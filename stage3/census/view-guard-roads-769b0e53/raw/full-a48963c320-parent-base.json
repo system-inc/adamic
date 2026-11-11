@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/roads-parent-census",
+    "/workspace/roads-adapted/src/tsc/tsc.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 49.77692632899925,
+  "peak_rss_kib": 871532,
+  "user_seconds": 43.764804,
+  "system_seconds": 2.947584,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts",
+    "GOMAXPROCS": "2",
+    "GOMEMLIMIT": "2560MiB",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-base-times.jsonl"
+  }
+}

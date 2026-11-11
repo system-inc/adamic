@@ -1,0 +1,45 @@
+{
+  "parent": {
+    "normal_unit_status": {
+      "attempted": 14
+    },
+    "observed_units": 14,
+    "views_evaluated": 0,
+    "raw_guard_refusals": 0,
+    "units_with_refusals": 0,
+    "probe_errors": 0,
+    "roads": {},
+    "graph_types_nonempty_units": 0
+  },
+  "head": {
+    "normal_unit_status": {
+      "attempted": 14
+    },
+    "observed_units": 14,
+    "views_evaluated": 0,
+    "raw_guard_refusals": 0,
+    "units_with_refusals": 0,
+    "probe_errors": 0,
+    "roads": {},
+    "graph_types_nonempty_units": 0
+  },
+  "per_unit_view_counts_equal": true,
+  "new_site_rows_previously_free_of_normal_and_guard_findings": {
+    "raw_findings": 0,
+    "distinct_reads": 0
+  },
+  "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+    "raw_findings": 0,
+    "distinct_reads": 0
+  },
+  "unique_new_guard_sites": {
+    "raw_findings": 0,
+    "distinct_reads": 0
+  },
+  "unit_stop_reading": {
+    "new_guard_stopped_units": 0,
+    "new_guard_stops_in_normally_finding_free_units": 0,
+    "new_guard_stops_in_already_normally_blocked_units": 0,
+    "changed_guard_first_stop_in_already_guard_blocked_units": 0
+  }
+}

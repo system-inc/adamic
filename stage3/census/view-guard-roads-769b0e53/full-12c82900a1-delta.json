@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/factory/nodeTests.ts": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+  },
+  "raw_findings": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

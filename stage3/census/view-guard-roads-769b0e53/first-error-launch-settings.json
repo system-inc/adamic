@@ -1,0 +1,26 @@
+{
+  "baseline-parent": {
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  },
+  "baseline-head": {
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  },
+  "guard-parent": {
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  },
+  "guard-head": {
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

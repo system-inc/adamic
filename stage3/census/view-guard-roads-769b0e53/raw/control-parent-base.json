@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/workspace/roads-parent-census",
+    "/workspace/roads-guard-control/control.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/control-parent-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 0.13381242400009796,
+  "peak_rss_kib": 31684,
+  "user_seconds": 0.07887999999999999,
+  "system_seconds": 0.053849,
+  "environment": {
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0"
+  }
+}

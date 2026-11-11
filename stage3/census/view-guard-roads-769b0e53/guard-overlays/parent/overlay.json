@@ -1,0 +1,29 @@
+{
+  "Replace": {
+    "/workspace/roads-parent/internal/lower/lower.go": "/workspace/roads-parent-guard-overlay/internal_lower_lower.go",
+    "/workspace/roads-parent/internal/lower/entries_records.go": "/workspace/roads-parent-guard-overlay/internal_lower_entries_records.go",
+    "/workspace/roads-parent/internal/lower/latent_state.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_state.go",
+    "/workspace/roads-parent/internal/lower/statements.go": "/workspace/roads-parent-guard-overlay/internal_lower_statements.go",
+    "/workspace/roads-parent/internal/lower/latent_relation_overflow.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_relation_overflow.go",
+    "/workspace/roads-parent/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/roads-parent-guard-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "/workspace/roads-parent/internal/lower/latent_full.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_full.go",
+    "/workspace/roads-parent/internal/lower/latent_units.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_units.go",
+    "/workspace/roads-parent/internal/lower/latent_timing.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_timing.go",
+    "/workspace/roads-parent/internal/lower/latent_replay.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_replay.go",
+    "/workspace/roads-parent/internal/lower/refusals.go": "/workspace/roads-parent-guard-overlay/internal_lower_refusals.go",
+    "/workspace/roads-parent/internal/load/load.go": "/workspace/roads-parent-guard-overlay/internal_load_load.go",
+    "/workspace/roads-parent/internal/load/latent_hook.go": "/workspace/roads-parent-guard-overlay/entry_load_hook.go",
+    "/workspace/roads-parent/internal/lower/expression.go": "/workspace/roads-parent-guard-overlay/internal_lower_expression.go",
+    "/workspace/roads-parent/internal/lower/functions.go": "/workspace/roads-parent-guard-overlay/internal_lower_functions.go",
+    "/workspace/roads-parent/internal/lower/generic.go": "/workspace/roads-parent-guard-overlay/internal_lower_generic.go",
+    "/workspace/roads-parent/internal/lower/locals.go": "/workspace/roads-parent-guard-overlay/internal_lower_locals.go",
+    "/workspace/roads-parent/internal/lower/latent_hook.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_hook.go",
+    "/workspace/roads-parent/stage3/census/latent/tool/main.go": "/workspace/roads-parent-guard-overlay/entry_main.go",
+    "/workspace/roads-parent/stage3/census/latent/replay/worker/main.go": "/workspace/roads-parent-guard-overlay/stage3_census_latent_replay_worker_main.go",
+    "/workspace/roads-parent/internal/lower/latent_piece.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_piece.go",
+    "/workspace/roads-parent/internal/lower/latent_progress.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_progress.go",
+    "/workspace/roads-parent/internal/lower/latent_speculative.go": "/workspace/roads-parent-guard-overlay/internal_lower_latent_speculative.go",
+    "/workspace/roads-parent/internal/lower/roads_guard_hook.go": "/workspace/roads-parent-guard-overlay/roads_guard_hook.go",
+    "/workspace/roads-parent/internal/lower/graph_types.go": "/workspace/roads-parent-guard-overlay/roads_graph_types.go"
+  }
+}

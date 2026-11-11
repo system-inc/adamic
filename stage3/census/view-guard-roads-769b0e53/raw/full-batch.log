@@ -1,0 +1,1133 @@
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 33.28503045199977, "peak_rss_kib": 885928, "user_seconds": 28.348643, "system_seconds": 4.955514, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "run": "full-dbf13ff563-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=aa1cd80b1b68bddc7b10c834bd0659afd8ffa48e
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 36.193397963999814, "peak_rss_kib": 889316, "user_seconds": 30.921548, "system_seconds": 5.44778, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "run": "full-dbf13ff563-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 36.47614117300145, "peak_rss_kib": 871208, "user_seconds": 30.222714, "system_seconds": 5.13931, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-dbf13ff563-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/utilitiesPublic.ts", "run": "full-dbf13ff563-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=2f4c9c4d9bd1ee8f781d2b4bf9b985e4ff013013
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 3,
+        "deferred_generic_instantiation": 1
+      },
+      "observed_units": 3,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 3,
+        "deferred_generic_instantiation": 1
+      },
+      "observed_units": 3,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-dbf13ff563", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=ac01292f7143ab11c2d58da60e0be45572c643a2
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=b035ce756049c56ec535e129a8c39174d6c11d13
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 48.93724693100012, "peak_rss_kib": 877344, "user_seconds": 40.973165, "system_seconds": 5.643204, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "run": "full-7cabb39c93-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=8131b56880ca06c3f45280cc95c677713e8b088e
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 46.054661378000674, "peak_rss_kib": 879456, "user_seconds": 42.402923, "system_seconds": 2.00977, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "run": "full-7cabb39c93-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 44.469068883001455, "peak_rss_kib": 867988, "user_seconds": 41.978706, "system_seconds": 1.7131560000000001, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7cabb39c93-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeChildren.ts", "run": "full-7cabb39c93-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=80821aa606a1894b1e79ca976702faf4a5d2ccb7
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 6
+      },
+      "observed_units": 6,
+      "views_evaluated": 2,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 6
+      },
+      "observed_units": 6,
+      "views_evaluated": 2,
+      "raw_guard_refusals": 2,
+      "units_with_refusals": 1,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 2
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 1,
+      "distinct_reads": 1
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 1,
+      "distinct_reads": 1
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 1,
+      "distinct_reads": 1
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 1,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 1,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 1,
+      "new_sites": 1,
+      "unit_first_stop_delta": 1,
+      "regressions": 1
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 1,
+      "new_sites": 1,
+      "unit_first_stop_delta": 1,
+      "regressions": 1
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-7cabb39c93", "cases": 1, "categories": {"guard bug: identity/union cross-product": 1}, "needs_reading": 0}
+render_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 48.29953962500076, "peak_rss_kib": 931080, "user_seconds": 44.731903, "system_seconds": 2.516073, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "run": "full-7f2a045a69-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=be329d80ea3f01ea1f17c3410592764272031fad
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=d14065ecb6a33f1b4632ceb9cd9435e9112b4a38
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=5cdfb3d231426f999deac24af623473ac0985d3d
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 50.52817619699999, "peak_rss_kib": 963416, "user_seconds": 44.499671, "system_seconds": 4.511381, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "run": "full-7f2a045a69-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=72150b7a0109875b8cc59d567a56f32186dd0620
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 45.860975519999556, "peak_rss_kib": 903412, "user_seconds": 40.681235, "system_seconds": 2.7321299999999997, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "run": "full-4dd6a78338-parent-base", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 43.31942933600112, "peak_rss_kib": 868732, "user_seconds": 38.934497, "system_seconds": 3.017823, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "run": "full-4dd6a78338-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=eb9ef0820514cc0381c94b9d6a993e9744849490
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=3b65d6f38d5fe7828874c0e8f8e421a744c98662
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 54.413546600999325, "peak_rss_kib": 966836, "user_seconds": 48.802016, "system_seconds": 2.939596, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-7f2a045a69-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts", "run": "full-7f2a045a69-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=47fb1c6a6be5bf471bf1a47e556da467ff13cfdf
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 8
+      },
+      "observed_units": 8,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 8
+      },
+      "observed_units": 8,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-7f2a045a69", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=03bb0ed7a57d5b4b341d49083c88c48e02b9267f
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 44.832817401000284, "peak_rss_kib": 889900, "user_seconds": 40.219483, "system_seconds": 3.408584, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-4dd6a78338-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/classThis.ts", "run": "full-4dd6a78338-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=af32f0ef12efd8d5b572c8bea633c306f56c8b65
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 5,
+        "deferred_generic_instantiation": 2
+      },
+      "observed_units": 5,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 5,
+        "deferred_generic_instantiation": 2
+      },
+      "observed_units": 5,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-4dd6a78338", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=5f824fc6d776b46c97eb8aa0ba0bcf07419d8e06
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 68.14385633399979, "peak_rss_kib": 1000272, "user_seconds": 64.016353, "system_seconds": 3.377228, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "run": "full-0854c1cf41-parent-base", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 69.2127115680014, "peak_rss_kib": 976872, "user_seconds": 65.179588, "system_seconds": 3.737942, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "run": "full-0854c1cf41-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=b2fe3febb1f548ecfcc12839ee65813f0d97bc78
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=2353a70d77a1d4c9d05e3a87b4f0a01aee680975
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 74.47381154699906, "peak_rss_kib": 1000052, "user_seconds": 68.742518, "system_seconds": 3.5885540000000002, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "run": "full-0854c1cf41-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=ddd10da26c2aef581488e6e91b0cbdd2ba6d434c
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 14
+      },
+      "observed_units": 14,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 14
+      },
+      "observed_units": 14,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-0854c1cf41", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=e01732596a8c85cd38afd8c236cef468d64673ce
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 49.77692632899925, "peak_rss_kib": 871532, "user_seconds": 43.764804, "system_seconds": 2.947584, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "run": "full-a48963c320-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=7478b4962dda7996340d303a868037ef1f314b21
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 128.4241848769998, "peak_rss_kib": 1114504, "user_seconds": 118.519525, "system_seconds": 6.118099, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "run": "full-d082b22d0d-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=27692788012d489b1e3a8f7b552f94c82bf47a68
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 52.17523631900076, "peak_rss_kib": 902648, "user_seconds": 46.521871, "system_seconds": 2.754826, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "run": "full-a48963c320-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=859c77119358316fa314c2f8168c3c1a3cb4e36d
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 128.99372849300016, "peak_rss_kib": 1099408, "user_seconds": 120.319432, "system_seconds": 5.057892, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "run": "full-d082b22d0d-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 127.07062569799928, "peak_rss_kib": 1126208, "user_seconds": 120.905745, "system_seconds": 5.901917, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-d082b22d0d-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts", "run": "full-d082b22d0d-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=7ff8d2077c850b82bdbbb760f4cf36a6fa59be76
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 15
+      },
+      "observed_units": 15,
+      "views_evaluated": 32,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 15
+      },
+      "observed_units": 15,
+      "views_evaluated": 32,
+      "raw_guard_refusals": 32,
+      "units_with_refusals": 4,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 8,
+        "union arms": 24
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 8,
+      "distinct_reads": 8
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 4,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 8,
+      "new_sites": 8,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 8,
+      "new_sites": 8,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-d082b22d0d", "cases": 8, "categories": {"guard bug: identity/union cross-product": 6, "guard bug: excluded discriminator arm": 2}, "needs_reading": 0}
+render_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 58.40176369800065, "peak_rss_kib": 896356, "user_seconds": 51.425917, "system_seconds": 3.036435, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a48963c320-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/namedEvaluation.ts", "run": "full-a48963c320-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=5d2eec5bb8423f6c287aa8593a56d1d8a6a9e4f7
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=b9c41bf552012ba2c1ac6be4a98bf3155f3a4422
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=5576abe94023802e3d69e579dc79d0b79bb01240
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 19,
+        "deferred_generic_instantiation": 2
+      },
+      "observed_units": 19,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 19,
+        "deferred_generic_instantiation": 2
+      },
+      "observed_units": 19,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-a48963c320", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=f5feb4b51f99dcc78a0bf6e8fbeed1a6d11bec75
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 103.05975969099927, "peak_rss_kib": 1038416, "user_seconds": 93.411537, "system_seconds": 4.524157, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "run": "full-91560bd618-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=e01871d4c9400faf50d36aa1c88be2dedc929ae4
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 85.59124097499989, "peak_rss_kib": 1011288, "user_seconds": 78.455061, "system_seconds": 4.735149, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "run": "full-5dc3fc14d8-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=dcdce3f0d108be00bdb291268a4d994df7cc3292
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 103.92858657100078, "peak_rss_kib": 1051488, "user_seconds": 96.036051, "system_seconds": 4.534476, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-head-records.jsonl"}}
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 104.45101113700002, "peak_rss_kib": 1073548, "user_seconds": 97.045598, "system_seconds": 4.127651, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-91560bd618-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "run": "full-91560bd618-head-guard", "wrapper_child_exit": 0}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/typeSerializer.ts", "run": "full-91560bd618-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=255900f4edfade9c7aed013b21e18844a3fbf145
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 22,
+        "deferred_generic_instantiation": 3
+      },
+      "observed_units": 22,
+      "views_evaluated": 26,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 22,
+        "deferred_generic_instantiation": 3
+      },
+      "observed_units": 22,
+      "views_evaluated": 26,
+      "raw_guard_refusals": 26,
+      "units_with_refusals": 4,
+      "probe_errors": 0,
+      "roads": {
+        "union arms": 8,
+        "index values": 18
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 4,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 4,
+      "regressions": 4
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-91560bd618", "cases": 7, "categories": {"guard bug: identity/union cross-product": 7}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=d0f045549cb771a5fba04ba8bdd037196952e45e
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=1049040eec7cc7f7b0d0b86e0349f01a11ffe884
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 98.38913470599982, "peak_rss_kib": 1015604, "user_seconds": 90.111627, "system_seconds": 3.841752, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "run": "full-5dc3fc14d8-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 96.43597869599944, "peak_rss_kib": 1011340, "user_seconds": 90.947841, "system_seconds": 3.637019, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-5dc3fc14d8-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/destructuring.ts", "run": "full-5dc3fc14d8-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=608474134912bb19cfe7817b0a2d1620a740e084
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 26
+      },
+      "observed_units": 26,
+      "views_evaluated": 20,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 26
+      },
+      "observed_units": 26,
+      "views_evaluated": 20,
+      "raw_guard_refusals": 20,
+      "units_with_refusals": 5,
+      "probe_errors": 0,
+      "roads": {
+        "union arms": 17,
+        "index values": 3
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 12,
+      "distinct_reads": 12
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 5,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 4,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 12,
+      "new_sites": 12,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 12,
+      "new_sites": 12,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-5dc3fc14d8", "cases": 12, "categories": {"guard bug: identity/union cross-product": 5, "needs reading": 1, "guard bug: checked pattern alternatives": 3, "guard bug: excluded discriminator arm": 3}, "needs_reading": 1}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=ab3805cbc2e4edeafb2a73fef16dc460538c3810
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=60f54d3feaf4d26749a6c0b764a6ae41a3a20a09
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 143.57204327399995, "peak_rss_kib": 1136568, "user_seconds": 135.091617, "system_seconds": 5.931298, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "run": "full-01e6ae4837-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=e49a6512e5cf3182e37031677b3161568ce3b186
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 146.78329680700153, "peak_rss_kib": 1107384, "user_seconds": 140.457035, "system_seconds": 6.192442, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "run": "full-01e6ae4837-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=91ae859c6236c8ae851c8159c44dd5d45fb34f5d
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 94.47276402900025, "peak_rss_kib": 916584, "user_seconds": 84.141975, "system_seconds": 4.604283, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "run": "full-8f10524394-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=eeb7eb1292fe70ffe9a03db4784a1d0d752843eb
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 84.32012553599998, "peak_rss_kib": 972532, "user_seconds": 79.134485, "system_seconds": 3.213514, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "run": "full-8f10524394-parent-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 144.7565977910017, "peak_rss_kib": 1145328, "user_seconds": 135.96223, "system_seconds": 6.459505, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-01e6ae4837-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/esnext.ts", "run": "full-01e6ae4837-head-guard", "wrapper_child_exit": 0}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 81.8030085850005, "peak_rss_kib": 926276, "user_seconds": 75.349152, "system_seconds": 3.91006, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-8f10524394-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/parenthesizerRules.ts", "run": "full-8f10524394-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=7047582e8803ea52d7608ec5a20d89843549e8bc
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 42
+      },
+      "observed_units": 42,
+      "views_evaluated": 21,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 42
+      },
+      "observed_units": 42,
+      "views_evaluated": 21,
+      "raw_guard_refusals": 21,
+      "units_with_refusals": 5,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 21
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 14,
+      "distinct_reads": 14
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 5,
+      "new_guard_stops_in_normally_finding_free_units": 1,
+      "new_guard_stops_in_already_normally_blocked_units": 4,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 14,
+      "new_sites": 14,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 14,
+      "new_sites": 14,
+      "unit_first_stop_delta": 5,
+      "regressions": 5
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-8f10524394", "cases": 14, "categories": {"guard bug: identity/union cross-product": 14}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=23aab01794c5b5af5f542365c0f01eeab086b1ae
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=b543cb9e387ddef7c89369bab4b170d80e1794f3
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 29
+      },
+      "observed_units": 29,
+      "views_evaluated": 15,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 29
+      },
+      "observed_units": 29,
+      "views_evaluated": 15,
+      "raw_guard_refusals": 15,
+      "units_with_refusals": 6,
+      "probe_errors": 0,
+      "roads": {
+        "index values": 13,
+        "union arms": 2
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 7,
+      "distinct_reads": 7
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 6,
+      "new_guard_stops_in_normally_finding_free_units": 3,
+      "new_guard_stops_in_already_normally_blocked_units": 3,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 6,
+      "regressions": 6
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 7,
+      "new_sites": 7,
+      "unit_first_stop_delta": 6,
+      "regressions": 6
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-01e6ae4837", "cases": 7, "categories": {"guard bug: identity/union cross-product": 7}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=df99584e7263b0b41f42089e2567b4e244fa0b33
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=61bbaa25f24949985cf76abb09e7f038eb1986a8
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 130.53134750500067, "peak_rss_kib": 1058880, "user_seconds": 121.097574, "system_seconds": 5.430261, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "run": "full-e082ecd054-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=66c176fe448232f514ccd10e30a15c63888d0548
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 141.7490950169995, "peak_rss_kib": 1054344, "user_seconds": 133.3775, "system_seconds": 5.159739, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "run": "full-e082ecd054-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=b6d7d0367a28e0b9cd19763d07111803645a01f2
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 144.7885168239991, "peak_rss_kib": 1066352, "user_seconds": 136.725979, "system_seconds": 5.858197, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "run": "full-e082ecd054-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=a89e8a841962bf159b3fec2d018ca6defe1b9bb6
+checkpoint_wrapper_child_exit=0
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 48,
+        "deferred_generic_instantiation": 6
+      },
+      "observed_units": 48,
+      "views_evaluated": 52,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 48,
+        "deferred_generic_instantiation": 6
+      },
+      "observed_units": 48,
+      "views_evaluated": 52,
+      "raw_guard_refusals": 52,
+      "units_with_refusals": 11,
+      "probe_errors": 0,
+      "roads": {
+        "union arms": 41,
+        "index values": 11
+      },
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 25,
+      "distinct_reads": 25
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 11,
+      "new_guard_stops_in_normally_finding_free_units": 3,
+      "new_guard_stops_in_already_normally_blocked_units": 8,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 25,
+      "new_sites": 25,
+      "unit_first_stop_delta": 11,
+      "regressions": 11
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 25,
+      "new_sites": 25,
+      "unit_first_stop_delta": 11,
+      "regressions": 11
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-e082ecd054", "cases": 25, "categories": {"guard bug: identity/union cross-product": 25}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=70acbb25225b191139dc14313934ca0386545e62
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 161.59646928999973, "peak_rss_kib": 1133144, "user_seconds": 146.244022, "system_seconds": 6.06095, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "run": "full-12c82900a1-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=6fcf16906b9d9d3b73f23ab401d9f0d4941daed6
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 164.94735262599897, "peak_rss_kib": 1124992, "user_seconds": 151.560009, "system_seconds": 7.073058, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "run": "full-12c82900a1-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=1ca488699479bf8bfd1737f6e9290393e619464b
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 114.01156169500064, "peak_rss_kib": 991920, "user_seconds": 109.874652, "system_seconds": 4.911976, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "run": "full-c1be4dcd17-parent-base", "wrapper_child_exit": 0}
+push_child_exit=0 sha=75c405d22c7a32e0fe59ff0ff601175415f4b0ea
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 114.90656348000084, "peak_rss_kib": 1019080, "user_seconds": 108.69907, "system_seconds": 6.806381, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "run": "full-c1be4dcd17-parent-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=a952d299026e12d72f4ccafb89b30cdcf80cdb62
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 165.89732360400012, "peak_rss_kib": 1108476, "user_seconds": 149.689786, "system_seconds": 5.067585, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-12c82900a1-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/nodeTests.ts", "run": "full-12c82900a1-head-guard", "wrapper_child_exit": 0}
+push_child_exit=0 sha=6eb6b62ee15f72f61e292c3920c8a92473794254
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": -15, "elapsed_seconds": 2.665649750000739, "peak_rss_kib": 282380, "user_seconds": 1.996637, "system_seconds": 0.328242, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "run": "full-a0fe6b8fd2-head-guard", "wrapper_child_exit": 143}
+{"command": ["/workspace/roads-parent-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-parent-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": -15, "elapsed_seconds": 33.19419751100031, "peak_rss_kib": 868416, "user_seconds": 29.99073, "system_seconds": 2.082222, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-parent-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-parent-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "run": "full-a0fe6b8fd2-parent-guard", "wrapper_child_exit": 143}
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": -15, "elapsed_seconds": 51.387169715999335, "peak_rss_kib": 952656, "user_seconds": 47.448672, "system_seconds": 2.934896, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-a0fe6b8fd2-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/factory/emitHelpers.ts", "run": "full-a0fe6b8fd2-parent-base", "wrapper_child_exit": 143}
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": -15, "elapsed_seconds": 63.070562233999226, "peak_rss_kib": 1017852, "user_seconds": 58.190785, "system_seconds": 3.312372, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-c1be4dcd17-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/declarations/diagnostics.ts", "run": "full-c1be4dcd17-head-guard", "wrapper_child_exit": 143}
+{
+  "summary": {
+    "parent": {
+      "normal_unit_status": {
+        "attempted": 228
+      },
+      "observed_units": 228,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "head": {
+      "normal_unit_status": {
+        "attempted": 228
+      },
+      "observed_units": 228,
+      "views_evaluated": 0,
+      "raw_guard_refusals": 0,
+      "units_with_refusals": 0,
+      "probe_errors": 0,
+      "roads": {},
+      "graph_types_nonempty_units": 0
+    },
+    "per_unit_view_counts_equal": true,
+    "new_site_rows_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_sites_previously_free_of_normal_and_guard_findings": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unique_new_guard_sites": {
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "unit_stop_reading": {
+      "new_guard_stopped_units": 0,
+      "new_guard_stops_in_normally_finding_free_units": 0,
+      "new_guard_stops_in_already_normally_blocked_units": 0,
+      "changed_guard_first_stop_in_already_guard_blocked_units": 0
+    }
+  },
+  "verification": {},
+  "deltas": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 0,
+      "regressions": 0
+    }
+  }
+}
+pair_wrapper_child_exit=0
+{"prefix": "full-12c82900a1", "cases": 0, "categories": {}, "needs_reading": 0}
+render_wrapper_child_exit=0
+push_child_exit=0 sha=6e889059d1b00209e385e03f8efcac1043be3ac0
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=6501e190363220b1b62e7dd4e1f363261b65ebe2
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=1581ee3c08665c2ef2f39284766daca564ebbef9
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=b29c22e35fb0edcaeda7e27718e318ce4e48e73a
+checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=be362f33034d536e8b9f0e02f33f1071e85a4f3e
+checkpoint_wrapper_child_exit=0
+verified full file checks=13 requested=26

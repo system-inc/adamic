@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/transformers/classThis.ts": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+  },
+  "raw_findings": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {},
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {},
+      "after": {}
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

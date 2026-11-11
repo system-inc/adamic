@@ -1,0 +1,3 @@
+interface Narrow { kind: number }
+interface Wide { kind: number; child: Narrow }
+function see(value: Narrow): Wide { return value as Wide; }

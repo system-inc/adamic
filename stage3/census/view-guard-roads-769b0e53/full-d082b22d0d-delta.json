@@ -1,0 +1,1161 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/transformers/module/esnextAnd2015.ts": "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+    "src/compiler/utilities.ts": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          146934
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          95894
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:2704:1",
+          "reason": "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isImportCall(n: Node): n is ImportCall {\r\n    if (n.kind !== SyntaxKind.CallExpression) return false;\r\n    const e = (n as CallExpression).expression;\r\n    return e.kind === SyntaxKind.ImportKeyword || (\r\n        isMetaProperty(e)\r\n        && e.keywordToken === SyntaxKind.ImportKeyword\r\n        && e.name.escapedText === \"defer\"\r\n    );\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6115
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6254
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:151:46",
+          "reason": "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportAssignment"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6365
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:153:36",
+          "reason": "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6547
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:156:47",
+          "reason": "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportDeclaration"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          146934
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          95894
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:2704:1",
+          "reason": "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isImportCall(n: Node): n is ImportCall {\r\n    if (n.kind !== SyntaxKind.CallExpression) return false;\r\n    const e = (n as CallExpression).expression;\r\n    return e.kind === SyntaxKind.ImportKeyword || (\r\n        isMetaProperty(e)\r\n        && e.keywordToken === SyntaxKind.ImportKeyword\r\n        && e.name.escapedText === \"defer\"\r\n    );\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6115
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6254
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:151:46",
+          "reason": "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportAssignment"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6365
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:153:36",
+          "reason": "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6547
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:156:47",
+          "reason": "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportDeclaration"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          1560
+        ],
+        "unit": {
+          "body_end": 18689,
+          "body_start": 1682,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformECMAScriptModule",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          2708
+        ],
+        "unit": {
+          "body_end": 4571,
+          "body_start": 2754,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformSourceFile",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          5450
+        ],
+        "unit": {
+          "body_end": 7124,
+          "body_start": 5509,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitor",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          7751
+        ],
+        "unit": {
+          "body_end": 8297,
+          "body_start": 7831,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitImportOrRequireCall",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      }
+    ],
+    "regressions": [
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          1560
+        ],
+        "unit": {
+          "body_end": 18689,
+          "body_start": 1682,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformECMAScriptModule",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          2708
+        ],
+        "unit": {
+          "body_end": 4571,
+          "body_start": 2754,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformSourceFile",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          5450
+        ],
+        "unit": {
+          "body_end": 7124,
+          "body_start": 5509,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitor",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          7751
+        ],
+        "unit": {
+          "body_end": 8297,
+          "body_start": 7831,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitImportOrRequireCall",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      }
+    ],
+    "totals": {
+      "before": {},
+      "after": {
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          146934
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          95894
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:2704:1",
+          "reason": "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isImportCall(n: Node): n is ImportCall {\r\n    if (n.kind !== SyntaxKind.CallExpression) return false;\r\n    const e = (n as CallExpression).expression;\r\n    return e.kind === SyntaxKind.ImportKeyword || (\r\n        isMetaProperty(e)\r\n        && e.keywordToken === SyntaxKind.ImportKeyword\r\n        && e.name.escapedText === \"defer\"\r\n    );\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6115
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6254
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:151:46",
+          "reason": "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportAssignment"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6365
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:153:36",
+          "reason": "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6547
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:156:47",
+          "reason": "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportDeclaration"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          146934
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          95894
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:2704:1",
+          "reason": "a view of Node as ImportCall in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isImportCall(n: Node): n is ImportCall {\r\n    if (n.kind !== SyntaxKind.CallExpression) return false;\r\n    const e = (n as CallExpression).expression;\r\n    return e.kind === SyntaxKind.ImportKeyword || (\r\n        isMetaProperty(e)\r\n        && e.keywordToken === SyntaxKind.ImportKeyword\r\n        && e.name.escapedText === \"defer\"\r\n    );\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          101975
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as StringLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as StringLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6115
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6254
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:151:46",
+          "reason": "a view of Node as ExportAssignment in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as SourceFile) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportAssignment"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6365
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:153:36",
+          "reason": "a view of Node as ExportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ExportDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          6547
+        ],
+        "finding": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:156:47",
+          "reason": "a view of Node as ImportDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportDeclaration"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          1560
+        ],
+        "unit": {
+          "body_end": 18689,
+          "body_start": 1682,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformECMAScriptModule",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          2708
+        ],
+        "unit": {
+          "body_end": 4571,
+          "body_start": 2754,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformSourceFile",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          5450
+        ],
+        "unit": {
+          "body_end": 7124,
+          "body_start": 5509,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitor",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          7751
+        ],
+        "unit": {
+          "body_end": 8297,
+          "body_start": 7831,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitImportOrRequireCall",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      }
+    ],
+    "regressions": [
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          1560
+        ],
+        "unit": {
+          "body_end": 18689,
+          "body_start": 1682,
+          "checker_diagnostics": [],
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformECMAScriptModule",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          2708
+        ],
+        "unit": {
+          "body_end": 4571,
+          "body_start": 2754,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "transformSourceFile",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilities.ts:3839:1",
+          "reason": "a view of Node as CallExpression in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "/** @internal */\r\nexport function isRequireCall(callExpression: Node, requireStringLiteralLikeArgument: boolean): callExpression is CallExpression;"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          5450
+        ],
+        "unit": {
+          "body_end": 7124,
+          "body_start": 5509,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitor",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:149:111",
+          "reason": "a view of Node as ImportEqualsDeclaration in a graph program, which the cycle finder doesn't relate yet through its field parent (Node as ModuleBlock | SourceFile) through an arm (Node as ModuleBlock) through its field parent (Node as ModuleDeclaration) through its field parent (Node as SourceFile | ModuleBody) through an arm (Node as Identifier) through its field parent (Node as Node) through its field original (Node | undefined as Node | undefined) through its field emitNode (EmitNode | undefined as EmitNode | undefined) through its field externalHelpersModuleName (Identifier | undefined as Identifier | undefined) through its field jsDoc (JSDocArray | undefined as JSDocArray | undefined) through its index values (JSDoc as JSDoc) through its field parent (HasJSDoc as HasJSDoc) through a source arm (ArrowFunction as HasJSDoc) through an arm (ArrowFunction as ArrowFunction) through its field modifiers (NodeArray<Modifier> | undefined as NodeArray<Modifier> | undefined) through its index values (Modifier as Modifier) through an arm (Modifier as AbstractKeyword) through a source arm (AccessorKeyword as AbstractKeyword)",
+          "text": "node as ImportEqualsDeclaration"
+        }
+      },
+      {
+        "type": "previously_finding_free_unit",
+        "identity": [
+          "src/compiler/transformers/module/esnextAnd2015.ts",
+          "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+          7751
+        ],
+        "unit": {
+          "body_end": 8297,
+          "body_start": 7831,
+          "checker_diagnostics": [],
+          "depth": 1,
+          "instantiated": false,
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "visitImportOrRequireCall",
+          "parent": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "status": "attempted",
+          "top": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+          "where": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5"
+        },
+        "base": null,
+        "head": {
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "unit": "/workspace/roads-adapted/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+          "where": "/workspace/roads-adapted/src/compiler/utilitiesPublic.ts:2625:1",
+          "reason": "a view of FileReference | Node as NoSubstitutionTemplateLiteral in a graph program, which the cycle finder doesn't relate yet through a source arm (FileReference as NoSubstitutionTemplateLiteral)",
+          "text": "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\r\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\r\n}"
+        }
+      }
+    ],
+    "totals": {
+      "before": {},
+      "after": {
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

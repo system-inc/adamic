@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/view-guard-roads-769b0e53/run-full.py",
+    "stage3/census/view-guard-roads-769b0e53/full-files.json",
+    "4"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 2,
+  "elapsed_seconds": 981.643300355001,
+  "peak_rss_kib": 1145328,
+  "user_seconds": 3617.010882,
+  "system_seconds": 210.973816,
+  "environment": {}
+}

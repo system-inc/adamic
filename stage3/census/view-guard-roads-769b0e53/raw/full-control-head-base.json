@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/workspace/roads-head-census",
+    "/workspace/roads-guard-control/control.ts",
+    "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-control-head-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 0.19402116099990963,
+  "peak_rss_kib": 32576,
+  "user_seconds": 0.112789,
+  "system_seconds": 0.023815,
+  "environment": {
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/roads-guard-control/control.ts",
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "1"
+  }
+}
