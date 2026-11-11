@@ -342,3 +342,7 @@ checkpoint_wrapper_child_exit=0
 {"file": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "run": "full-0854c1cf41-parent-guard", "wrapper_child_exit": 0}
 push_child_exit=0 sha=b2fe3febb1f548ecfcc12839ee65813f0d97bc78
 checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=2353a70d77a1d4c9d05e3a87b4f0a01aee680975
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-head-guard-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-guard-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 74.47381154699906, "peak_rss_kib": 1000052, "user_seconds": 68.742518, "system_seconds": 3.5885540000000002, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-guard-times.jsonl", "ROADS_GUARD_STREAM": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-0854c1cf41-head-records.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/symbolWalker.ts", "run": "full-0854c1cf41-head-guard", "wrapper_child_exit": 0}
