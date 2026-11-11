@@ -109,7 +109,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		}
 	}
 	assignAllocationSites(l.result)
-	entered := newAllocationFlowGraph(l.result)
+	entered := l.flowGraph(l.result)
 	entered.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CheckedCast:
@@ -148,7 +148,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		if !demanded && len(unentered) != 0 && !viewVouched(unentered, read.Name, field, true, l.checker) {
 			if graph == nil {
 				var reachUnknown bool
-				graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+				graph, viewed, reachUnknown = l.viewedAllocations(l.result, false)
 				unknown = unknown || reachUnknown
 			}
 			allocations := graph.ReachingAllocations(read.Object)
@@ -184,7 +184,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		if !demanded && len(unentered) != 0 {
 			if graph == nil {
 				var reachUnknown bool
-				graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+				graph, viewed, reachUnknown = l.viewedAllocations(l.result, false)
 				unknown = unknown || reachUnknown
 			}
 			demanded = unknown || deepReach(graph, whole.source, func(site int) bool { return viewed[site] })

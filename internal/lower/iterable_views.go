@@ -269,7 +269,7 @@ func (l *lowering) checkIterableViews() error {
 	// A parameter's hand views share its origins, since each proves the parameter's read, so the
 	// first a generator feeds rewrites every next on it, and the rest find it done.
 	handed := map[int]bool{}
-	graph := newAllocationFlowGraph(l.result)
+	graph := l.flowGraph(l.result)
 	graph.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CollectionIterator:

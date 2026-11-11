@@ -134,16 +134,18 @@ File: internal/lower/view_flow.go, newAllocationFlowGraph.
 Old:
 
 ```go
-		if !running[i] {
+		if !graph.running[i] {
 ```
 
 New:
 
 ```go
-		if false && !running[i] {
+		if false && !graph.running[i] {
 ```
 
-The plain `if false {` doesn't compile: `running` would be declared and never used.
+Before the late-reference check, the set was a local, and the plain `if false {` didn't compile, `running` declared and
+never used. It's the graph's field now, so `if false {` compiles too; the spelling above is kept, so one edit names
+the mutant before and after.
 
 Expected: TestReachUncalledWriterMakesNoWrite, TestReachSystemIsItsLiteral and
 TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "local or result has no tracked producer": the uncalled
@@ -238,3 +240,23 @@ New:
 
 Expected: TestReachExportedEntryFunctionParameterIsUnknown/exported_from_the_entry_module is known, the inside literal
 alone, though outside code can pass the exported function anything.
+
+## 7. Road 3's late-reference check removed
+
+File: internal/lower/view_flow.go, checkFlowLiveness.
+
+Old:
+
+```go
+		if dead[function] && running[function] {
+```
+
+New:
+
+```go
+		if false && dead[function] && running[function] {
+```
+
+Expected: TestReachLateReferenceIsACompilerBug gets no error after Main calls the function the graph took to never
+run. Deleting the call to checkFlowLiveness at the end of lower.go's lowerWithElementKey instead has no witness: no
+program reaches a late reference today, which is what the check holds, so only a run that hit one would show it.

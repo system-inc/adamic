@@ -23,6 +23,10 @@ type allocationFlowGraph struct {
 	// entry, when set, names a value an expression is where it enters a view: the flow stops there
 	// and reaches the site entry gives, which no allocation has (view_widened.go).
 	entry func(ir.Expression) int
+	// running is whether each function could run when the graph was built (runningFunctions): one
+	// that couldn't had its writes, returns and calls left out, so checkFlowLiveness holds it to
+	// that at the end of lowering.
+	running []bool
 }
 
 func (graph *allocationFlowGraph) resultNode(function int) int {
@@ -93,10 +97,10 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 		})
 	}
 	collect(program.Main, -1)
-	running := runningFunctions(program)
+	graph.running = runningFunctions(program)
 	for i, function := range program.Functions {
 		// A function that never runs makes none of its writes, returns or calls.
-		if !running[i] {
+		if !graph.running[i] {
 			continue
 		}
 		collect(function.Body, i)
@@ -114,6 +118,37 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 		}
 	}
 	return graph
+}
+
+// flowGraph is newAllocationFlowGraph for a lowering pass: it notes which functions the graph took to
+// never run, so checkFlowLiveness can hold lowering to that once nothing more changes the program.
+func (l *lowering) flowGraph(program *ir.Program) *allocationFlowGraph {
+	graph := newAllocationFlowGraph(program)
+	for function, running := range graph.running {
+		if !running {
+			if l.flowDead == nil {
+				l.flowDead = map[int]bool{}
+			}
+			l.flowDead[function] = true
+		}
+	}
+	return graph
+}
+
+// checkFlowLiveness reads, once nothing more changes the program, which functions can run, and
+// fails if one a flow graph took to never run (dead, by index) is named now. Liveness is read when a
+// graph is built, and a pass after that adding the first reference to a function would leave that
+// function's writes out of what the graph's consumers were told: a missed writer, so a compiler bug,
+// never a program to emit. A function made after the graph isn't in dead; its body was never in
+// that graph at all, as before road 3.
+func checkFlowLiveness(program *ir.Program, dead map[int]bool) error {
+	running := runningFunctions(program)
+	for function := range running {
+		if dead[function] && running[function] {
+			return fmt.Errorf("lower: compiler bug: function %d was named after the flow graph was built", function)
+		}
+	}
+	return nil
 }
 
 // functionReferenceFields are the IR fields that name a function, as type and field, each with what
