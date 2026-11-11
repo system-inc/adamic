@@ -12,9 +12,13 @@ interface Holder {
 	readonly d: number | undefined;
 	readonly e: string | undefined;
 }
-const holder: Holder = { a: null, b: undefined, c: null, d: undefined, e: undefined };
+// Construct through declared boxed slots; literal-only null/undefined shapes are bare pointers.
+function makeHolder(a: Box | null | undefined, b: Box | null | undefined, c: string | null, d: number | undefined, e: string | undefined): Holder {
+	return { a, b, c, d, e };
+}
+const holder = makeHolder(null, undefined, null, undefined, undefined);
 console.log(JSON.stringify(holder) ?? '<undefined>');
-const filled: Holder = { a: { v: 1 }, b: { v: 2 }, c: 'c', d: 4, e: 'e' };
+const filled = makeHolder({ v: 1 }, { v: 2 }, 'c', 4, 'e');
 console.log(JSON.stringify(filled) ?? '<undefined>');
 function text(flag: boolean): string | undefined {
 	return flag ? 'x'.repeat(2) : undefined;
@@ -25,7 +29,7 @@ function box(kind: number): Box | null | undefined {
 	}
 	return kind === 1 ? undefined : { v: kind };
 }
-const written: Holder = { a: box(0), b: box(1), c: null, d: undefined, e: text(false) };
+const written = makeHolder(box(0), box(1), null, undefined, text(false));
 console.log(JSON.stringify(written) ?? '<undefined>');
 function maybe(flag: boolean): Box | null {
 	return flag ? { v: 1 } : null;
