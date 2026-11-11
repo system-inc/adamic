@@ -1,0 +1,14 @@
+// Row 14 control: the same Node made on the main thread by a literal.
+interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b); // a cycle: the program is a graph program
+const items: readonly number[] = [1, 2];
+function build(item: number): Node { return { name: `n${item}`, next: [] }; }
+const made = items.map(build);
+const first = made[0];
+if (first !== undefined) {
+  a.next.push(first);
+  first.next.push(a);
+}
+console.log(`${a.next.length} ${made.length}`);
