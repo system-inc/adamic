@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path');
+const adapter=require('/workspace/adamic/stage3/adapt/99-correctness-tracing-length/adapt.cjs');
+const file=path.join(process.argv[2],'src/compiler/tracing.ts'),text=fs.readFileSync(file,'utf8'),after=adapter.plan(text);
+assert.equal(adapter.plan(after),after);assert.notEqual(after,text);
+const selected=adapter.owners(text);assert.deepEqual(selected.map(x=>x.pin.owner),['pop','popAll']);
+let undo=after;for(const {pin} of selected)undo=undo.replace(pin.after,pin.before);assert.equal(undo,text);
+const mutants=[['pop body drift',text.replace('Debug.assert(eventStack.length > 0);','Debug.assert(eventStack.length > 1);')],['popAll body drift',text.replace('const endTime = 1000 * timestamp();','const endTime = 1001 * timestamp();')],['half adapted',text.replace(selected[0].pin.before,selected[0].pin.after)],['missing owner',text.replace('function popAll()','function vanished()')],['duplicate owner',text+'\n'+selected[0].pin.before]];
+for(const [name,s] of mutants)assert.throws(()=>adapter.plan(s),undefined,name);
+console.log(JSON.stringify({idempotent:true,undoExact:true,mutantsRefused:mutants.map(x=>x[0]),onlyOwners:['pop','popAll']}));

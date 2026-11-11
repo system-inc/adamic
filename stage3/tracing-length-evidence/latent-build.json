@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/tracing-length-evidence/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/tracing-length-evidence/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 1,
+  "seconds": 0.4465576879999844
+}
