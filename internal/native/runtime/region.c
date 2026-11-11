@@ -7,6 +7,14 @@
 // it (an immortal child is passed over), tells any Weak that pointed at one that it's gone, and frees
 // its blocks. The blocks are ordinary malloc blocks, so a use after the region ended (an escape the
 // compiler missed) is a use after free to AddressSanitizer.
+//
+// A thread keeps the blocks its regions free, up to ADAMIC_REGION_BLOCK_CACHE bytes, and the next
+// region it opens takes them back before asking malloc (#yecmp1d, Adamic's ruling): malloc handed out
+// pages the kernel faulted in again for every region, a third of bench/trees' time in the kernel. A
+// block is taken and given on one thread, since a region is a stack value its own function opens and
+// ends, and a parallelMap task, a closure, is never handed its caller's region (only a direct call's
+// region version takes one). The cache is off under AddressSanitizer, so a use after a region ends is
+// still a use after free there.
 
 #include "adamic.h"
 #include "count.h"
@@ -31,6 +39,89 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
+// ADAMIC_REGION_BLOCK_CACHE is what a thread keeps after its last region ends: a build constant, never
+// read from the environment, so a program behaves the same whatever shell runs it. 1 MB took 93% of
+// trees' minor faults and 37% of its wall on Home; 16 MB bought 6 more points for 15 MB more per thread
+// (Runtime Performance, #yecmp1d).
+#ifndef ADAMIC_REGION_BLOCK_CACHE
+#define ADAMIC_REGION_BLOCK_CACHE ((size_t)1048576)
+#endif
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define REGION_BLOCK_CACHE_OFF 1
+#endif
+#endif
+#if defined(__SANITIZE_ADDRESS__)
+#define REGION_BLOCK_CACHE_OFF 1
+#endif
+
+// One list per standard block size, 4 KB doubling to 1 MB. A block of another size, one made for an
+// object bigger than its turn's size, goes back to malloc.
+#define BLOCK_SIZES 9
+static _Thread_local adamic_region_block *cached[BLOCK_SIZES];
+static _Thread_local size_t cached_bytes;
+
+#ifndef REGION_BLOCK_CACHE_OFF
+static int size_index(size_t capacity) {
+	for (int index = 0; index < BLOCK_SIZES; index++) {
+		if (capacity == ((size_t)4096 << index)) { return index; }
+	}
+	return -1;
+}
+#endif
+
+static adamic_region_block *block_take(size_t capacity) {
+#ifndef REGION_BLOCK_CACHE_OFF
+	int index = size_index(capacity);
+	if (index >= 0 && cached[index] != NULL) {
+		adamic_region_block *block = cached[index];
+		cached[index] = block->next;
+		cached_bytes -= capacity;
+		return block;
+	}
+#endif
+	adamic_region_block *block = malloc(sizeof *block + capacity);
+#ifdef ADAMIC_COUNT
+	if (block != NULL) { atomic_fetch_add_explicit(&adamic_counted.region_blocks, 1, memory_order_relaxed); }
+#endif
+	return block;
+}
+
+static void block_free(adamic_region_block *block) {
+#ifdef ADAMIC_COUNT
+	atomic_fetch_add_explicit(&adamic_counted.region_blocks_freed, 1, memory_order_relaxed);
+#endif
+	free(block);
+}
+
+static void block_give(adamic_region_block *block) {
+#ifndef REGION_BLOCK_CACHE_OFF
+	int index = size_index(block->size);
+	if (index >= 0 && cached_bytes + block->size <= ADAMIC_REGION_BLOCK_CACHE) {
+		block->next = cached[index];
+		cached[index] = block;
+		cached_bytes += block->size;
+		return;
+	}
+#endif
+	block_free(block);
+}
+
+size_t adamic_region_cached(void) {
+	return cached_bytes;
+}
+
+void adamic_region_thread_end(void) {
+	for (int index = 0; index < BLOCK_SIZES; index++) {
+		while (cached[index] != NULL) {
+			adamic_region_block *next = cached[index]->next;
+			block_free(cached[index]);
+			cached[index] = next;
+		}
+	}
+	cached_bytes = 0;
+}
+
 static inline void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
@@ -42,7 +133,7 @@ static inline void *allocate_in(adamic_region *region, size_t size) {
 		if (capacity < size) {
 			capacity = size;
 		}
-		adamic_region_block *fresh = malloc(sizeof *fresh + capacity);
+		adamic_region_block *fresh = block_take(capacity);
 		if (fresh == NULL) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
@@ -145,7 +236,7 @@ void adamic_region_end(adamic_region *region) {
 	adamic_weak_forget_region(region);
 	for (adamic_region_block *block = region->blocks; block != NULL;) {
 		adamic_region_block *next = block->next;
-		free(block);
+		block_give(block);
 		block = next;
 	}
 	ADAMIC_COUNT_REGION(region->count);
