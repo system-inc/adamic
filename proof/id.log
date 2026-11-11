@@ -1,0 +1,363 @@
+=== RUN   TestGeneratorsAgreeWithNode
+=== PAUSE TestGeneratorsAgreeWithNode
+=== RUN   TestNestedShorthandIdentityAgreesWithNode
+=== PAUSE TestNestedShorthandIdentityAgreesWithNode
+=== CONT  TestGeneratorsAgreeWithNode
+=== CONT  TestNestedShorthandIdentityAgreesWithNode
+=== RUN   TestGeneratorsAgreeWithNode/array_from.a
+=== PAUSE TestGeneratorsAgreeWithNode/array_from.a
+=== RUN   TestGeneratorsAgreeWithNode/array_from_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/array_from_view.a
+=== RUN   TestGeneratorsAgreeWithNode/body_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/body_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/break_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/break_map.a
+=== RUN   TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== PAUSE TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== RUN   TestGeneratorsAgreeWithNode/complete.a
+=== PAUSE TestGeneratorsAgreeWithNode/complete.a
+=== RUN   TestGeneratorsAgreeWithNode/consumer_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/consumer_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/declared_iterators.a
+=== PAUSE TestGeneratorsAgreeWithNode/declared_iterators.a
+=== RUN   TestGeneratorsAgreeWithNode/drop_start.a
+=== PAUSE TestGeneratorsAgreeWithNode/drop_start.a
+=== RUN   TestGeneratorsAgreeWithNode/early_return.a
+=== PAUSE TestGeneratorsAgreeWithNode/early_return.a
+=== RUN   TestGeneratorsAgreeWithNode/elementwise_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/elementwise_view.a
+=== RUN   TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== PAUSE TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== RUN   TestGeneratorsAgreeWithNode/first_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/first_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/generic.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic.a
+=== RUN   TestGeneratorsAgreeWithNode/generic_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic_map.a
+=== RUN   TestGeneratorsAgreeWithNode/generic_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/generic_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_capture.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_capture.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_environment.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_environment.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_forms.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_forms.a
+=== RUN   TestGeneratorsAgreeWithNode/in_place_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/in_place_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/labeled_exit.a
+=== PAUSE TestGeneratorsAgreeWithNode/labeled_exit.a
+=== RUN   TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== RUN   TestGeneratorsAgreeWithNode/map_iterator.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_iterator.a
+=== RUN   TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== PAUSE TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_early_break.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_early_break.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_iterable.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_iterable.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== RUN   TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== PAUSE TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_entries.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_entries.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_plain.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_plain.a
+=== RUN   TestGeneratorsAgreeWithNode/new_map_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_map_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/new_set.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_set.a
+=== RUN   TestGeneratorsAgreeWithNode/new_set_plain.a
+=== PAUSE TestGeneratorsAgreeWithNode/new_set_plain.a
+=== RUN   TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== PAUSE TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== RUN   TestGeneratorsAgreeWithNode/retained_param.a
+=== PAUSE TestGeneratorsAgreeWithNode/retained_param.a
+=== RUN   TestGeneratorsAgreeWithNode/return_from_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/return_from_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/split.a
+=== PAUSE TestGeneratorsAgreeWithNode/split.a
+=== RUN   TestGeneratorsAgreeWithNode/spread.a
+=== PAUSE TestGeneratorsAgreeWithNode/spread.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught_from.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught_from.a
+=== RUN   TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== PAUSE TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== RUN   TestGeneratorsAgreeWithNode/unused_class.a
+=== PAUSE TestGeneratorsAgreeWithNode/unused_class.a
+=== RUN   TestGeneratorsAgreeWithNode/view_body_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_body_throw.a
+=== RUN   TestGeneratorsAgreeWithNode/view_counted_items.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_counted_items.a
+=== RUN   TestGeneratorsAgreeWithNode/view_early_return.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_early_return.a
+=== RUN   TestGeneratorsAgreeWithNode/view_mixed.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_mixed.a
+=== RUN   TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== RUN   TestGeneratorsAgreeWithNode/view_string_items.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_string_items.a
+=== RUN   TestGeneratorsAgreeWithNode/view_throw.a
+=== PAUSE TestGeneratorsAgreeWithNode/view_throw.a
+=== CONT  TestGeneratorsAgreeWithNode/array_from.a
+=== CONT  TestGeneratorsAgreeWithNode/view_throw.a
+=== CONT  TestGeneratorsAgreeWithNode/view_string_items.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_view.a
+=== NAME  TestGeneratorsAgreeWithNode/view_string_items.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d miss 317.12
+=== NAME  TestNestedShorthandIdentityAgreesWithNode
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 317.13
+=== NAME  TestGeneratorsAgreeWithNode/array_from.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 317.13
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 317.13
+=== NAME  TestGeneratorsAgreeWithNode/view_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 317.13
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+--- PASS: TestNestedShorthandIdentityAgreesWithNode (390.21s)
+=== CONT  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+=== CONT  TestGeneratorsAgreeWithNode/map_iterator_entries.a
+=== CONT  TestGeneratorsAgreeWithNode/map_iterator.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_overloads.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.08
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_grandchild.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.08
+=== NAME  TestGeneratorsAgreeWithNode/map_iterator_entries.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/map_defined_iterator.a
+=== CONT  TestGeneratorsAgreeWithNode/labeled_exit.a
+=== NAME  TestGeneratorsAgreeWithNode/map_iterator.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/in_place_loop.a
+=== CONT  TestGeneratorsAgreeWithNode/in_place_forms.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_callee_generic.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/in_place_environment.a
+=== NAME  TestGeneratorsAgreeWithNode/labeled_exit.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/in_place_capture.a
+=== NAME  TestGeneratorsAgreeWithNode/map_defined_iterator.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/in_place_environment.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/in_place_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/generic_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/in_place_forms.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/generic_map.a
+=== CONT  TestGeneratorsAgreeWithNode/generic.a
+=== CONT  TestGeneratorsAgreeWithNode/first_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/generic_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/generic_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/first_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/in_place_capture.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/first_or_undefined.a
+=== CONT  TestGeneratorsAgreeWithNode/elementwise_view.a
+=== CONT  TestGeneratorsAgreeWithNode/early_return.a
+=== CONT  TestGeneratorsAgreeWithNode/drop_start.a
+=== NAME  TestGeneratorsAgreeWithNode/generic.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/declared_iterators.a
+=== NAME  TestGeneratorsAgreeWithNode/drop_start.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/elementwise_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/early_return.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/first_or_undefined.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/consumer_throw.a
+=== CONT  TestGeneratorsAgreeWithNode/complete.a
+=== CONT  TestGeneratorsAgreeWithNode/builder_state_strings.a
+=== NAME  TestGeneratorsAgreeWithNode/declared_iterators.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/break_map.a
+=== CONT  TestGeneratorsAgreeWithNode/body_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/consumer_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.04
+=== NAME  TestGeneratorsAgreeWithNode/complete.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/array_from_view.a
+=== NAME  TestGeneratorsAgreeWithNode/body_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/nullish_view_tests.a
+=== NAME  TestGeneratorsAgreeWithNode/break_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.05
+=== CONT  TestGeneratorsAgreeWithNode/view_outer_loop.a
+=== NAME  TestGeneratorsAgreeWithNode/builder_state_strings.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.06
+=== CONT  TestGeneratorsAgreeWithNode/view_mixed.a
+=== CONT  TestGeneratorsAgreeWithNode/view_early_return.a
+=== NAME  TestGeneratorsAgreeWithNode/array_from_view.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/nullish_view_tests.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/view_outer_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/view_counted_items.a
+=== CONT  TestGeneratorsAgreeWithNode/view_body_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/view_early_return.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.03
+=== CONT  TestGeneratorsAgreeWithNode/unused_class.a
+=== CONT  TestGeneratorsAgreeWithNode/uncaught_spread.a
+=== NAME  TestGeneratorsAgreeWithNode/view_mixed.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/uncaught_from.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught_spread.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/unused_class.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/uncaught.a
+=== NAME  TestGeneratorsAgreeWithNode/view_body_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/view_counted_items.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/spread.a
+=== CONT  TestGeneratorsAgreeWithNode/split.a
+=== CONT  TestGeneratorsAgreeWithNode/return_from_loop.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught_from.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/retained_param.a
+=== NAME  TestGeneratorsAgreeWithNode/uncaught.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/split.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/nested_stack_parent.a
+=== NAME  TestGeneratorsAgreeWithNode/spread.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/new_set_plain.a
+=== NAME  TestGeneratorsAgreeWithNode/return_from_loop.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/new_set.a
+=== CONT  TestGeneratorsAgreeWithNode/new_map_throw.a
+=== NAME  TestGeneratorsAgreeWithNode/retained_param.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/new_map_plain.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_stack_parent.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/new_map_entries.a
+=== NAME  TestGeneratorsAgreeWithNode/new_set_plain.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/new_set.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/new_map.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_hoisted.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_throw.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/nested_live_capture.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_plain.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/nested_iterable.a
+=== NAME  TestGeneratorsAgreeWithNode/new_map_entries.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/new_map.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.03
+=== NAME  TestGeneratorsAgreeWithNode/nested_hoisted.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== CONT  TestGeneratorsAgreeWithNode/nested_dead_zone.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_early_break.a
+=== CONT  TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_iterable.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== CONT  TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+=== NAME  TestGeneratorsAgreeWithNode/nested_dead_zone.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nested_early_break.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nested_checker_shapes.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.02
+=== NAME  TestGeneratorsAgreeWithNode/nested_carrier_temporary.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+=== NAME  TestGeneratorsAgreeWithNode/nested_live_capture.a
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.01
+--- PASS: TestGeneratorsAgreeWithNode (0.00s)
+    --- PASS: TestGeneratorsAgreeWithNode/array_from.a (390.19s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_view.a (390.20s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_string_items.a (390.22s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_throw.a (390.24s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_overloads.a (1.85s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_grandchild.a (1.86s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_iterator.a (1.94s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_iterator_entries.a (1.97s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_callee_generic.a (2.33s)
+    --- PASS: TestGeneratorsAgreeWithNode/labeled_exit.a (1.39s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_environment.a (1.12s)
+    --- PASS: TestGeneratorsAgreeWithNode/map_defined_iterator.a (1.64s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_loop.a (1.60s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_forms.a (1.60s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic_map.a (1.62s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic_throw.a (1.66s)
+    --- PASS: TestGeneratorsAgreeWithNode/first_throw.a (1.53s)
+    --- PASS: TestGeneratorsAgreeWithNode/in_place_capture.a (1.93s)
+    --- PASS: TestGeneratorsAgreeWithNode/generic.a (1.80s)
+    --- PASS: TestGeneratorsAgreeWithNode/drop_start.a (1.52s)
+    --- PASS: TestGeneratorsAgreeWithNode/elementwise_view.a (1.60s)
+    --- PASS: TestGeneratorsAgreeWithNode/early_return.a (1.60s)
+    --- PASS: TestGeneratorsAgreeWithNode/first_or_undefined.a (1.74s)
+    --- PASS: TestGeneratorsAgreeWithNode/declared_iterators.a (1.62s)
+    --- PASS: TestGeneratorsAgreeWithNode/consumer_throw.a (1.29s)
+    --- PASS: TestGeneratorsAgreeWithNode/complete.a (1.35s)
+    --- PASS: TestGeneratorsAgreeWithNode/body_throw.a (1.28s)
+    --- PASS: TestGeneratorsAgreeWithNode/break_map.a (1.56s)
+    --- PASS: TestGeneratorsAgreeWithNode/builder_state_strings.a (1.77s)
+    --- PASS: TestGeneratorsAgreeWithNode/array_from_view.a (1.56s)
+    --- PASS: TestGeneratorsAgreeWithNode/nullish_view_tests.a (1.57s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_outer_loop.a (1.40s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_early_return.a (1.28s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_mixed.a (1.84s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught_spread.a (1.40s)
+    --- PASS: TestGeneratorsAgreeWithNode/unused_class.a (1.54s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_body_throw.a (1.69s)
+    --- PASS: TestGeneratorsAgreeWithNode/view_counted_items.a (1.76s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught_from.a (1.55s)
+    --- PASS: TestGeneratorsAgreeWithNode/uncaught.a (1.27s)
+    --- PASS: TestGeneratorsAgreeWithNode/split.a (1.21s)
+    --- PASS: TestGeneratorsAgreeWithNode/spread.a (1.44s)
+    --- PASS: TestGeneratorsAgreeWithNode/return_from_loop.a (1.48s)
+    --- PASS: TestGeneratorsAgreeWithNode/retained_param.a (1.18s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_stack_parent.a (1.33s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_set.a (1.30s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_set_plain.a (1.43s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_throw.a (1.47s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_plain.a (1.45s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map_entries.a (1.68s)
+    --- PASS: TestGeneratorsAgreeWithNode/new_map.a (1.52s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_hoisted.a (1.53s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_iterable.a (1.99s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_dead_zone.a (1.32s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_early_break.a (1.45s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_checker_shapes.a (2.12s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_carrier_temporary.a (1.27s)
+    --- PASS: TestGeneratorsAgreeWithNode/nested_live_capture.a (28.99s)
+PASS
+gate cache: native hits=0 misses=174
+gate cache: node hits=0 misses=118
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	433.495s
