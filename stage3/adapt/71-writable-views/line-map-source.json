@@ -1,0 +1,12 @@
+{
+  "sourceFileLike": "/**\r\n * Subset of properties from SourceFile that are used in multiple utility functions\r\n */\r\nexport interface SourceFileLike {\r\n    readonly text: string;\r\n    /** @internal */\r\n    lineMap?: readonly number[] | undefined;\r\n    /** @internal */\r\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\r\n}",
+  "lineMapSource": "/** @internal */\r\nexport interface LineMapSource {\r\n    readonly text: string;\r\n    lineMap?: readonly number[] | undefined;\r\n}",
+  "starts": {
+    "before": "/** @internal */\r\nexport function getLineStarts(sourceFile: SourceFileLike): readonly number[] {\r\n    return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));\r\n}",
+    "after": "/** @internal */\r\nexport function getLineStarts(sourceFile: LineMapSource): readonly number[] {\r\n    return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));\r\n}"
+  },
+  "position": {
+    "before": "export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter {\r\n    return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);\r\n}",
+    "after": "/** @internal */\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;\r\nexport function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter; // eslint-disable-line @typescript-eslint/unified-signatures\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter {\r\n    return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);\r\n}"
+  }
+}
