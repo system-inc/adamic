@@ -605,31 +605,45 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 		}
 		return failure
 	}
-	// Each arm of a union source the view relates to (Lower's should on #3zex15c): GetPropertyOfType on
-	// a union drops a property only one arm has, so that arm's field under a view's optional one would
-	// go unpaired. An arm the view doesn't relate is one a downcast's check excludes at run time
-	// (First | Second | Third as First | Second never reads Third through the view), as the target's
-	// unrelated arms are skipped below.
-	if present.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, arm := range present.Types() {
-			if viewPairScalar(arm) || f.viewPairFunction(arm) || !f.deriveRelated(arm, viewed) {
-				continue
-			}
-			if failure := follow("a source arm", arm, viewed); failure != nil {
-				return failure
-			}
-		}
+	// The checker's identity is nothing to pair: a write through the view stores only what the source's
+	// slot already holds, which the finder walks (Correctness's crossing on #3zex15c, Language's word:
+	// identity, never assignability, since a wider view is the case this guard exists for).
+	if checker.Checker_isTypeIdenticalTo(f.l.checker, present, viewed) {
+		return nil
 	}
-	// Each union or intersection arm of the target that the source relates to: fields() of a union
-	// gives only the properties every arm shares, so a field only one arm declares would go unwalked
-	// (#3zex15c, Lower's second road).
+	// Arms pair one by one, each source arm with each target arm it relates to, never the cross product
+	// of whole sides: Modifier as Modifier crossed into AccessorKeyword as AbstractKeyword, a pair no
+	// program forms (289 refusals over tsc at 769b0e53). A source arm reaches the view's arm only where
+	// it relates to it: discriminant narrowing, checked predicates, instanceof and checked casts all
+	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
+	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
+	// test added is NotYet (#yqbg9vz). If either lifts, this pairing has to be looked at again.
+	// fields() of a union gives only the properties every arm shares, so without the arms a field only
+	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
+	// drops one only one arm has (Lower's should).
+	sourceArms, targetArms := []*checker.Type{present}, []*checker.Type{viewed}
+	if present.Flags()&checker.TypeFlagsUnion != 0 {
+		sourceArms = present.Types()
+	}
 	if viewed.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		for _, arm := range viewed.Types() {
-			if viewPairScalar(arm) || f.viewPairFunction(arm) || !f.deriveRelated(present, arm) {
+		targetArms = viewed.Types()
+	}
+	if len(sourceArms) > 1 || len(targetArms) > 1 {
+		name := "an arm"
+		if len(sourceArms) > 1 {
+			name = "a source arm"
+		}
+		for _, sourceArm := range sourceArms {
+			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
 				continue
 			}
-			if failure := follow("an arm", present, arm); failure != nil {
-				return failure
+			for _, targetArm := range targetArms {
+				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) || !f.deriveRelated(sourceArm, targetArm) {
+					continue
+				}
+				if failure := follow(name, sourceArm, targetArm); failure != nil {
+					return failure
+				}
 			}
 		}
 	}
