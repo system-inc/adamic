@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--no-checkout",
+    "https://github.com/microsoft/TypeScript.git",
+    "/workspace/scratch/typescript-source"
+  ],
+  "exit_code": 0,
+  "seconds": 208.21673149100002,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
