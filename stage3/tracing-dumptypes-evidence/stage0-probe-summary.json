@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-c",
+    "from pathlib import Path; import json; p=Path(\"/workspace/scratch/dp24r5m-evidence\"); result={}; [(result.__setitem__(name,{\"checker_rejected\":(rows:=[json.loads(l) for l in (p/(name+\"-census-v2.jsonl\")).read_text().splitlines()])[0][\"checker_rejected\"],\"findings\":[f for r in rows for f in r.get(\"findings\",[])],\"lowering_exit\":json.loads((p/(name+\"-lowering-v2.json\")).read_text())[\"exit\"]})) for name in [\"flags\",\"in\"]]; assert all(not x[\"checker_rejected\"] and not x[\"findings\"] and x[\"lowering_exit\"]==0 for x in result.values()); (p/\"stage0-probe-results.json\").write_text(json.dumps(result,indent=2)+\"\\n\"); print(json.dumps(result))"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 0.20634281299999202
+}

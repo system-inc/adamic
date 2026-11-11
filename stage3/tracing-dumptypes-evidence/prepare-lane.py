@@ -1,7 +1,7 @@
 from pathlib import Path
 import shutil,subprocess,json
 S=Path(__file__).resolve().parent;R=Path('/workspace/adamic');base=Path('/workspace/scratch/dp24r5m-base');product=S/'counted-product';tree=product/'tree'
-shutil.copytree(base,tree,symlinks=True,ignore=shutil.ignore_patterns('node_modules','.git'))
+shutil.copytree(base,tree,symlinks=True,ignore=lambda directory,entries: [name for name in ['node_modules','.git'] if name in entries] if Path(directory)==base else [])
 shutil.copytree(base/'.git',tree/'.git',symlinks=True)
 with (S/'instrumented-files.log').open('w') as log:
  p=subprocess.run(['node',S/'instrument.cjs',tree/'built/local'],stdout=log,stderr=subprocess.STDOUT)

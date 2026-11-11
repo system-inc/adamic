@@ -1,0 +1,5 @@
+from pathlib import Path
+import shutil,hashlib,json
+S=Path(__file__).resolve().parent;B=Path('/workspace/scratch/dp24r5m-base');T=Path('/workspace/scratch/dp24r5m-flags-road');T.mkdir();shutil.copytree(B/'src',T/'src')
+f=T/'src/compiler/tracing.ts';t=f.read_bytes().decode();a=t.replace('    getLineAndCharacterOfPosition,\r\n','    getLineAndCharacterOfPosition,\r\n    getObjectFlags,\r\n').replace('    type IntersectionType,\r\n','    type IntersectionType,\r\n    type IntrinsicType,\r\n').replace('const objectFlags = (type as any).objectFlags;','const objectFlags = getObjectFlags(type);').replace('intrinsicName: (type as any).intrinsicName,','intrinsicName: type.flags & TypeFlags.Intrinsic ? (type as IntrinsicType).intrinsicName : undefined,');assert a!=t;f.write_bytes(a.encode())
+files=sorted(p.relative_to(B/'src') for p in (B/'src').rglob('*') if p.is_file());changed=[str(p) for p in files if (B/'src'/p).read_bytes()!=(T/'src'/p).read_bytes()];assert changed==['compiler/tracing.ts'];(S/'source-road-results.json').write_text(json.dumps(dict(sourceFiles=len(files),changed=changed),indent=2)+'\n');print(json.dumps(dict(sourceFiles=len(files),changed=changed)))

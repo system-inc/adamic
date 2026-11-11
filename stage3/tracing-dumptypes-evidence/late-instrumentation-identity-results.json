@@ -1,0 +1,59 @@
+[
+  {
+    "project": "jsFileCompilation/DifferentNamesNotSpecified",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock-late/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/jsFileCompilation/DifferentNamesNotSpecified",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-late-trace-0"
+    ],
+    "exit": 0,
+    "instrumentedExit": 0,
+    "equal": true,
+    "bytes": 7251361,
+    "sha256": "261dd107cee6ef3adcdc7bddb16c6ecc71b108601c4e58ae052713ec3c9c9c28"
+  },
+  {
+    "project": "projectOption/DefaultExcludeOnlyNodeModules",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock-late/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/projectOption/DefaultExcludeOnlyNodeModules",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-late-trace-1"
+    ],
+    "exit": 0,
+    "instrumentedExit": 0,
+    "equal": true,
+    "bytes": 6311693,
+    "sha256": "f6d2ec205a90f13440d8032d062ccdae207d19cf8d5e153985ff41374ded558d"
+  },
+  {
+    "project": "decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule",
+    "command": [
+      "node",
+      "/workspace/scratch/dp24r5m-evidence/stock-late/tsc.js",
+      "--project",
+      "/workspace/scratch/dp24r5m-typescript/tests/cases/projects/decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule",
+      "--noEmit",
+      "--ignoreDeprecations",
+      "6.0",
+      "--generateTrace",
+      "/workspace/scratch/dp24r5m-evidence/stock-late-trace-2"
+    ],
+    "exit": 2,
+    "instrumentedExit": 2,
+    "equal": true,
+    "bytes": 6313556,
+    "sha256": "2f8f141696c6ca654efd86b82c68d2b86a5f508302c68bee08fbc3054b8def4f"
+  }
+]

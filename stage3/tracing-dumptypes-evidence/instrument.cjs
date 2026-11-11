@@ -5,7 +5,7 @@ for(const name of fs.readdirSync(dir).filter(x=>x.endsWith('.js'))){
  const start=text.indexOf('function dumpTypes(types) {');if(start<0)continue;
  const end=text.indexOf('function dumpLegend()',start);assert(end>start);
  const body=text.slice(start,end),needle='const objectFlags = type.objectFlags;';assert.equal(body.split(needle).length,2,name);
- const after=body.replace(needle,needle+'\n      globalThis.__dumpRecord(type, getObjectFlags(type), type.flags & 402431 ? type.intrinsicName : undefined);');
+ const after=body.replace('function dumpTypes(types) {','function dumpTypes(types) { globalThis.__dumpStart(types.length);').replace(needle,needle+'\n      globalThis.__dumpRecord(type, getObjectFlags(type), type.flags & 402431 ? type.intrinsicName : undefined);').replace('intrinsicName: type.intrinsicName,','intrinsicName: globalThis.__dumpIntrinsic(type),');
  fs.writeFileSync(file,text.slice(0,start)+after+text.slice(end));changes.push(name);
 }
 assert(changes.length);console.log(JSON.stringify(changes));

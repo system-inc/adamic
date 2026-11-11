@@ -1,0 +1,7 @@
+interface Type { flags: number }
+function read(type: Type) {
+    return "intrinsicName" in type ? type.intrinsicName : undefined;
+}
+
+const actual = { flags: 2, intrinsicName: "unknown" };
+console.log(read(actual));

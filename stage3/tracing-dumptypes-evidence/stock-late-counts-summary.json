@@ -1,0 +1,1045 @@
+{
+  "intrinsicOwnOutsideFlag": 0,
+  "intrinsicValueOutsideFlag": 0,
+  "descriptorOwnOutsideFlag": 0,
+  "descriptorValueOutsideFlag": 0,
+  "calls": 3,
+  "intrinsicAtDescriptorVisits": 84642,
+  "intrinsicAtDescriptorDifferences": 0,
+  "inAtDescriptorDifferences": 0,
+  "visits": 84642,
+  "processes": 3,
+  "objectOwn": 50995,
+  "intrinsicOwn": 88,
+  "objectRawDifferences": 33693,
+  "maskDifferences": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "nonObjectFlagsValues": 46,
+  "intrinsicDifferences": 0,
+  "inReadDifferences": 0,
+  "nonObjectFlagCounterexamples": [
+    {
+      "id": 9,
+      "flags": 2,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "unknown",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "unknown",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 14,
+      "flags": 32,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "string",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "string",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 15,
+      "flags": 64,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "number",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "number",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 16,
+      "flags": 128,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "bigint",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "bigint",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 17,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 18,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 19,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 20,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 22,
+      "flags": 512,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "symbol",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "symbol",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 23,
+      "flags": 16,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "void",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "void",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28,
+      "flags": 131072,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "object",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "object",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28909,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28991,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28998,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 29008,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 29517,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 9,
+      "flags": 2,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "unknown",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "unknown",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 14,
+      "flags": 32,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "string",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "string",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 15,
+      "flags": 64,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "number",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "number",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 16,
+      "flags": 128,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "bigint",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "bigint",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 17,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 18,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 19,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 20,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 22,
+      "flags": 512,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "symbol",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "symbol",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 23,
+      "flags": 16,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "void",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "void",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28,
+      "flags": 131072,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "object",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "object",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26816,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26898,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26905,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26915,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 9,
+      "flags": 2,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "unknown",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "unknown",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 14,
+      "flags": 32,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "string",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "string",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 15,
+      "flags": 64,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "number",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "number",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 16,
+      "flags": 128,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "bigint",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "bigint",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 17,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 18,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "false",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "false",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 19,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 20,
+      "flags": 8192,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "true",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "true",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 22,
+      "flags": 512,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "symbol",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "symbol",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 23,
+      "flags": 16,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "void",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "void",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 28,
+      "flags": 131072,
+      "objectOwn": true,
+      "objectValue": 52953088,
+      "intrinsicOwn": true,
+      "intrinsicValue": "object",
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": "object",
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26816,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26898,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26905,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    },
+    {
+      "id": 26915,
+      "flags": 16777216,
+      "objectOwn": true,
+      "objectValue": 14680064,
+      "intrinsicOwn": false,
+      "intrinsicValue": {
+        "undefined": true
+      },
+      "objectCandidate": 0,
+      "objectRawEqual": false,
+      "maskEqual": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "nonObjectFlagsValue": true,
+      "intrinsicCandidate": {
+        "undefined": true
+      },
+      "intrinsicEqual": true,
+      "inReadEqual": true
+    }
+  ]
+}

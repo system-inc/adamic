@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/dp24r5m-evidence/overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/dp24r5m-evidence/census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 640.9195433340001
+}
