@@ -1677,8 +1677,11 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	return scanLowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, cycleTypes, ownershipQuery...)
 }
 
-func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
+	// As lowerWithElementKey does: a stop before checkHostMemberWrites judges a deferred host member
+	// write is main's stop at that write.
+	defer func() { err = lowering.hostMemberPending(err) }()
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -1782,6 +1785,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 		return nil, err
 	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
+	// As lowerWithElementKey does: it numbers the program's allocation sites when a host member write
+	// was deferred, so both modes' IR agree, and stops such a write alike in both (#fj0vqtf).
+	if err := lowering.checkHostMemberWrites(); err != nil {
 		return nil, err
 	}
 	if len(lowering.asyncPayloadFailures) > 0 {

@@ -108,8 +108,10 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	return built, nil
 }
 
-func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
+	// A stop before checkHostMemberWrites judges a deferred host member write is main's stop at that write.
+	defer func() { err = lowering.hostMemberPending(err) }()
 	lowering.debug = debug
 	lowering.moduleFormat = moduleFormat
 	lowering.result.ProgramRegion = discovery || plan != nil
@@ -215,6 +217,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		return nil, err
 	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
+	if err := lowering.checkHostMemberWrites(); err != nil {
 		return nil, err
 	}
 	if len(lowering.asyncPayloadFailures) > 0 {
@@ -355,6 +360,13 @@ type lowering struct {
 	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
 	// view is in (view_optional_writes.go).
 	viewOptionalWrites []viewOptionalWrite
+	// hostMemberWrites are the writes to a method a program's interface or type literal declares, each
+	// with main's stop for it, which lowering stores as fields and checkHostMemberWrites judges once
+	// lowering is done (host_member_write.go).
+	hostMemberWrites []hostMemberWrite
+	// hostMemberJudged says checkHostMemberWrites has run, so a stop after it is the program's own
+	// (hostMemberPending).
+	hostMemberJudged bool
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).
