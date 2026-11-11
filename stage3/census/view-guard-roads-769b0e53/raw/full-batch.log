@@ -933,3 +933,7 @@ pair_wrapper_child_exit=0
 render_wrapper_child_exit=0
 push_child_exit=0 sha=df99584e7263b0b41f42089e2567b4e244fa0b33
 checkpoint_wrapper_child_exit=0
+push_child_exit=0 sha=61bbaa25f24949985cf76abb09e7f038eb1986a8
+checkpoint_wrapper_child_exit=0
+{"command": ["/workspace/roads-parent-census", "/workspace/roads-adapted/src/tsc/tsc.ts", "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-base-normal.jsonl"], "cwd": "/workspace/roads-head", "child_exit": 0, "elapsed_seconds": 130.53134750500067, "peak_rss_kib": 1058880, "user_seconds": 121.097574, "system_seconds": 5.430261, "environment": {"LATENT_FULL": "1", "LATENT_ASSERT_NO_OUTPUT": "1", "LATENT_ONLY_FILE": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "GOMAXPROCS": "2", "GOMEMLIMIT": "2560MiB", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript", "LATENT_TIMES": "/workspace/roads-head/stage3/census/view-guard-roads-769b0e53/raw/full-e082ecd054-parent-base-times.jsonl"}}
+{"file": "/workspace/roads-adapted/src/compiler/transformers/utilities.ts", "run": "full-e082ecd054-parent-base", "wrapper_child_exit": 0}
