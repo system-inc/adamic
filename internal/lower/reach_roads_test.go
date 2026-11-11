@@ -567,3 +567,71 @@ func TestFunctionReferenceFieldsAreEveryFunctionField(t *testing.T) {
 		}
 	}
 }
+
+// localFieldFunction is what local_uses.go's localFields says of a field it classes as naming a
+// function: true, with its offset, one where its why says the index is plus one and zero otherwise.
+func localFieldFunction(why string) (int, bool) {
+	if !strings.Contains(why, "function") || !strings.Contains(why, "index") {
+		return 0, false
+	}
+	if strings.Contains(why, "plus one") {
+		return 1, true
+	}
+	return 0, true
+}
+
+// functionReferenceFields and local_uses.go's localFields each class IR fields that hold a function's
+// index, the second by its why. On every field both name, they agree, offset included; each field one
+// names as a function, the other names too, unless it's listed here with why the other doesn't.
+// localFields covers the fields of statements and expressions and the structs they hold, so the
+// fields of a program, class, local, function, export or view contract are functionReferenceFields'
+// alone.
+func TestFunctionFieldTablesAgree(t *testing.T) {
+	t.Parallel()
+	const outside = "not a field of a statement, an expression or a struct one holds, which localFields covers"
+	notInLocalFields := map[string]string{
+		"Local.NestedFunction":           outside,
+		"Local.ConstantClosure":          outside,
+		"Class.Constructor":              outside,
+		"Class.Methods":                  outside,
+		"Accessor.Getter":                outside,
+		"Accessor.Setter":                outside,
+		"ViewContract.Functions":         outside,
+		"Program.MethodTargets":          outside,
+		"Program.StructuralMethodThunks": outside,
+		"Program.AsyncEntry":             outside,
+		"Export.Function":                outside,
+		"Function.ForwardsArguments":     outside,
+		"Function.NestedParent":          outside,
+		"Function.ForwardedNestedParent": outside,
+		"Function.ReferenceParents":      outside,
+	}
+	for field, classed := range localFields {
+		offset, names := localFieldFunction(classed.why)
+		if !names {
+			continue
+		}
+		counted, listed := functionReferenceFields[field]
+		if !listed {
+			t.Errorf("localFields says %s is %q, which functionReferenceFields doesn't count", field, classed.why)
+		} else if counted != offset {
+			t.Errorf("localFields says %s is %q, offset %d, but functionReferenceFields offsets it by %d", field, classed.why, offset, counted)
+		}
+	}
+	for field := range functionReferenceFields {
+		_, excluded := notInLocalFields[field]
+		classed, listed := localFields[field]
+		_, names := localFieldFunction(classed.why)
+		switch {
+		case excluded && listed:
+			t.Errorf("%s is listed here as outside localFields, which classes it as %q", field, classed.why)
+		case !excluded && !(listed && names):
+			t.Errorf("functionReferenceFields counts %s, which localFields doesn't class as a function's index: class it there, or say here why not", field)
+		}
+	}
+	for field := range notInLocalFields {
+		if _, counted := functionReferenceFields[field]; !counted {
+			t.Errorf("%s is listed here, but functionReferenceFields doesn't count it", field)
+		}
+	}
+}
