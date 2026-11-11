@@ -26,7 +26,7 @@ scopes=collections.Counter((s['file'],json.dumps(s.get('call_span'),sort_keys=Tr
 for s in grouped.values():
  if s.get('call_span') and scopes[(s['file'],json.dumps(s['call_span'],sort_keys=True))]>1:s['_comparison_span']=s['argument_span']
 files=json.loads((follow/'variant-files.json').read_text())+['scanner.ts'];result=[];summaries=[]
-for label in ['c']:
+for label in ['c','c-public']:
  raw=[];units=[];status={};go_sites={}
  for name in files:
   stem=name.replace('/','__').removesuffix('.ts');p=follow/label/'raw'/(stem+'.status.json');assert p.exists(),str(p)
