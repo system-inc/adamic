@@ -517,6 +517,10 @@
 `runtime-file:timers_impl.h`
 `timers_impl.h:timers:1`
 `timers_impl.h:timer_next_identity:1`
+# Node's per-duration lists (#a6yb7d1): each live list, owned and freed by the loop thread alone,
+# and the id counter, which only grows.
+`timers_impl.h:timer_lists:1`
+`timers_impl.h:timer_list_next_id:1`
 # Node's delay warnings (#zhgmbwz): the queued text and its length and capacity, written by setTimeout
 # and flushed by the loop thread alone, freed at teardown; the once flags and the hint flag are
 # process-wide, as Node's are, set only on the loop thread. No value graph.
