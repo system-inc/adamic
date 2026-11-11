@@ -605,10 +605,12 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 		}
 		return failure
 	}
-	// The checker's identity is nothing to pair: a write through the view stores only what the source's
+	// One type on both sides is nothing to pair: a write through the view stores only what the source's
 	// slot already holds, which the finder walks (Correctness's crossing on #3zex15c, Language's word:
-	// identity, never assignability, since a wider view is the case this guard exists for).
-	if checker.Checker_isTypeIdenticalTo(f.l.checker, present, viewed) {
+	// identity, never assignability, since a wider view is the case this guard exists for). It's the
+	// same type, not the checker's identity, which doesn't ask whether a member is a method or a field:
+	// class Speaks's speak() is identical to SpeaksField's writable speak, the third road below.
+	if present == viewed {
 		return nil
 	}
 	// Arms pair one by one, each source arm with each target arm it relates to, never the cross product
@@ -637,16 +639,42 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 			if viewPairScalar(sourceArm) || f.viewPairFunction(sourceArm) {
 				continue
 			}
+			paired := false
 			for _, targetArm := range targetArms {
 				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) || !f.deriveRelated(sourceArm, targetArm) {
 					continue
 				}
+				paired = true
 				if failure := follow(name, sourceArm, targetArm); failure != nil {
+					return failure
+				}
+			}
+			// A source arm related to a union target as a whole and to none of its arms is one the
+			// checker relates by splitting its discriminant across the arms ('a' | 'b' against an arm of
+			// 'a' and an arm of 'b'), so a value of it is seen through every arm its discriminant reaches
+			// (Language's must on #3zex15c). Skipping it would leave every field only some arms declare
+			// unwalked, so its members pair with each arm's, never failing on the arm not relating whole.
+			if paired || viewed.Flags()&checker.TypeFlagsUnion == 0 || !f.deriveRelated(sourceArm, viewed) {
+				continue
+			}
+			for _, targetArm := range targetArms {
+				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) {
+					continue
+				}
+				if failure := f.viewPairMembers(f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm), follow); failure != nil {
+					failure.through = append([]viewPairStep{{name: "a split arm", source: sourceArm, target: targetArm}}, failure.through...)
 					return failure
 				}
 			}
 		}
 	}
+	return f.viewPairMembers(present, viewed, follow)
+}
+
+// viewPairMembers pairs what a view of present as viewed reads of its source beneath the top pair: its
+// elements, its index values and its fields, each through follow, and stops a writable view field over
+// a source method or accessor.
+func (f *cycleFinder) viewPairMembers(present, viewed *checker.Type, follow func(string, *checker.Type, *checker.Type) *viewPairFailure) *viewPairFailure {
 	// Element and index values (#3zex15c, Lower's first road): a container's elements are what
 	// reachLinks follows by its type arguments, and a dictionary's values by its index signatures, so
 	// the view pairs them as it pairs fields.
