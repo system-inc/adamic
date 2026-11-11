@@ -1,0 +1,18 @@
+child exit=0 attempt=1 ['git', 'add', '-f', 'stage3/census/sourcefile-like-sites']
+
+child exit=0 attempt=1 ['git', 'write-tree']
+8aa33f31fcd09c14a535867250e264ccc841a6e9
+
+child exit=0 attempt=1 ['git', 'commit-tree', '8aa33f31fcd09c14a535867250e264ccc841a6e9', '-p', 'a22939674e5823e91553b64c464c160a238158ec', '-m', 'baobab census checkpoint piece road2-e-utilities.ts']
+4e3a23dc0499cb309bb0758c1ad21f675bda9336
+
+child exit=0 attempt=1 ['git', 'update-ref', 'refs/heads/typescript/sourcefile-like-sites-checkpoint', '4e3a23dc0499cb309bb0758c1ad21f675bda9336']
+
+child exit=0 attempt=1 ['git', 'push', 'origin', 'refs/heads/typescript/sourcefile-like-sites-checkpoint:refs/heads/typescript/sourcefile-like-sites-checkpoint']
+remote: 
+remote: GitHub found 22 vulnerabilities on system-inc/adamic's default branch (10 high, 11 moderate, 1 low). To find out more, visit:        
+remote:      https://github.com/system-inc/adamic/security/dependabot        
+remote: 
+To https://github.com/system-inc/adamic.git
+   a22939674..4e3a23dc0  typescript/sourcefile-like-sites-checkpoint -> typescript/sourcefile-like-sites-checkpoint
+
