@@ -1,0 +1,62 @@
+[
+  {
+    "mode": "full",
+    "mapping": {
+      "Replace": {
+        "/workspace/adamic/internal/lower/lower.go": "/workspace/tracing-census-build/full/internal_lower_lower.go",
+        "/workspace/adamic/internal/lower/entries_records.go": "/workspace/tracing-census-build/full/internal_lower_entries_records.go",
+        "/workspace/adamic/internal/lower/latent_state.go": "/workspace/tracing-census-build/full/internal_lower_latent_state.go",
+        "/workspace/adamic/internal/lower/statements.go": "/workspace/tracing-census-build/full/internal_lower_statements.go",
+        "/workspace/adamic/internal/lower/latent_relation_overflow.go": "/workspace/tracing-census-build/full/internal_lower_latent_relation_overflow.go",
+        "/workspace/adamic/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/tracing-census-build/full/stage3_census_latent_tool_relation_overflow_test.go",
+        "/workspace/adamic/internal/lower/latent_full.go": "/workspace/tracing-census-build/full/internal_lower_latent_full.go",
+        "/workspace/adamic/internal/lower/latent_units.go": "/workspace/tracing-census-build/full/internal_lower_latent_units.go",
+        "/workspace/adamic/internal/lower/latent_timing.go": "/workspace/tracing-census-build/full/internal_lower_latent_timing.go",
+        "/workspace/adamic/internal/lower/latent_replay.go": "/workspace/tracing-census-build/full/internal_lower_latent_replay.go",
+        "/workspace/adamic/internal/lower/refusals.go": "/workspace/tracing-census-build/full/internal_lower_refusals.go",
+        "/workspace/adamic/internal/load/load.go": "/workspace/tracing-census-build/full/internal_load_load.go",
+        "/workspace/adamic/internal/load/latent_hook.go": "/workspace/tracing-census-build/full/internal_load_latent_hook.go",
+        "/workspace/adamic/internal/lower/expression.go": "/workspace/tracing-census-build/full/internal_lower_expression.go",
+        "/workspace/adamic/internal/lower/functions.go": "/workspace/tracing-census-build/full/internal_lower_functions.go",
+        "/workspace/adamic/internal/lower/generic.go": "/workspace/tracing-census-build/full/internal_lower_generic.go",
+        "/workspace/adamic/internal/lower/locals.go": "/workspace/tracing-census-build/full/internal_lower_locals.go",
+        "/workspace/adamic/internal/lower/latent_hook.go": "/workspace/tracing-census-build/full/internal_lower_latent_hook.go",
+        "/workspace/adamic/stage3/census/latent/tool/main.go": "/workspace/tracing-census-build/full/stage3_census_latent_tool_main.go",
+        "/workspace/adamic/stage3/census/latent/replay/worker/main.go": "/workspace/tracing-census-build/full/stage3_census_latent_replay_worker_main.go",
+        "/workspace/adamic/internal/lower/latent_piece.go": "/workspace/tracing-census-build/full/internal_lower_latent_piece.go",
+        "/workspace/adamic/internal/lower/latent_progress.go": "/workspace/tracing-census-build/full/internal_lower_latent_progress.go",
+        "/workspace/adamic/internal/lower/latent_speculative.go": "/workspace/tracing-census-build/full/internal_lower_latent_speculative.go"
+      }
+    }
+  },
+  {
+    "mode": "entry",
+    "mapping": {
+      "Replace": {
+        "/workspace/adamic/internal/lower/lower.go": "/workspace/tracing-census-build/full/internal_lower_lower.go",
+        "/workspace/adamic/internal/lower/entries_records.go": "/workspace/tracing-census-build/full/internal_lower_entries_records.go",
+        "/workspace/adamic/internal/lower/latent_state.go": "/workspace/tracing-census-build/full/internal_lower_latent_state.go",
+        "/workspace/adamic/internal/lower/statements.go": "/workspace/tracing-census-build/full/internal_lower_statements.go",
+        "/workspace/adamic/internal/lower/latent_relation_overflow.go": "/workspace/tracing-census-build/full/internal_lower_latent_relation_overflow.go",
+        "/workspace/adamic/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/tracing-census-build/full/stage3_census_latent_tool_relation_overflow_test.go",
+        "/workspace/adamic/internal/lower/latent_full.go": "/workspace/tracing-census-build/full/internal_lower_latent_full.go",
+        "/workspace/adamic/internal/lower/latent_units.go": "/workspace/tracing-census-build/full/internal_lower_latent_units.go",
+        "/workspace/adamic/internal/lower/latent_timing.go": "/workspace/tracing-census-build/full/internal_lower_latent_timing.go",
+        "/workspace/adamic/internal/lower/latent_replay.go": "/workspace/tracing-census-build/full/internal_lower_latent_replay.go",
+        "/workspace/adamic/internal/lower/refusals.go": "/workspace/tracing-census-build/full/internal_lower_refusals.go",
+        "/workspace/adamic/internal/load/load.go": "/workspace/tracing-census-build/full/internal_load_load.go",
+        "/workspace/adamic/internal/load/latent_hook.go": "/workspace/tracing-census-build/entry/entry_load_hook.go",
+        "/workspace/adamic/internal/lower/expression.go": "/workspace/tracing-census-build/full/internal_lower_expression.go",
+        "/workspace/adamic/internal/lower/functions.go": "/workspace/tracing-census-build/full/internal_lower_functions.go",
+        "/workspace/adamic/internal/lower/generic.go": "/workspace/tracing-census-build/full/internal_lower_generic.go",
+        "/workspace/adamic/internal/lower/locals.go": "/workspace/tracing-census-build/full/internal_lower_locals.go",
+        "/workspace/adamic/internal/lower/latent_hook.go": "/workspace/tracing-census-build/full/internal_lower_latent_hook.go",
+        "/workspace/adamic/stage3/census/latent/tool/main.go": "/workspace/tracing-census-build/entry/entry_main.go",
+        "/workspace/adamic/stage3/census/latent/replay/worker/main.go": "/workspace/tracing-census-build/full/stage3_census_latent_replay_worker_main.go",
+        "/workspace/adamic/internal/lower/latent_piece.go": "/workspace/tracing-census-build/full/internal_lower_latent_piece.go",
+        "/workspace/adamic/internal/lower/latent_progress.go": "/workspace/tracing-census-build/full/internal_lower_latent_progress.go",
+        "/workspace/adamic/internal/lower/latent_speculative.go": "/workspace/tracing-census-build/full/internal_lower_latent_speculative.go"
+      }
+    }
+  }
+]

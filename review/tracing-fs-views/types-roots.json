@@ -1,0 +1,397 @@
+[
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "exit": 0,
+    "seconds": 3.589375566000058
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/_namespaces/ts.performance.ts",
+    "exit": 0,
+    "seconds": 3.481141940000043
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/_namespaces/ts.ts",
+    "exit": 0,
+    "seconds": 3.389266895999981
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/binder.ts",
+    "exit": 0,
+    "seconds": 3.217072556000062
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/builder.ts",
+    "exit": 0,
+    "seconds": 2.892536977999953
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/builderPublic.ts",
+    "exit": 0,
+    "seconds": 2.901453004000018
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/builderState.ts",
+    "exit": 0,
+    "seconds": 3.2522439970000505
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts",
+    "exit": 0,
+    "seconds": 3.347075080999957
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/checker.ts",
+    "exit": 0,
+    "seconds": 3.5014275620000035
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/commandLineParser.ts",
+    "exit": 0,
+    "seconds": 3.1615949749999572
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/core.ts",
+    "exit": 0,
+    "seconds": 3.199536279999961
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/corePublic.ts",
+    "exit": 0,
+    "seconds": 0.07241194099992754
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/debug.ts",
+    "exit": 0,
+    "seconds": 3.3152713859999494
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/diagnosticInformationMap.generated.ts",
+    "exit": 0,
+    "seconds": 3.22583839899994
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/emitter.ts",
+    "exit": 0,
+    "seconds": 3.1824898979999716
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts",
+    "exit": 0,
+    "seconds": 3.3020067999999583
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts",
+    "exit": 0,
+    "seconds": 3.494015021999985
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts",
+    "exit": 0,
+    "seconds": 3.9878950160000386
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts",
+    "exit": 0,
+    "seconds": 4.1462319820000175
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts",
+    "exit": 0,
+    "seconds": 3.722633948999942
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts",
+    "exit": 0,
+    "seconds": 3.517572795000092
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts",
+    "exit": 0,
+    "seconds": 3.900800075999996
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/nodeFactory.ts",
+    "exit": 0,
+    "seconds": 4.050925511999935
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts",
+    "exit": 0,
+    "seconds": 4.009925333000069
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts",
+    "exit": 0,
+    "seconds": 4.183974216000024
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/utilities.ts",
+    "exit": 0,
+    "seconds": 3.917104411999958
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/factory/utilitiesPublic.ts",
+    "exit": 0,
+    "seconds": 4.02189093700008
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/hostErrors.ts",
+    "exit": 0,
+    "seconds": 0.058292703999995865
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts",
+    "exit": 0,
+    "seconds": 3.6753438739999638
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts",
+    "exit": 0,
+    "seconds": 4.342982814999914
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/parser.ts",
+    "exit": 0,
+    "seconds": 4.368565144999934
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/path.ts",
+    "exit": 0,
+    "seconds": 4.499957325999958
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/performance.ts",
+    "exit": 0,
+    "seconds": 5.287775693999947
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/performanceCore.ts",
+    "exit": 0,
+    "seconds": 5.742277478999995
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/program.ts",
+    "exit": 0,
+    "seconds": 4.645745841000007
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts",
+    "exit": 0,
+    "seconds": 4.554294217000006
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/resolutionCache.ts",
+    "exit": 0,
+    "seconds": 5.557497424999951
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/scanner.ts",
+    "exit": 0,
+    "seconds": 4.721241598999995
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/semver.ts",
+    "exit": 0,
+    "seconds": 4.741059130999929
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/sourcemap.ts",
+    "exit": 0,
+    "seconds": 4.762849680000045
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/symbolWalker.ts",
+    "exit": 0,
+    "seconds": 4.537572339999997
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/sys.ts",
+    "exit": 0,
+    "seconds": 4.423366831999942
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/tracing.ts",
+    "exit": 0,
+    "seconds": 5.027127864000022
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformer.ts",
+    "exit": 0,
+    "seconds": 4.369592535000038
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts",
+    "exit": 0,
+    "seconds": 4.475262412000006
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts",
+    "exit": 0,
+    "seconds": 4.384000861000004
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts",
+    "exit": 0,
+    "seconds": 4.520233096999959
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts",
+    "exit": 0,
+    "seconds": 4.8132763439999735
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts",
+    "exit": 0,
+    "seconds": 4.6008774749999475
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2015.ts",
+    "exit": 0,
+    "seconds": 4.42454287999999
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts",
+    "exit": 0,
+    "seconds": 4.110574773000053
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts",
+    "exit": 0,
+    "seconds": 4.0999454720000585
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2018.ts",
+    "exit": 0,
+    "seconds": 4.806280649999962
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts",
+    "exit": 0,
+    "seconds": 4.465881765999939
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts",
+    "exit": 0,
+    "seconds": 3.750360877999924
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts",
+    "exit": 0,
+    "seconds": 4.200058533999936
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/esDecorators.ts",
+    "exit": 0,
+    "seconds": 4.464783242999943
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts",
+    "exit": 0,
+    "seconds": 4.2703001139999515
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/generators.ts",
+    "exit": 0,
+    "seconds": 3.8820707399999037
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts",
+    "exit": 0,
+    "seconds": 3.8331068539999933
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts",
+    "exit": 0,
+    "seconds": 4.043916015999912
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts",
+    "exit": 0,
+    "seconds": 3.828462922999961
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "exit": 0,
+    "seconds": 4.61009305999994
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/module/module.ts",
+    "exit": 0,
+    "seconds": 4.250963732999935
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/module/system.ts",
+    "exit": 0,
+    "seconds": 3.335802006999984
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts",
+    "exit": 0,
+    "seconds": 3.477912256999957
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts",
+    "exit": 0,
+    "seconds": 4.1198916450000524
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/ts.ts",
+    "exit": 0,
+    "seconds": 4.800061733999996
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts",
+    "exit": 0,
+    "seconds": 4.376108706999958
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/transformers/utilities.ts",
+    "exit": 0,
+    "seconds": 4.107380579000051
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/tsbuild.ts",
+    "exit": 0,
+    "seconds": 4.888756576000105
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts",
+    "exit": 0,
+    "seconds": 5.032810054000038
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/types.ts",
+    "exit": 0,
+    "seconds": 4.291085597999995
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/utilities.ts",
+    "exit": 0,
+    "seconds": 5.032294978999971
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts",
+    "exit": 0,
+    "seconds": 4.53649912000003
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/visitorPublic.ts",
+    "exit": 0,
+    "seconds": 4.398635896999963
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/watch.ts",
+    "exit": 0,
+    "seconds": 3.7560698029999458
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/watchPublic.ts",
+    "exit": 0,
+    "seconds": 3.700267978999932
+  },
+  {
+    "root": "/workspace/tracing-measured-after/src/compiler/watchUtilities.ts",
+    "exit": 0,
+    "seconds": 3.042339360000028
+  }
+]

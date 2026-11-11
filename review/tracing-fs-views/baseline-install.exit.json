@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npm",
+    "ci",
+    "--prefix",
+    "/workspace/tracing-before",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "exit": 0,
+  "seconds": 5.678166395000005
+}
