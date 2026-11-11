@@ -275,14 +275,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
-	// A call to an overload accepted narrow leaves lowering only through overloadResultCheck.
-	narrow := l.narrowOverloadCall(node)
-	if narrow {
-		l.overloadChecked = nil
-	}
+	l.noteOverloadCall(node)
 	value, err := l.value(node)
 	if err == nil {
-		l.checkedOverloadCall(node, narrow)
 		value = l.graphAllocation(value, node)
 		if err := l.noteViewArrayStorage(node, value); err != nil {
 			return nil, err
@@ -1383,6 +1378,7 @@ func boxedSlot(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	l.noteOverloadCall(node)
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if function, isNested := l.nestedGeneratorCallee(callee); isNested {
@@ -1495,6 +1491,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	l.noteOverloadCall(call.AsNode())
 	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
 	if err != nil {
 		return nil, err
@@ -1674,6 +1671,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	l.noteOverloadCall(node)
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does

@@ -15,9 +15,11 @@ import (
 // the narrow overload is checked even where the body would have produced the right value. The check is
 // R-T80's true-side membership (predicateMembership) with the call's result as its argument: a literal
 // is compared, a tag is read, and a tagged or branded member is read through its view from the call on,
-// so a lying tag stops at its first field read wherever the value goes. Every road a call takes goes
-// through overloadResultCheck, and expression's guard (checkedOverloadCall) panics on a call to a narrow
-// overload that left lowering unchecked, so a road nobody listed can't carry the lie.
+// so a lying tag stops at its first field read wherever the value goes. A result no read reaches is
+// erased and counted, never checked, as :146 and :137 read (Adamic's ruling on #z5d0jye): a lie nothing
+// observes changes nothing a program can see. Every road a call takes goes through overloadResultCheck,
+// and checkOverloadResults, after lowering, panics on any call to a narrow overload the lowering lowered
+// that it never settled, so a road nobody listed can't carry the lie.
 
 // narrowOverload is whether overload, a bodyless function declaration of a named overload set, is
 // accepted at its declaration only because each call checks its result: in .ts, a result the
@@ -127,8 +129,9 @@ func (l *lowering) narrowOverloadCall(node *ast.Node) bool {
 // overloadResultCheck is value, the result of call, checked against the narrow overload the call
 // resolves to: through a function that takes the result, panics when it isn't what the overload
 // promises, and hands it back, so it's one road for a direct call, a closure call and an instance's.
-// A call the body proves under the overload's parameters (censusProveOverloadResult) isn't checked.
-// Anything but a call to a narrow overload is value itself.
+// A call the body proves under the overload's parameters (censusProveOverloadResult) isn't checked, and
+// a result no read reaches (overloadResultDiscarded) is erased, each counted. Anything but a call to a
+// narrow overload is value itself.
 func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	if !l.narrowOverloadCall(node) {
 		return value, nil
@@ -136,8 +139,16 @@ func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.
 	resolved := l.checker.GetResolvedSignature(node)
 	overload := resolved.Declaration()
 	implementation := l.censusImplementation(overload)
-	l.overloadChecked = node
+	if l.overloadCalls == nil {
+		l.overloadCalls = map[*ast.Node]bool{}
+	}
+	l.overloadCalls[node] = true
 	if l.censusProveOverloadResult(implementation, overload) {
+		l.result.OverloadResultChecks.Proven++
+		return value, nil
+	}
+	if l.overloadResultDiscarded(node) {
+		l.result.OverloadResultChecks.Erased++
 		return value, nil
 	}
 	if value.Type() == 0 {
@@ -169,14 +180,60 @@ func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.
 	message := fmt.Sprintf("overload %d of %s result at %s: expected %s", ordinal, name, l.program.Where(node), l.checker.TypeToString(promised))
 	body := append(append([]ir.Statement{}, setup...), ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}, ir.Return{Value: read})
 	l.result.Functions[check].Body = body
+	l.result.OverloadResultChecks.Checked++
 	return ir.Call{Function: check, Arguments: []ir.Expression{value}, Returns: value.Type()}, nil
 }
 
-// checkedOverloadCall is the guard behind overloadResultCheck: node, a call that resolves to a narrow
-// overload, lowered to value without a road through overloadResultCheck, is a compiler bug, since
-// censusOverload accepted that overload's declaration only because every call to it is checked.
-func (l *lowering) checkedOverloadCall(node *ast.Node, narrow bool) {
-	if narrow && l.overloadChecked != node {
-		panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
+// overloadResultDiscarded is whether no read reaches node's result: a call statement, the left side of
+// a comma, a void operand, or an arrow's expression body when the arrow's own result is void. A
+// conditional or any other parent reads it, so it's checked.
+func (l *lowering) overloadResultDiscarded(node *ast.Node) bool {
+	child, parent := node, node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		child, parent = parent, parent.Parent
+	}
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindExpressionStatement, ast.KindVoidExpression:
+		return true
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		return binary.OperatorToken.Kind == ast.KindCommaToken && binary.Left == child
+	case ast.KindArrowFunction:
+		if parent.Body() != child {
+			return false
+		}
+		returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(parent))
+		return returns != nil && returns.Flags()&checker.TypeFlagsVoid != 0
+	}
+	return false
+}
+
+// noteOverloadCall records node, a call, a new or a tagged template the lowering is lowering, when it
+// resolves to a narrow overload, so checkOverloadResults can ask after lowering whether it was settled.
+// expression, callOrMethod, call, callFunction and callClosure note it, so a road entering at any of them
+// is seen, a call statement's included.
+func (l *lowering) noteOverloadCall(node *ast.Node) {
+	if !l.narrowOverloadCall(node) {
+		return
+	}
+	if l.overloadCalls == nil {
+		l.overloadCalls = map[*ast.Node]bool{}
+	}
+	if _, settled := l.overloadCalls[node]; !settled {
+		l.overloadCalls[node] = false
+	}
+}
+
+// checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done: a call to a
+// narrow overload the lowering lowered but never settled, checked, proven or erased, is a compiler bug,
+// since censusOverload accepted that overload's declaration only because every call to it is settled.
+func (l *lowering) checkOverloadResults() {
+	for node, settled := range l.overloadCalls {
+		if !settled {
+			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
+		}
 	}
 }

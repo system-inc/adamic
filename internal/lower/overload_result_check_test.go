@@ -93,6 +93,13 @@ func TestOverloadLiteralResultIsChecked(t *testing.T) {
 func TestOverloadLiteralResultLieStopsAtTheCall(t *testing.T) {
 	t.Parallel()
 	overloadCheckStops(t, strings.Replace(overloadLiteralShape, "BODY", "false", 1), "", "overload 1 of canDecorate result at ", ": expected true")
+	program, err := lowerSourceAs(t, strings.Replace(overloadLiteralShape, "BODY", "false", 1), ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if counts := program.OverloadResultChecks; counts.Checked != 1 || counts.Erased != 0 {
+		t.Fatalf("want the one read result checked, got %+v", counts)
+	}
 }
 
 // The check follows the promise, not the path: a call resolving to the narrow overload is checked even
@@ -271,6 +278,56 @@ func TestOverloadNarrowAsAValueStops(t *testing.T) {
 				t.Fatalf("want the stop %q where the overload set is read as a value, got %v", probe.stop, err)
 			}
 		})
+	}
+}
+
+// A result no read reaches is erased and counted, never checked (Adamic's ruling on #z5d0jye, reading
+// :127 as :146 and :137 do): a call statement, a comma's left side and a void operand each run the lying
+// body and agree with Node, and the program counts three erasures and no check. Mutant: the erasure
+// dropped, and each stops at exit 70 where Node prints.
+func TestOverloadDiscardedResultIsErased(t *testing.T) {
+	t.Parallel()
+	source := strings.Replace(overloadLiteralShape, "BODY", "false", 1)
+	source = source[:strings.Index(source, "const yes")] + `canDecorate(true, declaration);
+const after = (canDecorate(true, declaration), 2);
+void canDecorate(true, declaration);
+console.log(String(after));
+`
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 2, as Node prints", code, stdout, stderr)
+	}
+	if counts := program.OverloadResultChecks; counts.Erased != 3 || counts.Checked != 0 {
+		t.Fatalf("want 3 results erased and none checked, got %+v", counts)
+	}
+}
+
+// A discarded result is released as what the implementation hands back, never as what the overload
+// promises (Adamic's condition): the overload promises a Box, the implementation returns a union holding
+// a number and undefined, and the lying call statement's number is released as that union, natively under
+// the sanitizers. Mutant: the discarded result narrowed to the overload's object before its release, and
+// the release reads a number as a reference.
+func TestOverloadDiscardedResultKeepsTheImplementationsRepresentation(t *testing.T) {
+	t.Parallel()
+	source := `interface Box { readonly kind: "box"; readonly size: number }
+function pick(x: 0): Box;
+function pick(x: number): Box | number | undefined;
+function pick(x: number): Box | number | undefined {
+    if (x === 0) {
+        return 7;
+    }
+    return x === 1 ? undefined : { kind: "box", size: x };
+}
+pick(0);
+pick(1);
+console.log("done");
+`
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "done\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want done, as Node prints", code, stdout, stderr)
+	}
+	if counts := program.OverloadResultChecks; counts.Erased != 1 {
+		t.Fatalf("want overload 1's discarded result erased once, got %+v", counts)
 	}
 }
 

@@ -314,8 +314,10 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 			}
 			if l.narrowOverload(overload) {
 				checked, err := l.overloadResultCheck(call.AsNode(), value)
-				if err != nil {
-					return nil, err
+				if err != nil || l.overloadResultDiscarded(call.AsNode()) {
+					// A result no read reaches keeps the implementation's representation, the one its
+					// release reads it as (Adamic's condition on #z5d0jye).
+					return checked, err
 				}
 				return l.censusOverloadFit(call, checked)
 			}
