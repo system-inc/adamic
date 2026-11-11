@@ -13,12 +13,13 @@ Then `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestParameterDefaul
 
 # Mutant (b): unknown, any and open types read as holding no null
 
-Replace
+In internal/lower/expression.go's mayHoldNull, the one condition the parameter default and the destructured
+default share, replace
 
-		holdsNull := l.includesNull(concreteType) || concreteType.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
+	return l.includesNull(concrete) || concrete.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
 
 with
 
-		holdsNull := l.includesNull(concreteType)
+	return l.includesNull(concrete)
 
 Then `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestParameterDefaultNullAgrees/unknown_param.a' -count=1 -v`: unknown_param.a goes red, since f(null) takes the default (Compiler's must on #1mw3c4x). If unknown_param.a doesn't lower at all, it stops before the default, and this mutant has no witness: say so.
