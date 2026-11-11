@@ -10,14 +10,14 @@ function plan(text){
  assert.equal(ts.version,'6.0.3');const selected=owners(text);const states=selected.map(o=>o.text===o.pin.before?'before':o.text===o.pin.after?'after':undefined);
  assert(states.every(Boolean),'unreviewed pop or popAll');assert(states.every(s=>s===states[0]),'half-adapted owners');
  for(const [i,o] of selected.entries())assert.equal(crypto.createHash('sha256').update(o.text).digest('hex'),o.pin[states[i]+'Sha256']);
- assert.equal(pins[0].after,pins[0].before.replace('eventStack.length--;','eventStack.splice(eventStack.length - 1);'));
+ assert.equal(pins[0].after,pins[0].before.replace('eventStack.length--;','if (eventStack.length === 0) throw new RangeError("Invalid array length");\r\n        eventStack.splice(eventStack.length - 1);'));
  assert.equal(pins[1].after,pins[1].before.replace('eventStack.length = 0;','eventStack.splice(0);'));
  if(states[0]==='after')return text;
  let changed=text;for(const o of selected.sort((a,b)=>b.start-a.start))changed=changed.slice(0,o.start)+o.pin.after+changed.slice(o.end);
  for(const removeComments of [true,false]){
   const emit=s=>ts.transpileModule(s,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;
   const before=emit(text);assert.equal(before.split('eventStack.length--;').length-1,1);assert.equal(before.split('eventStack.length = 0;').length-1,1);
-  assert.equal(emit(changed),before.replace('eventStack.length--;','eventStack.splice(eventStack.length - 1);').replace('eventStack.length = 0;','eventStack.splice(0);'),'unreviewed JavaScript change');
+  assert.equal(emit(changed),before.replace(/^([ \t]*)eventStack\.length--;/m,(_,indent)=>indent+'if (eventStack.length === 0)\n'+indent+'    throw new RangeError("Invalid array length");\n'+indent+'eventStack.splice(eventStack.length - 1);').replace('eventStack.length = 0;','eventStack.splice(0);'),'unreviewed JavaScript change');
  }
  for(const stripInternal of [true,false]){
   const emit=s=>ts.transpileDeclaration(s,{fileName:'tracing.ts',compilerOptions:{stripInternal}}).outputText;

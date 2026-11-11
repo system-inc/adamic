@@ -2,9 +2,9 @@
   {
     "owner": "pop",
     "before": "export function pop(results?: Args): void {\r\n        Debug.assert(eventStack.length > 0);\r\n        writeStackEvent(eventStack.length - 1, 1000 * timestamp(), results);\r\n        eventStack.length--;\r\n    }",
-    "after": "export function pop(results?: Args): void {\r\n        Debug.assert(eventStack.length > 0);\r\n        writeStackEvent(eventStack.length - 1, 1000 * timestamp(), results);\r\n        eventStack.splice(eventStack.length - 1);\r\n    }",
+    "after": "export function pop(results?: Args): void {\r\n        Debug.assert(eventStack.length > 0);\r\n        writeStackEvent(eventStack.length - 1, 1000 * timestamp(), results);\r\n        if (eventStack.length === 0) throw new RangeError(\"Invalid array length\");\r\n        eventStack.splice(eventStack.length - 1);\r\n    }",
     "beforeSha256": "53d5f5598ae01da05cd3367243407e7cdb1bf33a55ad3fb4309a1cc7e5dc0401",
-    "afterSha256": "f1ffb3e03574d82709b1ede1aef3e730b04bfe1a8876ae47613cca22c89b654d"
+    "afterSha256": "c6036b392b512c884a191fcd01f456301abff6407cd064e3c1455ee19d26ee66"
   },
   {
     "owner": "popAll",

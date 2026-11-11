@@ -5,14 +5,22 @@ Only pop and popAll are owned here, pinned whole before and after with exact CRL
 bytes and SHA-256 hashes. Unknown owners, partial application and declaration
 changes are refused. A second application writes nothing.
 
-pop replaces eventStack.length-- with eventStack.splice(eventStack.length - 1).
-popAll replaces eventStack.length = 0 with eventStack.splice(0).
-On an empty stack, pop's Debug.assert throws when enabled. With assertions off,
-writeStackEvent(-1, ...) destructures eventStack[-1], which is undefined, and
-throws TypeError before the decrement. The negative length RangeError cannot be
-reached. The stack is a private ordinary array initialized in this module.
+pop replaces eventStack.length-- with an explicit empty-stack RangeError guard
+followed by eventStack.splice(eventStack.length - 1). popAll replaces
+eventStack.length = 0 with eventStack.splice(0).
 
-Adaptation 32 owns indexed reads, including eventStack[index] in writeStackEvent.
+An empty pop at entry throws from Debug.assert, or from writeStackEvent(-1, ...)
+when assertions are explicitly stubbed off. However, while writing an event,
+JSON.stringify(args) can invoke a getter that reenters popAll and empties the
+stack. The original decrement then executes at length 0 and throws RangeError.
+The explicit guard preserves that reachable class and "Invalid array length"
+message. The reentrant Node witness demonstrates the original unguarded splice
+would return normally, and requires the guarded adaptation to throw identically.
+
+Adaptation 20 owns the optional args annotation in the eventStack element type.
+32 owns indexed reads, including eventStack[index] in writeStackEvent, and the
+private TraceRecord.typesPath annotation. 40 changes erased any annotations.
+The typeCatalog declaration has no whole-owner pin in these adaptations.
 47 validates startTracing's require("fs") producer; 62 and 63 own dumpTypes and
 dumpLegend calls, 65 owns builtin declarations, and 99-correctness-tracing-assert
 pins stopTracing whole. None pins pop or popAll whole. This ownership audit is
