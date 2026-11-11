@@ -1,0 +1,70 @@
+// A generator's direct call handed into the one-read Iterable<T> parameter of a function declared
+// inside the same parent, a nested callee, whose call is a CallClosure (#qk8rztp S3c-1): from the
+// parent, through its binding; from a sibling, through the group's own closure; from an arrow in the
+// parent, through a closure made for the call (Language's road 4); and from the callee's own
+// recursion, handed a fresh generator each time (road 2's lowering half). A Map's values() feeds the
+// same parameter at another call, so its for-of dispatches on what it holds. The nested callee
+// shadows a module function of the same name (road 3's lowering half), whose own call stays outside.
+// The view proof takes the callee's parameter from its calls' edges alone, since nothing but a direct
+// call can run it (onlyCalledDirectly). One for-of returns from inside its loop, which finishes the
+// generator, so the line logged after that yield never prints. It yields objects of built strings,
+// as tsc's elaborateElementwise is handed, so a missed release or an extra one is a real leak or a
+// use after free.
+interface Item {
+    readonly name: string;
+    readonly weight: number;
+}
+function weigh(label: string): string {
+    return `module ${label}`;
+}
+function report(base: number, tag: string): string {
+    function* items(count: number): Generator<Item, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield { name: `${tag}${String(base + index)}`, weight: base * (index + 1) };
+            console.log(`${tag} after ${String(index)}`);
+        }
+    }
+    // Shadows the module's weigh: a call by this name inside report is this one.
+    function weigh(entries: Iterable<Item>): string {
+        let names = '';
+        let total = 0;
+        for (const entry of entries) {
+            names += `${entry.name};`;
+            total += entry.weight;
+        }
+        return `${names}=${String(total)}`;
+    }
+    function heaviest(entries: Iterable<Item>): string {
+        for (const entry of entries) {
+            if (entry.weight > base) {
+                return entry.name;
+            }
+        }
+        return 'none';
+    }
+    function deeper(entries: Iterable<Item>, depth: number): string {
+        let names = '';
+        for (const entry of entries) {
+            names += entry.name;
+        }
+        return depth > 0 ? `${names}|${deeper(items(depth), depth - 1)}` : names;
+    }
+    function fromSibling(): string {
+        return weigh(items(2));
+    }
+    const viaArrow = (): string => heaviest(items(3));
+    const stock = new Map<string, Item>();
+    stock.set(`${tag}-a`, { name: `${tag}stock`, weight: base + 1 });
+    stock.set(`${tag}-b`, { name: `${tag}spare`, weight: 1 });
+    const parts: string[] = [];
+    parts.push(weigh(items(3)));
+    parts.push(fromSibling());
+    parts.push(viaArrow());
+    parts.push(heaviest(stock.values()));
+    parts.push(weigh(stock.values()));
+    parts.push(deeper(items(1), 2));
+    return parts.join(' / ');
+}
+console.log(report(2, `r${String(1)}`));
+console.log(report(0, 'z'));
+console.log(weigh(`w${String(3)}`));

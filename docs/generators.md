@@ -78,8 +78,17 @@ don't lower either.
 A generator's direct call can also be passed straight into such a parameter, the argument for an
 `Iterable<T>` or `IterableIterator<T>` parameter of a function the call names by its one body: a
 module function, an overload set judged at its implementation, or a generic instance (#qk8rztp
-S2c-1). The generator crosses into the parameter through `ir.IterableOf`, the one door from a
-generator to an object's slot. The parameter's only use, counted in the lowered program, must be one
+S2c-1), and any of those declared by name directly in a function's body, a nested callee, called by
+name from its parent, a sibling, an arrow or a function nested deeper, or its own recursion (S3c-1).
+A nested callee's call is a `CallClosure`, admitted only where its closure targets are exactly that
+one function and never unknown, the same one body read through the closure graph, which is also
+where the void rules' one-read exemption reaches it. The view proof feeds a nested callee's
+parameter from its calls alone only while nothing but a direct call can run it
+(`onlyCalledDirectly`, view_flow.go): a callee also passed as a value, as a callback or held in a
+local, keeps its parameter unknown, and its view stops as of unproven origin. That exemption is the
+view proof's alone; the graph regions, shapes and the rest read the shared graph unchanged. The
+generator crosses into the parameter through `ir.IterableOf`, the one door from a generator to an
+object's slot. The parameter's only use, counted in the lowered program, must be one
 for-of over it, in a function that doesn't suspend, read `arguments`, assign it or let a closure
 capture it. The parameter may be typed `Iterable<T> | undefined` or `IterableIterator<T> | undefined`
 too, as tsc's `firstOrUndefinedIterator`'s is, when it is held as an object, whose undefined is a

@@ -1,0 +1,27 @@
+// A nested callee declared as an overload set (#qk8rztp S3c-1, Language's road 6): two signatures
+// and the implementation, all in the parent's body, so its call is judged at the implementation's
+// one body, as a module overload set's is. A generator's call goes in from the parent and from a
+// sibling, and a Set's values() at a third call.
+function measure(scale: number, label: string): string {
+    function* steps(count: number): Generator<number, void, undefined> {
+        for (let index = 1; index <= count; index++) {
+            yield index * scale;
+        }
+    }
+    function fold(values: Iterable<number>, mode: 'sum'): number;
+    function fold(values: Iterable<number>, mode: 'max'): number;
+    function fold(values: Iterable<number>, mode: 'sum' | 'max'): number {
+        let result = 0;
+        for (const value of values) {
+            result = mode === 'sum' ? result + value : value > result ? value : result;
+        }
+        return result;
+    }
+    function largest(): number {
+        return fold(steps(4), 'max');
+    }
+    const seen = new Set<number>([scale, scale * 10]);
+    return `${label} ${String(fold(steps(3), 'sum'))} ${String(largest())} ${String(fold(seen.values(), 'sum'))}`;
+}
+console.log(measure(2, `m${String(1)}`));
+console.log(measure(-3, 'n'));

@@ -1,0 +1,28 @@
+// A nested callee called from a grandchild (#qk8rztp S3c-1, Language's road 5): inner, declared
+// inside a sibling of the callee, calls the callee and the generator by name. Neither is in inner's
+// own group, so each call goes through a closure made for it as a reference is made, whose targets
+// are still exactly one function, and the callee's parameter is still fed by its calls alone. The
+// parent also calls the callee itself, so one parameter is handed generators from two depths.
+function tally(scale: number, label: string): string {
+    function* counted(limit: number): Generator<number, void, undefined> {
+        for (let index = 1; index <= limit; index++) {
+            yield index * scale;
+        }
+    }
+    function sum(values: Iterable<number>): string {
+        let total = 0;
+        for (const value of values) {
+            total += value;
+        }
+        return `${label}=${String(total)}`;
+    }
+    function outer(limit: number): string {
+        function inner(): string {
+            return sum(counted(limit + 1));
+        }
+        return `${inner()},${inner()}`;
+    }
+    return `${sum(counted(2))} ${outer(3)}`;
+}
+console.log(tally(3, `t${String(1)}`));
+console.log(tally(-2, 'u'));

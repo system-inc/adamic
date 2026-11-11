@@ -1,0 +1,42 @@
+// A generic nested callee (#qk8rztp S3c-1, Language's road 7): declared by name in the parent's body
+// with a type parameter of its own, so each call instantiates it where it's made, and its call is a
+// closure made for that instance, whose targets are still exactly the one instance's body. The
+// instance at number is handed a generator's call from the parent and from a sibling; the instance at
+// Entry, a Map's values() and another generator's call.
+interface Entry {
+    readonly key: string;
+    readonly size: number;
+}
+function survey(offset: number, label: string): string {
+    function* numbers(count: number): Generator<number, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield offset + index;
+        }
+    }
+    function* entries(count: number): Generator<Entry, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield { key: `${label}${String(index)}`, size: offset * index };
+        }
+    }
+    function render<T>(items: Iterable<T>, show: (item: T) => string): string {
+        let out = '';
+        for (const item of items) {
+            out += `[${show(item)}]`;
+        }
+        return out;
+    }
+    function fromSibling(): string {
+        return render(numbers(2), (value: number): string => String(value * 2));
+    }
+    const table = new Map<string, Entry>();
+    table.set(`${label}-x`, { key: `${label}x`, size: 7 });
+    const shown = (entry: Entry): string => `${entry.key}:${String(entry.size)}`;
+    return [
+        render(numbers(3), (value: number): string => String(value)),
+        fromSibling(),
+        render(entries(2), shown),
+        render(table.values(), shown),
+    ].join(' ');
+}
+console.log(survey(4, `s${String(1)}`));
+console.log(survey(-1, 't'));
