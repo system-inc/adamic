@@ -1,0 +1,11 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/meta-spread-tip-adamic",
+    "./cmd/adamic"
+  ],
+  "child_exit": 0,
+  "seconds": 20.827789414999643
+}

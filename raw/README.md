@@ -24,3 +24,17 @@ control observing cat,ph,ts,pid,tid. The initial reconciliation helper assumed
 a top-level counts field that the version-1 manifest does not contain. It was
 corrected to sum each unit expectation and independently compare the unchanged
 platform counts; final reconciliation passes. No lane expectation was altered.
+
+The later catalog-routing addition is now fully validated. Catalog-prefixed
+results are the current combined measurements: 398 passing shards, 0 starts,
+control lengths 3 before and 0 after reset, populated/empty real-bundle state
+witnesses, both restoring mutants, and current-tip census/type checks. The
+metadata-only commit was already pushed when the addition arrived. The complete
+combined tree is checkpointed pending the user's branch-history choice; no
+force-push is used.
+
+The raw combined source patch contains canonical diff context lines consisting
+of one space. A blanket whitespace check reports those preserved patch bytes;
+they are not source whitespace defects. The actual adaptation/ledger diff
+passes its whitespace check. Handwritten raw tooling and JSON are checked
+separately, without rewriting the raw patch or logs.

@@ -1,0 +1,20 @@
+--- before/src/compiler/tracing.ts
++++ after/src/compiler/tracing.ts
+@@ -69,7 +69,7 @@
+         }
+ 
+         mode = tracingMode;
+-        typeCatalog.length = 0;
++        typeCatalog.splice(0);
+ 
+         if (legendPath === undefined) {
+             legendPath = combinePaths(traceDir, "legend.json");
+@@ -100,7 +100,7 @@
+         fs.writeSync(
+             traceFd,
+             "[\n"
+-                + [{ name: "process_name", args: { name: "tsc" }, ...meta }, { name: "thread_name", args: { name: "Main" }, ...meta }, { name: "TracingStartedInBrowser", ...meta, cat: "disabled-by-default-devtools.timeline" }]
++                + [{ name: "process_name", args: { name: "tsc" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "thread_name", args: { name: "Main" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "TracingStartedInBrowser", cat: "disabled-by-default-devtools.timeline", ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }]
+                     .map(v => JSON.stringify(v)).join(",\n"),
+         );
+     }

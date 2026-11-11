@@ -1,0 +1,97 @@
+{
+  "base": "ddeadda2427332d88918ff5a53258c8eb5cd8a34",
+  "tree": "001810beb6a1517b2c0b9f991b09aa2f4cc4c735",
+  "checkpoint": "5e975bbb86f7ee1b3ba225313cacb8360a6358f5",
+  "changedPaths": [
+    "stage3/adapt/47-host-errors/PROOF.md",
+    "stage3/adapt/47-host-errors/README.md",
+    "stage3/adapt/47-host-errors/adapt.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-census.json",
+    "stage3/adapt/47-host-errors/meta-spread-emission.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-emission.json",
+    "stage3/adapt/47-host-errors/meta-spread-lane.json",
+    "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-pin-witness.json",
+    "stage3/adapt/47-host-errors/meta-spread-pins.json",
+    "stage3/adapt/47-host-errors/meta-spread-witness.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-witness.json",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "fileHashes": {
+    "stage3/adapt/47-host-errors/PROOF.md": "2d6c5ceddb6a6ea8f75541f4cb720c0fe7658988c0c0fdd857ffbda6908e99ec",
+    "stage3/adapt/47-host-errors/README.md": "7e97ac544efef521e710c3d153b056ae9b73e5e480a2e2dadfeac19b817dbacb",
+    "stage3/adapt/47-host-errors/adapt.cjs": "cad40df1e0b5a86608f2f79a3d98a43edc86562f6bfb79a929d32e467c89db06",
+    "stage3/adapt/47-host-errors/meta-spread-census.json": "d96dcf895bf4e952d98450966b5004bbe9657da5a81870afa19b610336babc52",
+    "stage3/adapt/47-host-errors/meta-spread-emission.cjs": "ec4bf298fc82f993ceddfb13d28fc8ccea12ac1ad80a071520b80058fb41296c",
+    "stage3/adapt/47-host-errors/meta-spread-emission.json": "193a11aa4f315f946fe91e8b3150146d5f01c08a02741934fbf5be6b4499fd90",
+    "stage3/adapt/47-host-errors/meta-spread-lane.json": "4a23e2dab0a284d1811cd6556457fd43cc35a614d82a59f1a9add9bad6c1fafe",
+    "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs": "83ee7f1303d35f129e3747342437033054d23cb34e5358908d6a57242a10529d",
+    "stage3/adapt/47-host-errors/meta-spread-pin-witness.json": "56fc5692015aa2c6850fb39151baa6e6b12ffa35447ba1ae040f2598550ab535",
+    "stage3/adapt/47-host-errors/meta-spread-pins.json": "011a18495fc467c8ac3d8d26bafdbebe2f7048f792f86dd0af164e1b07c2eb3a",
+    "stage3/adapt/47-host-errors/meta-spread-witness.cjs": "5bc2bded11068b988576451265482c52fea49c60baa8ffafef9f978b2778708b",
+    "stage3/adapt/47-host-errors/meta-spread-witness.json": "d9fbdcb17feb2ff9f94a7501e93b7beafd1986cc3fbc5b31164024323d57bd4f",
+    "stage3/upstream/LEDGER.md": "c03028980a22bb2b5248b63520c07f2b1984003ff40185b315b95e88ffc327e8"
+  },
+  "allChangesUnder47AndLedger": true,
+  "mainChangesInheritedWithoutModification": true,
+  "publicationChoicePending": true,
+  "gitChildren": [
+    {
+      "command": [
+        "git",
+        "read-tree",
+        "ddeadda2427332d88918ff5a53258c8eb5cd8a34"
+      ],
+      "child_exit": 0
+    },
+    {
+      "command": [
+        "git",
+        "add",
+        "--",
+        "stage3/adapt/47-host-errors/PROOF.md",
+        "stage3/adapt/47-host-errors/README.md",
+        "stage3/adapt/47-host-errors/adapt.cjs",
+        "stage3/adapt/47-host-errors/meta-spread-census.json",
+        "stage3/adapt/47-host-errors/meta-spread-emission.cjs",
+        "stage3/adapt/47-host-errors/meta-spread-emission.json",
+        "stage3/adapt/47-host-errors/meta-spread-lane.json",
+        "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+        "stage3/adapt/47-host-errors/meta-spread-pin-witness.json",
+        "stage3/adapt/47-host-errors/meta-spread-pins.json",
+        "stage3/adapt/47-host-errors/meta-spread-witness.cjs",
+        "stage3/adapt/47-host-errors/meta-spread-witness.json",
+        "stage3/upstream/LEDGER.md"
+      ],
+      "child_exit": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "child_exit": 0
+    },
+    {
+      "command": [
+        "git",
+        "write-tree"
+      ],
+      "child_exit": 0
+    },
+    {
+      "command": [
+        "git",
+        "commit-tree",
+        "001810beb6a1517b2c0b9f991b09aa2f4cc4c735",
+        "-p",
+        "f2f0e635b04e5130001441fe4b73dee216491b3d",
+        "-p",
+        "ddeadda2427332d88918ff5a53258c8eb5cd8a34"
+      ],
+      "child_exit": 0
+    }
+  ]
+}

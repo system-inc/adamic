@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/measure_shards.py",
+    "/workspace/scratch/meta-spread-catalog-lane",
+    "--concurrency",
+    "2"
+  ],
+  "child_exit": 0,
+  "seconds": 931.5995388329993
+}

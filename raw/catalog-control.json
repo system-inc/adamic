@@ -1,0 +1,75 @@
+{
+  "starts": 1,
+  "metaObservations": 1,
+  "keys": [
+    "cat",
+    "ph",
+    "ts",
+    "pid",
+    "tid"
+  ],
+  "catalogLengthBefore": 3,
+  "catalogLengthAfter": 0,
+  "actual": [
+    {
+      "event": "load",
+      "file": "/workspace/scratch/meta-spread-catalog-counting/built/local/typescript.js",
+      "pid": 40052
+    },
+    {
+      "event": "start",
+      "run": "40052:1",
+      "file": "/workspace/scratch/meta-spread-catalog-counting/built/local/typescript.js",
+      "pid": 40052
+    },
+    {
+      "event": "catalogBefore",
+      "run": "40052:1",
+      "file": "/workspace/scratch/meta-spread-catalog-counting/built/local/typescript.js",
+      "pid": 40052,
+      "length": 3
+    },
+    {
+      "event": "catalogAfter",
+      "run": "40052:1",
+      "file": "/workspace/scratch/meta-spread-catalog-counting/built/local/typescript.js",
+      "pid": 40052,
+      "length": 0
+    },
+    {
+      "event": "meta",
+      "run": "40052:1",
+      "file": "/workspace/scratch/meta-spread-catalog-counting/built/local/typescript.js",
+      "pid": 40052,
+      "keys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "ownKeys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "enumerableKeys": [
+        "cat",
+        "ph",
+        "ts",
+        "pid",
+        "tid"
+      ],
+      "values": {
+        "cat": "__metadata",
+        "ph": "M",
+        "ts": 187292.41400000002,
+        "pid": 1,
+        "tid": 1
+      }
+    }
+  ],
+  "passed": true
+}

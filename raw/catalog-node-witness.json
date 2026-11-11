@@ -1,0 +1,64 @@
+{
+  "node": "v24.19.0",
+  "mode": "server",
+  "fixedTimestamp": 123.25,
+  "timestampNormalized": false,
+  "timestampCalls": [
+    1,
+    1
+  ],
+  "traceBytesIdentical": true,
+  "traceSha256": "9a18cde59efa0695cec3d711f43d6264b8e764820343fc92ea01eb6739dab38c",
+  "trace": "[\n{\"name\":\"process_name\",\"args\":{\"name\":\"tsc\"},\"cat\":\"__metadata\",\"ph\":\"M\",\"ts\":123250,\"pid\":1,\"tid\":1},\n{\"name\":\"thread_name\",\"args\":{\"name\":\"Main\"},\"cat\":\"__metadata\",\"ph\":\"M\",\"ts\":123250,\"pid\":1,\"tid\":1},\n{\"name\":\"TracingStartedInBrowser\",\"cat\":\"disabled-by-default-devtools.timeline\",\"ph\":\"M\",\"ts\":123250,\"pid\":1,\"tid\":1}\n]\n",
+  "catalogCases": [
+    {
+      "seedLength": 0,
+      "beforeAfterStart": {
+        "length": 0,
+        "entries": [],
+        "ownKeys": [
+          "length"
+        ],
+        "sameArray": true
+      },
+      "afterAfterStart": {
+        "length": 0,
+        "entries": [],
+        "ownKeys": [
+          "length"
+        ],
+        "sameArray": true
+      },
+      "timestampCalls": [
+        1,
+        1
+      ]
+    },
+    {
+      "seedLength": 3,
+      "beforeAfterStart": {
+        "length": 0,
+        "entries": [],
+        "ownKeys": [
+          "length"
+        ],
+        "sameArray": true
+      },
+      "afterAfterStart": {
+        "length": 0,
+        "entries": [],
+        "ownKeys": [
+          "length"
+        ],
+        "sameArray": true
+      },
+      "timestampCalls": [
+        1,
+        1
+      ]
+    }
+  ],
+  "exportKeysIdentical": true,
+  "exportKeyCount": 2256,
+  "exportKeysSha256": "8125408be73cd4b1b940a7ac84511eaebbd209cff601fbbc8e539aa1870fe998"
+}
