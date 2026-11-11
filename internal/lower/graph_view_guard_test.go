@@ -45,6 +45,11 @@ interface HasInner { readonly tag: string; inner: MakesDerived }
 interface NoInner { readonly tag: string }
 type EitherInner = HasInner | NoInner
 interface ViewsInner { readonly tag: string; readonly inner?: MakesBase }
+interface ChoiceA { readonly kind: 'a'; link: Link }
+interface ChoiceB { readonly kind: 'b'; other: Link }
+type Choice = ChoiceA | ChoiceB
+interface HoldsChoice { value: Choice }
+interface AlsoChoice { value: Choice }
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -220,5 +225,36 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
 			t.Errorf("%s: got %v, want NotYet holding %q", row.name, err, row.want)
 		}
+	}
+}
+
+// Correctness's crossing on #3zex15c: at 769b0e53 the arm roads paired whole sides, so a slot of one
+// union type on both sides crossed into a pair of disjoint arms no program forms (Choice as Choice
+// into ChoiceB as ChoiceA), 289 refusals over tsc. Identity pairs nothing, and arms pair one by one,
+// so the view passes. Mutants: the cross product again (a source arm judged against the whole target)
+// refuses this; identity replaced by assignability lets MakesDerived as MakesBase through, which
+// TestGraphViewGuardFunctionFields reds.
+func TestGraphViewGuardIdentityAndArms(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{
+		{"one union type on both sides", "HoldsChoice", "AlsoChoice", ""},
+		{"the union itself", "Choice", "Choice", ""},
+	})
+}
+
+// The pairwise rule leans on two stops (Language's condition on #3zex15c): a source arm reaches a view's
+// arm only where it relates to it, and `in` narrowing over a union of object types would break that, so
+// it stays refused. The second, a write to a property only an `in` test added, is #yqbg9vz's NotYet,
+// pinned there when it lands.
+func TestGraphViewGuardLeansOnInRefusal(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, `interface A { readonly a: number } interface B { readonly b: number }
+function read(value: A | B): number { return 'a' in value ? value.a : value.b; }
+console.log(String(read({ a: 1 })));
+`, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in that narrows a union of object types") {
+		t.Fatalf("got %v, want the refusal of in over a union of object types", err)
 	}
 }
