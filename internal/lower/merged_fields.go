@@ -128,6 +128,12 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	if !merged {
 		return nil
 	}
+	// This module scan precedes rule 800. An unbuilt Node host member needs its
+	// own NotYet, not a checked-view contract for storage we do not build. A nil
+	// answer keeps the contract proof for implemented host and program members.
+	if err := l.nodeLibraryRefusal(node); err != nil {
+		return err
+	}
 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
 		return err
 	}
