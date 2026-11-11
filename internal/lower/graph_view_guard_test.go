@@ -41,6 +41,10 @@ class Speaks { speak(): void {} }
 interface SpeaksField { speak: () => void }
 type BagSpeaks = Record<string, Speaks>
 interface NamedSpeaks { readonly a?: SpeaksField }
+type SpeaksEither = Speaks | SpeaksField
+interface MakesDerivedTagged { readonly tag: 'd'; readonly inner: MakesDerived }
+interface MakesBaseTagged { readonly tag: 'd'; readonly inner: MakesBase }
+type EitherInner = MakesDerivedTagged | Scalars
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -205,6 +209,8 @@ func TestGraphViewGuardRoads(t *testing.T) {
 		{"an arm", "MakesDerived", "EitherBase", "whose field make takes a function its source's make can't hold, so a closure written through the view escapes the cycle finder through an arm (MakesDerived as MakesBase)"},
 		{"a method", "Speaks", "SpeaksField", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it"},
 		{"a method through an index source", "BagSpeaks", "NamedSpeaks", "whose writable field speak is its source's method or accessor, which the cycle finder doesn't walk, so a value written through the view escapes it through its field a (Speaks as "},
+		{"a union source whose one arm holds the method", "SpeaksEither", "SpeaksField", "whose writable field speak is its source's method or accessor"},
+		{"a union source whose one arm holds a nested function field", "EitherInner", "MakesBaseTagged", "whose field make takes a function"},
 	} {
 		if types[row.source] == nil || types[row.target] == nil {
 			t.Fatalf("%s: a type isn't declared", row.name)
