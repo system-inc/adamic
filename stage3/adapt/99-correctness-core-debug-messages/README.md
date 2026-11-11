@@ -86,3 +86,14 @@ This amendment changes recognition only. The four assertion message edits and
 all other guards remain as proved above. The move directory records the new
 paired replays, drift controls and normal-build proofs. Historical stop logs
 are preserved there as history, not current implementation status.
+
+## Stacked assertEachNode loop recognition
+
+Task 8n7eet3, site 2, Adamic Nov 10 22:01Z. The later
+99-correctness-core-each-node owns the ruled explicit loop and removal of
+the unused every import. Road (b) now recognizes that exact whole owner as
+a finished after state, pinned separately in pins.json. Its original before
+and after pins and four message edits are unchanged. The other three owners
+must still be after when the loop is present. Any other owner drift, including
+a changed loop, still refuses before writing. The later adapter's guards and
+PROOF.md record the finished-state replay and drift refusal.
