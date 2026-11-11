@@ -605,12 +605,14 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 		}
 		return failure
 	}
-	// Each arm of a union source against the view (Lower's should on #3zex15c): GetPropertyOfType on
+	// Each arm of a union source the view relates to (Lower's should on #3zex15c): GetPropertyOfType on
 	// a union drops a property only one arm has, so that arm's field under a view's optional one would
-	// go unpaired.
+	// go unpaired. An arm the view doesn't relate is one a downcast's check excludes at run time
+	// (First | Second | Third as First | Second never reads Third through the view), as the target's
+	// unrelated arms are skipped below.
 	if present.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, arm := range present.Types() {
-			if viewPairScalar(arm) || f.viewPairFunction(arm) {
+			if viewPairScalar(arm) || f.viewPairFunction(arm) || !f.deriveRelated(arm, viewed) {
 				continue
 			}
 			if failure := follow("a source arm", arm, viewed); failure != nil {
