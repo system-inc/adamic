@@ -1,0 +1,33 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.047s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.059s)
+Cloning into '/workspace/adamic/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.453s)
+setup: tsc ready (TypeScript 6.0.3) (0.893s)
+
+added 3 packages in 687ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.313s
+setup: markdown dependencies ready (2.288s)
+From https://github.com/system-inc/cohere
+ * [new tag]           v0.1.0     -> v0.1.0
+ * [new tag]           v0.1.1     -> v0.1.1
+From https://github.com/system-inc/cohere
+ * branch              5360753e19e4417675a90e92a1823bea66b13918 -> FETCH_HEAD
+Submodule path 'cohere': checked out '5360753e19e4417675a90e92a1823bea66b13918'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (249.245s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (249.256s)
+setup: go build ready (759.692s)
+setup: test binaries deferred (use --warm-tests) (759.935s)
+setup: build cache warm (759.938s)
+setup: build-flags commit=73c047484f82f6f6546ff589214f3a0b7c8db9fb nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=0.43 0.16 0.06 1/138 748 load-after=12.39 10.35 5.57 4/181 7933
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (760.492s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.dXM8x2
