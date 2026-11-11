@@ -28,6 +28,10 @@ typedef struct adamic_counts {
 	_Atomic size_t graph_merges;
 	// graph_searched is how many counted edges merges' searches read (graph_regions.c's between).
 	_Atomic size_t graph_searched;
+	// region_blocks is the blocks region.c asked malloc for and region_blocks_freed the ones it gave
+	// back: once every thread's cache is let go (adamic_region_thread_end), they're equal (#yecmp1d).
+	_Atomic size_t region_blocks;
+	_Atomic size_t region_blocks_freed;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
