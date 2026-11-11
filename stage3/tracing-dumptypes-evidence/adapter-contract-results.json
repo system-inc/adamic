@@ -1,0 +1,93 @@
+{
+  "cases": 15,
+  "accepted": 4,
+  "noWriteRefusals": 11,
+  "rows": [
+    {
+      "name": "CRLF",
+      "accepted": true,
+      "replayWrites": 0
+    },
+    {
+      "name": "LF",
+      "accepted": true,
+      "replayWrites": 0
+    },
+    {
+      "name": "foreign outside owner",
+      "accepted": true,
+      "replayWrites": 0
+    },
+    {
+      "name": "foreign namespace import",
+      "accepted": true,
+      "replayWrites": 0
+    },
+    {
+      "name": "whole owner drift",
+      "accepted": false,
+      "writes": 0,
+      "reason": "unreviewed or partially adapted dumpTypes"
+    },
+    {
+      "name": "restored object cast only",
+      "accepted": false,
+      "writes": 0,
+      "reason": "unreviewed or partially adapted dumpTypes"
+    },
+    {
+      "name": "restored intrinsic cast only",
+      "accepted": false,
+      "writes": 0,
+      "reason": "unreviewed or partially adapted dumpTypes"
+    },
+    {
+      "name": "after missing value import",
+      "accepted": false,
+      "writes": 0,
+      "reason": "partial or duplicate import: getObjectFlags\n\n0 !== 1\n"
+    },
+    {
+      "name": "after missing type import",
+      "accepted": false,
+      "writes": 0,
+      "reason": "partial or duplicate import: IntrinsicType\n\n0 !== 1\n"
+    },
+    {
+      "name": "duplicate import",
+      "accepted": false,
+      "writes": 0,
+      "reason": "partial or duplicate import: getObjectFlags\n\n2 !== 1\n"
+    },
+    {
+      "name": "wrong import kind",
+      "accepted": false,
+      "writes": 0,
+      "reason": "import kind drift: getObjectFlags\n\ntrue !== false\n"
+    },
+    {
+      "name": "missing owner",
+      "accepted": false,
+      "writes": 0,
+      "reason": "dumpTypes owner drift\n\n0 !== 1\n"
+    },
+    {
+      "name": "duplicate owner",
+      "accepted": false,
+      "writes": 0,
+      "reason": "dumpTypes owner drift\n\n2 !== 1\n"
+    },
+    {
+      "name": "namespace drift",
+      "accepted": false,
+      "writes": 0,
+      "reason": "dumpTypes namespace drift"
+    },
+    {
+      "name": "before owner with after imports",
+      "accepted": false,
+      "writes": 0,
+      "reason": "partial or duplicate import: getObjectFlags\n\n1 !== 0\n"
+    }
+  ]
+}

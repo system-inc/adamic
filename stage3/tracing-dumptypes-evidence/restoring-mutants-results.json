@@ -1,0 +1,18 @@
+[
+  {
+    "side": "mutant-object",
+    "sourceFiles": 747,
+    "changed": [
+      "compiler/tracing.ts"
+    ],
+    "restored": "const objectFlags = (type as any).objectFlags;"
+  },
+  {
+    "side": "mutant-intrinsic",
+    "sourceFiles": 747,
+    "changed": [
+      "compiler/tracing.ts"
+    ],
+    "restored": "intrinsicName: (type as any).intrinsicName,"
+  }
+]

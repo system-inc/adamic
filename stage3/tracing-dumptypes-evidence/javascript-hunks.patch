@@ -1,0 +1,68 @@
+diff --git a/workspace/scratch/dp24r5m-base/built/local/_tsc.js b/workspace/scratch/dp24r5m-after/built/local/_tsc.js
+index 77b3c366b..e36d2aaa1 100644
+--- a/workspace/scratch/dp24r5m-base/built/local/_tsc.js
++++ b/workspace/scratch/dp24r5m-after/built/local/_tsc.js
+@@ -2339,7 +2339,7 @@ var tracingEnabled;
+     const numTypes = types.length;
+     for (let i = 0; i < numTypes; i++) {
+       const type = types[i];
+-      const objectFlags = type.objectFlags;
++      const objectFlags = getObjectFlags(type);
+       const symbol = type.aliasSymbol ?? type.symbol;
+       let display;
+       if (objectFlags & 16 /* Anonymous */ | type.flags & 15360 /* Literal */) {
+@@ -2412,7 +2412,7 @@ var tracingEnabled;
+       }
+       const descriptor = {
+         id: type.id,
+-        intrinsicName: type.intrinsicName,
++        intrinsicName: type.flags & 402431 /* Intrinsic */ ? type.intrinsicName : void 0,
+         symbolName: (symbol == null ? void 0 : symbol.escapedName) && unescapeLeadingUnderscores(symbol.escapedName),
+         recursionId: recursionToken,
+         isTuple: objectFlags & 8 /* Tuple */ ? true : void 0,
+
+diff --git a/workspace/scratch/dp24r5m-base/built/local/run.js b/workspace/scratch/dp24r5m-after/built/local/run.js
+index 3b21420f9..ef0aab510 100644
+--- a/workspace/scratch/dp24r5m-base/built/local/run.js
++++ b/workspace/scratch/dp24r5m-after/built/local/run.js
+@@ -2729,7 +2729,7 @@ var init_tracing = __esm({
+         const numTypes = types.length;
+         for (let i = 0; i < numTypes; i++) {
+           const type = types[i];
+-          const objectFlags = type.objectFlags;
++          const objectFlags = getObjectFlags(type);
+           const symbol = type.aliasSymbol ?? type.symbol;
+           let display;
+           if (objectFlags & 16 /* Anonymous */ | type.flags & 15360 /* Literal */) {
+@@ -2802,7 +2802,7 @@ var init_tracing = __esm({
+           }
+           const descriptor = {
+             id: type.id,
+-            intrinsicName: type.intrinsicName,
++            intrinsicName: type.flags & 402431 /* Intrinsic */ ? type.intrinsicName : void 0,
+             symbolName: (symbol == null ? void 0 : symbol.escapedName) && unescapeLeadingUnderscores(symbol.escapedName),
+             recursionId: recursionToken,
+             isTuple: objectFlags & 8 /* Tuple */ ? true : void 0,
+
+diff --git a/workspace/scratch/dp24r5m-base/built/local/typescript.js b/workspace/scratch/dp24r5m-after/built/local/typescript.js
+index 00311f5db..f11c1a0fd 100644
+--- a/workspace/scratch/dp24r5m-base/built/local/typescript.js
++++ b/workspace/scratch/dp24r5m-after/built/local/typescript.js
+@@ -4935,7 +4935,7 @@ var tracingEnabled;
+     const numTypes = types.length;
+     for (let i = 0; i < numTypes; i++) {
+       const type = types[i];
+-      const objectFlags = type.objectFlags;
++      const objectFlags = getObjectFlags(type);
+       const symbol = type.aliasSymbol ?? type.symbol;
+       let display;
+       if (objectFlags & 16 /* Anonymous */ | type.flags & 15360 /* Literal */) {
+@@ -5008,7 +5008,7 @@ var tracingEnabled;
+       }
+       const descriptor = {
+         id: type.id,
+-        intrinsicName: type.intrinsicName,
++        intrinsicName: type.flags & 402431 /* Intrinsic */ ? type.intrinsicName : void 0,
+         symbolName: (symbol == null ? void 0 : symbol.escapedName) && unescapeLeadingUnderscores(symbol.escapedName),
+         recursionId: recursionToken,
+         isTuple: objectFlags & 8 /* Tuple */ ? true : void 0,

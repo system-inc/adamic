@@ -1,0 +1,45 @@
+{
+  "equal": true,
+  "runs": [
+    {
+      "side": "base",
+      "sourceTree": "/workspace/scratch/dp24r5m-base",
+      "cwd": "/workspace/scratch/dp24r5m-evidence/small-project",
+      "command": [
+        "node",
+        "/workspace/scratch/dp24r5m-evidence/trace-cli/tsc.js",
+        "--ignoreConfig",
+        "--strict",
+        "--noEmit",
+        "--ignoreDeprecations",
+        "6.0",
+        "--generateTrace",
+        "/workspace/scratch/dp24r5m-evidence/small-project/trace",
+        "/workspace/scratch/dp24r5m-evidence/small-project/main.ts"
+      ],
+      "exit": 0,
+      "bytes": 7241122,
+      "sha256": "bb0e074a3d6f5af54cbd064cf314e25917e15137bd99bb7dfacba7fe9cfd8bdb"
+    },
+    {
+      "side": "after",
+      "sourceTree": "/workspace/scratch/dp24r5m-after",
+      "cwd": "/workspace/scratch/dp24r5m-evidence/small-project",
+      "command": [
+        "node",
+        "/workspace/scratch/dp24r5m-evidence/trace-cli/tsc.js",
+        "--ignoreConfig",
+        "--strict",
+        "--noEmit",
+        "--ignoreDeprecations",
+        "6.0",
+        "--generateTrace",
+        "/workspace/scratch/dp24r5m-evidence/small-project/trace",
+        "/workspace/scratch/dp24r5m-evidence/small-project/main.ts"
+      ],
+      "exit": 0,
+      "bytes": 7241122,
+      "sha256": "bb0e074a3d6f5af54cbd064cf314e25917e15137bd99bb7dfacba7fe9cfd8bdb"
+    }
+  ]
+}

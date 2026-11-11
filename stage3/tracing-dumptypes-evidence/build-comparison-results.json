@@ -1,0 +1,62 @@
+{
+  "files": [
+    {
+      "name": "local/_tsc.js",
+      "equal": false,
+      "diffExit": 1,
+      "hunks": 2,
+      "allHunksInDumpTypes": true,
+      "beforeSha256": "0b88e7cd37c865269684d0b5f64f70784b7d24f9c8f24d36323d58dcc73cf3fa",
+      "afterSha256": "181f309ebbdcf0b6a607f1921d27e685122198618166e6b8cb6367527e80dfb8"
+    },
+    {
+      "name": "local/_tsserver.js",
+      "equal": true
+    },
+    {
+      "name": "local/_typingsInstaller.js",
+      "equal": true
+    },
+    {
+      "name": "local/run.js",
+      "equal": false,
+      "diffExit": 1,
+      "hunks": 2,
+      "allHunksInDumpTypes": true,
+      "beforeSha256": "0ecbbab8f3696c156c66d8ea2f237c0f8b9f8385a07c78ae97b425a366e520d3",
+      "afterSha256": "dcfdb9fd88e4013396e08155836c0fe01f3a1405ec0c69e666269e8b67374487"
+    },
+    {
+      "name": "local/tsc.js",
+      "equal": true
+    },
+    {
+      "name": "local/tsserver.js",
+      "equal": true
+    },
+    {
+      "name": "local/tsserverlibrary.js",
+      "equal": true
+    },
+    {
+      "name": "local/typescript.js",
+      "equal": false,
+      "diffExit": 1,
+      "hunks": 2,
+      "allHunksInDumpTypes": true,
+      "beforeSha256": "af5028a1b108ce537d1dc46363063314f6b01b91b3791f8af4902c8534f136a3",
+      "afterSha256": "bf6de92989a652c27a3799e8cc7dff8203f5e3897a40c152c9fd158256dd7f49"
+    },
+    {
+      "name": "local/typingsInstaller.js",
+      "equal": true
+    },
+    {
+      "name": "local/watchGuard.js",
+      "equal": true
+    }
+  ],
+  "declarationFiles": 716,
+  "exportKeys": 2256,
+  "symbolKeys": 0
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/workspace/scratch/dp24r5m-evidence-branch",
+    "push",
+    "origin",
+    "HEAD:typescript/tracing-dumptypes-evidence",
+    "HEAD:typescript/tracing-dumptypes-checkpoint"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 3.793947503000254
+}

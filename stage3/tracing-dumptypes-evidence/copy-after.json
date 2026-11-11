@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-c",
+    "import shutil;shutil.copytree(\"/workspace/scratch/dp24r5m-base\",\"/workspace/scratch/dp24r5m-after\",symlinks=True)"
+  ],
+  "cwd": "/workspace/adamic",
+  "exit": 0,
+  "seconds": 18.532154205999632
+}

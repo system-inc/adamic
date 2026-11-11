@@ -1,0 +1,69 @@
+{
+  "base": {
+    "units": 23,
+    "diagnostics": 0,
+    "kinds": {
+      "NotYet": 23,
+      "Refused": 12,
+      "Boundary": 26
+    },
+    "casts": [
+      {
+        "phase": "refusal_scan",
+        "where": "/workspace/scratch/dp24r5m-base/src/compiler/tracing.ts:232:34"
+      },
+      {
+        "phase": "refusal_scan",
+        "where": "/workspace/scratch/dp24r5m-base/src/compiler/tracing.ts:318:33"
+      },
+      {
+        "phase": "lowering",
+        "where": "/workspace/scratch/dp24r5m-base/src/compiler/tracing.ts:318:33"
+      }
+    ]
+  },
+  "after": {
+    "units": 23,
+    "diagnostics": 0,
+    "kinds": {
+      "NotYet": 25,
+      "Refused": 9,
+      "Boundary": 27
+    },
+    "casts": []
+  },
+  "mutant-object": {
+    "units": 23,
+    "diagnostics": 0,
+    "kinds": {
+      "NotYet": 24,
+      "Refused": 10,
+      "Boundary": 26
+    },
+    "casts": [
+      {
+        "phase": "refusal_scan",
+        "where": "/workspace/scratch/dp24r5m-mutant-object/src/compiler/tracing.ts:234:34"
+      }
+    ]
+  },
+  "mutant-intrinsic": {
+    "units": 23,
+    "diagnostics": 0,
+    "kinds": {
+      "NotYet": 24,
+      "Refused": 11,
+      "Boundary": 27
+    },
+    "casts": [
+      {
+        "phase": "refusal_scan",
+        "where": "/workspace/scratch/dp24r5m-mutant-intrinsic/src/compiler/tracing.ts:320:33"
+      },
+      {
+        "phase": "lowering",
+        "where": "/workspace/scratch/dp24r5m-mutant-intrinsic/src/compiler/tracing.ts:320:33"
+      }
+    ]
+  }
+}

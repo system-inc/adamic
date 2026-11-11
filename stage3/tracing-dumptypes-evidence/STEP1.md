@@ -1,13 +1,89 @@
-# Step 1 measurement in progress
+# dumpTypes proof for dp24r5m
 
-Base: efe887763, fetched origin/main tip. Pinned TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8.
+Base: efe887763f26e96653546fae904d57539139f7ae, origin/main at setup.
+TypeScript: 050880ce59e30b356b686bd3144efe24f875ebc8, version 6.0.3.
+Node: v24.19.0, Linux x64.
 
-The complete dumpTypes owner has five later reads of objectFlags: Anonymous in the display condition, Reference for instantiatedType/typeArguments/referenceLocation, ReverseMapped for reverseMappedSourceType/reverseMappedMappedType/reverseMappedConstraintType, EvolvingArray for evolvingArrayElementType/evolvingArrayFinalType, and Tuple for isTuple. All five reads apply bit masks. No raw objectFlags value is serialized. descriptor.intrinsicName has no later property access: JSON.stringify(descriptor) serializes it, omitting undefined and retaining strings.
 
-Three oracle projects were run by Node tsc --generateTrace. DifferentNamesNotSpecified visited 30559 types, DefaultExcludeOnlyNodeModules visited 27038, and emitDecoratorMetadataCommonJSIsolatedModule visited 27045. The first two exited 0. The third exited 2 for missing angular2/core and an implicit-any return, but wrote its trace; its diagnostics are retained.
+## Ownership
 
-Total visits: 84642. Own objectFlags: 50995. Own intrinsicName: 88. getObjectFlags raw differences: 33693. Real nonzero objectFlags on non-ObjectFlagsType types: 46 (33 hold 52953088; 13 hold 14680064). All five mask differences: 0. Intrinsic flag guard value differences: 0. Property-existence read value differences: 0.
+40 and 41 retain these reads because the fields belong to Type subtypes; their
+classification explicitly declines a uniform unknown replacement. 62 owns only
+the dumpTypes writeSync expression, 63 owns dumpLegend, and
+99-correctness-tracing-assert pins stopTracing. None pins either exact read or
+all of dumpTypes. The new adaptation pins the complete composed dumpTypes
+before and after and changes its two subtype reads together.
 
-With both runtime replacements applied only inside the private Node bundle's dumpTypes, all three written types.json files are byte-identical. Byte sizes: 7153496, 6227528, 6229391. Child exits are unchanged (0, 0, 2). Individual records, file hashes and retained complete outputs accompany this note.
+## Step 1: every later use
 
-Whole lane and stage-0 acceptance remain pending. No source adaptation has been added and no claim of a completed road is made yet.
+The objectFlags local has exactly five later reads. Every read applies a mask:
+
+| Original adapted line | Mask | Effect on the written descriptor |
+| --- | --- | --- |
+| 237 | Anonymous | Enables display computation, together with TypeFlags.Literal |
+| 256 | Reference | instantiatedType, typeArguments and referenceLocation |
+| 286 | ReverseMapped | reverseMappedSourceType, reverseMappedMappedType and reverseMappedConstraintType |
+| 296 | EvolvingArray | evolvingArrayElementType and evolvingArrayFinalType |
+| 321 | Tuple | isTuple |
+
+The raw objectFlags value is never serialized. descriptor.intrinsicName has no
+later property read: JSON.stringify(descriptor) consumes it in the existing
+writeSync call. Undefined is omitted; a string is retained.
+
+## Step 1: whole lane
+
+All 398 real gate TestShard_ units pass with child exit 0. Their manifests
+validate 106,366 passing oracle cases, one sanctioned API acknowledgement
+failure and zero skipped cases. All 398 units have counter-loaded process
+coverage, across 797 completed Node processes. dumpTypes executes **0 times**
+and visits **0 types** in the entire lane. Written-value differences are **0**.
+This is a zero count, not direct coverage of the changed function. The three
+real generateTrace projects below supply that execution coverage.
+
+The counted product is a private copy. Its complete inventory contains 82,870
+files, all 747 source files are byte-identical to baseline, and its 10 normal
+JavaScript files differ only by the explicit counter hooks in _tsc.js, run.js
+and typescript.js. The overlay selects that copy and passes the VM-aware preload
+through the gate's own filtered environment. Production Go remains unchanged.
+
+## Step 1: actual adapted compiler with generateTrace
+
+Node runs the counted lane compiler against these real upstream oracle projects:
+
+- jsFileCompilation/DifferentNamesNotSpecified
+- projectOption/DefaultExcludeOnlyNodeModules
+- decoratorMetadata/emitDecoratorMetadataCommonJSIsolatedModule
+
+The first two exit 0. The third exits 2 for missing angular2/core and an implicit
+any return, and still writes its types file. These diagnostics are retained and
+are not described as a clean project run.
+
+Across three dumpTypes calls, 84,642 visited types have 50,995 own objectFlags
+properties and 88 own intrinsicName properties. getObjectFlags differs from the
+raw read 33,693 times: 33,647 undefined reads become 0, and 46 types carry real
+objectFlags outside TypeFlags.ObjectFlagsType. Of those 46, 33 hold 52953088 and
+13 hold 14680064. None sets any of the five masks above. Differences for each
+mask are 0, 0, 0, 0, 0.
+
+The Intrinsic flag guard has 0 intrinsicName differences, both at loop entry and
+at descriptor construction after display and recursion work. The in read also
+has 0 differences. There are 0 own intrinsicName properties and 0 defined values
+outside TypeFlags.Intrinsic. All 88 flagged visits have string names; flagged
+objectFlags reads have 0 missing or nonnumeric values.
+
+Stock 6.0.3 controls repeat the three projects. The original and two-replacement
+runs write byte-identical types files of 7,153,496, 6,227,528 and 6,229,391 bytes.
+The descriptor-time counter is separately checked against a pristine compiler
+in the same directory, again with exact byte identity. Complete individual
+records, original types files, hashes, commands and child exits are retained.
+
+## Step 1: stage 0
+
+Both intrinsicName forms pass ordinary lowering and complete refusal scans in
+isolated executable probes, with 0 diagnostics and 0 findings. The selected
+flags road also passes all 79 actual compiler roots. Its complete tracing census
+visits all 23 units with 0 diagnostics and removes all three unchecked-cast events
+at the two original sites: two refusal-scan events and one lowering event.
+Other existing NotYet findings remain and deeper findings become visible. This
+is not a claim that all compiler roots lower to native code.
+

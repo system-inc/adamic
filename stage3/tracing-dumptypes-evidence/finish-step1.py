@@ -21,7 +21,7 @@ for result in [lane,project]:
  assert result['intrinsicFlaggedWithoutString']==result['descriptorFlaggedWithoutString']==result['objectFlaggedWithoutNumber']==0
  assert result['maskDifferences']==[0]*5 and result['intrinsicDifferences']==result['intrinsicAtDescriptorDifferences']==result['inAtDescriptorDifferences']==0
 processes=[json.loads(p.read_text()) for p in (S/'lane-counts').glob('*.json')]
-coverage={name:sum(name in '\n'.join(p['argv']) for p in processes) for name in passed};assert all(coverage.values()),[k for k,v in coverage.items() if not v]
+coverage={u['name']:sum('/'+u['name']+'/' in '\n'.join(p['argv']) for p in processes) for u in manifest['units']};assert all(coverage.values()),[k for k,v in coverage.items() if not v]
 (S/'lane-counter-process-coverage.json').write_text(json.dumps(coverage,indent=2)+'\n')
 for side in ['base','flags-road']:
  types=json.loads((S/(side+'-types.json')).read_text());assert types['exit']==0 and len(types['command'])-2==79
