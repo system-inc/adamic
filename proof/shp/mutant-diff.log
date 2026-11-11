@@ -1,0 +1,13 @@
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 1da313c08..04fb5cc37 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1996,7 +1996,7 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+ 	}
+ 	// A nested declaration's value goes the way its name written alone goes: a nested generator or
+ 	// generic function stops, and a read from another function takes the group's canonical closure.
+-	if value, handled, err := l.nestedReferenceOf(property, symbol); handled {
++	if value, handled, err := l.nestedReferenceOf(property, symbol); false && handled {
+ 		return value, err
+ 	}
+ 	local, isLocal := l.locals[symbol]

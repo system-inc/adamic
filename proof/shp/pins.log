@@ -1,0 +1,122 @@
+=== RUN   TestNestedGeneratorRoadsAreNotYet
+=== PAUSE TestNestedGeneratorRoadsAreNotYet
+=== CONT  TestNestedGeneratorRoadsAreNotYet
+=== RUN   TestNestedGeneratorRoadsAreNotYet/spread
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/spread
+=== RUN   TestNestedGeneratorRoadsAreNotYet/Array.from
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/Array.from
+=== RUN   TestNestedGeneratorRoadsAreNotYet/new_Set
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/new_Set
+=== RUN   TestNestedGeneratorRoadsAreNotYet/new_Map
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/new_Map
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_increment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_increment
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== RUN   TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+=== RUN   TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== RUN   TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_only_typeof_read
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_only_typeof_read
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_called_through
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_called_through
+=== RUN   TestNestedGeneratorRoadsAreNotYet/stored
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/stored
+=== RUN   TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== RUN   TestNestedGeneratorRoadsAreNotYet/returned
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/returned
+=== RUN   TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== RUN   TestNestedGeneratorRoadsAreNotYet/destructured
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/destructured
+=== RUN   TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== RUN   TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+=== PAUSE TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+=== CONT  TestNestedGeneratorRoadsAreNotYet/spread
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_logical_assignment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_increment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_destructuring_target
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_compound_assignment
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/new_Map
+=== CONT  TestNestedGeneratorRoadsAreNotYet/new_Set
+=== CONT  TestNestedGeneratorRoadsAreNotYet/Array.from
+=== CONT  TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/stored
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local
+=== CONT  TestNestedGeneratorRoadsAreNotYet/destructured
+=== CONT  TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/returned
+=== CONT  TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument
+=== CONT  TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_called_through
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_a_generator
+=== CONT  TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_only_typeof_read
+=== CONT  TestNestedGeneratorRoadsAreNotYet/in_a_block
+=== CONT  TestNestedGeneratorRoadsAreNotYet/inside_an_async_function
+--- PASS: TestNestedGeneratorRoadsAreNotYet (0.05s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_logical_assignment (0.17s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/spread (0.17s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_named_function_in_the_body_writing_a_captured_local (0.18s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generic_function (0.18s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/declaring_a_nested_function (0.19s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_compound_assignment (0.23s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_assignment_to_a_captured_local (0.24s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Map (0.23s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_destructuring_target (0.27s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_increment (0.28s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/Array.from (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_write_by_an_arrow_made_inside_the_generator (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/new_Set (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_prefix_update's_helper (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/an_object_literal's_getter_in_the_body (0.16s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_nested_generic_generator (0.08s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_class_in_the_body_whose_method_writes_a_captured_local (0.09s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/stored (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_closure_over_its_own_local (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/destructured (0.11s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/returned (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/passed_as_an_argument (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/consumed_inside_a_nested_generator (0.12s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/the_function_as_a_value (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_only_typeof_read (0.07s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_a_generator (0.08s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/a_shorthand_property,_called_through (0.10s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/in_a_block (0.08s)
+    --- PASS: TestNestedGeneratorRoadsAreNotYet/inside_an_async_function (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.891s

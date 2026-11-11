@@ -1,0 +1,545 @@
+=== oracle.log line 1
+--- FAIL: TestAssignmentProofWiderTargetMutant (0.10s)
+    assignment_proofs_test.go:202: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 26
+--- FAIL: TestAssignmentProofWiderTarget (0.08s)
+    assignment_proofs_test.go:197: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 51
+--- FAIL: TestAssignmentProofCompoundMutant (0.10s)
+    assignment_proofs_test.go:192: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 76
+--- FAIL: TestAssignmentProofCompound (0.07s)
+    assignment_proofs_test.go:187: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 101
+--- FAIL: TestAssignmentProofChainedMutant (0.07s)
+    assignment_proofs_test.go:182: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 126
+--- FAIL: TestAssignmentProofChained (0.05s)
+    assignment_proofs_test.go:177: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 151
+--- FAIL: TestAssignmentProofReturnDefinedMutant (0.05s)
+    assignment_proofs_test.go:172: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 176
+--- FAIL: TestAssignmentProofReturnDefined (0.07s)
+    assignment_proofs_test.go:167: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 201
+--- FAIL: TestAssignmentProofIfNarrowingMutant (0.05s)
+    assignment_proofs_test.go:162: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 226
+--- FAIL: TestAssignmentProofIfNarrowing (0.04s)
+    assignment_proofs_test.go:157: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 251
+--- FAIL: TestAssignmentProofScannerKeywordMutant (0.04s)
+    assignment_proofs_test.go:152: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 276
+--- FAIL: TestAssignmentProofScannerKeyword (0.05s)
+    assignment_proofs_test.go:147: stock TypeScript: exit status 1, node:internal/modules/cjs/loader:1520
+          throw err;
+          ^
+        
+        Error: Cannot find module 'typescript'
+        Require stack:
+=== oracle.log line 301
+--- FAIL: TestParallelBenchmark_tsan_One_1 (73.18s)
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.19
+    --- FAIL: TestParallelBenchmark_tsan_One_1/tsan (61.61s)
+        --- FAIL: TestParallelBenchmark_tsan_One_1/tsan/1 (60.50s)
+            parallel_test.go:119: exit codes differ: Node exit 0 stdout "4096 files, 20282626 UTF-16 units, 2621440 tokens, 556992 distinct per file, ordered digest 823772603\n" stderr ""; native exit -1 stdout "" stderr ""
+--- FAIL: TestParallelBenchmark_tsan_One_0 (69.67s)
+    oracle_test.go:638: build go_build_./oracle/json_types.go_json-types 4f2203f4e01d hit 0.14
+    --- FAIL: TestParallelBenchmark_tsan_One_0/tsan (63.59s)
+        --- FAIL: TestParallelBenchmark_tsan_One_0/tsan/1 (61.78s)
+            parallel_test.go:119: exit codes differ: Node exit 0 stdout "4096 files, 20282626 UTF-16 units, 2621440 tokens, 556992 distinct per file, ordered digest 823772603\n" stderr ""; native exit -1 stdout "" stderr ""
+--- FAIL: TestStdoutColumnsRefusesWASI (0.63s)
+    library_node_stdout_columns_test.go:246: want typed, named WASI refusal, got native: wasm32-wasi requires WASI_SYSROOT
+--- FAIL: TestFamiliesCatchAPlantedCase_CountsAreRecorded (90.19s)
+    families_generated_test.go:5190: the probe of TestCountsAreRecorded was killed at 90 s:
+        === RUN   TestCountsAreRecorded_000
+        === PAUSE TestCountsAreRecorded_000
+        === RUN   TestCountsAreRecorded_001
+        === PAUSE TestCountsAreRecorded_001
+        === RUN   TestCountsAreRecorded_002
+=== oracle.log line 966
+--- FAIL: TestCountsAreRecorded_010 (106.58s)
+    program_region_parse_counts_test.go:22: build program-parse-source-false 2bc9bba2f4f4 miss 9.37
+    program_region_parse_test.go:28: build program-parse-source-false 2bc9bba2f4f4 hit 0.05
+    program_region_parse_test.go:23: build program-parse-false-false d1f931677396 miss 27.68
+    program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestCountsAreRecorded_async_counts_stable (120.27s)
+    program_region_parse_counts_test.go:22: build program-parse-source-true fe0e66a37e2e miss 16.83
+    program_region_parse_test.go:28: build program-parse-source-true fe0e66a37e2e hit 0.13
+    program_region_parse_test.go:40: build native-runtime 03390f7f956d miss 13.24
+    program_region_parse_test.go:23: build program-parse-true-false e1f26585ee9f miss 41.38
+    program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestInstalledLayoutInvokedPathMutantMovesTheReads (0.02s)
+    installed_layout_test.go:439: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestInstalledLayoutCwdMutantMovesTheReads (0.00s)
+    installed_layout_test.go:404: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestInstalledLayoutReadsThroughTheLinkAreNodes (0.00s)
+    installed_layout_test.go:321: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestInstalledLayoutReadsAreNodes (0.00s)
+    installed_layout_test.go:288: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestProduct_CountMeasurements10 (0.00s)
+    counts_test.go:408: count-measurements shard 10 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_CountMeasurements07 (0.00s)
+    counts_test.go:405: count-measurements shard 7 couldn't be had: the test that first asked for it says why
+--- FAIL: TestProduct_ProgramTscSource (0.00s)
+    program_region_source_test.go:15: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseMeasurement4 (0.00s)
+    program_region_parse_test.go:122: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseMeasurement3 (0.00s)
+    program_region_parse_test.go:121: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseMeasurement2 (0.00s)
+    program_region_parse_test.go:120: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseMeasurement1 (0.00s)
+    program_region_parse_test.go:119: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseMeasurement0 (0.00s)
+    program_region_parse_test.go:118: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseOffAgreesWithNode (0.00s)
+    program_region_parse_oracle_test.go:42: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionParseOnAgreesWithNode (0.01s)
+    program_region_parse_oracle_test.go:39: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionRecordedCountParseOff (0.11s)
+    program_region_parse_counts_test.go:22: build program-parse-source-false 2bc9bba2f4f4 hit 0.03
+    program_region_parse_test.go:23: build program-parse-false-false d1f931677396 hit 0.04
+    program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionRecordedCountParseOn (0.11s)
+    program_region_parse_counts_test.go:22: build program-parse-source-true fe0e66a37e2e hit 0.07
+    program_region_parse_test.go:23: build program-parse-true-false e1f26585ee9f hit 0.02
+    program_region_parse_counts_test.go:33: ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch
+--- FAIL: TestProgramRegionScalarContainersOnNode (0.01s)
+    program_region_node_records_test.go:66: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestProduct_ProgramTscNodeAPI (0.00s)
+    program_region_node_records_test.go:63: build program-tsc-node-api: exec: "tsc": executable file not found in $PATH
+--- FAIL: TestCountsAreRecorded_async_coverage_unions (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_coverage_unions/internal/oracle/testdata/async_coverage_unions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_coverage_unions.a: ""
+--- FAIL: TestCountsAreRecorded_async_for_of_body (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_for_of_body/internal/oracle/testdata/async_for_of_body.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_for_of_body.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_string_break_function (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_break_function/internal/oracle/testdata/async_iterable_string_break_function.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_string_break_function.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_set_entries_module/internal/oracle/testdata/async_iterable_set_entries_module.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_set_entries_module.a: ""
+--- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_iterable_string_ascii_module/internal/oracle/testdata/async_iterable_string_ascii_module.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_iterable_string_ascii_module.a: ""
+--- FAIL: TestCountsAreRecorded_async_finally_break (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_finally_break/internal/oracle/testdata/async_finally_break.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_finally_break.a: ""
+--- FAIL: TestCountsAreRecorded_label_block_break_sync (0.00s)
+    --- FAIL: TestCountsAreRecorded_label_block_break_sync/internal/oracle/testdata/label_block_break_sync.a (0.01s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/label_block_break_sync.a: ""
+--- FAIL: TestCountsAreRecorded_async_labels_finally (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_labels_finally/internal/oracle/testdata/async_labels_finally.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_labels_finally.a: ""
+--- FAIL: TestCountsAreRecorded_async_loop_body_capture (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_loop_body_capture/internal/oracle/testdata/async_loop_body_capture.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_loop_body_capture.a: ""
+--- FAIL: TestCountsAreRecorded_flat (0.00s)
+    --- FAIL: TestCountsAreRecorded_flat/internal/oracle/testdata/ownership-query/flat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/ownership-query/flat.a: ""
+--- FAIL: TestCountsAreRecorded_release_fast_graph (0.00s)
+    --- FAIL: TestCountsAreRecorded_release_fast_graph/internal/oracle/testdata/release_fast_graph.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/release_fast_graph.a: ""
+--- FAIL: TestCountsAreRecorded_counters_square_jump (0.00s)
+    --- FAIL: TestCountsAreRecorded_counters_square_jump/internal/oracle/testdata/counters_square_jump.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/counters_square_jump.a: ""
+--- FAIL: TestCountsAreRecorded_counters_shapes (0.00s)
+    --- FAIL: TestCountsAreRecorded_counters_shapes/internal/oracle/testdata/counters_shapes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/counters_shapes.a: ""
+--- FAIL: TestCountsAreRecorded_async_mutation (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_mutation/internal/oracle/testdata/async_mutation.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_mutation.a: ""
+--- FAIL: TestCountsAreRecorded_async_operand_order (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_operand_order/internal/oracle/testdata/async_operand_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_operand_order.a: ""
+--- FAIL: TestCountsAreRecorded_async_methods (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_methods/internal/oracle/testdata/async_methods.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_methods.a: ""
+--- FAIL: TestCountsAreRecorded_async_catches (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_catches/internal/oracle/testdata/async_catches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_catches.a: ""
+--- FAIL: TestCountsAreRecorded_async_counts_captured (0.00s)
+    --- FAIL: TestCountsAreRecorded_async_counts_captured/internal/oracle/testdata/async_counts/async_counts_captured.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_counts/async_counts_captured.a: ""
+--- FAIL: TestCountsAreRecorded_lots_streams (75.92s)
+    --- FAIL: TestCountsAreRecorded_lots_streams/internal/oracle/testdata/stdout_edges/lots_streams.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/stdout_edges/lots_streams.a: ""
+--- FAIL: TestCountsAreRecorded_026 (0.00s)
+    --- FAIL: TestCountsAreRecorded_026/stage3/interface-downcasts/lane4b/fixtures/literal-good.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/literal-good.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/string_views_calls.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/string_views_calls.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/fallthrough.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/switch_case_declarations/fallthrough.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/scanner.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/switch_case_declarations/scanner.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/scout_selector_optional_boolean.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_selector_optional_boolean.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/regexp_replace/callback.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_replace/callback.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/records_partial_parser.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_partial_parser.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/process_shadow.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_shadow.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/process_exit.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_exit.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/predicate_qualified/false_read_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/false_read_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/predicate_qualified/module_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/module_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/predicate_qualified/type_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/type_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/stage3/parser-next/speculation/named-tryparse.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-next/speculation/named-tryparse.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/omitted_reader_direct.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/omitted_reader_direct.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/omitted_number.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/omitted_number.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/nested_pattern_parameter.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_pattern_parameter.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/047cb0d_n_optional.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/047cb0d_n_optional.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/047cb0d_n_element_method.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/047cb0d_n_element_method.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_string_startswith.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_startswith.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_string_includes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_includes.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_empty_alias_tdz.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_empty_alias_tdz.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/timers_source/delay_nan.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/timers_source/delay_nan.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/json_encode_last_use.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_encode_last_use.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/json_decode_coverage_tags.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_decode_coverage_tags.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/imported_const_cases/numeric.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/imported_const_cases/numeric.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_sort.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_sort.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/lower/testdata/fx6/p35.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/fx6/p35.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=false) (0.00s)
+        counts_test.go:453: invalid runtime count row for Program region: internal/oracle/testdata/program_region/parse.a (Program=false): ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/normalize_long.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/normalize_long.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/enum_views/keyed_only.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enum_views/keyed_only.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/enum_tag_flow_admitted.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enum_tag_flow_admitted.a: ""
+    --- FAIL: TestCountsAreRecorded_026/stage3/fixtures/enum-init-reach/call-graph-24.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/enum-init-reach/call-graph-24.a: ""
+    --- FAIL: TestCountsAreRecorded_026/stage3/fixtures/enum-init-reach/safe-constructor.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/enum-init-reach/safe-constructor.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/conditions_object.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_object.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/cast_class_fails.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_class_fails.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/callback_widening/number-index.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-index.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/lower/testdata/callable_producers/p135_tagged_unread.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/callable_producers/p135_tagged_unread.ts: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/node_commonjs_require_missing_cast.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_commonjs_require_missing_cast.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/async_review/accepted/snapshot_reference.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/snapshot_reference.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/uncaught_names_empty.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/uncaught_names_empty.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/radix_range.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/radix_range.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/borrow_element.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_element.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/class_layouts.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_layouts.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/adversarial_exits.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/adversarial_exits.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/exceptions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/exceptions.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/fresh_parser.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/fresh_parser.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/call_targets_element.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/call_targets_element.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/sorting.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/sorting.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/input_spread_local.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/input_spread_local.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/map_foreach_named_numbers.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_foreach_named_numbers.a: ""
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/map_foreach_objects.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_foreach_objects.a: ""
+--- FAIL: TestCountsAreRecorded_023 (0.00s)
+    --- FAIL: TestCountsAreRecorded_023/Program_region:_internal/oracle/testdata/program_region/parse.a_(Program=true) (0.00s)
+        counts_test.go:453: invalid runtime count row for Program region: internal/oracle/testdata/program_region/parse.a (Program=true): ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_object_has_own.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_object_has_own.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/rulings/node-array-unset.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-ahead/rulings/node-array-unset.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/parser-ahead/factories/already-complete.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/parser-ahead/factories/already-complete.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/refusal_rulings/function_unused.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/refusal_rulings/function_unused.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/readiness-number-uninitialized.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/readiness-number-uninitialized.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/interface-downcasts/default-destructure.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/default-destructure.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/matching_methods.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/matching_methods.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/unknown_narrowing_host.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/unknown_narrowing_host.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/structural_statics_mixed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/structural_statics_mixed.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_tsc_source_content.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_tsc_source_content.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_nullable_object_stale_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_object_stale_field.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/scout_values_optional_boolean.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_values_optional_boolean.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/fixtures/nested-functions/03_scanner_hoisting.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/nested-functions/03_scanner_hoisting.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/non_null_uninitialized_catch.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_catch.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/process_bad_code.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/process_bad_code.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_optional_receiver_foreach.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_optional_receiver_foreach.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_reduced_parameter_unreachable.a: ""
+    --- FAIL: TestCountsAreRecorded_023/stage3/namespaces/shapes/Parser.JSDocParser.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/namespaces/shapes/Parser.JSDocParser.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/namespaces_pair/main.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_pair/main.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/module_namespace_reads/initialized.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/module_namespace_reads/initialized.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_string_tostring.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_tostring.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_codes.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_codes.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/timers_source/callback_throw.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/timers_source/callback_throw.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/json_decode_coverage_depth_extra.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/json_decode_coverage_depth_extra.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/node_inspector_profile_data.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_inspector_profile_data.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/import_cycles/runtime/even.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/import_cycles/runtime/even.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/host_void_method.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_void_method.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/getters_census_throwing_object.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/getters_census_throwing_object.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_diagnostic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/function_values_diagnostic.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/function_values_chain.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/function_values_chain.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/enums_names.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/enums_names.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/entries_record_alias.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_record_alias.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/element_access_presence.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/element_access_presence.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/devirtualize_interfaces.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/devirtualize_interfaces.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/class_inheritance_generic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_inheritance_generic.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/census_optional_values_system.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_optional_values_system.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/cast_enum_const_string_fails.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_const_string_fails.ts: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/callback_widening/object-every.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/object-every.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/closure.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/closure.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/async_review/accepted/parallel_catch.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/async_review/accepted/parallel_catch.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_next.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_next.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/long_field_name.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/long_field_name.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/search_from.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/search_from.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/declared_later.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/declared_later.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_group_by.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_map_set_group_by.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/throw_keeps_old_value.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/throw_keeps_old_value.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/size_class_churn.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/size_class_churn.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/self_assignments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/self_assignments.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/read_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/read_order.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/functions.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/functions.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/library_fnexpr_loops.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_fnexpr_loops.a: ""
+    --- FAIL: TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a: ""
+--- FAIL: TestCountsAreRecorded_007 (0.01s)
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/set_foreach_keep.a (0.01s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/set_foreach_keep.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions_entries.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions_entries.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/refusal_rulings/merge_missing.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/refusal_rulings/merge_missing.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane4b/fixtures/required-missing.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane4b/fixtures/required-missing.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/node_process_host.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/node_process_host.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/read_arguments.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/read_arguments.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/typed_arrays_int32array.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/typed_arrays_int32array.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/self-compare/array-fill.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/self-compare/array-fill.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/scout_nullable_object_null_field.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/scout_nullable_object_null_field.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/records_literal_branches.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/records_literal_branches.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/fixtures/nested-functions/06_parser_token_state.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/fixtures/nested-functions/06_parser_token_state.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/non_null_uninitialized_iteration.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/non_null_uninitialized_iteration.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/predicate_qualified/defined_lie/main.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/predicate_qualified/defined_lie/main.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/placeholder_nonnull_null_optional.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/placeholder_nonnull_null_optional.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/library_optional_receiver_effects.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_optional_receiver_effects.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_mixed.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_mixed.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_destructured_tdz.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_destructured_tdz.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/nested_hoisting.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/nested_hoisting.a: ""
+    --- FAIL: TestCountsAreRecorded_007/stage3/namespaces/shapes/ReactNames.a (0.00s)
+        counts_test.go:453: invalid runtime count row for stage3/namespaces/shapes/ReactNames.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/namespaces_unknown_enum_before.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/namespaces_unknown_enum_before.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_trim.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_trim.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_concat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_concat.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_codepointat.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_string_codepointat.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_array_mutations.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/method_coverage_array_mutations.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/host_phantom_overload_primitive.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/host_phantom_overload_primitive.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/cast_enum_string_fails.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/cast_enum_string_fails.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions/flow_unknown_map.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions/flow_unknown_map.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions/flow_to_sorted.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions/flow_to_sorted.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/graph_regions/flow_group_by.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/graph_regions/flow_group_by.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_coverage_local_containers.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_coverage_local_containers.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/environment_callback_escape.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/environment_callback_escape.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/entries_checked_boolean.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/entries_checked_boolean.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/devirtualize_accessors.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/devirtualize_accessors.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/conditions_ledger78.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/conditions_ledger78.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static_private.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_features_static_private.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/class_features_static.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/census_append_overload.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/census_append_overload.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/collections.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/collections.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-generic.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-generic.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-find.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/callback_widening/number-find.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/lower/testdata/callable_producers/p23.ts (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/lower/testdata/callable_producers/p23.ts: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/regexp_match.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/regexp_match.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/undefined_references.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/undefined_references.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/void_discards_canonical.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/void_discards_canonical.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/map_union_value_host_file_info.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/map_union_value_host_file_info.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/adversarial_order.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/adversarial_order.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/library_object_assign.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/library_object_assign.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/modules/main.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/modules/main.a: ""
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/borrow_chain_walk.a (0.00s)
+        counts_test.go:453: invalid runtime count row for internal/oracle/testdata/borrow_chain_walk.a: ""
+panic: test timed out after 1h0m0s
+	running tests:
+		TestNativeAgreesWithNode_087/internal/oracle/testdata/census_optional_values_system.a (2s)
+		TestNativeAgreesWithNode_087/internal/oracle/testdata/class_inheritance_generic.a (2s)
+		TestNativeAgreesWithNode_087/internal/oracle/testdata/declared_later.a (1s)
