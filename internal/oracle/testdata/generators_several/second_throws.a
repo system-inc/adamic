@@ -1,0 +1,53 @@
+// A view fed by generators of two functions, only one of which can throw (#qk8rztp S3c-2): loud
+// throws after its first yield, quiet and calm never do. The step's caller must test for a pending
+// throw whenever any function feeding the view may leave one, so the throw out of loud's body is
+// caught by the try around the for-of, which prints it beside what the loop saw. Loud is listed
+// after quiet and before calm, so a step that asked only the first function its view lists would miss
+// the throw in walk's or in walkAgain's, whether the three are numbered in that order or its reverse.
+function* quiet(limit: number): Generator<string, void, undefined> {
+    for (let index = 0; index < limit; index++) {
+        yield `quiet ${String(index)}`;
+    }
+}
+function* loud(limit: number): Generator<string, void, undefined> {
+    yield `loud ${String(limit)}`;
+    throw new Error(`loud stopped after ${String(limit)}`);
+}
+function* calm(word: string): Generator<string, void, undefined> {
+    yield `${word} once`;
+    yield `${word} twice`;
+}
+function walk(steps: Iterable<string>): string {
+    let seen = '';
+    try {
+        for (const step of steps) {
+            seen += `${step}, `;
+        }
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            seen += `caught ${error.message}`;
+        }
+    }
+    return seen;
+}
+function walkAgain(steps: Iterable<string>): string {
+    let seen = '';
+    try {
+        for (const step of steps) {
+            seen += `${step}; `;
+        }
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            seen += `caught again ${error.message}`;
+        }
+    }
+    return seen;
+}
+console.log(walk(quiet(2)));
+console.log(walk(loud(3)));
+console.log(walk(quiet(0)));
+console.log(walkAgain(calm(`c${String(1)}`)));
+console.log(walkAgain(loud(4)));
+console.log(walkAgain(calm(`c${String(2)}`)));
