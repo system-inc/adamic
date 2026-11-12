@@ -952,7 +952,7 @@ func (f *scanCycleFinder) graphAdoptionBoundary() error {
 		if site != nil {
 			where = f.l.program.Where(site)
 		}
-		return &Refused{Where: where, What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+		return &Refused{Where: where, What: reason, Fix: "keep records, checked ObjectCalls and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
 	}
 	return nil
 }
