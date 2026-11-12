@@ -1,0 +1,2 @@
+export interface Node { readonly kind: number }
+export interface Identifier extends Node { readonly kind: 1; readonly text: string }

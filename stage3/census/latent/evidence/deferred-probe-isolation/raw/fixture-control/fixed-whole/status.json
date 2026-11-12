@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/fixture-control/fixed-whole/instantiations.json",
+    "/workspace/ldpi/fixed-entry-census",
+    "/workspace/ldpi/split-fixture/main.ts",
+    "/workspace/ldpi/fixture-control/fixed-whole/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 0.4412092929997016,
+  "peak_rss_kib": 34040
+}

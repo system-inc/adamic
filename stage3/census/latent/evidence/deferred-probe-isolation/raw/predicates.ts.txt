@@ -1,0 +1,3 @@
+import type { Node, Identifier } from "./types";
+export function isIdentifier(node: Node): node is Identifier { return node.kind === 1; }
+export function identity<T>(value: T): T { return value; }

@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/1-fixed/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/1-fixed/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/1-fixed/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/utilities.ts\n/workspace/ldpi/adapted/src/compiler/moduleSpecifiers.ts\n/workspace/ldpi/adapted/src/compiler/executeCommandLine.ts\n/workspace/ldpi/adapted/src/compiler/transformers/declarations.ts\n/workspace/ldpi/adapted/src/compiler/transformers/ts.ts\n/workspace/ldpi/adapted/src/compiler/transformers/destructuring.ts\n/workspace/ldpi/adapted/src/compiler/transformers/declarations/diagnostics.ts\n/workspace/ldpi/adapted/src/compiler/transformers/jsx.ts\n/workspace/ldpi/adapted/src/compiler/factory/parenthesizerRules.ts\n/workspace/ldpi/adapted/src/compiler/transformers/classThis.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2020.ts\n/workspace/ldpi/adapted/src/compiler/symbolWalker.ts\n/workspace/ldpi/adapted/src/compiler/builderStatePublic.ts\n/workspace/ldpi/adapted/src/tsc/_namespaces/ts.ts",
+    "/workspace/ldpi/fixed-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/1-fixed/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 1384.776237725,
+  "peak_rss_kib": 1842248
+}

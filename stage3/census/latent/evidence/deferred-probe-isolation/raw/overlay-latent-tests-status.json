@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "-tags=census_overlay",
+    "-overlay=/workspace/ldpi/fixed-overlay/overlay.json",
+    "./stage3/census/latent/...",
+    "-count=1",
+    "-json",
+    "-timeout=25s"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 129.12654539999858,
+  "peak_rss_kib": 1529744
+}

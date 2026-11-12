@@ -1,0 +1,447 @@
+{
+  "files": 81,
+  "units": 4566,
+  "groups": [
+    {
+      "id": 0,
+      "weight": 3183.98046875,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/checker.ts",
+          "bytes": 3155948,
+          "units": 51
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "weight": 3142.16796875,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/utilities.ts",
+          "bytes": 515375,
+          "units": 893
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/moduleSpecifiers.ts",
+          "bytes": 80070,
+          "units": 49
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/executeCommandLine.ts",
+          "bytes": 54191,
+          "units": 50
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/declarations.ts",
+          "bytes": 99946,
+          "units": 14
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/ts.ts",
+          "bytes": 116761,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/destructuring.ts",
+          "bytes": 30894,
+          "units": 22
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/declarations/diagnostics.ts",
+          "bytes": 47414,
+          "units": 8
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/jsx.ts",
+          "bytes": 36259,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/parenthesizerRules.ts",
+          "bytes": 34072,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/classThis.ts",
+          "bytes": 5565,
+          "units": 7
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2020.ts",
+          "bytes": 13128,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/symbolWalker.ts",
+          "bytes": 8433,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/builderStatePublic.ts",
+          "bytes": 392,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/tsc/_namespaces/ts.ts",
+          "bytes": 104,
+          "units": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "weight": 3140.4404296875,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/types.ts",
+          "bytes": 493959,
+          "units": 876
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/path.ts",
+          "bytes": 44406,
+          "units": 83
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/visitorPublic.ts",
+          "bytes": 88114,
+          "units": 41
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/utilities.ts",
+          "bytes": 35851,
+          "units": 50
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/watchPublic.ts",
+          "bytes": 61488,
+          "units": 25
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/watchUtilities.ts",
+          "bytes": 35634,
+          "units": 26
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2017.ts",
+          "bytes": 50205,
+          "units": 6
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/typeSerializer.ts",
+          "bytes": 28972,
+          "units": 6
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/legacyDecorators.ts",
+          "bytes": 36740,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+          "bytes": 18691,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/tsbuild.ts",
+          "bytes": 5332,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/utilitiesPublic.ts",
+          "bytes": 2131,
+          "units": 4
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2021.ts",
+          "bytes": 4144,
+          "units": 2
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "weight": 3141.9619140625,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/parser.ts",
+          "bytes": 541346,
+          "units": 75
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/moduleNameResolver.ts",
+          "bytes": 181882,
+          "units": 163
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/scanner.ts",
+          "bytes": 219806,
+          "units": 86
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/nodeFactory.ts",
+          "bytes": 336651,
+          "units": 26
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/utilities.ts",
+          "bytes": 76635,
+          "units": 108
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/sys.ts",
+          "bytes": 86128,
+          "units": 62
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/emitHelpers.ts",
+          "bytes": 69204,
+          "units": 45
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/resolutionCache.ts",
+          "bytes": 82271,
+          "units": 31
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/sourcemap.ts",
+          "bytes": 32292,
+          "units": 31
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/module/system.ts",
+          "bytes": 85511,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/namedEvaluation.ts",
+          "bytes": 22318,
+          "units": 21
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/performance.ts",
+          "bytes": 6161,
+          "units": 24
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/builderState.ts",
+          "bytes": 26209,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/performanceCore.ts",
+          "bytes": 3360,
+          "units": 12
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/nodeChildren.ts",
+          "bytes": 2252,
+          "units": 6
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/baseNodeFactory.ts",
+          "bytes": 2682,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/hostErrors.ts",
+          "bytes": 758,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+          "bytes": 111,
+          "units": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "weight": 3142.4970703125,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/core.ts",
+          "bytes": 93387,
+          "units": 264
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/commandLineParser.ts",
+          "bytes": 185569,
+          "units": 171
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/nodeTests.ts",
+          "bytes": 37936,
+          "units": 228
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/tsbuildPublic.ts",
+          "bytes": 114771,
+          "units": 106
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/builder.ts",
+          "bytes": 118708,
+          "units": 86
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/classFields.ts",
+          "bytes": 156729,
+          "units": 23
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/_namespaces/ts.ts",
+          "bytes": 3323,
+          "units": 78
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/esDecorators.ts",
+          "bytes": 127406,
+          "units": 9
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/emitNode.ts",
+          "bytes": 12800,
+          "units": 41
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/expressionToTypeNode.ts",
+          "bytes": 70491,
+          "units": 9
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/semver.ts",
+          "bytes": 17970,
+          "units": 28
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/builderPublic.ts",
+          "bytes": 11609,
+          "units": 16
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/debug.ts",
+          "bytes": 29764,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/corePublic.ts",
+          "bytes": 1330,
+          "units": 9
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/taggedTemplate.ts",
+          "bytes": 5489,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+          "bytes": 608,
+          "units": 6
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+          "bytes": 3750,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/_namespaces/ts.performance.ts",
+          "bytes": 101,
+          "units": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "weight": 3140.7783203125,
+      "files": [
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts",
+          "bytes": 104648,
+          "units": 251
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/diagnosticInformationMap.generated.ts",
+          "bytes": 579194,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/program.ts",
+          "bytes": 271535,
+          "units": 85
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/emitter.ts",
+          "bytes": 274785,
+          "units": 50
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2015.ts",
+          "bytes": 231854,
+          "units": 13
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/binder.ts",
+          "bytes": 195526,
+          "units": 16
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/generators.ts",
+          "bytes": 124532,
+          "units": 16
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/watch.ts",
+          "bytes": 45864,
+          "units": 46
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/module/module.ts",
+          "bytes": 111833,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2018.ts",
+          "bytes": 69990,
+          "units": 4
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformer.ts",
+          "bytes": 30053,
+          "units": 17
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/esnext.ts",
+          "bytes": 32654,
+          "units": 9
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/tracing.ts",
+          "bytes": 15299,
+          "units": 9
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/programDiagnostics.ts",
+          "bytes": 21401,
+          "units": 5
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/factory/nodeConverters.ts",
+          "bytes": 7275,
+          "units": 3
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2016.ts",
+          "bytes": 4519,
+          "units": 2
+        },
+        {
+          "path": "/workspace/ldpi/adapted/src/compiler/transformers/es2019.ts",
+          "bytes": 1563,
+          "units": 2
+        }
+      ]
+    }
+  ]
+}

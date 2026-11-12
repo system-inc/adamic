@@ -1,0 +1,125 @@
+{
+  "complete": true,
+  "children": [
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/0-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/0-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/0-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/checker.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/0-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 283.7563642639998,
+      "peak_rss_kib": 934916
+    },
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/1-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/1-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/1-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/utilities.ts\n/workspace/ldpi/adapted/src/compiler/moduleSpecifiers.ts\n/workspace/ldpi/adapted/src/compiler/executeCommandLine.ts\n/workspace/ldpi/adapted/src/compiler/transformers/declarations.ts\n/workspace/ldpi/adapted/src/compiler/transformers/ts.ts\n/workspace/ldpi/adapted/src/compiler/transformers/destructuring.ts\n/workspace/ldpi/adapted/src/compiler/transformers/declarations/diagnostics.ts\n/workspace/ldpi/adapted/src/compiler/transformers/jsx.ts\n/workspace/ldpi/adapted/src/compiler/factory/parenthesizerRules.ts\n/workspace/ldpi/adapted/src/compiler/transformers/classThis.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2020.ts\n/workspace/ldpi/adapted/src/compiler/symbolWalker.ts\n/workspace/ldpi/adapted/src/compiler/builderStatePublic.ts\n/workspace/ldpi/adapted/src/tsc/_namespaces/ts.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/1-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 1341.8656669469983,
+      "peak_rss_kib": 1821432
+    },
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/2-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/2-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/2-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/types.ts\n/workspace/ldpi/adapted/src/compiler/path.ts\n/workspace/ldpi/adapted/src/compiler/visitorPublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/utilities.ts\n/workspace/ldpi/adapted/src/compiler/watchPublic.ts\n/workspace/ldpi/adapted/src/compiler/watchUtilities.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2017.ts\n/workspace/ldpi/adapted/src/compiler/transformers/typeSerializer.ts\n/workspace/ldpi/adapted/src/compiler/transformers/legacyDecorators.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/esnextAnd2015.ts\n/workspace/ldpi/adapted/src/compiler/tsbuild.ts\n/workspace/ldpi/adapted/src/compiler/factory/utilitiesPublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2021.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/2-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 407.57930352199946,
+      "peak_rss_kib": 1307276
+    },
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/3-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/3-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/3-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/parser.ts\n/workspace/ldpi/adapted/src/compiler/moduleNameResolver.ts\n/workspace/ldpi/adapted/src/compiler/scanner.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeFactory.ts\n/workspace/ldpi/adapted/src/compiler/factory/utilities.ts\n/workspace/ldpi/adapted/src/compiler/sys.ts\n/workspace/ldpi/adapted/src/compiler/factory/emitHelpers.ts\n/workspace/ldpi/adapted/src/compiler/resolutionCache.ts\n/workspace/ldpi/adapted/src/compiler/sourcemap.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/system.ts\n/workspace/ldpi/adapted/src/compiler/transformers/namedEvaluation.ts\n/workspace/ldpi/adapted/src/compiler/performance.ts\n/workspace/ldpi/adapted/src/compiler/builderState.ts\n/workspace/ldpi/adapted/src/compiler/performanceCore.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeChildren.ts\n/workspace/ldpi/adapted/src/compiler/factory/baseNodeFactory.ts\n/workspace/ldpi/adapted/src/compiler/hostErrors.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/3-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 927.6358116869997,
+      "peak_rss_kib": 1798292
+    },
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/4-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/4-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/4-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/core.ts\n/workspace/ldpi/adapted/src/compiler/commandLineParser.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeTests.ts\n/workspace/ldpi/adapted/src/compiler/tsbuildPublic.ts\n/workspace/ldpi/adapted/src/compiler/builder.ts\n/workspace/ldpi/adapted/src/compiler/transformers/classFields.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.ts\n/workspace/ldpi/adapted/src/compiler/transformers/esDecorators.ts\n/workspace/ldpi/adapted/src/compiler/factory/emitNode.ts\n/workspace/ldpi/adapted/src/compiler/expressionToTypeNode.ts\n/workspace/ldpi/adapted/src/compiler/semver.ts\n/workspace/ldpi/adapted/src/compiler/builderPublic.ts\n/workspace/ldpi/adapted/src/compiler/debug.ts\n/workspace/ldpi/adapted/src/compiler/corePublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/taggedTemplate.ts\n/workspace/ldpi/adapted/src/tsc/tsc.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/4-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 871.6629634889996,
+      "peak_rss_kib": 2261952
+    },
+    {
+      "argv": [
+        "env",
+        "LATENT_FULL=0",
+        "LATENT_SPECULATIVE=0",
+        "LATENT_ASSERT_NO_OUTPUT=1",
+        "LATENT_TIMES=/workspace/ldpi/slices/5-shallow/units.jsonl",
+        "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/5-shallow/prepasses.tsv",
+        "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/5-shallow/instantiations.json",
+        "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts\n/workspace/ldpi/adapted/src/compiler/diagnosticInformationMap.generated.ts\n/workspace/ldpi/adapted/src/compiler/program.ts\n/workspace/ldpi/adapted/src/compiler/emitter.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2015.ts\n/workspace/ldpi/adapted/src/compiler/binder.ts\n/workspace/ldpi/adapted/src/compiler/transformers/generators.ts\n/workspace/ldpi/adapted/src/compiler/watch.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/module.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2018.ts\n/workspace/ldpi/adapted/src/compiler/transformer.ts\n/workspace/ldpi/adapted/src/compiler/transformers/esnext.ts\n/workspace/ldpi/adapted/src/compiler/tracing.ts\n/workspace/ldpi/adapted/src/compiler/programDiagnostics.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeConverters.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2016.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2019.ts",
+        "/workspace/ldpi/shallow-split-census",
+        "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+        "/workspace/ldpi/slices/5-shallow/census.jsonl"
+      ],
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 1214.6040748619998,
+      "peak_rss_kib": 1474440
+    }
+  ],
+  "file_records": 81,
+  "unit_records": 4566,
+  "status_counts": {
+    "attempted": 4063,
+    "deferred_generic_instantiation": 503
+  }
+}

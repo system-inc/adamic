@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/4-fixed/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/4-fixed/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/4-fixed/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/core.ts\n/workspace/ldpi/adapted/src/compiler/commandLineParser.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeTests.ts\n/workspace/ldpi/adapted/src/compiler/tsbuildPublic.ts\n/workspace/ldpi/adapted/src/compiler/builder.ts\n/workspace/ldpi/adapted/src/compiler/transformers/classFields.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.ts\n/workspace/ldpi/adapted/src/compiler/transformers/esDecorators.ts\n/workspace/ldpi/adapted/src/compiler/factory/emitNode.ts\n/workspace/ldpi/adapted/src/compiler/expressionToTypeNode.ts\n/workspace/ldpi/adapted/src/compiler/semver.ts\n/workspace/ldpi/adapted/src/compiler/builderPublic.ts\n/workspace/ldpi/adapted/src/compiler/debug.ts\n/workspace/ldpi/adapted/src/compiler/corePublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/taggedTemplate.ts\n/workspace/ldpi/adapted/src/tsc/tsc.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.performance.ts",
+    "/workspace/ldpi/fixed-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/4-fixed/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 883.8601542959987,
+  "peak_rss_kib": 2434272
+}

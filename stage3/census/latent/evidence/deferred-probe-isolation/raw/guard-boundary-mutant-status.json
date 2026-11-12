@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "./stage3/census/latent/overlaytext",
+    "-run",
+    "^TestLatentDeferredProbeSnapshotBoundaryHcxsh1k$",
+    "-count=1",
+    "-timeout=25s",
+    "-v"
+  ],
+  "child_exit_code": 1,
+  "deadline_expired": false,
+  "wall_seconds": 0.9431013469984464,
+  "peak_rss_kib": 90056
+}

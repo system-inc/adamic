@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/0-fixed/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/0-fixed/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/0-fixed/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/checker.ts",
+    "/workspace/ldpi/fixed-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/0-fixed/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 285.481152331,
+  "peak_rss_kib": 969068
+}

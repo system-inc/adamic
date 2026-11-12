@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/2-shallow/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/2-shallow/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/2-shallow/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/types.ts\n/workspace/ldpi/adapted/src/compiler/path.ts\n/workspace/ldpi/adapted/src/compiler/visitorPublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/utilities.ts\n/workspace/ldpi/adapted/src/compiler/watchPublic.ts\n/workspace/ldpi/adapted/src/compiler/watchUtilities.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2017.ts\n/workspace/ldpi/adapted/src/compiler/transformers/typeSerializer.ts\n/workspace/ldpi/adapted/src/compiler/transformers/legacyDecorators.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/esnextAnd2015.ts\n/workspace/ldpi/adapted/src/compiler/tsbuild.ts\n/workspace/ldpi/adapted/src/compiler/factory/utilitiesPublic.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2021.ts",
+    "/workspace/ldpi/shallow-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/2-shallow/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 407.57930352199946,
+  "peak_rss_kib": 1307276
+}

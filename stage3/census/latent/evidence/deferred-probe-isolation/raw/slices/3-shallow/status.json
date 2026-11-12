@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/3-shallow/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/3-shallow/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/3-shallow/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/parser.ts\n/workspace/ldpi/adapted/src/compiler/moduleNameResolver.ts\n/workspace/ldpi/adapted/src/compiler/scanner.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeFactory.ts\n/workspace/ldpi/adapted/src/compiler/factory/utilities.ts\n/workspace/ldpi/adapted/src/compiler/sys.ts\n/workspace/ldpi/adapted/src/compiler/factory/emitHelpers.ts\n/workspace/ldpi/adapted/src/compiler/resolutionCache.ts\n/workspace/ldpi/adapted/src/compiler/sourcemap.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/system.ts\n/workspace/ldpi/adapted/src/compiler/transformers/namedEvaluation.ts\n/workspace/ldpi/adapted/src/compiler/performance.ts\n/workspace/ldpi/adapted/src/compiler/builderState.ts\n/workspace/ldpi/adapted/src/compiler/performanceCore.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeChildren.ts\n/workspace/ldpi/adapted/src/compiler/factory/baseNodeFactory.ts\n/workspace/ldpi/adapted/src/compiler/hostErrors.ts\n/workspace/ldpi/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "/workspace/ldpi/shallow-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/3-shallow/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 927.6358116869997,
+  "peak_rss_kib": 1798292
+}

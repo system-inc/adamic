@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "./stage3/census/latent/...",
+    "-count=1",
+    "-json",
+    "-timeout=25s"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 20.600023998000324,
+  "peak_rss_kib": 223968
+}

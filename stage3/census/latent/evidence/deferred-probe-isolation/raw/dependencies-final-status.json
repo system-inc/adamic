@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "./internal/compilercensus",
+    "-run",
+    "^TestDependenciesCoverTheDeclaredMap$",
+    "-count=1",
+    "-v",
+    "-timeout=25s"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 3.0956728760011174,
+  "peak_rss_kib": 151416
+}

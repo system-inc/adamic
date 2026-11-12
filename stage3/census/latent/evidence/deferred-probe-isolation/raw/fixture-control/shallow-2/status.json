@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/fixture-control/shallow-2/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/split-fixture/types.ts",
+    "/workspace/ldpi/shallow-split-census",
+    "/workspace/ldpi/split-fixture/main.ts",
+    "/workspace/ldpi/fixture-control/shallow-2/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 0.11699727599989274,
+  "peak_rss_kib": 32044
+}

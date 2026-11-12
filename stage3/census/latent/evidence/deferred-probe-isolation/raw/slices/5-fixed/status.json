@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "env",
+    "LATENT_FULL=0",
+    "LATENT_SPECULATIVE=0",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "LATENT_TIMES=/workspace/ldpi/slices/5-fixed/units.jsonl",
+    "LATENT_PREPASS_TIMES=/workspace/ldpi/slices/5-fixed/prepasses.tsv",
+    "LDPI_INSTANTIATIONS=/workspace/ldpi/slices/5-fixed/instantiations.json",
+    "LATENT_ONLY_FILE=/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts\n/workspace/ldpi/adapted/src/compiler/diagnosticInformationMap.generated.ts\n/workspace/ldpi/adapted/src/compiler/program.ts\n/workspace/ldpi/adapted/src/compiler/emitter.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2015.ts\n/workspace/ldpi/adapted/src/compiler/binder.ts\n/workspace/ldpi/adapted/src/compiler/transformers/generators.ts\n/workspace/ldpi/adapted/src/compiler/watch.ts\n/workspace/ldpi/adapted/src/compiler/transformers/module/module.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2018.ts\n/workspace/ldpi/adapted/src/compiler/transformer.ts\n/workspace/ldpi/adapted/src/compiler/transformers/esnext.ts\n/workspace/ldpi/adapted/src/compiler/tracing.ts\n/workspace/ldpi/adapted/src/compiler/programDiagnostics.ts\n/workspace/ldpi/adapted/src/compiler/factory/nodeConverters.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2016.ts\n/workspace/ldpi/adapted/src/compiler/transformers/es2019.ts",
+    "/workspace/ldpi/fixed-split-census",
+    "/workspace/ldpi/adapted/src/tsc/tsc.ts",
+    "/workspace/ldpi/slices/5-fixed/census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "deadline_expired": false,
+  "wall_seconds": 1208.8409272299996,
+  "peak_rss_kib": 1509532
+}

@@ -1,0 +1,13 @@
+import type { Node } from "./types";
+import { identity, isIdentifier } from "./predicates";
+function run(node: Node): boolean { return isIdentifier(identity(node)); }
+function callIdentity(): number { return identity(1); }
+const actual = { kind: 1, text: "ok" };
+console.log(String(run(actual)));
+function extraIdentity0(): number { return identity(2); }
+function extraIdentity1(): number { return identity(3); }
+function extraIdentity2(): number { return identity(4); }
+function extraIdentity3(): number { return identity(5); }
+function extraIdentity4(): number { return identity(6); }
+function extraIdentity5(): number { return identity(7); }
+function extraIdentity6(): number { return identity(8); }
