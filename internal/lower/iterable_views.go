@@ -276,7 +276,7 @@ func (l *lowering) checkIterableViews() error {
 	handed := map[int]bool{}
 	// The proof's own graph, which lets a nested function only ever called directly take its
 	// parameters from its calls, as a module function does (onlyCalledDirectly, #qk8rztp S3c-1).
-	graph := newIterableViewFlowGraph(l.result)
+	graph := l.iterableViewFlowGraph(l.result)
 	graph.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CollectionIterator:
