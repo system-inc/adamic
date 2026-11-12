@@ -275,7 +275,7 @@ func (l *lowering) methodValueStop(node *ast.Node) error {
 	if l.directBindMethodRead(node) {
 		return nil
 	}
-	if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !assertedCallee(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) && !l.nodeProcessMethodObservation(node) && !l.methodPresenceTest(node) {
+	if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !assertedCallee(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) && !l.nodeProcessMethodObservation(node) && !l.methodPresenceTest(node) && !l.optionalMemberPresenceTest(node) {
 		// A method read as a value loses its object: this is undefined when it's called.
 		access := node.AsPropertyAccessExpression()
 		if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
