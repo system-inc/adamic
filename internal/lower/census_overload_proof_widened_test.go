@@ -8,25 +8,26 @@ import (
 
 // tsc's getSupportedExtensions (utilities.ts:9993), cut to its proof: the first overload's caller passes
 // no extra extensions, so `!extra || extra.length === 0` sends it to a return of the narrower constant,
-// and the body proves overload 1's promise at the declaration (#z5d0jye step 2). Mutant: censusTrustedTest
+// and the body proves overload 1's promise at the declaration (#z5d0jye step 2). The inner arrays are
+// readonly here; tsc's are mutable, which Adamic refuses as invariance on its own (adamic/invariant-mutable). Mutant: censusTrustedTest
 // without its ! and || arms, and the declaration is refused.
 func TestOverloadProofReadsAnOrOfTruthinessAndLength(t *testing.T) {
 	t.Parallel()
 	source := `type Extension = ".ts" | ".js";
-const tsExtensions: readonly Extension[][] = [[".ts"]];
-const allExtensions: readonly Extension[][] = [[".ts"], [".js"]];
+const tsExtensions: readonly (readonly Extension[])[] = [[".ts"]];
+const allExtensions: readonly (readonly Extension[])[] = [[".ts"], [".js"]];
 interface Options { readonly allowJs?: boolean }
 interface Extra { readonly extension: string }
-function supported(options?: Options): readonly Extension[][];
-function supported(options?: Options, extra?: readonly Extra[]): readonly string[][];
-function supported(options?: Options, extra?: readonly Extra[]): readonly string[][] {
+function supported(options?: Options): readonly (readonly Extension[])[];
+function supported(options?: Options, extra?: readonly Extra[]): readonly (readonly string[])[];
+function supported(options?: Options, extra?: readonly Extra[]): readonly (readonly string[])[] {
     const needJs = options !== undefined && options.allowJs === true;
     if (!extra || extra.length === 0) {
         return needJs ? allExtensions : tsExtensions;
     }
     return extra.map(x => [x.extension]);
 }
-const all: readonly Extension[][] = supported({ allowJs: true });
+const all: readonly (readonly Extension[])[] = supported({ allowJs: true });
 console.log(String(all.length));
 console.log(String(supported(undefined).length));
 console.log(String(supported(undefined, [{ extension: ".vue" }]).length));
@@ -81,28 +82,25 @@ func TestOverloadProofKeepsRefusing(t *testing.T) {
 		// tsc's concatenate overload 4: concat(undefined, []) returns undefined where it promises T[]. b's
 		// test narrows nothing but b, so a stays possibly undefined at `return a`.
 		{"concatenate's undefined first array", strings.Replace(overloadConcatenateShape, "LIE", "function concat<T>(a: T[] | undefined, b: T[]): T[];", 1), ".ts", "overload 2 of concat result T[] cannot be served"},
-		// A call in the test stops the proof, a lying predicate's included. Mutant: censusTrustedTest
-		// trusting any leaf, and the declaration is accepted.
-		{"a predicate call in the test", `function isNumber(x: string | number): x is number { return x !== "never"; }
+		// A call in the test stops the proof, a predicate's included, though this one is proven. In .a, where
+		// a number taken out of string | number has no call-site check. Mutant: censusTrustedTest trusting
+		// any leaf, and the declaration is accepted.
+		{"a predicate call in the test", `function isNumber(x: string | number): x is number { return typeof x === "number"; }
 function only(x: string | number): number;
 function only(x: string | number): string | number;
 function only(x: string | number): string | number { if (isNumber(x)) return x; return 0; }
 console.log(String(only("a")));
-`, ".ts", "overload 1 of only result number cannot be served"},
-		// A length with a literal part is a discriminant, so its comparison narrows: a tuple, an object
-		// member like { length: 1 }, and a type parameter whose constraint has one. Mutant: censusLengthPlain
-		// answering yes, and the One program is accepted.
-		{"a tuple's length", `function head(xs: [string]): string;
-function head(xs: [string] | [number, number]): string | number;
-function head(xs: [string] | [number, number]): string | number { if (xs.length === 2) return 0; return "s"; }
-console.log(String(head(["a"])));
-`, ".ts", "overload 1 of head result string cannot be served"},
+`, ".a", "overload 1 of only result number cannot be served"},
+		// A length with a literal part is a discriminant, so its comparison narrows: an object member like
+		// { length: 1 }, and a type parameter whose constraint has one. In .a, where a string taken out of
+		// string | number has no call-site check. A tuple in a union stops earlier today, at lowering its
+		// length. Mutant: censusLengthPlain answering yes, and the One program is accepted.
 		{"a member whose length is a literal", `interface One { readonly length: 1; readonly first: string }
 function first(x: One): string;
 function first(x: One | readonly string[]): string | number;
 function first(x: One | readonly string[]): string | number { if (x.length === 1) return "s"; return 0; }
 console.log(String(first({ length: 1, first: "a" })));
-`, ".ts", "overload 1 of first result string cannot be served"},
+`, ".a", "overload 1 of first result string cannot be served"},
 		{"a type parameter whose constraint's length is a literal", `function size<T extends { readonly length: 1 }>(x: T): string;
 function size<T extends { readonly length: 1 }>(x: T): string | number;
 function size<T extends { readonly length: 1 }>(x: T): string | number { if (x.length === 1) return "s"; return 0; }
