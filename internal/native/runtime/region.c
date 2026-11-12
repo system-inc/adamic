@@ -52,9 +52,12 @@ static size_t object_size(size_t count) {
 }
 
 // ADAMIC_REGION_BLOCK_CACHE is what a thread keeps after its last region ends: a build constant, never
-// read from the environment, so a program behaves the same whatever shell runs it. 1 MB took 93% of
-// trees' minor faults and 37% of its wall on Home; 16 MB bought 6 more points for 15 MB more per thread
-// (Runtime Performance, #yecmp1d).
+// read from the environment, so a program behaves the same whatever shell runs it. At 1 MB, trees runs
+// 3.12 s against main's 3.78 under glibc as shipped and 3.22 against 3.51 with its thresholds pinned,
+// faults 627K against 750K (Runtime Performance on Home, #yecmp1d). The 1.91 s a malloc'd cache showed
+// came from glibc keeping freed arenas warm, about 50 MB a thread, which is the retention this rules out.
+// trees' regions outgrow 1 MB, so most of its remaining time is allocation, not the cache (Adamic's
+// ruling). A larger cap for a target is a build input in its unit key, after a measurement.
 #ifndef ADAMIC_REGION_BLOCK_CACHE
 #define ADAMIC_REGION_BLOCK_CACHE ((size_t)1048576)
 #endif
