@@ -1,0 +1,63 @@
+{
+  "implementation": "9ad919ace",
+  "base": "838809f7a",
+  "required_checks": {
+    "setup": 0,
+    "api_install": 0,
+    "fresh_apply": 0,
+    "normal_build_before": 0,
+    "normal_build_after": 0,
+    "adamic_types": {
+      "roots": 79,
+      "all_exit_zero": true
+    },
+    "javascript": {
+      "files": 10,
+      "byte_identical": true
+    },
+    "exports": {
+      "string_keys": 2256,
+      "symbol_keys": 0,
+      "identical": true
+    },
+    "node_witness": {
+      "both_exit_zero": true,
+      "types_bytes": 378816,
+      "legend_bytes": 179,
+      "byte_identical": true
+    },
+    "full_census": {
+      "before_and_after_checker_diagnostics": 0,
+      "units_each": 23,
+      "retired_variance_refusals_gone": true,
+      "now": "NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)"
+    },
+    "core_first_stop": {
+      "checker_diagnostics": 0,
+      "error": "/workspace/tracing-measured-after/src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "kind": "Refused",
+      "output": false,
+      "reason": "an ambient value declaration",
+      "root": "/workspace/tracing-measured-after/src/compiler/core.ts",
+      "where": "/workspace/tracing-measured-after/src/compiler/tracing.ts:380:1"
+    },
+    "restoring_mutants": {
+      "62": "340:14 Refused",
+      "63": "359:10 Refused"
+    },
+    "lane": {
+      "shards": 398,
+      "all_exit_zero": true,
+      "all_pass": true,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "wall_seconds": 3178.23055925,
+      "max_seconds": 21.374168053000176
+    }
+  },
+  "checkpoint_branch": "typescript/tracing-fs-views-checkpoint",
+  "evidence_branch": "typescript/tracing-fs-views-evidence"
+}

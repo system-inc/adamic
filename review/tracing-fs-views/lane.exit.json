@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/measure_shards.py",
+    "/workspace/tracing-lane-run",
+    "--concurrency",
+    "2"
+  ],
+  "exit": 0,
+  "seconds": 3178.316810504
+}

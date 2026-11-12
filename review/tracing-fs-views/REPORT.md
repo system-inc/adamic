@@ -76,8 +76,14 @@ output. No backend is imported or invoked.
 
 ## Lane
 
-The complete 398-shard run is in progress. Final ledger and child exits will be
-added when it finishes.
+All 398 shards pass, all child exits are zero, and all walls are below 30
+seconds. Concurrency: 2. Wall: 3178.231 seconds. Maximum
+shard: 21.374 seconds. Counts: {'pass': 106366, 'fail': 1, 'skip': 0}.
+The full ledger is lane-ledger.json; raw per-shard reports, observations and
+logs are in lane-evidence.tar.gz. No cached tree or private build view is
+included in that archive. The raw upstream counts retain the one expected,
+mechanically sanctioned Public APIs snapshot case in the unchanged lane plan;
+all 398 shard verdicts pass.
 
 ## Provenance and discarded measurement attempts
 
