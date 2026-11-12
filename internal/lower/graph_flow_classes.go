@@ -254,6 +254,7 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.InstanceOf]():               {class: graphFlowCannotHold, why: "a boolean (ir.go:1156)"},
 	reflect.TypeFor[ir.Unary]():                    {class: graphFlowCannotHold, why: "a number or a boolean (ir.go:1307)"},
 	reflect.TypeFor[ir.Binary]():                   {class: graphFlowCannotHold, why: "a number, a boolean or a maybe boolean (ir.go:1314)"},
+	reflect.TypeFor[ir.FunctionLength]():           {class: graphFlowCannotHold, why: "a number or a maybe number (ir.FunctionLength.Type)"},
 	reflect.TypeFor[ir.Length]():                   {class: graphFlowCannotHold, why: "a number or a maybe number (ir.go:1179)"},
 	reflect.TypeFor[ir.MathCall]():                 {class: graphFlowCannotHold, why: "a number (ir.go:1185)"},
 	reflect.TypeFor[ir.StringFromCodes]():          {class: graphFlowCannotHold, why: "a string (ir.go:1186)"},

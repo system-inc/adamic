@@ -40,7 +40,7 @@ var inertExpressions = func() map[string]bool {
 		ArrayPush ArrayReverse ArraySearch ArraySlice ArraySplice Binary BooleanConstant BooleanToString Box CharCodeAt
 		CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Comma Conditional Defined Effects ErrorToString
 		GeneratorDone HasAccessor HasOwn HasProperty InstanceOf IsCollectionIterator IsGenerator IsNull IsUndefined
-		IterableOf JSONDecode JSONNull JoinEnter JoinLeave Length LibraryGlobal Logical LogicalAssignment MakeClosure
+		IterableOf JSONDecode JSONNull JoinEnter JoinLeave FunctionLength Length LibraryGlobal Logical LogicalAssignment MakeClosure
 		MakeError MapClear MapDelete MapEntries MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf
 		Narrow NodeBufferCall Null NumberCall NumberConstant NumberFormat NumberToString ObjectKeys OwnFunction PhantomMember PlaceholderUse PromiseValue Property Read RecordCall RecordCoalesce RecordLiteral
 		RecordStorage RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant

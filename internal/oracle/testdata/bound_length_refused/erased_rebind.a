@@ -1,0 +1,8 @@
+// Refused: rebinding can hide a class-method entry without source arity metadata.
+// Measurement before the refusal: Node prints 2; native read 0.
+class Host { m(a: number, b: number): number { return a + b; } }
+const host = new Host();
+let target: (a: number, b: number) => number = (a, b) => a + b;
+target = host.m.bind(host);
+const rebound = target.bind(undefined);
+console.log(String(rebound.length));

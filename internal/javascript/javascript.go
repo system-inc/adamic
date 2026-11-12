@@ -83,7 +83,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicDirect = (fn, values) => fn(...values);\n")
 	}
 	builder.WriteString(recordRuntime)
-	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = invoke.bind(object); return make({code: (self, values) => bound(...values)}, object); };\n")
+	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = invoke.bind(object); return make({code: (self, values) => bound(...values), length: fn instanceof AdamicClosure ? fn.length : 0}, object); };\n")
 	builder.WriteString("const adamicBoundCall = (self, values) => { const fn = self.cells[0].value; return adamicCall(fn, fn.receiver ? [self.cells[1].value, ...values] : values); };\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// A static constructor's live parent prototype carries inherited fields. Keep its
@@ -1207,6 +1207,12 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			array = "adamicRecordFieldTypes(" + array + ", {" + strings.Join(types, ", ") + "})"
 		}
 		return array
+	case ir.FunctionLength:
+		// Read the AdamicClosure's runtime source arity, which bind snapshots.
+		if expression.Optional {
+			return e.value(expression.Function) + "?.length"
+		}
+		return e.value(expression.Function) + ".length"
 	case ir.Length:
 		if expression.Optional {
 			return e.value(expression.Array) + "?.length"
@@ -1439,7 +1445,12 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			return ", " + e.values(expression.Fixed)
 		}())
 	case ir.BoundClosure:
-		return e.value(ir.MakeClosure{Function: expression.Function})
+		target := e.program.Functions[expression.Function]
+		cells := []string{}
+		for _, local := range target.Environment {
+			cells = append(cells, e.cell(local))
+		}
+		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t, Math.max(0, (%s.value?.length ?? 0) - %d))", functionName(e.program, expression.Function), strings.Join(cells, ", "), target.Receiver, e.cell(target.Environment[0]), expression.Fixed)
 	case ir.MakeClosure:
 		if e.program.Functions[expression.Function].Source.Role == "host_realpath" {
 			return "Object.assign(adamicNodeFSFile.realpathSync.native, {code: (self, values) => adamicNodeFSFile.realpathSync.native(...values)})"

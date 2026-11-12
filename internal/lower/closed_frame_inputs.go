@@ -43,7 +43,7 @@ func (l *lowering) closedFrameInput(local int) bool {
 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Read,
 				ir.Binary, ir.Unary, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap,
 				ir.MaybeOf, ir.Defined, ir.IsUndefined, ir.NumberToString, ir.BooleanToString,
-				ir.Concat, ir.Length, ir.Property, ir.ArrayIndex, ir.ArrayLiteral, ir.ObjectLiteral,
+				ir.Concat, ir.FunctionLength, ir.Length, ir.Property, ir.ArrayIndex, ir.ArrayLiteral, ir.ObjectLiteral,
 				ir.Call, ir.CallClosure, ir.MakeClosure, ir.ClosureSelf:
 			default:
 				safe = false

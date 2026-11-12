@@ -534,6 +534,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Closure && name == "length" && l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
+		return ir.FunctionLength{Function: object, Optional: access.QuestionDotToken != nil}, nil
+	}
 	if object.Type() == ir.Object || object.Type() == ir.Array {
 		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
 			return value, err

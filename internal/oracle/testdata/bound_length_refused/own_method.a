@@ -1,0 +1,3 @@
+const holder = { m: (a: number, b: number): number => a + b };
+const bound = holder.m.bind(holder);
+console.log(String(bound.length));

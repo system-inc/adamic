@@ -56,6 +56,7 @@ var gobTypes = []any{
 	Evaluate{},
 	FileStatus{},
 	ForOf{},
+	FunctionLength{},
 	GeneratorDone{},
 	GeneratorNext{},
 	HasAccessor{},

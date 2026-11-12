@@ -8,13 +8,9 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// A bound closure's length isn't built: the bound function lowering makes it an ir.Function with no
-// SourceLength, so native would read 0 where Node gives the target's length less the fixed arguments.
-// Every road a bound function takes to a Function-typed .length read stops today at the graph
-// boundary, because a bound closure captures a closure and so makes the program a graph program,
-// where a dynamic property read is refused. That stop is held for another reason, so each road is
-// pinned here: whoever lifts it meets every one of them (#0ty4971). The typed arrow is the row a
-// static length would get wrong, since its declared type names two parameters and the arrow has one.
+// Local bound lengths use runtime metadata, while Function-typed graph views
+// retain their independent dynamic-property boundary. The typed arrow prevents
+// replacing runtime metadata with its wider declared signature's arity.
 func TestFunctionBindLengthFunctionSlot(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout, line string }{
@@ -43,8 +39,8 @@ func TestFunctionBindLengthFunctionSlot(t *testing.T) {
 	}
 }
 
-// The shared lower stop protects both emitted backends before a keyed read can
-// observe the synthetic adapter's length. Node supplies each source answer.
+// Removing the local length stop exposes the separate unknown-function boundary
+// in this helper. Class method entries retain the metadata stop.
 func TestFunctionBindKeyedLength(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -63,14 +59,18 @@ func TestFunctionBindKeyedLength(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != probe.stdout || len(truth.stderr) != 0 {
 				t.Fatalf("source Node: %+v", truth)
 			}
+			what := "a function viewed as unknown or object (dynamic function descriptors)"
+			if probe.file == "keyed_length_method.a" {
+				what = "a bound function's length (bound length metadata)"
+			}
 			_, err = lowered(t, path)
-			if err == nil || !strings.Contains(err.Error(), "a bound function's length (bound length metadata)") {
-				t.Fatalf("want bound length stop protecting native and JavaScript, got %v", err)
+			if err == nil || !strings.Contains(err.Error(), what) {
+				t.Fatalf("want %s, got %v", what, err)
 			}
 			compiler := buildcache.AdamicBuiltElsewhere(t)
 			for _, backend := range []string{"c", "js"} {
 				stopped := execute(t, compiler, backend, path)
-				if stopped.exitCode == 0 || !strings.Contains(string(stopped.stderr), "a bound function's length (bound length metadata)") {
+				if stopped.exitCode == 0 || !strings.Contains(string(stopped.stderr), what) {
 					t.Fatalf("%s must stop before emission: %+v", backend, stopped)
 				}
 			}

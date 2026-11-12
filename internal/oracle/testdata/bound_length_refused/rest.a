@@ -1,0 +1,3 @@
+function rest(a: number, ...tail: number[]): number { return a + tail.length; }
+const bound = rest.bind(undefined);
+console.log(`${bound.length}`);
