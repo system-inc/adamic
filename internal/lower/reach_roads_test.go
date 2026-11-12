@@ -355,6 +355,37 @@ func TestReachWriterNamedOnlyByAMethod(t *testing.T) {
 	wantSites(t, newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -2, -1)
 }
 
+// Road 3's guard: liveness is read when a graph is built, so a reference a later pass adds to a
+// function the graph took to never run is a writer the graph's consumers missed. checkFlowLiveness,
+// run once lowering is done, makes that a compiler bug. Here replace is named by nothing when the
+// graph is built, so current is only its literal; then Main calls it. Mutant 7.
+func TestReachLateReferenceIsACompilerBug(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Locals: []ir.Local{
+			{Name: "current", Type: ir.Object, Global: true, Function: -1},
+			{Name: "next", Type: ir.Object, Function: 0},
+		},
+		Functions: []ir.Function{{
+			Name:       "replace",
+			Parameters: []int{1},
+			Body:       []ir.Statement{ir.Assign{Local: 0, Value: ir.Read{Local: 1, Of: ir.Object}}},
+		}},
+		Main: []ir.Statement{ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}}}},
+	}
+	lowering := &lowering{result: program}
+	graph := lowering.flowGraph(program)
+	wantSites(t, graph.ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -1)
+	if err := checkFlowLiveness(program, lowering.flowDead); err != nil {
+		t.Fatalf("nothing names replace yet, but the check says %v", err)
+	}
+	program.Main = append(program.Main, ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{-2}}}}})
+	err := checkFlowLiveness(program, lowering.flowDead)
+	if err == nil || err.Error() != "lower: compiler bug: function 0 was named after the flow graph was built" {
+		t.Fatalf("got %v, want the compiler bug naming function 0", err)
+	}
+}
+
 // Road 3's negatives: a writer that's called keeps its write and what it's passed; one exported from
 // the entry module can be called by outside code with anything, and one made a function value can be
 // called through it with anything, so each keeps its write and the parameter it writes is unknown.
