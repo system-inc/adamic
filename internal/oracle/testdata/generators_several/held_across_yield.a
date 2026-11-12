@@ -1,0 +1,33 @@
+// One view fed in one run by names and in another by repeated (#qk8rztp S3c-2), each holding a
+// string built at run time across its yields, in its frame. Two calls break out of the loop early,
+// one of them at its first step, so the view's block closes a frame still holding its string, and
+// the line each generator logs after the yield it was stopped at never prints, as in Node; the other
+// two run to the end. A missed release of the held string is a leak, and an extra one a use after
+// free.
+function* names(prefix: string, count: number): Generator<string, void, undefined> {
+    for (let index = 0; index < count; index++) {
+        const held = `${prefix}-${String(index)}`;
+        yield held;
+        console.log(`after ${held}`);
+    }
+}
+function* repeated(word: string): Generator<string, void, undefined> {
+    const doubled = word + word;
+    yield doubled;
+    yield `${doubled}!`;
+    console.log(`repeated done ${doubled}`);
+}
+function upTo(steps: Iterable<string>, stop: string): string {
+    let seen = '';
+    for (const step of steps) {
+        if (step === stop) {
+            break;
+        }
+        seen += `${step},`;
+    }
+    return seen;
+}
+console.log(upTo(names(`n${String(1)}`, 3), `n1-${String(1)}`));
+console.log(upTo(repeated(`w${String(2)}`), 'none'));
+console.log(upTo(repeated(`x${String(3)}`), `x${String(3)}x3`));
+console.log(upTo(names(`m${String(0)}`, 2), 'none'));

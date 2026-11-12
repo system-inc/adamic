@@ -1,0 +1,17 @@
+# Mutants for one view fed by generators of several functions (#qk8rztp S3c-2)
+
+Each mutant is one exact line edit, run on a Linux box against the test it names, then put back from
+a saved copy. The oracle rows run with `ADAMIC_GATE_UNCACHED=1`. The oracle's test is
+internal/oracle/generators_several_test.go; the lower rows are in
+internal/lower/iterable_generators_test.go and internal/lower/iterable_hand_next_test.go.
+
+None of these has been run yet: each row says what reading the code predicts, and the box's run is
+what decides it.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| M1: the step's throw test reads only the first function | internal/ir/generator.go, `GeneratorNextMayThrow`: `for _, function := range next.Functions {` made `for _, function := range next.Functions[:1] {` | TestGeneratorsSeveralAgreeWithNode, second_throws.a, native and sanitized: in whichever of walk's and walkAgain's views lists loud second (quiet is declared before it and calm after it, so one of the two does, whether lowering numbers the three in their declaration order or its reverse), the step never tests for loud's throw, the catch around the for-of never sees it, and the line differs from Node's. The JavaScript backend stays green, since its throw is JavaScript's own |
+| M2: the yields check across functions taken out | internal/lower/iterable_views.go, `generatorFunctions`: `if other := l.result.Functions[function].Yields; other != yields {` made `if other := l.result.Functions[function].Yields; false && other != yields {` | TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad, "two generator functions yielding a number and a string (S3c-2)": it still stops, at the held-differently stop, whose words aren't the row's. That is the only red, and by reading no program can compile wrong under it: two origins that both read as the view's element (readsAs, checked next) hold it alike, so the check names two origins as two, ahead of the view's read, and is the second line behind readsAs, not the only one |
+| M3a: purity following only the first listed body | internal/worker/purity.go, the GeneratorNext arm: `for _, function := range node.Functions {` made `for _, function := range node.Functions[:1] {` | Only a unit test: TestCheckPureInspectsEveryBodyAGeneratorStepMayRun, on built IR. No oracle program here catches it: none is built for a worker, whose purity check is the one that asks |
+| M3b: reuse following only the first listed body | internal/native/reuse.go, `reachesGlobal`'s GeneratorNext arm: `for _, function := range expression.Functions {` made `for _, function := range expression.Functions[:1] {` | Only a unit test: TestReuseFollowsEveryBodyAGeneratorStepMayRun, on built IR. No oracle program here catches it: none reuses a global's storage in place across a step whose second listed body touches that global |
+| M4: the hand view taking the first function without its one-function check | internal/lower/iterable_views.go, `handView`: `function, err := l.oneGeneratorFunction(view, generators)` made `function, err := generators[0].generator-1, error(nil)` | TestHandDrivenNextOverAGeneratorStops, "two generator functions" (internal/lower/iterable_hand_next_test.go:214): it lowers, where it must stop at "generators of more than one function" |
