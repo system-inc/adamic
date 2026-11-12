@@ -1312,7 +1312,18 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.MakeError:
 		if expression.Name != nil {
-			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
+			name, constant := expression.Name.(ir.StringConstant)
+			if !constant {
+				panic("compiler bug: a named error needs a string constant")
+			}
+			class := e.program.Strings[name.Index]
+			switch class {
+			case "TypeError", "RangeError", "ReferenceError", "SyntaxError":
+				// The constructor keeps name inherited until the program writes its own.
+				return "new " + class + "(" + e.value(expression.Message) + ")"
+			default:
+				panic("compiler bug: unsupported named error " + class)
+			}
 		}
 		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
