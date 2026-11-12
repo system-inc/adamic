@@ -195,6 +195,8 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 // from the generator's table. Unrelated lowering fields are intentionally ignored.
 func carryFactGuardGaps(root, lowerInput string) []string {
 	audited := map[string]string{
+		"inspectorRequireKnown":      "bool",
+		"inspectorRequirePresent":    "bool",
 		"omittedOptionals":           "map[string]bool",
 		"entriesRecords":             "map[*ast.Node]bool",
 		"entriesProgramRecords":      "bool",

@@ -41,6 +41,7 @@ facts into another lowering (statecopy's `speculativeState` row and
 | Remove the doomed-binding requirement for inspector receivers | `TestInspectorNonDoomedMergedMemberStaysNotYet` | `non-doomed Session.post must keep rule 800 NotYet` |
 | Drop the ordinary read, retaining only the Panic | `TestInspectorDoomedEscapedReadRefused`, `TestInspectorDoomedHoistedReadKeepsDeadZone` | `d1.ts must stop at the ordinary read`; `hoisted use lost its ordinary dead-zone read` |
 | A contract skip may return nil without checking its actual trap | `TestInspectorDoomedMemberValueHasPanic` | `lost trap must fail closed` |
+| Gate always answers false | `TestInspectorDoomedMemberValueHasPanic`, `TestInspectorDoomedEnableMeterSites` | `doomed member value lost its read-then-Panic`; `full enable shape must stop only at captured-let guard` |
 | Remove the value() trap hook | `TestInspectorDoomedValueHookRequired` | `skipped inspector contract without its doomed-use Panic` |
 | Remove the require's host_inspector_unavailable Evaluate | `TestInspectorDoomedRequiresThrowBeforeTrap` | `inspector require must throw before a doomed use` |
 
@@ -216,3 +217,16 @@ the no-profiler tsc-shape row is `2 | 2 | 4 | 6 | 2 | 0`, in the runtime record'
 allocation, free, retain, release, peak and region columns. Both counted runs
 agree with Node and balance their allocations and frees. The required six
 IsCaught tests all passed with the red lines in the mutation table.
+
+## Program gate (#pncjepa)
+
+`inspectorProgramHasRequire` memoizes a graph-wide fact on the lowering. It scans
+all non-declaration source files from the loaded compiler program, filtering the
+inspector literal before confirming the existing `nodeCommonJSRequireRoot` form.
+The fact only skips recorder/trap work; the admission predicate is unchanged.
+`TestInspectorDoomedAbsentGateSkipsMemberLookups` clears the program and checker
+after caching false, proving both entries return before a lookup or another scan.
+`TestInspectorDoomedGateSeesImportedModule` keeps the only require in an imported
+second module, outside the named root list, and pins its exact trap text.
+Both scalar fields are audited carried program facts; the latent disposable
+program probe initializes them before capture for its fresh unit lowerings.

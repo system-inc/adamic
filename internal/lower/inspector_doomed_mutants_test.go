@@ -16,6 +16,8 @@ func inspectorDoomedMutant(t *testing.T, mode string) string {
 	file := "internal/lower/inspector_doomed.go"
 	var mutations []buildcache.Mutation
 	switch mode {
+	case "Gate":
+		mutations = []buildcache.Mutation{{File: file, Before: "func (l *lowering) inspectorProgramHasRequire() bool {", After: "func (l *lowering) inspectorProgramHasRequire() bool {\n return false // mutant: ignore every inspector require"}}
 	case "AnyRequire":
 		mutations = []buildcache.Mutation{{File: file, Before: "if initializer.Kind == ast.KindCallExpression && l.nodeLibraryMember(initializer) == nodeRequireMember && nodeInspectorRequireThrows(initializer) {\n\t\t\treturn l.nodeCommonJSRequireRoot(initializer), false\n\t\t}", After: "if initializer.Kind == ast.KindCallExpression && l.nodeLibraryMember(initializer) == nodeRequireMember { return initializer, false }"}}
 	case "Let":
@@ -168,4 +170,14 @@ func TestInspectorLetDerivedWriteMutantIsCaught(t *testing.T) {
 func TestProduct_InspectorLetDerivedWriteMutant(t *testing.T) {
 	t.Parallel()
 	inspectorDoomedMutant(t, "DerivedWrite")
+}
+
+func TestProduct_InspectorDoomedGateMutant(t *testing.T) {
+	t.Parallel()
+	inspectorDoomedMutant(t, "Gate")
+}
+func TestInspectorDoomedGateMutantIsCaught(t *testing.T) {
+	t.Parallel()
+	inspectorDoomedCaught(t, "Gate", "TestInspectorDoomedMemberValueHasPanic", "doomed member value lost its read-then-Panic")
+	inspectorDoomedCaught(t, "Gate", "TestInspectorDoomedEnableMeterSites", "full enable shape must stop only at captured-let guard")
 }
