@@ -135,7 +135,18 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 		})
 	}
 	collect(program.Main, -1)
+	// A function that never runs makes none of its writes, returns or calls (runningFunctions). This
+	// and calls' exemption agree, so neither needs anything of the other. A call can run a function
+	// onlyCalledDirectly holds for only through a MakeClosure of it, a Read of its binding, whose
+	// Declare holds that MakeClosure, or a ClosureSelf in its group, each of whose members is made the
+	// same way; a MakeClosure names its function, so any function such a call can run is running. A
+	// call the exemption accounts for in a body left out here never runs, so the edge it would have
+	// collected passes nothing.
+	running := runningFunctions(program)
 	for i, function := range program.Functions {
+		if !running[i] {
+			continue
+		}
 		collect(function.Body, i)
 	}
 	// Outside code calls the entry module's exported functions (the JavaScript backend's
@@ -151,6 +162,161 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 		}
 	}
 	return graph
+}
+
+// functionReferenceFields are the IR fields that name a function, as type and field, each with what
+// its value is offset by: one for a field that holds an index plus one, zero for one that holds the
+// index. A count or a slice of them, or a map whose keys or values are, names every function in it.
+// TestFunctionReferenceFieldsAreEveryFunctionField holds every IR field whose name says it may hold
+// a function to this table or to its own list of fields that don't.
+var functionReferenceFields = map[string]int{
+	// Calls: a direct or virtual call's function (a virtual call's targets are MethodTargets'),
+	// a sibling call's code, a sort's named comparator, a generator's step.
+	"Call.Function":          0,
+	"CallClosure.Direct":     1,
+	"ArraySort.Comparator":   0,
+	"GeneratorNext.Function": 0,
+	"IteratorNext.Function":  0,
+	// Function values and method tables: each is a road an opaque call can run it by.
+	"MakeClosure.Function":           0,
+	"BoundClosure.Function":          0,
+	"BoundMethod.Factory":            0,
+	"Method.Function":                0,
+	"ObjectLiteral.SpreadGetters":    0,
+	"Class.Constructor":              0,
+	"Class.Methods":                  0,
+	"Accessor.Getter":                0,
+	"Accessor.Setter":                0,
+	"Local.NestedFunction":           1,
+	"Local.ConstantClosure":          1,
+	"ViewContract.Functions":         0,
+	"Program.MethodTargets":          0,
+	"Program.StructuralMethodThunks": 0,
+	// Entries outside code calls: the entry module's exports (the JavaScript backend's
+	// ModuleExports, wasm32's handleRequest), and the async module body Main moves into.
+	"Export.Function":    0,
+	"Program.AsyncEntry": 1,
+	// Lowering's own links between functions, kept though none of them is a call, since a field
+	// that may name a function counts.
+	"Function.ForwardsArguments":     1,
+	"Function.NestedParent":          1,
+	"Function.ForwardedNestedParent": 1,
+	"Function.ReferenceParents":      1,
+}
+
+// runningFunctions is whether each function can run: whether any field functionReferenceFields
+// names, anywhere in the program (Main, every function's body and its own fields, the classes,
+// locals, exports, view contracts and the program's tables), names it. One that nothing names is
+// no call's target, no function value, no method and no entry, so nothing runs it. An opaque call
+// (a CallClosure whose targets are Unknown) runs only a function value that exists, and a function
+// value is only ever made by MakeClosure or BoundClosure, or found in a method table, all of them
+// counted here, so no opaque call reaches one either. FunctionTypeTargets isn't counted: it is every
+// function a checker function type could be by assignability alone, and a function becomes a value
+// only through those nodes. A function named only from the body of one that never runs is still
+// kept, since the names are read from every body: that keeps more than it must, and is the cheaper
+// of the two, with no fixed point to reach.
+func runningFunctions(program *ir.Program) []bool {
+	running := make([]bool, len(program.Functions))
+	var record func(reflect.Value, int)
+	record = func(value reflect.Value, offset int) {
+		switch value.Kind() {
+		case reflect.Int:
+			if function := int(value.Int()) - offset; function >= 0 && function < len(running) {
+				running[function] = true
+			}
+		case reflect.Slice, reflect.Array:
+			for i := 0; i < value.Len(); i++ {
+				record(value.Index(i), offset)
+			}
+		case reflect.Map:
+			entries := value.MapRange()
+			for entries.Next() {
+				record(entries.Key(), offset)
+				record(entries.Value(), offset)
+			}
+		}
+	}
+	// plan is, for each struct type met, its fields that name a function and its fields that can hold
+	// more of the program, so each field's name is looked up once per type, not once per node.
+	type reference struct{ field, offset int }
+	type plan struct {
+		references []reference
+		nested     []int
+	}
+	plans := map[reflect.Type]*plan{}
+	planOf := func(structure reflect.Type) *plan {
+		if known, ok := plans[structure]; ok {
+			return known
+		}
+		made := &plan{}
+		for i := 0; i < structure.NumField(); i++ {
+			if offset, names := functionReferenceFields[structure.Name()+"."+structure.Field(i).Name]; names {
+				made.references = append(made.references, reference{field: i, offset: offset})
+			}
+			if holdsProgram(structure.Field(i).Type) {
+				made.nested = append(made.nested, i)
+			}
+		}
+		plans[structure] = made
+		return made
+	}
+	type pointer struct {
+		of      reflect.Type
+		address uintptr
+	}
+	seen := map[pointer]bool{}
+	var visit func(reflect.Value)
+	visit = func(value reflect.Value) {
+		switch value.Kind() {
+		case reflect.Interface:
+			if !value.IsNil() {
+				visit(value.Elem())
+			}
+		case reflect.Pointer:
+			if value.IsNil() || seen[pointer{value.Type(), value.Pointer()}] {
+				return
+			}
+			seen[pointer{value.Type(), value.Pointer()}] = true
+			visit(value.Elem())
+		case reflect.Slice, reflect.Array:
+			if holdsProgram(value.Type().Elem()) {
+				for i := 0; i < value.Len(); i++ {
+					visit(value.Index(i))
+				}
+			}
+		case reflect.Map:
+			if holdsProgram(value.Type().Key()) || holdsProgram(value.Type().Elem()) {
+				entries := value.MapRange()
+				for entries.Next() {
+					visit(entries.Key())
+					visit(entries.Value())
+				}
+			}
+		case reflect.Struct:
+			fields := planOf(value.Type())
+			for _, named := range fields.references {
+				record(value.Field(named.field), named.offset)
+			}
+			for _, i := range fields.nested {
+				visit(value.Field(i))
+			}
+		}
+	}
+	visit(reflect.ValueOf(program).Elem())
+	return running
+}
+
+// holdsProgram is whether a value of the type can hold a struct, and so a field that names a function.
+func holdsProgram(of reflect.Type) bool {
+	switch of.Kind() {
+	case reflect.Interface, reflect.Pointer, reflect.Struct:
+		return true
+	case reflect.Slice, reflect.Array:
+		return holdsProgram(of.Elem())
+	case reflect.Map:
+		return holdsProgram(of.Key()) || holdsProgram(of.Elem())
+	}
+	return false
 }
 
 // closureCalls is what onlyCalledDirectly reads off a lowered program, in one walk of it: for each
