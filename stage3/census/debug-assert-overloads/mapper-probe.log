@@ -1,0 +1,343 @@
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218e9a3e5a00 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:319:9" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:281:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:281:5"
+MAPPER BIND parameter="T" target="ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression"
+MAPPER BIND parameter="U" target="BindingName"
+MAPPER PARAMETER label="overload 1 of assertNode" mapper_non_nil=true mapper=0x218e9a3e5a00 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1" given="(node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e98988308, 0x218e87ce5968, 0x218e87ce5808, 0x1)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e98988308, 0x218e87ce5968)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e98988308, 0x1fa4, 0x218e87ce5968, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e98988308, 0x1fa4, 0x218e87ce5968, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e98988308, 0x1fa4, 0x218e87ce5808, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e98988308, 0x218e8eb71f08, 0x218e87ce5808, 0x218e9614e800)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e98988308, 0x218e8eb71f08, 0x218e87ce5808)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e98988308, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e98988308, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e98988308, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e98988308, 0x218e8ebc4348)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 1 of assertNode index 1 given (node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName takes ((node: Node) => boolean) | undefined
+HOLDSANY enter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ... 4 more ... | undefined
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ... 4 more ... | undefined" "union/intersection[1]: ArrayBindingPattern" "property parent: BindingElement | ParameterDeclaration | VariableDeclaration" "union/intersection[0]: BindingElement" "property parent: BindingPattern" "union/intersection[1]: ObjectBindingPattern" "property original: Node | undefined" "union/intersection[1]: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike"]
+DOOR assertNode overloadCallbackArgument 249 flow Node
+HOLDSANY enter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression" "union/intersection[0]: ArrayBindingPattern" "property parent: BindingElement | ParameterDeclaration | VariableDeclaration" "union/intersection[0]: BindingElement" "property parent: BindingPattern" "union/intersection[1]: ObjectBindingPattern" "property original: Node | undefined" "union/intersection[1]: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike"]
+CALLGATE assertNode argument Node parameter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression holdsAny true relatedIfEvaluated false
+DOOR assertNode overloadCallbackCall 211
+PARAMETER RESULT overload 1 of assertNode 1 related false callback false
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218e95d21480 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:318:5" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:319:9" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:281:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:281:5"
+MAPPER BIND parameter="T" target="ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression"
+MAPPER BIND parameter="U" target="BindingName"
+MAPPER PARAMETER label="overload 1 of assertNode" mapper_non_nil=true mapper=0x218e95d21480 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:318:5" given="(node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e994bd108, 0x218e87ce5968, 0x218e87ce5808, 0x1)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e994bd108, 0x218e87ce5968)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e994bd108, 0x1fa1, 0x218e87ce5968, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e994bd108, 0x1fa1, 0x218e87ce5968, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e994bd108, 0x1fa1, 0x218e87ce5808, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e994bd108, 0x218e8eb71f08, 0x218e87ce5808, 0x218e9614e800)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e994bd108, 0x218e8eb71f08, 0x218e87ce5808)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e994bd108, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e994bd108, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e994bd108, 0x218e8eb71f08)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e994bd108, 0x218e8ebc4348)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 1 of assertNode index 1 given (node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName takes ((node: Node) => boolean) | undefined
+HOLDSANY enter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ... 4 more ... | undefined
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ... 4 more ... | undefined" "union/intersection[1]: ArrayBindingPattern" "property parent: BindingElement | ParameterDeclaration | VariableDeclaration" "union/intersection[0]: BindingElement" "property parent: BindingPattern" "union/intersection[1]: ObjectBindingPattern" "property original: Node | undefined" "union/intersection[1]: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike"]
+DOOR assertNode overloadCallbackArgument 249 flow Node
+HOLDSANY enter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression" "union/intersection[0]: ArrayBindingPattern" "property parent: BindingElement | ParameterDeclaration | VariableDeclaration" "union/intersection[0]: BindingElement" "property parent: BindingPattern" "union/intersection[1]: ObjectBindingPattern" "property original: Node | undefined" "union/intersection[1]: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike"]
+CALLGATE assertNode argument Node parameter ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression holdsAny true relatedIfEvaluated false
+DOOR assertNode overloadCallbackCall 211
+PARAMETER RESULT overload 1 of assertNode 1 related false callback false
+PARAMETER overload 1 of visitNode index 0 given TIn takes Node
+DOOR visitNode overloadCallbackUse 47
+PARAMETER RESULT overload 1 of visitNode 0 related false callback false
+PARAMETER overload 1 of visitNode index 0 given TIn takes Node
+DOOR visitNode overloadCallbackUse 47
+PARAMETER RESULT overload 1 of visitNode 0 related false callback false
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218e95d9abc0 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:601:5" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:259:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:257:5"
+MAPPER BIND parameter="T" target="BindingOrAssignmentElement"
+MAPPER BIND parameter="U" target="ArrayBindingElement"
+PARAMETER overload 1 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T>
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 1 of assertEachNode 1 related false callback true
+PARAMETER overload 2 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly T[]
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 2 of assertEachNode 1 related false callback true
+PARAMETER overload 3 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T> | undefined
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 3 of assertEachNode 1 related false callback true
+MAPPER PARAMETER label="overload 4 of assertEachNode" mapper_non_nil=true mapper=0x218e95d9abc0 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1" given="(node: BindingOrAssignmentElement) => node is ArrayBindingElement" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e99de4e08, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e99de4e08, 0x218e87cdf708)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e99de4e08, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e99de4e08, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e99de4e08, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e99de4e08, 0x218e8ebe8368, 0x218e87cdf5a8, 0x218e9614e180)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e99de4e08, 0x218e8ebe8368, 0x218e87cdf5a8)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e99de4e08, 0x218e8ebe8368)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e99de4e08, 0x218e8ebe8368)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e99de4e08, 0x218e8ebe8368)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e99de4e08, 0x218e8eb74308)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 4 of assertEachNode index 1 given (node: BindingOrAssignmentElement) => node is ArrayBindingElement takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly BindingOrAssignmentElement[] | undefined
+HOLDSANY branch=bound depth=32 flags=1048576 path=["root: readonly BindingOrAssignmentElement[] | undefined" "union/intersection[1]: readonly BindingOrAssignmentElement[]" "typeArgument[0]: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator"]
+DOOR assertEachNode overloadCallbackElement 332 flow Node
+HOLDSANY enter BindingOrAssignmentElement
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator" "property parent: NamedDeclaration" "property name: DeclarationName | undefined"]
+CALLGATE assertEachNode argument Node parameter BindingOrAssignmentElement holdsAny true relatedIfEvaluated false
+DOOR assertEachNode overloadCallbackCall 211
+PARAMETER RESULT overload 4 of assertEachNode 1 related false callback false
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218e99d5e540 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:605:1" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:606:5" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:259:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:257:5"
+MAPPER BIND parameter="T" target="BindingOrAssignmentElement"
+MAPPER BIND parameter="U" target="ArrayBindingOrAssignmentElement"
+PARAMETER overload 1 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T>
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 1 of assertEachNode 1 related false callback true
+PARAMETER overload 2 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly T[]
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 2 of assertEachNode 1 related false callback true
+PARAMETER overload 3 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T> | undefined
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 3 of assertEachNode 1 related false callback true
+MAPPER PARAMETER label="overload 4 of assertEachNode" mapper_non_nil=true mapper=0x218e99d5e540 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:605:1" given="(node: BindingOrAssignmentElement) => node is ArrayBindingOrAssignmentElement" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e994a5508, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e994a5508, 0x218e87cdf708)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e994a5508, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e994a5508, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e994a5508, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e994a5508, 0x218e8ebe8428, 0x218e87cdf5a8, 0x218e95f3be80)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e994a5508, 0x218e8ebe8428, 0x218e87cdf5a8)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e994a5508, 0x218e8ebe8428)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e994a5508, 0x218e8ebe8428)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e994a5508, 0x218e8ebe8428)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e994a5508, 0x218e8eb74348)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 4 of assertEachNode index 1 given (node: BindingOrAssignmentElement) => node is ArrayBindingOrAssignmentElement takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly BindingOrAssignmentElement[] | undefined
+HOLDSANY branch=bound depth=32 flags=1048576 path=["root: readonly BindingOrAssignmentElement[] | undefined" "union/intersection[1]: readonly BindingOrAssignmentElement[]" "typeArgument[0]: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator"]
+DOOR assertEachNode overloadCallbackElement 332 flow Node
+HOLDSANY enter BindingOrAssignmentElement
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator" "property parent: NamedDeclaration" "property name: DeclarationName | undefined"]
+CALLGATE assertEachNode argument Node parameter BindingOrAssignmentElement holdsAny true relatedIfEvaluated false
+DOOR assertEachNode overloadCallbackCall 211
+PARAMETER RESULT overload 4 of assertEachNode 1 related false callback false
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218eb26e8480 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:610:1" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:611:5" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:259:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:257:5"
+MAPPER BIND parameter="T" target="BindingOrAssignmentElement"
+MAPPER BIND parameter="U" target="BindingElement"
+PARAMETER overload 1 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T>
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 1 of assertEachNode 1 related false callback true
+PARAMETER overload 2 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly T[]
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 2 of assertEachNode 1 related false callback true
+PARAMETER overload 3 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T> | undefined
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 3 of assertEachNode 1 related false callback true
+MAPPER PARAMETER label="overload 4 of assertEachNode" mapper_non_nil=true mapper=0x218eb26e8480 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:610:1" given="(node: BindingOrAssignmentElement) => node is BindingElement" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e98fa9108, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e98fa9108, 0x218e87cdf708)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e98fa9108, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e98fa9108, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e98fa9108, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e98fa9108, 0x218e8ebe8548, 0x218e87cdf5a8, 0x218e9614e400)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e98fa9108, 0x218e8ebe8548, 0x218e87cdf5a8)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e98fa9108, 0x218e8ebe8548)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e98fa9108, 0x218e8ebe8548)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e98fa9108, 0x218e8ebe8548)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e98fa9108, 0x218e8eb74388)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 4 of assertEachNode index 1 given (node: BindingOrAssignmentElement) => node is BindingElement takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly BindingOrAssignmentElement[] | undefined
+HOLDSANY branch=bound depth=32 flags=1048576 path=["root: readonly BindingOrAssignmentElement[] | undefined" "union/intersection[1]: readonly BindingOrAssignmentElement[]" "typeArgument[0]: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator"]
+DOOR assertEachNode overloadCallbackElement 332 flow Node
+HOLDSANY enter BindingOrAssignmentElement
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator" "property parent: NamedDeclaration" "property name: DeclarationName | undefined"]
+CALLGATE assertEachNode argument Node parameter BindingOrAssignmentElement holdsAny true relatedIfEvaluated false
+DOOR assertEachNode overloadCallbackCall 211
+PARAMETER RESULT overload 4 of assertEachNode 1 related false callback false
+MAPPER SETTER original=generic.go:148 function=instantiateFunctionSignature mapper=0x218eb5ac0540 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:615:1" call="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:616:5" generic_declaration="/workspace/orm-adapted/src/compiler/debug.ts:259:5" resolved_declaration="/workspace/orm-adapted/src/compiler/debug.ts:257:5"
+MAPPER BIND parameter="T" target="BindingOrAssignmentElement"
+MAPPER BIND parameter="U" target="ObjectBindingOrAssignmentElement"
+PARAMETER overload 1 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T>
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 1 of assertEachNode 1 related false callback true
+PARAMETER overload 2 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly T[]
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 2 of assertEachNode 1 related false callback true
+PARAMETER overload 3 of assertEachNode index 1 given (node: T) => node is U takes ((node: Node) => boolean) | undefined
+HOLDSANY enter NodeArray<T> | undefined
+HOLDSANY enter T
+CALLGATE assertEachNode argument T parameter T holdsAny false relatedIfEvaluated true
+PARAMETER RESULT overload 3 of assertEachNode 1 related false callback true
+MAPPER PARAMETER label="overload 4 of assertEachNode" mapper_non_nil=true mapper=0x218eb5ac0540 unit="/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:615:1" given="(node: BindingOrAssignmentElement) => node is ObjectBindingOrAssignmentElement" takes="((node: Node) => boolean) | undefined"
+MAPPER STACK BEGIN
+goroutine 1 [running]:
+runtime/debug.Stack()
+	runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e991d0708, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)
+	github.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a
+github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e991d0708, 0x218e87cdf708)
+	github.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e991d0708, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:83 +0x73
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e991d0708, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)
+	github.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	github.com/system-inc/adamic/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e991d0708, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e991d0708, 0x218e8ebe8608, 0x218e87cdf5a8, 0x218e96036b80)
+	github.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938
+github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e991d0708, 0x218e8ebe8608, 0x218e87cdf5a8)
+	github.com/system-inc/adamic/internal/lower/generic.go:27 +0x45
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e991d0708, 0x218e8ebe8608)
+	github.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e991d0708, 0x218e8ebe8608)
+	github.com/system-inc/adamic/internal/lower/class.go:349 +0x596
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e991d0708, 0x218e8ebe8608)
+	github.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd
+github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e991d0708, 0x218e8ebc0608)
+	github.com/system-inc/adamic/internal/lower/statements.go:88 +0x396
+MAPPER STACK END
+PARAMETER overload 4 of assertEachNode index 1 given (node: BindingOrAssignmentElement) => node is ObjectBindingOrAssignmentElement takes ((node: Node) => boolean) | undefined
+HOLDSANY enter readonly BindingOrAssignmentElement[] | undefined
+HOLDSANY branch=bound depth=32 flags=1048576 path=["root: readonly BindingOrAssignmentElement[] | undefined" "union/intersection[1]: readonly BindingOrAssignmentElement[]" "typeArgument[0]: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator"]
+DOOR assertEachNode overloadCallbackElement 332 flow Node
+HOLDSANY enter BindingOrAssignmentElement
+HOLDSANY branch=bound depth=32 flags=134217728 path=["root: BindingOrAssignmentElement" "union/intersection[0]: ArrayLiteralExpression" "property elements: NodeArray<Expression>" "typeArgument[0]: Expression" "property parent: Node" "property emitNode: EmitNode | undefined" "union/intersection[1]: EmitNode" "property externalHelpersModuleName: Identifier | undefined" "union/intersection[1]: Identifier" "property jsDoc: JSDocArray | undefined" "union/intersection[1]: JSDocArray" "property jsDocCache: readonly JSDocTag[] | undefined" "union/intersection[1]: readonly JSDocTag[]" "typeArgument[0]: JSDocTag" "property parent: JSDoc | JSDocTypeLiteral" "union/intersection[0]: JSDoc" "property parent: HasJSDoc" "union/intersection[0]: ArrowFunction" "property body: ConciseBody" "union/intersection[0]: Block" "property nextContainer: HasLocals | undefined" "union/intersection[3]: CallSignatureDeclaration" "property typeParameters: NodeArray<TypeParameterDeclaration> | undefined" "union/intersection[1]: NodeArray<TypeParameterDeclaration>" "typeArgument[0]: TypeParameterDeclaration" "property parent: InferTypeNode | DeclarationWithTypeParameterChildren" "union/intersection[2]: ClassDeclaration" "property modifiers: NodeArray<ModifierLike> | undefined" "union/intersection[1]: NodeArray<ModifierLike>" "typeArgument[0]: ModifierLike" "union/intersection[5]: Decorator" "property parent: NamedDeclaration" "property name: DeclarationName | undefined"]
+CALLGATE assertEachNode argument Node parameter BindingOrAssignmentElement holdsAny true relatedIfEvaluated false
+DOOR assertEachNode overloadCallbackCall 211
+PARAMETER RESULT overload 4 of assertEachNode 1 related false callback false
+/workspace/orm-adapted/src/compiler/transformers/destructuring.ts 91 measured on a checker-clean entry-root program

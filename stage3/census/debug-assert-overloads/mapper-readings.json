@@ -1,0 +1,176 @@
+[
+  {
+    "label": "overload 1 of assertNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218e9a3e5a00",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1",
+    "given": "(node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218e9a3e5a00",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:319:9",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:281:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:281:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression"
+        },
+        {
+          "parameter": "U",
+          "target": "BindingName"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e98988308, 0x218e87ce5968, 0x218e87ce5808, 0x1)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e98988308, 0x218e87ce5968)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e98988308, 0x1fa4, 0x218e87ce5968, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e98988308, 0x1fa4, 0x218e87ce5968, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e98988308, 0x1fa4, 0x218e87ce5808, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e98988308, 0x218e8eb71f08, 0x218e87ce5808, 0x218e9614e800)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e98988308, 0x218e8eb71f08, 0x218e87ce5808)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e98988308, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e98988308, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e98988308, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e98988308, 0x218e8ebc4348)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  },
+  {
+    "label": "overload 1 of assertNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218e95d21480",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:318:5",
+    "given": "(node: ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression) => node is BindingName",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218e95d21480",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:318:5",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:319:9",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:281:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:281:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "ArrayBindingPattern | ArrayLiteralExpression | ElementAccessExpression | Identifier | ObjectBindingPattern | ObjectLiteralExpression | OmittedExpression | PropertyAccessExpression"
+        },
+        {
+          "parameter": "U",
+          "target": "BindingName"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e994bd108, 0x218e87ce5968, 0x218e87ce5808, 0x1)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e994bd108, 0x218e87ce5968)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e994bd108, 0x1fa1, 0x218e87ce5968, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e994bd108, 0x1fa1, 0x218e87ce5968, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e994bd108, 0x1fa1, 0x218e87ce5808, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e994bd108, 0x218e8eb71f08, 0x218e87ce5808, 0x218e9614e800)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e994bd108, 0x218e8eb71f08, 0x218e87ce5808)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e994bd108, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e994bd108, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e994bd108, 0x218e8eb71f08)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e994bd108, 0x218e8ebc4348)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  },
+  {
+    "label": "overload 4 of assertEachNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218e95d9abc0",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1",
+    "given": "(node: BindingOrAssignmentElement) => node is ArrayBindingElement",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218e95d9abc0",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:601:5",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:259:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:257:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "BindingOrAssignmentElement"
+        },
+        {
+          "parameter": "U",
+          "target": "ArrayBindingElement"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e99de4e08, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e99de4e08, 0x218e87cdf708)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e99de4e08, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e99de4e08, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e99de4e08, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e99de4e08, 0x218e8ebe8368, 0x218e87cdf5a8, 0x218e9614e180)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e99de4e08, 0x218e8ebe8368, 0x218e87cdf5a8)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e99de4e08, 0x218e8ebe8368)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e99de4e08, 0x218e8ebe8368)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e99de4e08, 0x218e8ebe8368)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e99de4e08, 0x218e8eb74308)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  },
+  {
+    "label": "overload 4 of assertEachNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218e99d5e540",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:605:1",
+    "given": "(node: BindingOrAssignmentElement) => node is ArrayBindingOrAssignmentElement",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218e99d5e540",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:605:1",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:606:5",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:259:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:257:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "BindingOrAssignmentElement"
+        },
+        {
+          "parameter": "U",
+          "target": "ArrayBindingOrAssignmentElement"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e994a5508, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e994a5508, 0x218e87cdf708)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e994a5508, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e994a5508, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e994a5508, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e994a5508, 0x218e8ebe8428, 0x218e87cdf5a8, 0x218e95f3be80)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e994a5508, 0x218e8ebe8428, 0x218e87cdf5a8)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e994a5508, 0x218e8ebe8428)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e994a5508, 0x218e8ebe8428)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e994a5508, 0x218e8ebe8428)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e994a5508, 0x218e8eb74348)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  },
+  {
+    "label": "overload 4 of assertEachNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218eb26e8480",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:610:1",
+    "given": "(node: BindingOrAssignmentElement) => node is BindingElement",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218eb26e8480",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:610:1",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:611:5",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:259:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:257:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "BindingOrAssignmentElement"
+        },
+        {
+          "parameter": "U",
+          "target": "BindingElement"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e98fa9108, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e98fa9108, 0x218e87cdf708)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e98fa9108, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e98fa9108, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e98fa9108, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e98fa9108, 0x218e8ebe8548, 0x218e87cdf5a8, 0x218e9614e400)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e98fa9108, 0x218e8ebe8548, 0x218e87cdf5a8)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e98fa9108, 0x218e8ebe8548)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e98fa9108, 0x218e8ebe8548)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e98fa9108, 0x218e8ebe8548)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e98fa9108, 0x218e8eb74388)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  },
+  {
+    "label": "overload 4 of assertEachNode",
+    "mapper_non_nil": true,
+    "mapper": "0x218eb5ac0540",
+    "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:615:1",
+    "given": "(node: BindingOrAssignmentElement) => node is ObjectBindingOrAssignmentElement",
+    "takes": "((node: Node) => boolean) | undefined",
+    "setter": {
+      "original": "generic.go:148",
+      "function": "instantiateFunctionSignature",
+      "mapper": "0x218eb5ac0540",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:615:1",
+      "call": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:616:5",
+      "generic_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:259:5",
+      "resolved_declaration": "/workspace/orm-adapted/src/compiler/debug.ts:257:5",
+      "bindings": [
+        {
+          "parameter": "T",
+          "target": "BindingOrAssignmentElement"
+        },
+        {
+          "parameter": "U",
+          "target": "ObjectBindingOrAssignmentElement"
+        }
+      ]
+    },
+    "stack": "goroutine 1 [running]:\nruntime/debug.Stack()\n\truntime/debug/stack.go:26 +0x5e\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverload(0x218e991d0708, 0x218e87cdf708, 0x218e87cdf5a8, 0x4)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:236 +0x78a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).censusOverloads(0x218e991d0708, 0x218e87cdf708)\n\tgithub.com/system-inc/adamic/internal/lower/census_small.go:154 +0x10f\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x218e991d0708, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:83 +0x73\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:486\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x218e991d0708, 0x1fa1, 0x218e87cdf708, 0xffffffffffffffff, 0x0)\n\tgithub.com/system-inc/adamic/internal/lower/latent_speculative.go:150 +0x168\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:490\ngithub.com/system-inc/adamic/internal/lower.(*lowering).signature(...)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:482\ngithub.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x218e991d0708, 0x1fa1, 0x218e87cdf5a8, 0xffffffffffffffff)\n\tgithub.com/system-inc/adamic/internal/lower/functions.go:60 +0x2c5\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature(0x218e991d0708, 0x218e8ebe8608, 0x218e87cdf5a8, 0x218e96036b80)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:176 +0x1938\ngithub.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction(0x218e991d0708, 0x218e8ebe8608, 0x218e87cdf5a8)\n\tgithub.com/system-inc/adamic/internal/lower/generic.go:27 +0x45\ngithub.com/system-inc/adamic/internal/lower.(*lowering).call(0x218e991d0708, 0x218e8ebe8608)\n\tgithub.com/system-inc/adamic/internal/lower/expression.go:1456 +0x413\ngithub.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x218e991d0708, 0x218e8ebe8608)\n\tgithub.com/system-inc/adamic/internal/lower/class.go:349 +0x596\ngithub.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0x218e991d0708, 0x218e8ebe8608)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:251 +0xcdd\ngithub.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw(0x218e991d0708, 0x218e8ebc0608)\n\tgithub.com/system-inc/adamic/internal/lower/statements.go:88 +0x396",
+    "stack_frames": 15
+  }
+]

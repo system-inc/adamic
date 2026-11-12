@@ -1,0 +1,18 @@
+{
+  "main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "report_parent": "a3de72ce340fcc99220c409ddfc9875692cd98fd",
+  "old_evidence_hashes_unchanged": true,
+  "all_747_input_hashes_unchanged": true,
+  "complete_stream_equals_old_stock_and_probe": true,
+  "parameter_readings": 6,
+  "all_readings_mapper_non_nil": true,
+  "all_readings_match_direct_setter_pointer_and_unit": true,
+  "frames_per_stack": 15,
+  "setter": "internal/lower/generic.go:148 instantiateFunctionSignature",
+  "requested_units": [
+    "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1",
+    "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1"
+  ],
+  "build_and_census_child_exits_zero": true,
+  "binary_sha256": "a05845edd59bce128a12b5355624c65de3231f29e346b47f1597e8e3511dcf57"
+}
