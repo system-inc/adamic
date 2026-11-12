@@ -381,6 +381,12 @@ type lowering struct {
 	// hostMemberJudged says checkHostMemberWrites has run, so a stop after it is the program's own
 	// (hostMemberPending).
 	hostMemberJudged bool
+	// hostMemberValues are the reads of such a method as a value, each with main's stop for it, which
+	// lowering reads as fields and checkHostMemberValues judges with the writes (host_member_value.go).
+	hostMemberValues []hostMemberValue
+	// hostMemberFirst is the first stop deferred, a write's or a value read's: main's stop, which a
+	// lowering that stops before they're judged gives back (hostMemberPending).
+	hostMemberFirst error
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).

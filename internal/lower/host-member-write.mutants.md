@@ -8,13 +8,13 @@ Each is one edit to internal/lower/host_member_write.go, run, then put back, wit
 In checkHostMemberWrites, old:
 
 ```go
-		if err := l.hostMemberReach(write, reaches, graph.projectionIndex()); err != nil {
+		if err := l.hostMemberReach(write.stop, reaches, graph.projectionIndex()); err != nil {
 ```
 
 New:
 
 ```go
-		if err := l.hostMemberReach(write, reaches, graph.projectionIndex()); false && err != nil {
+		if err := l.hostMemberReach(write.stop, reaches, graph.projectionIndex()); false && err != nil {
 ```
 
 Red: s3_class_instance, s4_exported_parameter and s5_arrow_parameter, .a and .ts, each `lowered, want ...`: a
