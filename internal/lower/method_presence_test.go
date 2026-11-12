@@ -44,8 +44,9 @@ func TestMethodPresenceTestsLower(t *testing.T) {
 // Every other consumer keeps the method value, and is refused with the same words a method read as a
 // value always is, at the read: an alias (refused at the read, not where the alias is tested), ||, ??,
 // an arm of ?:, an assignment, an argument, a return and a comma operand. So is an optional method's
-// read, which nothing proves is there. Mutant (testdata/method_presence/mutants.md in internal/oracle):
-// presenceConsumer's check dropped admits every consumer, and these rows stop as not yet instead.
+// alias, though its presence test lowers (optional_member_presence_test.go). Mutant
+// (testdata/method_presence/mutants.md in internal/oracle): presenceConsumer's check dropped admits
+// every consumer, and these rows stop as not yet instead.
 func TestMethodReadsThatKeepTheValueAreRefused(t *testing.T) {
 	t.Parallel()
 	const refusal = "Adamic 0.1 refuses a method read as a value (step would lose its object, and this with it)"
@@ -58,7 +59,7 @@ func TestMethodReadsThatKeepTheValueAreRefused(t *testing.T) {
 		{"an argument", presenceCounter + "function call(f: () => number): number {\n\treturn f();\n}\nconsole.log(String(call(counter.step)));\n", "main.a:12:25: " + refusal},
 		{"a return", presenceCounter + "function detach(): () => number {\n\treturn counter.step;\n}\n", "main.a:10:9: " + refusal},
 		{"a comma operand", presenceCounter + "console.log(typeof (counter.step(), counter.step));\n", "main.a:9:37: " + refusal},
-		{"an optional method", "interface Maybe {\n\tm?(): number;\n}\nconst maybe: Maybe = { m() { return 1; } };\nconsole.log(typeof maybe.m);\n", "main.a:5:20: Adamic 0.1 refuses a method read as a value (m would lose its object, and this with it)"},
+		{"an optional method's alias", "interface Maybe {\n\tm?(): number;\n}\nconst maybe: Maybe = { m() { return 1; } };\nconst held = maybe.m;\nconsole.log(typeof held);\n", "main.a:5:14: Adamic 0.1 refuses a method read as a value (m would lose its object, and this with it)"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
