@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // containerFitStop is the stop for a value held one way going where a container is held another. A
@@ -361,6 +362,15 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 		// nothing at any depth, like the map slot above.
 		return stop
 	}
+	// checker.ts:21784's inline generator meets two ir.Object IteratorYieldResults past
+	// the depth gate only because the iterator wrapper adds levels. Unwrap the bundled
+	// lib's yield arm by declaration symbol, using the remaining depth (not a fresh
+	// walk) and the same memo, cycle and cap state. The reproducer needs only this
+	// yield arm: IteratorReturnResult and every other protocol pair keep their ordinary
+	// walk; raising the depth for all protocol types would be a broader claim.
+	if containerYieldResultPair(value, target) {
+		return l.pairwiseContainerPairGoes(l.typeArguments(value), l.typeArguments(target), depth, walk)
+	}
 	if depth > containerFitDepth {
 		if l.containerFitGeneric(value) || l.containerFitGeneric(target) {
 			// A generic pair this deep stops if either side can hold a map at all, or, for the converse,
@@ -471,4 +481,14 @@ func (l *lowering) pairwiseContainerPairGoes(values []*checker.Type, targets []*
 		}
 	}
 	return ""
+}
+
+// containerYieldResultPair identifies references to the same bundled lib declaration,
+// never a program's own interface with the same name.
+func containerYieldResultPair(value, target *checker.Type) bool {
+	if value.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.ObjectFlags()&checker.ObjectFlagsReference == 0 || target.ObjectFlags()&checker.ObjectFlagsReference == 0 || value.Target() == nil || target.Target() == nil {
+		return false
+	}
+	symbol := value.Target().Symbol()
+	return symbol != nil && symbol == target.Target().Symbol() && symbol.Name == "IteratorYieldResult" && len(symbol.Declarations) != 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
