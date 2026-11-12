@@ -1,0 +1,16 @@
+{
+    "block-report": {
+        "why": "One Adamic block's own build and tests at its commit, run sealed on a rented machine with no network, no root, no token and no loom, as a report read by hand beside the house's decided run of the same commit. It isn't the house's build of the tree: it makes no keys and compares none, and nothing it says lands, charges or clears (#highfive, piece 6, Node's road 3).",
+        "command": "bash cloud/block-report/run.sh",
+        "handKind": "Gap",
+        "standDown": true,
+        "classes": ["Rented"],
+        "at": "Required",
+        "rung": "Measure",
+        "ceilingSeconds": 10800,
+        "ceilingMostSeconds": 21600,
+        "trust": "Sealed",
+        "needs": ["adamic-block"],
+        "mustCheck": true
+    }
+}
