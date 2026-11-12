@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"os"
 	"path/filepath"
 	"testing"
 
@@ -9,69 +8,38 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// graphCheckedViewFixtures are the graph programs holding a checked view, each with its runtime count record
+// (testdata/counts/runtime/internal/oracle/testdata/graph_checked_views/).
+var graphCheckedViewFixtures = []string{
+	"internal/oracle/testdata/graph_checked_views/read.ts",
+	"internal/oracle/testdata/graph_checked_views/stored.ts",
+	"internal/oracle/testdata/graph_checked_views/tagged.ts",
+}
+
+func init() {
+	for _, path := range graphCheckedViewFixtures {
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
+	}
+}
+
 // A graph program holds checked views since slice 3 of #ztpcwrr (#ef727kr): a view owns nothing, so a
 // read through it retains as any read does, and a write through it takes writeProperty's graph hold.
-// Each row puts the viewed objects on a cycle 1,000 times in a function, so every turn's cycle is a
-// graph region that must free whole, and holds the answer to Node and the counted build. The views are
-// .ts, where a downcast stays a checked view (in .a it's refused, #m8dvvmf). Writing a field of a
-// type a view checks (Node and Identifier here) is NotYet without a source-slot certificate, and a
-// legacy view's field can't hold a reference yet, so each cycle closes through a holder no view checks.
-// The write is a view stored into the holder's graph slot, which the graph hold takes as any store.
+// Each fixture puts the viewed objects on a cycle 1,000 times in a function, so every turn's cycle is
+// a graph region that must free whole, and holds the answer to Node and the counted build. They're .ts,
+// where a downcast stays a checked view (in .a it's refused, #m8dvvmf). Writing a field of a type a
+// view checks (Node and Identifier here) is NotYet without a source-slot certificate, and a legacy
+// view's field can't hold a reference yet, so each cycle closes through a holder no view checks. The
+// write is a view stored into the holder's graph slot, which the graph hold takes as any store.
 //
-// Mutant: graphAdoptionBoundary's refusal of ViewOrigins and CheckedFields put back stops every row
-// before it lowers.
+// Mutant: graphAdoptionBoundary's refusal of ViewOrigins and CheckedFields put back stops every
+// fixture before it lowers.
 func TestGraphCheckedViews(t *testing.T) {
 	t.Parallel()
-	const nodes = `interface Node { readonly kind: 'identifier' | 'number'; readonly pos: number; next: Node | undefined }
-interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string }
-function identifier(node: Node): Identifier { return node as Identifier; }
-`
-	for _, c := range []struct{ name, source string }{
-		{"a checked read", nodes + `interface Holder { node: Node; self: Holder | undefined }
-function turn(index: number): string {
-	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
-	const holder: Holder = { node: a, self: undefined };
-	holder.self = holder;
-	return identifier(holder.node).name;
-}
-let last = '';
-for (let index = 0; index < 1000; index++) last = turn(index);
-console.log(last);
-`},
-		{"a view stored into a graph slot", nodes + `interface Holder { node: Node | undefined; self: Holder | undefined }
-function turn(index: number): string {
-	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
-	const seen: Node = a;
-	const holder: Holder = { node: undefined, self: undefined };
-	holder.self = holder;
-	const view = identifier(seen);
-	holder.node = view;
-	return view.name + ' ' + String(holder.node === a);
-}
-let last = '';
-for (let index = 0; index < 1000; index++) last = turn(index);
-console.log(last);
-`},
-		{"a tagged cast", `type First = { readonly kind: 'a'; readonly name: string };
-type Second = { readonly kind: 'b'; readonly name: string };
-type Third = { readonly kind: 'c'; readonly name: string };
-type Item = First | Second | Third;
-interface Holder { item: Item; self: Holder | undefined }
-function narrow(value: Item): First | Second { return value as First | Second; }
-function turn(index: number): string {
-	const holder: Holder = { item: { kind: 'a', name: 'a' + String(index) }, self: undefined };
-	holder.self = holder;
-	return narrow(holder.item).name;
-}
-let last = '';
-for (let index = 0; index < 1000; index++) last = turn(index);
-console.log(last);
-`},
-	} {
-		t.Run(c.name, func(t *testing.T) {
+	for _, fixture := range graphCheckedViewFixtures {
+		t.Run(filepath.Base(fixture), func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "main.ts")
-			if err := os.WriteFile(path, []byte(c.source), 0600); err != nil {
+			path, err := filepath.Abs(filepath.Join(repository, fixture))
+			if err != nil {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
@@ -94,7 +62,6 @@ console.log(last);
 			if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: ran.stdout, Stderr: ran.stderr, ExitCode: ran.exitCode}); report != "" {
 				t.Fatal(report)
 			}
-			t.Logf("counted: %s", ran.stderr)
 		})
 	}
 }
