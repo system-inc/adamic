@@ -26,7 +26,7 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 		return nil
 	}
 	candidates := l.librarySpreadCandidates(modules)
-	graph := newAllocationFlowGraph(l.result)
+	graph := l.flowGraph(l.result)
 	for _, spread := range l.librarySpreads {
 		// A complete producer proof preserves ordinary record and Adamic class
 		// spreads even when an unrelated compatible library object exists elsewhere.

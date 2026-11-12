@@ -29,6 +29,10 @@ type allocationFlowGraph struct {
 	// entry, when set, names a value an expression is where it enters a view: the flow stops there
 	// and reaches the site entry gives, which no allocation has (view_widened.go).
 	entry func(ir.Expression) int
+	// running is whether each function could run when the graph was built (runningFunctions): one
+	// that couldn't had its writes, returns and calls left out, so checkFlowLiveness holds it to
+	// that at the end of lowering.
+	running []bool
 }
 
 // unknownAt is why a node's value may come from somewhere the graph doesn't name, if it may: a
@@ -62,6 +66,47 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 // head of its own, with each consumer's delta and #0d8s5ff's inversion test.
 func newIterableViewFlowGraph(program *ir.Program) *allocationFlowGraph {
 	return collectAllocationFlowGraph(program, closureCallsOf(program))
+}
+
+// flowGraph is newAllocationFlowGraph for a lowering pass, and iterableViewFlowGraph is
+// newIterableViewFlowGraph for one: each notes which functions the graph took to never run
+// (noteFlowDead), so checkFlowLiveness can hold lowering to that once nothing more changes the
+// program. Every graph lowering builds is built through one of them.
+func (l *lowering) flowGraph(program *ir.Program) *allocationFlowGraph {
+	return l.noteFlowDead(newAllocationFlowGraph(program))
+}
+
+func (l *lowering) iterableViewFlowGraph(program *ir.Program) *allocationFlowGraph {
+	return l.noteFlowDead(newIterableViewFlowGraph(program))
+}
+
+// noteFlowDead adds the functions graph took to never run to flowDead, and hands graph back.
+func (l *lowering) noteFlowDead(graph *allocationFlowGraph) *allocationFlowGraph {
+	for function, running := range graph.running {
+		if !running {
+			if l.flowDead == nil {
+				l.flowDead = map[int]bool{}
+			}
+			l.flowDead[function] = true
+		}
+	}
+	return graph
+}
+
+// checkFlowLiveness reads, once nothing more changes the program, which functions can run, and
+// fails if one a flow graph took to never run (dead, by index) is named now. Liveness is read when a
+// graph is built, and a pass after that adding the first reference to a function would leave that
+// function's writes out of what the graph's consumers were told: a missed writer, so a compiler bug,
+// never a program to emit. A function made after the graph isn't in dead; its body was never in
+// that graph at all, as before road 3.
+func checkFlowLiveness(program *ir.Program, dead map[int]bool) error {
+	running := runningFunctions(program)
+	for function := range running {
+		if dead[function] && running[function] {
+			return fmt.Errorf("lower: compiler bug: function %d was named after the flow graph was built", function)
+		}
+	}
+	return nil
 }
 
 // collectAllocationFlowGraph collects the graph's edges. calls, when given, says which nested
@@ -142,9 +187,9 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 	// same way; a MakeClosure names its function, so any function such a call can run is running. A
 	// call the exemption accounts for in a body left out here never runs, so the edge it would have
 	// collected passes nothing.
-	running := runningFunctions(program)
+	graph.running = runningFunctions(program)
 	for i, function := range program.Functions {
-		if !running[i] {
+		if !graph.running[i] {
 			continue
 		}
 		collect(function.Body, i)
