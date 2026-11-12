@@ -262,8 +262,10 @@ func (l *lowering) censusTrustedTest(test *ast.Node, parameters []*ast.Node, ini
 // by length only where length is a discriminant, a member's length with a literal part (a tuple, or an
 // object like { length: 1 }), so this leaf narrows nothing the proof reads (Lower's read on #z5d0jye).
 // Both the declared type and the type the proof starts from are judged, since the narrowing runs from
-// the overload's parameter or the call's argument (initial), not the implementation's declaration
-// (Lower's must on 1fdc8083).
+// the overload's parameter or the call's argument (initial), and tsc judges a discriminant on that flow
+// type when it's a union that isn't a subset of the declared type (checker.ts
+// getDiscriminantPropertyAccess), so an overload's tuple union narrows by length over an array
+// implementation (Lower's must on 1fdc8083).
 // p?.length narrows p and isn't this leaf.
 func (l *lowering) censusLengthLeaf(side, other *ast.Node, parameterOf func(*ast.Node) int, starts func(int) []*checker.Type) bool {
 	side, other = ast.SkipParentheses(side), ast.SkipParentheses(other)
