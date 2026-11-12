@@ -1,0 +1,5 @@
+/workspace/scratch/tracing-census-lower/overlay.json
+# github.com/system-inc/adamic/internal/load
+./stage3/census/config_hook.go.txt:20:68: cannot use name (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to tsoptions.GetParsedCommandLineOfConfigFile
+./stage3/census/config_hook.go.txt:20:84: cannot use censusConfigHost{…} (value of struct type censusConfigHost) as "github.com/microsoft/TypeScript/tsc/internal/vfs".FS value in argument to tsoptions.GetParsedCommandLineOfConfigFile: censusConfigHost does not implement "github.com/microsoft/TypeScript/tsc/internal/vfs".FS (missing method AppendFile)
+./stage3/census/config_hook.go.txt:28:53: cannot use censusConfig().ParsedConfig.FileNames (variable of type []"github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as []string value in return statement

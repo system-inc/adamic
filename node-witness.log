@@ -1,0 +1,9 @@
+control-plain child exit=0
+after-plain child exit=0
+control-trace child exit=0
+after-trace child exit=0
+Traceback (most recent call last):
+  File "/workspace/scratch/tracing-fs-import-evidence/node_witness.py", line 37, in <module>
+    assert normalize(json.loads(data))==normalize(json.loads(b['traces'][name])),(mode,name,'trace changes outside timestamps and pids')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('trace', 'trace.json', 'trace changes outside timestamps and pids')

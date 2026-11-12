@@ -1,0 +1,58 @@
+[
+  {
+    "mode": "plain",
+    "tree": "control",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-control/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project/tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "exit": 0
+  },
+  {
+    "mode": "plain",
+    "tree": "after",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-after/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project/tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "exit": 0
+  },
+  {
+    "mode": "trace",
+    "tree": "control",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-control/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project/trace"
+    ],
+    "exit": 0
+  },
+  {
+    "mode": "trace",
+    "tree": "after",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-after/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project/trace"
+    ],
+    "exit": 0
+  }
+]

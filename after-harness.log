@@ -1,0 +1,12 @@
+Using /workspace/scratch/tracing-after/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 177ms
+Starting bundle-tests
+Starting build-tests
+Finished lib in 306ms
+Finished build-tests in 470ms
+Finished bundle-tests in 1.4s
+Completed tests in 1.6s

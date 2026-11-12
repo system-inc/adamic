@@ -1,0 +1,46 @@
+[
+  {
+    "tree": "control",
+    "diagnostics": [],
+    "trailer": "relation_report",
+    "ambientRequireFindings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/tracing-control/src/compiler/tracing.ts:380:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/tracing-control/src/compiler/tracing.ts:380:1",
+        "reason": "an ambient value declaration",
+        "text": "/workspace/scratch/tracing-control/src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
+      }
+    ],
+    "processDeclarations": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/tracing-control/src/compiler/tracing.ts:381:15",
+        "name": " process",
+        "kind": "KindVariableDeclaration",
+        "start": 15790,
+        "end": 15824
+      }
+    ]
+  },
+  {
+    "tree": "after",
+    "diagnostics": [],
+    "trailer": "relation_report",
+    "ambientRequireFindings": [],
+    "processDeclarations": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/tracing-after/src/compiler/tracing.ts:371:15",
+        "name": " process",
+        "kind": "KindVariableDeclaration",
+        "start": 15208,
+        "end": 15242
+      }
+    ]
+  }
+]

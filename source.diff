@@ -1,0 +1,40 @@
+--- control/src/compiler/tracing.ts
++++ after/src/compiler/tracing.ts
+@@ -25,6 +25,7 @@
+ } from "./_namespaces/ts.js";
+ import * as performance from "./_namespaces/ts.performance.js";
+ import { errorMessage } from "./hostErrors.js";
++import * as fs from "node:fs";
+ 
+ /* Tracing events for the compiler. */
+ 
+@@ -40,7 +41,6 @@
+ export namespace tracingEnabled {
+     type Mode = "project" | "build" | "server";
+ 
+-    let fs: { existsSync(path: string): boolean; mkdirSync(path: string, options: { recursive: boolean }): string | undefined; openSync(path: string, flags: string): number; writeSync(fd: number, data: string): number; closeSync(fd: number): void; writeFileSync(path: string, data: string): void; };
+ 
+     let traceCount = 0;
+     let traceFd = 0;
+@@ -60,15 +60,6 @@
+     /** Starts tracing for the given project. */
+     export function startTracing(tracingMode: Mode, traceDir: string, configFilePath?: string): void {
+         Debug.assert(!tracing, "Tracing already started");
+-
+-        if (fs === undefined) {
+-            try {
+-                fs = require("fs");
+-            }
+-            catch (e) {
+-                throw new Error(`tracing requires having fs\n(original error: ${errorMessage(e) || e})`);
+-            }
+-        }
+ 
+         mode = tracingMode;
+         typeCatalog.splice(0);
+@@ -377,5 +368,4 @@
+     tracingPath?: Path;
+ }
+ 
+-declare const require: (specifier: "fs") => any;
+ declare const process: { readonly pid: number };

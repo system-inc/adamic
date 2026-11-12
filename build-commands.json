@@ -1,0 +1,74 @@
+[
+  {
+    "tree": "control",
+    "phase": "install",
+    "argv": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "exit": 0,
+    "seconds": 5.260651343000063
+  },
+  {
+    "tree": "control",
+    "phase": "build",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 26.123108579000018
+  },
+  {
+    "tree": "control",
+    "phase": "harness",
+    "argv": [
+      "npm",
+      "exec",
+      "hereby",
+      "--",
+      "tests"
+    ],
+    "exit": 0,
+    "seconds": 1.7791404539999576
+  },
+  {
+    "tree": "after",
+    "phase": "install",
+    "argv": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "exit": 0,
+    "seconds": 2.7220597529999395
+  },
+  {
+    "tree": "after",
+    "phase": "build",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 35.98781819399994
+  },
+  {
+    "tree": "after",
+    "phase": "harness",
+    "argv": [
+      "npm",
+      "exec",
+      "hereby",
+      "--",
+      "tests"
+    ],
+    "exit": 0,
+    "seconds": 2.5852574389999745
+  }
+]

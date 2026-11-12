@@ -1,0 +1,22 @@
+package load
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+	"os"
+)
+
+func censusConfig() *tsoptions.ParsedCommandLine {
+	name := os.Getenv("CENSUS_CONFIG")
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(name), nil, nil, osvfs.FS(), nil)
+	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
+		panic(fmt.Sprintf("cannot parse census config: %v %v", diagnostics, config))
+	}
+	return config
+}
+
+func censusOptions() *core.CompilerOptions { return censusConfig().CompilerOptions() }
+func censusRoots() []tspath.RootedFilePath                { return censusConfig().ParsedConfig.FileNames }
