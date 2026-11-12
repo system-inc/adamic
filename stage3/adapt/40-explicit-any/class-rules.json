@@ -65,7 +65,11 @@
       "file": "src/compiler/path.ts",
       "key": "__pathComponensBrand",
       "line": 457,
-      "replacement": "undefined"
+      "replacement": "undefined",
+      "owner": "PathPathComponents",
+      "upstream": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+      "before": "export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };",
+      "after": "export interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined; }"
     },
     {
       "id": 142,
