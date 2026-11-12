@@ -246,3 +246,22 @@ func TestPhantomObjectPresenceHeldElsewhere(t *testing.T) {
 		})
 	}
 }
+
+// Mutant run and restored: omitting recursion loses the read refusal. At this
+// parent, invariance or the nested-assignment NotYet holds the program before run time.
+func TestPhantomObjectNestedAssignmentRead(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source, where string }{
+		{"holder", phantomObjectTaggedSource + "const holder: { a: TaggedNode } = { a: r };\nlet x: undefined;\n({ a: { __tagged: x } } = holder);\nconsole.log(String(x));", "9:9"},
+		{"deeper holder", phantomObjectTaggedSource + "const holder: { b: { a: TaggedNode } } = { b: { a: r } };\nlet x: undefined;\n({ b: { a: { __tagged: x } } } = holder);\nconsole.log(String(x));", "9:14"},
+		{"complete mutable pattern", strings.Replace(phantomObjectTaggedSource, "readonly kind", "kind", 1) + "const holder: { a: TaggedNode } = { a: r };\nlet x: undefined; let k: number;\n({ a: { kind: k, __tagged: x } } = holder);\nconsole.log(String(x));", "9:18"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, row.source, extension)
+				phantomObjectPresenceWant(t, err, "main"+extension+":"+row.where+": Adamic 0.1 refuses an observation of TaggedNode's phantom member __tagged (a read); "+phantomObjectPresenceFix)
+			})
+		}
+	}
+}

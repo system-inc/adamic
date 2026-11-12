@@ -49,16 +49,8 @@ func (l *lowering) phantomPresenceRefusal(node *ast.Node) error {
 		if ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
 			target := ast.SkipParentheses(binary.Left)
 			if binary.OperatorToken.Kind == ast.KindEqualsToken && target.Kind == ast.KindObjectLiteralExpression {
-				for _, property := range target.AsObjectLiteralExpression().Properties.Nodes {
-					if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
-						continue
-					}
-					name := property.Name()
-					if name != nil && (name.Kind == ast.KindIdentifier || name.Kind == ast.KindStringLiteral || name.Kind == ast.KindNumericLiteral) {
-						if err := l.phantomObjectRead(property, binary.Right, l.checker.GetTypeAtLocation(binary.Right), name.Text()); err != nil {
-							return err
-						}
-					}
+				if err := l.phantomObjectAssignmentRead(target, binary.Right, l.checker.GetTypeAtLocation(binary.Right)); err != nil {
+					return err
 				}
 			}
 			return l.phantomPresenceWrite(node, target)
@@ -198,6 +190,32 @@ func (l *lowering) phantomPresenceKeyed(node, value, key *ast.Node, road string)
 		members = []string{key.Text()}
 	}
 	return l.phantomPresenceRefused(node, brand, members, road)
+}
+
+// Nested assignment patterns read each field from the value at that path, not
+// from the outer holder. Follow the source's member types just as binding patterns do.
+func (l *lowering) phantomObjectAssignmentRead(pattern, origin *ast.Node, receiver *checker.Type) error {
+	if receiver == nil {
+		return nil
+	}
+	for _, property := range pattern.AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+			continue
+		}
+		name := property.Name()
+		if name == nil || (name.Kind != ast.KindIdentifier && name.Kind != ast.KindStringLiteral && name.Kind != ast.KindNumericLiteral) {
+			continue
+		}
+		if err := l.phantomObjectRead(property, origin, receiver, name.Text()); err != nil {
+			return err
+		}
+		if property.Kind == ast.KindPropertyAssignment && property.Initializer().Kind == ast.KindObjectLiteralExpression {
+			if err := l.phantomObjectAssignmentRead(property.Initializer(), nil, l.checker.GetTypeOfPropertyOfType(receiver, name.Text())); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }
 
 // Only object brands take the read road. Their checked field reads require a
