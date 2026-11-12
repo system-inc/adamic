@@ -2,11 +2,12 @@
 
 Tasks: #mez92e7 and #6jq01hc. Tested source: `d9c11411d498db77f81bca13454ca621c398bb12`, branch `compiler/record-storage-and-logical-views`; base `ab6be657a4d947544674e883fc1c8bd718e68a1b`.
 
-## Results so far
+## Final results
 
 Step 2 PASS: all 84 subtests passed (11 record storage, 12 logical assignment views, 61 declared-key stops). Exit 0; wall time 183 seconds. No failures, so no got/want blocks.
 Step 3 PASS: exit 0; wall time 884 seconds (14m 44s); no failing tests and no environment failures.
-Step 1 PASS. Step 4 pending.
+Step 4 PASS: exit 0; no failures; wall time 79 seconds.
+Step 1 PASS: formatting clean, vet exit 0, fetch/checkout/submodules successful.
 
 ## Environment and setup
 
@@ -138,4 +139,22 @@ ok  	github.com/system-inc/adamic/internal/lower	866.791s
 
 ## Report checkpoints
 
-After step 2: `718b12198bf1fbf1da967af3291223c7c1dfa750`, pushed to `proof/lower-both-a-report`. Count correction: `a2ac16e55` (new commit, pushed; no amend or force). This update records step 3 before step 4 starts.
+After step 2: `718b12198bf1fbf1da967af3291223c7c1dfa750`, pushed to `proof/lower-both-a-report`. Count correction: `a2ac16e55` (new commit, pushed; no amend or force). After step 3: `8648584f4a56adee55b8c79a58a025f9168adf76`, pushed before step 4 started.
+
+## Step 4: IR
+
+Command: `go test ./internal/ir -count=1 -timeout 30m`.
+
+Exit 0; every failure: none. Wall time 79 seconds.
+
+Complete output:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	61.119s
+```
+
+## Repository integrity
+
+All test commands ran at detached `d9c11411d498db77f81bca13454ca621c398bb12`. The report branch was created from that exact commit. Only `proof/lower-both-a/report.md` was added/committed. No compiler changes were made. Report checkpoints were pushed only to `refs/heads/proof/lower-both-a-report`, each as a new commit with no force pushes. The final report commit follows the step 3 checkpoint and includes step 4.
+
+Verified before the final commit: the report branch's only changed path relative to the tested source is `proof/lower-both-a/report.md`; source checkout status was clean. After this final report commit, verify the working tree is clean and the remote report branch matches local HEAD.
