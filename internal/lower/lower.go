@@ -158,6 +158,7 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
+	lowering.checkOverloadResults(modules)
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
 	if err := lowering.finishAccessors(); err != nil {
@@ -353,6 +354,11 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// narrowOverloads memoizes narrowOverload; overloadCalls holds each call to a narrow overload the
+	// lowering lowered, true once overloadResultCheck settled it, which checkOverloadResults reads after
+	// lowering (overload_result_check.go, #z5d0jye).
+	narrowOverloads map[*ast.Node]bool
+	overloadCalls   map[*ast.Node]bool
 	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
 	// view is in (view_optional_writes.go).
 	viewOptionalWrites []viewOptionalWrite
@@ -368,6 +374,10 @@ type lowering struct {
 	// handNext is the callee of the hand-driven `x.next()` callClosure is lowering, which property
 	// lets past its library-member guard (handDrivenNext); nil otherwise.
 	handNext *ast.Node
+	// nestedCallee is the bare callee of the call callClosure is lowering, which nestedReference lets
+	// past its overload-set stop, since that call resolves to the overload and is checked; nil
+	// otherwise (#z5d0jye).
+	nestedCallee *ast.Node
 
 	// optionalReceiverCall identifies the call whose receiver optionalIntrinsic guards.
 	optionalReceiverCall *ast.Node
