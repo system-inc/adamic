@@ -48,3 +48,11 @@ with a new output directory, redirecting output to a log. Compare against a
 separate current-main lane. Full commands and reports live in
 [the parser evidence](../../drivers/parser/evidence/front31/result.json), including
 both complete lane reports, apply tables, oracle logs, runtime JS hashes and mutants.
+
+## Tracing import amendment, nqp4p7g
+
+47 now supplies tracing.ts's qualified node:fs namespace import under Adamic's
+#00qn5az ruling and adaptation 93's precedent. 65 neither widens a local fs
+binding nor appends an ambient require there. It independently appends and
+validates exactly `declare const process: { readonly pid: number };`, retaining
+the CLI host binding row and readonly pid. The other two files are unchanged.

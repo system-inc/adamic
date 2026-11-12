@@ -3,6 +3,10 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const tree=path.resolve(process.argv[2]);
 const names=['core.ts','performanceCore.ts','tracing.ts'];
 const before=names.map(n=>fs.readFileSync(path.join(tree,'src/compiler',n)));
+const tracing=before[2].toString();
+assert(tracing.includes('import * as fs from "node:fs";'),'tracing import missing');
+assert(!tracing.includes('declare const require:'),'ambient tracing require restored');
+assert.equal(tracing.split('declare const process: { readonly pid: number };').length-1,1,'readonly tracing pid drift');
 const command=[path.join(__dirname,'adapt.cjs'),tree];
 const result=cp.spawnSync(process.execPath,command,{encoding:'utf8'});
 assert.equal(result.status,0,result.stderr);
