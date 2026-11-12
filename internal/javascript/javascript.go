@@ -250,7 +250,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			}
 		}
 		if options.Enter != nil {
-			if function.Async && options.Suspend != nil {
+			if (function.Async || function.Generator) && options.Suspend != nil {
 				emitter.line("const adamicActivation = %s;", options.Enter(index))
 			} else {
 				emitter.line("%s;", options.Enter(index))
@@ -643,6 +643,10 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Evaluate:
 		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
 			e.tracedAwait(at, wait, -1)
+			return
+		}
+		if yield, ok := statement.Value.(ir.Yield); ok && e.options.Suspend != nil {
+			e.tracedYield(yield)
 			return
 		}
 		e.line("%s;", e.value(statement.Value))
