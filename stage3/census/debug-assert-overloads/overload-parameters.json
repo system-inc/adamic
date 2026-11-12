@@ -1,0 +1,114 @@
+[
+  {
+    "unit_name": "flattenDestructuringBinding",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:281:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:244:1",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:281:82"
+    }
+  },
+  {
+    "unit_name": "emitBindingOrAssignment",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of assertNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:281:82: Adamic 0.1 refuses overload 1 of assertNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:318:5",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:281:82"
+    }
+  },
+  {
+    "unit_name": "flattenBindingOrAssignmentElement",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:338:1",
+      "where": "/workspace/orm-adapted/src/compiler/visitorPublic.ts:123:5"
+    }
+  },
+  {
+    "unit_name": "flattenObjectBindingOrAssignmentPattern",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:386:1",
+      "where": "/workspace/orm-adapted/src/compiler/visitorPublic.ts:123:5"
+    }
+  },
+  {
+    "unit_name": "makeArrayBindingPattern",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 4 of assertEachNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:259:98: Adamic 0.1 refuses overload 4 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:600:1",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:259:98"
+    }
+  },
+  {
+    "unit_name": "makeArrayAssignmentPattern",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 4 of assertEachNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:259:98: Adamic 0.1 refuses overload 4 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:605:1",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:259:98"
+    }
+  },
+  {
+    "unit_name": "makeObjectBindingPattern",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 4 of assertEachNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:259:98: Adamic 0.1 refuses overload 4 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:610:1",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:259:98"
+    }
+  },
+  {
+    "unit_name": "makeObjectAssignmentPattern",
+    "finding": {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "overload 4 of assertEachNode parameter test cannot be served by implementation parameter test",
+      "root_kind": "",
+      "text": "/workspace/orm-adapted/src/compiler/debug.ts:259:98: Adamic 0.1 refuses overload 4 of assertEachNode parameter test cannot be served by implementation parameter test; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+      "unit": "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts:615:1",
+      "where": "/workspace/orm-adapted/src/compiler/debug.ts:259:98"
+    }
+  }
+]

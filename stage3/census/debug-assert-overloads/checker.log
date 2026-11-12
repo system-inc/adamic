@@ -1,0 +1,7 @@
+stock TypeScript 6.0.3 diagnostics 0 calls 6
+src/compiler/transformers/destructuring.ts:185:9 assertNode overload 1 argument BindingOrAssignmentElementTarget test (node: Node) => node is Expression any 0 0
+src/compiler/transformers/destructuring.ts:319:9 assertNode overload 1 argument BindingOrAssignmentElementTarget test (node: Node) => node is BindingName any 0 0
+src/compiler/transformers/destructuring.ts:601:5 assertEachNode overload 2 argument BindingOrAssignmentElement[] test (node: Node) => node is ArrayBindingElement any 0 0
+src/compiler/transformers/destructuring.ts:606:5 assertEachNode overload 2 argument BindingOrAssignmentElement[] test (node: Node) => node is ArrayBindingOrAssignmentElement any 0 0
+src/compiler/transformers/destructuring.ts:611:5 assertEachNode overload 2 argument BindingOrAssignmentElement[] test (node: Node) => node is BindingElement any 0 0
+src/compiler/transformers/destructuring.ts:616:5 assertEachNode overload 2 argument BindingOrAssignmentElement[] test (node: Node) => node is ObjectBindingOrAssignmentElement any 0 0

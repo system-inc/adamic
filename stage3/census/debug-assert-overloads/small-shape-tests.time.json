@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadCallback(AssertNode|AssertEachNode)$",
+    "-count=1"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 20.48179279199985,
+  "user_seconds": 49.201273,
+  "system_seconds": 11.309609,
+  "peak_rss_kib": 1516052
+}

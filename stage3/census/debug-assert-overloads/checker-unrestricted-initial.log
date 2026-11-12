@@ -1,0 +1,17 @@
+/workspace/op2-report/stage3/census/debug-assert-overloads/checker.cjs:31
+  if(seen.size>100000)throw Error('unexpected graph size');
+                      ^
+
+Error: unexpected graph size
+    at graph (/workspace/op2-report/stage3/census/debug-assert-overloads/checker.cjs:31:29)
+    at visit (/workspace/op2-report/stage3/census/debug-assert-overloads/checker.cjs:42:905)
+    at visitNode2 (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:32551:18)
+    at forEachChildInExpressionStatement (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:32781:12)
+    at Object.forEachChild (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at visit (/workspace/op2-report/stage3/census/debug-assert-overloads/checker.cjs:45:5)
+    at visitNodes (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:32559:22)
+    at forEachChildInBlock (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:33029:10)
+    at Object.forEachChild (/workspace/orm-main/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at visit (/workspace/op2-report/stage3/census/debug-assert-overloads/checker.cjs:45:5)
+
+Node.js v24.19.0
