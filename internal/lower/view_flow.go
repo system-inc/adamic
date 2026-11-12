@@ -441,6 +441,12 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 		if value.Panic == nil {
 			follow(value.Fallback)
 		}
+	case ir.Logical:
+		// x || y and x && y each give back one operand or the other (ir/taste.go), so the value reaches what
+		// either does. Where lowering converts the left operand to the result's type, an object is held as
+		// itself; the fresh values that conversion makes are scalars and falsy lefts, which reach no site.
+		follow(value.Left)
+		follow(value.Right)
 	default:
 		unknown(fmt.Sprintf("untracked source %T", expression))
 	}
