@@ -111,8 +111,10 @@ vetExit=$?
 step build go build $reproducible $packages
 buildExit=$?
 # One test stream for every package, uncached, in one process tree; a package that doesn't build is in the stream too.
+# The house runs each test binary with -test.timeout=3h; go test's own default of 10 minutes killed internal/lower whole
+# on an 8-core box (Pupa, Nov 12), so a slow machine reads as a failed package.
 # shellcheck disable=SC2086
-step test go test -count=1 -json $reproducible $packages
+step test go test -count=1 -json -timeout 3h $reproducible $packages
 testExit=$?
 cp "$out/test.log" "$out/test.jsonl"
 
