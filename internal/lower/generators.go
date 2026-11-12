@@ -739,7 +739,7 @@ func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) 
 		// The step is tested for a throw before done is read (a step that threw also finished the
 		// body): the native backend tests after a call that can throw, and this is one when
 		// ResumeMayThrow says so.
-		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
+		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Functions: []int{function}, Of: yields}},
 		ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
 		ir.Declare{Local: local, Value: ir.Read{Local: step, Of: yields}},
 	}
@@ -963,7 +963,7 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 	held := ir.Read{Local: generator, Of: ir.Generator}
 	collected := ir.Read{Local: output, Of: ir.Array}
 	loop := ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
-		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
+		ir.Declare{Local: step, Value: ir.GeneratorNext{Generator: held, Functions: []int{function}, Of: yields}},
 		ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
 		ir.Evaluate{Value: ir.ArrayPush{Array: collected, Value: ir.Read{Local: step, Of: yields}, Element: yields, Site: l.iterationArrayWriteSite(node)}},
 	}}

@@ -34,19 +34,38 @@ func TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal(t *testing.T) {
 	}
 }
 
-// A generator's step runs its body, which touches finds the global in through the step's Function.
+// A generator's step runs its body, which touches finds the global in through the step's Functions.
 // Mutant: the GeneratorNext arm made `return false`.
 func TestReuseFollowsAGeneratorStepIntoItsBody(t *testing.T) {
 	t.Parallel()
 	program := &ir.Program{
 		Locals: []ir.Local{{Name: "tree", Type: ir.Object, Global: true, Function: -1}, {Name: "frame", Type: ir.Generator, Function: 0}},
 		Functions: []ir.Function{
-			{Name: "steps", Body: []ir.Statement{ir.Evaluate{Value: ir.GeneratorNext{Generator: ir.Read{Local: 1, Of: ir.Generator}, Function: 1, Of: ir.Object}}}},
+			{Name: "steps", Body: []ir.Statement{ir.Evaluate{Value: ir.GeneratorNext{Generator: ir.Read{Local: 1, Of: ir.Generator}, Functions: []int{1}, Of: ir.Object}}}},
 			{Name: "numbers", Generator: true, Body: []ir.Statement{ir.Evaluate{Value: ir.Read{Local: 0, Of: ir.Object}}}},
 		},
 	}
 	if !touches(program, 0, 0, map[int]bool{}) {
 		t.Fatal("a step of a generator whose body reads the global is taken to touch nothing")
+	}
+}
+
+// A view's dispatch steps frames any of several generator functions made (#qk8rztp S3c-2), so touches
+// follows every listed body, and one that reads the global listed after one that doesn't makes the
+// step touch it. Mutant (internal/oracle/testdata/generators_several/mutants.md, M3): the arm
+// following only expression.Functions[0], and the second body's read goes unseen.
+func TestReuseFollowsEveryBodyAGeneratorStepMayRun(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Locals: []ir.Local{{Name: "tree", Type: ir.Object, Global: true, Function: -1}, {Name: "frame", Type: ir.Object, Function: 0}},
+		Functions: []ir.Function{
+			{Name: "steps", Body: []ir.Statement{ir.Evaluate{Value: ir.GeneratorNext{Generator: ir.Read{Local: 1, Of: ir.Object}, Functions: []int{1, 2}, Of: ir.Object}}}},
+			{Name: "numbers", Generator: true, Body: []ir.Statement{ir.Evaluate{Value: ir.NumberConstant{Value: 1}}}},
+			{Name: "trees", Generator: true, Body: []ir.Statement{ir.Evaluate{Value: ir.Read{Local: 0, Of: ir.Object}}}},
+		},
+	}
+	if !touches(program, 0, 0, map[int]bool{}) {
+		t.Fatal("a step of generators the second of which reads the global is taken to touch nothing")
 	}
 }
 

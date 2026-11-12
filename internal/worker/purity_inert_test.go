@@ -29,17 +29,33 @@ func TestCheckPureRefusesAnOperationNoReviewNames(t *testing.T) {
 	}
 }
 
-// A generator's step runs its body, which is inspected through the step's own Function, since the
+// A generator's step runs its body, which is inspected through the step's own Functions, since the
 // call that made the frame may be outside what CheckPure walks. Mutant: the GeneratorNext arm's
 // inspect dropped, and the body's console write passes.
 func TestCheckPureInspectsAGeneratorStepsBody(t *testing.T) {
 	t.Parallel()
 	program := &ir.Program{Functions: []ir.Function{
-		{Name: "compute", Body: []ir.Statement{ir.Return{Value: ir.GeneratorNext{Generator: ir.Read{Local: 0, Of: ir.Object}, Function: 1, Of: ir.Number}}}},
+		{Name: "compute", Body: []ir.Statement{ir.Return{Value: ir.GeneratorNext{Generator: ir.Read{Local: 0, Of: ir.Object}, Functions: []int{1}, Of: ir.Number}}}},
 		{Name: "numbers", Body: []ir.Statement{ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}}}},
 	}, Locals: []ir.Local{{Name: "iterator", Type: ir.Object, Function: 0}}}
 	if err := CheckPure(program, 0); err == nil || !strings.Contains(err.Error(), "calls console") {
 		t.Fatalf("want the stepped body's console write refused, got %v", err)
+	}
+}
+
+// A view's dispatch steps frames any of several generator functions made (#qk8rztp S3c-2), so every
+// listed body is inspected, and an impure one listed after a pure one makes the step impure. Mutant
+// (internal/oracle/testdata/generators_several/mutants.md, M3): the arm inspecting only
+// node.Functions[0], and the second body's console write passes.
+func TestCheckPureInspectsEveryBodyAGeneratorStepMayRun(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Functions: []ir.Function{
+		{Name: "compute", Body: []ir.Statement{ir.Return{Value: ir.GeneratorNext{Generator: ir.Read{Local: 0, Of: ir.Object}, Functions: []int{1, 2}, Of: ir.Number}}}},
+		{Name: "numbers", Body: []ir.Statement{ir.Evaluate{Value: ir.NumberConstant{Value: 1}}}},
+		{Name: "noisy", Body: []ir.Statement{ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}}}},
+	}, Locals: []ir.Local{{Name: "iterator", Type: ir.Object, Function: 0}}}
+	if err := CheckPure(program, 0); err == nil || !strings.Contains(err.Error(), "calls console") {
+		t.Fatalf("want the second stepped body's console write refused, got %v", err)
 	}
 }
 
