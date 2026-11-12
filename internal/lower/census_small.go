@@ -242,6 +242,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if (l.hasPhantom(from) || l.hasPhantom(to)) && l.phantomCast(from, to) && l.phantomAssignable(from, to) && l.phantomAssignable(to, from) {
 			return nil
 		}
+		if l.overloadPhantomResult(implementation, produced, promised) {
+			return nil // Only phantom brands differ, below the top level too (rulings.md:34 with :32, #z5d0jye step 3).
+		}
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}
