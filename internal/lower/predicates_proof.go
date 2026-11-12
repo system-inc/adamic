@@ -1076,7 +1076,7 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 			node.ForEachChild(visit)
 			return false
 		}
-		if l.predicateSameReference(node, argument) && !ast.IsDeclarationName(node) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
+		if l.predicateNameReads(node, argument) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
 			actual := l.checker.GetTypeAtLocation(node)
 			if !checker.Checker_isTypeIdenticalTo(l.checker, actual, declared) {
 				if flow := node.FlowNodeData(); flow != nil {
@@ -1110,6 +1110,40 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 // it still reaches the checker.
 func predicateCannotMatch(node, argument *ast.Node) bool {
 	return argument.Kind == ast.KindIdentifier && node.Kind == ast.KindIdentifier && node.Text() != argument.Text()
+}
+
+// predicateNameReads is whether node reads argument's value: a reference in read position that matches
+// it, never a declaration's own name, except a shorthand property's name, `{ v }`, which is a declaration
+// name and a read of v at once (Compiler's must on #39wtqdj). Its value symbol is the binding it reads, as
+// checkedPredicateInferredReference resolves it, and the binder gives it its own flow node, as it gives
+// every identifier (measured on #39wtqdj -5).
+func (l *lowering) predicateNameReads(node, argument *ast.Node) bool {
+	if !ast.IsDeclarationName(node) {
+		return predicateReadPosition(node) && l.predicateSameReference(node, argument)
+	}
+	parent := node.Parent
+	if parent == nil || parent.Kind != ast.KindShorthandPropertyAssignment || argument.Kind != ast.KindIdentifier {
+		return false
+	}
+	value := l.checker.GetShorthandAssignmentValueSymbol(parent)
+	if value != nil && value.Flags&ast.SymbolFlagsAlias != 0 {
+		value = l.checker.GetAliasedSymbol(value)
+	}
+	return value != nil && value == l.symbol(argument)
+}
+
+// predicateReadPosition is whether node can read a value where it stands: an identifier, this, or an access
+// expression, in expression position and never the name after a dot. The checker's isMatchingReference
+// also matches nodes that read nothing. Measured on #39wtqdj -5: an assignment to v, `v = x` or `v ??= x`,
+// and a VariableDeclaration of v, neither carrying flow data, and the b in a.b when a local is named b,
+// which it resolves as a name wherever it stands. Read from isMatchingReference, the same holds for a
+// comma, parentheses or a non-null assertion around v and a BindingElement declaring it. A read inside
+// one of those is its own node, which the walks visit.
+func predicateReadPosition(node *ast.Node) bool {
+	if node.Kind != ast.KindIdentifier && node.Kind != ast.KindThisKeyword && node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression {
+		return false
+	}
+	return ast.IsExpressionNode(node) && !ast.IsRightSideOfPropertyAccess(node)
 }
 
 func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
