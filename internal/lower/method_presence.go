@@ -31,11 +31,10 @@ import (
 // Object.setPrototypeOf, Object.assign, Reflect.set, a write and a delete
 // (TestMethodPresenceRestsOnTheseStops). The constant comes once the
 // receiver is evaluated, once, for its effects. Through ?. the receiver may be missing, and its
-// presence is the answer. An optional method (m?(): T) stays
-// refused, since nothing proves it there and nothing yet reads whether it is: its read goes the way an
-// optional function-typed field's does (property), and that stops for every method behind it, an
-// object literal's as a literal method through a view that erases its receiver, a class's as a class
-// method through a view that erases its prototype origin.
+// presence is the answer. An optional method (m?(): T) is never a
+// constant, since nothing proves it there: its presence test is read off its slot as it runs, the way
+// an optional function-typed field's is (property), and stops where its receiver may hold anything but
+// a plain object literal (optionalMemberPresenceTest, #p2n17c4 shape 1).
 
 // methodPresenceTest reports whether node reads a method that is always there only to test for it.
 // A read the library observations already admit (typeof String.raw, typeof Array.prototype.map,
