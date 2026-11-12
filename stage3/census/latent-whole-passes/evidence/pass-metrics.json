@@ -1,0 +1,262 @@
+[
+  {
+    "pass_name": "checkOverloadResults",
+    "calls": 3186,
+    "wall_seconds": 0.120018008,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "forwarderValues",
+    "calls": 3186,
+    "wall_seconds": 0.02828226,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "finishClassCalls",
+    "calls": 3186,
+    "wall_seconds": 0.006447731,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "finishAccessors",
+    "calls": 3186,
+    "wall_seconds": 0.00588356,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "finishToPrimitive",
+    "calls": 3186,
+    "wall_seconds": 0.006842679,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkIterableViews",
+    "calls": 3186,
+    "wall_seconds": 0.005582813,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 1,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "exceptions",
+    "calls": 3185,
+    "wall_seconds": 0.82856813,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 256,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkLibrarySpreads",
+    "calls": 3185,
+    "wall_seconds": 6.081166595,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 8832,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkAccessorSpreads",
+    "calls": 3185,
+    "wall_seconds": 0.12450908,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 3,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkRecordGuardedReads",
+    "calls": 3182,
+    "wall_seconds": 0.008206913,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 2,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkDynamicKeyedGetters",
+    "calls": 3180,
+    "wall_seconds": 0.032350941,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkGeneratorRoads",
+    "calls": 3180,
+    "wall_seconds": 0.192272165,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "NormalizeAsync",
+    "calls": 3180,
+    "wall_seconds": 0.055684316,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "asyncEntrySource",
+    "calls": 3180,
+    "wall_seconds": 0.003986249,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkBoundArguments",
+    "calls": 3180,
+    "wall_seconds": 0.015337143000000001,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkViewOptionalWrites",
+    "calls": 3180,
+    "wall_seconds": 0.004640523,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkViewCopies",
+    "calls": 3180,
+    "wall_seconds": 0.003813815,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkViewWidenedReads",
+    "calls": 3180,
+    "wall_seconds": 0.194995232,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 265,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkHostMemberWrites",
+    "calls": 2915,
+    "wall_seconds": 0.003742529,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "asyncPayloadFailures",
+    "calls": 2915,
+    "wall_seconds": 0.002052391,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkPromiseConsumption",
+    "calls": 2915,
+    "wall_seconds": 0.23678508,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 128,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "checkViewLogicalWrites",
+    "calls": 2915,
+    "wall_seconds": 0.080583806,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "readiness",
+    "calls": 2915,
+    "wall_seconds": 2.859722755,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 59520,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "borrow",
+    "calls": 2915,
+    "wall_seconds": 0.380444289,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "counters",
+    "calls": 2915,
+    "wall_seconds": 0.31958939,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 0,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  },
+  {
+    "pass_name": "voidDiscards",
+    "calls": 2915,
+    "wall_seconds": 1.997963664,
+    "observed_process_hwm_kib": 1736508,
+    "sum_hwm_growth_kib": 6656,
+    "new_stopped_units": 0,
+    "panics": 0,
+    "isolated_incremental_peak_memory": null
+  }
+]

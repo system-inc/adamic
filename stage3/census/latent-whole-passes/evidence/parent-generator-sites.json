@@ -1,0 +1,42 @@
+[
+  {
+    "where": "21733:22",
+    "owner": "elaborateJsxComponents",
+    "owner_where": "21725:5",
+    "top": "createTypeChecker",
+    "top_where": "1489:1",
+    "argument": "generateJsxAttributes(node)"
+  },
+  {
+    "where": "21783:34",
+    "owner": "elaborateJsxComponents",
+    "owner_where": "21725:5",
+    "top": "createTypeChecker",
+    "top_where": "1489:1",
+    "argument": "(function* () {\r\n                                yield elem;\r\n                            })()"
+  },
+  {
+    "where": "21849:20",
+    "owner": "elaborateArrayLiteral",
+    "owner_where": "21839:5",
+    "top": "createTypeChecker",
+    "top_where": "1489:1",
+    "argument": "generateLimitedTupleElements(node, target)"
+  },
+  {
+    "where": "21857:20",
+    "owner": "elaborateArrayLiteral",
+    "owner_where": "21839:5",
+    "top": "createTypeChecker",
+    "top_where": "1489:1",
+    "argument": "generateLimitedTupleElements(node, target)"
+  },
+  {
+    "where": "21895:16",
+    "owner": "elaborateObjectLiteral",
+    "owner_where": "21886:5",
+    "top": "createTypeChecker",
+    "top_where": "1489:1",
+    "argument": "generateObjectLiteralElements(node)"
+  }
+]

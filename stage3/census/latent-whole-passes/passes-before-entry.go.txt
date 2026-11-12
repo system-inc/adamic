@@ -1,0 +1,98 @@
+// Scratch-only post-body observations. Never compiled without the guarded census overlay.
+package lower
+
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strconv"
+ "syscall"
+ "time"
+ "errors"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/flow"
+ "github.com/system-inc/adamic/internal/ir"
+)
+
+var lwpOrdinal int
+func lwpSelected() bool {
+ n := lwpOrdinal; lwpOrdinal++
+ start, _ := strconv.Atoi(os.Getenv("LWP_START"))
+ end, _ := strconv.Atoi(os.Getenv("LWP_END"))
+ return n >= start && (end == 0 || n < end)
+}
+func lwpPass(name string, run func() error) (failure error) {
+ start := time.Now()
+ var before, after syscall.Rusage
+ syscall.Getrusage(syscall.RUSAGE_SELF, &before)
+ defer func() {
+  crash := recover()
+  elapsed := time.Since(start).Seconds()
+  syscall.Getrusage(syscall.RUSAGE_SELF, &after)
+  row := map[string]any{"unit":latentFindingOwner,"pass":name,"wall_seconds":elapsed,"maxrss_kib":after.Maxrss,"hwm_growth_kib":after.Maxrss-before.Maxrss}
+  if failure != nil { row["error"] = failure.Error(); row["type"] = fmt.Sprintf("%T",failure) }
+  if crash != nil { row["panic"] = fmt.Sprint(crash) }
+  f, err := os.OpenFile(os.Getenv("LWP_TIMES"), os.O_CREATE|os.O_APPEND|os.O_WRONLY,0600)
+  if err != nil { panic(err) }; err = json.NewEncoder(f).Encode(row); f.Close(); if err != nil { panic(err) }
+  if crash != nil { panic(crash) }
+ }()
+ return run()
+}
+func (l *lowering) lwpOverloads(node *ast.Node) {
+ // Production skips function/class declarations in moduleStatements and visits each produced
+ // function's children separately. Restrict that module walk to this unit, retaining its guard.
+ var visit func(*ast.Node) bool
+ visit = func(n *ast.Node) bool {
+  if ast.IsFunctionLike(n) || ast.IsClassLike(n) { return false }
+  if l.narrowOverloadCall(n) && !l.overloadCalls[n] { panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check",l.program.Where(n))) }
+  n.ForEachChild(visit); return false
+ }
+ visit(node)
+ l.checkOverloadResults(nil)
+}
+func (l *lowering) lwpTail(node *ast.Node, modules []*ast.SourceFile) error {
+ if os.Getenv("LWP_PASSES") == "" { return nil }
+ l.result.Source = l.program.Where(node)
+ passes := []struct{name string; run func() error}{
+ {"checkOverloadResults",func() error { l.lwpOverloads(node); return nil }},
+ {"forwarderValues",func() error { l.result.Main=append(l.forwarderValues,l.result.Main...); return nil }},
+ {"finishClassCalls",func() error { l.finishClassCalls(); return nil }},
+ {"finishAccessors",l.finishAccessors},
+ {"finishToPrimitive",func() error { l.finishToPrimitive(); return nil }},
+ {"checkIterableViews",l.checkIterableViews},
+ {"exceptions",l.exceptions},
+ {"checkLibrarySpreads",func() error { return l.checkLibrarySpreads(modules) }},
+ {"checkAccessorSpreads",l.checkAccessorSpreads},
+ {"checkRecordGuardedReads",l.checkRecordGuardedReads},
+ {"checkDynamicKeyedGetters",l.checkDynamicKeyedGetters},
+ {"checkGeneratorRoads",func() error { return checkGeneratorRoads(l.result) }},
+ {"NormalizeAsync",func() error {
+  if err:=flow.NormalizeAsync(l.result); err!=nil {
+   where:=node; var located *flow.AsyncError
+   if errors.As(err,&located) && located.Site>0 && located.Site<=len(l.asyncSites) { where=l.asyncSites[located.Site-1] }
+   return &NotYet{Where:l.program.Where(where),What:err.Error()}
+  }; return nil
+ }},
+ {"asyncEntrySource",func() error {
+  if l.result.AsyncEntry>0 { source:=ir.SourceIdentity{Module:l.modulePath(ast.GetSourceFileOfNode(node)),Declaration:[]string{"module"},Role:"async_module"}; l.result.Functions[l.result.AsyncEntry-1].Source=source; l.result.MainModules=[]ir.MainModule{{Module:source.Module,Statements:len(l.result.Main)}} };return nil
+ }},
+ // findCycles and its dependent Program/plan/ownership proofs deliberately omitted.
+ {"checkBoundArguments",l.checkBoundArguments},
+ {"checkViewOptionalWrites",l.checkViewOptionalWrites},
+ {"checkViewCopies",l.checkViewCopies},
+ {"checkViewWidenedReads",l.checkViewWidenedReads},
+ {"checkHostMemberWrites",l.checkHostMemberWrites},
+ {"asyncPayloadFailures",func() error { if len(l.asyncPayloadFailures)>0 {return l.asyncPayloadFailures[0]};return nil }},
+ {"checkPromiseConsumption",l.checkPromiseConsumption},
+ {"checkViewLogicalWrites",l.checkViewLogicalWrites},
+ {"readiness",func() error { readiness(l.result); return nil }},
+ {"borrow",func() error { borrow(l.result); return nil }},
+ {"counters",func() error { counters(l.result); return nil }},
+ {"voidDiscards",l.voidDiscards},
+ }
+ for _, pass:=range passes {
+  latentFindingPhase="whole_pass:"+pass.name
+  if err:=lwpPass(pass.name,pass.run);err!=nil{return err}
+ }
+ return nil
+}

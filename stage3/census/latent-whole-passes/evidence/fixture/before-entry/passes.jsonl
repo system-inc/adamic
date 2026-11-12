@@ -1,0 +1,39 @@
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkOverloadResults","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000037635}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"forwarderValues","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000001527}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"finishClassCalls","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000001262}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"finishAccessors","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000016909}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"finishToPrimitive","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000033695}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkIterableViews","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.00001783}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"exceptions","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000100756}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkLibrarySpreads","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000001273}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkAccessorSpreads","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000015615}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkRecordGuardedReads","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000016305}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkDynamicKeyedGetters","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":8.73e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkGeneratorRoads","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000068485}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"NormalizeAsync","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000171416}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"asyncEntrySource","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":7.14e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkBoundArguments","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000001399}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkViewOptionalWrites","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000044156}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkViewCopies","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000017218}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkViewWidenedReads","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000016843}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"checkHostMemberWrites","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000034781}
+{"hwm_growth_kib":0,"maxrss_kib":32092,"pass":"asyncPayloadFailures","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":8e-7}
+{"hwm_growth_kib":256,"maxrss_kib":32348,"panic":"runtime error: invalid memory address or nil pointer dereference","pass":"checkPromiseConsumption","unit":"/workspace/lwp-scratch/fixture/probe.ts:1:1","wall_seconds":0.000341928}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkOverloadResults","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":0.000007676}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"forwarderValues","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":8.57e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishClassCalls","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":9.72e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishAccessors","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":9.95e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishToPrimitive","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":9.35e-7}
+{"error":"/workspace/lwp-scratch/fixture/probe.ts:2:64: stage 0 can't lower a view over an iterable of unproven origin (local or result has no tracked producer; no reaching allocation established) yet","hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkIterableViews","type":"*lower.NotYet","unit":"/workspace/lwp-scratch/fixture/probe.ts:2:1","wall_seconds":0.000525693}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkOverloadResults","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":0.000004879}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"forwarderValues","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":0.000001029}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishClassCalls","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":8.41e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishAccessors","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":7.47e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"finishToPrimitive","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":8.23e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkIterableViews","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":8.24e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"exceptions","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":0.000004196}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkLibrarySpreads","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":0.000001069}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkAccessorSpreads","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":7.49e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkRecordGuardedReads","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":6.87e-7}
+{"hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkDynamicKeyedGetters","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":7.01e-7}
+{"error":"lower: compiler bug: 1 generator values where only 0 are a consuming loop's or a dropped call's","hwm_growth_kib":0,"maxrss_kib":32604,"pass":"checkGeneratorRoads","type":"*errors.errorString","unit":"/workspace/lwp-scratch/fixture/probe.ts:3:1","wall_seconds":0.000028064}

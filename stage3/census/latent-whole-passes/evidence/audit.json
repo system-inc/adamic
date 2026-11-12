@@ -1,0 +1,35 @@
+{
+  "entry_sources": 81,
+  "new_stopped_units": 271,
+  "new_stops_by_pass": {
+    "checkAccessorSpreads": 3,
+    "checkIterableViews": 1,
+    "checkRecordGuardedReads": 2,
+    "checkViewWidenedReads": 265
+  },
+  "panics": 0,
+  "pass_calls": 80613,
+  "pass_wall_seconds": 13.599472057,
+  "pin_stream_sha256": "c6f1d2498c6fad3f83c89dcb36c0d9f8b45e2828db8461963f32c86937cffa0d",
+  "prototype_peak_rss_kib": 1737148,
+  "prototype_unit_wall_seconds": 1753.192394421,
+  "requested_positive_pin": "not reproduced; owner stops before tail",
+  "scope": "unit-only first-error; independent whole-file refusal scan omitted on both sides",
+  "stock_peak_rss_kib": 1710016,
+  "stock_unit_wall_seconds": 1743.921543291,
+  "tail_unit_kinds": {
+    "KindClassDeclaration": 3,
+    "KindEnumDeclaration": 154,
+    "KindExportDeclaration": 79,
+    "KindExpressionStatement": 3,
+    "KindFunctionDeclaration": 1429,
+    "KindIfStatement": 3,
+    "KindImportDeclaration": 99,
+    "KindInterfaceDeclaration": 741,
+    "KindModuleDeclaration": 8,
+    "KindTypeAliasDeclaration": 385,
+    "KindVariableStatement": 282
+  },
+  "tail_units": 3186,
+  "units": 4566
+}
