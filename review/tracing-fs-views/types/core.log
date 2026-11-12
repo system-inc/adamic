@@ -1,0 +1,1265 @@
+/workspace/tracing-measured-after/src/compiler/core.ts:17:14: variable emptyArray: never[]
+/workspace/tracing-measured-after/src/compiler/core.ts:19:14: variable emptyMap: ReadonlyMap<never, never>
+/workspace/tracing-measured-after/src/compiler/core.ts:22:17: function length: <T>(array: readonly T[] | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:22:27: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:33:17: function forEach: <T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:33:31: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:33:64: parameter callback: (element: T, index: number) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:33:75: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:33:87: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:35:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:36:19: variable result: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:50:17: function forEachRight: <T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:50:36: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:50:69: parameter callback: (element: T, index: number) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:50:80: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:50:92: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:52:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:53:19: variable result: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:67:17: function firstDefined: <T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:67:36: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:67:69: parameter callback: (element: T, index: number) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:67:80: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:67:92: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:72:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:73:15: variable result: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:82:17: function firstDefinedIterator: <T, U>(iter: Iterable<T>, callback: (element: T) => U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:82:44: parameter iter: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:82:63: parameter callback: (element: T) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:82:74: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:83:16: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:84:15: variable result: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:93:17: function reduceLeftIterator: <T, U>(iterator: Iterable<T> | undefined, f: (memo: U, value: T, i: number) => U, initial: U) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:93:42: parameter iterator: Iterable<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:93:77: parameter f: (memo: U, value: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:93:81: parameter memo: U
+/workspace/tracing-measured-after/src/compiler/core.ts:93:90: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:93:100: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:93:117: parameter initial: U
+/workspace/tracing-measured-after/src/compiler/core.ts:94:9: variable result: U
+/workspace/tracing-measured-after/src/compiler/core.ts:96:13: variable pos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:97:20: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:106:17: function zipWith: <T, U, V>(arrayA: readonly T[], arrayB: readonly U[], callback: (a: T, b: U, index: number) => V) => V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:106:34: parameter arrayA: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:106:56: parameter arrayB: readonly U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:106:78: parameter callback: (a: T, b: U, index: number) => V
+/workspace/tracing-measured-after/src/compiler/core.ts:106:89: parameter a: T
+/workspace/tracing-measured-after/src/compiler/core.ts:106:95: parameter b: U
+/workspace/tracing-measured-after/src/compiler/core.ts:106:101: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:107:11: variable result: V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:109:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:121:17: function intersperse: <T>(input: T[], element: T) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:121:32: parameter input: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:121:44: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:125:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:126:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:126:21: variable n: number
+/workspace/tracing-measured-after/src/compiler/core.ts:140:17: function every: { <T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[]; <T, U extends T>(array: readonly T[] | undefined, callback: (element: T, index: number) => element is U): array is readonly U[] | undefined; <T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:140:39: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:140:60: parameter callback: (element: T, index: number) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:140:71: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:140:83: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:142:17: function every: { <T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[]; <T, U extends T>(array: readonly T[] | undefined, callback: (element: T, index: number) => element is U): array is readonly U[] | undefined; <T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:142:39: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:142:72: parameter callback: (element: T, index: number) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:142:83: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:142:95: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:144:17: function every: { <T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[]; <T, U extends T>(array: readonly T[] | undefined, callback: (element: T, index: number) => element is U): array is readonly U[] | undefined; <T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:144:26: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:144:59: parameter callback: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:144:70: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:144:82: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:145:17: function every: { <T, U extends T>(array: readonly T[], callback: (element: T, index: number) => element is U): array is readonly U[]; <T, U extends T>(array: readonly T[] | undefined, callback: (element: T, index: number) => element is U): array is readonly U[] | undefined; <T>(array: readonly T[] | undefined, callback: (element: T, index: number) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:145:26: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:145:59: parameter callback: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:145:70: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:145:82: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:147:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:162:17: function find: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:162:38: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:162:71: parameter predicate: (element: T, index: number) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:162:83: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:162:95: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:162:127: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:164:17: function find: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:164:25: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:164:58: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:164:70: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:164:82: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:164:109: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:166:17: function find: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:166:25: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:166:58: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:166:70: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:166:82: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:166:109: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:168:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:169:15: variable value: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:178:17: function findLast: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:178:42: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:178:75: parameter predicate: (element: T, index: number) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:178:87: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:178:99: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:178:131: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:180:17: function findLast: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:180:29: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:180:62: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:180:74: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:180:86: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:180:113: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:182:17: function findLast: { <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number | undefined): U | undefined; <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:182:29: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:182:62: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:182:74: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:182:86: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:182:113: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:184:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:185:15: variable value: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:198:17: function findIndex: <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:198:30: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:198:63: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:198:75: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:198:87: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:198:114: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:200:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:209:17: function findLastIndex: <T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:209:34: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:209:67: parameter predicate: (element: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:209:79: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:209:91: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:209:118: parameter startIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:211:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:220:17: function contains: <T>(array: readonly T[] | undefined, value: T, equalityComparer?: EqualityComparer<T>) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:220:29: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:220:62: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:220:72: parameter equalityComparer: EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:222:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:232:17: function indexOfAnyCharCode: (text: string, charCodes: readonly number[], start?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:232:36: parameter text: string
+/workspace/tracing-measured-after/src/compiler/core.ts:232:50: parameter charCodes: readonly number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:232:80: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:233:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:242:17: function countWhere: <T>(array: readonly T[] | undefined, predicate: (x: T, i: number) => boolean) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:242:31: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:242:64: parameter predicate: (x: T, i: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:242:76: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:242:82: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:243:9: variable count: number
+/workspace/tracing-measured-after/src/compiler/core.ts:245:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:246:19: variable v: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:261:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:261:40: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:261:52: parameter f: (x: T) => x is U
+/workspace/tracing-measured-after/src/compiler/core.ts:261:56: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:263:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:263:27: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:263:39: parameter f: (x: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:263:43: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:265:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:265:40: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:265:61: parameter f: (x: T) => x is U
+/workspace/tracing-measured-after/src/compiler/core.ts:265:65: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:267:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:267:27: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:267:48: parameter f: (x: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:267:52: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:269:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:269:40: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:269:64: parameter f: (x: T) => x is U
+/workspace/tracing-measured-after/src/compiler/core.ts:269:68: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:271:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:271:27: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:271:51: parameter f: (x: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:271:55: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:273:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:273:40: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:273:73: parameter f: (x: T) => x is U
+/workspace/tracing-measured-after/src/compiler/core.ts:273:77: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:275:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:275:27: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:275:60: parameter f: (x: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:275:64: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:277:17: function filter: { <T, U extends T>(array: T[], f: (x: T) => x is U): U[]; <T>(array: T[], f: (x: T) => boolean): T[]; <T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[]; <T>(array: readonly T[], f: (x: T) => boolean): readonly T[]; <T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined; <T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined; <T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined; <T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:277:27: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:277:60: parameter f: (x: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:277:64: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:279:15: variable len: number
+/workspace/tracing-measured-after/src/compiler/core.ts:280:13: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:283:19: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:286:23: variable item: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:299:17: function filterMutate: <T>(array: T[], f: (x: T, i: number, array: T[]) => boolean) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:299:33: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:299:45: parameter f: (x: T, i: number, array: T[]) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:299:49: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:299:55: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:299:66: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:300:9: variable outIndex: number
+/workspace/tracing-measured-after/src/compiler/core.ts:301:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:311:17: function clear: <T>(array: T[]) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:311:26: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:316:17: function map: { <T, U>(array: readonly T[], f: (x: T, i: number) => U): U[]; <T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:316:27: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:316:48: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:316:52: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:316:58: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:318:17: function map: { <T, U>(array: readonly T[], f: (x: T, i: number) => U): U[]; <T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:318:27: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:318:60: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:318:64: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:318:70: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:320:17: function map: { <T, U>(array: readonly T[], f: (x: T, i: number) => U): U[]; <T, U>(array: readonly T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:320:27: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:320:60: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:320:64: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:320:70: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:321:9: variable result: U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:324:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:332:18: function mapIterator: <T, U>(iter: Iterable<T>, mapFn: (x: T) => U) => Generator<U, void, unknown>
+/workspace/tracing-measured-after/src/compiler/core.ts:332:36: parameter iter: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:332:55: parameter mapFn: (x: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:332:63: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:333:16: variable x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:342:17: function sameMap: { <T extends U, U = T>(array: T[], f: (x: T, i: number) => U): U[]; <T extends U, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly U[]; <T extends U, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; <T extends U, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:342:45: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:342:57: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:342:61: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:342:67: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:344:17: function sameMap: { <T extends U, U = T>(array: T[], f: (x: T, i: number) => U): U[]; <T extends U, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly U[]; <T extends U, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; <T extends U, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:344:45: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:344:66: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:344:70: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:344:76: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:346:17: function sameMap: { <T extends U, U = T>(array: T[], f: (x: T, i: number) => U): U[]; <T extends U, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly U[]; <T extends U, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; <T extends U, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:346:45: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:346:69: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:346:73: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:346:79: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:348:17: function sameMap: { <T extends U, U = T>(array: T[], f: (x: T, i: number) => U): U[]; <T extends U, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly U[]; <T extends U, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; <T extends U, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:348:45: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:348:78: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:348:82: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:348:88: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:350:17: function sameMap: { <T extends U, U = T>(array: T[], f: (x: T, i: number) => U): U[]; <T extends U, U = T>(array: readonly T[], f: (x: T, i: number) => U): readonly U[]; <T extends U, U = T>(array: T[] | undefined, f: (x: T, i: number) => U): U[] | undefined; <T extends U, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:350:45: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:350:78: parameter f: (x: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:350:82: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:350:88: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:352:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:353:19: variable item: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:354:19: variable mapped: U
+/workspace/tracing-measured-after/src/compiler/core.ts:356:23: variable result: U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:375:17: function flatten: <T>(array: T[][] | readonly (T | readonly T[] | undefined)[]) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:375:28: parameter array: T[][] | readonly (T | readonly T[] | undefined)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:376:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:377:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:378:15: variable v: T | T[] | readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:399:17: function flatMap: <T, U extends {}>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined) => readonly U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:399:42: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:399:75: parameter mapfn: (x: T, i: number) => U | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:399:83: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:399:89: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:400:9: variable result: U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:402:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:403:19: variable v: U | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:418:17: function flatMapToMutable: <T, U>(array: readonly T[] | undefined, mapfn: (x: T, i: number) => U | readonly U[] | undefined) => U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:418:40: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:418:73: parameter mapfn: (x: T, i: number) => U | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:418:81: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:418:87: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:419:11: variable result: U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:421:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:422:19: variable v: U | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:437:18: function flatMapIterator: <T, U>(iter: Iterable<T>, mapfn: (x: T) => Iterable<U> | readonly U[] | undefined) => Generator<U, void, any>
+/workspace/tracing-measured-after/src/compiler/core.ts:437:40: parameter iter: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:437:59: parameter mapfn: (x: T) => Iterable<U> | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:437:67: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:438:16: variable x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:439:15: variable iter2: Iterable<U> | readonly U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:454:17: function sameFlatMap: { <T>(array: T[], mapfn: (x: T, i: number) => T | readonly T[]): T[]; <T>(array: readonly T[], mapfn: (x: T, i: number) => T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:454:32: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:454:44: parameter mapfn: (x: T, i: number) => T | readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:454:52: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:454:58: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:456:17: function sameFlatMap: { <T>(array: T[], mapfn: (x: T, i: number) => T | readonly T[]): T[]; <T>(array: readonly T[], mapfn: (x: T, i: number) => T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:456:32: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:456:53: parameter mapfn: (x: T, i: number) => T | readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:456:61: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:456:67: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:458:17: function sameFlatMap: { <T>(array: T[], mapfn: (x: T, i: number) => T | readonly T[]): T[]; <T>(array: readonly T[], mapfn: (x: T, i: number) => T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:458:32: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:458:53: parameter mapfn: (x: T, i: number) => T | readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:458:61: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:458:67: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:459:9: variable result: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:461:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:462:19: variable item: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:463:19: variable mapped: T | readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:481:17: function mapAllOrFail: <T, U>(array: readonly T[], mapFn: (x: T, i: number) => U | undefined) => U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:481:36: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:481:57: parameter mapFn: (x: T, i: number) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:481:65: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:481:71: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:482:11: variable result: U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:483:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:484:15: variable mapped: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:494:17: function mapDefined: <T, U>(array: readonly T[] | undefined, mapFn: (x: T, i: number) => U | undefined) => U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:494:34: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:494:67: parameter mapFn: (x: T, i: number) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:494:75: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:494:81: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:495:11: variable result: U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:497:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:498:19: variable mapped: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:509:18: function mapDefinedIterator: <T, U>(iter: Iterable<T>, mapFn: (x: T) => U | undefined) => Generator<U & ({} | null), void, unknown>
+/workspace/tracing-measured-after/src/compiler/core.ts:509:43: parameter iter: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:509:62: parameter mapFn: (x: T) => U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:509:70: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:510:16: variable x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:511:15: variable value: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:519:17: function getOrUpdate: <K, V>(map: Map<K, V>, key: K, callback: () => V) => V
+/workspace/tracing-measured-after/src/compiler/core.ts:519:35: parameter map: Map<K, V>
+/workspace/tracing-measured-after/src/compiler/core.ts:519:51: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:519:59: parameter callback: () => V
+/workspace/tracing-measured-after/src/compiler/core.ts:523:11: variable value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:529:17: function tryAddToSet: <T>(set: Set<T>, value: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:529:32: parameter set: Set<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:529:45: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:538:18: function singleIterator: <T>(value: T) => Generator<T, void, unknown>
+/workspace/tracing-measured-after/src/compiler/core.ts:538:36: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:551:17: function spanMap: { <T, K, U>(array: readonly T[], keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[]; <T, K, U>(array: readonly T[] | undefined, keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:551:34: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:551:55: parameter keyfn: (x: T, i: number) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:551:63: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:551:69: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:551:86: parameter mapfn: (chunk: T[], key: K, start: number, end: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:551:94: parameter chunk: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:551:106: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:551:114: parameter start: number
+/workspace/tracing-measured-after/src/compiler/core.ts:551:129: parameter end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:553:17: function spanMap: { <T, K, U>(array: readonly T[], keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[]; <T, K, U>(array: readonly T[] | undefined, keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:553:34: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:553:67: parameter keyfn: (x: T, i: number) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:553:75: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:553:81: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:553:98: parameter mapfn: (chunk: T[], key: K, start: number, end: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:553:106: parameter chunk: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:553:118: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:553:126: parameter start: number
+/workspace/tracing-measured-after/src/compiler/core.ts:553:141: parameter end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:555:17: function spanMap: { <T, K, U>(array: readonly T[], keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[]; <T, K, U>(array: readonly T[] | undefined, keyfn: (x: T, i: number) => K, mapfn: (chunk: T[], key: K, start: number, end: number) => U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:555:34: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:555:67: parameter keyfn: (x: T, i: number) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:555:75: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:555:81: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:555:98: parameter mapfn: (chunk: T[], key: K, start: number, end: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:555:106: parameter chunk: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:555:118: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:555:126: parameter start: number
+/workspace/tracing-measured-after/src/compiler/core.ts:555:141: parameter end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:556:9: variable result: U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:559:15: variable len: number
+/workspace/tracing-measured-after/src/compiler/core.ts:560:13: variable previousKey: K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:561:13: variable key: K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:562:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/core.ts:563:13: variable pos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:566:23: variable value: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:579:23: variable v: U
+/workspace/tracing-measured-after/src/compiler/core.ts:596:17: function mapEntries: { <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1>, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2>; <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1> | undefined, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2> | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:596:44: parameter map: ReadonlyMap<K1, V1>
+/workspace/tracing-measured-after/src/compiler/core.ts:596:70: parameter f: (key: K1, value: V1) => readonly [K2, V2]
+/workspace/tracing-measured-after/src/compiler/core.ts:596:74: parameter key: K1
+/workspace/tracing-measured-after/src/compiler/core.ts:596:83: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:598:17: function mapEntries: { <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1>, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2>; <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1> | undefined, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2> | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:598:44: parameter map: ReadonlyMap<K1, V1> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:598:82: parameter f: (key: K1, value: V1) => readonly [K2, V2]
+/workspace/tracing-measured-after/src/compiler/core.ts:598:86: parameter key: K1
+/workspace/tracing-measured-after/src/compiler/core.ts:598:95: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:600:17: function mapEntries: { <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1>, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2>; <K1, V1, K2, V2>(map: ReadonlyMap<K1, V1> | undefined, f: (key: K1, value: V1) => readonly [K2, V2]): Map<K2, V2> | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:600:44: parameter map: ReadonlyMap<K1, V1> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:600:82: parameter f: (key: K1, value: V1) => readonly [K2, V2]
+/workspace/tracing-measured-after/src/compiler/core.ts:600:86: parameter key: K1
+/workspace/tracing-measured-after/src/compiler/core.ts:600:95: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:605:11: variable result: Map<K2, V2>
+/workspace/tracing-measured-after/src/compiler/core.ts:606:18: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:606:25: parameter key: K1
+/workspace/tracing-measured-after/src/compiler/core.ts:607:16: binding newKey: K2
+/workspace/tracing-measured-after/src/compiler/core.ts:607:24: binding newValue: V2
+/workspace/tracing-measured-after/src/compiler/core.ts:614:17: function some: { <T>(array: readonly T[] | undefined): array is readonly T[]; <T>(array: readonly T[] | undefined, predicate: (value: T) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:614:25: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:616:17: function some: { <T>(array: readonly T[] | undefined): array is readonly T[]; <T>(array: readonly T[] | undefined, predicate: (value: T) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:616:25: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:616:58: parameter predicate: (value: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:616:70: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:618:17: function some: { <T>(array: readonly T[] | undefined): array is readonly T[]; <T>(array: readonly T[] | undefined, predicate: (value: T) => boolean): boolean; }
+/workspace/tracing-measured-after/src/compiler/core.ts:618:25: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:618:58: parameter predicate: ((value: T) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:618:71: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:621:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:639:17: function getRangesWhere: <T>(arr: readonly T[], pred: (t: T) => boolean, cb: (start: number, afterEnd: number) => void) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:639:35: parameter arr: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:639:54: parameter pred: (t: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:639:61: parameter t: T
+/workspace/tracing-measured-after/src/compiler/core.ts:639:79: parameter cb: (start: number, afterEnd: number) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:639:84: parameter start: number
+/workspace/tracing-measured-after/src/compiler/core.ts:639:99: parameter afterEnd: number
+/workspace/tracing-measured-after/src/compiler/core.ts:640:9: variable start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:641:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:656:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:656:32: parameter array1: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:656:45: parameter array2: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:658:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:658:32: parameter array1: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:658:54: parameter array2: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:660:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:660:32: parameter array1: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:660:45: parameter array2: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:662:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:662:32: parameter array1: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:662:57: parameter array2: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:664:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:664:32: parameter array1: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:664:54: parameter array2: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:666:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:666:32: parameter array1: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:666:66: parameter array2: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:668:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:668:32: parameter array1: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:668:57: parameter array2: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:670:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:670:32: parameter array1: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:670:66: parameter array2: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:672:17: function concatenate: { <T>(array1: T[], array2: T[]): T[]; <T>(array1: readonly T[], array2: readonly T[]): readonly T[]; <T>(array1: T[], array2: T[] | undefined): T[]; <T>(array1: T[] | undefined, array2: T[]): T[] | undefined; <T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[]; <T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined; <T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined; <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:672:32: parameter array1: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:672:66: parameter array2: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:678:10: function selectIndex: (_: unknown, i: number) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:678:22: parameter _: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:678:34: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:683:17: function indicesOf: <T>(array: readonly T[]) => number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:683:30: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:687:10: function deduplicateRelational: <T>(array: readonly T[], equalityComparer: EqualityComparer<T>, comparer: Comparer<T>) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:687:35: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:687:56: parameter equalityComparer: EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:687:95: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:690:11: variable indices: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:693:9: variable last: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:694:11: variable deduplicated: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:695:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:696:15: variable index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:697:15: variable item: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:706:32: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:709:10: function deduplicateEquality: <T>(array: readonly T[], equalityComparer: EqualityComparer<T>) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:709:33: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:709:54: parameter equalityComparer: EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:710:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:711:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:725:17: function deduplicate: <T>(array: readonly T[], equalityComparer: EqualityComparer<T>, comparer?: Comparer<T> | undefined) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:725:32: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:725:53: parameter equalityComparer: EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:725:92: parameter comparer: Comparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:735:10: function deduplicateSorted: <T>(array: SortedReadonlyArray<T>, comparer: Comparer<T> | EqualityComparer<T>) => SortedReadonlyArray<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:735:31: parameter array: SortedReadonlyArray<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:735:62: parameter comparer: Comparer<T> | EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:738:9: variable last: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:739:11: variable deduplicated: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:740:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:741:15: variable next: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:763:17: function createSortedArray: <T>() => SortedArray<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:768:17: function insertSorted: <T>(array: SortedArray<T>, insert: T, compare: Comparer<T>, equalityComparer?: EqualityComparer<T> | undefined, allowDuplicates?: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:769:5: parameter array: SortedArray<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:770:5: parameter insert: T
+/workspace/tracing-measured-after/src/compiler/core.ts:771:5: parameter compare: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:772:5: parameter equalityComparer: EqualityComparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:773:5: parameter allowDuplicates: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:780:11: variable insertIndex: number
+/workspace/tracing-measured-after/src/compiler/core.ts:783:19: variable idx: number
+/workspace/tracing-measured-after/src/compiler/core.ts:805:17: function sortAndDeduplicate: { (array: readonly string[]): SortedReadonlyArray<string>; <T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T> | undefined): SortedReadonlyArray<T>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:805:36: parameter array: readonly string[]
+/workspace/tracing-measured-after/src/compiler/core.ts:807:17: function sortAndDeduplicate: { (array: readonly string[]): SortedReadonlyArray<string>; <T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T> | undefined): SortedReadonlyArray<T>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:807:39: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:807:60: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:807:83: parameter equalityComparer: EqualityComparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:809:17: function sortAndDeduplicate: { (array: readonly string[]): SortedReadonlyArray<string>; <T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T> | undefined): SortedReadonlyArray<T>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:809:39: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:809:60: parameter comparer: Comparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:809:84: parameter equalityComparer: EqualityComparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:814:17: function arrayIsEqualTo: <T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined, equalityComparer?: (a: T, b: T, index: number) => boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:814:35: parameter array1: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:814:69: parameter array2: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:814:103: parameter equalityComparer: (a: T, b: T, index: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:814:122: parameter a: T
+/workspace/tracing-measured-after/src/compiler/core.ts:814:128: parameter b: T
+/workspace/tracing-measured-after/src/compiler/core.ts:814:134: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:823:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:837:17: function compact: { <T>(array: ("" | 0 | false | T | null | undefined)[]): T[]; <T>(array: readonly ("" | 0 | false | T | null | undefined)[]): readonly T[]; <T>(array: T[]): T[]; <T>(array: readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:837:28: parameter array: ("" | 0 | false | T | null | undefined)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:839:17: function compact: { <T>(array: ("" | 0 | false | T | null | undefined)[]): T[]; <T>(array: readonly ("" | 0 | false | T | null | undefined)[]): readonly T[]; <T>(array: T[]): T[]; <T>(array: readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:839:28: parameter array: readonly ("" | 0 | false | T | null | undefined)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:842:17: function compact: { <T>(array: ("" | 0 | false | T | null | undefined)[]): T[]; <T>(array: readonly ("" | 0 | false | T | null | undefined)[]): readonly T[]; <T>(array: T[]): T[]; <T>(array: readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:842:28: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:844:17: function compact: { <T>(array: ("" | 0 | false | T | null | undefined)[]): T[]; <T>(array: readonly ("" | 0 | false | T | null | undefined)[]): readonly T[]; <T>(array: T[]): T[]; <T>(array: readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:844:28: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:846:17: function compact: { <T>(array: ("" | 0 | false | T | null | undefined)[]): T[]; <T>(array: readonly ("" | 0 | false | T | null | undefined)[]): readonly T[]; <T>(array: T[]): T[]; <T>(array: readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:846:28: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:847:9: variable result: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:849:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:850:19: variable v: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:871:17: function relativeComplement: { <T>(arrayA: T[], arrayB: T[], comparer: Comparer<T>): T[]; <T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:871:39: parameter arrayA: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:871:52: parameter arrayB: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:871:65: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:873:17: function relativeComplement: { <T>(arrayA: T[], arrayB: T[], comparer: Comparer<T>): T[]; <T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:873:39: parameter arrayA: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:873:64: parameter arrayB: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:873:89: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:881:17: function relativeComplement: { <T>(arrayA: T[], arrayB: T[], comparer: Comparer<T>): T[]; <T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:881:39: parameter arrayA: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:881:64: parameter arrayB: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:881:89: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:883:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:885:14: variable offsetA: number
+/workspace/tracing-measured-after/src/compiler/core.ts:885:27: variable offsetB: number
+/workspace/tracing-measured-after/src/compiler/core.ts:892:20: variable startA: number
+/workspace/tracing-measured-after/src/compiler/core.ts:931:17: function append: { <T extends {}>(to: T[], value: T | undefined): T[]; <T extends {}>(to: T[] | undefined, value: T): T[]; <T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:931:38: parameter to: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:931:47: parameter value: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:933:17: function append: { <T extends {}>(to: T[], value: T | undefined): T[]; <T extends {}>(to: T[] | undefined, value: T): T[]; <T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:933:38: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:933:59: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:935:17: function append: { <T extends {}>(to: T[], value: T | undefined): T[]; <T extends {}>(to: T[] | undefined, value: T): T[]; <T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:935:38: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:935:59: parameter value: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:936:17: function append: { <T extends {}>(to: T[], value: T | undefined): T[]; <T extends {}>(to: T[] | undefined, value: T): T[]; <T extends {}>(to: T[] | undefined, value: T | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:936:38: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:936:59: parameter value: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:957:17: function combine: { <T extends {}>(xs: T[] | undefined, ys: T[] | undefined): T[] | undefined; <T extends {}>(xs: T | readonly T[] | undefined, ys: T | readonly T[] | undefined): T | readonly T[] | undefined; <T extends {}>(xs: T | T[] | undefined, ys: T | T[] | undefined): T | T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:957:39: parameter xs: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:957:60: parameter ys: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:959:17: function combine: { <T extends {}>(xs: T[] | undefined, ys: T[] | undefined): T[] | undefined; <T extends {}>(xs: T | readonly T[] | undefined, ys: T | readonly T[] | undefined): T | readonly T[] | undefined; <T extends {}>(xs: T | T[] | undefined, ys: T | T[] | undefined): T | T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:959:39: parameter xs: T | readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:959:73: parameter ys: T | readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:961:17: function combine: { <T extends {}>(xs: T[] | undefined, ys: T[] | undefined): T[] | undefined; <T extends {}>(xs: T | readonly T[] | undefined, ys: T | readonly T[] | undefined): T | readonly T[] | undefined; <T extends {}>(xs: T | T[] | undefined, ys: T | T[] | undefined): T | T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:961:39: parameter xs: T | T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:961:64: parameter ys: T | T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:963:17: function combine: { <T extends {}>(xs: T[] | undefined, ys: T[] | undefined): T[] | undefined; <T extends {}>(xs: T | readonly T[] | undefined, ys: T | readonly T[] | undefined): T | readonly T[] | undefined; <T extends {}>(xs: T | T[] | undefined, ys: T | T[] | undefined): T | T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:963:39: parameter xs: T | T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:963:64: parameter ys: T | T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:975:10: function toOffset: <T>(array: readonly T[], offset: number) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:975:22: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:975:43: parameter offset: number
+/workspace/tracing-measured-after/src/compiler/core.ts:991:17: function addRange: { <T>(to: T[], from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[]; <T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:991:29: parameter to: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:991:38: parameter from: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:991:70: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:991:86: parameter end: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:993:17: function addRange: { <T>(to: T[], from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[]; <T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:993:29: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:993:50: parameter from: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:993:82: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:993:98: parameter end: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:995:17: function addRange: { <T>(to: T[], from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[]; <T>(to: T[] | undefined, from: readonly T[] | undefined, start?: number | undefined, end?: number | undefined): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:995:29: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:995:50: parameter from: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:995:82: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:995:98: parameter end: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1000:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1013:17: function pushIfUnique: <T>(array: T[], toAdd: T, equalityComparer?: EqualityComparer<T> | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1013:33: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1013:45: parameter toAdd: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1013:55: parameter equalityComparer: EqualityComparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1028:17: function appendIfUnique: <T>(array: T[] | undefined, toAdd: T, equalityComparer?: EqualityComparer<T> | undefined) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1028:35: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1028:59: parameter toAdd: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1028:69: parameter equalityComparer: EqualityComparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1038:10: function stableSortIndices: <T>(array: readonly T[], indices: number[], comparer: Comparer<T>) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1038:31: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1038:52: parameter indices: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1038:71: parameter comparer: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1040:19: parameter x: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1040:22: parameter y: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1048:17: function toSorted: <T>(array: readonly T[], comparer?: Comparer<T> | undefined) => SortedReadonlyArray<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1048:29: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1048:50: parameter comparer: Comparer<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1053:18: function arrayReverseIterator: <T>(array: readonly T[]) => Generator<T, void, unknown>
+/workspace/tracing-measured-after/src/compiler/core.ts:1053:42: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1054:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1060:17: function rangeEquals: <T>(array1: readonly T[], array2: readonly T[], pos: number, end: number) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1060:32: parameter array1: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1060:54: parameter array2: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1060:76: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1060:89: parameter end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1076:17: function elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1076:30: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1076:63: parameter offset: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1091:17: function firstOrUndefined: <T>(array: readonly T[] | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1091:37: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1096:17: function firstOrUndefinedIterator: <T>(iter: Iterable<T> | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1096:45: parameter iter: Iterable<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1098:20: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1106:17: function first: <T>(array: readonly T[]) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1106:26: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1112:17: function firstIterator: <T>(iter: Iterable<T>) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1112:34: parameter iter: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1113:16: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1124:17: function lastOrUndefined: <T>(array: readonly T[] | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1124:36: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1129:17: function last: <T>(array: readonly T[]) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1129:25: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1139:17: function singleOrUndefined: <T>(array: readonly T[] | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1139:38: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1150:17: function single: <T>(array: readonly T[]) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1150:27: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1160:17: function singleOrMany: { <T>(array: T[]): T | T[]; <T>(array: readonly T[]): T | readonly T[]; <T>(array: T[] | undefined): T | T[] | undefined; <T>(array: readonly T[] | undefined): T | readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1160:33: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1162:17: function singleOrMany: { <T>(array: T[]): T | T[]; <T>(array: readonly T[]): T | readonly T[]; <T>(array: T[] | undefined): T | T[] | undefined; <T>(array: readonly T[] | undefined): T | readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1162:33: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1164:17: function singleOrMany: { <T>(array: T[]): T | T[]; <T>(array: readonly T[]): T | readonly T[]; <T>(array: T[] | undefined): T | T[] | undefined; <T>(array: readonly T[] | undefined): T | readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1164:33: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1166:17: function singleOrMany: { <T>(array: T[]): T | T[]; <T>(array: readonly T[]): T | readonly T[]; <T>(array: T[] | undefined): T | T[] | undefined; <T>(array: readonly T[] | undefined): T | readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1166:33: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1168:17: function singleOrMany: { <T>(array: T[]): T | T[]; <T>(array: readonly T[]): T | readonly T[]; <T>(array: T[] | undefined): T | T[] | undefined; <T>(array: readonly T[] | undefined): T | readonly T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1168:33: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1175:17: function replaceElement: <T>(array: readonly T[], index: number, value: T) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1175:35: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1175:56: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1175:71: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1176:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:17: function binarySearch: <T, U>(array: readonly T[], value: T, keySelector: (v: T) => U, keyComparer: Comparer<U>, offset?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:36: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:57: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:67: parameter keySelector: (v: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:81: parameter v: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:93: parameter keyComparer: Comparer<U>
+/workspace/tracing-measured-after/src/compiler/core.ts:1194:119: parameter offset: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:17: function binarySearchKey: <T, U>(array: readonly T[], key: U, keySelector: (v: T, i: number) => U, keyComparer: Comparer<U>, offset?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:39: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:60: parameter key: U
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:68: parameter keySelector: (v: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:82: parameter v: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:88: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:105: parameter keyComparer: Comparer<U>
+/workspace/tracing-measured-after/src/compiler/core.ts:1210:131: parameter offset: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1215:9: variable low: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1216:9: variable high: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1218:15: variable middle: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1219:15: variable midKey: U
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:17: function reduceLeft: { <T, U>(array: readonly T[] | undefined, f: (memo: U, value: T, i: number) => U, initial: U, start?: number | undefined, count?: number | undefined): U; <T>(array: readonly T[], f: (memo: T, value: T, i: number) => T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:34: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:67: parameter f: (memo: U, value: T, i: number) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:71: parameter memo: U
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:80: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:90: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:107: parameter initial: U
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:119: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1236:135: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:17: function reduceLeft: { <T, U>(array: readonly T[] | undefined, f: (memo: U, value: T, i: number) => U, initial: U, start?: number | undefined, count?: number | undefined): U; <T>(array: readonly T[], f: (memo: T, value: T, i: number) => T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:31: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:52: parameter f: (memo: T, value: T, i: number) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:56: parameter memo: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:65: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1238:75: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:17: function reduceLeft: { <T, U>(array: readonly T[] | undefined, f: (memo: U, value: T, i: number) => U, initial: U, start?: number | undefined, count?: number | undefined): U; <T>(array: readonly T[], f: (memo: T, value: T, i: number) => T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:31: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:64: parameter f: (memo: T | undefined, value: T, i: number) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:68: parameter memo: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:89: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:99: parameter i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:116: parameter initial: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:129: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1240:145: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1242:15: variable size: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1244:17: variable pos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1245:19: variable end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1246:17: variable result: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1264:7: variable hasOwnProperty: (v: PropertyKey) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1274:17: function hasProperty: <T extends object>(map: T, key: string) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1274:47: parameter map: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1274:55: parameter key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1286:17: function getProperty: <T>(map: MapLike<T>, key: string) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1286:32: parameter map: MapLike<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1286:49: parameter key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1295:17: function getOwnKeys: <T>(map: MapLike<T>) => string[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1295:31: parameter map: MapLike<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1296:11: variable keys: string[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1297:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1309:17: function getOwnValues: <T>(collection: MapLike<T>) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1309:33: parameter collection: MapLike<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1310:11: variable values: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1311:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1321:17: function arrayOf: <T>(count: number, f: (index: number) => T) => T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1321:28: parameter count: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1321:43: parameter f: (index: number) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1321:47: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1322:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1323:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1334:17: function arrayFrom: { <T, U>(iterator: Iterable<T>, map: (t: T) => U): U[]; <T>(iterator: Iterable<T>): T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1334:33: parameter iterator: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1334:56: parameter map: (t: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1334:62: parameter t: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1336:17: function arrayFrom: { <T, U>(iterator: Iterable<T>, map: (t: T) => U): U[]; <T>(iterator: Iterable<T>): T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1336:30: parameter iterator: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1338:17: function arrayFrom: { <T, U>(iterator: Iterable<T>, map: (t: T) => U): U[]; <T>(iterator: Iterable<T>): T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1338:33: parameter iterator: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1338:56: parameter map: ((t: T) => U) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1338:63: parameter t: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1339:11: variable result: (T | U)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1340:16: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1347:17: function assign: <T extends object>(t: T, ...args: (T | undefined)[]) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1347:42: parameter t: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1347:51: parameter args: (T | undefined)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1348:16: variable arg: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1350:20: variable p: Extract<keyof T, string>
+/workspace/tracing-measured-after/src/compiler/core.ts:1367:17: function equalOwnProperties: <T>(left: MapLike<T> | undefined, right: MapLike<T> | undefined, equalityComparer?: EqualityComparer<T>) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1367:39: parameter left: MapLike<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1367:69: parameter right: MapLike<T> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1367:100: parameter equalityComparer: EqualityComparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1370:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1377:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1398:17: function arrayToMap: { <K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>; <K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>; <T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>; <T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1398:34: parameter array: readonly V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1398:55: parameter makeKey: (value: V) => K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1398:65: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:17: function arrayToMap: { <K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>; <K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>; <T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>; <T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:39: parameter array: readonly V1[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:61: parameter makeKey: (value: V1) => K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:71: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:100: parameter makeValue: (value: V1) => V2
+/workspace/tracing-measured-after/src/compiler/core.ts:1400:112: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:1402:17: function arrayToMap: { <K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>; <K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>; <T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>; <T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1402:31: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1402:52: parameter makeKey: (value: T) => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1402:62: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:17: function arrayToMap: { <K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>; <K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>; <T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>; <T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:34: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:55: parameter makeKey: (value: T) => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:65: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:98: parameter makeValue: (value: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1404:110: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:17: function arrayToMap: { <K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>; <K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>; <T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>; <T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:39: parameter array: readonly V1[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:61: parameter makeKey: (value: V1) => K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:71: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:100: parameter makeValue: (value: V1) => V1 | V2
+/workspace/tracing-measured-after/src/compiler/core.ts:1406:112: parameter value: V1
+/workspace/tracing-measured-after/src/compiler/core.ts:1407:11: variable result: Map<K, V1 | V2>
+/workspace/tracing-measured-after/src/compiler/core.ts:1408:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1409:15: variable value: NonNullable<V1>
+/workspace/tracing-measured-after/src/compiler/core.ts:1410:15: variable key: K | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1417:17: function arrayToNumericMap: { <T>(array: readonly T[], makeKey: (value: T) => number): T[]; <T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => U): U[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1417:38: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1417:59: parameter makeKey: (value: T) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:1417:69: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:17: function arrayToNumericMap: { <T>(array: readonly T[], makeKey: (value: T) => number): T[]; <T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => U): U[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:41: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:62: parameter makeKey: (value: T) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:72: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:93: parameter makeValue: (value: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1419:105: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:17: function arrayToNumericMap: { <T>(array: readonly T[], makeKey: (value: T) => number): T[]; <T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => U): U[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:41: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:62: parameter makeKey: (value: T) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:72: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:93: parameter makeValue: (value: T) => T | U
+/workspace/tracing-measured-after/src/compiler/core.ts:1421:105: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1422:11: variable result: (T | U)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1423:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1424:15: variable value: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1431:17: function arrayToMultiMap: { <K, V>(values: readonly V[], makeKey: (value: V) => K): MultiMap<K, V>; <K, V, U>(values: readonly V[], makeKey: (value: V) => K, makeValue: (value: V) => U): MultiMap<K, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1431:39: parameter values: readonly V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1431:61: parameter makeKey: (value: V) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1431:71: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:17: function arrayToMultiMap: { <K, V>(values: readonly V[], makeKey: (value: V) => K): MultiMap<K, V>; <K, V, U>(values: readonly V[], makeKey: (value: V) => K, makeValue: (value: V) => U): MultiMap<K, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:42: parameter values: readonly V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:64: parameter makeKey: (value: V) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:74: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:90: parameter makeValue: (value: V) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:1433:102: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:17: function arrayToMultiMap: { <K, V>(values: readonly V[], makeKey: (value: V) => K): MultiMap<K, V>; <K, V, U>(values: readonly V[], makeKey: (value: V) => K, makeValue: (value: V) => U): MultiMap<K, U>; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:42: parameter values: readonly V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:64: parameter makeKey: (value: V) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:74: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:90: parameter makeValue: (value: V) => U | V
+/workspace/tracing-measured-after/src/compiler/core.ts:1435:102: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1436:11: variable result: MultiMap<K, U | V>
+/workspace/tracing-measured-after/src/compiler/core.ts:1437:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1438:15: variable value: NonNullable<V>
+/workspace/tracing-measured-after/src/compiler/core.ts:1445:17: function group: { <T, K>(values: readonly T[], getGroupId: (value: T) => K): readonly (readonly T[])[]; <T, K, R>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => R): R[]; <T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[]; <T, R>(values: readonly T[], getGroupId: (value: T) => string, resultSelector: (values: readonly T[]) => R): R[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1445:29: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1445:51: parameter getGroupId: (value: T) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1445:64: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:17: function group: { <T, K>(values: readonly T[], getGroupId: (value: T) => K): readonly (readonly T[])[]; <T, K, R>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => R): R[]; <T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[]; <T, R>(values: readonly T[], getGroupId: (value: T) => string, resultSelector: (values: readonly T[]) => R): R[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:32: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:54: parameter getGroupId: (value: T) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:67: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:83: parameter resultSelector: (values: readonly T[]) => R
+/workspace/tracing-measured-after/src/compiler/core.ts:1447:100: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1449:17: function group: { <T, K>(values: readonly T[], getGroupId: (value: T) => K): readonly (readonly T[])[]; <T, K, R>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => R): R[]; <T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[]; <T, R>(values: readonly T[], getGroupId: (value: T) => string, resultSelector: (values: readonly T[]) => R): R[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1449:26: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1449:48: parameter getGroupId: (value: T) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:1449:61: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:17: function group: { <T, K>(values: readonly T[], getGroupId: (value: T) => K): readonly (readonly T[])[]; <T, K, R>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => R): R[]; <T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[]; <T, R>(values: readonly T[], getGroupId: (value: T) => string, resultSelector: (values: readonly T[]) => R): R[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:29: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:51: parameter getGroupId: (value: T) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:64: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:85: parameter resultSelector: (values: readonly T[]) => R
+/workspace/tracing-measured-after/src/compiler/core.ts:1451:102: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:17: function group: { <T, K>(values: readonly T[], getGroupId: (value: T) => K): readonly (readonly T[])[]; <T, K, R>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => R): R[]; <T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[]; <T, R>(values: readonly T[], getGroupId: (value: T) => string, resultSelector: (values: readonly T[]) => R): R[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:29: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:51: parameter getGroupId: (value: T) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:64: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:80: parameter resultSelector: (values: readonly T[]) => readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1453:97: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:17: function groupBy: { <T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; }; <T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:41: parameter values: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:75: parameter keySelector: (value: T) => value is U
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:89: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:117: property true: U[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1458:129: property false: Exclude<T, U>[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1460:17: function groupBy: { <T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; }; <T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1460:84: parameter values: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1460:118: parameter keySelector: (value: T) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1460:132: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1461:17: function groupBy: { <T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; }; <T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1461:84: parameter values: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1461:118: parameter keySelector: (value: T) => K
+/workspace/tracing-measured-after/src/compiler/core.ts:1461:132: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1462:11: variable result: Record<string, T[]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1464:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1465:19: variable value: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1466:19: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1467:19: variable array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1475:17: function clone: <T>(object: T) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1475:26: parameter object: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1476:11: variable result: any
+/workspace/tracing-measured-after/src/compiler/core.ts:1477:16: variable id: Extract<keyof T, string>
+/workspace/tracing-measured-after/src/compiler/core.ts:1492:17: function extend: <T>(first: MapLike<T | undefined>, second: MapLike<T | undefined>) => MapLike<T | undefined>
+/workspace/tracing-measured-after/src/compiler/core.ts:1492:27: parameter first: MapLike<T | undefined>
+/workspace/tracing-measured-after/src/compiler/core.ts:1492:58: parameter second: MapLike<T | undefined>
+/workspace/tracing-measured-after/src/compiler/core.ts:1493:11: variable result: MapLike<T | undefined>
+/workspace/tracing-measured-after/src/compiler/core.ts:1494:16: variable id: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1500:16: variable id: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1510:17: function copyProperties: <T2>(first: T2, second: T2) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1510:36: parameter first: T2
+/workspace/tracing-measured-after/src/compiler/core.ts:1510:47: parameter second: T2
+/workspace/tracing-measured-after/src/compiler/core.ts:1511:16: variable id: Extract<keyof T2, string>
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:17: function maybeBind: <T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined) => ((...args: A) => R) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:50: parameter obj: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:58: parameter fn: ((this: T, ...args: A) => R) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:64: parameter this: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:76: parameter args: A
+/workspace/tracing-measured-after/src/compiler/core.ts:1519:110: parameter args: A
+/workspace/tracing-measured-after/src/compiler/core.ts:1524:13: type MultiMap: Map<K, V[]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1527:17: function createMultiMap: <K, V>() => MultiMap<K, V>
+/workspace/tracing-measured-after/src/compiler/core.ts:1534:17: function multiMapAddValue: <K, V>(map: Map<K, V[]>, key: K, value: V) => V[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1534:40: parameter map: Map<K, V[]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1534:58: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:1534:66: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1535:9: variable values: V[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1546:17: function multiMapRemoveValue: <K, V>(map: Map<K, V[]>, key: K, value: V) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1546:43: parameter map: Map<K, V[]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1546:61: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:1546:69: parameter value: V
+/workspace/tracing-measured-after/src/compiler/core.ts:1547:11: variable values: V[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1557:17: function createQueue: <T>(items?: readonly T[] | undefined) => Queue<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1557:32: parameter items: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1558:11: variable elements: ({ value: T; } | undefined)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1558:24: property value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1559:27: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1560:9: variable headIndex: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1561:14: function isEmpty: () => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1565:14: function enqueue: (...items: T[]) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1565:25: parameter items: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1566:20: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1569:14: function dequeue: () => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1573:15: variable box: { value: T; } | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1581:19: variable newLength: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1599:18: interface HashedSet: HashedSet<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1600:9: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1601:9: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1602:12: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1604:14: property size: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1605:13: parameter action: (value: T, key: T, set: HashedSet<T>) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1605:22: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1605:32: parameter key: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1605:40: parameter set: HashedSet<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1625:17: function createSet: <TElement, THash = number>(getHashCode: (element: TElement) => THash, equals: EqualityComparer<TElement>) => HashedSet<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1625:53: parameter getHashCode: (element: TElement) => THash
+/workspace/tracing-measured-after/src/compiler/core.ts:1625:67: parameter element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1625:96: parameter equals: EqualityComparer<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1626:11: variable multiMap: Map<THash, TElement | TElement[]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1627:9: variable size: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1629:15: function getElementIterator: () => SetIterator<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1630:20: variable value: TElement | TElement[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1640:11: variable set: HashedSet<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1641:9: method has: (element: TElement) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1641:13: parameter element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1642:19: variable hash: THash
+/workspace/tracing-measured-after/src/compiler/core.ts:1644:19: variable candidates: TElement[] | NonNullable<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1649:9: method add: (element: TElement) => HashedSet<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1649:13: parameter element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1650:19: variable hash: THash
+/workspace/tracing-measured-after/src/compiler/core.ts:1652:23: variable values: TElement[] | NonNullable<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1660:27: variable value: NonNullable<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1674:9: method delete: (element: TElement) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1674:16: parameter element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1675:19: variable hash: THash
+/workspace/tracing-measured-after/src/compiler/core.ts:1677:19: variable candidates: TElement[] | NonNullable<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1679:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:1696:23: variable candidate: NonNullable<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1706:9: method clear: () => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1713:9: method forEach: (action: (value: TElement, key: TElement, set: HashedSet<TElement>) => void) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1713:17: parameter action: (value: TElement, key: TElement, set: HashedSet<TElement>) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1713:26: parameter value: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1713:43: parameter key: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1713:58: parameter set: HashedSet<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1716:24: variable elements: TElement | TElement[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1718:32: variable element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1723:27: variable element: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1728:9: method keys: () => SetIterator<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1731:9: method values: () => SetIterator<TElement>
+/workspace/tracing-measured-after/src/compiler/core.ts:1734:10: method entries: () => SetIterator<[TElement, TElement]>
+/workspace/tracing-measured-after/src/compiler/core.ts:1735:24: variable value: TElement
+/workspace/tracing-measured-after/src/compiler/core.ts:1753:17: function isArray: (value: unknown) => value is readonly unknown[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1753:25: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:1759:17: function toArray: { <T>(value: T | T[]): T[]; <T>(value: T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1759:28: parameter value: T | T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1761:17: function toArray: { <T>(value: T | T[]): T[]; <T>(value: T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1761:28: parameter value: T | readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1763:17: function toArray: { <T>(value: T | T[]): T[]; <T>(value: T | readonly T[]): readonly T[]; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1763:28: parameter value: T | T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1772:17: function isString: (text: unknown) => text is string
+/workspace/tracing-measured-after/src/compiler/core.ts:1772:26: parameter text: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:1776:17: function isNumber: (x: unknown) => x is number
+/workspace/tracing-measured-after/src/compiler/core.ts:1776:26: parameter x: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:1781:17: function tryCast: <TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut) => TOut | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1781:54: parameter value: TIn | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1781:78: parameter test: (value: TIn) => value is TOut
+/workspace/tracing-measured-after/src/compiler/core.ts:1781:85: parameter value: TIn
+/workspace/tracing-measured-after/src/compiler/core.ts:1786:17: function cast: <TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut) => TOut
+/workspace/tracing-measured-after/src/compiler/core.ts:1786:51: parameter value: TIn | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1786:75: parameter test: (value: TIn) => value is TOut
+/workspace/tracing-measured-after/src/compiler/core.ts:1786:82: parameter value: TIn
+/workspace/tracing-measured-after/src/compiler/core.ts:1797:17: function noop: (_?: unknown) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1797:22: parameter _: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:1804:17: function returnFalse: () => false
+/workspace/tracing-measured-after/src/compiler/core.ts:1813:17: function returnTrue: () => true
+/workspace/tracing-measured-after/src/compiler/core.ts:1822:17: function returnUndefined: () => undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1831:17: function identity: <T>(x: T) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1831:29: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1838:10: function toLowerCase: (x: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:1838:22: parameter x: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1864:7: variable fileNameLowerCaseRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/core.ts:1878:17: function toFileNameLowerCase: (x: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:1878:37: parameter x: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1889:17: function notImplemented: () => never
+/workspace/tracing-measured-after/src/compiler/core.ts:1894:17: function memoize: <T>(callback: (() => T) | undefined) => () => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1894:28: parameter callback: (() => T) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1895:9: variable value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1910:17: function memoizeOne: <A extends string | number | boolean | undefined, T>(callback: (arg: A) => T) => (arg: A) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1910:80: parameter callback: (arg: A) => T
+/workspace/tracing-measured-after/src/compiler/core.ts:1910:91: parameter arg: A
+/workspace/tracing-measured-after/src/compiler/core.ts:1910:107: parameter arg: A
+/workspace/tracing-measured-after/src/compiler/core.ts:1911:11: variable map: Map<string, T>
+/workspace/tracing-measured-after/src/compiler/core.ts:1912:13: parameter arg: A
+/workspace/tracing-measured-after/src/compiler/core.ts:1913:15: variable key: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1914:13: variable value: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1937:13: type AnyFunction: (...args: never[]) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:1937:31: parameter args: never[]
+/workspace/tracing-measured-after/src/compiler/core.ts:1940:17: function equateValues: <T>(a: T, b: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1940:33: parameter a: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1940:39: parameter b: T
+/workspace/tracing-measured-after/src/compiler/core.ts:1954:17: function equateStringsCaseInsensitive: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1954:46: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1954:57: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1969:17: function equateStringsCaseSensitive: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:1969:44: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1969:55: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:1974:17: function compareComparableValues: { (a: string | undefined, b: string | undefined): Comparison; (a: number | undefined, b: number | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1974:41: parameter a: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1974:64: parameter b: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1976:17: function compareComparableValues: { (a: string | undefined, b: string | undefined): Comparison; (a: number | undefined, b: number | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1976:41: parameter a: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1976:64: parameter b: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1977:17: function compareComparableValues: { (a: string | undefined, b: string | undefined): Comparison; (a: number | undefined, b: number | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/core.ts:1977:41: parameter a: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1977:73: parameter b: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1991:17: function compareValues: (a: number | undefined, b: number | undefined) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:1991:31: parameter a: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:1991:54: parameter b: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2000:17: function compareTextSpans: (a: Partial<TextSpan> | undefined, b: Partial<TextSpan> | undefined) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2000:34: parameter a: Partial<TextSpan> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2000:68: parameter b: Partial<TextSpan> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2005:17: function maxBy: <T>(arr: readonly T[], init: number, mapper: (x: T) => number) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:2005:26: parameter arr: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2005:45: parameter init: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2005:59: parameter mapper: (x: T) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:2005:68: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2006:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2013:17: function min: { <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T; <T>(items: readonly T[], compare: Comparer<T>): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2013:24: parameter items: readonly [T, ...T[]]
+/workspace/tracing-measured-after/src/compiler/core.ts:2013:53: parameter compare: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2015:17: function min: { <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T; <T>(items: readonly T[], compare: Comparer<T>): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2015:24: parameter items: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2015:45: parameter compare: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2017:17: function min: { <T>(items: readonly [T, ...T[]], compare: Comparer<T>): T; <T>(items: readonly T[], compare: Comparer<T>): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2017:24: parameter items: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2017:45: parameter compare: Comparer<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2018:31: parameter x: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2018:34: parameter y: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2035:17: function compareStringsCaseInsensitive: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2035:47: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2035:58: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2056:17: function compareStringsCaseInsensitiveEslintCompatible: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2056:63: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2056:74: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2077:17: function compareStringsCaseSensitive: (a: string | undefined, b: string | undefined) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2077:45: parameter a: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2077:68: parameter b: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2082:17: function getStringComparer: (ignoreCase?: boolean | undefined) => (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2082:35: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2089:7: variable createUIStringComparer: (locale: string | undefined) => Comparer<string>
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:14: function compareWithCallback: (a: string | undefined, b: string | undefined, comparer: (a: string, b: string) => number) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:34: parameter a: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:57: parameter b: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:80: parameter comparer: (a: string, b: string) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:91: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2092:102: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2096:15: variable value: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2100:14: function createIntlCollatorStringComparer: (locale: string | undefined) => Comparer<string>
+/workspace/tracing-measured-after/src/compiler/core.ts:2100:47: parameter locale: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2103:15: variable comparer: (x: string, y: string) => number
+/workspace/tracing-measured-after/src/compiler/core.ts:2104:17: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2104:20: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2108:5: variable uiComparerCaseSensitive: Comparer<string> | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2109:5: variable uiLocale: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2112:17: function getUILocale: () => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2117:17: function setUILocale: (value: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2117:29: parameter value: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2136:17: function compareStringsCaseSensitiveUI: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2136:47: parameter a: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2136:58: parameter b: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2142:17: function compareProperties: <T extends object, K extends keyof T>(a: T | undefined, b: T | undefined, key: K, comparer: Comparer<T[K]>) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2142:72: parameter a: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2142:90: parameter b: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2142:108: parameter key: K
+/workspace/tracing-measured-after/src/compiler/core.ts:2142:116: parameter comparer: Comparer<T[K]>
+/workspace/tracing-measured-after/src/compiler/core.ts:2154:17: function compareBooleans: (a: boolean, b: boolean) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2154:33: parameter a: boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2154:45: parameter b: boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2172:17: function getSpellingSuggestion: <T>(name: string, candidates: Iterable<T>, getName: (candidate: T) => string | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2172:42: parameter name: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2172:56: parameter candidates: Iterable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2172:81: parameter getName: (candidate: T) => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2172:91: parameter candidate: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2173:11: variable maximumLengthDifference: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2174:9: variable bestDistance: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2175:9: variable bestCandidate: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2176:16: variable candidate: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2177:15: variable candidateName: string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2188:19: variable distance: number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2201:10: function levenshteinWithMax: (s1: string, s2: string, max: number) => number | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2201:29: parameter s1: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2201:41: parameter s2: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2201:53: parameter max: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2202:9: variable previous: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2203:9: variable current: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2205:11: variable big: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2207:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2211:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2212:15: variable c1: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2213:15: variable minJ: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2214:15: variable maxJ: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2217:13: variable colMin: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2218:18: variable j: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2221:18: variable j: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2223:19: variable substitutionDistance: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2226:19: variable dist: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2232:18: variable j: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2240:15: variable temp: number[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2245:11: variable res: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2250:17: function endsWith: (str: string, suffix: string, ignoreCase?: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2250:26: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2250:39: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2250:55: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2251:11: variable expectedPos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2260:17: function removeSuffix: (str: string, suffix: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2260:30: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2260:43: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2265:17: function tryRemoveSuffix: (str: string, suffix: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2265:33: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2265:46: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2274:17: function removeMinAndVersionNumbers: (fileName: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2274:44: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2279:9: variable end: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2281:14: variable pos: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2282:13: variable ch: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2328:17: function orderedRemoveItem: <T>(array: T[], item: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2328:38: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2328:50: parameter item: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2329:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2343:17: function orderedRemoveItemAt: <T>(array: T[], index: number) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2343:40: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2343:52: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2345:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2351:10: function unorderedRemoveItemAt: <T>(array: T[], index: number) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2351:35: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2351:47: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2362:17: function unorderedRemoveItem: <T>(array: T[], item: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2362:40: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2362:52: parameter item: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2363:49: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2367:10: function unorderedRemoveFirstItemWhere: <T>(array: T[], predicate: (element: T) => boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2367:43: parameter array: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2367:55: parameter predicate: (element: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2367:67: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2368:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2378:13: type GetCanonicalFileName: (fileName: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2378:37: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2380:17: function createGetCanonicalFileName: (useCaseSensitiveFileNames: boolean) => GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/core.ts:2380:44: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2389:18: interface Pattern: Pattern
+/workspace/tracing-measured-after/src/compiler/core.ts:2390:5: property prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2391:5: property suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2395:17: function patternText: ({ prefix, suffix }: Pattern) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2395:31: binding prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2395:39: binding suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2405:17: function matchedText: (pattern: Pattern, candidate: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2405:29: parameter pattern: Pattern
+/workspace/tracing-measured-after/src/compiler/core.ts:2405:47: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2415:17: function findBestPatternMatch: <T>(values: readonly T[], getPattern: (value: T) => Pattern, candidate: string) => T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2415:41: parameter values: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2415:63: parameter getPattern: (value: T) => Pattern
+/workspace/tracing-measured-after/src/compiler/core.ts:2415:76: parameter value: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2415:98: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2416:9: variable matchedValue: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2418:9: variable longestMatchPrefixLength: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2420:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2421:15: variable v: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2422:15: variable pattern: Pattern
+/workspace/tracing-measured-after/src/compiler/core.ts:2433:17: function startsWith: (str: string, prefix: string, ignoreCase?: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2433:28: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2433:41: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2433:57: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2440:17: function removePrefix: (str: string, prefix: string) => string
+/workspace/tracing-measured-after/src/compiler/core.ts:2440:30: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2440:43: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2445:17: function tryRemovePrefix: (str: string, prefix: string, getCanonicalFileName?: GetCanonicalFileName) => string | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2445:33: parameter str: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2445:46: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2445:62: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/core.ts:2450:17: function isPatternMatch: ({ prefix, suffix }: Pattern, candidate: string) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2450:34: binding prefix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2450:42: binding suffix: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2450:61: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/core.ts:2457:17: function and: <T>(f: (arg: T) => boolean, g: (arg: T) => boolean) => (arg: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2457:24: parameter f: (arg: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2457:28: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2457:48: parameter g: (arg: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2457:52: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2458:13: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:17: function orPredicate2: <P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2) => (p: P) => p is R1 | R2
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:61: parameter f1: (p1: P) => p1 is R1
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:66: parameter p1: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:86: parameter f2: (p2: P) => p2 is R2
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:91: parameter p2: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2462:113: parameter p: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2463:12: parameter p: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:17: function orPredicate3: <P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3) => (p: P) => p is R1 | R2 | R3
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:75: parameter f1: (p1: P) => p1 is R1
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:80: parameter p1: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:100: parameter f2: (p2: P) => p2 is R2
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:105: parameter p2: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:125: parameter f3: (p3: P) => p3 is R3
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:130: parameter p3: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2466:152: parameter p: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2467:12: parameter p: P
+/workspace/tracing-measured-after/src/compiler/core.ts:2470:17: function or: { <T extends unknown[], U>(fs_0: (...args: T) => U, ...fs: ((...args: T) => U)[]): (...args: T) => U; <T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2470:47: parameter fs: [(...args: T) => U, ...((...args: T) => U)[]]
+/workspace/tracing-measured-after/src/compiler/core.ts:2470:56: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2470:79: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2470:103: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2472:17: function or: { <T extends unknown[], U>(fs_0: (...args: T) => U, ...fs: ((...args: T) => U)[]): (...args: T) => U; <T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2472:47: parameter fs: ((...args: T) => U)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2472:56: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2472:79: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2474:17: function or: { <T extends unknown[], U>(fs_0: (...args: T) => U, ...fs: ((...args: T) => U)[]): (...args: T) => U; <T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2474:47: parameter fs: ((...args: T) => U)[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2474:56: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2474:79: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2475:16: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2476:13: variable lastResult: U | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2477:20: variable f: (...args: T) => U
+/workspace/tracing-measured-after/src/compiler/core.ts:2488:17: function not: <T extends unknown[]>(fn: (...args: T) => boolean) => (...args: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2488:42: parameter fn: (...args: T) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2488:50: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2488:76: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2489:16: parameter args: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2493:17: function assertType: <T>(_: T) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2493:31: parameter _: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2496:17: function singleElementArray: <T>(t: T | undefined) => T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2496:39: parameter t: T | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:17: function enumerateInsertsAndDeletes: <T, U>(newItems: readonly T[], oldItems: readonly U[], comparer: (a: T, b: U) => Comparison, inserted: (newItem: T) => void, deleted: (oldItem: U) => void, unchanged?: ((oldItem: U, newItem: T) => void) | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:50: parameter newItems: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:74: parameter oldItems: readonly U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:98: parameter comparer: (a: T, b: U) => Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:109: parameter a: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:115: parameter b: U
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:136: parameter inserted: (newItem: T) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:147: parameter newItem: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:168: parameter deleted: (oldItem: U) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:178: parameter oldItem: U
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:199: parameter unchanged: ((oldItem: U, newItem: T) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:212: parameter oldItem: U
+/workspace/tracing-measured-after/src/compiler/core.ts:2501:224: parameter newItem: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2503:9: variable newIndex: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2504:9: variable oldIndex: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2505:11: variable newLen: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2506:11: variable oldLen: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2507:9: variable hasChanges: boolean
+/workspace/tracing-measured-after/src/compiler/core.ts:2509:15: variable newItem: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2510:15: variable oldItem: NonNullable<U>
+/workspace/tracing-measured-after/src/compiler/core.ts:2511:15: variable compareResult: Comparison
+/workspace/tracing-measured-after/src/compiler/core.ts:2540:17: function cartesianProduct: <T>(arrays: readonly T[][]) => T[][]
+/workspace/tracing-measured-after/src/compiler/core.ts:2540:37: parameter arrays: readonly T[][]
+/workspace/tracing-measured-after/src/compiler/core.ts:2541:11: variable result: T[][]
+/workspace/tracing-measured-after/src/compiler/core.ts:2546:10: function cartesianProductWorker: <T>(arrays: readonly (readonly T[])[], result: T[][], outer: readonly T[] | undefined, index: number) => void
+/workspace/tracing-measured-after/src/compiler/core.ts:2546:36: parameter arrays: readonly (readonly T[])[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2546:71: parameter result: T[][]
+/workspace/tracing-measured-after/src/compiler/core.ts:2546:86: parameter outer: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2546:119: parameter index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2547:16: variable element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2548:13: variable inner: T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2566:17: function takeWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): U[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2566:43: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2566:64: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2566:76: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2568:17: function takeWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): U[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2568:43: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2568:76: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2568:88: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2569:17: function takeWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): U[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2569:43: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2569:76: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2569:88: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2571:15: variable result: U[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2572:15: variable len: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2573:13: variable index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2575:19: variable element: NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/core.ts:2585:17: function skipWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): T[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2585:43: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/core.ts:2585:64: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2585:76: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2587:17: function skipWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): T[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2587:43: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2587:76: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2587:88: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2589:17: function skipWhile: { <T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): T[]; <T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): T[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/core.ts:2589:43: parameter array: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2589:76: parameter predicate: (element: T) => element is U
+/workspace/tracing-measured-after/src/compiler/core.ts:2589:88: parameter element: T
+/workspace/tracing-measured-after/src/compiler/core.ts:2591:15: variable len: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2592:13: variable index: number
+/workspace/tracing-measured-after/src/compiler/core.ts:2599:15: variable process: { nextTick?: unknown; browser?: unknown; } | undefined
+/workspace/tracing-measured-after/src/compiler/core.ts:2599:26: property nextTick: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:2599:46: property browser: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:2599:94: variable require: unknown
+/workspace/tracing-measured-after/src/compiler/core.ts:2601:17: function isNodeLikeSystem: () => boolean

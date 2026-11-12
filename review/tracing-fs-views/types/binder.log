@@ -1,0 +1,752 @@
+/workspace/tracing-measured-after/src/compiler/binder.ts:321:11: interface ActiveLabel: ActiveLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:322:5: property next: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:323:5: property name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:324:5: property breakTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:325:5: property continueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:326:5: property referenced: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:330:17: function getModuleInstanceState: (node: ModuleDeclaration, visited?: Map<number, ModuleInstanceState | undefined> | undefined) => ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:330:40: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:330:65: parameter visited: Map<number, ModuleInstanceState | undefined> | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:339:10: function getModuleInstanceStateCached: (node: Node, visited?: Map<number, ModuleInstanceState | undefined>) => ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:339:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:339:51: parameter visited: Map<number, ModuleInstanceState | undefined>
+/workspace/tracing-measured-after/src/compiler/binder.ts:340:11: variable nodeId: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:345:11: variable result: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:350:10: function getModuleInstanceStateWorker: (node: Node, visited: Map<number, ModuleInstanceState | undefined>) => ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:350:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:350:51: parameter visited: Map<number, ModuleInstanceState | undefined>
+/workspace/tracing-measured-after/src/compiler/binder.ts:372:19: variable exportDeclaration: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:374:21: variable state: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:375:28: variable specifier: ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:376:27: variable specifierState: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:389:17: variable state: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:390:32: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:391:23: variable childState: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:422:10: function getModuleInstanceStateForAliasTarget: (specifier: ExportSpecifier, visited: Map<number, ModuleInstanceState | undefined>) => ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:422:47: parameter specifier: ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:422:75: parameter visited: Map<number, ModuleInstanceState | undefined>
+/workspace/tracing-measured-after/src/compiler/binder.ts:423:11: variable name: ModuleExportName
+/workspace/tracing-measured-after/src/compiler/binder.ts:427:9: variable p: Node | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:430:19: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/binder.ts:431:17: variable found: ModuleInstanceState | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:432:24: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/binder.ts:438:27: variable state: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:495:17: function createFlowNode: (flags: FlowFlags, node: unknown, antecedent: FlowNode[] | FlowNode | undefined) => FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:495:32: parameter flags: FlowFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:495:50: parameter node: unknown
+/workspace/tracing-measured-after/src/compiler/binder.ts:495:65: parameter antecedent: FlowNode[] | FlowNode | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:499:7: variable binder: (file: SourceFile, options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:502:17: function bindSourceFile: (file: SourceFile, options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:502:32: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:502:50: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/binder.ts:509:10: function createBinder: () => (file: SourceFile, options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:509:27: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:509:45: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/binder.ts:513:9: variable file: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:514:9: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/binder.ts:515:9: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/binder.ts:516:9: variable parent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:517:9: variable container: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:518:9: variable thisParentContainer: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:519:9: variable blockScopeContainer: IsBlockScopedContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:520:9: variable lastContainer: HasLocals
+/workspace/tracing-measured-after/src/compiler/binder.ts:521:9: variable delayedTypeAliases: (JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag)[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:522:9: variable seenThisKeyword: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:523:9: variable jsDocImports: JSDocImportTag[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:526:9: variable currentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:527:9: variable currentBreakTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:528:9: variable currentContinueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:529:9: variable currentReturnTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:530:9: variable currentTrueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:531:9: variable currentFalseTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:532:9: variable currentExceptionTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:533:9: variable preSwitchCaseFlow: FlowNode | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:534:9: variable activeLabelList: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:535:9: variable hasExplicitReturn: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:536:9: variable inReturnPosition: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:537:9: variable hasFlowEffects: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:540:9: variable emitFlags: NodeFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:546:9: variable inStrictMode: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:549:9: variable inAssignmentPattern: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:551:9: variable symbolCount: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:553:9: variable Symbol: new (flags: SymbolFlags, name: __String) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:553:22: parameter flags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:553:42: parameter name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:554:9: variable classifiableNames: Set<__String>
+/workspace/tracing-measured-after/src/compiler/binder.ts:556:9: variable unreachableFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:557:9: variable bindBinaryExpressionFlow: (node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:567:14: function createDiagnosticForNode: (node: Node, message: DiagnosticMessage, ...args: DiagnosticArguments) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/binder.ts:567:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:567:50: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:567:81: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/binder.ts:571:14: function bindSourceFile: (f: SourceFile, opts: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:571:29: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:571:44: parameter opts: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/binder.ts:620:14: function bindInStrictMode: (file: SourceFile, opts: CompilerOptions) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:620:31: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:620:49: parameter opts: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/binder.ts:630:14: function createSymbol: (flags: SymbolFlags, name: __String) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:630:27: parameter flags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:630:47: parameter name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:635:14: function addDeclarationToSymbol: (symbol: Symbol, node: Declaration, symbolFlags: SymbolFlags) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:635:37: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:635:53: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:635:72: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:661:14: function getDeclarationName: (node: Declaration) => __String | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:661:33: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:666:15: variable name: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:669:23: variable moduleName: string
+/workspace/tracing-measured-after/src/compiler/binder.ts:673:23: variable nameExpression: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:687:23: variable containingClass: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:692:23: variable containingClassSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:731:23: variable functionType: JSDocFunctionType
+/workspace/tracing-measured-after/src/compiler/binder.ts:732:23: variable index: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:737:14: function getDisplayName: (node: Declaration) => string
+/workspace/tracing-measured-after/src/compiler/binder.ts:737:29: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:14: function declareSymbol: (symbolTable: SymbolTable, parent: Symbol | undefined, node: Declaration, includes: SymbolFlags, excludes: SymbolFlags, isReplaceableByMethod?: boolean | undefined, isComputedName?: boolean | undefined) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:28: parameter symbolTable: SymbolTable
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:54: parameter parent: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:82: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:101: parameter includes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:124: parameter excludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:147: parameter isReplaceableByMethod: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:749:180: parameter isComputedName: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:752:15: variable isDefaultExport: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:755:15: variable name: __String | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:759:13: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:814:25: variable message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:817:25: variable messageNeedsName: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:824:25: variable multipleDefaultExports: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:850:27: variable relatedInformation: DiagnosticRelatedInformation[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:856:27: variable declarationName: ArrayBindingPattern | BigIntLiteral | ComputedPropertyName | Declaration | JsxNamespacedName | ObjectBindingPattern | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:857:51: parameter declaration: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:857:64: parameter index: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:858:31: variable decl: ArrayBindingPattern | BigIntLiteral | ComputedPropertyName | Declaration | JsxNamespacedName | ObjectBindingPattern | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:859:31: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/binder.ts:868:27: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/binder.ts:887:14: function declareModuleMember: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:887:34: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:887:53: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:887:79: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:888:15: variable hasExportModifier: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:919:23: variable exportKind: 0 | SymbolFlags.ExportValue
+/workspace/tracing-measured-after/src/compiler/binder.ts:920:23: variable local: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:932:14: function jsdocTreatAsExported: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:932:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:941:15: variable declName: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:953:14: function bindContainer: (node: Mutable<HasContainerFlags>, containerFlags: ContainerFlags) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:953:28: parameter node: Mutable<HasContainerFlags>
+/workspace/tracing-measured-after/src/compiler/binder.ts:953:62: parameter containerFlags: ContainerFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:957:15: variable saveContainer: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:958:15: variable saveThisParentContainer: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:959:15: variable savedBlockScopeContainer: IsBlockScopedContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:960:15: variable savedInReturnPosition: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:997:19: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:998:19: variable saveBreakTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:999:19: variable saveContinueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1000:19: variable saveReturnTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1001:19: variable saveExceptionTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1002:19: variable saveActiveLabelList: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1003:19: variable saveHasExplicitReturn: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1004:19: variable saveSeenThisKeyword: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1005:19: variable isImmediatelyInvoked: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1062:19: variable saveSeenThisKeyword: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1079:14: function bindEachFunctionsFirst: (nodes: NodeArray<Node> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1079:37: parameter nodes: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1080:25: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1081:25: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1084:14: function bindEach: (nodes: NodeArray<Node> | undefined, bindFunction?: (node: Node) => undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1084:23: parameter nodes: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1084:59: parameter bindFunction: (node: Node) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1084:74: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1092:14: function bindEachChild: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1092:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1096:14: function bindChildren: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1096:27: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1097:15: variable saveInAssignmentPattern: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1242:14: function isNarrowingExpression: (expr: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1242:36: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1269:14: function isNarrowableReference: (expr: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1269:36: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1290:14: function containsNarrowableReference: (expr: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1290:42: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1294:14: function hasNarrowableArgument: (expr: CallExpression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1294:36: parameter expr: CallExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1296:24: variable argument: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1311:14: function isNarrowingTypeofOperands: (expr1: Expression, expr2: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1311:40: parameter expr1: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1311:59: parameter expr2: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1315:14: function isNarrowingBinaryExpression: (expr: BinaryExpression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1315:42: parameter expr: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1326:23: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1327:23: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1341:14: function isNarrowableOperand: (expr: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1341:34: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1356:14: function createBranchLabel: () => FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1360:14: function createLoopLabel: () => FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1364:14: function createReduceLabel: (target: FlowLabel, antecedents: FlowNode[], antecedent: FlowNode) => FlowReduceLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1364:32: parameter target: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1364:51: parameter antecedents: FlowNode[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:1364:76: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1368:14: function setFlowNodeReferenced: (flow: FlowNode) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1368:36: parameter flow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1373:14: function addAntecedent: (label: FlowLabel, antecedent: FlowNode) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1373:28: parameter label: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1373:46: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1380:14: function createFlowCondition: (flags: FlowFlags.TrueCondition | FlowFlags.FalseCondition, antecedent: FlowNode, expression: Expression | undefined) => FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1380:34: parameter flags: FlowFlags.TrueCondition | FlowFlags.FalseCondition
+/workspace/tracing-measured-after/src/compiler/binder.ts:1380:93: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1380:115: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1401:14: function createFlowSwitchClause: (antecedent: FlowNode, switchStatement: SwitchStatement, clauseStart: number, clauseEnd: number) => FlowSwitchClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:1401:37: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1401:59: parameter switchStatement: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1401:93: parameter clauseStart: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:1401:114: parameter clauseEnd: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:1406:14: function createFlowMutation: (flags: FlowFlags.Assignment | FlowFlags.ArrayMutation, antecedent: FlowNode, node: Expression | VariableDeclaration | ArrayBindingElement) => FlowArrayMutation | FlowAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:1406:33: parameter flags: FlowFlags.Assignment | FlowFlags.ArrayMutation
+/workspace/tracing-measured-after/src/compiler/binder.ts:1406:88: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1406:110: parameter node: Expression | VariableDeclaration | ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1409:15: variable result: FlowArrayMutation | FlowAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:1416:14: function createFlowCall: (antecedent: FlowNode, node: CallExpression) => FlowCall
+/workspace/tracing-measured-after/src/compiler/binder.ts:1416:29: parameter antecedent: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1416:51: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1422:14: function finishFlowLabel: (flow: FlowLabel) => FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1422:30: parameter flow: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1423:15: variable antecedents: FlowNode[] | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1433:14: function isStatementCondition: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1433:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1434:15: variable parent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1447:14: function isLogicalExpression: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1447:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1461:14: function isLogicalAssignmentExpression: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1461:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1465:14: function isTopLevelLogicalExpression: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1465:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:14: function doWithConditionalBranches: <T>(action: (value: T) => void, value: T, trueTarget: FlowLabel, falseTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:43: parameter action: (value: T) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:52: parameter value: T
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:71: parameter value: T
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:81: parameter trueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1477:104: parameter falseTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1478:15: variable savedTrueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1479:15: variable savedFalseTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1487:14: function bindCondition: (node: Expression | undefined, trueTarget: FlowLabel, falseTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1487:28: parameter node: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1487:58: parameter trueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1487:81: parameter falseTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1495:14: function bindIterativeStatement: (node: Statement, breakTarget: FlowLabel, continueTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1495:37: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1495:54: parameter breakTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1495:78: parameter continueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1496:15: variable saveBreakTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1497:15: variable saveContinueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1505:14: function setContinueTarget: (node: Node, target: FlowLabel) => FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1505:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1505:44: parameter target: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1506:13: variable label: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1515:14: function bindWhileStatement: (node: WhileStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1515:33: parameter node: WhileStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1516:15: variable preWhileLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1517:15: variable preBodyLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1518:15: variable postWhileLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1528:14: function bindDoStatement: (node: DoStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1528:30: parameter node: DoStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1529:15: variable preDoLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1530:15: variable preConditionLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1531:15: variable postDoLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1541:14: function bindForStatement: (node: ForStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1541:31: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1542:15: variable preLoopLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1543:15: variable preBodyLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1544:15: variable preIncrementorLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1545:15: variable postLoopLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1559:14: function bindForInOrForOfStatement: (node: ForInOrOfStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1559:40: parameter node: ForInOrOfStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1560:15: variable preLoopLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1561:15: variable postLoopLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1578:14: function bindIfStatement: (node: IfStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1578:30: parameter node: IfStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1579:15: variable thenLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1580:15: variable elseLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1581:15: variable postIfLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1592:14: function bindReturnOrThrow: (node: ReturnStatement | ThrowStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1592:32: parameter node: ReturnStatement | ThrowStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1593:15: variable savedInReturnPosition: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1607:14: function findActiveLabel: (name: __String) => ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1607:30: parameter name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:1608:18: variable label: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1616:14: function bindBreakOrContinueFlow: (node: BreakOrContinueStatement, breakTarget: FlowLabel | undefined, continueTarget: FlowLabel | undefined) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1616:38: parameter node: BreakOrContinueStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1616:70: parameter breakTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1616:106: parameter continueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1617:15: variable flowLabel: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1625:14: function bindBreakOrContinueStatement: (node: BreakOrContinueStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1625:43: parameter node: BreakOrContinueStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1628:19: variable activeLabel: ActiveLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1639:14: function bindTryStatement: (node: TryStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1639:31: parameter node: TryStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1646:15: variable saveReturnTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1647:15: variable saveExceptionTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1648:15: variable normalExitLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1649:15: variable returnLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1650:13: variable exceptionLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1687:19: variable finallyLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1717:14: function bindSwitchStatement: (node: SwitchStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1717:34: parameter node: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1718:15: variable postSwitchLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1720:15: variable saveBreakTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1721:15: variable savePreSwitchCaseFlow: FlowNode | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1726:15: variable hasDefault: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1726:60: parameter c: CaseClause | DefaultClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:1739:14: function bindCaseBlock: (node: CaseBlock) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1739:28: parameter node: CaseBlock
+/workspace/tracing-measured-after/src/compiler/binder.ts:1740:15: variable clauses: NodeArray<CaseOrDefaultClause>
+/workspace/tracing-measured-after/src/compiler/binder.ts:1741:15: variable isNarrowingSwitch: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1742:13: variable fallthroughFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1744:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:1745:19: variable clauseStart: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:1753:19: variable preCaseLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1757:19: variable clause: CaseOrDefaultClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:1766:14: function bindCaseClause: (node: CaseClause) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1766:29: parameter node: CaseClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:1767:15: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1774:14: function bindExpressionStatement: (node: ExpressionStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1774:38: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1779:14: function maybeBindExpressionFlowIfCall: (node: Expression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1779:44: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1783:19: variable call: CallExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1790:14: function bindLabeledStatement: (node: LabeledStatement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1790:35: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:1791:15: variable postStatementLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1809:14: function bindDestructuringTargetFlow: (node: Expression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1809:42: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1818:14: function bindAssignmentTargetFlow: (node: Expression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1818:39: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1823:24: variable e: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1833:24: variable p: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/binder.ts:1847:14: function bindLogicalLikeExpression: (node: BinaryExpression, trueTarget: FlowLabel, falseTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1847:40: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1847:64: parameter trueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1847:87: parameter falseTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1848:15: variable preRightLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1870:14: function bindPrefixUnaryExpressionFlow: (node: PrefixUnaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1870:44: parameter node: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1872:19: variable saveTrueTarget: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1887:14: function bindPostfixUnaryExpressionFlow: (node: PostfixUnaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1887:45: parameter node: PostfixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1894:14: function bindDestructuringAssignmentFlow: (node: DestructuringAssignment) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1894:46: parameter node: DestructuringAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:1912:14: function createBindBinaryExpressionFlow: () => (node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1913:19: interface WorkArea: WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1914:13: property stackIndex: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:1915:13: property skip: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1916:13: property inStrictModeStack: (boolean | undefined)[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:1917:13: property parentStack: (Node | undefined)[]
+/workspace/tracing-measured-after/src/compiler/binder.ts:1922:18: function onEnter: (node: BinaryExpression, state: WorkArea | undefined) => WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1922:26: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1922:50: parameter state: WorkArea | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1928:23: variable saveInStrictMode: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1930:23: variable saveParent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:1947:19: variable operator: BinaryOperator
+/workspace/tracing-measured-after/src/compiler/binder.ts:1950:27: variable postExpressionLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:1951:27: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:1952:27: variable saveHasFlowEffects: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:1966:18: function onLeft: (left: Expression, state: WorkArea, node: BinaryExpression) => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1966:25: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1966:43: parameter state: WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1966:60: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1968:23: variable maybeBound: BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1976:18: function onOperator: (operatorToken: BinaryOperatorToken, state: WorkArea, _node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1976:29: parameter operatorToken: BinaryOperatorToken
+/workspace/tracing-measured-after/src/compiler/binder.ts:1976:65: parameter state: WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1976:82: parameter _node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1982:18: function onRight: (right: Expression, state: WorkArea, node: BinaryExpression) => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1982:26: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1982:45: parameter state: WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1982:62: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1984:23: variable maybeBound: BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:1992:18: function onExit: (node: BinaryExpression, state: WorkArea) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:1992:25: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:1992:49: parameter state: WorkArea
+/workspace/tracing-measured-after/src/compiler/binder.ts:1994:23: variable operator: BinaryOperator
+/workspace/tracing-measured-after/src/compiler/binder.ts:1998:31: variable elementAccess: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2005:19: variable savedInStrictMode: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2006:19: variable savedParent: Node | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2017:18: function maybeBind: (node: Node) => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2017:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2025:14: function bindDeleteExpressionFlow: (node: DeleteExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2025:39: parameter node: DeleteExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2032:14: function bindConditionalExpressionFlow: (node: ConditionalExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2032:44: parameter node: ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2033:15: variable trueLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2034:15: variable falseLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2035:15: variable postExpressionLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2036:15: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2037:15: variable saveHasFlowEffects: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2058:14: function bindInitializedVariableFlow: (node: VariableDeclaration | ArrayBindingElement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2058:42: parameter node: VariableDeclaration | ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2059:15: variable name: BindingName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2061:24: variable child: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2070:14: function bindVariableDeclarationFlow: (node: VariableDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2070:42: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2077:14: function bindBindingElementFlow: (node: BindingElement) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2077:37: parameter node: BindingElement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2089:14: function bindParameterFlow: (node: ParameterDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2089:32: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2099:14: function bindInitializer: (node: Expression | undefined) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2099:30: parameter node: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2103:15: variable entryFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2108:15: variable exitFlow: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2114:14: function bindJSDocTypeAlias: (node: JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2114:33: parameter node: JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:2126:14: function bindJSDocClassTag: (node: JSDocClassTag) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2126:32: parameter node: JSDocClassTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:2128:15: variable host: SignatureDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2134:14: function bindJSDocImportTag: (node: JSDocImportTag) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2134:33: parameter node: JSDocImportTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:2145:14: function bindOptionalExpression: (node: Expression, trueTarget: FlowLabel, falseTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2145:37: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2145:55: parameter trueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2145:78: parameter falseTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2153:14: function bindOptionalChainRest: (node: OptionalChain) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2153:36: parameter node: OptionalChain
+/workspace/tracing-measured-after/src/compiler/binder.ts:2171:14: function bindOptionalChain: (node: OptionalChain, trueTarget: FlowLabel, falseTarget: FlowLabel) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2171:32: parameter node: OptionalChain
+/workspace/tracing-measured-after/src/compiler/binder.ts:2171:53: parameter trueTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2171:76: parameter falseTarget: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2183:15: variable preChainLabel: FlowLabel | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2195:14: function bindOptionalChainFlow: (node: OptionalChain) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2195:36: parameter node: OptionalChain
+/workspace/tracing-measured-after/src/compiler/binder.ts:2197:19: variable postExpressionLabel: FlowLabel
+/workspace/tracing-measured-after/src/compiler/binder.ts:2198:19: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2199:19: variable saveHasFlowEffects: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2209:14: function bindNonNullExpressionFlow: (node: NonNullChain | NonNullExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2209:40: parameter node: NonNullChain | NonNullExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2218:14: function bindAccessExpressionFlow: (node: ElementAccessChain | PropertyAccessChain | AccessExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2218:39: parameter node: ElementAccessChain | PropertyAccessChain | AccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2227:14: function bindCallExpressionFlow: (node: CallChain | CallExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2227:37: parameter node: CallChain | CallExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2235:19: variable expr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2249:19: variable propertyAccess: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2256:14: function addToContainerChain: (next: HasLocals) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2256:34: parameter next: HasLocals
+/workspace/tracing-measured-after/src/compiler/binder.ts:2264:14: function declareSymbolAndAddToSymbolTable: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2264:47: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2264:66: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2264:92: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2324:14: function declareClassMember: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2324:33: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2324:52: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2324:78: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2330:14: function declareSourceFileMember: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2330:38: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2330:57: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2330:83: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2336:14: function hasExportDeclarations: (node: ModuleDeclaration | SourceFile) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2336:36: parameter node: ModuleDeclaration | SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:2337:15: variable body: ModuleBlock | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2338:47: parameter s: Statement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2341:14: function setExportContextFlag: (node: Mutable<ModuleDeclaration | SourceFile>) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2341:35: parameter node: Mutable<ModuleDeclaration | SourceFile>
+/workspace/tracing-measured-after/src/compiler/binder.ts:2352:14: function bindModuleDeclaration: (node: ModuleDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2352:36: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2362:21: variable pattern: string | Pattern | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2364:29: binding text: string
+/workspace/tracing-measured-after/src/compiler/binder.ts:2371:23: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2376:19: variable state: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:2378:25: binding symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2389:14: function declareModuleSymbol: (node: ModuleDeclaration) => ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:2389:34: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2390:15: variable state: ModuleInstanceState
+/workspace/tracing-measured-after/src/compiler/binder.ts:2391:15: variable instantiated: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2400:14: function bindFunctionOrConstructorType: (node: JSDocSignature | SignatureDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2400:44: parameter node: JSDocSignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2407:15: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2410:15: variable typeLiteralSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2416:14: function bindObjectLiteralExpression: (node: ObjectLiteralExpression) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2416:42: parameter node: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2420:14: function bindJsxAttributes: (node: JsxAttributes) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2420:32: parameter node: JsxAttributes
+/workspace/tracing-measured-after/src/compiler/binder.ts:2424:14: function bindJsxAttribute: (node: JsxAttribute, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2424:31: parameter node: JsxAttribute
+/workspace/tracing-measured-after/src/compiler/binder.ts:2424:51: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2424:77: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2428:14: function bindAnonymousDeclaration: (node: Declaration, symbolFlags: SymbolFlags, name: __String) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2428:39: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2428:58: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2428:84: parameter name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:2429:15: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:2437:14: function bindBlockScopedDeclaration: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2437:41: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2437:60: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2437:86: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2458:14: function delayedBindJSDocTypedefTag: () => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2462:15: variable saveContainer: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:2463:15: variable saveLastContainer: HasLocals
+/workspace/tracing-measured-after/src/compiler/binder.ts:2464:15: variable saveBlockScopeContainer: IsBlockScopedContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:2465:15: variable saveParent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2466:15: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2467:20: variable typeAlias: JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:2468:19: variable host: HasJSDoc
+/workspace/tracing-measured-after/src/compiler/binder.ts:2474:19: variable declName: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2477:23: variable isTopLevel: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2479:121: parameter d: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2480:27: variable oldContainer: ArrowFunction | CallSignatureDeclaration | ClassDeclaration | ClassExpression | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | EnumDeclaration | FunctionDeclaration | FunctionExpression | FunctionTypeNode | GetAccessorDeclaration | IndexSignatureDeclaration | InterfaceDeclaration | JSDocFunctionType | JSDocSignature | JSDocTypeLiteral | JsxAttributes | MappedTypeNode | MethodDeclaration | MethodSignature | ModuleDeclaration | ObjectLiteralExpression | SetAccessorDeclaration | SourceFile | TypeAliasDeclaration | TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2526:14: function bindJSDocImports: () => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2531:15: variable saveContainer: EntityNameExpression | IsContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:2532:15: variable saveLastContainer: HasLocals
+/workspace/tracing-measured-after/src/compiler/binder.ts:2533:15: variable saveBlockScopeContainer: IsBlockScopedContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:2534:15: variable saveParent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2535:15: variable saveCurrentFlow: FlowNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:2537:20: variable jsDocImportTag: JSDocImportTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:2538:19: variable host: HasJSDoc | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2539:19: variable enclosingContainer: IsContainer | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2540:19: variable enclosingBlockScopeContainer: IsBlockScopedContainer | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2558:14: function checkContextualIdentifier: (node: Identifier) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2558:40: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:2567:19: variable originalKeywordKind: KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2593:14: function getStrictModeIdentifierMessage: (node: Node) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:2593:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2609:14: function checkPrivateIdentifier: (node: PrivateIdentifier) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2609:37: parameter node: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:2618:14: function checkStrictModeBinaryExpression: (node: BinaryExpression) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2618:46: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2626:14: function checkStrictModeCatchClause: (node: CatchClause) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2626:41: parameter node: CatchClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:2634:14: function checkStrictModeDeleteExpression: (node: DeleteExpression) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2634:46: parameter node: DeleteExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2639:19: variable span: TextSpan
+/workspace/tracing-measured-after/src/compiler/binder.ts:2644:14: function isEvalOrArgumentsIdentifier: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2644:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2648:14: function checkStrictModeEvalOrArguments: (contextNode: Node, name: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2648:45: parameter contextNode: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2648:64: parameter name: Node | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2650:19: variable identifier: Identifier
+/workspace/tracing-measured-after/src/compiler/binder.ts:2654:23: variable span: TextSpan
+/workspace/tracing-measured-after/src/compiler/binder.ts:2660:14: function getStrictModeEvalOrArgumentsMessage: (node: Node) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:2660:50: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2674:14: function checkStrictModeFunctionName: (node: FunctionLikeDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2674:42: parameter node: FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2681:14: function getStrictModeBlockScopeFunctionDeclarationMessage: (node: Node) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:2681:64: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2695:14: function checkStrictModeFunctionDeclaration: (node: FunctionDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2695:49: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:2705:23: variable errorSpan: TextSpan
+/workspace/tracing-measured-after/src/compiler/binder.ts:2711:14: function checkStrictModePostfixUnaryExpression: (node: PostfixUnaryExpression) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2711:52: parameter node: PostfixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2721:14: function checkStrictModePrefixUnaryExpression: (node: PrefixUnaryExpression) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2721:51: parameter node: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2730:14: function checkStrictModeWithStatement: (node: WithStatement) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2730:43: parameter node: WithStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2737:14: function checkStrictModeLabeledStatement: (node: LabeledStatement) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2737:46: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2746:14: function errorOnFirstToken: (node: Node, message: DiagnosticMessage, ...args: DiagnosticArguments) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2746:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2746:44: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/binder.ts:2746:75: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/binder.ts:2747:15: variable span: TextSpan
+/workspace/tracing-measured-after/src/compiler/binder.ts:2751:14: function bind: (node: Node | undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2751:19: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2757:15: variable saveInStrictMode: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2786:19: variable saveParent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2788:19: variable containerFlags: ContainerFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:2798:19: variable saveParent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2806:14: function bindJSDoc: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:2806:24: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2809:28: variable j: JSDoc
+/workspace/tracing-measured-after/src/compiler/binder.ts:2814:28: variable j: JSDoc
+/workspace/tracing-measured-after/src/compiler/binder.ts:2822:14: function updateStrictModeStatementList: (statements: NodeArray<Statement>) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2822:44: parameter statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/binder.ts:2824:24: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2838:14: function isUseStrictPrologueDirective: (node: ExpressionStatement) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:2838:43: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/binder.ts:2839:15: variable nodeText: string
+/workspace/tracing-measured-after/src/compiler/binder.ts:2846:14: function bindWorker: (node: Node) => number | Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:2846:25: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2854:25: variable parentNode: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:2885:23: variable expr: ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2902:23: variable specialKind: AssignmentDeclarationKind
+/workspace/tracing-measured-after/src/compiler/binder.ts:2920:31: variable expression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:2922:35: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3009:23: variable assignmentKind: AssignmentDeclarationKind
+/workspace/tracing-measured-after/src/compiler/binder.ts:3081:23: variable propTag: JSDocPropertyLikeTag
+/workspace/tracing-measured-after/src/compiler/binder.ts:3082:23: variable flags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3097:14: function bindPropertyWorker: (node: PropertyDeclaration | PropertySignature) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3097:33: parameter node: PropertyDeclaration | PropertySignature
+/workspace/tracing-measured-after/src/compiler/binder.ts:3098:15: variable isAutoAccessor: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3099:15: variable includes: SymbolFlags.Property | SymbolFlags.Accessor
+/workspace/tracing-measured-after/src/compiler/binder.ts:3100:15: variable excludes: SymbolFlags.None | SymbolFlags.AccessorExcludes
+/workspace/tracing-measured-after/src/compiler/binder.ts:3104:14: function bindAnonymousTypeWorker: (node: JSDocTypeLiteral | MappedTypeNode | TypeLiteralNode) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3104:38: parameter node: JSDocTypeLiteral | MappedTypeNode | TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:3108:14: function bindSourceFileIfExternalModule: () => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3116:19: variable originalSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3122:14: function bindSourceFileAsExternalModule: () => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3126:14: function bindExportAssignment: (node: ExportAssignment) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3126:35: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:3132:19: variable flags: SymbolFlags.Property | SymbolFlags.Alias
+/workspace/tracing-measured-after/src/compiler/binder.ts:3139:19: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3148:14: function bindNamespaceExportDeclaration: (node: NamespaceExportDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3148:45: parameter node: NamespaceExportDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3152:15: variable diag: DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3165:14: function bindExportDeclaration: (node: ExportDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3165:36: parameter node: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3182:14: function bindImportClause: (node: ImportClause) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3182:31: parameter node: ImportClause
+/workspace/tracing-measured-after/src/compiler/binder.ts:3188:14: function setCommonJsModuleIndicator: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3188:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3201:14: function bindObjectDefinePropertyExport: (node: BindableObjectDefinePropertyCall) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3201:45: parameter node: BindableObjectDefinePropertyCall
+/workspace/tracing-measured-after/src/compiler/binder.ts:3205:15: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3205:96: parameter id: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3205:100: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3212:19: variable flags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3217:14: function bindExportsPropertyAssignment: (node: BindableStaticPropertyAssignmentExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3217:44: parameter node: BindableStaticPropertyAssignmentExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3223:15: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3223:99: parameter id: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3223:103: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3230:19: variable isAlias: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3231:19: variable flags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3237:14: function bindModuleExportsAssignment: (node: BindablePropertyAssignmentExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3237:42: parameter node: BindablePropertyAssignmentExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3245:15: variable assignedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3256:15: variable flags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3259:15: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3263:14: function bindExportAssignedObjectMemberAlias: (node: ShorthandPropertyAssignment) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3263:50: parameter node: ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:3267:14: function bindThisPropertyAssignment: (node: BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3267:41: parameter node: BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3270:15: variable hasPrivateIdentifier: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3275:15: variable thisContainer: ThisContainer
+/workspace/tracing-measured-after/src/compiler/binder.ts:3279:21: variable constructorSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3282:27: variable l: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3310:23: variable containingClass: InterfaceDeclaration | ObjectLiteralExpression | TypeLiteralNode | ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3311:23: variable symbolTable: SymbolTable
+/workspace/tracing-measured-after/src/compiler/binder.ts:3339:14: function bindDynamicallyNamedThisPropertyAssignment: (node: BinaryExpression | DynamicNamedDeclaration, symbol: Symbol, symbolTable: SymbolTable) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3339:57: parameter node: BinaryExpression | DynamicNamedDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3339:107: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3339:123: parameter symbolTable: SymbolTable
+/workspace/tracing-measured-after/src/compiler/binder.ts:3344:14: function addLateBoundAssignmentDeclarationToSymbol: (node: BinaryExpression | DynamicNamedDeclaration, symbol: Symbol | undefined) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3344:56: parameter node: BinaryExpression | DynamicNamedDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3344:106: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3350:14: function bindSpecialPropertyDeclaration: (node: PropertyAccessExpression | LiteralLikeElementAccessExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3350:45: parameter node: PropertyAccessExpression | LiteralLikeElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3365:14: function bindPrototypeAssignment: (node: BindableStaticPropertyAssignmentExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3365:38: parameter node: BindableStaticPropertyAssignmentExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3371:14: function bindObjectDefinePrototypeProperty: (node: BindableObjectDefinePropertyCall) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3371:48: parameter node: BindableObjectDefinePropertyCall
+/workspace/tracing-measured-after/src/compiler/binder.ts:3372:15: variable namespaceSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3384:14: function bindPrototypePropertyAssignment: (lhs: BindableStaticAccessExpression, parent: Node) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3384:46: parameter lhs: BindableStaticAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3384:83: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3387:15: variable classPrototype: BindableStaticAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3388:15: variable constructorFunction: EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)
+/workspace/tracing-measured-after/src/compiler/binder.ts:3398:14: function bindObjectDefinePropertyAssignment: (node: BindableObjectDefinePropertyCall) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3398:49: parameter node: BindableObjectDefinePropertyCall
+/workspace/tracing-measured-after/src/compiler/binder.ts:3399:13: variable namespaceSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3400:15: variable isToplevel: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3405:14: function bindSpecialPropertyAssignment: (node: BindablePropertyAssignmentExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3405:44: parameter node: BindablePropertyAssignmentExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3407:15: variable parentSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3411:15: variable rootExpr: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3426:19: variable sym: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3438:14: function bindStaticPropertyAssignment: (node: BindableStaticNameExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3438:43: parameter node: BindableStaticNameExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:14: function bindPotentiallyMissingNamespaces: (namespaceSymbol: Symbol | undefined, entityName: BindableStaticNameExpression, isToplevel: boolean, isPrototypeProperty: boolean, containerIsClass: boolean) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:47: parameter namespaceSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:84: parameter entityName: BindableStaticNameExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:126: parameter isToplevel: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:147: parameter isPrototypeProperty: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3444:177: parameter containerIsClass: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3450:19: variable flags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3451:19: variable excludeFlags: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3452:91: parameter id: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3452:95: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3452:103: parameter parent: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3458:27: variable table: SymbolTable
+/workspace/tracing-measured-after/src/compiler/binder.ts:3470:14: function bindPotentiallyNewExpandoMemberToNamespace: (declaration: CallExpression | BindableStaticAccessExpression, namespaceSymbol: Symbol | undefined, isPrototypeProperty: boolean) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3470:57: parameter declaration: CallExpression | BindableStaticAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3470:119: parameter namespaceSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3470:156: parameter isPrototypeProperty: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3476:15: variable symbolTable: SymbolTable
+/workspace/tracing-measured-after/src/compiler/binder.ts:3480:13: variable includes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:3481:13: variable excludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:3490:59: parameter p: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:3491:27: variable id: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3501:59: parameter p: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/binder.ts:3502:27: variable id: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3519:14: function isTopLevelNamespaceAssignment: (propertyAccess: BindableAccessExpression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3519:44: parameter propertyAccess: BindableAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3525:14: function bindPropertyAssignment: (name: BindableStaticNameExpression, propertyAccess: BindableStaticAccessExpression, isPrototypeProperty: boolean, containerIsClass: boolean) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3525:37: parameter name: BindableStaticNameExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3525:73: parameter propertyAccess: BindableStaticAccessExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3525:121: parameter isPrototypeProperty: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3525:151: parameter containerIsClass: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3526:13: variable namespaceSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3527:15: variable isToplevel: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3542:14: function isExpandoSymbol: (symbol: Symbol) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3542:30: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3546:15: variable node: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3550:13: variable init: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3557:19: variable isPrototypeAssignment: boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3563:14: function getParentOfBinaryExpression: (expr: Node) => Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3563:42: parameter expr: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3570:14: function lookupSymbolForPropertyAccess: (node: BindableStaticNameExpression, lookupContainer?: ArrowFunction | Block | CallSignatureDeclaration | CaseBlock | CatchClause | ClassDeclaration | ClassExpression | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | EnumDeclaration | ForInStatement | ForOfStatement | ForStatement | FunctionDeclaration | FunctionExpression | FunctionTypeNode | GetAccessorDeclaration | Identifier | IndexSignatureDeclaration | InterfaceDeclaration | JSDocFunctionType | JSDocSignature | JSDocTypeLiteral | JsxAttributes | MappedTypeNode | MethodDeclaration | MethodSignature | ModuleDeclaration | ObjectLiteralExpression | PropertyAccessEntityNameExpression | SetAccessorDeclaration | SourceFile | TypeAliasDeclaration | TypeLiteralNode) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3570:44: parameter node: BindableStaticNameExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3570:80: parameter lookupContainer: ArrowFunction | Block | CallSignatureDeclaration | CaseBlock | CatchClause | ClassDeclaration | ClassExpression | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | EnumDeclaration | ForInStatement | ForOfStatement | ForStatement | FunctionDeclaration | FunctionExpression | FunctionTypeNode | GetAccessorDeclaration | Identifier | IndexSignatureDeclaration | InterfaceDeclaration | JSDocFunctionType | JSDocSignature | JSDocTypeLiteral | JsxAttributes | MappedTypeNode | MethodDeclaration | MethodSignature | ModuleDeclaration | ObjectLiteralExpression | PropertyAccessEntityNameExpression | SetAccessorDeclaration | SourceFile | TypeAliasDeclaration | TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/binder.ts:3575:19: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:14: function forEachIdentifierInEntityName: (e: BindableStaticNameExpression, parent: Symbol | undefined, action: (e: Declaration, symbol: Symbol | undefined, parent: Symbol | undefined) => Symbol | undefined) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:44: parameter e: BindableStaticNameExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:77: parameter parent: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:105: parameter action: (e: Declaration, symbol: Symbol | undefined, parent: Symbol | undefined) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:114: parameter e: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:130: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3580:158: parameter parent: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3588:19: variable s: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3589:19: variable name: MemberName | (Expression & (NumericLiteral | StringLiteralLike))
+/workspace/tracing-measured-after/src/compiler/binder.ts:3598:14: function bindCallExpression: (node: CallExpression) => void
+/workspace/tracing-measured-after/src/compiler/binder.ts:3598:33: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3606:14: function bindClassLikeDeclaration: (node: ClassLikeDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3606:39: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3611:19: variable bindingName: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:3619:17: binding symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3630:15: variable prototypeSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3631:15: variable symbolExport: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3642:14: function bindEnumDeclaration: (node: EnumDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3642:34: parameter node: EnumDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3648:14: function bindVariableDeclarationOrBindingElement: (node: BindingElement | VariableDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3648:54: parameter node: BindingElement | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3654:19: variable possibleVariableDecl: BindingElement | ParameterDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3684:14: function bindParameter: (node: JSDocParameterTag | ParameterDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3684:28: parameter node: JSDocParameterTag | ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3704:19: variable classDeclaration: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3709:14: function bindFunctionDeclaration: (node: FunctionDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3709:38: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3726:14: function bindFunctionExpression: (node: ArrowFunction | FunctionExpression) => Symbol
+/workspace/tracing-measured-after/src/compiler/binder.ts:3726:37: parameter node: ArrowFunction | FunctionExpression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3736:15: variable bindingName: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:3740:14: function bindPropertyOrMethodOrAccessor: (node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3740:45: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3740:64: parameter symbolFlags: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:3740:90: parameter symbolExcludes: SymbolFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:3754:14: function getInferTypeContainer: (node: Node) => ConditionalTypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3754:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3755:15: variable extendsType: Node | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3755:48: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3759:14: function bindTypeParameter: (node: TypeParameterDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3759:32: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/binder.ts:3761:19: variable container: HasLocals | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3772:19: variable container: HasLocals | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3789:17: function isExportsOrModuleExportsOrAlias: (sourceFile: SourceFile, node: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/binder.ts:3789:49: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/binder.ts:3789:73: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3790:9: variable i: number
+/workspace/tracing-measured-after/src/compiler/binder.ts:3791:11: variable q: Queue<Expression>
+/workspace/tracing-measured-after/src/compiler/binder.ts:3800:19: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3802:23: variable init: Expression
+/workspace/tracing-measured-after/src/compiler/binder.ts:3815:17: function getContainerFlags: (node: Node) => ContainerFlags
+/workspace/tracing-measured-after/src/compiler/binder.ts:3815:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3905:10: function lookupSymbolForName: (container: Node, name: __String) => Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/binder.ts:3905:30: parameter container: Node
+/workspace/tracing-measured-after/src/compiler/binder.ts:3905:47: parameter name: __String
+/workspace/tracing-measured-after/src/compiler/binder.ts:3906:11: variable local: Symbol | undefined

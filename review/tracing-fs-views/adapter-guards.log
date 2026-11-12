@@ -1,0 +1,92 @@
+[
+  {
+    "dir": "62-temporary-tracing-write",
+    "newline": "\"\\r\\n\"",
+    "status": "accept and idempotent"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "newline": "\"\\n\"",
+    "status": "accept and idempotent"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "view",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "ownerDrift",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "nonliteral",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "toJSON",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "reassigned",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "missingCall",
+    "status": "refused"
+  },
+  {
+    "dir": "62-temporary-tracing-write",
+    "name": "duplicateOwner",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "newline": "\"\\r\\n\"",
+    "status": "accept and idempotent"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "newline": "\"\\n\"",
+    "status": "accept and idempotent"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "view",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "ownerDrift",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "nonliteral",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "toJSON",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "reassigned",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "missingCall",
+    "status": "refused"
+  },
+  {
+    "dir": "63-temporary-tracing-legend",
+    "name": "duplicateOwner",
+    "status": "refused"
+  }
+]

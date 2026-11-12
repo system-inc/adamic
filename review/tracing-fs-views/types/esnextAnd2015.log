@@ -1,0 +1,72 @@
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:67:17: function transformECMAScriptModule: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:67:43: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:67:77: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:69:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:70:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:72:11: variable host: EmitHost
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:73:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:74:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:75:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:76:11: variable previousOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:77:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:83:11: variable noSubstitution: Set<number>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:84:9: variable importsAndRequiresToRewriteOrShim: CallExpression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:85:9: variable helperNameSubstitutions: Map<string, Identifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:86:9: variable currentSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:87:9: variable importRequireStatements: [ImportDeclaration, VariableStatement] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:90:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:90:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:99:136: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:105:17: variable result: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:126:14: function updateExternalModule: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:126:35: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:127:15: variable externalHelpersImportDeclaration: ImportDeclaration | ImportEqualsDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:129:19: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:130:19: variable statementOffset: number
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:143:14: function visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:143:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:153:23: variable exportDecl: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:171:14: function visitImportDeclaration: (node: ImportDeclaration) => VisitResult<ImportDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:171:37: parameter node: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:175:15: variable updatedModuleSpecifier: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:188:14: function visitImportOrRequireCall: (node: CallExpression) => VisitResult<Expression>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:188:39: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:207:14: function createRequireCall: (importNode: ExportDeclaration | ImportDeclaration | ImportEqualsDeclaration) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:207:32: parameter importNode: ExportDeclaration | ImportDeclaration | ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:208:15: variable moduleName: StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:209:15: variable args: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:218:19: variable createRequireName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:219:19: variable importStatement: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:231:19: variable requireHelperName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:232:19: variable requireStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:251:15: variable name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:261:14: function visitImportEqualsDeclaration: (node: ImportEqualsDeclaration) => VisitResult<Statement | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:261:43: parameter node: ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:264:13: variable statements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:294:14: function appendExportsOfImportEqualsDeclaration: (statements: Statement[] | undefined, node: ImportEqualsDeclaration) => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:294:53: parameter statements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:294:90: parameter node: ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:308:14: function visitExportAssignment: (node: ExportAssignment) => VisitResult<ExportAssignment | ExpressionStatement | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:308:36: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:311:23: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:331:14: function visitExportDeclaration: (node: ExportDeclaration) => (ExportAssignment | ExportDeclaration | ImportDeclaration)[] | ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:331:37: parameter node: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:332:15: variable updatedModuleSpecifier: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:349:15: variable oldIdentifier: ModuleExportName
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:350:15: variable synthName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:351:15: variable importDecl: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:365:15: variable exportDecl: ExportAssignment | ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:14: function onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:25: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:53: parameter emitCallback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:68: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:386:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:411:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:411:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:411:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:423:14: function substituteHelperName: (node: Identifier) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:423:35: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:424:15: variable externalHelpersModuleName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:430:19: variable name: string
+/workspace/tracing-measured-after/src/compiler/transformers/module/esnextAnd2015.ts:431:17: variable substitution: Identifier | undefined

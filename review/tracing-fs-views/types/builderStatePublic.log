@@ -1,0 +1,9 @@
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:6:18: interface EmitOutput: EmitOutput
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:7:5: property outputFiles: OutputFile[]
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:8:5: property emitSkipped: boolean
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:9:5: property diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:12:18: interface OutputFile: OutputFile
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:13:5: property name: string
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:14:5: property writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:15:5: property text: string
+/workspace/tracing-measured-after/src/compiler/builderStatePublic.ts:16:22: property data: WriteFileCallbackData | undefined

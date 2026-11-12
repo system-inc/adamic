@@ -1,0 +1,147 @@
+/workspace/tracing-measured-after/src/compiler/semver.ts:20:7: variable versionRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:27:7: variable prereleaseRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:28:7: variable prereleasePartRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:34:7: variable buildRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:35:7: variable buildPartRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:39:7: variable numericIdentifierRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:46:14: class Version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:47:21: property zero: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:49:14: property major: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:50:14: property minor: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:51:14: property patch: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:52:14: property prerelease: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:53:14: property build: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:55:17: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:56:17: parameter major: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:56:32: parameter minor: number | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:56:48: parameter patch: number | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:56:64: parameter prerelease: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:56:105: parameter build: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:57:17: parameter major: string | number
+/workspace/tracing-measured-after/src/compiler/semver.ts:57:41: parameter minor: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:57:52: parameter patch: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:57:63: parameter prerelease: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:57:108: parameter build: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:59:19: variable result: { major: number; minor: number; patch: number; prerelease: string; build: string; }
+/workspace/tracing-measured-after/src/compiler/semver.ts:67:15: variable prereleaseArray: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:68:15: variable buildArray: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:70:45: parameter s: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:71:40: parameter s: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:80:12: method tryParse: (text: string) => Version | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:80:21: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:81:15: variable result: { major: number; minor: number; patch: number; prerelease: string; build: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:84:17: binding major: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:84:24: binding minor: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:84:31: binding patch: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:84:38: binding prerelease: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:84:50: binding build: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:88:5: method compareTo: (other: Version | undefined) => Comparison
+/workspace/tracing-measured-after/src/compiler/semver.ts:88:15: parameter other: Version | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:109:5: method increment: (field: "major" | "minor" | "patch") => Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:109:15: parameter field: "major" | "minor" | "patch"
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:5: method with: (fields: { major?: number; minor?: number; patch?: number; prerelease?: string | readonly string[]; build?: string | readonly string[]; }) => Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:10: parameter fields: { major?: number; minor?: number; patch?: number; prerelease?: string | readonly string[]; build?: string | readonly string[]; }
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:20: property major: number | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:36: property minor: number | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:52: property patch: number | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:68: property prerelease: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:122:109: property build: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:124:13: binding major: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:125:13: binding minor: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:126:13: binding patch: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:127:13: binding prerelease: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:128:13: binding build: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:133:5: method toString: () => string
+/workspace/tracing-measured-after/src/compiler/semver.ts:134:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:141:10: function tryParseComponents: (text: string) => { major: number; minor: number; patch: number; prerelease: string; build: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:141:29: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:142:11: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/semver.ts:145:11: variable major: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:146:16: binding minor: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:146:29: binding patch: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:146:42: binding prerelease: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:146:59: binding build: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:158:10: function comparePrereleaseIdentifiers: (left: readonly string[], right: readonly string[]) => Comparison
+/workspace/tracing-measured-after/src/compiler/semver.ts:158:39: parameter left: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:158:64: parameter right: readonly string[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:170:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:171:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/semver.ts:172:15: variable leftIdentifier: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:173:15: variable rightIdentifier: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:176:15: variable leftIsNumeric: boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:177:15: variable rightIsNumeric: boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:185:19: variable result: Comparison
+/workspace/tracing-measured-after/src/compiler/semver.ts:191:19: variable result: Comparison
+/workspace/tracing-measured-after/src/compiler/semver.ts:207:14: class VersionRange: VersionRange
+/workspace/tracing-measured-after/src/compiler/semver.ts:208:13: property _alternatives: readonly (readonly Comparator[])[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:210:17: parameter spec: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:214:12: method tryParse: (text: string) => VersionRange | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:214:21: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:215:15: variable sets: Comparator[][] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:217:19: variable range: VersionRange
+/workspace/tracing-measured-after/src/compiler/semver.ts:228:5: method test: (version: string | Version) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:228:10: parameter version: string | Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:233:5: method toString: () => string
+/workspace/tracing-measured-after/src/compiler/semver.ts:238:11: interface Comparator: Comparator
+/workspace/tracing-measured-after/src/compiler/semver.ts:239:14: property operator: "<" | "<=" | "=" | ">" | ">="
+/workspace/tracing-measured-after/src/compiler/semver.ts:240:14: property operand: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:248:7: variable logicalOrRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:261:7: variable partialRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:266:7: variable hyphenRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:274:7: variable rangeRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/semver.ts:276:10: function parseRange: (text: string) => Comparator[][] | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:276:21: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:277:11: variable alternatives: Comparator[][]
+/workspace/tracing-measured-after/src/compiler/semver.ts:278:14: variable range: string | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:280:15: variable comparators: Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:282:15: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/semver.ts:287:24: variable simple: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:288:23: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/semver.ts:297:10: function parsePartial: (text: string) => { version: Version; major: string; minor: string; patch: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:297:23: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:298:11: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/semver.ts:301:11: variable major: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:302:16: binding minor: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:302:29: binding patch: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:302:42: binding prerelease: string | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:302:54: binding build: string | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:303:11: variable version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:314:10: function parseHyphen: (left: string, right: string, comparators: Comparator[]) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:314:22: parameter left: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:314:36: parameter right: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:314:51: parameter comparators: Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:315:11: variable leftResult: { version: Version; major: string; minor: string; patch: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:318:11: variable rightResult: { version: Version; major: string; minor: string; patch: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:336:10: function parseComparator: (operator: string | undefined, text: string, comparators: Comparator[]) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:336:26: parameter operator: string | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:336:56: parameter text: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:336:70: parameter comparators: Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:337:11: variable result: { version: Version; major: string; minor: string; patch: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/semver.ts:340:13: binding version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:340:22: binding major: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:340:29: binding minor: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:340:36: binding patch: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:401:10: function isWildcard: (part: string) => part is "*" | "X" | "x"
+/workspace/tracing-measured-after/src/compiler/semver.ts:401:21: parameter part: string
+/workspace/tracing-measured-after/src/compiler/semver.ts:405:10: function createComparator: (operator: "<" | "<=" | "=" | ">" | ">=", operand: Version) => { operator: "<" | "<=" | "=" | ">" | ">="; operand: Version; }
+/workspace/tracing-measured-after/src/compiler/semver.ts:405:27: parameter operator: "<" | "<=" | "=" | ">" | ">="
+/workspace/tracing-measured-after/src/compiler/semver.ts:405:61: parameter operand: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:409:10: function testDisjunction: (version: Version, alternatives: readonly (readonly Comparator[])[]) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:409:26: parameter version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:409:44: parameter alternatives: readonly (readonly Comparator[])[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:412:16: variable alternative: readonly Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:418:10: function testAlternative: (version: Version, comparators: readonly Comparator[]) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:418:26: parameter version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:418:44: parameter comparators: readonly Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:419:16: variable comparator: Comparator
+/workspace/tracing-measured-after/src/compiler/semver.ts:425:10: function testComparator: (version: Version, operator: "<" | "<=" | "=" | ">" | ">=", operand: Version) => boolean
+/workspace/tracing-measured-after/src/compiler/semver.ts:425:25: parameter version: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:425:43: parameter operator: "<" | "<=" | "=" | ">" | ">="
+/workspace/tracing-measured-after/src/compiler/semver.ts:425:77: parameter operand: Version
+/workspace/tracing-measured-after/src/compiler/semver.ts:426:11: variable cmp: Comparison
+/workspace/tracing-measured-after/src/compiler/semver.ts:443:10: function formatDisjunction: (alternatives: readonly (readonly Comparator[])[]) => string
+/workspace/tracing-measured-after/src/compiler/semver.ts:443:28: parameter alternatives: readonly (readonly Comparator[])[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:447:10: function formatAlternative: (comparators: readonly Comparator[]) => string
+/workspace/tracing-measured-after/src/compiler/semver.ts:447:28: parameter comparators: readonly Comparator[]
+/workspace/tracing-measured-after/src/compiler/semver.ts:451:10: function formatComparator: (comparator: Comparator) => string
+/workspace/tracing-measured-after/src/compiler/semver.ts:451:27: parameter comparator: Comparator

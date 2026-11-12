@@ -1,0 +1,162 @@
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:88:17: function transformLegacyDecorators: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:88:43: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:88:77: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:90:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:91:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:92:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:95:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:96:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:97:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:100:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:109:9: variable classAliases: Identifier[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:113:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:113:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:114:15: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:119:14: function modifierVisitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:119:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:123:14: function visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:123:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:153:14: function visitClassDeclaration: (node: ClassDeclaration) => VisitResult<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:153:36: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:158:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:165:14: function decoratorContainsPrivateIdentifierInExpression: (decorator: Decorator) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:165:61: parameter decorator: Decorator
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:169:14: function parameterDecoratorsContainPrivateIdentifierInExpression: (parameterDecorators: readonly Decorator[] | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:169:70: parameter parameterDecorators: readonly Decorator[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:173:14: function hasClassElementWithDecoratorContainingPrivateIdentifierInExpression: (node: ClassDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:173:82: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:174:20: variable member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:176:19: variable allDecorators: AllDecorators | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:183:14: function transformDecoratorsOfClassElements: (node: ClassDeclaration, members: NodeArray<ClassElement>) => { decorationStatements: Statement[] | undefined; members: NodeArray<ClassElement>; }
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:183:49: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:183:73: parameter members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:184:13: variable decorationStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:208:14: function transformClassDeclarationWithoutClassDecorators: (node: ClassDeclaration, name: Identifier | undefined) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:208:62: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:208:86: parameter name: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:213:15: variable modifiers: NodeArray<Modifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:214:15: variable heritageClauses: NodeArray<HeritageClause> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:215:13: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:217:13: variable decorationStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:220:15: variable updated: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:236:14: function transformClassDeclarationWithClassDecorators: (node: ClassDeclaration, name: Identifier | undefined) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:236:59: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:236:83: parameter name: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:323:15: variable isExport: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:324:15: variable isDefault: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:325:15: variable modifiers: NodeArray<ModifierLike> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:325:54: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:327:15: variable location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:328:15: variable classAlias: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:332:15: variable declName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:339:15: variable heritageClauses: NodeArray<HeritageClause> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:340:13: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:342:13: variable decorationStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:347:15: variable assignClassAliasInStaticBlock: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:349:27: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:368:15: variable classExpression: ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:381:15: variable varInitializer: AssignmentExpression<EqualsToken> | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:382:15: variable varDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:385:15: variable varDeclList: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:386:15: variable varStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:391:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:397:23: variable exportStatement: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:401:23: variable exportStatement: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:409:14: function visitClassExpression: (node: ClassExpression) => ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:409:35: parameter node: ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:421:14: function visitConstructorDeclaration: (node: ConstructorDeclaration) => ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:421:42: parameter node: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:430:14: function finishClassElement: (updated: ClassElement, original: ClassElement) => ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:430:33: parameter updated: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:430:56: parameter original: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:440:14: function visitMethodDeclaration: (node: MethodDeclaration) => ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:440:37: parameter node: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:457:14: function visitGetAccessorDeclaration: (node: GetAccessorDeclaration) => ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:457:42: parameter node: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:471:14: function visitSetAccessorDeclaration: (node: SetAccessorDeclaration) => ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:471:42: parameter node: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:484:14: function visitPropertyDeclaration: (node: PropertyDeclaration) => ClassElement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:484:39: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:502:14: function visitParameterDeclaration: (node: ParameterDeclaration) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:502:40: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:503:15: variable updated: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:523:14: function isSyntheticMetadataDecorator: (node: Decorator) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:523:43: parameter node: Decorator
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:532:14: function transformAllDecoratorsOfDeclaration: (allDecorators: AllDecorators | undefined) => Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:532:50: parameter allDecorators: AllDecorators | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:538:24: binding decorators: Decorator[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:538:42: binding metadata: Decorator[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:539:15: variable decoratorExpressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:554:14: function addClassElementDecorationStatements: (statements: Statement[], node: ClassDeclaration, isStatic: boolean) => void
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:554:50: parameter statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:554:75: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:554:99: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:555:93: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:564:14: function isDecoratedClassElement: (member: ClassElement, isStaticElement: boolean, parent: ClassLikeDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:564:38: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:564:60: parameter isStaticElement: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:564:86: parameter parent: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:577:14: function getDecoratedClassElements: (node: ClassDeclaration | ClassExpression, isStatic: boolean) => readonly ClassElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:577:40: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:577:82: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:578:37: parameter m: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:589:14: function generateClassElementDecorationExpressions: (node: ClassDeclaration | ClassExpression, isStatic: boolean) => Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:589:56: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:589:98: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:590:15: variable members: readonly ClassElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:591:13: variable expressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:592:20: variable member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:604:14: function generateClassElementDecorationExpression: (node: ClassDeclaration | ClassExpression, member: ClassElement) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:604:55: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:604:97: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:605:15: variable allDecorators: AllDecorators | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:606:15: variable decoratorExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:642:15: variable prefix: Identifier | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:643:15: variable memberName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:644:15: variable descriptor: NullLiteral | VoidExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:652:15: variable helper: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:669:14: function addConstructorDecorationStatement: (statements: Statement[], node: ClassDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:669:48: parameter statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:669:73: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:670:15: variable expression: AssignmentExpression<EqualsToken> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:681:14: function generateConstructorDecorationExpression: (node: ClassDeclaration | ClassExpression) => AssignmentExpression<EqualsToken> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:681:54: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:682:15: variable allDecorators: AllDecorators | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:683:15: variable decoratorExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:688:15: variable classAlias: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:692:15: variable localName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:695:15: variable decorate: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:696:15: variable expression: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:707:14: function transformDecorator: (decorator: Decorator) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:707:33: parameter decorator: Decorator
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:717:14: function transformDecoratorsOfParameter: (decorators: readonly Decorator[] | undefined, parameterOffset: number) => Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:717:45: parameter decorators: readonly Decorator[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:717:91: parameter parameterOffset: number
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:718:13: variable expressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:721:24: variable decorator: Decorator
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:722:23: variable helper: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:741:14: function getExpressionForPropertyName: (member: ClassElement | EnumMember, generateNameForComputedPropertyName: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:741:43: parameter member: ClassElement | EnumMember
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:741:78: parameter generateNameForComputedPropertyName: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:742:15: variable name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:759:14: function enableSubstitutionForClassAliases: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:775:14: function getClassAliasIfNeeded: (node: ClassDeclaration) => Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:775:36: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:778:19: variable classAlias: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:785:14: function getClassPrototype: (node: ClassDeclaration | ClassExpression) => PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:785:32: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:789:14: function getClassMemberPrefix: (node: ClassDeclaration | ClassExpression, member: ClassElement) => Identifier | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:789:35: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:789:77: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:801:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:801:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:801:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:809:14: function substituteExpression: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:809:35: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:818:14: function substituteExpressionIdentifier: (node: Identifier) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:818:45: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:823:14: function trySubstituteClassAlias: (node: Identifier) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:823:38: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:831:23: variable declaration: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:833:27: variable classAlias: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/legacyDecorators.ts:835:31: variable clone: Identifier

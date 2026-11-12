@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/tracing-evidence/review/tracing-fs-views/normal-proof.py", line 34, in <module>
+    for file in ['types.json','legend.json']:shutil.copyfile(trace/file,out/(label+'-'+file))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/tracing-witness/trace/legend.json'

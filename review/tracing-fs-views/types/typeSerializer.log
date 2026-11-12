@@ -1,0 +1,118 @@
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:73:13: type SerializedEntityName: Identifier | PropertyAccessEntityNameExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:79:13: type SerializedTypeNode: ConditionalExpression | VoidExpression | SerializedEntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:86:18: interface RuntimeTypeSerializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:88:5: property currentLexicalScope: Block | CaseBlock | ModuleBlock | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:90:5: property currentNameScope: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:94:18: interface RuntimeTypeSerializer: RuntimeTypeSerializer
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:113:23: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:113:72: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:118:25: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:118:74: parameter node: MethodDeclaration | ParameterDeclaration | PropertyDeclaration | AccessorDeclaration | ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:118:189: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:123:35: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:123:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:123:96: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:128:31: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:128:80: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:132:17: function createRuntimeTypeSerializer: (context: TransformationContext) => RuntimeTypeSerializer
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:132:45: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:134:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:135:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:138:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:139:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:140:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:141:11: variable strictNullChecks: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:143:9: variable currentLexicalScope: Block | CaseBlock | ModuleBlock | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:144:9: variable currentNameScope: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:147:29: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:147:48: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:148:31: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:148:50: parameter node: MethodDeclaration | ParameterDeclaration | PropertyDeclaration | AccessorDeclaration | ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:148:56: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:149:41: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:149:60: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:149:66: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:150:37: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:150:56: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:153:14: function setSerializerContextAnd: { <TNode extends Node | undefined, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode) => R, node: TNode): R; <TNode extends Node | undefined, T, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode, arg: T) => R, node: TNode, arg: T): R; }
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:153:73: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:153:122: parameter cb: (node: TNode) => R
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:153:127: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:153:146: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:14: function setSerializerContextAnd: { <TNode extends Node | undefined, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode) => R, node: TNode): R; <TNode extends Node | undefined, T, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode, arg: T) => R, node: TNode, arg: T): R; }
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:76: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:125: parameter cb: (node: TNode, arg: T) => R
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:130: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:143: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:157: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:154:170: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:14: function setSerializerContextAnd: { <TNode extends Node | undefined, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode) => R, node: TNode): R; <TNode extends Node | undefined, T, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode, arg: T) => R, node: TNode, arg: T): R; }
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:76: parameter serializerContext: RuntimeTypeSerializerContext
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:125: parameter cb: (node: TNode, arg?: T | undefined) => R
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:130: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:143: parameter arg: T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:158: parameter node: TNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:155:171: parameter arg: T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:156:15: variable savedCurrentLexicalScope: Block | CaseBlock | ModuleBlock | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:157:15: variable savedCurrentNameScope: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:162:15: variable result: R
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:169:14: function getAccessorTypeNode: (node: AccessorDeclaration, container: ClassLikeDeclaration) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:169:34: parameter node: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:169:61: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:170:15: variable accessors: AllAccessorDeclarations
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:179:14: function serializeTypeOfNode: (node: MethodDeclaration | ParameterDeclaration | PropertyDeclaration | AccessorDeclaration | ClassLikeDeclaration, container: ClassLikeDeclaration) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:179:34: parameter node: MethodDeclaration | ParameterDeclaration | PropertyDeclaration | AccessorDeclaration | ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:179:149: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:200:14: function serializeParameterTypesOfNode: (node: Node, container: ClassLikeDeclaration) => ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:200:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:200:56: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:201:15: variable valueDeclaration: SignatureDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:207:15: variable expressions: SerializedTypeNode[]
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:209:19: variable parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:210:19: variable numParameters: number
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:211:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:212:23: variable parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:228:14: function getParametersOfDecoratedDeclaration: (node: SignatureDeclaration, container: ClassLikeDeclaration) => NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:228:50: parameter node: SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:228:78: parameter container: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:230:21: binding setAccessor: SetAccessorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:242:14: function serializeReturnTypeOfNode: (node: Node) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:242:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:271:14: function serializeTypeNode: (node: TypeNode | undefined) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:271:32: parameter node: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:367:14: function serializeLiteralOfLiteralTypeNode: (node: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:367:48: parameter node: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:374:23: variable operand: UnaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:402:14: function serializeUnionOrIntersectionConstituents: (types: readonly TypeNode[], isIntersection: boolean) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:402:55: parameter types: readonly TypeNode[]
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:402:83: parameter isIntersection: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:404:13: variable serializedType: SerializedTypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:405:18: variable typeNode: TypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:425:19: variable serializedConstituent: SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:449:14: function equateSerializedTypeNodes: (left: Expression, right: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:449:40: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:449:58: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:490:14: function serializeTypeReferenceNode: (node: TypeReferenceNode) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:490:41: parameter node: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:491:15: variable kind: TypeReferenceSerializationKind
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:495:40: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:499:23: variable serialized: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:500:23: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:558:14: function createCheckedValue: (left: Expression, right: Expression) => BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:558:33: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:558:51: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:569:14: function serializeEntityNameAsExpressionFallback: (node: EntityName) => BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:569:54: parameter node: EntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:572:19: variable copied: SerializedEntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:580:15: variable left: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:581:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:595:14: function serializeEntityNameAsExpression: (node: EntityName) => SerializedEntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:595:46: parameter node: EntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:600:23: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:614:14: function serializeQualifiedNameAsExpression: (node: QualifiedName) => SerializedEntityName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:614:49: parameter node: QualifiedName
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:618:14: function getGlobalConstructorWithFallback: (name: string) => ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:618:47: parameter name: string
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:628:14: function getGlobalConstructor: (name: string, minLanguageVersion: ScriptTarget) => SerializedTypeNode
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:628:35: parameter name: string
+/workspace/tracing-measured-after/src/compiler/transformers/typeSerializer.ts:628:49: parameter minLanguageVersion: ScriptTarget

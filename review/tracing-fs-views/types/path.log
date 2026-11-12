@@ -1,0 +1,325 @@
+/workspace/tracing-measured-after/src/compiler/path.ts:28:14: variable directorySeparator: "/"
+/workspace/tracing-measured-after/src/compiler/path.ts:30:14: variable altDirectorySeparator: "\\"
+/workspace/tracing-measured-after/src/compiler/path.ts:31:7: variable urlSchemeSeparator: "://"
+/workspace/tracing-measured-after/src/compiler/path.ts:32:7: variable backslashRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/path.ts:41:17: function isAnyDirectorySeparator: (charCode: number) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:41:41: parameter charCode: number
+/workspace/tracing-measured-after/src/compiler/path.ts:50:17: function isUrl: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:50:23: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:60:17: function isRootedDiskPath: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:60:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:69:17: function isDiskPathRoot: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:69:32: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:70:11: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:91:17: function pathIsAbsolute: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:91:32: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:100:17: function pathIsRelative: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:100:32: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:110:17: function pathIsBareSpecifier: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:110:37: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:115:17: function hasExtension: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:115:30: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:120:17: function fileExtensionIs: (path: string, extension: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:120:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:120:47: parameter extension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:125:17: function fileExtensionIsOneOf: (path: string, extensions: readonly string[]) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:125:38: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:125:52: parameter extensions: readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:126:16: variable extension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:140:17: function hasTrailingDirectorySeparator: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:140:47: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:146:10: function isVolumeCharacter: (charCode: number) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:146:28: parameter charCode: number
+/workspace/tracing-measured-after/src/compiler/path.ts:151:10: function getFileUrlVolumeSeparatorEnd: (url: string, start: number) => number
+/workspace/tracing-measured-after/src/compiler/path.ts:151:39: parameter url: string
+/workspace/tracing-measured-after/src/compiler/path.ts:151:52: parameter start: number
+/workspace/tracing-measured-after/src/compiler/path.ts:152:11: variable ch0: number
+/workspace/tracing-measured-after/src/compiler/path.ts:155:15: variable ch2: number
+/workspace/tracing-measured-after/src/compiler/path.ts:165:10: function getEncodedRootLength: (path: string) => number
+/workspace/tracing-measured-after/src/compiler/path.ts:165:31: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:167:11: variable ch0: number
+/workspace/tracing-measured-after/src/compiler/path.ts:173:15: variable p1: number
+/workspace/tracing-measured-after/src/compiler/path.ts:181:15: variable ch2: number
+/workspace/tracing-measured-after/src/compiler/path.ts:187:11: variable schemeEnd: number
+/workspace/tracing-measured-after/src/compiler/path.ts:189:15: variable authorityStart: number
+/workspace/tracing-measured-after/src/compiler/path.ts:190:15: variable authorityEnd: number
+/workspace/tracing-measured-after/src/compiler/path.ts:195:19: variable scheme: string
+/workspace/tracing-measured-after/src/compiler/path.ts:196:19: variable authority: string
+/workspace/tracing-measured-after/src/compiler/path.ts:201:23: variable volumeSeparatorEnd: number
+/workspace/tracing-measured-after/src/compiler/path.ts:250:17: function getRootLength: (path: string) => number
+/workspace/tracing-measured-after/src/compiler/path.ts:250:31: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:251:11: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:278:17: function getDirectoryPath: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:278:34: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:310:17: function getDirectoryPath: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:310:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:312:17: function getDirectoryPath: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:312:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:316:11: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:356:17: function getBaseFileName: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:356:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:371:17: function getBaseFileName: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:371:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:371:47: parameter extensions: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:371:87: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:373:17: function getBaseFileName: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:373:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:373:47: parameter extensions: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:373:88: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:377:11: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:383:11: variable name: string
+/workspace/tracing-measured-after/src/compiler/path.ts:384:11: variable extension: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:388:10: function tryGetExtensionFromPath: (path: string, extension: string, stringEqualityComparer: (a: string, b: string) => boolean) => string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:388:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:388:48: parameter extension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:388:67: parameter stringEqualityComparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:388:92: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:388:103: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:391:15: variable pathExtension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:398:10: function getAnyExtensionFromPathWorker: (path: string, extensions: string | readonly string[], stringEqualityComparer: (a: string, b: string) => boolean) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:398:40: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:398:54: parameter extensions: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:398:94: parameter stringEqualityComparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:398:119: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:398:130: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:402:16: variable extension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:403:15: variable result: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:421:17: function getAnyExtensionFromPath: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:421:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:433:17: function getAnyExtensionFromPath: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:433:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:433:55: parameter extensions: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:433:95: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:435:17: function getAnyExtensionFromPath: { (path: string): string; (path: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:435:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:435:55: parameter extensions: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:435:96: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:441:11: variable baseFileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:442:11: variable extensionIndex: number
+/workspace/tracing-measured-after/src/compiler/path.ts:449:10: function pathComponents: (path: string, rootLength: number) => string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:449:25: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:449:39: parameter rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:450:11: variable root: string
+/workspace/tracing-measured-after/src/compiler/path.ts:451:11: variable rest: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:457:13: type PathPathComponents: Path[] & { __pathComponensBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/path.ts:457:45: property __pathComponensBrand: undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:492:17: function getPathComponents: { (path: Path): PathPathComponents; (path: string, currentDirectory?: string | undefined): string[]; }
+/workspace/tracing-measured-after/src/compiler/path.ts:492:35: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:494:17: function getPathComponents: { (path: Path): PathPathComponents; (path: string, currentDirectory?: string | undefined): string[]; }
+/workspace/tracing-measured-after/src/compiler/path.ts:494:35: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:494:49: parameter currentDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:495:17: function getPathComponents: { (path: Path): PathPathComponents; (path: string, currentDirectory?: string | undefined): string[]; }
+/workspace/tracing-measured-after/src/compiler/path.ts:495:35: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:495:49: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:512:17: function getPathFromPathComponents: <T extends string>(pathComponents: readonly T[], length?: number | undefined) => T
+/workspace/tracing-measured-after/src/compiler/path.ts:512:61: parameter pathComponents: readonly T[]
+/workspace/tracing-measured-after/src/compiler/path.ts:512:91: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:515:11: variable root: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:526:17: function normalizeSlashes: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:526:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:538:17: function reducePathComponents: (components: readonly string[]) => string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:538:38: parameter components: readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:540:11: variable reduced: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:541:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/path.ts:542:15: variable component: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:579:17: function combinePaths: (path: string, ...paths: (string | undefined)[]) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:579:30: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:579:47: parameter paths: (string | undefined)[]
+/workspace/tracing-measured-after/src/compiler/path.ts:581:14: variable relativePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:606:17: function resolvePath: (path: string, ...paths: (string | undefined)[]) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:606:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:606:46: parameter paths: (string | undefined)[]
+/workspace/tracing-measured-after/src/compiler/path.ts:622:17: function getNormalizedPathComponents: (path: string, currentDirectory: string | undefined) => string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:622:45: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:622:59: parameter currentDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:627:17: function getNormalizedAbsolutePath: (path: string, currentDirectory: string | undefined) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:627:43: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:627:57: parameter currentDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:628:9: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:638:11: variable simpleNormalized: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:643:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/path.ts:644:11: variable root: string
+/workspace/tracing-measured-after/src/compiler/path.ts:646:9: variable normalized: any
+/workspace/tracing-measured-after/src/compiler/path.ts:647:9: variable index: number
+/workspace/tracing-measured-after/src/compiler/path.ts:648:9: variable segmentStart: number
+/workspace/tracing-measured-after/src/compiler/path.ts:649:9: variable normalizedUpTo: number
+/workspace/tracing-measured-after/src/compiler/path.ts:650:9: variable seenNonDotDotSegment: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:654:13: variable ch: number
+/workspace/tracing-measured-after/src/compiler/path.ts:665:13: variable segmentEnd: number
+/workspace/tracing-measured-after/src/compiler/path.ts:669:15: variable segmentLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:693:23: variable lastSlash: number
+/workspace/tracing-measured-after/src/compiler/path.ts:722:17: function normalizePath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:722:31: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:724:9: variable normalized: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:732:10: function simpleNormalizePath: (path: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:732:30: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:738:9: variable simplified: string
+/workspace/tracing-measured-after/src/compiler/path.ts:751:10: function getPathWithoutRoot: (pathComponents: readonly string[]) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:751:29: parameter pathComponents: readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:757:17: function getNormalizedAbsolutePathWithoutRoot: (fileName: string, currentDirectory: string | undefined) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:757:54: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:757:72: parameter currentDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:762:17: function toPath: (fileName: string, basePath: string | undefined, getCanonicalFileName: (path: string) => string) => Path
+/workspace/tracing-measured-after/src/compiler/path.ts:762:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:762:42: parameter basePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:762:72: parameter getCanonicalFileName: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:762:95: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:763:11: variable nonCanonicalizedPath: string
+/workspace/tracing-measured-after/src/compiler/path.ts:781:17: function removeTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:781:50: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:783:17: function removeTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:783:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:785:17: function removeTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:785:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:803:17: function ensureTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:803:50: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:805:17: function ensureTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:805:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:807:17: function ensureTrailingDirectorySeparator: { (path: Path): Path; (path: string): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:807:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:828:17: function ensurePathIsNonModuleName: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:828:43: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:841:17: function changeAnyExtension: { (path: string, ext: string): string; (path: string, ext: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:841:36: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:841:50: parameter ext: string
+/workspace/tracing-measured-after/src/compiler/path.ts:853:17: function changeAnyExtension: { (path: string, ext: string): string; (path: string, ext: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:853:36: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:853:50: parameter ext: string
+/workspace/tracing-measured-after/src/compiler/path.ts:853:63: parameter extensions: string | readonly string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:853:103: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:855:17: function changeAnyExtension: { (path: string, ext: string): string; (path: string, ext: string, extensions: string | readonly string[], ignoreCase: boolean): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:855:36: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:855:50: parameter ext: string
+/workspace/tracing-measured-after/src/compiler/path.ts:855:63: parameter extensions: string | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:855:104: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:856:11: variable pathext: string
+/workspace/tracing-measured-after/src/compiler/path.ts:870:17: function changeFullExtension: (path: string, newExtension: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:870:37: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:870:51: parameter newExtension: string
+/workspace/tracing-measured-after/src/compiler/path.ts:871:11: variable declarationExtension: string | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:882:7: variable relativePathSegmentRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/path.ts:884:10: function comparePathsWorker: (a: string, b: string, componentComparer: (a: string, b: string) => Comparison) => Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:884:29: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:884:40: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:884:51: parameter componentComparer: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:884:71: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:884:82: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:891:11: variable aRoot: string
+/workspace/tracing-measured-after/src/compiler/path.ts:892:11: variable bRoot: string
+/workspace/tracing-measured-after/src/compiler/path.ts:893:11: variable result: Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:900:11: variable aRest: string
+/workspace/tracing-measured-after/src/compiler/path.ts:901:11: variable bRest: string
+/workspace/tracing-measured-after/src/compiler/path.ts:908:11: variable aComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:909:11: variable bComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:910:11: variable sharedLength: number
+/workspace/tracing-measured-after/src/compiler/path.ts:911:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/path.ts:912:15: variable result: Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:925:17: function comparePathsCaseSensitive: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:925:43: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:925:54: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:934:17: function comparePathsCaseInsensitive: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/path.ts:934:45: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:934:56: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:943:17: function comparePaths: { (a: string, b: string, ignoreCase?: boolean | undefined): Comparison; (a: string, b: string, currentDirectory: string, ignoreCase?: boolean | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/path.ts:943:30: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:943:41: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:943:52: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:945:17: function comparePaths: { (a: string, b: string, ignoreCase?: boolean | undefined): Comparison; (a: string, b: string, currentDirectory: string, ignoreCase?: boolean | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/path.ts:945:30: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:945:41: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:945:52: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:945:78: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:947:17: function comparePaths: { (a: string, b: string, ignoreCase?: boolean | undefined): Comparison; (a: string, b: string, currentDirectory: string, ignoreCase?: boolean | undefined): Comparison; }
+/workspace/tracing-measured-after/src/compiler/path.ts:947:30: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:947:41: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:947:52: parameter currentDirectory: string | boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:947:89: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:963:17: function containsPath: { (parent: string, child: string, ignoreCase?: boolean | undefined): boolean; (parent: string, child: string, currentDirectory: string, ignoreCase?: boolean | undefined): boolean; }
+/workspace/tracing-measured-after/src/compiler/path.ts:963:30: parameter parent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:963:46: parameter child: string
+/workspace/tracing-measured-after/src/compiler/path.ts:963:61: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:965:17: function containsPath: { (parent: string, child: string, ignoreCase?: boolean | undefined): boolean; (parent: string, child: string, currentDirectory: string, ignoreCase?: boolean | undefined): boolean; }
+/workspace/tracing-measured-after/src/compiler/path.ts:965:30: parameter parent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:965:46: parameter child: string
+/workspace/tracing-measured-after/src/compiler/path.ts:965:61: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:965:87: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:967:17: function containsPath: { (parent: string, child: string, ignoreCase?: boolean | undefined): boolean; (parent: string, child: string, currentDirectory: string, ignoreCase?: boolean | undefined): boolean; }
+/workspace/tracing-measured-after/src/compiler/path.ts:967:30: parameter parent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:967:46: parameter child: string
+/workspace/tracing-measured-after/src/compiler/path.ts:967:61: parameter currentDirectory: string | boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:967:98: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:977:11: variable parentComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:978:11: variable childComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:983:11: variable componentEqualityComparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:984:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/path.ts:985:15: variable equalityComparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1002:17: function startsWithDirectory: (fileName: string, directoryName: string, getCanonicalFileName: GetCanonicalFileName) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1002:37: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1002:55: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1002:78: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1003:11: variable canonicalFileName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1004:11: variable canonicalDirectoryName: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:10: function getPathComponentsRelativeTo: (from: string, to: string, stringEqualityComparer: (a: string, b: string) => boolean, getCanonicalFileName: GetCanonicalFileName) => string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:38: parameter from: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:52: parameter to: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:64: parameter stringEqualityComparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:89: parameter a: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:100: parameter b: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1010:123: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1011:11: variable fromComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1012:11: variable toComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1014:9: variable start: number
+/workspace/tracing-measured-after/src/compiler/path.ts:1016:15: variable fromComponent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1017:15: variable toComponent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1018:15: variable comparer: (a: string, b: string) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1026:11: variable components: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1027:11: variable relative: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1039:17: function getRelativePathFromDirectory: { (from: string, to: string, ignoreCase: boolean): string; (fromDirectory: string, to: string, getCanonicalFileName: GetCanonicalFileName): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1039:46: parameter from: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1039:60: parameter to: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1039:72: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1045:17: function getRelativePathFromDirectory: { (from: string, to: string, ignoreCase: boolean): string; (fromDirectory: string, to: string, getCanonicalFileName: GetCanonicalFileName): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1045:46: parameter fromDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1045:69: parameter to: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1045:81: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1047:17: function getRelativePathFromDirectory: { (from: string, to: string, ignoreCase: boolean): string; (fromDirectory: string, to: string, getCanonicalFileName: GetCanonicalFileName): string; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1047:46: parameter fromDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1047:69: parameter to: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1047:81: parameter getCanonicalFileNameOrIgnoreCase: boolean | GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1049:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1050:11: variable ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1051:11: variable pathComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1056:17: function convertToRelativePath: (absoluteOrRelativePath: string, basePath: string, getCanonicalFileName: (path: string) => string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:1056:39: parameter absoluteOrRelativePath: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1056:71: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1056:89: parameter getCanonicalFileName: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:1056:112: parameter path: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1063:17: function getRelativePathFromFile: (from: string, to: string, getCanonicalFileName: GetCanonicalFileName) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:1063:41: parameter from: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1063:55: parameter to: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1063:67: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:17: function getRelativePathToDirectoryOrUrl: (directoryPathOrUrl: string, relativeOrAbsolutePath: string, currentDirectory: string, getCanonicalFileName: GetCanonicalFileName, isAbsolutePathAnUrl: boolean) => string
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:49: parameter directoryPathOrUrl: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:77: parameter relativeOrAbsolutePath: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:109: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:135: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/path.ts:1068:179: parameter isAbsolutePathAnUrl: boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1069:11: variable pathComponents: string[]
+/workspace/tracing-measured-after/src/compiler/path.ts:1076:11: variable firstComponent: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1078:15: variable prefix: "file://" | "file:///"
+/workspace/tracing-measured-after/src/compiler/path.ts:1092:17: function forEachAncestorDirectory: { <T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined; <T>(directory: string, callback: (directory: string) => T | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1092:45: parameter directory: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:1092:62: parameter callback: (directory: Path) => T | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:1092:73: parameter directory: Path
+/workspace/tracing-measured-after/src/compiler/path.ts:1094:17: function forEachAncestorDirectory: { <T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined; <T>(directory: string, callback: (directory: string) => T | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1094:45: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1094:64: parameter callback: (directory: string) => T | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:1094:75: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/path.ts:1096:17: function forEachAncestorDirectory: { <T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined; <T>(directory: string, callback: (directory: string) => T | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/path.ts:1096:63: parameter directory: P
+/workspace/tracing-measured-after/src/compiler/path.ts:1096:77: parameter callback: (directory: P) => T | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:1096:88: parameter directory: P
+/workspace/tracing-measured-after/src/compiler/path.ts:1098:15: variable result: T | undefined
+/workspace/tracing-measured-after/src/compiler/path.ts:1103:15: variable parentPath: P
+/workspace/tracing-measured-after/src/compiler/path.ts:1113:17: function isNodeModulesDirectory: (dirPath: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/path.ts:1113:40: parameter dirPath: Path

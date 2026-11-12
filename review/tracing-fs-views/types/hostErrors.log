@@ -1,0 +1,7 @@
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:2:17: function errorCode: (error: unknown) => string | undefined
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:2:27: parameter error: unknown
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:7:17: function errorMessage: (error: unknown) => string | undefined
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:7:30: parameter error: unknown
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:12:17: function propertyOf: (value: unknown, key: string) => unknown
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:12:28: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/hostErrors.ts:12:44: parameter key: string

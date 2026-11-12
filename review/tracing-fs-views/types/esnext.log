@@ -1,0 +1,137 @@
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:71:17: function transformESNext: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:71:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:71:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:78:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:79:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:80:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:81:9: binding startLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:82:9: binding endLexicalEnvironment: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:85:9: variable exportBindings: IdentifierNameMap<ExportSpecifier>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:86:9: variable exportVars: VariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:87:9: variable defaultExportBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:88:9: variable exportEqualsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:92:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:92:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:97:15: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:105:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:105:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:128:14: function visitSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:128:30: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:129:15: variable usingKind: UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:174:19: variable prologueCount: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:175:19: variable topLevelStatements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:180:17: variable pos: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:182:23: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:195:19: variable envBinding: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:196:19: variable bodyStatements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:236:14: function visitBlock: (node: Block) => VisitResult<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:236:25: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:237:15: variable usingKind: UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:239:19: variable prologueCount: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:240:19: variable envBinding: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:256:14: function visitForStatement: (node: ForStatement) => VisitResult<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:256:32: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:289:14: function visitForOfStatement: (node: ForOfStatement) => Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:289:34: parameter node: ForOfStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:303:19: variable forInitializer: VariableDeclarationList & { _usingBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:304:19: variable forDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:306:19: variable isAwaitUsing: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:307:19: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:308:19: variable usingVar: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:309:19: variable usingVarList: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:310:19: variable usingVarStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:14: function transformUsingDeclarations: (statementsIn: readonly Statement[], start: number, end: number, envBinding: Identifier, topLevelStatements: Statement[] | undefined) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:41: parameter statementsIn: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:77: parameter start: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:92: parameter end: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:105: parameter envBinding: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:339:129: parameter topLevelStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:340:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:342:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:343:19: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:344:19: variable usingKind: UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:347:23: variable declarations: VariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:348:26: variable declaration: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:360:27: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:376:27: variable varList: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:384:19: variable result: VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:395:18: function hoistOrAppendNode: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:395:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:400:18: function hoist: (node: Statement) => Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:400:24: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:421:14: function hoistImportOrExportOrHoistedDeclaration: (node: Statement, topLevelStatements: Statement[]) => undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:421:54: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:421:71: parameter topLevelStatements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:427:14: function hoistExportAssignment: (node: ExportAssignment) => ExportAssignment | ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:427:36: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:431:14: function hoistExportDefault: (node: ExportAssignment) => ExportAssignment | ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:431:33: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:455:13: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:456:13: variable innerExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:462:15: variable assignment: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:466:14: function hoistExportEquals: (node: ExportAssignment) => ExportAssignment | ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:466:32: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:494:15: variable assignment: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:498:14: function hoistClassDeclaration: (node: ClassDeclaration) => ClassDeclaration | ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:498:36: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:505:15: variable isExported: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:506:15: variable isDefault: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:510:13: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:583:14: function hoistVariableStatement: (node: VariableStatement) => ExpressionStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:583:37: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:585:13: variable expressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:586:15: variable isExported: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:587:20: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:594:19: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:603:14: function hoistInitializedVariable: (node: VariableDeclaration) => AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:603:39: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:606:13: variable target: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:615:15: variable assignment: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:622:14: function hoistBindingElement: (node: BindingElement | VariableDeclaration, isExportedDeclaration: boolean, original: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:622:34: parameter node: BindingElement | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:622:78: parameter isExportedDeclaration: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:622:110: parameter original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:625:24: variable element: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:636:14: function hoistBindingIdentifier: (node: Identifier, isExport: boolean, exportAlias: string | Identifier | undefined, original: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:636:37: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:636:55: parameter isExport: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:636:74: parameter exportAlias: string | Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:636:120: parameter original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:638:15: variable name: GeneratedIdentifier | Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:641:23: variable varDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:649:19: variable localName: GeneratedIdentifier | Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:650:19: variable exportName: string | GeneratedIdentifier | Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:651:19: variable specifier: ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:660:14: function createEnvBinding: () => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:664:14: function createDownlevelUsingStatements: (bodyStatements: readonly Statement[], envBinding: Identifier, async: boolean) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:664:45: parameter bodyStatements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:664:83: parameter envBinding: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:664:107: parameter async: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:665:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:671:15: variable envObject: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:676:15: variable envVar: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:677:15: variable envVarList: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:678:15: variable envVarStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:712:15: variable tryBlock: Block
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:713:15: variable bodyCatchBinding: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:714:15: variable catchClause: CatchClause
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:732:13: variable finallyBlock: Block
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:734:19: variable result: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:758:15: variable tryStatement: TryStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:765:10: function countPrologueStatements: (statements: readonly Statement[]) => number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:765:34: parameter statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:766:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:774:10: function isUsingVariableDeclarationList: (node: Node) => node is VariableDeclarationList & { _usingBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:774:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:774:90: property _usingBrand: undefined
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:778:10: function getUsingKindOfVariableDeclarationList: (node: VariableDeclarationList) => UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:778:48: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:784:10: function getUsingKindOfVariableStatement: (node: VariableStatement) => UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:784:42: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:788:10: function getUsingKind: (statement: Statement) => UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:788:23: parameter statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:792:10: function getUsingKindOfStatements: (statements: readonly Statement[]) => UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:792:35: parameter statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:793:9: variable result: UsingKind
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:794:16: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/esnext.ts:795:15: variable usingKind: UsingKind

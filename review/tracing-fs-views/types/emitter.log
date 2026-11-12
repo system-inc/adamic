@@ -1,0 +1,1628 @@
+/workspace/tracing-measured-after/src/compiler/emitter.ts:428:7: variable brackets: string[][]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:431:17: function isBuildInfoFile: (file: string) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:431:33: parameter file: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:446:17: function forEachEmittedFile: <T>(host: EmitHost, action: (emitFileNames: EmitFileNames, sourceFileOrBundle: Bundle | SourceFile | undefined) => T, sourceFilesOrTargetSourceFile?: readonly SourceFile[] | SourceFile | undefined, forceDtsEmit?: boolean, onlyBuildInfo?: boolean | undefined, includeBuildInfo?: boolean | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:447:5: parameter host: EmitHost
+/workspace/tracing-measured-after/src/compiler/emitter.ts:448:5: parameter action: (emitFileNames: EmitFileNames, sourceFileOrBundle: Bundle | SourceFile | undefined) => T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:448:14: parameter emitFileNames: EmitFileNames
+/workspace/tracing-measured-after/src/compiler/emitter.ts:448:44: parameter sourceFileOrBundle: Bundle | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:449:5: parameter sourceFilesOrTargetSourceFile: readonly SourceFile[] | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:450:5: parameter forceDtsEmit: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:451:5: parameter onlyBuildInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:452:5: parameter includeBuildInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:454:11: variable sourceFiles: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:455:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:459:23: variable bundle: Bundle
+/workspace/tracing-measured-after/src/compiler/emitter.ts:460:23: variable result: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:467:24: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:468:23: variable result: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:476:15: variable buildInfoPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:481:17: function getTsBuildInfoEmitOutputFilePath: (options: CompilerOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:481:50: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:482:11: variable configFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:485:11: variable outPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:486:9: variable buildInfoExtensionLess: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:492:15: variable configFileExtensionLess: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:502:10: function canEmitTsBuildInfo: (options: CompilerOptions) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:502:29: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:506:10: function getOutputPathsForBundle: (options: CompilerOptions, forceDtsPaths: boolean) => EmitFileNames
+/workspace/tracing-measured-after/src/compiler/emitter.ts:506:34: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:506:60: parameter forceDtsPaths: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:507:11: variable outPath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:508:11: variable jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:509:11: variable sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:510:11: variable declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:511:11: variable declarationMapPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:516:17: function getOutputPathsFor: (sourceFile: Bundle | SourceFile, host: EmitHost, forceDtsPaths: boolean) => EmitFileNames
+/workspace/tracing-measured-after/src/compiler/emitter.ts:516:35: parameter sourceFile: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:516:68: parameter host: EmitHost
+/workspace/tracing-measured-after/src/compiler/emitter.ts:516:84: parameter forceDtsPaths: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:517:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:522:15: variable ownOutputFilePath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:523:15: variable isJsonFile: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:525:15: variable isJsonEmittedToSameLocation: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:527:15: variable jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:528:15: variable sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:529:15: variable declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:530:15: variable declarationMapPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:535:10: function getSourceMapFilePath: (jsFilePath: string, options: CompilerOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:535:31: parameter jsFilePath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:535:51: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:540:17: function getOutputExtension: (fileName: string, options: Pick<CompilerOptions, "jsx">) => Extension
+/workspace/tracing-measured-after/src/compiler/emitter.ts:540:36: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:540:54: parameter options: Pick<CompilerOptions, "jsx">
+/workspace/tracing-measured-after/src/compiler/emitter.ts:548:10: function getOutputPathWithoutChangingExt: (inputFileName: string, ignoreCase: boolean, outputDir: string | undefined, getCommonSourceDirectory: () => string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:549:5: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:550:5: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:551:5: parameter outputDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:552:5: parameter getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:563:17: function getOutputDeclarationFileName: (inputFileName: string, configFile: ParsedCommandLine, ignoreCase: boolean, getCommonSourceDirectory?: () => string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:564:5: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:565:5: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:566:5: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:567:5: parameter getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:573:17: function getOutputDeclarationFileNameWorker: (inputFileName: string, options: CompilerOptions, ignoreCase: boolean, getCommonSourceDirectory: () => string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:573:52: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:573:75: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:573:101: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:573:122: parameter getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:580:10: function getOutputJSFileName: (inputFileName: string, configFile: ParsedCommandLine, ignoreCase: boolean, getCommonSourceDirectory?: () => string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:580:30: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:580:53: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:580:84: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:580:105: parameter getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:582:11: variable isJsonFile: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:583:11: variable outputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:590:17: function getOutputJSFileNameWorker: (inputFileName: string, options: CompilerOptions, ignoreCase: boolean, getCommonSourceDirectory: () => string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:590:43: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:590:66: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:590:92: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:590:113: parameter getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:597:10: function createAddOutput: () => { addOutput: (path: string | undefined) => void; getOutputs: () => readonly string[]; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:598:9: variable outputs: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:600:14: function addOutput: (path: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:600:24: parameter path: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:605:14: function getOutputs: () => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:610:10: function getSingleOutputFileNames: (configFile: ParsedCommandLine, addOutput: (path: string | undefined) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:610:35: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:610:66: parameter addOutput: (path: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:611:13: binding jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:611:25: binding sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:611:44: binding declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:611:65: binding declarationMapPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:10: function getOwnOutputFileNames: (configFile: ParsedCommandLine, inputFileName: string, ignoreCase: boolean, addOutput: (path: string | undefined) => void, getCommonSourceDirectory?: (() => string) | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:32: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:63: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:86: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:107: parameter addOutput: (path: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:618:167: parameter getCommonSourceDirectory: (() => string) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:620:11: variable js: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:627:15: variable dts: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:636:17: function getCommonSourceDirectory: (options: CompilerOptions, emittedFiles: () => readonly string[], currentDirectory: string, getCanonicalFileName: GetCanonicalFileName, checkSourceFilesBelongToPath?: ((commonSourceDirectory: string) => void) | undefined) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:637:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:638:5: parameter emittedFiles: () => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:639:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:640:5: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:641:5: parameter checkSourceFilesBelongToPath: ((commonSourceDirectory: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:641:37: parameter commonSourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:643:9: variable commonSourceDirectory: any
+/workspace/tracing-measured-after/src/compiler/emitter.ts:668:17: function getComputedCommonSourceDirectory: (emittedFiles: readonly string[], currentDirectory: string, getCanonicalFileName: GetCanonicalFileName) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:669:5: parameter emittedFiles: readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:670:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:671:5: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:673:9: variable commonSourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:685:17: function getCommonSourceDirectoryOfConfig: ({ options, fileNames }: ParsedCommandLine, ignoreCase: boolean) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:685:52: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:685:61: binding fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:685:93: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:688:33: parameter file: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:695:17: function getAllProjectOutputs: (configFile: ParsedCommandLine, ignoreCase: boolean) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:695:38: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:695:69: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:696:13: binding addOutput: (path: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:696:24: binding getOutputs: () => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:701:15: variable getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:702:20: variable inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:710:17: function getOutputFileNames: (commandLine: ParsedCommandLine, inputFileName: string, ignoreCase: boolean) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:710:36: parameter commandLine: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:710:68: parameter inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:710:91: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:713:13: binding addOutput: (path: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:713:24: binding getOutputs: () => readonly string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:724:17: function getFirstProjectOutput: (configFile: ParsedCommandLine, ignoreCase: boolean) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:724:39: parameter configFile: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:724:70: parameter ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:726:17: binding jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:726:29: binding declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:730:11: variable getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:731:16: variable inputFileName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:733:15: variable jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:740:11: variable buildInfoPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:746:17: function emitResolverSkipsTypeChecking: (emitOnly: boolean | EmitOnly | undefined, forceDtsEmit: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:746:47: parameter emitOnly: boolean | EmitOnly | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:746:89: parameter forceDtsEmit: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:752:17: function emitFiles: (resolver: EmitResolver, host: EmitHost, targetSourceFile: SourceFile | undefined, { scriptTransformers, declarationTransformers }: EmitTransformers, emitOnly: boolean | EmitOnly | undefined, onlyBuildInfo: boolean, forceDtsEmit?: boolean | undefined, skipBuildInfo?: boolean | undefined) => EmitResult
+/workspace/tracing-measured-after/src/compiler/emitter.ts:753:5: parameter resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/emitter.ts:754:5: parameter host: EmitHost
+/workspace/tracing-measured-after/src/compiler/emitter.ts:755:5: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:756:7: binding scriptTransformers: readonly TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:756:27: binding declarationTransformers: readonly TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:757:5: parameter emitOnly: boolean | EmitOnly | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:758:5: parameter onlyBuildInfo: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:759:5: parameter forceDtsEmit: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:760:5: parameter skipBuildInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:765:9: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:766:9: variable sourceMapDataList: SourceMapEmitResult[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:767:9: variable emittedFilesList: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:768:9: variable emitterDiagnostics: DiagnosticCollection
+/workspace/tracing-measured-after/src/compiler/emitter.ts:769:9: variable newLine: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:770:9: variable writer: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:771:11: binding enter: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:771:18: binding exit: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:772:9: variable emitSkipped: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:14: function emitSourceFileOrBundle: ({ jsFilePath, sourceMapFilePath, declarationFilePath, declarationMapPath, buildInfoPath }: EmitFileNames, sourceFileOrBundle: Bundle | SourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:39: binding jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:51: binding sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:70: binding declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:91: binding declarationMapPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:111: binding buildInfoPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:794:143: parameter sourceFileOrBundle: Bundle | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:808:14: function emitBuildInfo: (buildInfoPath: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:808:28: parameter buildInfoPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:815:15: variable buildInfo: BuildInfo
+/workspace/tracing-measured-after/src/compiler/emitter.ts:821:14: function emitJsFileOrBundle: (sourceFileOrBundle: Bundle | SourceFile | undefined, jsFilePath: string | undefined, sourceMapFilePath: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:822:9: parameter sourceFileOrBundle: Bundle | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:823:9: parameter jsFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:824:9: parameter sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:837:13: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:846:15: variable transform: TransformationResult<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:848:15: variable printerOptions: PrinterOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:862:15: variable printer: Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:886:14: function emitDeclarationFileOrBundle: (sourceFileOrBundle: Bundle | SourceFile | undefined, declarationFilePath: string | undefined, declarationMapPath: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:887:9: parameter sourceFileOrBundle: Bundle | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:888:9: parameter declarationFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:889:9: parameter declarationMapPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:896:15: variable sourceFiles: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:897:15: variable filesForEmit: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:899:15: variable inputListOrBundle: Bundle[] | readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:902:30: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:913:15: variable declarationTransform: TransformationResult<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:915:24: variable diagnostic: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/emitter.ts:920:15: variable declBlocked: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:924:19: variable printerOptions: PrinterOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:938:19: variable declarationPrinter: Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:947:19: variable dtsWritten: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:970:14: function collectLinkedAliases: (node: Node) => undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:970:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:984:14: function markLinkedReferences: (file: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:984:35: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:986:42: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:14: function printSourceFileOrBundle: (jsFilePath: string, sourceMapFilePath: string | undefined, transform: TransformationResult<Bundle | SourceFile>, printer: Printer, mapOptions: SourceMapOptions) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:38: parameter jsFilePath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:58: parameter sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:97: parameter transform: TransformationResult<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:151: parameter printer: Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:993:169: parameter mapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:994:15: variable sourceFileOrBundle: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:995:15: variable bundle: Bundle | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:996:15: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:997:15: variable sourceFiles: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:999:13: variable sourceMapGenerator: SourceMapGenerator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1017:13: variable sourceMapUrlPos: any
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1026:19: variable sourceMappingURL: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1042:23: variable sourceMap: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1051:15: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1052:15: variable data: WriteFileCallbackData
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1060:15: interface SourceMapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1061:9: property sourceMap: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1062:9: property inlineSourceMap: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1063:9: property inlineSources: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1064:9: property sourceRoot: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1065:9: property mapRoot: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1066:9: property extendedDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1069:14: function shouldEmitSourceMaps: (mapOptions: SourceMapOptions, sourceFileOrBundle: Bundle | SourceFile) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1069:35: parameter mapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1069:65: parameter sourceFileOrBundle: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1074:14: function getSourceRoot: (mapOptions: SourceMapOptions) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1074:28: parameter mapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1077:15: variable sourceRoot: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1081:14: function getSourceMapDirectory: (mapOptions: SourceMapOptions, filePath: string, sourceFile: SourceFile | undefined) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1081:36: parameter mapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1081:66: parameter filePath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1081:84: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1084:17: variable sourceMapDir: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:14: function getSourceMappingURL: (mapOptions: SourceMapOptions, sourceMapGenerator: SourceMapGenerator, filePath: string, sourceMapFilePath: string | undefined, sourceFile: SourceFile | undefined) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:34: parameter mapOptions: SourceMapOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:64: parameter sourceMapGenerator: SourceMapGenerator
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:104: parameter filePath: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:122: parameter sourceMapFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1099:161: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1102:19: variable sourceMapText: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1103:19: variable base64SourceMapText: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1107:15: variable sourceMapFile: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1109:17: variable sourceMapDir: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1137:17: function getBuildInfoText: (buildInfo: BuildInfo) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1137:34: parameter buildInfo: BuildInfo
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1142:17: function getBuildInfo: (buildInfoFile: string, buildInfoText: string) => BuildInfo | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1142:30: parameter buildInfoFile: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1142:53: parameter buildInfoText: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1147:14: variable notImplementedResolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1158:19: parameter _node: Declaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1200:14: variable createPrinterWithDefaults: () => Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1203:14: variable createPrinterWithRemoveComments: () => Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1206:14: variable createPrinterWithRemoveCommentsNeverAsciiEscape: () => Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1209:14: variable createPrinterWithRemoveCommentsOmitTrailingSemicolon: () => Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1211:17: function createPrinter: (printerOptions?: PrinterOptions, handlers?: PrintHandlers) => Printer
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1211:31: parameter printerOptions: PrinterOptions
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1211:68: parameter handlers: PrintHandlers
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1216:9: binding hasGlobalName: ((name: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1217:9: binding onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1218:9: binding isEmitNotificationEnabled: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1219:9: binding substituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1220:9: binding onBeforeEmitNode: ((node: Node | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1221:9: binding onAfterEmitNode: ((node: Node | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1222:9: binding onBeforeEmitNodeArray: ((nodes: NodeArray<Node> | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1223:9: binding onAfterEmitNodeArray: ((nodes: NodeArray<Node> | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1224:9: binding onBeforeEmitToken: ((node: Node) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1225:9: binding onAfterEmitToken: ((node: Node) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1228:9: variable extendedDiagnostics: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1229:9: variable omitBraceSourcePositions: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1230:9: variable newLine: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1231:9: variable moduleKind: ModuleKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1232:9: variable bundledHelpers: Map<string, boolean>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1234:9: variable currentSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1235:9: variable nodeIdToGeneratedName: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1236:9: variable nodeIdToGeneratedPrivateName: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1237:9: variable autoGeneratedIdToGeneratedName: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1238:9: variable generatedNames: Set<string>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1239:9: variable formattedNameTempFlagsStack: (Map<string, TempFlags> | undefined)[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1240:9: variable formattedNameTempFlags: Map<string, TempFlags> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1241:9: variable privateNameTempFlagsStack: TempFlags[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1242:9: variable privateNameTempFlags: TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1243:9: variable tempFlagsStack: TempFlags[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1244:9: variable tempFlags: TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1245:9: variable reservedNamesStack: (Set<string> | undefined)[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1246:9: variable reservedNames: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1247:9: variable reservedPrivateNamesStack: (Set<string> | undefined)[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1248:9: variable reservedPrivateNames: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1249:9: variable preserveSourceNewlines: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1250:9: variable nextListElementPos: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1252:9: variable writer: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1253:9: variable ownWriter: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1254:9: variable write: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1255:9: variable isOwnFileEmit: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1258:9: variable sourceMapsDisabled: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1259:9: variable sourceMapGenerator: SourceMapGenerator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1260:9: variable sourceMapSource: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1261:9: variable sourceMapSourceIndex: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1262:9: variable mostRecentlyAddedSourceMapSource: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1263:9: variable mostRecentlyAddedSourceMapSourceIndex: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1266:9: variable containerPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1267:9: variable containerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1268:9: variable declarationListContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1269:9: variable currentLineMap: readonly number[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1270:9: variable detachedCommentsInfo: { nodePos: number; detachedCommentEndPos: number; }[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1270:33: property nodePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1270:50: property detachedCommentEndPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1271:9: variable hasWrittenComment: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1272:9: variable commentsDisabled: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1273:9: variable lastSubstitution: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1274:9: variable currentParenthesizerRule: ParenthesizerRule<any> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1275:18: binding enterComment: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1275:38: binding exitComment: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1276:9: variable parenthesizer: ParenthesizerRules
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1277:9: variable typeArgumentParenthesizerRuleSelector: OrdinalParentheizerRuleSelector<TypeNode>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1278:17: parameter index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1280:9: variable emitBinaryExpression: (node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1298:14: function printNode: (hint: EmitHint, node: Node, sourceFile: SourceFile) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1298:24: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1298:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1298:52: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1320:14: function printList: <T extends Node>(format: ListFormat, nodes: NodeArray<T>, sourceFile: SourceFile) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1320:40: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1320:60: parameter nodes: NodeArray<T>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1320:81: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1325:14: function printBundle: (bundle: Bundle) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1325:26: parameter bundle: Bundle
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1330:14: function printFile: (sourceFile: SourceFile) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1330:24: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1338:14: function writeNode: { (hint: EmitHint, node: TypeNode, sourceFile: undefined, output: EmitTextWriter): void; (hint: EmitHint, node: Node, sourceFile: SourceFile, output: EmitTextWriter): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1338:24: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1338:40: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1338:56: parameter sourceFile: undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1338:79: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1339:14: function writeNode: { (hint: EmitHint, node: TypeNode, sourceFile: undefined, output: EmitTextWriter): void; (hint: EmitHint, node: Node, sourceFile: SourceFile, output: EmitTextWriter): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1339:24: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1339:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1339:52: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1339:76: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1340:14: function writeNode: { (hint: EmitHint, node: TypeNode, sourceFile: undefined, output: EmitTextWriter): void; (hint: EmitHint, node: Node, sourceFile: SourceFile, output: EmitTextWriter): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1340:24: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1340:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1340:52: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1340:88: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1341:15: variable previousWriter: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1348:14: function writeList: <T extends Node>(format: ListFormat, nodes: NodeArray<T>, sourceFile: SourceFile | undefined, output: EmitTextWriter) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1348:40: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1348:60: parameter nodes: NodeArray<T>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1348:81: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1348:117: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1349:15: variable previousWriter: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1359:14: function writeBundle: (bundle: Bundle, output: EmitTextWriter, sourceMapGenerator: SourceMapGenerator | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1359:26: parameter bundle: Bundle
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1359:42: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1359:66: parameter sourceMapGenerator: SourceMapGenerator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1361:15: variable previousWriter: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1367:20: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1374:14: function writeFile: (sourceFile: SourceFile, output: EmitTextWriter, sourceMapGenerator: SourceMapGenerator | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1374:24: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1374:48: parameter output: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1374:72: parameter sourceMapGenerator: SourceMapGenerator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1376:15: variable previousWriter: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1385:14: function beginPrint: () => EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1389:14: function endPrint: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1390:15: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1395:14: function print: (hint: EmitHint, node: Node, sourceFile: SourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1395:20: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1395:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1395:48: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1403:14: function setSourceFile: (sourceFile: SourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1403:28: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1412:14: function setWriter: (_writer: EmitTextWriter | undefined, _sourceMapGenerator: SourceMapGenerator | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1412:24: parameter _writer: EmitTextWriter | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1412:61: parameter _sourceMapGenerator: SourceMapGenerator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1422:14: function reset: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1443:14: function getCurrentLineMap: () => readonly number[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1447:14: function emit: { <T extends Node>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Node>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1447:35: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1447:44: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1447:65: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1448:14: function emit: { <T extends Node>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Node>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1448:35: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1448:56: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1448:77: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1449:14: function emit: { <T extends Node>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Node>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1449:35: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1449:56: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1449:77: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1454:14: function emitIdentifierName: { (node: Identifier): void; (node: Identifier | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1454:33: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1455:14: function emitIdentifierName: { (node: Identifier): void; (node: Identifier | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1455:33: parameter node: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1456:14: function emitIdentifierName: { (node: Identifier): void; (node: Identifier | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1456:33: parameter node: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1461:14: function emitExpression: { <T extends Expression>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Expression>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1461:51: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1461:60: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1461:81: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1462:14: function emitExpression: { <T extends Expression>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Expression>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1462:51: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1462:72: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1462:93: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1463:14: function emitExpression: { <T extends Expression>(node: T, parenthesizerRule?: ((node: T) => T) | undefined): void; <T extends Expression>(node: T | undefined, parenthesizerRule?: ((node: T) => T) | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1463:51: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1463:72: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1463:93: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1468:14: function emitJsxAttributeValue: (node: JsxAttributeValue) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1468:36: parameter node: JsxAttributeValue
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1472:14: function beforeEmitNode: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1472:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1478:14: function afterEmitNode: (savedPreserveSourceNewlines: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1478:28: parameter savedPreserveSourceNewlines: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1482:14: function pipelineEmit: <T extends Node>(emitHint: EmitHint, node: T, parenthesizerRule?: ((node: T) => T) | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1482:43: parameter emitHint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1482:63: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1482:72: parameter parenthesizerRule: ((node: T) => T) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1482:93: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1484:15: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1489:14: function shouldEmitComments: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1489:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1493:14: function shouldEmitSourceMaps: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1493:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1499:14: function getPipelinePhase: (phase: PipelinePhase, emitHint: EmitHint, node: Node) => (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1499:31: parameter phase: PipelinePhase
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1499:53: parameter emitHint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1499:73: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1531:14: function getNextPipelinePhase: (currentPhase: PipelinePhase, emitHint: EmitHint, node: Node) => (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1531:35: parameter currentPhase: PipelinePhase
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1531:64: parameter emitHint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1531:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1535:14: function pipelineEmitWithNotification: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1535:43: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1535:59: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1536:15: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1540:14: function pipelineEmitWithHint: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1540:35: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1540:51: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1543:19: variable savedPreserveSourceNewlines: true
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1556:14: function pipelineEmitWithHintWorker: (hint: EmitHint, node: Node, allowSnippets?: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1556:41: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1556:57: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1556:69: parameter allowSnippets: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1558:19: variable snippet: SnippetElement | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:1912:27: variable substitute: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2032:14: function emitMappedTypeParameter: (node: TypeParameterDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2032:38: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2040:14: function pipelineEmitWithSubstitution: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2040:43: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2040:59: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2041:15: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2048:14: function emitHelpers: (node: Node) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2048:26: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2049:13: variable helpersEmitted: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2050:15: variable bundle: Bundle | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2054:15: variable numNodes: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2055:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2056:19: variable currentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2057:19: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2058:19: variable shouldSkip: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2059:19: variable shouldBundle: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2060:19: variable helpers: SortedReadonlyArray<EmitHelper> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2062:28: variable helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2097:14: function getSortedEmitHelpers: (node: Node) => SortedReadonlyArray<EmitHelper> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2097:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2098:15: variable helpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2108:14: function emitNumericOrBigIntLiteral: (node: BigIntLiteral | NumericLiteral) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2108:41: parameter node: BigIntLiteral | NumericLiteral
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2118:14: function emitLiteral: (node: LiteralLikeNode, jsxAttributeEscape: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2118:26: parameter node: LiteralLikeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2118:49: parameter jsxAttributeEscape: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2119:15: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2136:14: function emitSnippetNode: (hint: EmitHint, node: Node, snippet: SnippetElement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2136:30: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2136:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2136:58: parameter snippet: SnippetElement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2147:14: function emitPlaceholder: (hint: EmitHint, node: Node, snippet: Placeholder) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2147:30: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2147:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2147:58: parameter snippet: Placeholder
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2154:14: function emitTabStop: (hint: EmitHint, node: Node, snippet: TabStop) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2154:26: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2154:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2154:54: parameter snippet: TabStop
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2165:14: function emitIdentifier: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2165:29: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2166:15: variable writeText: (s: string, sym: Symbol) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2175:14: function emitPrivateIdentifier: (node: PrivateIdentifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2175:36: parameter node: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2179:14: function emitQualifiedName: (node: QualifiedName) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2179:32: parameter node: QualifiedName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2185:14: function emitEntityName: (node: EntityName) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2185:29: parameter node: EntityName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2194:14: function emitComputedPropertyName: (node: ComputedPropertyName) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2194:39: parameter node: ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2204:14: function emitTypeParameter: (node: TypeParameterDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2204:32: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2221:14: function emitParameter: (node: ParameterDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2221:28: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2236:14: function emitDecorator: (decorator: Decorator) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2236:28: parameter decorator: Decorator
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2245:14: function emitPropertySignature: (node: PropertySignature) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2245:36: parameter node: PropertySignature
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2253:14: function emitPropertyDeclaration: (node: PropertyDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2253:38: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2263:14: function emitMethodSignature: (node: MethodSignature) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2263:34: parameter node: MethodSignature
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2270:14: function emitMethodDeclaration: (node: MethodDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2270:36: parameter node: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2278:14: function emitClassStaticBlockDeclaration: (node: ClassStaticBlockDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2278:46: parameter node: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2285:14: function emitConstructor: (node: ConstructorDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2285:30: parameter node: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2291:14: function emitAccessorDeclaration: (node: AccessorDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2291:38: parameter node: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2292:15: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2293:15: variable token: SyntaxKind.GetKeyword | SyntaxKind.SetKeyword
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2300:14: function emitCallSignature: (node: CallSignatureDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2300:32: parameter node: CallSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2304:14: function emitConstructSignature: (node: ConstructSignatureDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2304:37: parameter node: ConstructSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2310:14: function emitIndexSignature: (node: IndexSignatureDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2310:33: parameter node: IndexSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2317:14: function emitTemplateTypeSpan: (node: TemplateLiteralTypeSpan) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2317:35: parameter node: TemplateLiteralTypeSpan
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2322:14: function emitSemicolonClassElement: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2330:14: function emitTypePredicate: (node: TypePredicateNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2330:32: parameter node: TypePredicateNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2344:14: function emitTypeReference: (node: TypeReferenceNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2344:32: parameter node: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2349:14: function emitFunctionType: (node: FunctionTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2349:31: parameter node: FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2353:14: function emitFunctionTypeHead: (node: ConstructorTypeNode | FunctionTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2353:35: parameter node: ConstructorTypeNode | FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2360:14: function emitFunctionTypeBody: (node: ConstructorTypeNode | FunctionTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2360:35: parameter node: ConstructorTypeNode | FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2365:14: function emitJSDocFunctionType: (node: JSDocFunctionType) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2365:36: parameter node: JSDocFunctionType
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2372:14: function emitJSDocNullableType: (node: JSDocNullableType) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2372:36: parameter node: JSDocNullableType
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2377:14: function emitJSDocNonNullableType: (node: JSDocNonNullableType) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2377:39: parameter node: JSDocNonNullableType
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2382:14: function emitJSDocOptionalType: (node: JSDocOptionalType) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2382:36: parameter node: JSDocOptionalType
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2387:14: function emitConstructorType: (node: ConstructorTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2387:34: parameter node: ConstructorTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2394:14: function emitTypeQuery: (node: TypeQueryNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2394:28: parameter node: TypeQueryNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2401:14: function emitTypeLiteral: (node: TypeLiteralNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2401:30: parameter node: TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2406:15: variable flags: ListFormat.SingleLineTypeLiteralMembers | ListFormat.MultiLineTypeLiteralMembers
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2413:14: function emitArrayType: (node: ArrayTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2413:28: parameter node: ArrayTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2419:14: function emitRestOrJSDocVariadicType: (node: JSDocVariadicType | RestTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2419:42: parameter node: JSDocVariadicType | RestTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2424:14: function emitTupleType: (node: TupleTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2424:28: parameter node: TupleTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2426:15: variable flags: ListFormat.SingleLineTupleTypeElements | ListFormat.MultiLineTupleTypeElements
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2431:14: function emitNamedTupleMember: (node: NamedTupleMember) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2431:35: parameter node: NamedTupleMember
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2440:14: function emitOptionalType: (node: OptionalTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2440:31: parameter node: OptionalTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2445:14: function emitUnionType: (node: UnionTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2445:28: parameter node: UnionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2449:14: function emitIntersectionType: (node: IntersectionTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2449:35: parameter node: IntersectionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2453:14: function emitConditionalType: (node: ConditionalTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2453:34: parameter node: ConditionalTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2469:14: function emitInferType: (node: InferTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2469:28: parameter node: InferTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2475:14: function emitParenthesizedType: (node: ParenthesizedTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2475:36: parameter node: ParenthesizedTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2481:14: function emitThisType: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2485:14: function emitTypeOperator: (node: TypeOperatorNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2485:31: parameter node: TypeOperatorNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2489:15: variable parenthesizerRule: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2495:14: function emitIndexedAccessType: (node: IndexedAccessTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2495:36: parameter node: IndexedAccessTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2502:14: function emitMappedType: (node: MappedTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2502:29: parameter node: MappedTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2503:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2551:14: function emitLiteralType: (node: LiteralTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2551:30: parameter node: LiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2555:14: function emitTemplateType: (node: TemplateLiteralTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2555:31: parameter node: TemplateLiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2560:14: function emitImportTypeNode: (node: ImportTypeNode) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2560:33: parameter node: ImportTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2585:14: function emitObjectBindingPattern: (node: ObjectBindingPattern) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2585:39: parameter node: ObjectBindingPattern
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2591:14: function emitArrayBindingPattern: (node: ArrayBindingPattern) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2591:38: parameter node: ArrayBindingPattern
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2597:14: function emitBindingElement: (node: BindingElement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2597:33: parameter node: BindingElement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2612:14: function emitArrayLiteralExpression: (node: ArrayLiteralExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2612:41: parameter node: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2613:15: variable elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2614:15: variable preferNewLine: ListFormat.None | ListFormat.PreferNewLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2618:14: function emitObjectLiteralExpression: (node: ObjectLiteralExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2618:42: parameter node: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2622:15: variable indentedFlag: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2627:15: variable preferNewLine: ListFormat.None | ListFormat.PreferNewLine
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2628:15: variable allowTrailingComma: ListFormat.None | ListFormat.AllowTrailingComma
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2638:14: function emitPropertyAccessExpression: (node: PropertyAccessExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2638:43: parameter node: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2640:15: variable token: DotToken | QuestionDotToken
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2641:15: variable linesBeforeDot: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2642:15: variable linesAfterDot: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2646:15: variable shouldEmitDotDot: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2668:14: function mayNeedDotDotForPropertyAccess: (expression: Expression) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2668:45: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2672:19: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2682:19: variable constantValue: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2689:14: function emitElementAccessExpression: (node: ElementAccessExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2689:42: parameter node: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2697:14: function emitCallExpression: (node: CallExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2697:33: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2698:15: variable indirectCall: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2714:14: function emitNewExpression: (node: NewExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2714:32: parameter node: NewExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2722:14: function emitTaggedTemplateExpression: (node: TaggedTemplateExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2722:43: parameter node: TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2723:15: variable indirectCall: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2739:14: function emitTypeAssertionExpression: (node: TypeAssertion) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2739:42: parameter node: TypeAssertion
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2746:14: function emitParenthesizedExpression: (node: ParenthesizedExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2746:42: parameter node: ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2747:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2748:15: variable indented: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2755:14: function emitFunctionExpression: (node: FunctionExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2755:37: parameter node: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2760:14: function emitArrowFunction: (node: ArrowFunction) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2760:32: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2765:14: function emitArrowFunctionHead: (node: ArrowFunction) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2765:36: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2773:14: function emitArrowFunctionBody: (node: ArrowFunction) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2773:36: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2783:14: function emitDeleteExpression: (node: DeleteExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2783:35: parameter node: DeleteExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2789:14: function emitTypeOfExpression: (node: TypeOfExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2789:35: parameter node: TypeOfExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2795:14: function emitVoidExpression: (node: VoidExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2795:33: parameter node: VoidExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2801:14: function emitAwaitExpression: (node: AwaitExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2801:34: parameter node: AwaitExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2807:14: function emitPrefixUnaryExpression: (node: PrefixUnaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2807:40: parameter node: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2815:14: function shouldEmitWhitespaceBeforeOperand: (node: PrefixUnaryExpression) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2815:48: parameter node: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2828:15: variable operand: UnaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2834:14: function emitPostfixUnaryExpression: (node: PostfixUnaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2834:41: parameter node: PostfixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2839:14: function createEmitBinaryExpression: () => (node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2840:19: interface WorkArea: WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2841:13: property stackIndex: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2842:13: property preserveSourceNewlinesStack: (boolean | undefined)[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2843:13: property containerPosStack: number[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2844:13: property containerEndStack: number[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2845:13: property declarationListContainerEndStack: number[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2846:13: property shouldEmitCommentsStack: boolean[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2847:13: property shouldEmitSourceMapsStack: boolean[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2852:18: function onEnter: (node: BinaryExpression, state: WorkArea | undefined) => WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2852:26: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2852:50: parameter state: WorkArea | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2859:23: variable emitComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2860:23: variable emitSourceMaps: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2880:18: function onLeft: (next: Expression, _workArea: WorkArea, parent: BinaryExpression) => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2880:25: parameter next: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2880:43: parameter _workArea: WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2880:64: parameter parent: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2884:18: function onOperator: (operatorToken: BinaryOperatorToken, _state: WorkArea, node: BinaryExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2884:29: parameter operatorToken: BinaryOperatorToken
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2884:65: parameter _state: WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2884:83: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2885:19: variable isCommaOperator: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2886:19: variable linesBeforeOperator: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2887:19: variable linesAfterOperator: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2895:18: function onRight: (next: Expression, _workArea: WorkArea, parent: BinaryExpression) => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2895:26: parameter next: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2895:44: parameter _workArea: WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2895:65: parameter parent: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2899:18: function onExit: (node: BinaryExpression, state: WorkArea) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2899:25: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2899:49: parameter state: WorkArea
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2900:19: variable linesBeforeOperator: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2901:19: variable linesAfterOperator: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2904:23: variable savedPreserveSourceNewlines: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2905:23: variable savedContainerPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2906:23: variable savedContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2907:23: variable savedDeclarationListContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2908:23: variable shouldEmitComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2909:23: variable shouldEmitSourceMaps: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2918:18: function maybeEmitExpression: (next: Expression, parent: BinaryExpression, side: "left" | "right") => BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2918:38: parameter next: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2918:56: parameter parent: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2918:82: parameter side: "left" | "right"
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2919:19: variable parenthesizerRule: (leftSide: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2923:17: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2946:14: function emitConditionalExpression: (node: ConditionalExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2946:40: parameter node: ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2947:15: variable linesBeforeQuestion: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2948:15: variable linesAfterQuestion: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2949:15: variable linesBeforeColon: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2950:15: variable linesAfterColon: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2966:14: function emitTemplateExpression: (node: TemplateExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2966:37: parameter node: TemplateExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2971:14: function emitYieldExpression: (node: YieldExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2971:34: parameter node: YieldExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2977:14: function emitSpreadElement: (node: SpreadElement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2977:32: parameter node: SpreadElement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2982:14: function emitClassExpression: (node: ClassExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2982:34: parameter node: ClassExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2987:14: function emitExpressionWithTypeArguments: (node: ExpressionWithTypeArguments) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2987:46: parameter node: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2992:14: function emitAsExpression: (node: AsExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:2992:31: parameter node: AsExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3002:14: function emitNonNullExpression: (node: NonNullExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3002:36: parameter node: NonNullExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3007:14: function emitSatisfiesExpression: (node: SatisfiesExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3007:38: parameter node: SatisfiesExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3017:14: function emitMetaProperty: (node: MetaProperty) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3017:31: parameter node: MetaProperty
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3027:14: function emitTemplateSpan: (node: TemplateSpan) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3027:31: parameter node: TemplateSpan
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3036:14: function emitBlock: (node: Block) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3036:24: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3040:14: function emitBlockStatements: (node: BlockLike, forceSingleLine: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3040:34: parameter node: BlockLike
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3040:51: parameter forceSingleLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3042:15: variable format: ListFormat.SingleLineTypeLiteralMembers | ListFormat.MultiLineBlockStatements
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3047:14: function emitVariableStatement: (node: VariableStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3047:36: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3053:14: function emitEmptyStatement: (isEmbeddedStatement: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3053:33: parameter isEmbeddedStatement: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3064:14: function emitExpressionStatement: (node: ExpressionStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3064:38: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3073:14: function emitIfStatement: (node: IfStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3073:30: parameter node: IfStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3074:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3093:14: function emitWhileClause: (node: DoStatement | WhileStatement, startPos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3093:30: parameter node: DoStatement | WhileStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3093:66: parameter startPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3094:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3101:14: function emitDoStatement: (node: DoStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3101:30: parameter node: DoStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3115:14: function emitWhileStatement: (node: WhileStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3115:33: parameter node: WhileStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3120:14: function emitForStatement: (node: ForStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3120:31: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3121:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3123:13: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3133:14: function emitForInStatement: (node: ForInStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3133:33: parameter node: ForInStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3134:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3146:14: function emitForOfStatement: (node: ForOfStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3146:33: parameter node: ForOfStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3147:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3160:14: function emitForBinding: (node: Expression | VariableDeclarationList | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3160:29: parameter node: Expression | VariableDeclarationList | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3171:14: function emitContinueStatement: (node: ContinueStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3171:36: parameter node: ContinueStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3177:14: function emitBreakStatement: (node: BreakStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3177:33: parameter node: BreakStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:14: function emitTokenWithComment: (token: SyntaxKind, pos: number, writer: (s: string) => void, contextNode: Node, indentLeading?: boolean | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:35: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:54: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:67: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:76: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:96: parameter contextNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3183:115: parameter indentLeading: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3184:15: variable node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3185:15: variable isSimilarNode: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3186:15: variable startPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3191:19: variable needsIndent: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3213:19: variable isJsxExprContext: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3219:14: function commentWillEmitNewLine: (node: CommentRange) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3219:37: parameter node: CommentRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3223:14: function willEmitLeadingNewLine: (node: Expression) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3223:37: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3225:15: variable leadingCommentRanges: CommentRange[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3227:19: variable parseNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3247:14: function parenthesizeExpressionForNoAsi: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3247:45: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3252:31: variable parseNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3255:35: variable parens: ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3335:14: function parenthesizeExpressionForNoAsiAndDisallowedComma: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3335:63: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3339:14: function emitReturnStatement: (node: ReturnStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3339:34: parameter node: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3345:14: function emitWithStatement: (node: WithStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3345:32: parameter node: WithStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3346:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3354:14: function emitSwitchStatement: (node: SwitchStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3354:34: parameter node: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3355:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3364:14: function emitLabeledStatement: (node: LabeledStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3364:35: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3371:14: function emitThrowStatement: (node: ThrowStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3371:33: parameter node: ThrowStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3377:14: function emitTryStatement: (node: TryStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3377:31: parameter node: TryStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3393:14: function emitDebuggerStatement: (node: DebuggerStatement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3393:36: parameter node: DebuggerStatement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3402:14: function emitVariableDeclaration: (node: VariableDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3402:38: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3409:14: function emitVariableDeclarationList: (node: VariableDeclarationList) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3409:42: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3416:19: variable head: "const" | "let" | "using" | "var"
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3426:14: function emitFunctionDeclaration: (node: FunctionDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3426:38: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3430:14: function emitFunctionDeclarationOrExpression: (node: FunctionDeclaration | FunctionExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3430:50: parameter node: FunctionDeclaration | FunctionExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:14: function emitSignatureAndBody: <T extends SignatureDeclaration>(node: T, emitSignatureHead: (node: T) => void, emitBody: (node: T) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:67: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:76: parameter emitSignatureHead: (node: T) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:96: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:114: parameter emitBody: (node: T) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3439:125: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3440:15: variable indentedFlag: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3456:14: function emitFunctionBody: <T extends Exclude<FunctionLikeDeclaration, ArrowFunction>>(node: T) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3456:90: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3457:15: variable body: Block | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3466:14: function emitEmptyFunctionBody: (_node: SignatureDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3466:36: parameter _node: SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3470:14: function emitSignatureHead: (node: SignatureDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3470:32: parameter node: SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3476:14: function shouldEmitBlockFunctionBodyOnSingleLine: (body: Block) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3476:54: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3504:13: variable previousStatement: Statement | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3505:20: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3516:14: function emitBlockFunctionBody: (body: Block) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3516:36: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3523:15: variable emitBlockFunctionBody: (body: Block, emitBlockFunctionBodyOnSingleLine?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3534:14: function emitBlockFunctionBodyOnSingleLine: (body: Block) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3534:48: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3538:14: function emitBlockFunctionBodyWorker: (body: Block, emitBlockFunctionBodyOnSingleLine?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3538:42: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3538:55: parameter emitBlockFunctionBodyOnSingleLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3540:15: variable statementOffset: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3541:15: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3553:14: function emitClassDeclaration: (node: ClassDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3553:35: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3557:14: function emitClassDeclarationOrExpression: (node: ClassDeclaration | ClassExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3557:47: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3565:15: variable indentedFlag: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3587:14: function emitInterfaceDeclaration: (node: InterfaceDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3587:39: parameter node: InterfaceDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3605:14: function emitTypeAliasDeclaration: (node: TypeAliasDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3605:39: parameter node: TypeAliasDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3618:14: function emitEnumDeclaration: (node: EnumDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3618:34: parameter node: EnumDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3630:14: function emitModuleDeclaration: (node: ModuleDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3630:36: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3638:13: variable body: ModuleBody | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3650:14: function emitModuleBlock: (node: ModuleBlock) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3650:30: parameter node: ModuleBlock
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3657:14: function emitCaseBlock: (node: CaseBlock) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3657:28: parameter node: CaseBlock
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3663:14: function emitImportEqualsDeclaration: (node: ImportEqualsDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3663:42: parameter node: ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3679:14: function emitModuleReference: (node: ModuleReference) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3679:34: parameter node: ModuleReference
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3688:14: function emitImportDeclaration: (node: ImportDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3688:36: parameter node: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3705:14: function emitImportClause: (node: ImportClause) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3705:31: parameter node: ImportClause
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3718:14: function emitNamespaceImport: (node: NamespaceImport) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3718:34: parameter node: NamespaceImport
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3719:15: variable asPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3726:14: function emitNamedImports: (node: NamedImports) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3726:31: parameter node: NamedImports
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3730:14: function emitImportSpecifier: (node: ImportSpecifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3730:34: parameter node: ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3734:14: function emitExportAssignment: (node: ExportAssignment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3734:35: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3735:15: variable nextPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3753:14: function emitExportDeclaration: (node: ExportDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3753:36: parameter node: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3755:13: variable nextPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3769:19: variable fromPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3780:14: function emitImportTypeNodeAttributes: (node: ImportAttributes) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3780:43: parameter node: ImportAttributes
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3786:15: variable elements: NodeArray<ImportAttribute>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3792:14: function emitImportAttributes: (node: ImportAttributes) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3792:35: parameter node: ImportAttributes
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3795:15: variable elements: NodeArray<ImportAttribute>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3799:14: function emitImportAttribute: (node: ImportAttribute) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3799:34: parameter node: ImportAttribute
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3804:15: variable value: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3807:19: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3813:14: function emitNamespaceExportDeclaration: (node: NamespaceExportDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3813:45: parameter node: NamespaceExportDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3814:13: variable nextPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3825:14: function emitNamespaceExport: (node: NamespaceExport) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3825:34: parameter node: NamespaceExport
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3826:15: variable asPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3833:14: function emitNamedExports: (node: NamedExports) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3833:31: parameter node: NamedExports
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3837:14: function emitExportSpecifier: (node: ExportSpecifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3837:34: parameter node: ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3841:14: function emitNamedImportsOrExports: (node: NamedImportsOrExports) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3841:40: parameter node: NamedImportsOrExports
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3847:14: function emitImportOrExportSpecifier: (node: ImportOrExportSpecifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3847:42: parameter node: ImportOrExportSpecifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3866:14: function emitExternalModuleReference: (node: ExternalModuleReference) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3866:42: parameter node: ExternalModuleReference
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3877:14: function emitJsxElement: (node: JsxElement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3877:29: parameter node: JsxElement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3883:14: function emitJsxSelfClosingElement: (node: JsxSelfClosingElement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3883:40: parameter node: JsxSelfClosingElement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3892:14: function emitJsxFragment: (node: JsxFragment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3892:30: parameter node: JsxFragment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3898:14: function emitJsxOpeningElementOrFragment: (node: JsxOpeningElement | JsxOpeningFragment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3898:46: parameter node: JsxOpeningElement | JsxOpeningFragment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3902:19: variable indented: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3916:14: function emitJsxText: (node: JsxText) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3916:26: parameter node: JsxText
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3920:14: function emitJsxClosingElementOrFragment: (node: JsxClosingElement | JsxClosingFragment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3920:46: parameter node: JsxClosingElement | JsxClosingFragment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3928:14: function emitJsxAttributes: (node: JsxAttributes) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3928:32: parameter node: JsxAttributes
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3932:14: function emitJsxAttribute: (node: JsxAttribute) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3932:31: parameter node: JsxAttribute
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3937:14: function emitJsxSpreadAttribute: (node: JsxSpreadAttribute) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3937:37: parameter node: JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3943:14: function hasTrailingCommentsAtPosition: (pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3943:44: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3944:13: variable result: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3949:14: function hasLeadingCommentsAtPosition: (pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3949:43: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3950:13: variable result: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3955:14: function hasCommentsAtPosition: (pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3955:36: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3959:14: function emitJsxExpression: (node: JsxExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3959:32: parameter node: JsxExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3961:19: variable isMultiline: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3965:19: variable end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3975:14: function emitJsxNamespacedName: (node: JsxNamespacedName) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3975:36: parameter node: JsxNamespacedName
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3981:14: function emitJsxTagName: (node: JsxTagNameExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3981:29: parameter node: JsxTagNameExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3994:14: function emitCaseClause: (node: CaseClause) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:3994:29: parameter node: CaseClause
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4002:14: function emitDefaultClause: (node: DefaultClause) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4002:32: parameter node: DefaultClause
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4003:15: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4007:14: function emitCaseOrDefaultClauseRest: (parentNode: Node, statements: NodeArray<Statement>, colonPos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4007:42: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4007:60: parameter statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4007:94: parameter colonPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4008:15: variable emitAsSingleStatement: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4017:13: variable format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4029:14: function emitHeritageClause: (node: HeritageClause) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4029:33: parameter node: HeritageClause
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4036:14: function emitCatchClause: (node: CatchClause) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4036:30: parameter node: CatchClause
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4037:15: variable openParenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4052:14: function emitPropertyAssignment: (node: PropertyAssignment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4052:37: parameter node: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4063:15: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4065:19: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4071:14: function emitShorthandPropertyAssignment: (node: ShorthandPropertyAssignment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4071:46: parameter node: ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4081:14: function emitSpreadAssignment: (node: SpreadAssignment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4081:35: parameter node: SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4092:14: function emitEnumMember: (node: EnumMember) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4092:29: parameter node: EnumMember
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4100:14: function emitJSDoc: (node: JSDoc) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4100:24: parameter node: JSDoc
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4103:19: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4105:23: variable lines: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4106:28: variable line: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4128:14: function emitJSDocSimpleTypedTag: (tag: JSDocEnumTag | JSDocReturnTag | JSDocSatisfiesTag | JSDocThisTag | JSDocThrowsTag | JSDocTypeTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4128:38: parameter tag: JSDocEnumTag | JSDocReturnTag | JSDocSatisfiesTag | JSDocThisTag | JSDocThrowsTag | JSDocTypeTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4134:14: function emitJSDocSeeTag: (tag: JSDocSeeTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4134:30: parameter tag: JSDocSeeTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4140:14: function emitJSDocImportTag: (tag: JSDocImportTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4140:33: parameter tag: JSDocImportTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4159:14: function emitJSDocNameReference: (node: JSDocNameReference) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4159:37: parameter node: JSDocNameReference
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4166:14: function emitJSDocHeritageTag: (tag: JSDocAugmentsTag | JSDocImplementsTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4166:35: parameter tag: JSDocAugmentsTag | JSDocImplementsTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4175:14: function emitJSDocTemplateTag: (tag: JSDocTemplateTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4175:35: parameter tag: JSDocTemplateTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4183:14: function emitJSDocTypedefTag: (tag: JSDocTypedefTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4183:34: parameter tag: JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4210:14: function emitJSDocCallbackTag: (tag: JSDocCallbackTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4210:35: parameter tag: JSDocCallbackTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4220:14: function emitJSDocOverloadTag: (tag: JSDocOverloadTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4220:35: parameter tag: JSDocOverloadTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4225:14: function emitJSDocSimpleTag: (tag: JSDocTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4225:33: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4230:14: function emitJSDocTypeLiteral: (lit: JSDocTypeLiteral) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4230:35: parameter lit: JSDocTypeLiteral
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4234:14: function emitJSDocSignature: (sig: JSDocSignature) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4234:33: parameter sig: JSDocSignature
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4250:14: function emitJSDocPropertyLikeTag: (param: JSDocPropertyLikeTag) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4250:39: parameter param: JSDocPropertyLikeTag
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4264:14: function emitJSDocTagName: (tagName: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4264:31: parameter tagName: Identifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4269:14: function emitJSDocComment: (comment: string | NodeArray<JSDocComment> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4269:31: parameter comment: string | NodeArray<JSDocComment> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4270:15: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4277:14: function emitJSDocTypeExpression: (typeExpression: JSDocTypeExpression | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4277:38: parameter typeExpression: JSDocTypeExpression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4290:14: function emitSourceFile: (node: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4290:29: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4292:15: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4295:15: variable shouldEmitDetachedComment: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4305:14: function emitSyntheticTripleSlashReferencesIfNeeded: (node: Bundle) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4305:57: parameter node: Bundle
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4309:14: function emitTripleSlashDirectivesIfNeeded: (node: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4309:48: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4313:14: function emitTripleSlashDirectives: (files: readonly FileReference[], types: readonly FileReference[], libs: readonly FileReference[]) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4313:40: parameter files: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4313:73: parameter types: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4313:106: parameter libs: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4319:24: variable dep: AmdDependency
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4330:18: function writeDirectives: (kind: "lib" | "path" | "types", directives: readonly FileReference[]) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4330:34: parameter kind: "lib" | "path" | "types"
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4330:66: parameter directives: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4331:24: variable directive: FileReference
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4332:23: variable resolutionMode: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4335:23: variable preserve: "" | "preserve=\"true\" "
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4346:14: function emitSourceFileWorker: (node: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4346:35: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4347:15: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4351:15: variable index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4351:45: parameter statement: Statement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4359:14: function emitPartiallyEmittedExpression: (node: PartiallyEmittedExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4359:45: parameter node: PartiallyEmittedExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4360:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4370:14: function emitCommaList: (node: CommaListExpression) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4370:28: parameter node: CommaListExpression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4378:14: function emitPrologueDirectives: (statements: readonly Node[], sourceFile?: SourceFile | undefined, seenPrologueDirectives?: Set<string> | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4378:37: parameter statements: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4378:66: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4378:91: parameter seenPrologueDirectives: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4379:13: variable needsToSetSourceFile: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4380:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4381:19: variable statement: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4383:23: variable shouldEmitPrologueDirective: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4405:14: function emitPrologueDirectivesIfNeeded: (sourceFileOrBundle: Bundle | SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4405:45: parameter sourceFileOrBundle: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4410:19: variable seenPrologueDirectives: Set<string>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4411:24: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4418:14: function emitShebangIfNeeded: (sourceFileOrBundle: Bundle | SourceFile) => true | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4418:34: parameter sourceFileOrBundle: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4420:19: variable shebang: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4428:24: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4441:14: function emitNodeWithWriter: (node: Node | undefined, writer: (s: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4441:33: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4441:57: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4443:15: variable savedWrite: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4449:14: function emitDecoratorsAndModifiers: (node: Node, modifiers: NodeArray<ModifierLike> | undefined, allowDecorators: boolean) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4449:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4449:53: parameter modifiers: NodeArray<ModifierLike> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4449:101: parameter allowDecorators: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4467:17: variable lastMode: "decorators" | "modifiers" | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4468:17: variable mode: "decorators" | "modifiers" | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4469:17: variable start: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4470:17: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4471:17: variable lastModifier: ModifierLike | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4486:23: variable textRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4517:14: function emitModifierList: (node: Node, modifiers: NodeArray<Modifier> | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4517:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4517:43: parameter modifiers: NodeArray<Modifier> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4519:15: variable lastModifier: AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | DefaultKeyword | ExportKeyword | InKeyword | OutKeyword | OverrideKeyword | PrivateKeyword | ProtectedKeyword | PublicKeyword | ReadonlyKeyword | StaticKeyword | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4523:14: function emitTypeAnnotation: (node: TypeNode | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4523:33: parameter node: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:14: function emitInitializer: (node: Expression | undefined, equalCommentStartPos: number, container: Node, parenthesizerRule?: ((node: Expression) => Expression) | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:30: parameter node: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:60: parameter equalCommentStartPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:90: parameter container: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:107: parameter parenthesizerRule: ((node: Expression) => Expression) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4531:128: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:14: function emitNodeWithPrefix: <T extends Node>(prefix: string, prefixWriter: (s: string) => void, node: T | undefined, emit: (node: T) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:49: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:65: parameter prefixWriter: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:80: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:100: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:121: parameter emit: (node: T) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4540:128: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4547:14: function emitWithLeadingSpace: (node: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4547:35: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4554:14: function emitExpressionWithLeadingSpace: (node: Expression | undefined, parenthesizerRule?: ((node: Expression) => Expression) | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4554:45: parameter node: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4554:75: parameter parenthesizerRule: ((node: Expression) => Expression) | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4554:96: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4561:14: function emitWithTrailingSpace: (node: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4561:36: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4568:14: function emitEmbeddedStatement: (parent: Node, node: Statement) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4568:36: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4568:50: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4590:14: function emitDecoratorList: (parentNode: Node, decorators: NodeArray<Decorator> | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4590:32: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4590:50: parameter decorators: NodeArray<Decorator> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4592:15: variable lastDecorator: Decorator | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4596:14: function emitTypeArguments: (parentNode: Node, typeArguments: NodeArray<TypeNode> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4596:32: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4596:50: parameter typeArguments: NodeArray<TypeNode> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4600:14: function emitTypeParameters: (parentNode: ClassDeclaration | ClassExpression | InterfaceDeclaration | TypeAliasDeclaration | SignatureDeclaration, typeParameters: NodeArray<TypeParameterDeclaration> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4600:33: parameter parentNode: ClassDeclaration | ClassExpression | InterfaceDeclaration | TypeAliasDeclaration | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4600:150: parameter typeParameters: NodeArray<TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4607:14: function emitParameters: (parentNode: Node, parameters: NodeArray<ParameterDeclaration>) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4607:29: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4607:47: parameter parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4611:14: function canEmitSimpleArrowHead: (parentNode: ArrowFunction | ConstructorTypeNode | FunctionTypeNode, parameters: NodeArray<ParameterDeclaration>) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4611:37: parameter parentNode: ArrowFunction | ConstructorTypeNode | FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4611:105: parameter parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4612:15: variable parameter: ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4627:14: function emitParametersForArrow: (parentNode: ArrowFunction | ConstructorTypeNode | FunctionTypeNode, parameters: NodeArray<ParameterDeclaration>) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4627:37: parameter parentNode: ArrowFunction | ConstructorTypeNode | FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4627:105: parameter parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4636:14: function emitParametersForIndexSignature: (parentNode: Node, parameters: NodeArray<ParameterDeclaration>) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4636:46: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4636:64: parameter parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4640:14: function writeDelimiter: (format: ListFormat) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4640:29: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:14: function emitList: <Child extends Node, Children extends NodeArray<Child>>(parentNode: Node | undefined, children: Children | undefined, format: ListFormat, parenthesizerRule?: ParenthesizerRuleOrSelector<Child> | undefined, start?: number | undefined, count?: number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:78: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:108: parameter children: Children | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:140: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:160: parameter parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:216: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4663:232: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:14: function emitExpressionList: <Child extends Node, Children extends NodeArray<Child>>(parentNode: Node | undefined, children: Children | undefined, format: ListFormat, parenthesizerRule?: ParenthesizerRuleOrSelector<Child> | undefined, start?: number | undefined, count?: number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:88: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:118: parameter children: Children | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:150: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:170: parameter parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:226: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4675:242: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:14: function emitNodeList: <Child extends Node, Children extends NodeArray<Child>>(emit: EmitFunction, parentNode: Node | undefined, children: Children | undefined, format: ListFormat, parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined, start?: number, count?: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:82: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:102: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:132: parameter children: Children | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:164: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:184: parameter parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:251: parameter start: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4679:262: parameter count: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4680:15: variable isUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4685:15: variable isEmpty: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:14: function emitNodeListItems: <Child extends Node>(emit: EmitFunction, parentNode: Node | undefined, children: readonly Child[], format: ListFormat, parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined, start: number, count: number, hasTrailingComma: boolean, childrenTextRange: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:52: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:72: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:102: parameter children: readonly Child[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:130: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:150: parameter parenthesizerRule: ParenthesizerRuleOrSelector<Child> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:217: parameter start: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:232: parameter count: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:247: parameter hasTrailingComma: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4729:274: parameter childrenTextRange: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4731:15: variable mayEmitInterveningComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4732:13: variable shouldEmitInterveningComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4734:15: variable leadingLineTerminatorCount: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4748:15: variable emitListItem: EmitListItemFunction<Child>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4751:13: variable previousSibling: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4752:13: variable shouldDecreaseIndentAfterEmit: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4753:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4754:19: variable child: Child
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4770:27: variable previousSiblingEmitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4779:23: variable separatingLineTerminatorCount: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4789:31: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4803:23: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4822:15: variable emitFlags: 0 | EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4823:15: variable skipTrailingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4824:15: variable emitTrailingComma: number | false
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4850:15: variable closingLineTerminatorCount: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4861:14: function writeLiteral: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4861:27: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4865:14: function writeStringLiteral: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4865:33: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4869:14: function writeBase: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4869:24: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4873:14: function writeSymbol: (s: string, sym: Symbol) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4873:26: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4873:37: parameter sym: Symbol
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4877:14: function writePunctuation: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4877:31: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4881:14: function writeTrailingSemicolon: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4885:14: function writeKeyword: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4885:27: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4889:14: function writeOperator: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4889:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4893:14: function writeParameter: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4893:29: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4897:14: function writeComment: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4897:27: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4901:14: function writeSpace: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4905:14: function writeProperty: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4905:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4909:14: function nonEscapingWrite: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4909:31: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4919:14: function writeLine: (count?: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4919:24: parameter count: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4920:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4925:14: function increaseIndent: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4929:14: function decreaseIndent: () => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:14: function writeToken: (token: SyntaxKind, pos: number, writer: (s: string) => void, contextNode?: Node | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:25: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:44: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:57: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:66: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4933:86: parameter contextNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4939:14: function writeTokenNode: (node: Node, writer: (s: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4939:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4939:41: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4939:50: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4949:14: function writeTokenText: { (token: SyntaxKind, writer: (s: string) => void): void; (token: SyntaxKind, writer: (s: string) => void, pos: number): number; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4949:29: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4949:48: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4949:57: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4950:14: function writeTokenText: { (token: SyntaxKind, writer: (s: string) => void): void; (token: SyntaxKind, writer: (s: string) => void, pos: number): number; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4950:29: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4950:48: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4950:57: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4950:77: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4951:14: function writeTokenText: { (token: SyntaxKind, writer: (s: string) => void): void; (token: SyntaxKind, writer: (s: string) => void, pos: number): number; }
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4951:29: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4951:48: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4951:57: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4951:77: parameter pos: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4952:15: variable tokenString: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4957:14: function writeLineOrSpace: (parentNode: Node, prevChildNode: Node, nextChildNode: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4957:31: parameter parentNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4957:49: parameter prevChildNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4957:70: parameter nextChildNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4962:19: variable lines: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4975:14: function writeLines: (text: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4975:25: parameter text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4976:15: variable lines: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4977:15: variable indentation: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4978:20: variable lineText: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4979:19: variable line: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4987:14: function writeLinesAndIndent: (lineCount: number, writeSpaceIfNotIndenting: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4987:34: parameter lineCount: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:4987:53: parameter writeSpaceIfNotIndenting: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5001:14: function decreaseIndentIf: (value1: number | boolean | undefined, value2?: number | boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5001:31: parameter value1: number | boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5001:69: parameter value2: number | boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5010:14: function getLeadingLineTerminatorCount: (parentNode: Node | undefined, firstChild: Node | undefined, format: ListFormat) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5010:44: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5010:74: parameter firstChild: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5010:104: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5049:25: parameter includeComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5067:14: function getSeparatingLineTerminatorCount: (previousNode: Node | undefined, nextNode: Node, format: ListFormat) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5067:47: parameter previousNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5067:79: parameter nextNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5067:95: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5079:25: parameter includeComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5110:14: function getClosingLineTerminatorCount: (parentNode: Node | undefined, lastChild: Node | undefined, format: ListFormat, childrenTextRange: TextRange | undefined) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5110:44: parameter parentNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5110:74: parameter lastChild: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5110:103: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5110:123: parameter childrenTextRange: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5121:27: variable end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5123:25: parameter includeComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5144:14: function getEffectiveLines: (getLineDifference: (includeComments: boolean) => number) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5144:32: parameter getLineDifference: (includeComments: boolean) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5144:52: parameter includeComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5154:15: variable lines: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5168:14: function writeLineSeparatorsAndIndentBefore: (node: Node, parent: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5168:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5168:61: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5169:15: variable leadingNewlines: number | false | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5176:14: function writeLineSeparatorsAfter: (node: Node, parent: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5176:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5176:51: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5177:15: variable trailingNewlines: number | false | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5183:14: function synthesizedNodeStartsOnNewLine: (node: Node, format: ListFormat) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5183:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5183:57: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5185:19: variable startsOnNewLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5196:14: function getLinesBetweenNodes: (parent: Node, node1: Node, node2: Node) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5196:35: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5196:49: parameter node1: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5196:62: parameter node2: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5213:21: parameter includeComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5228:14: function isEmptyBlock: (block: BlockLike) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5228:27: parameter block: BlockLike
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5233:14: function skipSynthesizedParentheses: (node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5233:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5241:14: function getTextOfNode: (node: Identifier | JsxNamespacedName | LiteralExpression | PrivateIdentifier, includeTrivia?: boolean | undefined) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5241:28: parameter node: Identifier | JsxNamespacedName | LiteralExpression | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5241:106: parameter includeTrivia: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5248:15: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5249:15: variable canUseSourceFile: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5269:14: function getLiteralTextOfNode: (node: LiteralLikeNode, sourceFile: SourceFile | undefined, neverAsciiEscape: boolean | undefined, jsxAttributeEscape: boolean) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5269:35: parameter node: LiteralLikeNode
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5269:58: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5269:90: parameter neverAsciiEscape: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5269:129: parameter jsxAttributeEscape: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5271:19: variable textSourceNode: BigIntLiteral | Identifier | JsxNamespacedName | NumericLiteral | PrivateIdentifier | StringLiteralLike
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5273:23: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5283:15: variable flags: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5294:14: function pushNameGenerationScope: (node: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5294:38: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5313:14: function popNameGenerationScope: (node: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5313:37: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5326:14: function reserveNameInNestedScopes: (name: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5326:40: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5333:14: function reservePrivateNameInNestedScopes: (name: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5333:47: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5340:14: function generateNames: (node: Node | undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5340:28: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5426:14: function generateMemberNames: (node: Node | undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5426:34: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5442:14: function generateNameIfNeeded: (name: DeclarationName | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5442:35: parameter name: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5456:14: function generateName: (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5456:27: parameter name: GeneratedIdentifier | GeneratedPrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5457:15: variable autoGenerate: AutoGenerateInfo
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5466:19: variable autoGenerateId: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:14: function generateNameCached: (node: Node, privateName: boolean, flags?: GeneratedIdentifierFlags | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:45: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:67: parameter flags: GeneratedIdentifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:101: parameter prefix: string | GeneratedNamePart | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5471:138: parameter suffix: string | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5472:15: variable nodeId: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5473:15: variable cache: string[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5481:14: function isUniqueName: (name: string, privateName: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5481:27: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5481:41: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5487:14: function isReservedName: (name: string, privateName: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5487:29: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5487:43: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5488:13: variable set: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5489:13: variable stack: (Set<string> | undefined)[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5502:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5520:14: function isFileLevelUniqueNameInCurrentFile: (name: string, _isPrivate: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5520:49: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5520:63: parameter _isPrivate: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5527:14: function isUniqueLocalName: (name: string, container: HasLocals | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5527:32: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5527:46: parameter container: HasLocals | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5528:18: variable node: HasLocals | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5530:23: variable local: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5540:14: function getTempFlags: (formattedNameKey: string) => TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5540:27: parameter formattedNameKey: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5551:14: function setTempFlags: (formattedNameKey: string, flags: TempFlags) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5551:27: parameter formattedNameKey: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5551:53: parameter flags: TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:14: function makeTempVariableName: (flags: TempFlags, reservedInNestedScopes: boolean, privateName: boolean, prefix: string, suffix: string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:35: parameter flags: TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:53: parameter reservedInNestedScopes: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:86: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:108: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5571:124: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5577:15: variable key: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5578:13: variable tempFlags: TempFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5581:19: variable name: "_i" | "_n"
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5582:19: variable fullName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5597:19: variable count: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5601:23: variable name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5604:23: variable fullName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:14: function makeUniqueName: (baseName: string, checkFn: ((name: string, privateName: boolean) => boolean) | undefined, optimistic: boolean, scoped: boolean, privateName: boolean, prefix: string, suffix: string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:29: parameter baseName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:47: parameter checkFn: (name: string, privateName: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:57: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:71: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:120: parameter optimistic: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:141: parameter scoped: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:158: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:180: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5626:196: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5634:19: variable fullName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5652:13: variable i: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5654:19: variable fullName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5671:14: function makeFileLevelOptimisticUniqueName: (name: string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5671:48: parameter name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5678:14: function generateNameForModuleOrEnum: (node: EnumDeclaration | ModuleDeclaration) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5678:42: parameter node: EnumDeclaration | ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5679:15: variable name: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5687:14: function generateNameForImportOrExportDeclaration: (node: ExportDeclaration | ImportDeclaration) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5687:55: parameter node: ExportDeclaration | ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5688:15: variable expr: Expression
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5689:15: variable baseName: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5697:14: function generateNameForExportDefault: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5704:14: function generateNameForClassExpression: () => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5708:14: function generateNameForMethodOrAccessor: (node: MethodDeclaration | AccessorDeclaration, privateName: boolean, prefix: string, suffix: string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5708:46: parameter node: MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5708:93: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5708:115: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5708:131: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:14: function generateNameForNode: (node: Node, privateName: boolean, flags: GeneratedIdentifierFlags, prefix: string, suffix: string) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:46: parameter privateName: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:68: parameter flags: GeneratedIdentifierFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:101: parameter prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5718:117: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5742:23: variable name: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5768:14: function makeName: (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5768:23: parameter name: GeneratedIdentifier | GeneratedPrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5769:15: variable autoGenerate: AutoGenerateInfo
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5770:15: variable prefix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5771:15: variable suffix: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5795:14: function pipelineEmitWithComments: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5795:39: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5795:55: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5796:15: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5797:15: variable savedContainerPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5798:15: variable savedContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5799:15: variable savedDeclarationListContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5805:14: function emitCommentsBeforeNode: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5805:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5806:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5807:15: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5816:14: function emitCommentsAfterNode: (node: Node, savedContainerPos: number, savedContainerEnd: number, savedDeclarationListContainerEnd: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5816:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5816:48: parameter savedContainerPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5816:75: parameter savedContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5816:102: parameter savedDeclarationListContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5817:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5818:15: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5825:15: variable typeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5831:14: function emitLeadingCommentsOfNode: (node: Node, emitFlags: EmitFlags, pos: number, end: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5831:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5831:52: parameter emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5831:74: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5831:87: parameter end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5837:15: variable skipLeadingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5838:15: variable skipTrailingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:14: function emitTrailingCommentsOfNode: (node: Node, emitFlags: EmitFlags, pos: number, end: number, savedContainerPos: number, savedContainerEnd: number, savedDeclarationListContainerEnd: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:53: parameter emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:75: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:88: parameter end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:101: parameter savedContainerPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:128: parameter savedContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5868:155: parameter savedDeclarationListContainerEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5870:15: variable skipTrailingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5887:14: function emitLeadingSynthesizedComment: (comment: SynthesizedComment) => undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5887:44: parameter comment: SynthesizedComment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5900:14: function emitTrailingSynthesizedComment: (comment: SynthesizedComment) => undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5900:45: parameter comment: SynthesizedComment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5910:14: function writeSynthesizedComment: (comment: SynthesizedComment) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5910:38: parameter comment: SynthesizedComment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5911:15: variable text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5912:15: variable lineMap: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5916:14: function formatSynthesizedComment: (comment: SynthesizedComment) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5916:39: parameter comment: SynthesizedComment
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5922:14: function emitBodyWithDetachedComments: <T extends Node>(node: T, detachedRange: TextRange, emitCallback: (node: T) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5922:59: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5922:68: parameter detachedRange: TextRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5922:94: parameter emitCallback: (node: T) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5922:109: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5924:17: binding pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5924:22: binding end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5925:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5926:15: variable skipLeadingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5927:15: variable skipTrailingComments: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5952:14: function originalNodesHaveSameParent: (nodeA: Node, nodeB: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5952:42: parameter nodeA: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5952:55: parameter nodeB: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5959:14: function siblingNodePositionsAreComparable: (previousNode: Node, nextNode: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5959:48: parameter previousNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5959:68: parameter nextNode: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5966:15: variable parent: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5971:15: variable parentNodeArray: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5972:15: variable prevNodeIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5976:14: function emitLeadingComments: (pos: number, isEmittedNode: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5976:34: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:5976:47: parameter isEmittedNode: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:14: function emitTripleSlashLeadingComment: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:44: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:64: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:84: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:102: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6000:131: parameter rangePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:14: function emitNonTripleSlashLeadingComment: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:47: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:67: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:87: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:105: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6006:134: parameter rangePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6012:14: function shouldWriteComment: (text: string, pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6012:33: parameter text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6012:47: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:14: function emitLeadingComment: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:33: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:53: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:73: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:91: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6019:120: parameter rangePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6039:14: function emitLeadingCommentsOfPosition: (pos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6039:44: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6047:14: function emitTrailingComments: (pos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6047:35: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6051:14: function emitTrailingComment: (commentPos: number, commentEnd: number, _kind: SyntaxKind, hasTrailingNewLine: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6051:34: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6051:54: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6051:74: parameter _kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6051:93: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6067:14: function emitTrailingCommentsOfPosition: (pos: number, prefixSpace?: boolean | undefined, forceNoNewline?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6067:45: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6067:58: parameter prefixSpace: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6067:81: parameter forceNoNewline: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6076:14: function emitTrailingCommentOfPositionNoNewline: (commentPos: number, commentEnd: number, kind: SyntaxKind) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6076:53: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6076:73: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6076:93: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6089:14: function emitTrailingCommentOfPosition: (commentPos: number, commentEnd: number, _kind: SyntaxKind, hasTrailingNewLine: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6089:44: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6089:64: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6089:84: parameter _kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6089:103: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:14: function forEachLeadingCommentToEmit: (pos: number, cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:42: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:55: parameter cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:60: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:80: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:100: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:118: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6105:147: parameter rangePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:14: function forEachTrailingCommentToEmit: (end: number, cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:43: parameter end: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:56: parameter cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:61: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:81: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:101: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6117:119: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6124:14: function hasDetachedComments: (pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6124:34: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:14: function forEachLeadingCommentWithoutDetachedComments: (cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:59: parameter cb: (commentPos: number, commentEnd: number, kind: SyntaxKind, hasTrailingNewLine: boolean, rangePos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:64: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:84: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:104: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:122: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6128:151: parameter rangePos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6131:15: variable pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6142:14: function emitDetachedCommentsAndUpdateCommentsInfo: (range: Readonly<TextRange>) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6142:56: parameter range: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6143:15: variable currentDetachedCommentInfo: DetachedCommentInfo | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:14: function emitComment: (text: string, lineMap: readonly number[], writer: EmitTextWriter, commentPos: number, commentEnd: number, newLine: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:26: parameter text: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:40: parameter lineMap: readonly number[]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:68: parameter writer: EmitTextWriter
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:92: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:112: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6154:132: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6166:14: function isTripleSlashComment: (commentPos: number, commentEnd: number) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6166:35: parameter commentPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6166:55: parameter commentEnd: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6171:14: function pipelineEmitWithSourceMaps: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6171:41: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6171:57: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6172:15: variable pipelinePhase: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6178:14: function emitSourceMapsBeforeNode: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6178:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6179:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6180:15: variable sourceMapRange: SourceMapRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6183:15: variable source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6196:14: function emitSourceMapsAfterNode: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6196:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6197:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6198:15: variable sourceMapRange: SourceMapRange
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6216:14: function skipSourceTrivia: (source: SourceMapSource, pos: number) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6216:31: parameter source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6216:56: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6228:14: function emitPos: (pos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6228:22: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6233:23: binding sourceLine: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6233:46: binding sourceCharacter: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6244:14: function emitSourcePos: (source: SourceMapSource, pos: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6244:28: parameter source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6244:53: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6246:19: variable savedSourceMapSource: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6247:19: variable savedSourceMapSourceIndex: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:14: function emitTokenWithSourceMap: (node: Node | undefined, token: SyntaxKind, writer: (s: string) => void, tokenPos: number, emitCallback: (token: SyntaxKind, writer: (s: string) => void, tokenStartPos: number) => number) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:37: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:61: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:80: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:89: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:109: parameter tokenPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:127: parameter emitCallback: (token: SyntaxKind, writer: (s: string) => void, tokenStartPos: number) => number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:142: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:161: parameter writer: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:170: parameter s: string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6265:190: parameter tokenStartPos: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6270:15: variable emitNode: EmitNode | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6271:15: variable emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6272:15: variable range: SourceMapRange | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6273:15: variable source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6290:14: function setSourceMapSource: (source: SourceMapSource) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6290:33: parameter source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6317:14: function resetSourceMapSource: (source: SourceMapSource, sourceIndex: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6317:35: parameter source: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6317:60: parameter sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6322:14: function isJsonSourceMapSource: (sourceFile: SourceMapSource) => boolean
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6322:36: parameter sourceFile: SourceMapSource
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6327:10: function createBracketsMap: () => string[][]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6328:11: variable brackets: string[][]
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6336:10: function getOpeningBracket: (format: ListFormat) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6336:28: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6340:10: function getClosingBracket: (format: ListFormat) => string
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6340:28: parameter format: ListFormat
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6351:11: interface OrdinalParentheizerRuleSelector: OrdinalParentheizerRuleSelector<T>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6352:12: parameter index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6352:30: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6355:6: type ParenthesizerRule: (node: T) => T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6355:43: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6357:6: type ParenthesizerRuleOrSelector: OrdinalParentheizerRuleSelector<T> | ParenthesizerRule<T>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6359:6: type EmitFunction: <T extends Node>(node: T, parenthesizerRule?: ParenthesizerRule<T> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6359:38: parameter node: T
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6359:47: parameter parenthesizerRule: ParenthesizerRule<T> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6360:6: type EmitListItemFunction: (node: Node, emit: EmitFunction, parenthesizerRule: ParenthesizerRuleOrSelector<T> | undefined, index: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6360:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6360:58: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6360:78: parameter parenthesizerRule: ParenthesizerRuleOrSelector<T> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6360:141: parameter index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6362:10: function emitListItemNoParenthesizer: (node: Node, emit: EmitFunction, _parenthesizerRule: ParenthesizerRuleOrSelector<Node> | undefined, _index: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6362:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6362:50: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6362:70: parameter _parenthesizerRule: ParenthesizerRuleOrSelector<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6362:137: parameter _index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6366:10: function emitListItemWithParenthesizerRuleSelector: (node: Node, emit: EmitFunction, parenthesizerRuleSelector: OrdinalParentheizerRuleSelector<Node> | undefined, index: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6366:52: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6366:64: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6366:84: parameter parenthesizerRuleSelector: OrdinalParentheizerRuleSelector<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6366:162: parameter index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6370:10: function emitListItemWithParenthesizerRule: (node: Node, emit: EmitFunction, parenthesizerRule: ParenthesizerRule<Node> | undefined, _index: number) => void
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6370:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6370:56: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6370:76: parameter parenthesizerRule: ParenthesizerRule<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6370:132: parameter _index: number
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6374:10: function getEmitListItem: <T extends Node>(emit: EmitFunction, parenthesizerRule: ParenthesizerRuleOrSelector<T> | undefined) => EmitListItemFunction<T>
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6374:42: parameter emit: EmitFunction
+/workspace/tracing-measured-after/src/compiler/emitter.ts:6374:62: parameter parenthesizerRule: ParenthesizerRuleOrSelector<T> | undefined

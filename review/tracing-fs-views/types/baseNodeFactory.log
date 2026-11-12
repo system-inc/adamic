@@ -1,0 +1,37 @@
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:13:18: interface BaseNodeFactory: BaseNodeFactory
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:14:30: parameter kind: SyntaxKind.SourceFile
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:15:30: parameter kind: SyntaxKind.Identifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:16:37: parameter kind: SyntaxKind.PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:17:25: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:18:20: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:26:17: function createBaseNodeFactory: () => BaseNodeFactory
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:27:9: variable NodeConstructor: new (kind: SyntaxKind, pos: number, end: number) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:27:31: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:27:49: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:27:62: parameter end: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:28:9: variable TokenConstructor: new (kind: SyntaxKind, pos: number, end: number) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:28:32: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:28:50: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:28:63: parameter end: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:29:9: variable IdentifierConstructor: new (kind: SyntaxKind.Identifier, pos: number, end: number) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:29:37: parameter kind: SyntaxKind.Identifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:29:66: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:29:79: parameter end: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:30:9: variable PrivateIdentifierConstructor: new (kind: SyntaxKind.PrivateIdentifier, pos: number, end: number) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:30:44: parameter kind: SyntaxKind.PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:30:80: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:30:93: parameter end: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:31:9: variable SourceFileConstructor: new (kind: SyntaxKind.SourceFile, pos: number, end: number) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:31:37: parameter kind: SyntaxKind.SourceFile
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:31:66: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:31:79: parameter end: number
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:41:14: function createBaseSourceFileNode: (kind: SyntaxKind.SourceFile) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:41:39: parameter kind: SyntaxKind.SourceFile
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:45:14: function createBaseIdentifierNode: (kind: SyntaxKind.Identifier) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:45:39: parameter kind: SyntaxKind.Identifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:49:14: function createBasePrivateIdentifierNode: (kind: SyntaxKind.PrivateIdentifier) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:49:46: parameter kind: SyntaxKind.PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:53:14: function createBaseTokenNode: (kind: SyntaxKind) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:53:34: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:57:14: function createBaseNode: (kind: SyntaxKind) => Node
+/workspace/tracing-measured-after/src/compiler/factory/baseNodeFactory.ts:57:29: parameter kind: SyntaxKind

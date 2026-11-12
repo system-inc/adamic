@@ -1,0 +1,27 @@
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:8:18: interface PerformanceHooks: PerformanceHooks
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:9:5: property shouldWriteNativeEvents: boolean
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:10:5: property performance: Performance | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:11:5: property performanceTime: PerformanceTime | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:15:18: interface PerformanceTime: PerformanceTime
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:17:14: property timeOrigin: number
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:21:18: interface Performance: Performance
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:22:10: parameter name: string
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:23:13: parameter name: string
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:23:27: parameter startMark: string | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:23:47: parameter endMark: string | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:24:19: parameter name: string | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:25:16: parameter name: string | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:29:15: variable performance: Performance | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:31:10: function tryGetPerformance: () => { shouldWriteNativeEvents: boolean; performance: Performance; } | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:31:33: property shouldWriteNativeEvents: boolean
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:31:67: property performance: Performance
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:36:21: binding performance: Performance
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:62:10: function tryGetPerformanceHooks: () => PerformanceHooks | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:63:11: variable p: { shouldWriteNativeEvents: boolean; performance: Performance; } | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:65:13: binding shouldWriteNativeEvents: boolean
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:65:38: binding performance: Performance
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:67:11: variable hooks: PerformanceHooks
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:90:7: variable nativePerformanceHooks: PerformanceHooks | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:91:7: variable nativePerformanceTime: PerformanceTime | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:94:17: function tryGetNativePerformanceHooks: () => PerformanceHooks | undefined
+/workspace/tracing-measured-after/src/compiler/performanceCore.ts:103:14: variable timestamp: () => number

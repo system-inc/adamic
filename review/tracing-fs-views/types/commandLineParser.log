@@ -1,0 +1,924 @@
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:127:7: variable compileOnSaveCommandLineOption: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:133:7: variable jsxOptionMap: Map<string, JsxEmit>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:142:14: variable inverseJsxOptionMap: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:142:103: binding key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:142:108: binding value: JsxEmit
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:152:7: variable libEntries: [string, string][]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:275:14: variable libs: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:275:46: parameter entry: [string, string]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:283:14: variable libMap: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:289:14: variable optionsForWatch: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:364:14: variable commonOptionsWithBuild: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:573:14: variable targetOptionDeclaration: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:606:14: variable moduleOptionDeclaration: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:638:7: variable commandOptionsWithoutBuild: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1693:14: variable optionDeclarations: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1699:14: variable semanticDiagnosticsOptionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1699:110: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1702:14: variable affectsEmitOptionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1702:102: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1705:14: variable affectsDeclarationPathOptionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1705:113: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1708:14: variable moduleResolutionOptionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1708:107: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1711:14: variable sourceFileAffectingCompilerOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1711:107: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1714:14: variable optionsAffectingProgramStructure: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1714:105: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1717:14: variable transpileOptionValueCompilerOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1717:108: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1719:7: variable configDirTemplateSubstitutionOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1720:5: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1723:7: variable configDirTemplateSubstitutionWatchOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1724:5: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1728:14: variable commandLineOptionOfCustomType: readonly CommandLineOptionOfCustomType[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1729:10: function isCommandLineOptionOfCustomType: (option: CommandLineOption) => option is CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1729:42: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1734:14: variable tscBuildOption: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1746:14: variable optionsForBuild: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1789:14: variable buildOpts: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1796:14: variable typeAcquisitionDeclarations: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1826:18: interface OptionsNameMap: OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1827:5: property optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1828:5: property shortOptionNames: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1832:17: function createOptionNameMap: (optionDeclarations: readonly CommandLineOption[]) => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1832:37: parameter optionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1833:11: variable optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1834:11: variable shortOptionNames: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1835:33: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1845:5: variable optionsNameMapCache: OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1848:17: function getOptionsNameMap: () => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1852:7: variable compilerOptionsAlternateMode: AlternateModeDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1859:14: variable defaultInitCompilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1869:17: function createCompilerDiagnosticForInvalidCustomType: (opt: CommandLineOptionOfCustomType) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1869:62: parameter opt: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1873:10: function createDiagnosticForInvalidCustomType: (opt: CommandLineOptionOfCustomType, createDiagnostic: (message: DiagnosticMessage, ...args: DiagnosticArguments) => Diagnostic) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1873:47: parameter opt: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1873:83: parameter createDiagnostic: (message: DiagnosticMessage, ...args: DiagnosticArguments) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1873:102: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1873:133: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1874:11: variable namesOfType: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1875:11: variable stringNames: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1875:66: parameter k: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1875:119: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1880:17: function parseCustomTypeOption: (opt: CommandLineOptionOfCustomType, value: string | undefined, errors: Diagnostic[]) => string | number | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1880:39: parameter opt: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1880:75: parameter value: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1880:102: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1885:17: function parseListTypeOption: (opt: CommandLineOptionOfListType, value: string | undefined, errors: Diagnostic[]) => string | (string | number)[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1885:37: parameter opt: CommandLineOptionOfListType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1885:71: parameter value: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1885:83: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1896:11: variable values: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1899:39: parameter v: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1901:39: parameter v: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1906:39: parameter v: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1911:18: interface OptionsBase: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1912:6: parameter option: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1916:18: interface BaseParsedCommandLine: BaseParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1917:5: property options: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1918:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1919:5: property fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1920:5: property errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1924:18: interface ParseCommandLineWorkerDiagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1925:5: property getOptionsNameMap: () => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1926:5: property optionTypeMismatchDiagnostic: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1929:10: function getOptionName: (option: CommandLineOption) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1929:24: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1933:10: function createUnknownOptionError: (unknownOption: string, diagnostics: DidYouMeanOptionsDiagnostics, unknownOptionErrorText?: string | undefined, node?: PropertyName | undefined, sourceFile?: TsConfigSourceFile | undefined) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1934:5: parameter unknownOption: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1935:5: parameter diagnostics: DidYouMeanOptionsDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1936:5: parameter unknownOptionErrorText: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1937:5: parameter node: PropertyName | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1938:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1940:11: variable otherOption: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1952:11: variable possibleOption: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1959:17: function parseCommandLineWorker: (diagnostics: ParseCommandLineWorkerDiagnostics, commandLine: readonly string[], readFile?: ((path: string) => string | undefined) | undefined) => BaseParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1960:5: parameter diagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1961:5: parameter commandLine: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1962:5: parameter readFile: ((path: string) => string | undefined) | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1962:17: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1964:11: variable options: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1965:9: variable watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1966:11: variable fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1967:11: variable errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1977:14: function parseStrings: (args: readonly string[]) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1977:27: parameter args: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1978:13: variable i: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1980:19: variable s: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1986:23: variable inputOptionName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1987:23: variable opt: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:1992:27: variable watchOpt: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2007:14: function parseResponseFile: (fileName: string) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2007:32: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2008:15: variable text: string | Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2008:57: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2014:15: variable args: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2015:13: variable pos: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2019:19: variable start: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2040:10: function parseOptionValue: (args: readonly string[], i: number, diagnostics: ParseCommandLineWorkerDiagnostics, opt: CommandLineOption, options: OptionsBase, errors: Diagnostic[]) => number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2041:5: parameter args: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2042:5: parameter i: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2043:5: parameter diagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2044:5: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2045:5: parameter options: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2046:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2049:15: variable optValue: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2083:27: variable optValue: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2095:27: variable result: string | (string | number)[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2120:14: variable compilerOptionsDidYouMeanDiagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2128:17: function parseCommandLine: (commandLine: readonly string[], readFile?: ((path: string) => string | undefined) | undefined) => ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2128:34: parameter commandLine: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2128:66: parameter readFile: ((path: string) => string | undefined) | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2128:78: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2133:17: function getOptionFromName: (optionName: string, allowShort?: boolean | undefined) => CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2133:35: parameter optionName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2133:55: parameter allowShort: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2137:10: function getOptionDeclarationFromName: (getOptionNameMap: () => OptionsNameMap, optionName: string, allowShort?: boolean) => CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2137:39: parameter getOptionNameMap: () => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2137:79: parameter optionName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2137:99: parameter allowShort: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2139:13: binding optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2139:29: binding shortOptionNames: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2142:15: variable short: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2151:18: interface ParsedBuildCommand: ParsedBuildCommand
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2152:5: property buildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2153:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2154:5: property projects: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2155:5: property errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2158:5: variable buildOptionsNameMapCache: OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2159:10: function getBuildOptionsNameMap: () => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2163:7: variable buildOptionsAlternateMode: AlternateModeDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2168:7: variable buildOptionsDidYouMeanDiagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2177:17: function parseBuildCommand: (commandLine: readonly string[]) => ParsedBuildCommand
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2177:35: parameter commandLine: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2178:13: binding options: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2178:22: binding watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2178:47: binding projects: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2178:57: binding errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2182:11: variable buildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2207:17: function getDiagnosticText: (message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2207:35: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2207:66: parameter args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2211:13: type DiagnosticReporter: (diagnostic: Diagnostic) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2211:35: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2215:18: interface ConfigFileDiagnosticsReporter: ConfigFileDiagnosticsReporter
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2219:5: property onUnRecoverableConfigFileDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2225:18: interface ParseConfigFileHost: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2232:17: function getParsedCommandLineOfConfigFile: (configFileName: string, optionsToExtend: CompilerOptions | undefined, host: ParseConfigFileHost, extendedConfigCache?: Map<string, ExtendedConfigCacheEntry> | undefined, watchOptionsToExtend?: WatchOptions | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2233:5: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2234:5: parameter optionsToExtend: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2235:5: parameter host: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2236:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2237:5: parameter watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2238:5: parameter extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2240:11: variable configFileText: string | Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2240:56: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2246:11: variable result: JsonSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2247:11: variable cwd: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:17: function readConfigFile: (fileName: string, readFile: (path: string) => string | undefined) => { config?: AdamicJsonRecoveryObject; error?: Diagnostic | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:32: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:50: parameter readFile: (path: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:61: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:101: property config: AdamicJsonRecoveryObject | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2268:136: property error: Diagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2269:11: variable textOrDiagnostic: string | Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2278:17: function parseConfigFileTextToJson: (fileName: string, jsonText: string) => { config?: any; error?: Diagnostic | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2278:43: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2278:61: parameter jsonText: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2278:82: property config: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2278:96: property error: Diagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2279:11: variable jsonSourceFile: JsonSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2290:17: function readJsonConfigFile: (fileName: string, readFile: (path: string) => string | undefined) => TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2290:36: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2290:54: parameter readFile: (path: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2290:65: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2291:11: variable textOrDiagnostic: string | Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2296:17: function tryReadFile: (fileName: string, readFile: (path: string) => string | undefined) => string | Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2296:29: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2296:47: parameter readFile: (path: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2296:58: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2297:9: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2301:12: variable e: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2307:10: function commandLineOptionsToMap: (options: readonly CommandLineOption[]) => Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2307:34: parameter options: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2311:7: variable typeAcquisitionDidYouMeanDiagnostics: DidYouMeanOptionsDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2317:5: variable watchOptionsNameMapCache: OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2318:10: function getWatchOptionsNameMap: () => OptionsNameMap
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2321:7: variable watchOptionsDidYouMeanDiagnostics: ParseCommandLineWorkerDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2329:5: variable commandLineCompilerOptionsMapCache: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2330:10: function getCommandLineCompilerOptionsMap: () => Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2333:5: variable commandLineWatchOptionsMapCache: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2334:10: function getCommandLineWatchOptionsMap: () => Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2337:5: variable commandLineTypeAcquisitionMapCache: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2338:10: function getCommandLineTypeAcquisitionMap: () => Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2342:7: variable extendsOptionDeclaration: CommandLineOptionOfListType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2352:7: variable compilerOptionsDeclaration: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2358:7: variable watchOptionsDeclaration: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2364:7: variable typeAcquisitionDeclaration: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2370:5: variable _tsconfigRootOptions: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2371:10: function getTsconfigRootOptionsMap: () => TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2427:18: interface JsonConversionNotifier: JsonConversionNotifier
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2428:5: property rootOptions: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2430:9: parameter keyText: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2431:9: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2432:9: parameter propertyAssignment: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2433:9: parameter parentOption: TsConfigOnlyOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2434:9: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2438:13: type AdamicJsonRecoveryValue: string | number | boolean | AdamicJsonRecoveryObject | AdamicJsonRecoveryValue[] | null
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2439:18: interface AdamicJsonRecoveryObject: AdamicJsonRecoveryObject
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2439:46: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2442:17: function isAdamicJsonObject: (value: unknown) => value is { [key: string]: unknown; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2442:36: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2442:65: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2447:17: function checkedAdamicJsonObject: (value: unknown) => { [key: string]: unknown; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2447:41: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2447:61: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2452:10: function convertConfigFileToObject: (sourceFile: JsonSourceFile, errors: Pick<DiagnosticWithLocation[], "push">, jsonConversionNotifier: JsonConversionNotifier | undefined) => AdamicJsonRecoveryObject
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2453:5: parameter sourceFile: JsonSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2454:5: parameter errors: Pick<DiagnosticWithLocation[], "push">
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2455:5: parameter jsonConversionNotifier: JsonConversionNotifier | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2457:11: variable rootExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2469:19: variable firstObject: ObjectLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2482:17: function convertToObject: (sourceFile: JsonSourceFile, errors: Diagnostic[]) => AdamicJsonRecoveryValue | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2482:33: parameter sourceFile: JsonSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2482:61: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2493:17: function convertToJson: (sourceFile: JsonSourceFile, rootExpression: Expression | undefined, errors: Pick<DiagnosticWithLocation[], "push">, returnValue: boolean, jsonConversionNotifier: JsonConversionNotifier | undefined) => AdamicJsonRecoveryValue | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2494:5: parameter sourceFile: JsonSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2495:5: parameter rootExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2496:5: parameter errors: Pick<DiagnosticWithLocation[], "push">
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2497:5: parameter returnValue: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2498:5: parameter jsonConversionNotifier: JsonConversionNotifier | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2506:14: function convertObjectLiteralExpressionToJson: (node: ObjectLiteralExpression, objectOption: TsConfigOnlyOption | undefined) => AdamicJsonRecoveryObject | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2507:9: parameter node: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2508:9: parameter objectOption: TsConfigOnlyOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2510:15: variable result: AdamicJsonRecoveryObject | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2511:20: variable element: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2524:19: variable textOfKey: __String | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2525:19: variable keyText: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2526:19: variable option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2527:19: variable value: AdamicJsonRecoveryValue | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2540:14: function convertArrayLiteralExpressionToJson: (elements: NodeArray<Expression>, elementOption: CommandLineOption | undefined) => AdamicJsonRecoveryValue[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2541:9: parameter elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2542:9: parameter elementOption: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2545:30: parameter element: Expression
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2550:36: parameter element: Expression
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2550:100: parameter v: AdamicJsonRecoveryValue | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2553:14: function convertPropertyValueToJson: (valueExpression: Expression, option: CommandLineOption | undefined) => AdamicJsonRecoveryValue | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2553:41: parameter valueExpression: Expression
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2553:70: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2580:23: variable objectLiteralExpression: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2608:14: function isDoubleQuotedString: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2608:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2613:10: function getCompilerOptionValueTypeString: (option: CommandLineOption) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2613:43: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2621:10: function isCompilerOptionsValue: (option: CommandLineOption | undefined, value: any) => value is CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2621:33: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2621:72: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2630:15: variable expectedType: "boolean" | "number" | "object" | "string"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2637:18: interface TSConfig: TSConfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2638:5: property compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2639:5: property compileOnSave: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2640:5: property exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2641:5: property files: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2642:5: property include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2643:5: property references: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2647:18: interface ConvertToTSConfigHost: ConvertToTSConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2649:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2660:17: function convertToTSConfig: (configParseResult: ParsedCommandLine, configFileName: string, host: ConvertToTSConfigHost) => TSConfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2660:35: parameter configParseResult: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2660:73: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2660:97: parameter host: ConvertToTSConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2661:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2662:11: variable files: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2672:9: parameter f: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2674:11: variable pathOptions: { configFilePath: string; useCaseSensitiveFileNames: boolean; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2675:11: variable optionMap: Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2676:11: variable watchOptionMap: Map<string, CompilerOptionsValue> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2677:11: variable config: TSConfig & { watchOptions?: object | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2677:32: property watchOptions: object | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2692:62: parameter r: ProjectReference
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2701:11: variable providedKeys: Set<string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2702:11: variable impliedCompilerOptions: Record<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2703:16: variable option: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2705:19: variable implied: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2706:19: variable defaultValue: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2716:10: function optionDependsOn: (option: string, dependsOn: Set<string>) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2716:26: parameter option: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2716:42: parameter dependsOn: Set<string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2717:11: variable seen: Set<string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2720:14: function optionDependsOnRecursive: (option: string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2720:39: parameter option: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2722:64: parameter dep: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2729:17: function optionMapToObject: (optionMap: Map<string, CompilerOptionsValue>) => object
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2729:35: parameter optionMap: Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2733:10: function filterSameAsDefaultInclude: (specs: readonly string[] | undefined) => readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2733:37: parameter specs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:10: function matchesSpecs: (path: string, includeSpecs: readonly string[] | undefined, excludeSpecs: readonly string[] | undefined, host: ConvertToTSConfigHost) => (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:23: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:37: parameter includeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:82: parameter excludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:127: parameter host: ConvertToTSConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2740:158: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2742:11: variable patterns: FileMatcherPatterns
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2743:11: variable excludeRe: "" | RegExp | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2744:11: variable includeRe: "" | RegExp | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2747:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2749:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2752:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2757:10: function getCustomTypeMapOfCommandLineOption: (optionDefinition: CommandLineOption) => Map<string, string | number> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2757:46: parameter optionDefinition: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2774:17: function getNameOfCompilerOptionValue: (value: CompilerOptionsValue, customTypeMap: Map<string, string | number>) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2774:46: parameter value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2774:75: parameter customTypeMap: Map<string, string | number>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2776:41: parameter mapValue: string | number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2776:51: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2784:17: function serializeCompilerOptions: (options: CompilerOptions, pathOptions?: { configFilePath: string; useCaseSensitiveFileNames: boolean; } | undefined) => Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2785:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2786:5: parameter pathOptions: { configFilePath: string; useCaseSensitiveFileNames: boolean; } | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2786:21: property configFilePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2786:45: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2791:10: function serializeWatchOptions: (options: WatchOptions) => Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2791:32: parameter options: WatchOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2795:10: function serializeOptionBaseObject: (options: OptionsBase, { optionsNameMap }: OptionsNameMap, pathOptions?: { configFilePath: string; useCaseSensitiveFileNames: boolean; } | undefined) => Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2796:5: parameter options: OptionsBase
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2797:7: binding optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2798:5: parameter pathOptions: { configFilePath: string; useCaseSensitiveFileNames: boolean; } | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2798:21: property configFilePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2798:45: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2800:11: variable result: Map<string, CompilerOptionsValue>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2801:11: variable getCanonicalFileName: GetCanonicalFileName | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2803:16: variable name: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2810:19: variable value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2811:19: variable optionDefinition: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2814:23: variable customTypeMap: Map<string, string | number> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2823:66: parameter v: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2831:86: parameter element: string | number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2849:17: function generateTSConfig: (options: CompilerOptions, newLine: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2849:34: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2849:60: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2850:10: type PresetValue: string | number | boolean | (string | number | boolean)[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2852:11: variable tab: "  "
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2853:11: variable result: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2854:11: variable allSetOptions: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2854:55: parameter k: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2921:14: function newline: () => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2925:14: function emitHeader: (header: DiagnosticMessage) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2925:25: parameter header: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2932:14: function emitOption: <K extends string & keyof CompilerOptions>(setting: K, defaultValue: CompilerOptions[K], commented?: "always" | "never" | "optional") => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2932:67: parameter setting: K
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2932:79: parameter defaultValue: CompilerOptions[K]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2932:113: parameter commented: "always" | "never" | "optional"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2933:15: variable existingOptionIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2938:13: variable comment: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2949:15: variable value: CompilerOptions[K]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2950:15: variable formattedValue: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2959:14: function formatValueOrArray: (settingName: string, value: PresetValue) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2959:33: parameter settingName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2959:54: parameter value: PresetValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2960:15: variable option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2960:50: parameter c: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2962:15: variable map: Map<string, string | number> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2965:19: variable map: Map<string, string | number> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2966:41: parameter v: string | number | boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2973:14: function formatSingleValue: (value: PresetValue, map: Map<string, string | number> | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2973:32: parameter value: PresetValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2973:52: parameter map: Map<string, string | number> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2988:17: function convertToOptionsWithAbsolutePaths: (options: CompilerOptions, toAbsolutePath: (path: string) => string) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2988:51: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2988:77: parameter toAbsolutePath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2988:94: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2989:11: variable result: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2990:11: variable optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:2992:16: variable name: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3007:10: function convertToOptionValueWithAbsolutePaths: (option: CommandLineOption | undefined, value: CompilerOptionsValue, toAbsolutePath: (path: string) => string) => CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3007:48: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3007:87: parameter value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3007:116: parameter toAbsolutePath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3007:133: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3010:19: variable values: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:17: function parseJsonConfigFileContent: (json: unknown, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions | undefined, configFileName?: string | undefined, resolutionStack?: Path[] | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined, extendedConfigCache?: Map<string, ExtendedConfigCacheEntry> | undefined, existingWatchOptions?: WatchOptions | undefined) => ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:44: parameter json: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:59: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:82: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:100: parameter existingOptions: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:135: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:160: parameter resolutionStack: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:186: parameter extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:238: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3031:299: parameter existingWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:17: function parseJsonSourceFileConfigFileContent: (sourceFile: TsConfigSourceFile, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions | undefined, configFileName?: string | undefined, resolutionStack?: Path[] | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined, extendedConfigCache?: Map<string, ExtendedConfigCacheEntry> | undefined, existingWatchOptions?: WatchOptions | undefined) => ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:54: parameter sourceFile: TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:86: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:109: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:127: parameter existingOptions: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:162: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:187: parameter resolutionStack: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:213: parameter extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:265: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3042:326: parameter existingWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3044:11: variable result: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3050:17: function setConfigFileInOptions: (options: CompilerOptions, configFile: TsConfigSourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3050:40: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3050:66: parameter configFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3056:10: function isNullOrUndefined: (x: any) => x is null | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3056:28: parameter x: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3060:10: function directoryOfCombinedPath: (fileName: string, basePath: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3060:34: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3060:52: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3066:7: variable defaultIncludeSpec: "**/*"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3077:10: function parseJsonConfigFileContentWorker: <TRaw>(json: TRaw, sourceFile: TsConfigSourceFile | undefined, host: ParseConfigHost, basePath: string, existingOptions: CompilerOptions | undefined, existingWatchOptions: WatchOptions | undefined, configFileName?: string | undefined, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry> | undefined) => ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3078:5: parameter json: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3079:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3080:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3081:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3082:5: parameter existingOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3083:5: parameter existingWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3084:5: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3085:5: parameter resolutionStack: Path[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3086:5: parameter extraFileExtensions: readonly FileExtensionInfo[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3087:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3090:11: variable errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3092:11: variable parsedConfig: ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3093:11: variable raw: { [key: string]: unknown; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3094:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3099:11: variable watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3106:11: variable basePathForFileNames: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3107:11: variable configFileSpecs: ConfigFileSpecs
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3127:14: function getConfigFileSpecs: () => ConfigFileSpecs
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3128:15: variable referencesOfRaw: PropOfRaw<ProjectReference>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3128:80: parameter element: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3129:15: variable filesSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3131:19: variable hasZeroOrNoReferences: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3132:19: variable hasExtends: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3135:27: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3136:27: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3137:27: variable nodeValue: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3137:85: parameter property: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3138:27: variable error: Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3147:13: variable includeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3149:15: variable excludeOfRaw: PropOfRaw<string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3150:13: variable isDefaultIncludeSpec: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3151:13: variable excludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3153:19: variable outDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3154:19: variable declarationDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3157:66: parameter d: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3165:13: variable validatedIncludeSpecsBeforeSubstitution: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3165:85: variable validatedExcludeSpecsBeforeSubstitution: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3166:13: variable validatedIncludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3166:67: variable validatedExcludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3188:15: variable validatedFilesSpecBeforeSubstitution: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3189:15: variable validatedFilesSpec: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3208:14: function getFileNames: (basePath: string) => string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3208:27: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3209:15: variable fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3216:14: function getProjectReferences: (basePath: string) => readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3216:35: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3217:13: variable projectReferences: ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3218:15: variable referencesOfRaw: PropOfRaw<ProjectReference>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3218:80: parameter element: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3220:24: variable ref: ProjectReference
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3237:10: type PropOfRaw: "no-prop" | "not-array" | readonly T[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3238:14: function toPropValue: <T>(specResult: PropOfRaw<T>) => readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3238:29: parameter specResult: PropOfRaw<T>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3242:14: function getSpecsFromRaw: (prop: "exclude" | "files" | "include") => PropOfRaw<string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3242:30: parameter prop: "exclude" | "files" | "include"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3246:14: function getPropFromRaw: <T>(prop: "exclude" | "files" | "include" | "references", validateElement: (value: unknown) => boolean, elementTypeName: string) => PropOfRaw<T>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3246:32: parameter prop: "exclude" | "files" | "include" | "references"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3246:86: parameter validateElement: (value: unknown) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3246:104: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3246:132: parameter elementTypeName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3249:23: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3263:14: function createCompilerDiagnosticOnlyIfJson: (message: DiagnosticMessage, ...args: DiagnosticArguments) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3263:49: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3263:80: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3271:17: function handleWatchOptionsConfigDirTemplateSubstitution: (watchOptions: WatchOptions | undefined, basePath: string) => WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3272:5: parameter watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3273:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3278:10: function handleOptionConfigDirTemplateSubstitution: (options: OptionsBase | undefined, optionDeclarations: readonly CommandLineOption[], basePath: string) => OptionsBase | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3279:5: parameter options: OptionsBase | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3280:5: parameter optionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3281:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3284:9: variable result: OptionsBase | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3285:16: variable option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3287:19: variable value: TsConfigSourceFile | CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3297:27: variable listResult: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3302:27: variable objectResult: MapLike<string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3312:14: function setOptionValue: (option: CommandLineOption, value: CompilerOptionsValue) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3312:29: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3312:56: parameter value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3317:7: variable configDirTemplate: "${configDir}"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3318:10: function startsWithConfigDirTemplate: (value: any) => value is string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3318:38: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3322:10: function getSubstitutedPathWithConfigDirTemplate: (value: string, basePath: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3322:50: parameter value: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3322:65: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3326:10: function getSubstitutedStringArrayWithConfigDirTemplate: (list: readonly string[] | undefined, basePath: string) => string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3326:57: parameter list: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3326:94: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3328:9: variable result: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3329:19: parameter element: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3329:28: parameter index: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3336:10: function getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate: (mapLike: MapLike<string[]>, basePath: string) => MapLike<string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3336:66: parameter mapLike: MapLike<string[]>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3336:94: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3337:9: variable result: MapLike<string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3338:11: variable ownKeys: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3339:21: parameter key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3341:15: variable subStitution: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3348:10: function isErrorNoInputFiles: (error: Diagnostic) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3348:30: parameter error: Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3352:10: function getErrorForNoInputFiles: ({ includeSpecs, excludeSpecs }: ConfigFileSpecs, configFileName: string | undefined) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3352:36: binding includeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3352:50: binding excludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3352:83: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3361:10: function shouldReportNoInputFiles: (fileNames: string[], canJsonReportNoInutFiles: boolean, resolutionStack?: Path[] | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3361:35: parameter fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3361:56: parameter canJsonReportNoInutFiles: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3361:91: parameter resolutionStack: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3366:17: function isSolutionConfig: (config: ParsedCommandLine) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3366:34: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3372:17: function canJsonReportNoInputFiles: (raw: any) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3372:43: parameter raw: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3377:17: function updateErrorForNoInputFiles: (fileNames: string[], configFileName: string, configFileSpecs: ConfigFileSpecs, configParseDiagnostics: Diagnostic[], canJsonReportNoInutFiles: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3378:5: parameter fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3379:5: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3380:5: parameter configFileSpecs: ConfigFileSpecs
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3381:5: parameter configParseDiagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3382:5: parameter canJsonReportNoInutFiles: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3384:11: variable existingErrors: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3389:46: parameter error: Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3394:18: interface ParsedTsconfig: ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3395:5: property raw: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3396:5: property options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3397:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3398:5: property typeAcquisition: TypeAcquisition | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3402:5: property extendedConfigPath: string | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3405:10: function isSuccessfulParsedTsconfig: (value: ParsedTsconfig) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3405:37: parameter value: ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3409:11: interface ExtendsResult: ExtendsResult
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3410:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3411:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3412:5: property watchOptionsCopied: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3413:5: property include: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3414:5: property exclude: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3415:5: property files: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3416:5: property compileOnSave: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3417:5: property extendedSourceFiles: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3423:10: function parseConfig: <TRaw>(json: TRaw, sourceFile: TsConfigSourceFile | undefined, host: ParseConfigHost, basePath: string, configFileName: string | undefined, resolutionStack: string[], errors: Diagnostic[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry> | undefined) => ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3424:5: parameter json: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3425:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3426:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3427:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3428:5: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3429:5: parameter resolutionStack: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3430:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3431:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3434:11: variable resolvedPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3441:11: variable ownConfig: ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3445:11: variable ownRaw: { [key: string]: unknown; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3457:15: variable result: ExtendsResult
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3462:50: parameter extendedConfigPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3478:14: function applyExtendedConfig: (result: ExtendsResult, extendedConfigPath: string) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3478:34: parameter result: ExtendsResult
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3478:57: parameter extendedConfigPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3479:15: variable extendedConfig: ParsedTsconfig | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3481:19: variable extendsRaw: { [key: string]: unknown; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3482:17: variable relativeDifference: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3483:19: variable setPropertyInResultIfNotUndefined: (propertyName: "exclude" | "files" | "include") => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3483:56: parameter propertyName: "exclude" | "files" | "include"
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3485:23: variable extendedSpecs: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3488:64: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3511:14: function assignWatchOptions: (result: ExtendsResult, watchOptions: WatchOptions) => WatchOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3511:33: parameter result: ExtendsResult
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3511:56: parameter watchOptions: WatchOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3518:10: function parseOwnConfigOfJson: (json: any, host: ParseConfigHost, basePath: string, configFileName: string | undefined, errors: Diagnostic[]) => ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3519:5: parameter json: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3520:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3521:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3522:5: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3523:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3529:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3530:11: variable typeAcquisition: TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3531:11: variable watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3533:11: variable extendedConfigPath: string | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3539:10: function getExtendsConfigPathOrArray: (value: CompilerOptionsValue, host: ParseConfigHost, basePath: string, configFileName: string | undefined, errors: Diagnostic[], propertyAssignment?: PropertyAssignment | undefined, valueExpression?: Expression | undefined, sourceFile?: JsonSourceFile | undefined) => string | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3540:5: parameter value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3541:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3542:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3543:5: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3544:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3545:5: parameter propertyAssignment: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3546:5: parameter valueExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3547:5: parameter sourceFile: JsonSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3549:9: variable extendedConfigPath: string | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3550:11: variable newBase: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3563:18: variable index: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3564:19: variable fileName: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3589:10: function parseOwnConfigOfJsonSourceFile: (sourceFile: TsConfigSourceFile, host: ParseConfigHost, basePath: string, configFileName: string | undefined, errors: Diagnostic[]) => ParsedTsconfig
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3590:5: parameter sourceFile: TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3591:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3592:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3593:5: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3594:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3596:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3597:9: variable typeAcquisition: TypeAcquisition | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3598:9: variable watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3599:9: variable extendedConfigPath: string | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3600:9: variable rootCompilerOptions: PropertyName[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3602:11: variable rootOptions: TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3603:11: variable json: AdamicJsonRecoveryObject
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3619:14: function onPropertySet: (keyText: string, value: any, propertyAssignment: PropertyAssignment, parentOption: TsConfigOnlyOption | undefined, option: CommandLineOption | undefined) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3620:9: parameter keyText: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3621:9: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3622:9: parameter propertyAssignment: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3623:9: parameter parentOption: TsConfigOnlyOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3624:9: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3630:21: variable currentOption: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3660:54: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3668:10: function getExtendsConfigPath: (extendedConfig: string, host: ParseConfigHost, basePath: string, errors: Diagnostic[], valueExpression: Expression | undefined, sourceFile: TsConfigSourceFile | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3669:5: parameter extendedConfig: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3670:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3671:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3672:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3673:5: parameter valueExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3674:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3678:13: variable extendedConfigPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3689:11: variable resolved: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3702:18: interface ExtendedConfigCacheEntry: ExtendedConfigCacheEntry
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3703:5: property extendedResult: TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3704:5: property extendedConfig: ParsedTsconfig | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3707:10: function getExtendedConfig: (sourceFile: TsConfigSourceFile | undefined, extendedConfigPath: string, host: ParseConfigHost, resolutionStack: string[], errors: Diagnostic[], extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined, result: ExtendsResult) => ParsedTsconfig | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3708:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3709:5: parameter extendedConfigPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3710:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3711:5: parameter resolutionStack: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3712:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3713:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3714:5: parameter result: ExtendsResult
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3716:11: variable path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3717:9: variable value: ExtendedConfigCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3718:9: variable extendedResult: TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3719:9: variable extendedConfig: ParsedTsconfig | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3724:65: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3735:24: variable extenedSourceFile: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3747:10: function convertCompileOnSaveOptionFromJson: <T>(jsonOption: { compileOnSave?: T; }, basePath: string, errors: Diagnostic[]) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3747:48: parameter jsonOption: { compileOnSave?: T; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3747:62: property compileOnSave: T | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3747:83: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3747:101: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3751:11: variable result: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:17: function convertCompilerOptionsFromJson: (jsonOptions: unknown, basePath: string, configFileName?: string | undefined) => { options: CompilerOptions; errors: Diagnostic[]; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:48: parameter jsonOptions: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:70: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:88: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:116: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3755:142: property errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3756:11: variable errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3757:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:17: function convertTypeAcquisitionFromJson: (jsonOptions: unknown, basePath: string, configFileName?: string | undefined) => { options: TypeAcquisition; errors: Diagnostic[]; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:48: parameter jsonOptions: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:70: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:88: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:116: property options: TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3761:142: property errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3762:11: variable errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3763:11: variable options: TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3767:10: function getDefaultCompilerOptions: (configFileName?: string | undefined) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3767:36: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3768:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3774:10: function convertCompilerOptionsFromJsonWorker: <TRaw>(jsonOptions: TRaw, basePath: string, errors: Diagnostic[], configFileName?: string | undefined) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3774:53: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3774:72: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3774:90: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3774:112: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3775:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3783:10: function getDefaultTypeAcquisition: (configFileName?: string | undefined) => TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3783:36: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3787:10: function convertTypeAcquisitionFromJsonWorker: <TRaw>(jsonOptions: TRaw, basePath: string, errors: Diagnostic[], configFileName?: string | undefined) => TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3787:53: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3787:72: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3787:90: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3787:112: parameter configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3788:11: variable options: TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3793:10: function convertWatchOptionsFromJsonWorker: <TRaw>(jsonOptions: TRaw, basePath: string, errors: Diagnostic[]) => WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3793:50: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3793:69: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3793:87: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:10: function convertOptionsFromJson: { <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined; <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:39: parameter optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:87: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:106: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:124: parameter defaultOptions: undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:151: parameter diagnostics: DidYouMeanOptionsDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3797:194: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:10: function convertOptionsFromJson: { <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined; <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:39: parameter optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:87: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:106: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:124: parameter defaultOptions: CompilerOptions | TypeAcquisition
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:175: parameter diagnostics: DidYouMeanOptionsDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3798:218: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:10: function convertOptionsFromJson: { <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined; <TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:39: parameter optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:87: parameter jsonOptions: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:106: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:124: parameter defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:202: parameter diagnostics: DidYouMeanOptionsDiagnostics
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3799:245: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3804:16: variable id: Extract<keyof NonNullable<TRaw>, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3805:15: variable opt: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3816:10: function createDiagnosticForNodeInSourceFileOrCompilerDiagnostic: (sourceFile: TsConfigSourceFile | undefined, node: Node | undefined, message: DiagnosticMessage, ...args: DiagnosticArguments) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3816:66: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3816:110: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3816:134: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3816:165: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3823:17: function convertJsonOption: <TRaw>(opt: CommandLineOption, value: TRaw, basePath: string, errors: Diagnostic[], propertyAssignment?: PropertyAssignment | undefined, valueExpression?: Expression | undefined, sourceFile?: TsConfigSourceFile | undefined) => CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3824:5: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3825:5: parameter value: TRaw
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3826:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3827:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3828:5: parameter propertyAssignment: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3829:5: parameter valueExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3830:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3837:15: variable optType: "boolean" | "list" | "listOrElement" | "number" | "object" | "string" | Map<string, string | number>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3849:15: variable validatedValue: (TRaw & undefined) | (TRaw & null) | (TRaw & string) | (TRaw & number) | (TRaw & false) | (TRaw & true) | (TRaw & PluginImport[]) | (TRaw & ProjectReference[]) | (TRaw & (string | number)[]) | (TRaw & MapLike<string[]>) | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3857:10: function normalizeNonListOptionValue: (option: CommandLineOption, basePath: string, value: any) => CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3857:38: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3857:65: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3857:83: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3868:10: function validateJsonOptionValue: <T extends CompilerOptionsValue>(opt: CommandLineOption, value: T, errors: Diagnostic[], valueExpression?: Expression | undefined, sourceFile?: TsConfigSourceFile | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3869:5: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3870:5: parameter value: T
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3871:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3872:5: parameter valueExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3873:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3876:11: variable d: [DiagnosticMessage, ...string[]] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3882:10: function convertJsonOptionOfCustomType: (opt: CommandLineOptionOfCustomType, value: string, errors: Diagnostic[], valueExpression?: Expression | undefined, sourceFile?: TsConfigSourceFile | undefined) => string | number | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3883:5: parameter opt: CommandLineOptionOfCustomType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3884:5: parameter value: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3885:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3886:5: parameter valueExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3887:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3890:11: variable key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3891:11: variable val: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3896:64: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3896:76: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3900:10: function convertJsonOptionOfListType: <TValues extends readonly unknown[]>(option: CommandLineOptionOfListType, values: TValues, basePath: string, errors: Diagnostic[], propertyAssignment: PropertyAssignment | undefined, valueExpression: ArrayLiteralExpression | undefined, sourceFile: TsConfigSourceFile | undefined) => any[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3901:5: parameter option: CommandLineOptionOfListType
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3902:5: parameter values: TValues
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3903:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3904:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3905:5: parameter propertyAssignment: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3906:5: parameter valueExpression: ArrayLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3907:5: parameter sourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3909:71: parameter v: TValues[number]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3909:74: parameter index: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3909:207: parameter v: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3923:7: variable invalidTrailingRecursionPattern: RegExp
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3937:7: variable wildcardDirectoryPattern: RegExp
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3950:17: function getFileNamesFromConfigSpecs: (configFileSpecs: ConfigFileSpecs, basePath: string, options: CompilerOptions, host: ParseConfigHost, extraFileExtensions?: readonly FileExtensionInfo[]) => string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3951:5: parameter configFileSpecs: ConfigFileSpecs
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3952:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3953:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3954:5: parameter host: ParseConfigHost
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3955:5: parameter extraFileExtensions: readonly FileExtensionInfo[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3959:11: variable keyMapper: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3964:11: variable literalFileMap: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3969:11: variable wildcardFileMap: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3974:11: variable wildCardJsonFileMap: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3975:13: binding validatedFilesSpec: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3975:33: binding validatedIncludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3975:56: binding validatedExcludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3979:11: variable supportedExtensions: readonly string[][]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3980:11: variable supportedExtensionsWithJsonIfResolveJsonModule: readonly string[][]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3985:20: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3986:19: variable file: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3991:9: variable jsonOnlyIncludeRegexes: readonly RegExp[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3993:20: variable file: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3997:27: variable includes: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3997:67: parameter s: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3998:27: variable includeFilePatterns: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3998:117: parameter pattern: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:3999:92: parameter pattern: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4001:23: variable includeIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4001:72: parameter re: RegExp
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4003:27: variable key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4026:19: variable key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4033:11: variable literalFiles: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4034:11: variable wildcardFiles: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4040:17: function isExcludedFile: (pathToCheck: string, spec: ConfigFileSpecs, basePath: string, useCaseSensitiveFileNames: boolean, currentDirectory: string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4041:5: parameter pathToCheck: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4042:5: parameter spec: ConfigFileSpecs
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4043:5: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4044:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4045:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4047:13: binding validatedFilesSpec: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4047:33: binding validatedIncludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4047:56: binding validatedExcludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4052:11: variable keyMapper: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4054:20: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4062:10: function invalidDotDotAfterRecursiveWildcard: (s: string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4062:46: parameter s: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4068:11: variable wildcardIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4072:11: variable lastDotIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4077:17: function matchesExclude: (pathToCheck: string, excludeSpecs: readonly string[] | undefined, useCaseSensitiveFileNames: boolean, currentDirectory: string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4078:5: parameter pathToCheck: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4079:5: parameter excludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4080:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4081:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4085:30: parameter spec: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4092:17: function matchesExcludeWorker: (pathToCheck: string, excludeSpecs: readonly string[] | undefined, useCaseSensitiveFileNames: boolean, currentDirectory: string, basePath?: string | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4093:5: parameter pathToCheck: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4094:5: parameter excludeSpecs: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4095:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4096:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4097:5: parameter basePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4099:11: variable excludePattern: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4100:11: variable excludeRegex: "" | RegExp | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:10: function validateSpecs: (specs: readonly string[], errors: Diagnostic[], disallowTrailingRecursion: boolean, jsonSourceFile: TsConfigSourceFile | undefined, specKey: string) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:24: parameter specs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:50: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:72: parameter disallowTrailingRecursion: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:108: parameter jsonSourceFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4106:156: parameter specKey: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4107:25: parameter spec: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4109:15: variable diag: [DiagnosticMessage, string] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4116:14: function createDiagnostic: (message: DiagnosticMessage, spec: string) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4116:31: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4116:59: parameter spec: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4117:15: variable element: StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4122:10: function specToDiagnostic: (spec: CompilerOptionsValue, disallowTrailingRecursion?: boolean | undefined) => [DiagnosticMessage, string] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4122:27: parameter spec: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4122:55: parameter disallowTrailingRecursion: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4135:10: function getWildcardDirectories: ({ validatedIncludeSpecs: include, validatedExcludeSpecs: exclude }: ConfigFileSpecs, basePath: string, useCaseSensitiveFileNames: boolean) => MapLike<WatchDirectoryFlags>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4135:58: binding include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4135:90: binding exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4135:118: parameter basePath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4135:136: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4148:11: variable rawExcludeRegex: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4149:11: variable excludeRegex: "" | RegExp | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4150:11: variable wildcardDirectories: MapLike<WatchDirectoryFlags>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4151:11: variable wildCardKeyToPath: Map<CanonicalKey, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4153:15: variable recursiveKeys: CanonicalKey[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4154:20: variable file: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4155:19: variable spec: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4160:19: variable match: { key: CanonicalKey; path: string; flags: WatchDirectoryFlags; } | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4162:25: binding key: CanonicalKey
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4162:30: binding path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4162:36: binding flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4163:23: variable existingPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4164:23: variable existingFlags: WatchDirectoryFlags | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4176:20: variable path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4178:28: variable recursiveKey: CanonicalKey
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4179:27: variable key: CanonicalKey
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4191:6: type CanonicalKey: string & { __canonicalKey: never; }
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4191:32: property __canonicalKey: never
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4192:10: function toCanonicalKey: (path: string, useCaseSensitiveFileNames: boolean) => CanonicalKey
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4192:25: parameter path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4192:39: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:10: function getWildcardDirectoryFromSpec: (spec: string, useCaseSensitiveFileNames: boolean) => { key: CanonicalKey; path: string; flags: WatchDirectoryFlags; } | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:39: parameter spec: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:53: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:92: property key: CanonicalKey
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:111: property path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4196:125: property flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4197:11: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4203:15: variable questionWildcardIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4204:15: variable starWildcardIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4205:15: variable lastDirectorySeperatorIndex: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4215:15: variable path: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:10: function hasFileWithHigherPriorityExtension: (file: string, literalFiles: Map<string, string>, wildcardFiles: Map<string, string>, extensions: readonly string[][], keyMapper: (value: string) => string) => boolean
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:45: parameter file: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:59: parameter literalFiles: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:94: parameter wildcardFiles: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:130: parameter extensions: readonly string[][]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:163: parameter keyMapper: (value: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4231:175: parameter value: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4232:11: variable extensionGroup: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4232:48: parameter group: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4236:16: variable ext: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4243:15: variable higherPriorityPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:10: function removeWildcardFilesWithLowerPriorityExtension: (file: string, wildcardFiles: Map<string, string>, extensions: readonly string[][], keyMapper: (value: string) => string) => void
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:56: parameter file: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:70: parameter wildcardFiles: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:106: parameter extensions: readonly string[][]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:139: parameter keyMapper: (value: string) => string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4264:151: parameter value: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4265:11: variable extensionGroup: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4265:48: parameter group: string[]
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4269:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4270:15: variable ext: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4274:15: variable lowerPriorityPath: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4285:17: function convertCompilerOptionsForTelemetry: (opts: CompilerOptions) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4285:52: parameter opts: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4286:11: variable out: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4287:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4289:19: variable type: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4298:10: function getOptionValueWithEmptyStrings: (value: any, option: CommandLineOption) => {} | undefined
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4298:41: parameter value: any
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4298:53: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4313:19: variable elementType: CommandLineOptionOfBooleanType | CommandLineOptionOfCustomType | CommandLineOptionOfNumberType | CommandLineOptionOfStringType | TsConfigOnlyOption
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4314:55: parameter v: unknown
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4316:47: parameter optionEnumValue: string | number
+/workspace/tracing-measured-after/src/compiler/commandLineParser.ts:4316:64: parameter optionStringValue: string

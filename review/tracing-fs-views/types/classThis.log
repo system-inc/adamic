@@ -1,0 +1,32 @@
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:33:10: function createClassThisAssignmentBlock: (factory: NodeFactory, classThis: Identifier, thisExpression?: ThisExpression) => ClassThisAssignmentBlock
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:33:41: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:33:63: parameter classThis: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:33:86: parameter thisExpression: ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:39:11: variable expression: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:40:11: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:41:11: variable body: Block
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:42:11: variable block: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:52:13: type ClassThisAssignmentBlock: ClassStaticBlockDeclaration & { readonly body: Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }; }]; }; }
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:53:14: property body: Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }; }]; }
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:54:18: property statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }; }]
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:58:30: property expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:59:34: property left: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:60:34: property right: ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:72:17: function isClassThisAssignmentBlock: (node: Node) => node is ClassThisAssignmentBlock
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:72:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:77:11: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:90:17: function classHasClassThisAssignment: (node: ClassLikeDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:90:45: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:103:17: function injectClassThisAssignmentIfMissing: <T extends ClassLikeDeclaration>(factory: NodeFactory, node: T, classThis: Identifier, thisExpression?: ThisExpression | undefined) => Extract<ClassDeclaration, Pick<T, "kind">> | Extract<ClassExpression, Pick<T, "kind">>
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:103:84: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:103:106: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:103:115: parameter classThis: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:103:138: parameter thisExpression: ThisExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:104:17: function injectClassThisAssignmentIfMissing: <T extends ClassLikeDeclaration>(factory: NodeFactory, node: T, classThis: Identifier, thisExpression?: ThisExpression | undefined) => Extract<ClassDeclaration, Pick<T, "kind">> | Extract<ClassExpression, Pick<T, "kind">>
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:104:84: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:104:106: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:104:115: parameter classThis: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:104:138: parameter thisExpression: ThisExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:120:11: variable staticBlock: ClassThisAssignmentBlock
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:125:11: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/classThis.ts:128:11: variable updatedNode: ClassDeclaration | ClassExpression

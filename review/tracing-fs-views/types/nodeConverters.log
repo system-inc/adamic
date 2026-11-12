@@ -1,0 +1,30 @@
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:41:17: function createNodeConverters: (factory: NodeFactory) => NodeConverters
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:41:38: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:54:14: function convertToFunctionBlock: (node: ConciseBody, multiLine?: boolean | undefined) => Block
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:54:37: parameter node: ConciseBody
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:54:56: parameter multiLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:56:15: variable returnStatement: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:58:15: variable body: Block
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:63:14: function convertToFunctionExpression: (node: FunctionDeclaration) => FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:63:42: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:65:15: variable updated: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:66:40: parameter modifier: Modifier
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:82:14: function convertToClassExpression: (node: ClassDeclaration) => ClassExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:82:39: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:83:15: variable updated: ClassExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:84:36: parameter modifier: ModifierLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:98:14: function convertToArrayAssignmentElement: (element: ArrayBindingOrAssignmentElement) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:98:46: parameter element: ArrayBindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:104:19: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:118:14: function convertToObjectAssignmentElement: (element: ObjectBindingOrAssignmentElement) => ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:118:47: parameter element: ObjectBindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:125:23: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:135:14: function convertToAssignmentPattern: (node: BindingOrAssignmentPattern) => AssignmentPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:135:41: parameter node: BindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:147:14: function convertToObjectAssignmentPattern: (node: ObjectBindingOrAssignmentPattern) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:147:47: parameter node: ObjectBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:160:14: function convertToArrayAssignmentPattern: (node: ArrayBindingOrAssignmentPattern) => ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:160:46: parameter node: ArrayBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:173:14: function convertToAssignmentElementTarget: (node: BindingOrAssignmentElementTarget) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:173:47: parameter node: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/factory/nodeConverters.ts:183:14: variable nullNodeConverters: NodeConverters

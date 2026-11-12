@@ -1,0 +1,96 @@
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:20:13: type AffectedFileResult: { result: T; affected: Program | SourceFile; } | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:20:39: property result: T
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:20:50: property affected: Program | SourceFile
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:22:18: interface BuilderProgramHost: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:26:5: property createHash: ((data: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:26:20: parameter data: string
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:31:5: property writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:37:5: property storeSignatureInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:41:13: type HostForComputeHash: { createHash?: ((data: string) => string) | undefined; storeSignatureInfo?: boolean | undefined; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:46:18: interface BuilderProgram: BuilderProgram
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:48:5: property state: ReusableBuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:74:19: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:82:27: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:86:26: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:94:29: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:94:54: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:98:31: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:98:56: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:102:24: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:112:28: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:112:53: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:124:10: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:124:41: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:124:72: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:124:111: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:124:139: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:126:19: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:126:50: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:138:18: interface SemanticDiagnosticsBuilderProgram: SemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:143:46: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:143:85: parameter ignoreSourceFile: ((sourceFile: SourceFile) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:143:105: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:150:18: interface EmitAndSemanticDiagnosticsBuilderProgram: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:156:26: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:156:57: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:156:96: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:156:124: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:162:17: function createSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): SemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): SemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:163:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:164:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:165:5: parameter oldProgram: SemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:166:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:168:17: function createSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): SemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): SemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:169:5: parameter rootNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:170:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:171:5: parameter host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:172:5: parameter oldProgram: SemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:173:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:174:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:176:17: function createSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): SemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: SemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): SemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:177:5: parameter newProgramOrRootNames: Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:178:5: parameter hostOrOptions: BuilderProgramHost | CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:179:5: parameter oldProgramOrHost: CompilerHost | SemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:180:5: parameter configFileParsingDiagnosticsOrOldProgram: readonly Diagnostic[] | SemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:181:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:182:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:201:17: function createEmitAndSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:202:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:203:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:204:5: parameter oldProgram: EmitAndSemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:205:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:207:17: function createEmitAndSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:208:5: parameter rootNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:209:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:210:5: parameter host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:211:5: parameter oldProgram: EmitAndSemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:212:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:213:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:215:17: function createEmitAndSemanticDiagnosticsBuilderProgram: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:216:5: parameter newProgramOrRootNames: Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:217:5: parameter hostOrOptions: BuilderProgramHost | CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:218:5: parameter oldProgramOrHost: CompilerHost | EmitAndSemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:219:5: parameter configFileParsingDiagnosticsOrOldProgram: EmitAndSemanticDiagnosticsBuilderProgram | readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:220:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:221:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:239:17: function createAbstractBuilder: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): BuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): BuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:240:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:241:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:242:5: parameter oldProgram: BuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:243:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:245:17: function createAbstractBuilder: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): BuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): BuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:246:5: parameter rootNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:247:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:248:5: parameter host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:249:5: parameter oldProgram: BuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:250:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:251:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:253:17: function createAbstractBuilder: { (newProgram: Program, host: BuilderProgramHost, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined): BuilderProgram; (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: BuilderProgram | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined): BuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:254:5: parameter newProgramOrRootNames: Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:255:5: parameter hostOrOptions: BuilderProgramHost | CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:256:5: parameter oldProgramOrHost: BuilderProgram | CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:257:5: parameter configFileParsingDiagnosticsOrOldProgram: BuilderProgram | readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:258:5: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:259:5: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:261:13: binding newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builderPublic.ts:261:55: binding newConfigFileParsingDiagnostics: readonly Diagnostic[]

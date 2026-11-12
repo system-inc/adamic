@@ -1,0 +1,213 @@
+/workspace/tracing-measured-after/src/compiler/builderState.ts:39:17: function getFileEmitOutput: (program: Program, sourceFile: SourceFile, emitOnlyDtsFiles: boolean, cancellationToken?: CancellationToken | undefined, customTransformers?: CustomTransformers | undefined, forceDtsEmit?: boolean | undefined) => EmitOutput
+/workspace/tracing-measured-after/src/compiler/builderState.ts:40:5: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:41:5: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:42:5: parameter emitOnlyDtsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:43:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:44:5: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:45:5: parameter forceDtsEmit: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:47:11: variable outputFiles: OutputFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:48:13: binding emitSkipped: boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:48:26: binding diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:51:14: function writeFile: (fileName: string, text: string, writeByteOrderMark: boolean) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:51:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:51:42: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:51:56: parameter writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:62:18: interface BuilderState: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:66:5: property fileInfos: Map<Path, FileInfo>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:72:14: property referencedMap: ReadonlyManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:77:5: property useFileVersionAsSignature: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:83:5: property hasCalledUpdateShapeSignature: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:87:5: property oldSignatures: Map<Path, string | false> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:91:5: property allFilesExcludingDefaultLibraryFile: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:95:5: property allFileNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:97:5: property signatureInfo: Map<Path, SignatureInfo> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:104:22: interface FileInfo: FileInfo
+/workspace/tracing-measured-after/src/compiler/builderState.ts:105:18: property version: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:106:9: property signature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:107:9: property affectsGlobalScope: true | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:108:9: property impliedFormat: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/builderState.ts:111:22: interface ReadonlyManyToManyPathMap: ReadonlyManyToManyPathMap
+/workspace/tracing-measured-after/src/compiler/builderState.ts:112:17: parameter v: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:113:19: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:118:22: interface ManyToManyPathMap: ManyToManyPathMap
+/workspace/tracing-measured-after/src/compiler/builderState.ts:119:19: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:120:13: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:120:22: parameter v: ReadonlySet<Path>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:123:21: function createManyToManyPathMap: () => ManyToManyPathMap
+/workspace/tracing-measured-after/src/compiler/builderState.ts:124:18: function create: (forward: Map<Path, ReadonlySet<Path>>, reverse: Map<Path, Set<Path>>, deleted: Set<Path> | undefined) => ManyToManyPathMap
+/workspace/tracing-measured-after/src/compiler/builderState.ts:124:25: parameter forward: Map<Path, ReadonlySet<Path>>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:124:64: parameter reverse: Map<Path, Set<Path>>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:124:95: parameter deleted: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:125:19: variable map: ManyToManyPathMap
+/workspace/tracing-measured-after/src/compiler/builderState.ts:126:26: parameter v: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:127:28: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:131:28: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:134:27: variable set: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:139:33: parameter v: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:143:23: parameter k: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:143:26: parameter vSet: ReadonlySet<Path>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:146:27: variable existingVSet: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:149:43: parameter v: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:155:34: parameter v: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:171:14: function addToMultimap: <K, V>(map: Map<K, Set<V>>, k: K, v: V) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:171:34: parameter map: Map<K, Set<V>>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:171:55: parameter k: K
+/workspace/tracing-measured-after/src/compiler/builderState.ts:171:61: parameter v: V
+/workspace/tracing-measured-after/src/compiler/builderState.ts:172:13: variable set: Set<V> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:180:14: function deleteFromMultimap: <K, V>(map: Map<K, Set<V>>, k: K, v: V) => boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:180:39: parameter map: Map<K, Set<V>>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:180:60: parameter k: K
+/workspace/tracing-measured-after/src/compiler/builderState.ts:180:66: parameter v: V
+/workspace/tracing-measured-after/src/compiler/builderState.ts:181:15: variable set: Set<V> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:193:14: function getReferencedFilesFromImportedModuleSymbol: (symbol: Symbol) => Path[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:193:57: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/builderState.ts:194:48: parameter declaration: Declaration
+/workspace/tracing-measured-after/src/compiler/builderState.ts:200:14: function getReferencedFilesFromImportLiteral: (checker: TypeChecker, importName: StringLiteralLike) => Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:200:50: parameter checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/builderState.ts:200:72: parameter importName: StringLiteralLike
+/workspace/tracing-measured-after/src/compiler/builderState.ts:201:15: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:208:14: function getReferencedFileFromFileName: (program: Program, fileName: string, sourceFileDirectory: Path, getCanonicalFileName: GetCanonicalFileName) => Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:208:44: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:208:62: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:208:80: parameter sourceFileDirectory: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:208:107: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/builderState.ts:215:14: function getReferencedFiles: (program: Program, sourceFile: SourceFile, getCanonicalFileName: GetCanonicalFileName) => Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:215:33: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:215:51: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:215:75: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/builderState.ts:216:13: variable referencedFiles: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:222:19: variable checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/builderState.ts:223:24: variable importName: StringLiteralLike
+/workspace/tracing-measured-after/src/compiler/builderState.ts:224:23: variable declarationSourceFilePaths: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:229:15: variable sourceFileDirectory: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:232:24: variable referencedFile: FileReference
+/workspace/tracing-measured-after/src/compiler/builderState.ts:233:23: variable referencedPath: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:239:58: binding resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:244:19: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:245:19: variable typeFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:251:19: variable checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/builderState.ts:252:24: variable moduleName: Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/builderState.ts:254:23: variable symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:263:20: variable ambientModule: Symbol
+/workspace/tracing-measured-after/src/compiler/builderState.ts:271:18: function addReferenceFromAmbientModule: (symbol: Symbol) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:271:48: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/builderState.ts:276:24: variable declaration: Declaration
+/workspace/tracing-measured-after/src/compiler/builderState.ts:277:23: variable declarationSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:287:18: function addReferencedFile: (referencedPath: Path) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:287:36: parameter referencedPath: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:295:21: function canReuseOldState: (newReferencedMap: ReadonlyManyToManyPathMap | undefined, oldState: BuilderState | undefined) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:295:38: parameter newReferencedMap: ReadonlyManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:295:95: parameter oldState: BuilderState | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:299:21: function createReferencedMap: (options: CompilerOptions) => ManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:299:41: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builderState.ts:308:21: function create: (newProgram: Program, oldState: Readonly<BuilderState> | undefined, disableUseFileVersionAsSignature: boolean) => BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:308:28: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:308:49: parameter oldState: Readonly<BuilderState> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:308:95: parameter disableUseFileVersionAsSignature: boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:309:15: variable fileInfos: Map<Path, FileInfo>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:310:15: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builderState.ts:311:15: variable referencedMap: ManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:312:15: variable useOldState: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:318:20: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:319:19: variable version: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:320:19: variable oldUncommittedSignature: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:321:19: variable signature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:325:23: variable newReferences: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:349:21: function releaseCache: (state: BuilderState) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:349:34: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:357:21: function getFilesAffectedBy: (state: BuilderState, programOfThisState: Program, path: Path, cancellationToken: CancellationToken | undefined, host: HostForComputeHash) => readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:358:9: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:359:9: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:360:9: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:361:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:362:9: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builderState.ts:364:15: variable result: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:375:21: function getFilesAffectedByWithOldState: (state: BuilderState, programOfThisState: Program, path: Path, cancellationToken: CancellationToken | undefined, host: HostForComputeHash) => readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:376:9: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:377:9: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:378:9: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:379:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:380:9: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builderState.ts:382:15: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:394:21: function updateSignatureOfFile: (state: BuilderState, signature: string | undefined, path: Path) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:394:43: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:394:64: parameter signature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:394:95: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:399:21: function computeDtsSignature: (programOfThisState: Program, sourceFile: SourceFile, cancellationToken: CancellationToken | undefined, host: HostForComputeHash, onNewSignature: (signature: string, sourceFiles: readonly SourceFile[]) => void) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:400:9: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:401:9: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:402:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:403:9: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builderState.ts:404:9: parameter onNewSignature: (signature: string, sourceFiles: readonly SourceFile[]) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:404:26: parameter signature: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:404:45: parameter sourceFiles: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:24: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:30: parameter _writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:51: parameter _onError: ((message: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:61: parameter sourceFiles: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:408:74: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:431:21: function updateShapeSignature: (state: BuilderState, programOfThisState: Program, sourceFile: SourceFile, cancellationToken: CancellationToken | undefined, host: HostForComputeHash, useFileVersionAsSignature?: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:432:9: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:433:9: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:434:9: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:435:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:436:9: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builderState.ts:437:9: parameter useFileVersionAsSignature: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:442:15: variable info: FileInfo
+/workspace/tracing-measured-after/src/compiler/builderState.ts:443:15: variable prevSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:444:13: variable latestSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:446:90: parameter signature: string
+/workspace/tracing-measured-after/src/compiler/builderState.ts:465:21: function getAllDependencies: (state: BuilderState, programOfThisState: Program, sourceFile: SourceFile) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:465:40: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:465:61: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:465:90: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:466:15: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builderState.ts:478:15: variable seenMap: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:479:15: variable queue: Path[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:481:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:484:23: variable references: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:486:32: variable key: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:493:75: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:499:14: function getAllFileNames: (state: BuilderState, programOfThisState: Program) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:499:30: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:499:51: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:501:19: variable sourceFiles: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:502:92: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:510:21: function getReferencedByPaths: (state: Readonly<BuilderState>, referencedFilePath: Path) => Path[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:510:42: parameter state: Readonly<BuilderState>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:510:73: parameter referencedFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:511:15: variable keys: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:521:14: function containsOnlyAmbientModules: (sourceFile: SourceFile) => boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:521:41: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:522:20: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/builderState.ts:534:14: function containsGlobalScopeAugmentation: (sourceFile: SourceFile) => boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:534:46: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:535:53: parameter augmentation: Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/builderState.ts:541:14: function isFileAffectingGlobalScope: (sourceFile: SourceFile) => boolean
+/workspace/tracing-measured-after/src/compiler/builderState.ts:541:41: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:549:21: function getAllFilesExcludingDefaultLibraryFile: (state: BuilderState, programOfThisState: Program, firstSourceFile: SourceFile | undefined) => readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:549:60: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:549:81: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:549:110: parameter firstSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:555:13: variable result: SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:557:20: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:565:18: function addSourceFile: (sourceFile: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/builderState.ts:565:32: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:575:14: function getFilesAffectedByUpdatedShapeWhenNonModuleEmit: (state: BuilderState, programOfThisState: Program, sourceFileWithUpdatedShape: SourceFile) => readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:575:62: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:575:83: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:575:112: parameter sourceFileWithUpdatedShape: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:576:15: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builderState.ts:588:14: function getFilesAffectedByUpdatedShapeWhenModuleEmit: (state: BuilderState, programOfThisState: Program, sourceFileWithUpdatedShape: SourceFile, cancellationToken: CancellationToken | undefined, host: HostForComputeHash) => readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:589:9: parameter state: BuilderState
+/workspace/tracing-measured-after/src/compiler/builderState.ts:590:9: parameter programOfThisState: Program
+/workspace/tracing-measured-after/src/compiler/builderState.ts:591:9: parameter sourceFileWithUpdatedShape: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:592:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builderState.ts:593:9: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builderState.ts:599:15: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builderState.ts:607:15: variable seenFileNamesMap: Map<Path, SourceFile>
+/workspace/tracing-measured-after/src/compiler/builderState.ts:611:15: variable queue: Path[]
+/workspace/tracing-measured-after/src/compiler/builderState.ts:613:19: variable currentPath: Path
+/workspace/tracing-measured-after/src/compiler/builderState.ts:615:23: variable currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builderState.ts:624:72: parameter value: SourceFile

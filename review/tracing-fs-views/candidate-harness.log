@@ -1,0 +1,12 @@
+Using /workspace/tracing-artifacts/b9ddcf9a7e66b8e673007d8eecf56d2325a965698232482ff37ec187d2c3983a.gv1crg00/tree/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 78ms
+Finished generate-diagnostics in 87ms
+Starting bundle-tests
+Starting build-tests
+Finished build-tests in 327ms
+Finished bundle-tests in 649ms
+Completed tests in 737ms

@@ -1,0 +1,17 @@
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:11:7: variable sourceFileToNodeChildren: WeakMap<SourceFileLike, WeakMap<Node, readonly Node[] | undefined>>
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:14:17: function getNodeChildren: (node: Node, sourceFile: SourceFileLike) => readonly Node[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:14:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:14:45: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:15:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:27:17: function setNodeChildren: (node: Node, sourceFile: SourceFileLike, children: readonly Node[]) => readonly Node[]
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:27:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:27:45: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:27:73: parameter children: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:34:9: variable map: WeakMap<Node, readonly Node[] | undefined> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:44:17: function unsetNodeChildren: (node: Node, origSourceFile: SourceFileLike) => void
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:44:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:44:47: parameter origSourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:55:17: function transferSourceFileChildren: (sourceFile: SourceFileLike, targetSourceFile: SourceFileLike) => void
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:55:44: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:55:72: parameter targetSourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/factory/nodeChildren.ts:56:11: variable map: WeakMap<Node, readonly Node[] | undefined> | undefined

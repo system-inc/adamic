@@ -1,0 +1,21 @@
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:25:17: function transformES2021: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:25:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:25:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:27:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:28:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:32:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:32:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:40:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:40:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:50:14: function transformLogicalAssignment: (binaryExpression: AssignmentExpression<Token<LogicalOrCoalescingAssignmentOperator>>) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:50:41: parameter binaryExpression: AssignmentExpression<Token<LogicalOrCoalescingAssignmentOperator>>
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:51:15: variable operator: Token<LogicalOrCoalescingAssignmentOperator>
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:52:15: variable nonAssignmentOperator: SyntaxKind.QuestionQuestionToken | LogicalOperatorOrHigher
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:53:13: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:54:13: variable assignmentTarget: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:55:15: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:58:19: variable propertyAccessTargetSimpleCopiable: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:59:19: variable propertyAccessTarget: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:61:19: variable propertyAccessTargetAssignment: AssignmentExpression<EqualsToken> | LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:77:23: variable elementAccessArgumentSimpleCopiable: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2021.ts:78:23: variable elementAccessArgument: Expression

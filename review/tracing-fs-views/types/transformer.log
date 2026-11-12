@@ -1,0 +1,133 @@
+/workspace/tracing-measured-after/src/compiler/transformer.ts:78:10: function getModuleTransformer: (moduleKind: ModuleKind) => TransformerFactory<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:78:31: parameter moduleKind: ModuleKind
+/workspace/tracing-measured-after/src/compiler/transformer.ts:117:14: variable noTransformers: EmitTransformers
+/workspace/tracing-measured-after/src/compiler/transformer.ts:120:17: function getTransformers: (compilerOptions: CompilerOptions, customTransformers?: CustomTransformers | undefined, emitOnly?: boolean | EmitOnly | undefined) => EmitTransformers
+/workspace/tracing-measured-after/src/compiler/transformer.ts:120:33: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformer.ts:120:67: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:120:108: parameter emitOnly: boolean | EmitOnly | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:127:10: function getScriptTransformers: (compilerOptions: CompilerOptions, customTransformers?: CustomTransformers | undefined, emitOnly?: boolean | EmitOnly | undefined) => TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:127:32: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformer.ts:127:66: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:127:107: parameter emitOnly: boolean | EmitOnly | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:130:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformer.ts:131:11: variable moduleKind: ModuleKind
+/workspace/tracing-measured-after/src/compiler/transformer.ts:132:11: variable useDefineForClassFields: boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:133:11: variable transformers: TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:192:10: function getDeclarationTransformers: (customTransformers?: CustomTransformers | undefined) => TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:192:37: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:193:11: variable transformers: TransformerFactory<Bundle | SourceFile>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:202:10: function wrapCustomTransformer: (transformer: CustomTransformer) => Transformer<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:202:32: parameter transformer: CustomTransformer
+/workspace/tracing-measured-after/src/compiler/transformer.ts:203:12: parameter node: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformer.ts:209:10: function wrapCustomTransformerFactory: <T extends SourceFile | Bundle>(transformer: CustomTransformerFactory | TransformerFactory<T>, handleDefault: (context: TransformationContext, tx: Transformer<T>) => Transformer<Bundle | SourceFile>) => TransformerFactory<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:209:70: parameter transformer: CustomTransformerFactory | TransformerFactory<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:209:133: parameter handleDefault: (context: TransformationContext, tx: Transformer<T>) => Transformer<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:209:149: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformer.ts:209:181: parameter tx: Transformer<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:210:12: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformer.ts:211:15: variable customTransformer: CustomTransformer | Transformer<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:218:10: function wrapScriptTransformerFactory: (transformer: CustomTransformerFactory | TransformerFactory<SourceFile>) => TransformerFactory<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:218:39: parameter transformer: CustomTransformerFactory | TransformerFactory<SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:222:10: function wrapDeclarationTransformerFactory: (transformer: CustomTransformerFactory | TransformerFactory<Bundle | SourceFile>) => TransformerFactory<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:222:44: parameter transformer: CustomTransformerFactory | TransformerFactory<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:223:55: parameter _: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformer.ts:223:58: parameter node: Transformer<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:227:17: function noEmitSubstitution: (_hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:227:36: parameter _hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:227:53: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:17: function noEmitNotification: (hint: EmitHint, node: Node, callback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:36: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:52: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:64: parameter callback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:75: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:232:91: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:17: function transformNodes: <T extends Node>(resolver: EmitResolver | undefined, host: EmitHost | undefined, factory: NodeFactory, options: CompilerOptions, nodes: readonly T[], transformers: readonly TransformerFactory<T>[], allowDtsFiles: boolean) => TransformationResult<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:48: parameter resolver: EmitResolver | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:84: parameter host: EmitHost | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:112: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:134: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:160: parameter nodes: readonly T[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:181: parameter transformers: readonly TransformerFactory<T>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:248:229: parameter allowDtsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:249:11: variable enabledSyntaxKindFeatures: SyntaxKindFeatureFlags[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:250:9: variable lexicalEnvironmentVariableDeclarations: VariableDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:251:9: variable lexicalEnvironmentFunctionDeclarations: FunctionDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:252:9: variable lexicalEnvironmentStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:253:9: variable lexicalEnvironmentFlags: LexicalEnvironmentFlags
+/workspace/tracing-measured-after/src/compiler/transformer.ts:254:9: variable lexicalEnvironmentVariableDeclarationsStack: (VariableDeclaration[] | undefined)[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:255:9: variable lexicalEnvironmentFunctionDeclarationsStack: (FunctionDeclaration[] | undefined)[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:256:9: variable lexicalEnvironmentStatementsStack: (Statement[] | undefined)[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:257:9: variable lexicalEnvironmentFlagsStack: LexicalEnvironmentFlags[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:258:9: variable lexicalEnvironmentStackOffset: number
+/workspace/tracing-measured-after/src/compiler/transformer.ts:259:9: variable lexicalEnvironmentSuspended: boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:260:9: variable blockScopedVariableDeclarationsStack: (Identifier[] | undefined)[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:261:9: variable blockScopeStackOffset: number
+/workspace/tracing-measured-after/src/compiler/transformer.ts:262:9: variable blockScopedVariableDeclarations: Identifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:263:9: variable emitHelpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:264:9: variable onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:265:9: variable onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:266:9: variable state: TransformationState
+/workspace/tracing-measured-after/src/compiler/transformer.ts:267:11: variable diagnostics: DiagnosticWithLocation[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:271:11: variable context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformer.ts:298:30: parameter value: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:306:24: parameter value: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:311:9: method addDiagnostic: (diag: DiagnosticWithLocation) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:311:23: parameter diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformer.ts:317:16: variable node: T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:324:11: variable transformersWithContext: Transformer<T>[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:324:54: parameter t: TransformerFactory<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:325:11: variable transformation: (node: T) => T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:325:29: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:326:20: variable transform: Transformer<T>
+/workspace/tracing-measured-after/src/compiler/transformer.ts:336:11: variable transformed: T[]
+/workspace/tracing-measured-after/src/compiler/transformer.ts:337:16: variable node: T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:358:14: function transformRoot: (node: T) => T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:358:28: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:365:14: function enableSubstitution: (kind: SyntaxKind) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:365:33: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/transformer.ts:373:14: function isSubstitutionEnabled: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:373:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:385:14: function substituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:385:29: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:385:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:393:14: function enableEmitNotification: (kind: SyntaxKind) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:393:37: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/transformer.ts:402:14: function isEmitNotificationEnabled: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:402:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:14: function emitNodeWithNotification: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:39: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:55: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:67: parameter emitCallback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:82: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformer.ts:414:98: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformer.ts:431:14: function hoistVariableDeclaration: (name: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:431:39: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformer.ts:434:15: variable decl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformer.ts:449:14: function hoistFunctionDeclaration: (func: FunctionDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:449:39: parameter func: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformer.ts:464:14: function addInitializationStatement: (node: Statement) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:464:41: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformer.ts:480:14: function startLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:501:14: function suspendLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:509:14: function resumeLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:520:14: function endLexicalEnvironment: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:525:13: variable statements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:536:23: variable statement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformer.ts:576:14: function setLexicalEnvironmentFlags: (flags: LexicalEnvironmentFlags, value: boolean) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:576:41: parameter flags: LexicalEnvironmentFlags
+/workspace/tracing-measured-after/src/compiler/transformer.ts:576:73: parameter value: boolean
+/workspace/tracing-measured-after/src/compiler/transformer.ts:582:14: function getLexicalEnvironmentFlags: () => LexicalEnvironmentFlags
+/workspace/tracing-measured-after/src/compiler/transformer.ts:589:14: function startBlockScope: () => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:600:14: function endBlockScope: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:603:15: variable statements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:608:61: parameter identifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformer.ts:621:14: function addBlockScopedVariable: (name: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:621:37: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformer.ts:626:14: function requestEmitHelper: (helper: EmitHelper) => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:626:32: parameter helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/transformer.ts:631:24: variable h: EmitHelper
+/workspace/tracing-measured-after/src/compiler/transformer.ts:638:14: function readEmitHelpers: () => EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:641:15: variable helpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformer.ts:646:14: function dispose: () => void
+/workspace/tracing-measured-after/src/compiler/transformer.ts:649:24: variable node: T
+/workspace/tracing-measured-after/src/compiler/transformer.ts:669:14: variable nullTransformationContext: TransformationContext

@@ -1,0 +1,1275 @@
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:118:17: function trace: (host: ModuleResolutionHost, message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:118:23: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:118:51: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:118:82: parameter args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:123:17: function isTraceEnabled: (compilerOptions: CompilerOptions, host: ModuleResolutionHost) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:123:32: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:123:66: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:127:10: function withPackageId: (packageInfo: PackageJsonInfo | undefined, r: PathAndExtension | undefined, state: ModuleResolutionState) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:127:24: parameter packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:127:66: parameter r: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:127:99: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:128:9: variable packageId: PackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:130:15: variable packageJsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:143:10: function noPackageId: (r: PathAndExtension | undefined) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:143:22: parameter r: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:147:10: function removeIgnoredPackageId: (r: Resolved | undefined) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:147:33: parameter r: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:155:11: interface Resolved: Resolved
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:156:5: property path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:157:5: property extension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:158:5: property packageId: PackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:168:14: property originalPath: string | true | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:169:5: property resolvedUsingTsExtension: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:173:11: interface PathAndExtension: PathAndExtension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:174:5: property path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:176:5: property ext: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:177:5: property resolvedUsingTsExtension: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:193:10: function formatExtensions: (extensions: Extensions) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:193:27: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:194:11: variable result: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:202:10: function extensionsToExtensionsArray: (extensions: Extensions) => Extension[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:202:38: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:203:11: variable result: Extension[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:211:11: interface PathAndPackageId: PathAndPackageId
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:212:14: property fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:213:14: property packageId: PackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:216:10: function resolvedTypeScriptOnly: (resolved: Resolved | undefined) => PathAndPackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:216:33: parameter resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:224:10: function createResolvedModuleWithFailedLookupLocationsHandlingSymlink: (moduleName: string, resolved: Resolved | undefined, isExternalLibraryImport: boolean | undefined, failedLookupLocations: string[], affectingLocations: string[], diagnostics: Diagnostic[], state: ModuleResolutionState, cache: ModuleResolutionCache | NonRelativeModuleNameResolutionCache | undefined, alternateResult?: string | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:225:5: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:226:5: parameter resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:227:5: parameter isExternalLibraryImport: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:228:5: parameter failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:229:5: parameter affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:230:5: parameter diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:231:5: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:232:5: parameter cache: ModuleResolutionCache | NonRelativeModuleNameResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:233:5: parameter alternateResult: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:244:17: binding resolvedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:244:35: binding originalPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:259:10: function createResolvedModuleWithFailedLookupLocations: (resolved: Resolved | undefined, isExternalLibraryImport: boolean | undefined, failedLookupLocations: string[], affectingLocations: string[], diagnostics: Diagnostic[], resultFromCache: ResolvedModuleWithFailedLookupLocations | undefined, cache: ModuleResolutionCache | NonRelativeModuleNameResolutionCache | undefined, alternateResult?: string | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:260:5: parameter resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:261:5: parameter isExternalLibraryImport: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:262:5: parameter failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:263:5: parameter affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:264:5: parameter diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:265:5: parameter resultFromCache: ResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:266:5: parameter cache: ModuleResolutionCache | NonRelativeModuleNameResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:267:5: parameter alternateResult: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:300:10: function initializeResolutionField: <T>(value: T[]) => T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:300:39: parameter value: T[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:304:17: function updateResolutionField: <T>(to: T[] | undefined, value: T[] | undefined) => T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:304:42: parameter to: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:304:63: parameter value: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:311:10: function initializeResolutionFieldForReadonlyCache: <T>(fromCache: T[] | undefined, value: T[]) => T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:311:55: parameter fromCache: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:311:83: parameter value: T[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:318:18: interface ModuleResolutionState: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:319:5: property host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:320:5: property compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:321:5: property traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:322:5: property failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:323:5: property affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:324:5: property resultFromCache: ResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:325:5: property packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:326:5: property features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:327:5: property conditions: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:328:5: property requestContainingDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:329:14: property reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:330:5: property isConfigLookup: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:331:5: property candidateIsFromPackageJsonField: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:332:5: property resolvedPackageDirectory: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:339:18: interface PackageJsonPathFields: PackageJsonPathFields
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:340:5: property typings: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:341:5: property types: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:342:5: property typesVersions: MapLike<MapLike<string[]>> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:343:5: property main: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:344:5: property tsconfig: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:345:5: property type: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:346:5: property imports: object | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:347:5: property exports: object | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:348:5: property name: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:349:5: property dependencies: MapLike<string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:350:5: property peerDependencies: MapLike<string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:351:5: property optionalDependencies: MapLike<string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:354:11: interface PackageJson: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:355:5: property name: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:356:5: property version: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:359:10: function readPackageJsonField: { <K extends MatchingKeys<PackageJson, string | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "string", state: ModuleResolutionState): PackageJson[K] | undefined; <K extends MatchingKeys<PackageJson, object | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "object", state: ModuleResolutionState): PackageJson[K] | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:359:88: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:359:114: parameter fieldName: K
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:359:128: parameter typeOfTag: "string"
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:359:149: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:360:10: function readPackageJsonField: { <K extends MatchingKeys<PackageJson, string | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "string", state: ModuleResolutionState): PackageJson[K] | undefined; <K extends MatchingKeys<PackageJson, object | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "object", state: ModuleResolutionState): PackageJson[K] | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:360:88: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:360:114: parameter fieldName: K
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:360:128: parameter typeOfTag: "object"
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:360:149: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:361:10: function readPackageJsonField: { <K extends MatchingKeys<PackageJson, string | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "string", state: ModuleResolutionState): PackageJson[K] | undefined; <K extends MatchingKeys<PackageJson, object | undefined>>(jsonContent: PackageJson, fieldName: K, typeOfTag: "object", state: ModuleResolutionState): PackageJson[K] | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:361:60: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:361:86: parameter fieldName: K
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:361:100: parameter typeOfTag: "object" | "string"
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:361:132: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:368:11: variable value: PackageJson[K]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:379:10: function readPackageJsonPathField: <K extends "typings" | "types" | "main" | "tsconfig">(jsonContent: PackageJson, fieldName: K, baseDirectory: string, state: ModuleResolutionState) => PackageJson[K] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:379:88: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:379:114: parameter fieldName: K
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:379:128: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:379:151: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:380:11: variable fileName: PackageJson[K] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:390:11: variable path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:397:10: function readPackageJsonTypesFields: (jsonContent: PackageJson, baseDirectory: string, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:397:37: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:397:63: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:397:86: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:402:10: function readPackageJsonTSConfigField: (jsonContent: PackageJson, baseDirectory: string, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:402:39: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:402:65: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:402:88: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:406:10: function readPackageJsonMainField: (jsonContent: PackageJson, baseDirectory: string, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:406:35: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:406:61: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:406:84: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:410:10: function readPackageJsonTypesVersionsField: (jsonContent: PackageJson, state: ModuleResolutionState) => MapLike<MapLike<string[]>> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:410:44: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:410:70: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:411:11: variable typesVersions: MapLike<MapLike<string[]>> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:422:18: interface VersionPaths: VersionPaths
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:423:5: property version: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:424:5: property paths: MapLike<string[]>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:427:10: function readPackageJsonTypesVersionPaths: (jsonContent: PackageJson, state: ModuleResolutionState) => VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:427:43: parameter jsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:427:69: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:428:11: variable typesVersions: MapLike<MapLike<string[]>> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:432:20: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:439:11: variable result: VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:447:22: binding bestVersionKey: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:447:45: binding bestVersionPaths: MapLike<string[]>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:458:5: variable typeScriptVersion: Version | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:461:17: function getPackageJsonTypesVersionsPaths: (typesVersions: MapLike<MapLike<string[]>>) => VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:461:50: parameter typesVersions: MapLike<MapLike<string[]>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:464:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:467:15: variable keyRange: VersionRange | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:479:17: function getEffectiveTypeRoots: (options: CompilerOptions, host: GetEffectiveTypeRootsHost) => string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:479:39: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:479:65: parameter host: GetEffectiveTypeRootsHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:484:9: variable currentDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:501:10: function getDefaultTypeRoots: (currentDirectory: string) => string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:501:30: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:502:9: variable typeRoots: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:503:63: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:504:15: variable atTypes: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:509:7: variable nodeModulesAtTypes: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:511:10: function arePathsEqual: (path1: string, path2: string, host: ModuleResolutionHost) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:511:24: parameter path1: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:511:39: parameter path2: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:511:54: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:512:11: variable useCaseSensitiveFileNames: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:516:10: function getOriginalAndResolvedFileName: (fileName: string, host: ModuleResolutionHost, traceEnabled: boolean) => { resolvedFileName: string; originalPath: string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:516:41: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:516:59: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:516:87: parameter traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:517:11: variable resolvedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:518:11: variable pathsAreEqual: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:526:10: function getCandidateFromTypeRoot: (typeRoot: string, typeReferenceDirectiveName: string, moduleResolutionState: ModuleResolutionState) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:526:35: parameter typeRoot: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:526:53: parameter typeReferenceDirectiveName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:526:89: parameter moduleResolutionState: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:527:11: variable nameForLookup: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:17: function resolveTypeReferenceDirective: (typeReferenceDirectiveName: string, containingFile: string | undefined, options: CompilerOptions, host: ModuleResolutionHost, redirectedReference?: ResolvedProjectReference | undefined, cache?: TypeReferenceDirectiveResolutionCache | undefined, resolutionMode?: ResolutionMode) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:47: parameter typeReferenceDirectiveName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:83: parameter containingFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:119: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:145: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:173: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:221: parameter cache: TypeReferenceDirectiveResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:538:268: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:540:11: variable traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:545:11: variable containingDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:546:9: variable result: ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:561:11: variable typeRoots: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:584:11: variable failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:585:11: variable affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:588:9: variable features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:592:11: variable moduleResolution: ModuleResolutionKind
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:596:11: variable conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:599:11: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:600:11: variable moduleResolutionState: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:610:27: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:615:9: variable resolved: PathAndPackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:616:9: variable primary: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:622:9: variable resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:624:17: binding fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:624:27: binding packageId: PackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:625:13: variable resolvedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:625:42: variable originalPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:650:14: function traceResult: (result: ResolvedTypeReferenceDirectiveWithFailedLookupLocations) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:650:26: parameter result: ResolvedTypeReferenceDirectiveWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:662:14: function primaryLookup: () => PathAndPackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:668:44: parameter typeRoot: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:669:23: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:670:23: variable directoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:676:27: variable resolvedFromFile: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:678:31: variable packageDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:679:31: variable packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:695:14: function secondaryLookup: () => PathAndPackageId | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:696:15: variable initialLocationForSecondaryLookup: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:698:17: variable result: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:705:27: variable searchResult: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:709:35: binding candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:726:10: function getNodeResolutionFeatures: (options: CompilerOptions) => NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:726:36: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:727:9: variable features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:755:17: function getConditions: (options: CompilerOptions, resolutionMode?: ResolutionMode) => string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:755:31: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:755:57: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:756:11: variable moduleResolution: ModuleResolutionKind
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:771:11: variable conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:787:17: function resolvePackageNameToPackageJson: (packageName: string, containingDirectory: string, options: CompilerOptions, host: ModuleResolutionHost, cache: ModuleResolutionCache | undefined) => PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:788:5: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:789:5: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:790:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:791:5: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:792:5: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:794:11: variable moduleResolutionState: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:796:85: parameter ancestorDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:798:19: variable nodeModulesFolder: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:799:19: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:813:17: function getAutomaticTypeDirectiveNames: (options: CompilerOptions, host: ModuleResolutionHost) => string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:813:48: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:813:74: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:819:11: variable wildcardMatches: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:821:15: variable typeRoots: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:823:24: variable root: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:825:32: variable typeDirectivePath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:826:31: variable normalized: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:827:31: variable packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:831:31: variable isNotNeededPackage: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:833:35: variable baseFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:849:50: parameter t: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:852:18: interface TypeReferenceDirectiveResolutionCache: TypeReferenceDirectiveResolutionCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:856:18: interface ModeAwareCache: ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:857:9: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:857:22: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:858:9: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:858:22: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:858:44: parameter value: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:859:12: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:859:25: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:860:9: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:860:22: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:861:13: parameter cb: (elem: T, key: string, mode: ResolutionMode) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:861:18: parameter elem: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:861:27: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:861:40: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:869:18: interface PerDirectoryResolutionCache: PerDirectoryResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:870:27: parameter name: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:870:41: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:870:63: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:870:86: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:871:34: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:871:57: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:877:12: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:878:22: property directoryToModuleNameMap: CacheWithRedirects<Path, ModeAwareCache<T>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:879:22: property isReadonly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:882:18: interface NonRelativeNameResolutionCache: NonRelativeNameResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:883:33: parameter nonRelativeName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:883:58: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:883:80: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:883:103: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:884:40: parameter nonRelativeName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:884:65: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:884:87: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:890:12: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:891:22: property isReadonly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:894:18: interface PerNonRelativeNameCache: PerNonRelativeNameCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:895:9: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:896:9: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:896:28: parameter result: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:897:22: property isReadonly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:900:18: interface ModuleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:903:22: property optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:910:18: interface NonRelativeModuleNameResolutionCache: NonRelativeModuleNameResolutionCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:912:35: parameter nonRelativeModuleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:912:66: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:912:88: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:916:18: interface MissingPackageJsonInfo: MissingPackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:917:5: property packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:918:5: property directoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:922:13: type PackageJsonInfoCacheEntry: MissingPackageJsonInfo | PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:925:17: function isPackageJsonInfo: (entry: PackageJsonInfoCacheEntry | undefined) => entry is PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:925:35: parameter entry: PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:930:17: function isMissingPackageJsonInfo: (entry: PackageJsonInfoCacheEntry | undefined) => entry is MissingPackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:930:42: parameter entry: PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:934:18: interface PackageJsonInfoCache: PackageJsonInfoCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:935:41: parameter packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:936:41: parameter packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:936:66: parameter info: PackageJsonInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:939:22: property isReadonly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:942:13: type PerModuleNameCache: PerNonRelativeNameCache<ResolvedModuleWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:944:10: function compilerOptionValueToString: (value: unknown) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:944:38: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:949:30: parameter e: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:951:9: variable str: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:952:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:961:17: function getKeyForCompilerOptions: (options: CompilerOptions, affectingOptionDeclarations: readonly CommandLineOption[]) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:961:42: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:961:68: parameter affectingOptionDeclarations: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:962:44: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:966:18: interface CacheWithRedirects: CacheWithRedirects<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:967:28: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:968:36: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:969:12: parameter newOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:975:13: type RedirectsCacheKey: string & { __compilerOptionsKey: undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:975:44: property __compilerOptionsKey: undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:977:10: function createCacheWithRedirects: <K, V>(ownOptions: CompilerOptions | undefined, optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>) => CacheWithRedirects<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:977:41: parameter ownOptions: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:977:82: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:978:11: variable redirectsMap: Map<CompilerOptions, Map<K, V>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:979:11: variable redirectsKeyToMap: Map<RedirectsCacheKey, Map<K, V>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:980:9: variable ownMap: Map<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:990:14: function getMapOfCacheRedirects: (redirectedReference: ResolvedProjectReference | undefined) => Map<K, V> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:990:37: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:996:14: function getOrCreateMapOfCacheRedirects: (redirectedReference: ResolvedProjectReference | undefined) => Map<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:996:45: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1002:14: function update: (newOptions: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1002:21: parameter newOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1010:14: function getOrCreateMap: { (redirectOptions: CompilerOptions, create: true): Map<K, V>; (redirectOptions: CompilerOptions, create: false): Map<K, V> | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1010:29: parameter redirectOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1010:63: parameter create: true
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1011:14: function getOrCreateMap: { (redirectOptions: CompilerOptions, create: true): Map<K, V>; (redirectOptions: CompilerOptions, create: false): Map<K, V> | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1011:29: parameter redirectOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1011:63: parameter create: false
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1012:14: function getOrCreateMap: { (redirectOptions: CompilerOptions, create: true): Map<K, V>; (redirectOptions: CompilerOptions, create: false): Map<K, V> | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1012:29: parameter redirectOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1012:63: parameter create: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1013:13: variable result: Map<K, V> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1015:15: variable key: RedirectsCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1019:23: variable ownKey: RedirectsCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1030:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1031:15: variable ownKey: RedirectsCacheKey | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1042:14: function getRedirectsCacheKey: (options: CompilerOptions) => RedirectsCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1042:35: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1043:13: variable result: RedirectsCacheKey | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1051:10: function createPackageJsonInfoCache: (currentDirectory: string, getCanonicalFileName: (s: string) => string) => PackageJsonInfoCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1051:37: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1051:63: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1051:86: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1052:9: variable cache: Map<Path, PackageJsonInfoCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1054:14: function getPackageJsonInfo: (packageJsonPath: string) => PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1054:33: parameter packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1057:14: function setPackageJsonInfo: (packageJsonPath: string, info: PackageJsonInfoCacheEntry) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1057:33: parameter packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1057:58: parameter info: PackageJsonInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1060:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1063:14: function getInternalMap: () => Map<Path, PackageJsonInfoCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1068:10: function getOrCreateCache: <K, V>(cacheWithRedirects: CacheWithRedirects<K, V>, redirectedReference: ResolvedProjectReference | undefined, key: K, create: () => V) => V
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1068:33: parameter cacheWithRedirects: CacheWithRedirects<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1068:79: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1068:138: parameter key: K
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1068:146: parameter create: () => V
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1069:11: variable cache: Map<K, V>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1070:9: variable result: V | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1078:10: function createPerDirectoryResolutionCache: <T>(currentDirectory: string, getCanonicalFileName: GetCanonicalFileName, options: CompilerOptions | undefined, optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>) => PerDirectoryResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1079:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1080:5: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1081:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1082:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1084:11: variable directoryToModuleNameMap: CacheWithRedirects<Path, ModeAwareCache<T>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1093:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1097:14: function update: (options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1097:21: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1101:14: function getOrCreateCacheForDirectory: (directoryName: string, redirectedReference?: ResolvedProjectReference | undefined) => ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1101:43: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1101:66: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1102:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1106:14: function getFromDirectoryCache: (name: string, mode: ResolutionMode, directoryName: string, redirectedReference: ResolvedProjectReference | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1106:36: parameter name: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1106:50: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1106:72: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1106:95: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1107:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1113:13: type ModeAwareCacheKey: string & { __modeAwareCacheKey: undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1113:44: property __modeAwareCacheKey: undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1115:17: function createModeAwareCacheKey: (specifier: string, mode: ResolutionMode) => ModeAwareCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1115:41: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1115:60: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1119:17: function createModeAwareCache: <T>() => ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1120:11: variable underlying: Map<ModeAwareCacheKey, T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1121:11: variable memoizedReverseKeys: Map<ModeAwareCacheKey, [specifier: string, mode: ResolutionMode]>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1123:11: variable cache: ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1124:9: method get: (specifier: string, mode: ResolutionMode) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1124:13: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1124:24: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1127:9: method set: (specifier: string, mode: ResolutionMode, value: T) => ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1127:13: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1127:24: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1127:30: parameter value: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1131:9: method delete: (specifier: string, mode: ResolutionMode) => ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1131:16: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1131:27: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1135:9: method has: (specifier: string, mode: ResolutionMode) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1135:13: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1135:24: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1138:9: method forEach: (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1138:17: parameter cb: (elem: T, key: string, mode: ResolutionMode) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1139:40: parameter elem: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1139:46: parameter key: ModeAwareCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1140:24: binding specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1140:35: binding mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1144:9: method size: () => number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1150:14: function getUnderlyingCacheKey: (specifier: string, mode: ResolutionMode) => ModeAwareCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1150:36: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1150:55: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1151:15: variable result: ModeAwareCacheKey
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1157:10: function getOriginalOrResolvedModuleFileName: (result: ResolvedModuleWithFailedLookupLocations) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1157:46: parameter result: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1161:10: function getOriginalOrResolvedTypeReferenceFileName: (result: ResolvedTypeReferenceDirectiveWithFailedLookupLocations) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1161:53: parameter result: ResolvedTypeReferenceDirectiveWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1166:10: function createNonRelativeNameResolutionCache: <T>(currentDirectory: string, getCanonicalFileName: (s: string) => string, options: CompilerOptions | undefined, getResolvedFileName: (result: T) => string | undefined, optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>) => NonRelativeNameResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1167:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1168:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1168:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1169:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1170:5: parameter getResolvedFileName: (result: T) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1170:27: parameter result: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1171:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1173:11: variable moduleNameToDirectoryMap: CacheWithRedirects<ModeAwareCacheKey, PerNonRelativeNameCache<T>>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1181:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1185:14: function update: (options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1185:21: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1189:14: function getFromNonRelativeNameCache: (nonRelativeModuleName: string, mode: ResolutionMode, directoryName: string, redirectedReference?: ResolvedProjectReference | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1189:42: parameter nonRelativeModuleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1189:73: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1189:95: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1189:118: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1194:14: function getOrCreateCacheForNonRelativeName: (nonRelativeModuleName: string, mode: ResolutionMode, redirectedReference?: ResolvedProjectReference | undefined) => PerNonRelativeNameCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1194:49: parameter nonRelativeModuleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1194:80: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1194:102: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1199:14: function createPerModuleNameCache: () => PerNonRelativeNameCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1200:15: variable directoryPathMap: Map<Path, T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1204:18: function get: (directory: string) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1204:22: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1219:18: function set: (directory: string, result: T) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1219:22: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1219:41: parameter result: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1220:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1227:19: variable resolvedFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1234:19: variable commonPrefix: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1235:17: variable current: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1237:23: variable parent: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1246:18: function getCommonPrefix: (directory: Path, resolution: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1246:34: parameter directory: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1246:51: parameter resolution: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1247:19: variable resolutionDirectory: Path
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1250:17: variable i: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1251:19: variable limit: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1258:19: variable rootLength: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1262:19: variable sep: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1271:11: interface ModuleOrTypeReferenceResolutionCache: ModuleOrTypeReferenceResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1274:5: property optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1276:10: function createModuleOrTypeReferenceResolutionCache: <T>(currentDirectory: string, getCanonicalFileName: (s: string) => string, options: CompilerOptions | undefined, packageJsonInfoCache: PackageJsonInfoCache | undefined, getResolvedFileName: (result: T) => string | undefined, optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined) => ModuleOrTypeReferenceResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1277:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1278:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1278:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1279:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1280:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1281:5: parameter getResolvedFileName: (result: T) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1281:27: parameter result: T
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1282:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1285:11: variable perDirectoryResolutionCache: PerDirectoryResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1291:11: variable nonRelativeNameResolutionCache: NonRelativeNameResolutionCache<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1311:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1316:14: function clearAllExceptPackageJsonInfoCache: () => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1321:14: function update: (options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1321:21: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1327:17: function createModuleResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): ModuleResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): ModuleResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1328:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1329:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1329:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1330:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1331:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1334:17: function createModuleResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): ModuleResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): ModuleResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1335:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1336:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1336:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1337:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1338:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1339:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1341:17: function createModuleResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): ModuleResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): ModuleResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1342:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1343:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1343:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1344:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1345:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1346:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1348:11: variable result: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1356:45: parameter nonRelativeName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1356:62: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1356:68: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1360:17: function createTypeReferenceDirectiveResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): TypeReferenceDirectiveResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): TypeReferenceDirectiveResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1361:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1362:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1362:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1363:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1364:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1367:17: function createTypeReferenceDirectiveResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): TypeReferenceDirectiveResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): TypeReferenceDirectiveResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1368:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1369:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1369:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1370:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1371:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1372:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1374:17: function createTypeReferenceDirectiveResolutionCache: { (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined): TypeReferenceDirectiveResolutionCache; (currentDirectory: string, getCanonicalFileName: (s: string) => string, options?: CompilerOptions | undefined, packageJsonInfoCache?: PackageJsonInfoCache | undefined, optionsToRedirectsKey?: Map<CompilerOptions, RedirectsCacheKey> | undefined): TypeReferenceDirectiveResolutionCache; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1375:5: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1376:5: parameter getCanonicalFileName: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1376:28: parameter s: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1377:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1378:5: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1379:5: parameter optionsToRedirectsKey: Map<CompilerOptions, RedirectsCacheKey> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1392:17: function getOptionsForLibraryResolution: (options: CompilerOptions) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1392:48: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:17: function resolveLibrary: (libraryName: string, resolveFrom: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:32: parameter libraryName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:53: parameter resolveFrom: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:74: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:108: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1397:136: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1401:17: function resolveModuleNameFromCache: (moduleName: string, containingFile: string, cache: ModuleResolutionCache, mode?: ResolutionMode) => ResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1401:44: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1401:64: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1401:88: parameter cache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1401:118: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1402:11: variable containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:17: function resolveModuleName: (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, resolutionMode?: ResolutionMode) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:35: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:55: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:79: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:113: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:141: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:172: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1406:220: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1407:11: variable traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1417:11: variable containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1418:9: variable result: ResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1426:13: variable moduleResolution: ModuleResolutionKind | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:6: type ResolutionKindSpecificLoader: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState, packageJsonValue?: string | undefined) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:38: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:62: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:81: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:110: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1493:140: parameter packageJsonValue: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:10: function tryLoadModuleUsingOptionalResolutionSettings: (extensions: Extensions, moduleName: string, containingDirectory: string, loader: ResolutionKindSpecificLoader, state: ModuleResolutionState) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:55: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:79: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:99: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:128: parameter loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1555:166: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1556:11: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1567:10: function tryLoadModuleUsingPathsIfEligible: (extensions: Extensions, moduleName: string, loader: ResolutionKindSpecificLoader, state: ModuleResolutionState) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1567:44: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1567:68: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1567:88: parameter loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1567:126: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1568:13: binding baseUrl: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1568:22: binding paths: MapLike<string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1576:15: variable baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1577:15: variable pathPatterns: ParsedPatterns
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:10: function tryLoadModuleUsingRootDirs: (extensions: Extensions, moduleName: string, containingDirectory: string, loader: ResolutionKindSpecificLoader, state: ModuleResolutionState) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:37: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:61: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:81: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:110: parameter loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1582:148: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1591:11: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1593:9: variable matchedRootDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1594:9: variable matchedNormalizedPrefix: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1595:16: variable rootDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1599:13: variable normalizedRoot: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1603:15: variable isLongestMatchingPrefix: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1619:15: variable suffix: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1625:15: variable resolvedFileName: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1634:20: variable rootDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1639:19: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1643:19: variable baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1644:19: variable resolvedFileName: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1656:10: function tryLoadModuleUsingBaseUrl: (extensions: Extensions, moduleName: string, loader: ResolutionKindSpecificLoader, state: ModuleResolutionState) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1656:36: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1656:60: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1656:80: parameter loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1656:118: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1657:13: binding baseUrl: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1664:11: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1678:17: function resolveJSModule: (moduleName: string, initialDir: string, host: ModuleResolutionHost) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1678:33: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1678:53: parameter initialDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1678:73: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1679:13: binding resolvedModule: ResolvedModuleFull | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1679:29: binding failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:10: function node16ModuleNameResolver: (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, resolutionMode?: ResolutionMode) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:35: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:55: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:79: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:113: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:141: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:172: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1712:220: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:10: function nodeNextModuleNameResolver: (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, resolutionMode?: ResolutionMode) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:37: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:57: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:81: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:115: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:143: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:174: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1725:222: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:10: function nodeNextModuleNameResolverWorker: (features: NodeResolutionFeatures, moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, resolutionMode?: ResolutionMode, conditions?: string[] | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:43: parameter features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:77: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:97: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:121: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:155: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:183: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:214: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:262: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1738:295: parameter conditions: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1739:11: variable containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1742:11: variable esmMode: 0 | NodeResolutionFeatures.EsmMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1743:9: variable extensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1750:10: function tryResolveJSModuleWorker: (moduleName: string, initialDir: string, host: ModuleResolutionHost) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1750:35: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1750:55: parameter initialDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1750:75: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:17: function bundlerModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:43: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:63: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:87: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:121: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:149: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1766:180: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:17: function bundlerModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:43: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:63: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:87: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:121: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:149: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:180: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1768:228: parameter conditions: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:17: function bundlerModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:43: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:63: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:87: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:121: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:149: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:180: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1769:228: parameter conditions: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1770:11: variable containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1771:9: variable extensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:17: function nodeModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined, lookupConfig?: boolean | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:40: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:60: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:84: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:118: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:146: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1778:177: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:34: function nodeModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined, lookupConfig?: boolean | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:57: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:77: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:101: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:135: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:163: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:194: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:242: parameter conditions: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1779:265: parameter lookupConfig: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:17: function nodeModuleNameResolver: { (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined): ResolvedModuleWithFailedLookupLocations; (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: ModuleResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined, conditions?: string[] | undefined, lookupConfig?: boolean | undefined): ResolvedModuleWithFailedLookupLocations; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:40: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:60: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:84: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:118: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:146: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:177: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:225: parameter conditions: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1780:248: parameter isConfigLookup: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1781:9: variable extensions: any
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1799:17: function nodeNextJsonConfigResolver: (moduleName: string, containingFile: string, host: ModuleResolutionHost) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1799:44: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1799:64: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1799:88: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1803:10: function nodeModuleNameResolverWorker: (features: NodeResolutionFeatures, moduleName: string, containingDirectory: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache: ModuleResolutionCache | undefined, extensions: Extensions, isConfigLookup: boolean, redirectedReference: ResolvedProjectReference | undefined, conditions: readonly string[] | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1804:5: parameter features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1805:5: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1806:5: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1807:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1808:5: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1809:5: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1810:5: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1811:5: parameter isConfigLookup: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1812:5: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1813:5: parameter conditions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1815:11: variable traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1817:11: variable failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1818:11: variable affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1819:11: variable moduleResolution: ModuleResolutionKind
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1827:11: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1828:11: variable state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1838:27: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1844:152: parameter c: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1847:9: variable result: any
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1849:15: variable priorityExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1850:15: variable secondaryExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1859:9: variable alternateResult: any
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1861:15: variable wantedTypesButGotJs: 0 | boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1871:19: variable diagnosticState: { host: ModuleResolutionHost; compilerOptions: CompilerOptions; traceEnabled: boolean; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resultFromCache?: ResolvedModuleWithFailedLookupLocations; packageJsonInfoCache: PackageJsonInfoCache | undefined; conditions: readonly string[]; requestContainingDirectory: string | undefined; isConfigLookup: boolean; candidateIsFromPackageJsonField: boolean; resolvedPackageDirectory: boolean; features: number; reportDiagnostic: (_?: unknown) => void; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1876:19: variable diagnosticResult: SearchResult<{ resolved: Resolved; readonly isExternalLibraryImport: boolean; }>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1886:19: variable diagnosticsCompilerOptions: { all?: boolean; allowImportingTsExtensions?: boolean; allowJs?: boolean; allowNonTsExtensions?: boolean; allowArbitraryExtensions?: boolean; allowSyntheticDefaultImports?: boolean; allowUmdGlobalAccess?: boolean; allowUnreachableCode?: boolean; allowUnusedLabels?: boolean; alwaysStrict?: boolean; baseUrl?: string; build?: boolean | undefined; charset?: string; checkJs?: boolean; configFilePath?: string | undefined; configFile?: TsConfigSourceFile | undefined; customConditions?: string[]; declaration?: boolean; declarationMap?: boolean; emitDeclarationOnly?: boolean; declarationDir?: string; diagnostics?: boolean; extendedDiagnostics?: boolean; disableSizeLimit?: boolean; disableSourceOfProjectReferenceRedirect?: boolean; disableSolutionSearching?: boolean; disableReferencedProjectLoad?: boolean; downlevelIteration?: boolean; emitBOM?: boolean; emitDecoratorMetadata?: boolean; exactOptionalPropertyTypes?: boolean; experimentalDecorators?: boolean; forceConsistentCasingInFileNames?: boolean; generateCpuProfile?: string; generateTrace?: string; help?: boolean | undefined; ignoreDeprecations?: string; importHelpers?: boolean; importsNotUsedAsValues?: ImportsNotUsedAsValues; init?: boolean | undefined; inlineSourceMap?: boolean; inlineSources?: boolean; isolatedModules?: boolean; isolatedDeclarations?: boolean; jsx?: JsxEmit; keyofStringsOnly?: boolean; lib?: string[]; libReplacement?: boolean; listEmittedFiles?: boolean | undefined; listFiles?: boolean | undefined; explainFiles?: boolean; listFilesOnly?: boolean; locale?: string; mapRoot?: string; maxNodeModuleJsDepth?: number; module?: ModuleKind | undefined; moduleSuffixes?: string[]; moduleDetection?: ModuleDetectionKind; newLine?: NewLineKind; noEmit?: boolean; noCheck?: boolean; noEmitForJsFiles?: boolean; noEmitHelpers?: boolean; noEmitOnError?: boolean; noErrorTruncation?: boolean; noFallthroughCasesInSwitch?: boolean; noImplicitAny?: boolean; noImplicitReturns?: boolean; noImplicitThis?: boolean; noStrictGenericChecks?: boolean; noUnusedLocals?: boolean; noUnusedParameters?: boolean; noImplicitUseStrict?: boolean; noPropertyAccessFromIndexSignature?: boolean; assumeChangesOnlyAffectDirectDependencies?: boolean; noLib?: boolean; noResolve?: boolean; noDtsResolution?: boolean; noUncheckedIndexedAccess?: boolean; out?: string; outDir?: string; outFile?: string; paths?: MapLike<string[]>; pathsBasePath?: string; plugins?: PluginImport[]; preserveConstEnums?: boolean; noImplicitOverride?: boolean; preserveSymlinks?: boolean; preserveValueImports?: boolean; preserveWatchOutput?: boolean; project?: string | undefined; pretty?: boolean; reactNamespace?: string; jsxFactory?: string; jsxFragmentFactory?: string; jsxImportSource?: string; composite?: boolean; incremental?: boolean; tsBuildInfoFile?: string; removeComments?: boolean; resolvePackageJsonExports?: boolean; resolvePackageJsonImports?: boolean; rewriteRelativeImportExtensions?: boolean; rootDir?: string; rootDirs?: string[]; skipLibCheck?: boolean; skipDefaultLibCheck?: boolean; sourceMap?: boolean; sourceRoot?: string; strict?: boolean; strictFunctionTypes?: boolean; strictBindCallApply?: boolean; strictNullChecks?: boolean; strictPropertyInitialization?: boolean; strictBuiltinIteratorReturn?: boolean; stableTypeOrdering?: boolean; stripInternal?: boolean; suppressExcessPropertyErrors?: boolean; suppressImplicitAnyIndexErrors?: boolean; suppressOutputPathCheck?: boolean; target?: ScriptTarget | undefined; traceResolution?: boolean | undefined; useUnknownInCatchVariables?: boolean; noUncheckedSideEffectImports?: boolean; resolveJsonModule?: boolean; types?: string[]; typeRoots?: string[]; verbatimModuleSyntax?: boolean; erasableSyntaxOnly?: boolean; version?: boolean | undefined; watch?: boolean; esModuleInterop?: boolean; showConfig?: boolean | undefined; ignoreConfig?: boolean; useDefineForClassFields?: boolean; tscBuild?: boolean; moduleResolution: ModuleResolutionKind; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1887:19: variable diagnosticState: { host: ModuleResolutionHost; traceEnabled: boolean; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resultFromCache?: ResolvedModuleWithFailedLookupLocations; packageJsonInfoCache: PackageJsonInfoCache | undefined; requestContainingDirectory: string | undefined; isConfigLookup: boolean; candidateIsFromPackageJsonField: boolean; resolvedPackageDirectory: boolean; compilerOptions: { all?: boolean; allowImportingTsExtensions?: boolean; allowJs?: boolean; allowNonTsExtensions?: boolean; allowArbitraryExtensions?: boolean; allowSyntheticDefaultImports?: boolean; allowUmdGlobalAccess?: boolean; allowUnreachableCode?: boolean; allowUnusedLabels?: boolean; alwaysStrict?: boolean; baseUrl?: string; build?: boolean | undefined; charset?: string; checkJs?: boolean; configFilePath?: string | undefined; configFile?: TsConfigSourceFile | undefined; customConditions?: string[]; declaration?: boolean; declarationMap?: boolean; emitDeclarationOnly?: boolean; declarationDir?: string; diagnostics?: boolean; extendedDiagnostics?: boolean; disableSizeLimit?: boolean; disableSourceOfProjectReferenceRedirect?: boolean; disableSolutionSearching?: boolean; disableReferencedProjectLoad?: boolean; downlevelIteration?: boolean; emitBOM?: boolean; emitDecoratorMetadata?: boolean; exactOptionalPropertyTypes?: boolean; experimentalDecorators?: boolean; forceConsistentCasingInFileNames?: boolean; generateCpuProfile?: string; generateTrace?: string; help?: boolean | undefined; ignoreDeprecations?: string; importHelpers?: boolean; importsNotUsedAsValues?: ImportsNotUsedAsValues; init?: boolean | undefined; inlineSourceMap?: boolean; inlineSources?: boolean; isolatedModules?: boolean; isolatedDeclarations?: boolean; jsx?: JsxEmit; keyofStringsOnly?: boolean; lib?: string[]; libReplacement?: boolean; listEmittedFiles?: boolean | undefined; listFiles?: boolean | undefined; explainFiles?: boolean; listFilesOnly?: boolean; locale?: string; mapRoot?: string; maxNodeModuleJsDepth?: number; module?: ModuleKind | undefined; moduleSuffixes?: string[]; moduleDetection?: ModuleDetectionKind; newLine?: NewLineKind; noEmit?: boolean; noCheck?: boolean; noEmitForJsFiles?: boolean; noEmitHelpers?: boolean; noEmitOnError?: boolean; noErrorTruncation?: boolean; noFallthroughCasesInSwitch?: boolean; noImplicitAny?: boolean; noImplicitReturns?: boolean; noImplicitThis?: boolean; noStrictGenericChecks?: boolean; noUnusedLocals?: boolean; noUnusedParameters?: boolean; noImplicitUseStrict?: boolean; noPropertyAccessFromIndexSignature?: boolean; assumeChangesOnlyAffectDirectDependencies?: boolean; noLib?: boolean; noResolve?: boolean; noDtsResolution?: boolean; noUncheckedIndexedAccess?: boolean; out?: string; outDir?: string; outFile?: string; paths?: MapLike<string[]>; pathsBasePath?: string; plugins?: PluginImport[]; preserveConstEnums?: boolean; noImplicitOverride?: boolean; preserveSymlinks?: boolean; preserveValueImports?: boolean; preserveWatchOutput?: boolean; project?: string | undefined; pretty?: boolean; reactNamespace?: string; jsxFactory?: string; jsxFragmentFactory?: string; jsxImportSource?: string; composite?: boolean; incremental?: boolean; tsBuildInfoFile?: string; removeComments?: boolean; resolvePackageJsonExports?: boolean; resolvePackageJsonImports?: boolean; rewriteRelativeImportExtensions?: boolean; rootDir?: string; rootDirs?: string[]; skipLibCheck?: boolean; skipDefaultLibCheck?: boolean; sourceMap?: boolean; sourceRoot?: string; strict?: boolean; strictFunctionTypes?: boolean; strictBindCallApply?: boolean; strictNullChecks?: boolean; strictPropertyInitialization?: boolean; strictBuiltinIteratorReturn?: boolean; stableTypeOrdering?: boolean; stripInternal?: boolean; suppressExcessPropertyErrors?: boolean; suppressImplicitAnyIndexErrors?: boolean; suppressOutputPathCheck?: boolean; target?: ScriptTarget | undefined; traceResolution?: boolean | undefined; useUnknownInCatchVariables?: boolean; noUncheckedSideEffectImports?: boolean; resolveJsonModule?: boolean; types?: string[]; typeRoots?: string[]; verbatimModuleSyntax?: boolean; erasableSyntaxOnly?: boolean; version?: boolean | undefined; watch?: boolean; esModuleInterop?: boolean; showConfig?: boolean | undefined; ignoreConfig?: boolean; useDefineForClassFields?: boolean; tscBuild?: boolean; moduleResolution: ModuleResolutionKind; }; features: NodeResolutionFeatures; conditions: string[]; reportDiagnostic: (_?: unknown) => void; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1894:19: variable diagnosticResult: SearchResult<{ resolved: Resolved; readonly isExternalLibraryImport: boolean; }>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1913:14: function tryResolve: (extensions: Extensions, state: ModuleResolutionState) => SearchResult<{ resolved: Resolved; readonly isExternalLibraryImport: boolean; }>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1913:25: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1913:49: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1913:95: property resolved: Resolved
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1913:124: property isExternalLibraryImport: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1914:15: variable loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1914:55: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1914:67: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1914:78: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1914:98: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1915:15: variable resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1922:23: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1929:23: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1945:17: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1953:27: binding candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1953:38: binding parts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1954:19: variable resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1966:10: function normalizePathForCJSResolution: (containingDirectory: string, moduleName: string) => { path: string; parts: string[]; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1966:40: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1966:69: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1967:11: variable combined: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1968:11: variable parts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1969:11: variable lastPart: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1970:11: variable path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1974:10: function realPath: (path: string, host: ModuleResolutionHost, traceEnabled: boolean) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1974:19: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1974:33: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1974:61: parameter traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1979:11: variable real: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:10: function nodeLoadModuleByRelativeName: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState, considerPackageJson: boolean) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:39: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:63: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:82: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:111: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1986:141: parameter considerPackageJson: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:1992:19: variable parentOfCandidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2000:15: variable resolvedFromFile: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2002:19: variable packageDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2003:19: variable packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2008:15: variable candidateExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2026:14: variable nodeModulesPathPart: "/node_modules/"
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2028:17: function pathContainsNodeModules: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2028:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2044:17: function parseNodeModuleFromPath: (resolved: string, isFolder?: boolean | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2044:41: parameter resolved: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2044:59: parameter isFolder: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2045:11: variable path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2046:11: variable idx: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2051:11: variable indexAfterNodeModules: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2052:9: variable indexAfterPackageName: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2059:10: function moveToNextDirectorySeparatorIfAvailable: (path: string, prevSeparatorIndex: number, isFolder: boolean | undefined) => number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2059:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2059:64: parameter prevSeparatorIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2059:92: parameter isFolder: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2060:11: variable nextSeparatorIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2064:10: function loadModuleFromFileNoPackageId: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2064:40: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2064:64: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2064:83: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2064:112: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2072:10: function loadModuleFromFile: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2072:29: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2072:53: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2072:72: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2072:101: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2074:11: variable resolvedByReplacingExtension: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2082:15: variable resolvedByAddingExtension: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2089:10: function loadModuleFromFileNoImplicitExtensions: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2089:49: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2089:73: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2089:92: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2089:121: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2090:11: variable filename: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2094:9: variable extensionless: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2100:11: variable extension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:10: function loadFileNameFromPackageJsonField: (extensions: Extensions, candidate: string, packageJsonValue: string | undefined, onlyRecordFailures: boolean, state: ModuleResolutionState) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:43: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:67: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:86: parameter packageJsonValue: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:124: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2112:153: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2117:15: variable result: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2118:15: variable ext: Extension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2123:15: variable result: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:10: function tryAddingExtensions: (candidate: string, extensions: Extensions, originalExtension: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:30: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:49: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:73: parameter originalExtension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:100: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2131:129: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2134:15: variable directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2182:14: function tryExtension: (ext: string, resolvedUsingTsExtension?: boolean | undefined) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2182:27: parameter ext: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2182:40: parameter resolvedUsingTsExtension: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2183:15: variable path: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2189:10: function tryFile: (fileName: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2189:18: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2189:36: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2189:65: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2194:11: variable ext: "" | Extension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2195:11: variable fileNameNoExtension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2196:58: parameter suffix: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2199:10: function tryFileLookup: (fileName: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2199:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2199:42: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2199:71: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:10: function loadNodeModuleFromDirectory: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState, considerPackageJson?: boolean) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:38: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:62: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:81: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:110: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2217:140: parameter considerPackageJson: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2218:11: variable packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2223:18: interface GetPackageJsonEntrypointsHost: GetPackageJsonEntrypointsHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2224:5: property readDirectory: ((rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number | undefined) => string[]) | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2228:17: function getEntrypointsFromPackageJsonInfo: (packageJsonInfo: PackageJsonInfo, options: CompilerOptions, host: GetPackageJsonEntrypointsHost, cache: ModuleResolutionCache | undefined, resolveJs?: boolean | undefined) => false | string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2229:5: parameter packageJsonInfo: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2230:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2231:5: parameter host: GetPackageJsonEntrypointsHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2232:5: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2233:5: parameter resolveJs: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2241:9: variable entrypoints: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2242:11: variable extensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2243:11: variable features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2244:11: variable loadPackageJsonMainState: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2247:11: variable mainResolution: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2257:15: variable conditionSets: string[][]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2261:20: variable conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2262:19: variable loadPackageJsonExportsState: { compilerOptions: CompilerOptions; traceEnabled: boolean; affectingLocations: string[] | undefined; resultFromCache?: ResolvedModuleWithFailedLookupLocations; packageJsonInfoCache: PackageJsonInfoCache | undefined; features: NodeResolutionFeatures; requestContainingDirectory: string | undefined; reportDiagnostic: DiagnosticReporter; isConfigLookup: boolean; candidateIsFromPackageJsonField: boolean; resolvedPackageDirectory: boolean; failedLookupLocations: never[]; conditions: string[]; host: GetPackageJsonEntrypointsHost; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2263:19: variable exportResolutions: PathAndExtension[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2270:28: variable resolution: PathAndExtension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2280:10: function loadEntrypointsFromExportMap: (scope: PackageJsonInfo, exports: object, state: ModuleResolutionState & { host: GetPackageJsonEntrypointsHost; }, extensions: Extensions) => PathAndExtension[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2281:5: parameter scope: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2282:5: parameter exports: object
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2283:5: parameter state: ModuleResolutionState & { host: GetPackageJsonEntrypointsHost; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2283:38: property host: GetPackageJsonEntrypointsHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2284:5: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2286:9: variable entrypoints: PathAndExtension[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2288:20: variable target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2294:20: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2303:14: function loadEntrypointsFromTargetExports: (target: unknown) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2303:47: parameter target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2317:27: parameter entry: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2326:23: variable partsAfterFirst: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2330:23: variable resolvedTarget: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2331:23: variable finalPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2332:23: variable result: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2334:72: parameter a: PathAndExtension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2334:75: parameter b: PathAndExtension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2340:24: variable t: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2341:23: variable success: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2349:68: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2360:17: function getTemporaryModuleResolutionState: (packageJsonInfoCache: PackageJsonInfoCache | undefined, host: ModuleResolutionHost, options: CompilerOptions) => ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2360:51: parameter packageJsonInfoCache: PackageJsonInfoCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2360:107: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2360:135: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2379:18: interface PackageJsonInfo: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2380:5: property packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2381:5: property contents: PackageJsonInfoContents
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2384:18: interface PackageJsonInfoContents: PackageJsonInfoContents
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2385:5: property packageJsonContent: PackageJsonPathFields
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2387:5: property versionPaths: false | VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2389:5: property resolvedEntrypoints: false | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2391:5: property peerDependencies: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2399:17: function getPackageScopeForPath: (directory: string, state: ModuleResolutionState) => PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2399:40: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2399:59: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2403:9: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2407:10: function getVersionPathsOfPackageJsonInfo: (packageJsonInfo: PackageJsonInfo, state: ModuleResolutionState) => VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2407:43: parameter packageJsonInfo: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2407:77: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2414:10: function getPeerDependenciesOfPackageJsonInfo: (packageJsonInfo: PackageJsonInfo, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2414:47: parameter packageJsonInfo: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2414:81: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2421:10: function readPackageJsonPeerDependencies: (packageJsonInfo: PackageJsonInfo, state: ModuleResolutionState) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2421:42: parameter packageJsonInfo: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2421:76: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2422:11: variable peerDependencies: MapLike<string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2425:11: variable packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2426:11: variable nodeModules: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2427:9: variable result: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2428:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2430:19: variable peerPackageJson: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2432:23: variable version: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2445:10: function getPackageJsonInfo: (packageDirectory: string, onlyRecordFailures: boolean, state: ModuleResolutionState) => PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2445:29: parameter packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2445:55: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2445:84: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2446:13: binding host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2446:19: binding traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2447:11: variable packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2453:11: variable existing: PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2468:11: variable directoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2470:15: variable packageJsonContent: PackageJson
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2474:15: variable result: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:10: function loadNodeModuleFromDirectoryWorker: (extensions: Extensions, candidate: string, onlyRecordFailures: boolean, state: ModuleResolutionState, packageJson: PackageJsonInfo | undefined) => PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:44: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:68: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:87: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:116: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2489:146: parameter packageJson: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2490:11: variable versionPaths: VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2491:9: variable packageFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2503:11: variable loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2503:51: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2503:63: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2503:74: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2503:94: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2504:15: variable fromFile: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2510:15: variable expandedExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2516:15: variable features: NodeResolutionFeatures
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2517:15: variable candidateIsFromPackageJsonField: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2522:15: variable result: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2528:11: variable onlyRecordFailuresForPackageFile: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2529:11: variable onlyRecordFailuresForIndex: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2530:11: variable indexPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2533:15: variable moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2537:15: variable pathPatterns: ParsedPatterns
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2538:15: variable result: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2545:11: variable packageFileResult: "" | PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2555:10: function extensionIsOk: (extensions: Extensions, extension: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2555:24: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2555:48: parameter extension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2564:17: function parsePackageName: (moduleName: string) => { packageName: string; rest: string; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2564:34: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2564:57: property packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2564:78: property rest: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2565:9: variable idx: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2573:17: function allKeysStartWithDot: (obj: MapLike<unknown>) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2573:37: parameter obj: MapLike<unknown>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2574:35: parameter k: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2577:10: function noKeyStartsWithDot: (obj: MapLike<unknown>) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2577:29: parameter obj: MapLike<unknown>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2578:35: parameter k: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:10: function loadModuleFromSelfNameReference: (extensions: Extensions, moduleName: string, directory: string, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:42: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:66: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:86: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:105: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:135: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2581:177: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2582:11: variable directoryPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2583:11: variable scope: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2590:11: variable parts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2591:11: variable nameParts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2592:28: parameter p: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2592:31: parameter i: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2595:11: variable trailingParts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2596:11: variable subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2613:11: variable priorityExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2614:11: variable secondaryExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:10: function loadModuleFromExports: (scope: PackageJsonInfo, extensions: Extensions, subpath: string, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:32: parameter scope: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:56: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:80: parameter subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:97: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:127: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2619:169: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2625:13: variable mainExport: any
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2633:19: variable loadModuleFromTargetExportOrImport: (target: unknown, subpath: string, pattern: boolean, key: string) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2644:15: variable result: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:10: function loadModuleFromImports: (extensions: Extensions, moduleName: string, directory: string, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:32: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:56: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:76: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:95: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:125: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2656:167: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2663:11: variable directoryPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2664:11: variable scope: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2678:11: variable result: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2694:17: function comparePatternKeys: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2694:36: parameter a: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2694:47: parameter b: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2695:11: variable aPatternIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2696:11: variable bPatternIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2697:11: variable baseLenA: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2698:11: variable baseLenB: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:10: function loadModuleFromExportsOrImports: (extensions: Extensions, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined, moduleName: string, lookupTable: object, scope: PackageJsonInfo, isImports: boolean) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:41: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:65: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:95: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:137: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:196: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:216: parameter lookupTable: object
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:237: parameter scope: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2708:261: parameter isImports: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2709:11: variable loadModuleFromTargetExportOrImport: (target: unknown, subpath: string, pattern: boolean, key: string) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2712:15: variable target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2715:11: variable expandingKeys: SortedReadonlyArray<string>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2715:88: parameter k: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2716:16: variable potentialTarget: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2718:19: variable target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2719:19: variable starPos: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2720:19: variable subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2724:19: variable target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2725:19: variable subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2729:19: variable target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2730:19: variable subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2735:14: function matchesPatternWithTrailer: (target: string, name: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2735:40: parameter target: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2735:56: parameter name: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2737:15: variable starPos: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2743:10: function hasOneAsterisk: (patternKey: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2743:25: parameter patternKey: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2744:11: variable firstStar: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:10: function getLoadModuleFromTargetExportOrImport: (extensions: Extensions, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined, moduleName: string, scope: PackageJsonInfo, isImports: boolean) => (target: unknown, subpath: string, pattern: boolean, key: string) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:48: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:72: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:102: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:144: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:203: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:223: parameter scope: PackageJsonInfo
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2751:247: parameter isImports: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2753:14: function loadModuleFromTargetExportOrImport: (target: unknown, subpath: string, pattern: boolean, key: string) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2753:49: parameter target: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2753:66: parameter subpath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2753:83: parameter pattern: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2753:101: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2763:27: variable combinedLookup: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2766:27: variable result: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2787:19: variable parts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2788:19: variable partsAfterFirst: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2795:19: variable resolvedTarget: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2798:19: variable subpathParts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2809:19: variable finalPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2810:19: variable inputLink: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2817:28: variable condition: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2820:31: variable subTarget: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2821:31: variable result: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2847:28: variable elem: unknown
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2848:27: variable result: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2866:18: function toAbsolutePath: { (path: string): string; (path: string | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2866:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2867:18: function toAbsolutePath: { (path: string): string; (path: string | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2867:33: parameter path: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2868:18: function toAbsolutePath: { (path: string): string; (path: string | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2868:33: parameter path: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2873:18: function combineDirectoryPath: (root: string, dir: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2873:39: parameter root: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2873:53: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2877:18: function tryLoadInputFileForPath: (finalPath: string, entry: string, packagePath: string, isImports: boolean) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2877:42: parameter finalPath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2877:61: parameter entry: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2877:76: parameter packagePath: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2877:97: parameter isImports: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2893:23: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2894:23: variable commonSourceDirGuesses: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2898:27: variable commonDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2916:27: variable requestingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2924:27: variable commonDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2927:25: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2929:31: variable parts: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2931:31: variable commonDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2945:28: variable commonSourceDirGuess: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2946:27: variable candidateDirectories: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2947:32: variable candidateDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2950:35: variable pathFragment: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2951:35: variable possibleInputBase: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2952:35: variable jsAndDtsExtensions: Extension[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2953:40: variable ext: Extension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2955:43: variable inputExts: Extension[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2956:48: variable possibleExt: Extension
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2958:47: variable possibleInputWithInputExtension: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2971:22: function getOutputDirectoriesForBaseDirectory: (commonSourceDirGuess: string) => string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2971:59: parameter commonSourceDirGuess: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2974:23: variable currentDir: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2975:23: variable candidateDirectories: any[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2989:17: function isApplicableVersionedTypesKey: (conditions: readonly string[], key: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2989:47: parameter conditions: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2989:78: parameter key: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2992:11: variable range: VersionRange | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:10: function loadModuleFromNearestNodeModulesDirectory: (extensions: Extensions, moduleName: string, directory: string, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:52: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:76: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:96: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:115: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:145: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:2997:187: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3001:10: function loadModuleFromNearestNodeModulesDirectoryTypesScope: (moduleName: string, directory: string, state: ModuleResolutionState) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3001:62: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3001:82: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3001:101: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:10: function loadModuleFromNearestNodeModulesDirectoryWorker: (extensions: Extensions, moduleName: string, directory: string, state: ModuleResolutionState, typesScopeOnly: boolean, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:58: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:82: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:102: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:121: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:151: parameter typesScopeOnly: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:176: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3006:218: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3007:11: variable mode: ModuleKind.CommonJS | ModuleKind.ESNext | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3014:11: variable priorityExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3015:11: variable secondaryExtensions: number
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3019:15: variable result: { readonly value: Resolved | undefined; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3028:14: function lookup: (extensions: Extensions) => { readonly value: Resolved | undefined; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3028:21: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3032:13: parameter ancestorDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3035:27: variable resolutionFromCache: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3051:17: function forEachAncestorDirectoryStoppingAtGlobalCache: <T, P extends string>(host: ModuleResolutionHost | ModuleSpecifierResolutionHost, directory: P, callback: (directory: P) => T | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3052:5: parameter host: ModuleResolutionHost | ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3053:5: parameter directory: P
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3054:5: parameter callback: (directory: P) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3054:16: parameter directory: P
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3056:11: variable globalCache: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3057:48: parameter ancestorDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3058:15: variable result: T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:10: function loadModuleFromImmediateNodeModulesDirectory: (extensions: Extensions, moduleName: string, directory: string, state: ModuleResolutionState, typesScopeOnly: boolean, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:54: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:78: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:98: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:117: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:147: parameter typesScopeOnly: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:172: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3064:214: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3065:11: variable nodeModulesFolder: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3066:11: variable nodeModulesFolderExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3072:15: variable packageResult: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3079:15: variable nodeModulesAtTypes: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3080:13: variable nodeModulesAtTypesExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:10: function loadModuleFromSpecificNodeModulesDirectory: (extensions: Extensions, moduleName: string, nodeModulesDirectory: string, nodeModulesDirectoryExists: boolean, state: ModuleResolutionState, cache: ModuleResolutionCache | undefined, redirectedReference: ResolvedProjectReference | undefined) => Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:53: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:77: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:97: parameter nodeModulesDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:127: parameter nodeModulesDirectoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:164: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:194: parameter cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3091:236: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3092:11: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3093:13: binding packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3093:26: binding rest: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3094:11: variable packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3096:9: variable rootPackageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3098:9: variable packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3106:15: variable fromFile: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3111:15: variable fromDirectory: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3121:11: variable loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3121:51: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3121:63: parameter candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3121:74: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3121:94: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3122:13: variable pathAndExtension: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3154:11: variable versionPaths: VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3159:15: variable packageDirectoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3160:15: variable pathPatterns: ParsedPatterns
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3161:15: variable fromPaths: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:10: function tryLoadModuleUsingPaths: (extensions: Extensions, moduleName: string, baseDirectory: string, paths: MapLike<string[]>, pathPatterns: ParsedPatterns, loader: ResolutionKindSpecificLoader, onlyRecordFailures: boolean, state: ModuleResolutionState) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:34: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:58: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:78: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:101: parameter paths: MapLike<string[]>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:127: parameter pathPatterns: ParsedPatterns
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:157: parameter loader: ResolutionKindSpecificLoader
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:195: parameter onlyRecordFailures: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3169:224: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3170:11: variable matchedPattern: string | Pattern | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3172:15: variable matchedStar: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3173:15: variable matchedPatternText: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3177:15: variable resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3177:61: parameter subst: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3178:19: variable path: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3180:19: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3185:19: variable extension: Extension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3187:23: variable path: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3199:7: variable mangledScopedPackageSeparator: "__"
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3202:10: function mangleScopedPackageNameWithTrace: (packageName: string, state: ModuleResolutionState) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3202:43: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3202:64: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3203:11: variable mangled: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3211:17: function getTypesPackageName: (packageName: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3211:37: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3216:17: function mangleScopedPackageName: (packageName: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3216:41: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3218:15: variable replaceSlash: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3227:17: function getPackageNameFromTypesPackageName: (mangledName: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3227:52: parameter mangledName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3228:11: variable withoutAtTypePrefix: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3236:17: function unmangleScopedPackageName: (typesPackageName: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3236:43: parameter typesPackageName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:10: function tryFindNonRelativeModuleNameInCache: (cache: NonRelativeModuleNameResolutionCache | undefined, moduleName: string, mode: ResolutionMode, containingDirectory: string, redirectedReference: ResolvedProjectReference | undefined, state: ModuleResolutionState) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:46: parameter cache: NonRelativeModuleNameResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:103: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:123: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:145: parameter containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:174: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3242:233: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3243:11: variable result: ResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:17: function classicNameResolver: (moduleName: string, containingFile: string, compilerOptions: CompilerOptions, host: ModuleResolutionHost, cache?: NonRelativeModuleNameResolutionCache | undefined, redirectedReference?: ResolvedProjectReference | undefined) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:37: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:57: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:81: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:115: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:143: parameter cache: NonRelativeModuleNameResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3261:189: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3262:11: variable traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3263:11: variable failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3264:11: variable affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3265:11: variable containingDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3266:11: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3267:11: variable state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3277:27: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3283:11: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3297:14: function tryResolve: (extensions: Extensions) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3297:25: parameter extensions: Extensions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3298:15: variable resolvedUsingSettings: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3305:19: variable resolved: { readonly value: Resolved | undefined; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3308:17: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3309:27: variable resolutionFromCache: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3313:27: variable searchName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3320:21: variable resolved: SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3326:19: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3332:10: function resolveFromTypeRoot: (moduleName: string, state: ModuleResolutionState) => SearchResult<Resolved>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3332:30: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3332:50: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3334:16: variable typeRoot: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3335:15: variable candidate: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3336:15: variable directoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3340:15: variable resolvedFromFile: PathAndExtension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3342:19: variable packageDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3343:19: variable packageInfo: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3346:15: variable resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3354:17: function shouldAllowImportingTsExtension: (compilerOptions: CompilerOptions, fromFileName?: string | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3354:49: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3354:83: parameter fromFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:17: function loadModuleFromGlobalCache: (moduleName: string, projectName: string | undefined, compilerOptions: CompilerOptions, host: ModuleResolutionHost, globalCache: string, packageJsonInfoCache: PackageJsonInfoCache) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:43: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:63: parameter projectName: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:96: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:130: parameter host: ModuleResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:158: parameter globalCache: string
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3364:179: parameter packageJsonInfoCache: PackageJsonInfoCache
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3365:11: variable traceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3369:11: variable failedLookupLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3370:11: variable affectingLocations: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3371:11: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3372:11: variable state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3382:27: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3387:11: variable resolved: Resolved | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3408:6: type SearchResult: { readonly value: T | undefined; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3408:35: property value: T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3414:10: function toSearchResult: <T>(value: T | undefined) => SearchResult<T>
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3414:28: parameter value: T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3418:10: function traceIfEnabled: (state: ModuleResolutionState, diagnostic: DiagnosticMessage, ...args: string[]) => void
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3418:25: parameter state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3418:55: parameter diagnostic: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3418:89: parameter args: string[]
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3424:10: function useCaseSensitiveFileNames: (state: ModuleResolutionState) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleNameResolver.ts:3424:36: parameter state: ModuleResolutionState

@@ -1,0 +1,59 @@
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:42:17: function transformES2020: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:42:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:42:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:44:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:45:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:50:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:50:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:58:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:58:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:64:23: variable updated: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:71:27: variable updated: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:88:14: function flattenChain: (chain: OptionalChain) => { expression: LeftHandSideExpression; chain: OptionalChain[]; }
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:88:27: parameter chain: OptionalChain
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:90:15: variable links: OptionalChain[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:99:14: function visitNonOptionalParenthesizedExpression: (node: ParenthesizedExpression, captureThisArg: boolean, isDelete: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:99:54: parameter node: ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:99:85: parameter captureThisArg: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:99:110: parameter isDelete: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:100:15: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:109:14: function visitNonOptionalPropertyOrElementAccessExpression: (node: AccessExpression, captureThisArg: boolean, isDelete: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:109:64: parameter node: AccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:109:88: parameter captureThisArg: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:109:113: parameter isDelete: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:115:13: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:118:13: variable thisArg: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:135:14: function visitNonOptionalCallExpression: (node: CallExpression, captureThisArg: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:135:45: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:135:67: parameter captureThisArg: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:142:19: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:143:19: variable args: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:152:14: function visitNonOptionalExpression: (node: Expression, captureThisArg: boolean, isDelete: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:152:41: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:152:59: parameter captureThisArg: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:152:84: parameter isDelete: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:166:14: function visitOptionalExpression: (node: OptionalChain, captureThisArg: boolean, isDelete: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:166:38: parameter node: OptionalChain
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:166:59: parameter captureThisArg: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:166:84: parameter isDelete: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:167:17: binding expression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:167:29: binding chain: OptionalChain[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:168:15: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:169:13: variable leftThisArg: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:170:13: variable capturedLeft: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:171:13: variable leftExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:176:13: variable rightExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:177:13: variable thisArg: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:178:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:179:19: variable segment: OptionalChain
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:220:15: variable target: ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:227:14: function createNotNullCondition: (left: Expression, right: Expression, invert?: boolean | undefined) => BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:227:37: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:227:55: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:227:74: parameter invert: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:243:14: function transformNullishCoalescingExpression: (node: BinaryExpression) => ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:243:51: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:244:13: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:245:13: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:262:14: function visitDeleteExpression: (node: DeleteExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2020.ts:262:36: parameter node: DeleteExpression

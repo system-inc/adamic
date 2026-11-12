@@ -1,0 +1,71 @@
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:30:17: function createGetSymbolWalker: (getRestTypeOfSignature: (sig: Signature) => Type, getTypePredicateOfSignature: (sig: Signature) => TypePredicate | undefined, getReturnTypeOfSignature: (sig: Signature) => Type, getBaseTypes: (type: InterfaceType) => BaseType[], resolveStructuredTypeMembers: (type: ObjectType) => ResolvedType, getTypeOfSymbol: (sym: Symbol) => Type, getResolvedSymbol: (node: Identifier) => Symbol, getConstraintOfTypeParameter: (typeParameter: TypeParameter) => Type | undefined, getFirstIdentifier: (node: EntityNameOrEntityNameExpression) => Identifier, getTypeArguments: (type: TypeReference) => readonly Type[]) => (accept?: ((symbol: Symbol) => boolean) | undefined) => SymbolWalker
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:31:5: parameter getRestTypeOfSignature: (sig: Signature) => Type
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:31:30: parameter sig: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:32:5: parameter getTypePredicateOfSignature: (sig: Signature) => TypePredicate | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:32:35: parameter sig: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:33:5: parameter getReturnTypeOfSignature: (sig: Signature) => Type
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:33:32: parameter sig: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:34:5: parameter getBaseTypes: (type: InterfaceType) => BaseType[]
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:34:20: parameter type: InterfaceType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:35:5: parameter resolveStructuredTypeMembers: (type: ObjectType) => ResolvedType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:35:36: parameter type: ObjectType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:36:5: parameter getTypeOfSymbol: (sym: Symbol) => Type
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:36:23: parameter sym: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:37:5: parameter getResolvedSymbol: (node: Identifier) => Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:37:25: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:38:5: parameter getConstraintOfTypeParameter: (typeParameter: TypeParameter) => Type | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:38:36: parameter typeParameter: TypeParameter
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:39:5: parameter getFirstIdentifier: (node: EntityNameOrEntityNameExpression) => Identifier
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:39:26: parameter node: EntityNameOrEntityNameExpression
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:40:5: parameter getTypeArguments: (type: TypeReference) => readonly Type[]
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:40:24: parameter type: TypeReference
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:41:5: parameter accept: ((symbol: Symbol) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:41:15: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:44:14: function getSymbolWalker: (accept?: (symbol: Symbol) => boolean) => SymbolWalker
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:44:30: parameter accept: (symbol: Symbol) => boolean
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:44:39: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:45:15: variable visitedTypes: MapLike<Type>
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:46:15: variable visitedSymbols: MapLike<Symbol>
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:49:23: parameter type: Type
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:55:32: variable key: string
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:56:32: variable key: string
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:59:25: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:65:32: variable key: string
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:66:32: variable key: string
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:71:18: function visitType: (type: Type | undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:71:28: parameter type: Type | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:83:19: variable shouldBail: boolean
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:88:23: variable objectType: ObjectType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:89:23: variable objectFlags: ObjectFlags
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:117:18: function visitTypeReference: (type: TypeReference) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:117:37: parameter type: TypeReference
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:122:18: function visitTypeParameter: (type: TypeParameter) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:122:37: parameter type: TypeParameter
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:126:18: function visitUnionOrIntersectionType: (type: UnionOrIntersectionType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:126:47: parameter type: UnionOrIntersectionType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:130:18: function visitIndexType: (type: IndexType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:130:33: parameter type: IndexType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:134:18: function visitIndexedAccessType: (type: IndexedAccessType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:134:41: parameter type: IndexedAccessType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:140:18: function visitMappedType: (type: MappedType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:140:34: parameter type: MappedType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:147:18: function visitSignature: (signature: Signature) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:147:33: parameter signature: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:148:19: variable typePredicate: TypePredicate | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:154:24: variable parameter: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:161:18: function visitInterfaceType: (interfaceT: InterfaceType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:161:37: parameter interfaceT: InterfaceType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:168:18: function visitObjectType: (type: ObjectType) => void
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:168:34: parameter type: ObjectType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:169:19: variable resolved: ResolvedType
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:170:24: variable info: IndexInfo
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:174:24: variable signature: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:177:24: variable signature: Signature
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:180:24: variable p: Symbol
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:185:18: function visitSymbol: (symbol: Symbol | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:185:30: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:189:19: variable symbolId: number
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:197:19: variable t: Type
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:202:42: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:208:27: variable query: TypeQueryNode
+/workspace/tracing-measured-after/src/compiler/symbolWalker.ts:209:27: variable entity: Symbol

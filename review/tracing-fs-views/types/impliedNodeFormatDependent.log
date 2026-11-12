@@ -1,0 +1,31 @@
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:18:17: function transformImpliedNodeFormatDependentModule: (context: TransformationContext) => Transformer<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:18:59: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:19:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:20:11: variable previousOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:22:11: variable esmTransform: (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:24:11: variable esmOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:25:11: variable esmOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:30:11: variable cjsTransform: (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:32:11: variable cjsOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:33:11: variable cjsOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:34:11: variable getEmitModuleFormatOfFile: (file: SourceFile) => ModuleKind
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:34:40: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:41:9: variable currentSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:44:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:44:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:44:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:14: function onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:25: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:53: parameter emitCallback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:68: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:63:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:76:14: function getModuleTransformForFile: (file: SourceFile) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:76:40: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:80:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:80:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:86:15: variable result: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:92:14: function transformSourceFileOrBundle: (node: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:92:42: parameter node: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:96:14: function transformBundle: (node: Bundle) => Bundle
+/workspace/tracing-measured-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts:96:30: parameter node: Bundle

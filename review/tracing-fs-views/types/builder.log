@@ -1,0 +1,697 @@
+/workspace/tracing-measured-after/src/compiler/builder.ts:94:18: interface ReusableDiagnostic: ReusableDiagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:96:5: property reportsUnnecessary: {} | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:97:5: property reportDeprecated: {} | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:98:5: property source: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:99:5: property relatedInformation: ReusableDiagnosticRelatedInformation[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:100:5: property skippedOn: keyof CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:104:18: interface ReusableDiagnosticRelatedInformation: ReusableDiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:105:5: property category: DiagnosticCategory
+/workspace/tracing-measured-after/src/compiler/builder.ts:106:5: property code: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:107:5: property file: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:108:5: property start: number | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:109:5: property length: number | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:110:5: property messageText: string | ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:114:18: interface ReusableRepopulateInfoChain: ReusableRepopulateInfoChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:115:5: property info: RepopulateDiagnosticChainInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:116:5: property next: ReusableDiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:120:13: type SerializedDiagnosticMessageChain: Omit<DiagnosticMessageChain, "next" | "repopulateInfo"> & { next?: ReusableDiagnosticMessageChain[] | undefined; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:121:5: property next: ReusableDiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:125:13: type ReusableDiagnosticMessageChain: ReusableRepopulateInfoChain | SerializedDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:132:13: type EmitSignature: string | [signature: string]
+/workspace/tracing-measured-after/src/compiler/builder.ts:135:18: interface ReusableBuilderProgramState: ReusableBuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:139:5: property semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:141:5: property emitDiagnosticsPerFile: Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:145:5: property changedFilesSet: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:149:5: property program: Program | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:153:5: property compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:157:5: property affectedFilesPendingEmit: ReadonlyMap<Path, BuilderFileEmit> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:161:5: property programEmitPending: BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:163:5: property checkPending: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:167:5: property hasReusableDiagnostic: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:171:5: property emitSignatures: Map<Path, EmitSignature> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:175:5: property outSignature: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:179:5: property latestChangedDtsFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:181:5: property hasErrors: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:208:18: interface BuilderProgramState: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:212:5: property semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:214:5: property emitDiagnosticsPerFile: Map<Path, readonly Diagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:218:5: property changedFilesSet: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:222:5: property affectedFiles: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:226:5: property affectedFilesIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:230:5: property currentChangedFilePath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:234:5: property seenAffectedFiles: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:238:5: property cleanedDiagnosticsOfLibFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:242:5: property semanticDiagnosticsFromOldState: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:246:5: property hasChangedEmitSignature: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:250:5: property affectedFilesPendingEmit: Map<Path, BuilderFileEmit> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:254:5: property buildInfoEmitPending: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:258:5: property seenEmittedFiles: Map<Path, BuilderFileEmit> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:260:5: property seenProgramEmit: BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:261:5: property hasErrorsFromOldState: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:264:11: interface BuilderProgramStateWithDefinedProgram: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:265:5: property program: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:267:10: function isBuilderProgramStateWithDefinedProgram: (state: ReusableBuilderProgramState) => state is BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:267:50: parameter state: ReusableBuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:270:10: function toBuilderProgramStateWithDefinedProgram: (state: ReusableBuilderProgramState) => BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:270:50: parameter state: ReusableBuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:280:17: function getBuilderFileEmit: (options: CompilerOptions) => BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:280:36: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:281:9: variable result: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:290:10: function getPendingEmitKind: (optionsOrEmitKind: CompilerOptions | BuilderFileEmit, oldOptionsOrEmitKind: CompilerOptions | BuilderFileEmit | undefined) => BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:291:5: parameter optionsOrEmitKind: CompilerOptions | BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:292:5: parameter oldOptionsOrEmitKind: CompilerOptions | BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:294:11: variable oldEmitKind: BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:295:11: variable emitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:298:11: variable diff: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:299:9: variable result: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:309:10: function hasSameKeys: (map1: ReadonlyCollection<string> | undefined, map2: ReadonlyCollection<string> | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:310:5: parameter map1: ReadonlyCollection<string> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:311:5: parameter map2: ReadonlyCollection<string> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:314:118: parameter key: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:320:10: function createBuilderProgramState: (newProgram: Program, oldState: Readonly<ReusableBuilderProgramState> | undefined) => BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:321:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:322:5: parameter oldState: Readonly<ReusableBuilderProgramState> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:324:11: variable state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:326:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:328:11: variable outFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:337:11: variable useOldState: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:338:11: variable oldCompilerOptions: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:339:9: variable canCopySemanticDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:347:11: variable canCopyEmitSignatures: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:351:9: variable canCopyEmitDiagnostics: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:354:44: parameter value: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:374:11: variable referencedMap: ReadonlyManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:375:11: variable oldReferencedMap: ReadonlyManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:376:11: variable copyDeclarationFileDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:377:11: variable copyLibFileDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:378:30: parameter info: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:378:36: parameter sourceFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:379:13: variable oldInfo: Readonly<FileInfo> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:380:13: variable newReferences: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:394:56: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:400:19: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:401:19: variable emitDiagnostics: readonly Diagnostic[] | readonly ReusableDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:417:23: variable diagnostics: readonly Diagnostic[] | readonly ReusableDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:430:19: variable oldEmitSignature: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:439:59: parameter info: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:439:65: parameter sourceFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:448:22: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:453:15: variable pendingEmitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:459:53: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:487:14: function addFileToChangeSet: (path: Path) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:487:33: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:508:10: function getEmitSignatureFromOldSignature: (options: CompilerOptions, oldOptions: CompilerOptions, oldEmitSignature: EmitSignature) => EmitSignature
+/workspace/tracing-measured-after/src/compiler/builder.ts:509:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:510:5: parameter oldOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:511:5: parameter oldEmitSignature: EmitSignature
+/workspace/tracing-measured-after/src/compiler/builder.ts:520:10: function repopulateDiagnostics: (diagnostics: readonly Diagnostic[], newProgram: Program) => readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:521:5: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:522:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:525:33: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:527:15: variable repopulatedChain: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:527:117: parameter chain: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:534:10: function convertOrRepopulateDiagnosticMessageChain: <T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(chain: T, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined) => DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:535:5: parameter chain: T
+/workspace/tracing-measured-after/src/compiler/builder.ts:536:5: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:537:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:538:5: parameter repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:538:22: parameter chain: T
+/workspace/tracing-measured-after/src/compiler/builder.ts:540:11: variable info: RepopulateDiagnosticChainInfo | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:553:11: variable next: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:561:14: function isFullChain: (value: T) => value is T & DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:561:26: parameter value: T
+/workspace/tracing-measured-after/src/compiler/builder.ts:566:10: function convertOrRepopulateDiagnosticMessageChainArray: <T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(array: T[] | undefined, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined) => DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:567:5: parameter array: T[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:568:5: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:569:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:570:5: parameter repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:570:22: parameter chain: T
+/workspace/tracing-measured-after/src/compiler/builder.ts:572:10: function convertOrRepopulateDiagnosticMessageChainArray: <T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(array: T[] | undefined, sourceFile: SourceFile | undefined, newProgram: Program, repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined) => DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:573:5: parameter array: (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:574:5: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:575:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:576:5: parameter repopulateInfo: (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:576:22: parameter chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:580:55: parameter chain: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:582:22: parameter chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:584:14: function isFullChain: (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => chain is DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:584:26: parameter chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:590:10: function convertToDiagnostics: (diagnostics: readonly ReusableDiagnostic[], diagnosticFilePath: Path, newProgram: Program) => readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:591:5: parameter diagnostics: readonly ReusableDiagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:592:5: parameter diagnosticFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:593:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:596:9: variable buildInfoDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:597:28: parameter diagnostic: ReusableDiagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:598:15: variable result: Diagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:603:17: binding relatedInformation: ReusableDiagnosticRelatedInformation[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:606:40: parameter r: ReusableDiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:612:14: function toPathInBuildInfoDirectory: (path: string) => Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:612:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:618:10: function convertToDiagnosticRelatedInformation: (diagnostic: ReusableDiagnosticRelatedInformation, diagnosticFilePath: Path, newProgram: Program, toPath: (path: string) => Path) => DiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:619:5: parameter diagnostic: ReusableDiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:620:5: parameter diagnosticFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:621:5: parameter newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:622:5: parameter toPath: (path: string) => Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:622:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:624:13: binding file: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:625:11: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:633:103: parameter chain: ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:640:10: function releaseCache: (state: BuilderProgramState) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:640:23: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:648:10: function assertSourceFileOkWithoutNextAffectedCall: (state: BuilderProgramState, sourceFile: SourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:648:52: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:648:80: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:658:10: function getNextAffectedFile: (state: BuilderProgramStateWithDefinedProgram, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => Program | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:659:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:660:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:661:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:664:17: binding affectedFiles: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:666:19: variable seenAffectedFiles: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:667:17: variable affectedFilesIndex: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:669:23: variable affectedFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:698:15: variable nextKey: AdamicCollectionIteratorResult<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:706:15: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:723:10: function clearAffectedFilesPendingEmit: (state: BuilderProgramState, emitOnlyDtsFiles: boolean | undefined, isForDtsErrors: boolean) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:724:5: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:725:5: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:726:5: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:733:46: parameter emitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:733:56: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:735:15: variable pending: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:743:15: variable pending: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:755:17: function getPendingEmitKindWithSeen: (optionsOrEmitKind: CompilerOptions | BuilderFileEmit, seenOldOptionsOrEmitKind: CompilerOptions | BuilderFileEmit | undefined, emitOnlyDtsFiles: boolean | undefined, isForDtsErrors: boolean) => BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:756:5: parameter optionsOrEmitKind: CompilerOptions | BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:757:5: parameter seenOldOptionsOrEmitKind: CompilerOptions | BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:758:5: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:759:5: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:761:9: variable pendingKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:767:10: function getBuilderFileEmitAllDts: (isForDtsErrors: boolean) => BuilderFileEmit.DtsErrors | BuilderFileEmit.AllDts
+/workspace/tracing-measured-after/src/compiler/builder.ts:767:35: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:774:10: function getNextAffectedFilePendingEmit: (state: BuilderProgramStateWithDefinedProgram, emitOnlyDtsFiles: boolean | undefined, isForDtsErrors: boolean) => { affectedFile: SourceFile; emitKind: BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | BuilderFileEmit.DtsEmit | BuilderFileEmit.DtsMap | BuilderFileEmit.Dts | BuilderFileEmit.AllJs | BuilderFileEmit.AllDtsEmit | BuilderFileEmit.AllDts | BuilderFileEmit.All; } | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:775:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:776:5: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:777:5: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:780:58: parameter emitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:780:68: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:781:15: variable affectedFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:786:15: variable seenKind: BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:787:15: variable pendingKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:797:10: function getNextPendingEmitDiagnosticsFile: (state: BuilderProgramStateWithDefinedProgram, isForDtsErrors: boolean) => { affectedFile: SourceFile; diagnostics: readonly Diagnostic[]; seenKind: BuilderFileEmit; } | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:798:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:799:5: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:802:56: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:802:69: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:803:15: variable affectedFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:808:15: variable seenKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:813:10: function removeDiagnosticsOfLibraryFiles: (state: BuilderProgramStateWithDefinedProgram) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:813:42: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:816:15: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:817:49: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:828:10: function handleDtsMayChangeOfAffectedFile: (state: BuilderProgramStateWithDefinedProgram, affectedFile: SourceFile, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:829:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:830:5: parameter affectedFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:831:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:832:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:864:10: function handleDtsMayChangeOf: (state: BuilderProgramStateWithDefinedProgram, path: Path, invalidateJsFiles: boolean, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:865:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:866:5: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:867:5: parameter invalidateJsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:868:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:869:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:874:15: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:912:10: function removeSemanticDiagnosticsOf: (state: BuilderProgramState, path: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:912:38: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:912:66: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:921:10: function isChangedSignature: (state: BuilderProgramState, path: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:921:29: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:921:57: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:922:11: variable oldSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:923:11: variable newSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:927:10: function handleDtsMayChangeOfGlobalScope: (state: BuilderProgramStateWithDefinedProgram, filePath: Path, invalidateJsFiles: boolean, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:928:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:929:5: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:930:5: parameter invalidateJsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:931:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:932:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:940:15: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:956:10: function handleDtsMayChangeOfReferencingExportOfAffectedFile: (state: BuilderProgramStateWithDefinedProgram, affectedFile: SourceFile, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:957:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:958:5: parameter affectedFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:959:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:960:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:970:15: variable seenFileNamesMap: Map<Path, true>
+/workspace/tracing-measured-after/src/compiler/builder.ts:972:15: variable queue: Path[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:974:19: variable currentPath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:988:27: variable currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:995:11: variable seenFileAndExportsOfFile: Set<string>
+/workspace/tracing-measured-after/src/compiler/builder.ts:997:11: variable invalidateJsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:999:9: parameter exported: Symbol
+/workspace/tracing-measured-after/src/compiler/builder.ts:1001:19: variable aliased: Symbol
+/workspace/tracing-measured-after/src/compiler/builder.ts:1004:44: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/builder.ts:1008:69: parameter exportedFromPath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1010:15: variable references: ReadonlySet<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1011:53: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1027:10: function handleDtsMayChangeOfFileAndExportsOfFile: (state: BuilderProgramStateWithDefinedProgram, filePath: Path, invalidateJsFiles: boolean, seenFileAndExportsOfFile: Set<string>, cancellationToken: CancellationToken | undefined, host: BuilderProgramHost) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1028:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1029:5: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1030:5: parameter invalidateJsFiles: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1031:5: parameter seenFileAndExportsOfFile: Set<string>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1032:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1033:5: parameter host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:1041:53: parameter referencingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1058:10: function getSemanticDiagnosticsOfFile: (state: BuilderProgramStateWithDefinedProgram, sourceFile: SourceFile, cancellationToken: CancellationToken | undefined, semanticDiagnosticsPerFile?: Map<Path, readonly Diagnostic[]> | undefined) => readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1059:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1060:5: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1061:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1062:5: parameter semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1075:10: function getBinderAndCheckerDiagnosticsOfFile: (state: BuilderProgramStateWithDefinedProgram, sourceFile: SourceFile, cancellationToken: CancellationToken | undefined, semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[]> | undefined) => readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1076:5: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1077:5: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1078:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1079:5: parameter semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1082:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1083:11: variable cachedDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1090:11: variable diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1097:13: type IncrementalBuildInfoFileId: number & { __incrementalBuildInfoFileIdBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1097:53: property __incrementalBuildInfoFileIdBrand: undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1099:13: type IncrementalBuildInfoFileIdListId: number & { __incrementalBuildInfoFileIdListIdBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1099:59: property __incrementalBuildInfoFileIdListIdBrand: undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1101:13: type IncrementalBuildInfoDiagnosticOfFile: [fileId: IncrementalBuildInfoFileId, diagnostics: readonly ReusableDiagnostic[]]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1103:13: type IncrementalBuildInfoDiagnostic: IncrementalBuildInfoDiagnosticOfFile | IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1107:13: type IncrementalBuildInfoEmitDiagnostic: [fileId: IncrementalBuildInfoFileId, diagnostics: readonly ReusableDiagnostic[]]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1116:13: type IncrementalBuildInfoFilePendingEmit: [fileId: IncrementalBuildInfoFileId] | [fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit] | IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1118:13: type IncrementalBuildInfoReferencedMap: [fileId: IncrementalBuildInfoFileId, fileIdListId: IncrementalBuildInfoFileIdListId][]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1120:13: type IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo: Omit<FileInfo, "signature"> & { signature: string | false | undefined; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1127:5: property signature: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1135:13: type IncrementalBuildInfoEmitSignature: [fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature] | IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1141:13: type IncrementalMultiFileEmitBuildInfoFileInfo: string | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1143:13: type IncrementalBuildInfoRootStartEnd: [start: IncrementalBuildInfoFileId, end: IncrementalBuildInfoFileId]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1148:13: type IncrementalBuildInfoRoot: IncrementalBuildInfoRootStartEnd | IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1150:13: type IncrementalBuildInfoResolvedRoot: [resolved: IncrementalBuildInfoFileId, root: IncrementalBuildInfoFileId]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1153:18: interface IncrementalBuildInfoBase: IncrementalBuildInfoBase
+/workspace/tracing-measured-after/src/compiler/builder.ts:1154:5: property fileNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1155:5: property root: readonly IncrementalBuildInfoRoot[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1156:5: property resolvedRoot: readonly IncrementalBuildInfoResolvedRoot[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1157:5: property options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1158:5: property semanticDiagnosticsPerFile: IncrementalBuildInfoDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1159:5: property emitDiagnosticsPerFile: IncrementalBuildInfoDiagnosticOfFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1160:5: property changeFileSet: readonly IncrementalBuildInfoFileId[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1162:5: property latestChangedDtsFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1163:5: property errors: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1164:5: property checkPending: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1168:18: interface IncrementalMultiFileEmitBuildInfo: IncrementalMultiFileEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1169:5: property fileInfos: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1170:5: property fileIdsList: readonly (readonly IncrementalBuildInfoFileId[])[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1171:5: property referencedMap: IncrementalBuildInfoReferencedMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1172:5: property affectedFilesPendingEmit: IncrementalBuildInfoFilePendingEmit[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1173:5: property emitSignatures: readonly IncrementalBuildInfoEmitSignature[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1180:13: type IncrementalBundleEmitBuildInfoFileInfo: string | FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1187:13: type IncrementalBuildInfoBundlePendingEmit: false | BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1189:18: interface IncrementalBundleEmitBuildInfo: IncrementalBundleEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1190:5: property fileInfos: readonly IncrementalBundleEmitBuildInfoFileInfo[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1191:5: property outSignature: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1192:5: property pendingEmit: IncrementalBuildInfoBundlePendingEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1196:13: type IncrementalBuildInfo: IncrementalBundleEmitBuildInfo | IncrementalMultiFileEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1199:17: function isIncrementalBundleEmitBuildInfo: (info: IncrementalBuildInfo) => info is IncrementalBundleEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1199:50: parameter info: IncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1204:17: function isIncrementalBuildInfo: (info: BuildInfo) => info is IncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1204:40: parameter info: BuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1209:18: interface NonIncrementalBuildInfo: NonIncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1210:5: property root: readonly string[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1211:5: property errors: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1212:5: property checkPending: true | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1215:10: function isNonIncrementalBuildInfo: (info: BuildInfo) => info is NonIncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1215:36: parameter info: BuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1219:10: function ensureHasErrorsForState: (state: BuilderProgramStateWithDefinedProgram) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:1219:34: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1223:65: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1224:19: variable bindAndCheckDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1230:50: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1234:64: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1235:19: variable bindAndCheckDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1243:10: function hasSyntaxOrGlobalErrors: (state: BuilderProgramStateWithDefinedProgram) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1243:34: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1250:10: function getBuildInfoEmitPending: (state: BuilderProgramStateWithDefinedProgram) => boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1250:34: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1258:10: function getBuildInfo: (state: BuilderProgramStateWithDefinedProgram) => BuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1258:23: parameter state: BuilderProgramStateWithDefinedProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1259:11: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1260:11: variable buildInfoDirectory: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1262:11: variable latestChangedDtsFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1263:11: variable fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1264:11: variable fileNameToFileId: Map<string, IncrementalBuildInfoFileId>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1265:11: variable rootFileNames: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1265:72: parameter f: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1268:15: variable buildInfo: NonIncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1269:44: parameter r: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1277:11: variable root: IncrementalBuildInfoRoot[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1281:15: variable fileInfos: IncrementalBundleEmitBuildInfoFileInfo[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1281:66: binding key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1281:71: binding value: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1283:19: variable fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1289:15: variable buildInfo: IncrementalBundleEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1312:9: variable fileIdsList: (readonly IncrementalBuildInfoFileId[])[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1313:9: variable fileNamesToFileIdListId: Map<string, IncrementalBuildInfoFileIdListId> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1314:9: variable emitSignatures: IncrementalBuildInfoEmitSignature[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1315:11: variable fileInfos: IncrementalMultiFileEmitBuildInfoFileInfo[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1315:62: binding key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1315:67: binding value: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1317:15: variable fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1320:15: variable oldSignature: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1321:15: variable actualSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1323:19: variable file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1325:23: variable emitSignature: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1353:9: variable referencedMap: IncrementalBuildInfoReferencedMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1355:101: parameter key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1361:11: variable semanticDiagnosticsPerFile: IncrementalBuildInfoDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1362:9: variable affectedFilesPendingEmit: IncrementalBuildInfoFilePendingEmit[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1364:15: variable fullEmitForOptions: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1365:15: variable seenFiles: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1366:20: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1368:23: variable file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1370:23: variable fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1370:48: variable pendingEmit: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1383:11: variable buildInfo: IncrementalMultiFileEmitBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1403:14: function relativeToBuildInfoEnsuringAbsolutePath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1403:54: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1407:14: function relativeToBuildInfo: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1407:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1411:14: function toFileId: (path: Path) => IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1411:23: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1412:13: variable fileId: IncrementalBuildInfoFileId | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1420:14: function toFileIdListId: (set: ReadonlySet<Path>) => IncrementalBuildInfoFileIdListId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1420:29: parameter set: ReadonlySet<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1421:15: variable fileIds: IncrementalBuildInfoFileId[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1422:15: variable key: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1423:13: variable fileIdListId: IncrementalBuildInfoFileIdListId | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1431:14: function tryAddRoot: (path: Path, fileId: IncrementalBuildInfoFileId) => number | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1431:25: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1431:37: parameter fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:1432:15: variable file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1433:73: parameter r: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/builder.ts:1436:15: variable last: IncrementalBuildInfoRoot
+/workspace/tracing-measured-after/src/compiler/builder.ts:1437:15: variable isLastStartEnd: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1442:15: variable lastButOne: IncrementalBuildInfoRoot
+/workspace/tracing-measured-after/src/compiler/builder.ts:1450:14: function toResolvedRoot: () => IncrementalBuildInfoResolvedRoot[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1451:13: variable result: IncrementalBuildInfoResolvedRoot[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1452:31: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1453:19: variable file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1464:14: function toIncrementalBuildInfoCompilerOptions: (options: CompilerOptions) => CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1464:52: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:1465:13: variable result: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1466:17: binding optionsNameMap: Map<string, CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1467:20: variable name: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1468:19: variable optionInfo: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1479:14: function toReusableCompilerOptionValue: (option: CommandLineOption | undefined, value: CompilerOptionsValue) => CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/builder.ts:1479:44: parameter option: CommandLineOption | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1479:83: parameter value: CompilerOptionsValue
+/workspace/tracing-measured-after/src/compiler/builder.ts:1483:23: variable values: readonly string[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1495:14: function toIncrementalBuildInfoDiagnostics: () => IncrementalBuildInfoDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1496:13: variable result: IncrementalBuildInfoDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1497:34: parameter _value: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1497:42: parameter key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1498:19: variable value: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1512:14: function toIncrementalBuildInfoEmitDiagnostics: () => IncrementalBuildInfoDiagnosticOfFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1513:13: variable result: IncrementalBuildInfoDiagnosticOfFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1515:20: variable key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1516:19: variable value: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1525:14: function toReusableDiagnostic: (diagnostics: readonly Diagnostic[], diagnosticFilePath: Path) => readonly ReusableDiagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1525:35: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1525:71: parameter diagnosticFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1527:32: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:1528:19: variable result: ReusableDiagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:1533:21: binding relatedInformation: DiagnosticRelatedInformation[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1536:44: parameter r: DiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:1543:14: function toReusableDiagnosticRelatedInformation: (diagnostic: DiagnosticRelatedInformation, diagnosticFilePath: Path) => ReusableDiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:1543:53: parameter diagnostic: DiagnosticRelatedInformation
+/workspace/tracing-measured-after/src/compiler/builder.ts:1543:95: parameter diagnosticFilePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1544:17: binding file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1556:14: function toReusableDiagnosticMessageChain: (chain: DiagnosticMessageChain) => ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:1556:47: parameter chain: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:1563:15: variable next: ReusableDiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1567:14: function toReusableDiagnosticMessageChainArray: (array: DiagnosticMessageChain[] | undefined) => ReusableDiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1567:52: parameter array: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1569:32: parameter chain: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:1569:39: parameter index: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:1570:19: variable reusable: ReusableDiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/builder.ts:1572:19: variable result: ReusableDiagnosticMessageChain[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1574:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:1581:14: function toChangeFileSet: () => IncrementalBuildInfoFileId[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1582:13: variable changeFileSet: IncrementalBuildInfoFileId[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1584:24: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1599:18: interface BuilderCreationParameters: BuilderCreationParameters
+/workspace/tracing-measured-after/src/compiler/builder.ts:1600:5: property newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:1601:5: property host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:1602:5: property oldProgram: BuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1603:5: property configFileParsingDiagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:17: function getBuilderCreationParameters: (newProgramOrRootNames: Program | readonly string[] | undefined, hostOrOptions: BuilderProgramHost | CompilerOptions | undefined, oldProgramOrHost?: BuilderProgram | CompilerHost | undefined, configFileParsingDiagnosticsOrOldProgram?: BuilderProgram | readonly Diagnostic[] | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined) => BuilderCreationParameters
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:46: parameter newProgramOrRootNames: Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:110: parameter hostOrOptions: BuilderProgramHost | CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:175: parameter oldProgramOrHost: BuilderProgram | CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:225: parameter configFileParsingDiagnosticsOrOldProgram: BuilderProgram | readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:308: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1607:362: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1608:9: variable host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:1609:9: variable newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:1610:9: variable oldProgram: BuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1639:10: function getTextHandlingSourceMapForSignature: (text: string, data: WriteFileCallbackData | undefined) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1639:47: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1639:61: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1644:17: function computeSignatureWithDiagnostics: (program: Program, sourceFile: SourceFile, text: string, host: HostForComputeHash, data: WriteFileCallbackData | undefined) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1645:5: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:1646:5: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1647:5: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1648:5: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builder.ts:1649:5: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1652:9: variable sourceFileDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1654:38: parameter diagnostic: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/builder.ts:1658:14: function flattenDiagnosticMessageText: (diagnostic: string | DiagnosticMessageChain | undefined) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1658:43: parameter diagnostic: string | DiagnosticMessageChain | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1668:14: function locationInfo: (diagnostic: DiagnosticWithLocation) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1668:27: parameter diagnostic: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/builder.ts:1681:10: function computeSignature: (text: string, host: HostForComputeHash, data?: WriteFileCallbackData | undefined) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1681:27: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1681:41: parameter host: HostForComputeHash
+/workspace/tracing-measured-after/src/compiler/builder.ts:1681:67: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1686:17: function createBuilderProgram: { (kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): SemanticDiagnosticsBuilderProgram; (kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1687:5: parameter kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1688:5: parameter builderCreationParameters: BuilderCreationParameters
+/workspace/tracing-measured-after/src/compiler/builder.ts:1691:17: function createBuilderProgram: { (kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): SemanticDiagnosticsBuilderProgram; (kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1692:5: parameter kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1693:5: parameter builderCreationParameters: BuilderCreationParameters
+/workspace/tracing-measured-after/src/compiler/builder.ts:1696:17: function createBuilderProgram: { (kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): SemanticDiagnosticsBuilderProgram; (kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters): EmitAndSemanticDiagnosticsBuilderProgram; }
+/workspace/tracing-measured-after/src/compiler/builder.ts:1697:5: parameter kind: BuilderProgramKind
+/workspace/tracing-measured-after/src/compiler/builder.ts:1698:7: binding newProgram: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:1698:19: binding host: BuilderProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:1698:25: binding oldProgram: BuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1698:37: binding configFileParsingDiagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1701:9: variable oldState: ReusableBuilderProgramState | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1708:11: variable state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:1716:11: variable builderProgram: BuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:1719:41: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1743:14: function emitBuildInfo: (writeFile: WriteFileCallback | undefined, cancellationToken: CancellationToken | undefined) => EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:1744:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1745:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1749:19: variable result: EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:1764:14: function emitNextAffectedFileOrDtsErrors: (writeFile: WriteFileCallback | undefined, cancellationToken: CancellationToken | undefined, emitOnlyDtsFiles: boolean | undefined, customTransformers: CustomTransformers | undefined, isForDtsErrors: boolean) => AffectedFileResult<EmitResult>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1765:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1766:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1767:9: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1768:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1769:9: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1772:13: variable affected: Program | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1773:15: variable programEmitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1774:13: variable emitKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1781:23: variable pendingAffectedFile: { affectedFile: SourceFile; emitKind: BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | BuilderFileEmit.DtsEmit | BuilderFileEmit.DtsMap | BuilderFileEmit.Dts | BuilderFileEmit.AllJs | BuilderFileEmit.AllDtsEmit | BuilderFileEmit.AllDts | BuilderFileEmit.All; } | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1791:27: variable pendingForDiagnostics: { affectedFile: SourceFile; diagnostics: readonly Diagnostic[]; seenKind: BuilderFileEmit; } | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1820:27: variable seenKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1823:31: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1824:62: parameter d: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1836:23: variable affected: Program
+/workspace/tracing-measured-after/src/compiler/builder.ts:1837:23: variable result: EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:1846:13: variable emitOnly: EmitOnly | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1850:15: variable result: EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:1869:19: variable affectedSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1875:19: variable existing: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1877:19: variable existingPending: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1878:19: variable pendingKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:1899:14: function setEmitDiagnosticsPerFile: (diagnostics: readonly Diagnostic[]) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:1899:40: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:1902:13: variable emitDiagnosticsPerFile: Map<Path, Diagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1903:29: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:1905:17: variable diagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1917:14: function emitNextAffectedFile: (writeFile: WriteFileCallback | undefined, cancellationToken: CancellationToken | undefined, emitOnlyDtsFiles: boolean | undefined, customTransformers: CustomTransformers | undefined) => AffectedFileResult<EmitResult>
+/workspace/tracing-measured-after/src/compiler/builder.ts:1918:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1919:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1920:9: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1921:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1932:14: function getWriteFileCallback: (writeFile: WriteFileCallback | undefined, customTransformers: CustomTransformers | undefined) => WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1933:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1934:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:17: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:27: parameter text: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:33: parameter writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:53: parameter onError: ((message: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:62: parameter sourceFiles: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1938:75: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1942:25: variable emitSignature: any
+/workspace/tracing-measured-after/src/compiler/builder.ts:1944:31: variable file: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:1945:31: variable info: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:1947:35: variable signature: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:1960:43: variable existing: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1976:31: variable filePath: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:1983:27: variable newSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1996:22: function handleNewSignature: (oldSignatureFormat: EmitSignature | undefined, newSignature: string | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1996:41: parameter oldSignatureFormat: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1996:88: parameter newSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:1997:23: variable oldSignature: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2028:14: function emit: (targetSourceFile: SourceFile | undefined, writeFile: WriteFileCallback | undefined, cancellationToken: CancellationToken | undefined, emitOnlyDtsFiles: boolean | undefined, customTransformers: CustomTransformers | undefined) => EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:2029:9: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2030:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2031:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2032:9: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2033:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2039:15: variable result: EmitResult | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2046:21: variable sourceMaps: SourceMapEmitResult[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2047:21: variable emitSkipped: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:2048:21: variable diagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2049:21: variable emittedFiles: string[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2051:21: variable affectedEmitResult: AffectedFileResult<EmitResult>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2081:15: variable emitResult: EmitResult
+/workspace/tracing-measured-after/src/compiler/builder.ts:2097:14: function handleNonEmitBuilderWithEmitOrDtsErrors: (targetSourceFile: SourceFile | undefined, emitOnlyDtsFiles: boolean | undefined, isForDtsErrors: boolean, diagnostics: readonly Diagnostic[]) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:2098:9: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2099:9: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2100:9: parameter isForDtsErrors: boolean
+/workspace/tracing-measured-after/src/compiler/builder.ts:2101:9: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2109:14: function getDeclarationDiagnostics: (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2110:9: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2111:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2116:17: variable affectedEmitResult: AffectedFileResult<EmitResult>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2117:17: variable diagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2134:19: variable result: readonly DiagnosticWithLocation[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2149:14: function getSemanticDiagnosticsOfNextAffectedFile: (cancellationToken: CancellationToken | undefined, ignoreSourceFile?: ((sourceFile: SourceFile) => boolean) | undefined) => AffectedFileResult<readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2150:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2151:9: parameter ignoreSourceFile: ((sourceFile: SourceFile) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2151:29: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2155:19: variable affected: Program | SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2156:17: variable result: any
+/workspace/tracing-measured-after/src/compiler/builder.ts:2166:23: variable affectedSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2178:21: variable diagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2179:23: variable semanticDiagnosticsPerFile: Map<Path, readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2180:56: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2210:14: function getSemanticDiagnostics: (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2211:9: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2212:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2223:19: variable affectedResult: AffectedFileResult<readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2229:13: variable diagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2230:20: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2241:10: function addToAffectedFilesPendingEmit: (state: BuilderProgramState, affectedFilePendingEmit: Path, kind: BuilderFileEmit) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:2242:5: parameter state: BuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:2243:5: parameter affectedFilePendingEmit: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2244:5: parameter kind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2246:11: variable existingKind: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2252:17: function toBuilderStateFileInfoForMultiEmit: (fileInfo: IncrementalMultiFileEmitBuildInfoFileInfo) => FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2252:52: parameter fileInfo: IncrementalMultiFileEmitBuildInfoFileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2261:17: function toBuilderFileEmit: (value: IncrementalBuildInfoFilePendingEmit, fullEmitForOptions: BuilderFileEmit) => BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2262:5: parameter value: IncrementalBuildInfoFilePendingEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2263:5: parameter fullEmitForOptions: BuilderFileEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2269:17: function toProgramEmitPending: (value: IncrementalBuildInfoBundlePendingEmit, options: CompilerOptions | undefined) => BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2270:5: parameter value: IncrementalBuildInfoBundlePendingEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2271:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2277:17: function createBuilderProgramUsingIncrementalBuildInfo: (buildInfo: IncrementalBuildInfo, buildInfoPath: string, host: ReadBuildProgramHost) => EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:2278:5: parameter buildInfo: IncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2279:5: parameter buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2280:5: parameter host: ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/builder.ts:2282:11: variable buildInfoDirectory: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2283:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/builder.ts:2285:9: variable state: ReusableBuilderProgramState
+/workspace/tracing-measured-after/src/compiler/builder.ts:2286:11: variable filePaths: Path[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2287:9: variable filePathsSetList: Set<Path>[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2288:11: variable latestChangedDtsFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2289:11: variable fileInfos: Map<Path, FileInfo>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2290:11: variable changedFilesSet: Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2292:38: parameter fileInfo: IncrementalBundleEmitBuildInfoFileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2292:48: parameter index: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:2293:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2311:55: parameter fileIds: readonly IncrementalBuildInfoFileId[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2312:15: variable emitSignatures: Map<Path, EmitSignature> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2313:38: parameter fileInfo: IncrementalMultiFileEmitBuildInfoFileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2313:48: parameter index: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:2314:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2315:19: variable stateFileInfo: FileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2319:43: parameter value: IncrementalBuildInfoEmitSignature
+/workspace/tracing-measured-after/src/compiler/builder.ts:2322:23: variable key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2327:28: parameter signature: EmitSignature | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2335:15: variable fullEmitForOptions: BuilderFileEmit | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2344:124: parameter value: IncrementalBuildInfoFilePendingEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2344:181: parameter value: IncrementalBuildInfoFilePendingEmit
+/workspace/tracing-measured-after/src/compiler/builder.ts:2376:14: function toPathInBuildInfoDirectory: (path: string) => Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2376:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2380:14: function toAbsolutePath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2380:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2384:14: function toFilePath: (fileId: IncrementalBuildInfoFileId) => Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2384:25: parameter fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2388:14: function toFilePathsSet: (fileIdsListId: IncrementalBuildInfoFileIdListId) => Set<Path>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2388:29: parameter fileIdsListId: IncrementalBuildInfoFileIdListId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2392:14: function toManyToManyPathMap: (referenceMap: IncrementalBuildInfoReferencedMap | undefined, options: CompilerOptions) => ManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2392:34: parameter referenceMap: IncrementalBuildInfoReferencedMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2392:95: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/builder.ts:2393:15: variable map: ManyToManyPathMap | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2395:32: binding fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2395:40: binding fileIdListId: IncrementalBuildInfoFileIdListId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2399:14: function toPerFileSemanticDiagnostics: (diagnostics: readonly IncrementalBuildInfoDiagnostic[] | undefined) => Map<Path, readonly ReusableDiagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2400:9: parameter diagnostics: readonly IncrementalBuildInfoDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2402:15: variable semanticDiagnostics: Map<Path, readonly ReusableDiagnostic[]>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2405:17: parameter key: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2408:30: parameter value: IncrementalBuildInfoDiagnostic
+/workspace/tracing-measured-after/src/compiler/builder.ts:2415:14: function toPerFileEmitDiagnostics: (diagnostics: readonly IncrementalBuildInfoDiagnosticOfFile[] | undefined) => Map<Path, readonly ReusableDiagnostic[]> | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2415:39: parameter diagnostics: readonly IncrementalBuildInfoDiagnosticOfFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2416:55: parameter value: IncrementalBuildInfoDiagnosticOfFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2416:86: parameter value: IncrementalBuildInfoDiagnosticOfFile
+/workspace/tracing-measured-after/src/compiler/builder.ts:2421:17: function getBuildInfoFileVersionMap: (program: IncrementalBuildInfo, buildInfoPath: string, host: Pick<ReadBuildProgramHost, "getCurrentDirectory" | "useCaseSensitiveFileNames">) => BuildInfoFileVersionMap
+/workspace/tracing-measured-after/src/compiler/builder.ts:2422:5: parameter program: IncrementalBuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2423:5: parameter buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2424:5: parameter host: Pick<ReadBuildProgramHost, "getCurrentDirectory" | "useCaseSensitiveFileNames">
+/workspace/tracing-measured-after/src/compiler/builder.ts:2426:11: variable buildInfoDirectory: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2427:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/builder.ts:2428:11: variable fileInfos: Map<Path, string>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2429:9: variable rootIndex: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:2431:11: variable roots: Map<Path, Path | undefined>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2432:11: variable resolvedRoots: Map<IncrementalBuildInfoFileId, IncrementalBuildInfoFileId>
+/workspace/tracing-measured-after/src/compiler/builder.ts:2433:32: parameter fileInfo: IncrementalMultiFileEmitBuildInfoFileInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2433:42: parameter index: number
+/workspace/tracing-measured-after/src/compiler/builder.ts:2434:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2435:15: variable version: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2438:19: variable current: IncrementalBuildInfoRoot
+/workspace/tracing-measured-after/src/compiler/builder.ts:2439:19: variable fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2454:14: function addRoot: (fileId: IncrementalBuildInfoFileId, path: Path) => void
+/workspace/tracing-measured-after/src/compiler/builder.ts:2454:22: parameter fileId: IncrementalBuildInfoFileId
+/workspace/tracing-measured-after/src/compiler/builder.ts:2454:58: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/builder.ts:2455:15: variable root: IncrementalBuildInfoFileId | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2466:17: function getNonIncrementalBuildInfoRoots: (buildInfo: BuildInfo, buildInfoPath: string, host: Pick<ReadBuildProgramHost, "getCurrentDirectory" | "useCaseSensitiveFileNames">) => Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2467:5: parameter buildInfo: BuildInfo
+/workspace/tracing-measured-after/src/compiler/builder.ts:2468:5: parameter buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2469:5: parameter host: Pick<ReadBuildProgramHost, "getCurrentDirectory" | "useCaseSensitiveFileNames">
+/workspace/tracing-measured-after/src/compiler/builder.ts:2472:11: variable buildInfoDirectory: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2473:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/builder.ts:2474:31: parameter r: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2478:17: function createRedirectedBuilderProgram: (state: Pick<ReusableBuilderProgramState, "compilerOptions" | "program">, configFileParsingDiagnostics: readonly Diagnostic[]) => BuilderProgram
+/workspace/tracing-measured-after/src/compiler/builder.ts:2479:5: parameter state: Pick<ReusableBuilderProgramState, "compilerOptions" | "program">
+/workspace/tracing-measured-after/src/compiler/builder.ts:2480:5: parameter configFileParsingDiagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/builder.ts:2488:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/builder.ts:2490:32: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2491:31: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2493:35: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2493:47: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2494:37: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2494:49: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2495:34: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2495:46: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2496:16: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2496:28: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2496:39: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2496:58: parameter emitOnlyDts: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2496:71: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2497:25: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2497:36: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/builder.ts:2503:14: function getProgram: () => Program

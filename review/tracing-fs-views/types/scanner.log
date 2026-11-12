@@ -1,0 +1,697 @@
+/workspace/tracing-measured-after/src/compiler/scanner.ts:39:13: type ErrorCallback: (message: DiagnosticMessage, length: number, arg0?: string | number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:39:30: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/scanner.ts:39:58: parameter length: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:39:74: parameter arg0: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:42:17: function tokenIsIdentifierOrKeyword: (token: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:42:44: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:47:17: function tokenIsIdentifierOrKeywordOrGreaterThan: (token: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:47:57: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:51:18: interface Scanner: Scanner
+/workspace/tracing-measured-after/src/compiler/scanner.ts:83:22: parameter reportErrors: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:85:25: parameter isTaggedTemplate: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:91:20: parameter allowMultilineJsxText: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:99:31: parameter inBackticks: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:107:13: parameter text: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:107:39: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:107:55: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:108:16: parameter onError: ErrorCallback | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:109:21: parameter scriptTarget: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/scanner.ts:110:24: parameter variant: LanguageVariant
+/workspace/tracing-measured-after/src/compiler/scanner.ts:111:19: parameter scriptKind: ScriptKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:112:25: parameter kind: JSDocParsingMode
+/workspace/tracing-measured-after/src/compiler/scanner.ts:114:16: parameter textPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:115:21: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:117:34: parameter skip: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:121:18: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:125:18: parameter start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:125:33: parameter length: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:125:49: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:131:16: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:135:14: variable textToKeywordObj: MapLike<KeywordSyntaxKind>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:222:7: variable textToKeyword: Map<string, KeywordSyntaxKind>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:224:7: variable textToToken: Map<string, SyntaxKind>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:289:7: variable charCodeToRegExpFlag: Map<CharacterCodes, RegularExpressionFlags>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:300:7: variable regExpFlagToFirstAvailableLanguageVersion: Map<RegularExpressionFlags, ScriptTarget>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:331:7: variable unicodeES5IdentifierStart: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:333:7: variable unicodeES5IdentifierPart: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:342:7: variable unicodeESNextIdentifierStart: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:344:7: variable unicodeESNextIdentifierPart: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:349:7: variable commentDirectiveRegExSingleLine: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:354:7: variable commentDirectiveRegExMultiLine: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:356:7: variable jsDocSeeOrLink: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:358:10: function lookupInUnicodeMap: (code: number, map: readonly number[]) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:358:29: parameter code: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:358:43: parameter map: readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:365:9: variable lo: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:366:9: variable hi: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:367:9: variable mid: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:389:17: function isUnicodeIdentifierStart: (code: number, languageVersion: ScriptTarget | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:389:42: parameter code: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:389:56: parameter languageVersion: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:395:10: function isUnicodeIdentifierPart: (code: number, languageVersion: ScriptTarget | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:395:34: parameter code: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:395:48: parameter languageVersion: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:401:10: function makeReverseMap: <T>(source: Map<T, number>) => T[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:401:28: parameter source: Map<T, number>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:402:11: variable result: T[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:403:21: parameter value: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:403:28: parameter name: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:409:7: variable tokenStrings: string[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:412:17: function tokenToString: { (t: PunctuationOrKeywordSyntaxKind): string; (t: SyntaxKind): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:412:31: parameter t: PunctuationOrKeywordSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:413:17: function tokenToString: { (t: PunctuationOrKeywordSyntaxKind): string; (t: SyntaxKind): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:413:31: parameter t: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:414:17: function tokenToString: { (t: PunctuationOrKeywordSyntaxKind): string; (t: SyntaxKind): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:414:31: parameter t: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:419:17: function stringToToken: (s: string) => SyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:419:31: parameter s: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:423:7: variable regExpFlagCharCodes: CharacterCodes[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:426:17: function regularExpressionFlagToCharacterCode: (f: RegularExpressionFlags) => CharacterCodes | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:426:54: parameter f: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:431:17: function characterCodeToRegularExpressionFlag: (ch: CharacterCodes) => RegularExpressionFlags | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:431:54: parameter ch: CharacterCodes
+/workspace/tracing-measured-after/src/compiler/scanner.ts:436:17: function computeLineStarts: (text: string) => number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:436:35: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:437:11: variable result: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:438:9: variable pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:439:9: variable lineStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:441:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:465:17: function getPositionOfLineAndCharacter: { (sourceFile: SourceFileLike, line: number, character: number): number; (sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true | undefined): number; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:465:47: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/scanner.ts:465:75: parameter line: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:465:89: parameter character: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:467:17: function getPositionOfLineAndCharacter: { (sourceFile: SourceFileLike, line: number, character: number): number; (sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true | undefined): number; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:467:47: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/scanner.ts:467:75: parameter line: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:467:89: parameter character: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:467:108: parameter allowEdits: true | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:468:17: function getPositionOfLineAndCharacter: { (sourceFile: SourceFileLike, line: number, character: number): number; (sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true | undefined): number; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:468:47: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/scanner.ts:468:75: parameter line: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:468:89: parameter character: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:468:108: parameter allowEdits: true | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:17: function computePositionOfLineAndCharacter: (lineStarts: readonly number[], line: number, character: number, debugText?: string | undefined, allowEdits?: true | undefined) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:51: parameter lineStarts: readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:82: parameter line: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:96: parameter character: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:115: parameter debugText: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:475:135: parameter allowEdits: true | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:486:11: variable res: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:491:15: variable nextLineStart: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:503:17: function getLineStarts: (sourceFile: LineMapSource) => readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:503:31: parameter sourceFile: LineMapSource
+/workspace/tracing-measured-after/src/compiler/scanner.ts:508:17: function computeLineAndCharacterOfPosition: (lineStarts: readonly number[], position: number) => LineAndCharacter
+/workspace/tracing-measured-after/src/compiler/scanner.ts:508:51: parameter lineStarts: readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:508:82: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:509:11: variable lineNumber: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:520:17: function computeLineOfPosition: (lineStarts: readonly number[], position: number, lowerBound?: number | undefined) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:520:39: parameter lineStarts: readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:520:70: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:520:88: parameter lowerBound: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:521:9: variable lineNumber: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:537:17: function getLinesBetweenPositions: (sourceFile: SourceFileLike, pos1: number, pos2: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:537:42: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/scanner.ts:537:70: parameter pos1: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:537:84: parameter pos2: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:539:11: variable lineStarts: readonly number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:540:11: variable lower: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:541:11: variable isNegative: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:542:11: variable upper: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:543:11: variable lowerLine: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:544:11: variable upperLine: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:549:17: function getLineAndCharacterOfPosition: { (sourceFile: LineMapSource, position: number): LineAndCharacter; (sourceFile: SourceFileLike, position: number): LineAndCharacter; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:549:47: parameter sourceFile: LineMapSource
+/workspace/tracing-measured-after/src/compiler/scanner.ts:549:74: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:550:17: function getLineAndCharacterOfPosition: { (sourceFile: LineMapSource, position: number): LineAndCharacter; (sourceFile: SourceFileLike, position: number): LineAndCharacter; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:550:47: parameter sourceFile: SourceFileLike
+/workspace/tracing-measured-after/src/compiler/scanner.ts:550:75: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:551:17: function getLineAndCharacterOfPosition: { (sourceFile: LineMapSource, position: number): LineAndCharacter; (sourceFile: SourceFileLike, position: number): LineAndCharacter; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:551:47: parameter sourceFile: LineMapSource
+/workspace/tracing-measured-after/src/compiler/scanner.ts:551:74: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:555:17: function isWhiteSpaceLike: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:555:34: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:560:17: function isWhiteSpaceSingleLine: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:560:40: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:577:17: function isLineBreak: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:577:29: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:595:10: function isDigit: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:595:18: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:599:10: function isHexDigit: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:599:21: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:603:10: function isASCIILetter: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:603:24: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:608:10: function isWordCharacter: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:608:26: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:612:10: function isOctalDigit: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:612:23: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:616:17: function couldStartTrivia: (text: string, pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:616:34: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:616:48: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:618:11: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:17: function skipTrivia: (text: string, pos: number, stopAfterLineBreak?: boolean | undefined, stopAtComments?: boolean | undefined, inJSDoc?: boolean | undefined) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:28: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:42: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:55: parameter stopAfterLineBreak: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:85: parameter stopAtComments: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:644:111: parameter inJSDoc: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:649:9: variable canConsumeStar: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:652:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:741:7: variable mergeConflictMarkerLength: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:743:10: function isConflictMarkerTrivia: (text: string, pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:743:33: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:743:47: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:748:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:751:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:10: function scanConflictMarkerTrivia: (text: string, pos: number, error?: ((diag: DiagnosticMessage, pos?: number | undefined, len?: number | undefined) => void) | undefined) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:35: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:49: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:62: parameter error: ((diag: DiagnosticMessage, pos?: number | undefined, len?: number | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:71: parameter diag: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:96: parameter pos: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:765:110: parameter len: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:770:11: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:771:11: variable len: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:783:19: variable currentChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:795:7: variable shebangTriviaRegex: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:797:10: function isShebangTrivia: (text: string, pos: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:797:26: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:797:40: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:803:10: function scanShebangTrivia: (text: string, pos: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:803:28: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:803:42: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:804:11: variable shebang: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:10: function iterateCommentRanges: <T, U>(reduce: boolean, text: string, pos: number, trailing: boolean, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T, memo: U | undefined) => U, state: T, initial?: U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:37: parameter reduce: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:54: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:68: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:81: parameter trailing: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:100: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T, memo: U | undefined) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:105: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:118: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:131: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:150: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:179: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:189: parameter memo: U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:216: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:829:226: parameter initial: U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:830:9: variable pendingPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:831:9: variable pendingEnd: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:832:9: variable pendingKind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:833:9: variable pendingHasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:834:9: variable hasPendingCommentRange: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:835:9: variable collecting: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:836:9: variable accumulator: U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:839:15: variable shebang: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:846:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:872:23: variable nextChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:873:21: variable hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:875:27: variable kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia
+/workspace/tracing-measured-after/src/compiler/scanner.ts:876:27: variable startPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:17: function forEachLeadingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:47: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:61: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:74: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:79: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:92: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:105: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:935:124: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:17: function forEachLeadingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:50: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:64: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:77: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:82: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:95: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:108: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:127: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:156: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:936:172: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:17: function forEachLeadingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:50: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:64: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:77: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:82: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:95: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:108: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:127: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:156: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:937:172: parameter state: T | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:17: function forEachTrailingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:48: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:62: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:75: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:80: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:93: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:106: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:941:125: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:17: function forEachTrailingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:51: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:65: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:78: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:83: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:96: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:109: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:128: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:157: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:942:173: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:17: function forEachTrailingCommentRange: { <U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined; <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T): U | undefined; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:51: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:65: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:78: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:83: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:96: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:109: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:128: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:157: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:943:173: parameter state: T | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:17: function reduceEachLeadingCommentRange: <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T, initial: U) => U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:53: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:67: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:80: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:85: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:98: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:111: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:130: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:159: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:175: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:947:185: parameter initial: U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:17: function reduceEachTrailingCommentRange: <T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state: T, initial: U) => U | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:54: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:68: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:81: parameter cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:86: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:99: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:112: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:131: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:160: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:176: parameter state: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:951:186: parameter initial: U
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:10: function appendCommentRange: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, _state: undefined, comments?: CommentRange[]) => CommentRange[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:29: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:42: parameter end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:55: parameter kind: CommentKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:74: parameter hasTrailingNewLine: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:103: parameter _state: undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:955:122: parameter comments: CommentRange[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:960:17: function getLeadingCommentRanges: (text: string, pos: number) => CommentRange[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:960:41: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:960:55: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:964:17: function getTrailingCommentRanges: (text: string, pos: number) => CommentRange[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:964:42: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:964:56: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:969:17: function getShebang: (text: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:969:28: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:970:11: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/scanner.ts:977:17: function isIdentifierStart: (ch: number, languageVersion: ScriptTarget | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:977:35: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:977:47: parameter languageVersion: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:982:17: function isIdentifierPart: (ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:982:34: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:982:46: parameter languageVersion: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:982:89: parameter identifierVariant: LanguageVariant | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:990:17: function isIdentifierText: (name: string, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:990:34: parameter name: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:990:48: parameter languageVersion: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:990:91: parameter identifierVariant: LanguageVariant | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:991:9: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:996:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1026:17: function createScanner: (languageVersion: ScriptTarget, skipTrivia: boolean, languageVariant?: LanguageVariant, textInitial?: string | undefined, onError?: ErrorCallback | undefined, start?: number | undefined, length?: number | undefined) => Scanner
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1027:5: parameter languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1028:5: parameter skipTrivia: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1029:5: parameter languageVariant: LanguageVariant
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1030:5: parameter textInitial: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1031:5: parameter onError: ErrorCallback | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1032:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1033:5: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1038:9: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1041:9: variable pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1044:9: variable end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1047:9: variable fullStartPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1050:9: variable tokenStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1052:9: variable token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1053:9: variable tokenValue: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1054:9: variable tokenFlags: TokenFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1056:9: variable commentDirectives: CommentDirective[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1057:9: variable skipJsDocLeadingAsterisks: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1059:9: variable scriptKind: ScriptKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1060:9: variable jsDocParsingMode: JSDocParsingMode
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1064:9: variable scanner: Scanner
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1122:23: variable text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1135:14: function codePointUnchecked: (pos: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1135:33: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1143:14: function codePointChecked: (pos: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1143:31: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1152:14: function charCodeUnchecked: (pos: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1152:32: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1160:14: function charCodeChecked: (pos: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1160:30: parameter pos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1164:14: function error: { (message: DiagnosticMessage): void; (message: DiagnosticMessage, errPos: number, length: number, arg0?: string | number | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1164:20: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1165:14: function error: { (message: DiagnosticMessage): void; (message: DiagnosticMessage, errPos: number, length: number, arg0?: string | number | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1165:20: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1165:48: parameter errPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1165:64: parameter length: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1165:80: parameter arg0: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1166:14: function error: { (message: DiagnosticMessage): void; (message: DiagnosticMessage, errPos: number, length: number, arg0?: string | number | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1166:20: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1166:48: parameter errPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1166:70: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1166:87: parameter arg0: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1168:19: variable oldPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1175:14: function scanNumberFragment: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1176:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1177:13: variable allowSeparator: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1178:13: variable isPreviousTokenSeparator: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1179:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1181:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1237:14: function scanNumber: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1238:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1239:13: variable mainFragment: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1264:23: variable withMinus: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1265:23: variable literal: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1274:13: variable decimalFragment: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1275:13: variable scientificFragment: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1280:13: variable end: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1285:19: variable preNumericPart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1286:19: variable finalFragment: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1295:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1324:19: variable type: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1330:14: function checkForIdentifierStartAfterNumericLiteral: (numericStart: number, isScientific?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1330:57: parameter numericStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1330:79: parameter isScientific: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1335:15: variable identifierStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1336:17: binding length: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1352:14: function scanDigits: () => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1353:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1354:13: variable isOctal: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1369:14: function scanExactNumberOfHexDigits: (count: number, canHaveSeparators: boolean) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1369:41: parameter count: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1369:56: parameter canHaveSeparators: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1370:15: variable valueString: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1378:14: function scanMinimumNumberOfHexDigits: (count: number, canHaveSeparators: boolean) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1378:43: parameter count: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1378:58: parameter canHaveSeparators: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1382:14: function scanHexDigits: (minCount: number, scanAsManyAsPossible: boolean, canHaveSeparators: boolean) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1382:28: parameter minCount: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1382:46: parameter scanAsManyAsPossible: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1382:77: parameter canHaveSeparators: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1383:13: variable valueChars: number[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1384:13: variable allowSeparator: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1385:13: variable isPreviousTokenSeparator: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1387:17: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1426:14: function scanString: (jsxAttributeString?: boolean) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1426:25: parameter jsxAttributeString: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1427:15: variable quote: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1429:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1430:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1438:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1466:14: function scanTemplateAndSetTokenValue: (shouldEmitInvalidEscapeError: boolean) => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1466:43: parameter shouldEmitInvalidEscapeError: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1467:15: variable startedWithBacktick: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1470:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1471:13: variable contents: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1472:13: variable resultingToken: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1483:19: variable currChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1547:14: function scanEscapeSequence: (flags: EscapeSequenceScanningFlags) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1547:33: parameter flags: EscapeSequenceScanningFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1548:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1554:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1585:27: variable code: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1629:27: variable result: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1649:23: variable escapedValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1650:23: variable escapedValueString: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1658:27: variable nextStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1659:25: variable nextPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1666:27: variable nextEscapedValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1712:14: function scanExtendedUnicodeEscape: (shouldEmitInvalidEscapeError: boolean) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1712:40: parameter shouldEmitInvalidEscapeError: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1713:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1715:15: variable escapedStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1716:15: variable escapedValueString: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1717:15: variable escapedValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1718:13: variable isInvalidExtendedEscape: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1762:14: function peekUnicodeEscape: () => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1764:19: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1766:19: variable value: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1773:14: function peekExtendedUnicodeEscape: () => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1775:19: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1777:19: variable escapedValueString: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1778:19: variable escapedValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1785:14: function scanIdentifierParts: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1786:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1787:13: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1789:17: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1819:14: function getIdentifierToken: () => SyntaxKind.Identifier | KeywordSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1821:15: variable len: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1823:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1825:23: variable keyword: KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1834:14: function scanBinaryOrOctalDigits: (base: 2 | 8) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1834:38: parameter base: 2 | 8
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1835:13: variable value: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1838:13: variable separatorAllowed: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1839:13: variable isPreviousTokenSeparator: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1841:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1873:14: function checkBigIntSuffix: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1885:19: variable numericValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1895:14: function scan: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:1904:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2088:31: variable isJSDoc: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2090:29: variable commentClosed: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2091:29: variable lastLineStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2093:35: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2311:27: variable extendedCookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2317:27: variable cookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2335:27: variable charAfterHash: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2338:31: variable extendedCookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2344:31: variable cookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2373:27: variable identifierKind: SyntaxKind.Identifier | KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2386:27: variable size: 0 | 1 | 2
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2394:14: function shouldParseJSDoc: () => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2416:14: function reScanInvalidIdentifier: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2420:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2421:15: variable identifierKind: SyntaxKind.Identifier | KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2429:14: function scanIdentifier: (startCharacter: number, languageVersion: ScriptTarget) => SyntaxKind.Identifier | KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2429:29: parameter startCharacter: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2429:53: parameter languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2430:13: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2443:14: function reScanGreaterToken: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2466:14: function reScanAsteriskEqualsToken: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2472:14: function reScanSlashToken: (reportErrors?: boolean | undefined) => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2472:31: parameter reportErrors: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2475:19: variable startOfRegExpBody: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2477:17: variable inEscape: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2478:17: variable namedCaptureGroups: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2488:17: variable inCharacterClass: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2492:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2529:19: variable endOfRegExpBody: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2535:21: variable characterClassDepth: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2536:21: variable inDecimalQuantifier: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2537:21: variable groupDepth: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2539:27: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2581:21: variable regExpFlags: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2583:27: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2587:27: variable size: 0 | 1 | 2
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2589:31: variable flag: RegularExpressionFlags | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2618:14: function scanRegularExpressionWorker: (regExpFlags: RegularExpressionFlags, annexB: boolean, namedCaptureGroups: boolean) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2618:42: parameter regExpFlags: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2618:79: parameter annexB: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2618:96: parameter namedCaptureGroups: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2624:13: variable unicodeSetsMode: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2626:13: variable anyUnicodeMode: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2630:13: variable anyUnicodeModeOrNonAnnexB: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2633:13: variable mayContainStrings: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2636:13: variable numberOfCapturingGroups: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2638:13: variable groupSpecifiers: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2640:13: variable groupNameReferences: (TextRange & { name: string; })[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2640:49: property name: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2642:13: variable decimalEscapes: (TextRange & { value: number; })[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2642:44: property value: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2644:13: variable namedCapturingGroupsScopeStack: (Set<string> | undefined)[]
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2645:13: variable topNamedCapturingGroupsScope: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2648:18: function scanDisjunction: (isInGroup: boolean) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2648:34: parameter isInGroup: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2690:18: function scanAlternative: (isInGroup: boolean) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2690:34: parameter isInGroup: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2691:17: variable isPreviousTermQuantifiable: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2693:23: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2694:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2729:43: variable groupNameStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2749:43: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2750:43: variable setFlags: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2772:31: variable digitsStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2774:31: variable min: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2782:35: variable max: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2867:18: function scanPatternModifiers: (currFlags: RegularExpressionFlags) => RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2867:39: parameter currFlags: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2869:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2873:23: variable size: 0 | 1 | 2
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2874:23: variable flag: RegularExpressionFlags | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2898:18: function scanAtomEscape: () => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2928:18: function scanDecimalEscape: () => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2930:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2932:23: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2947:18: function scanCharacterEscape: (atomEscape: boolean) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2947:38: parameter atomEscape: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:2949:17: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3002:18: function scanGroupName: (isReference: boolean) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3002:32: parameter isReference: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3012:107: parameter group: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3023:18: function isClassContentExit: (ch: number) => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3023:37: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3028:18: function scanClassRanges: () => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3035:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3039:23: variable minStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3040:23: variable minCharacter: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3043:27: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3050:27: variable maxStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3051:27: variable maxCharacter: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3059:27: variable minCharacterValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3060:27: variable maxCharacterValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3087:18: function scanClassSetExpression: () => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3089:17: variable isCharacterComplement: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3094:17: variable expressionMayContainStrings: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3095:17: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3099:17: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3100:17: variable operand: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3168:35: variable secondStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3169:35: variable secondOperand: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3181:35: variable minCharacterValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3182:35: variable maxCharacterValue: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3228:18: function scanClassSetSubExpression: (expressionType: ClassSetExpressionType) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3228:44: parameter expressionType: ClassSetExpressionType
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3229:17: variable expressionMayContainStrings: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3231:21: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3295:18: function scanClassSetOperand: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3331:18: function scanClassStringDisjunctionContents: () => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3333:17: variable characterCount: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3335:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3363:18: function scanClassSetCharacter: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3364:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3371:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3445:18: function scanClassAtom: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3448:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3471:18: function scanCharacterClassEscape: () => boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3473:17: variable isCharacterComplement: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3474:19: variable start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3475:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3492:31: variable propertyNameOrValueStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3493:31: variable propertyNameOrValue: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3495:35: variable propertyName: "General_Category" | "Script" | "Script_Extensions" | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3501:39: variable suggestion: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3507:35: variable propertyValueStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3508:35: variable propertyValue: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3514:39: variable suggestion: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3537:39: variable suggestion: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3560:18: function scanWordCharacters: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3561:17: variable value: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3563:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3573:18: function scanSourceCharacter: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3574:19: variable size: 0 | 1 | 2
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3579:18: function scanExpectedChar: (ch: CharacterCodes) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3579:35: parameter ch: CharacterCodes
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3590:38: parameter reference: TextRange & { name: string; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3594:27: variable suggestion: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3601:33: parameter escape: TextRange & { value: number; }
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3616:14: function checkRegularExpressionFlagAvailability: (flag: RegularExpressionFlags, size: number) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3616:53: parameter flag: RegularExpressionFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3616:83: parameter size: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3617:15: variable availableFrom: ScriptTarget | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3623:14: function appendIfCommentDirective: (commentDirectives: CommentDirective[] | undefined, text: string, commentDirectiveRegEx: RegExp, lineStart: number) => CommentDirective[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3624:9: parameter commentDirectives: CommentDirective[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3625:9: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3626:9: parameter commentDirectiveRegEx: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3627:9: parameter lineStart: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3629:15: variable type: CommentDirectiveType | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3643:14: function getDirectiveFromComment: (text: string, commentDirectiveRegEx: RegExp) => CommentDirectiveType | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3643:38: parameter text: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3643:52: parameter commentDirectiveRegEx: RegExp
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3644:15: variable match: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3663:14: function reScanTemplateToken: (isTaggedTemplate: boolean) => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3663:34: parameter isTaggedTemplate: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3668:14: function reScanTemplateHeadOrNoSubstitutionTemplate: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3673:14: function reScanJsxToken: (allowMultilineJsxText?: boolean) => JsxTokenSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3673:29: parameter allowMultilineJsxText: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3678:14: function reScanLessThanToken: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3686:14: function reScanHashToken: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3694:14: function reScanQuestionToken: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3700:14: function scanJsxToken: (allowMultilineJsxText?: boolean) => JsxTokenSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3700:27: parameter allowMultilineJsxText: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3707:13: variable char: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3723:13: variable firstNonWhitespace: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3775:14: function scanJsxIdentifier: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3782:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3788:23: variable oldPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3799:14: function scanJsxAttributeValue: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3813:14: function reScanJsxAttributeValue: () => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3818:14: function scanJSDocCommentTextToken: (inBackticks: boolean) => SyntaxKind.JSDocCommentTextToken | JSDocSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3818:40: parameter inBackticks: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3824:18: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3846:14: function scanJsDocToken: () => JSDocSyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3853:15: variable ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3904:23: variable extendedCookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3910:23: variable cookedChar: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3922:17: variable char: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3935:14: function speculationHelper: <T>(callback: () => T, isLookahead: boolean) => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3935:35: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3935:54: parameter isLookahead: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3936:15: variable savePos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3937:15: variable saveStartPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3938:15: variable saveTokenPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3939:15: variable saveToken: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3940:15: variable saveTokenValue: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3941:15: variable saveTokenFlags: TokenFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3942:15: variable result: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3957:14: function scanRange: <T>(start: number, length: number, callback: () => T) => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3957:27: parameter start: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3957:42: parameter length: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3957:58: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3958:15: variable saveEnd: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3959:15: variable savePos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3960:15: variable saveStartPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3961:15: variable saveTokenPos: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3962:15: variable saveToken: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3963:15: variable saveTokenValue: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3964:15: variable saveTokenFlags: TokenFlags
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3965:15: variable saveErrorExpectations: CommentDirective[] | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3968:15: variable result: T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3982:14: function lookAhead: <T>(callback: () => T) => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3982:27: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3986:14: function tryScan: <T>(callback: () => T) => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3986:25: parameter callback: () => T
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3990:14: function getText: () => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3994:14: function clearCommentDirectives: () => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3998:14: function setText: (newText: string | undefined, start: number | undefined, length: number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3998:22: parameter newText: string | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3998:51: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:3998:78: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4004:14: function setOnError: (errorCallback: ErrorCallback | undefined) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4004:25: parameter errorCallback: ErrorCallback | undefined
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4008:14: function setScriptTarget: (scriptTarget: ScriptTarget) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4008:30: parameter scriptTarget: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4012:14: function setLanguageVariant: (variant: LanguageVariant) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4012:33: parameter variant: LanguageVariant
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4016:14: function setScriptKind: (kind: ScriptKind) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4016:28: parameter kind: ScriptKind
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4020:14: function setJSDocParsingMode: (kind: JSDocParsingMode) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4020:34: parameter kind: JSDocParsingMode
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4024:14: function resetTokenState: (position: number) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4024:30: parameter position: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4034:14: function setSkipJsDocLeadingAsterisks: (skip: boolean) => void
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4034:43: parameter skip: boolean
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4039:10: function codePointAt: (s: string, i: number) => number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4039:22: parameter s: string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4039:33: parameter i: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4044:10: function charSize: (ch: number) => 0 | 1 | 2
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4044:19: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4055:10: function utf16EncodeAsStringFallback: (codePoint: number) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4055:38: parameter codePoint: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4062:11: variable codeUnit1: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4063:11: variable codeUnit2: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4068:7: variable utf16EncodeAsStringWorker: (codePoint: number) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4068:35: parameter codePoint: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4068:89: parameter codePoint: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4071:17: function utf16EncodeAsString: (codePoint: number) => string
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4071:37: parameter codePoint: number
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4078:7: variable nonBinaryUnicodeProperties: Map<string, "General_Category" | "Script" | "Script_Extensions">
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4090:7: variable binaryUnicodeProperties: Set<string>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4095:7: variable binaryUnicodePropertiesOfStrings: Set<string>
+/workspace/tracing-measured-after/src/compiler/scanner.ts:4099:7: variable valuesOfNonBinaryUnicodeProperties: { General_Category: Set<string>; Script: Set<string>; Script_Extensions: Set<string>; }

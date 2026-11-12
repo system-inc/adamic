@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/tracing-evidence/review/tracing-fs-views/normal-proof.py", line 36, in <module>
+    x=(out/('before-'+file)).read_bytes();y=(out/('after-'+file)).read_bytes();assert x==y,file
+                                                                                      ^^^^
+AssertionError: types.json

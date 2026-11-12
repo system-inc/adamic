@@ -1,0 +1,526 @@
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:133:7: variable stringToRegex: (arg: string) => RegExp | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:133:35: parameter pattern: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:135:13: variable slash: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:140:15: variable lastSlash: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:152:15: variable flags: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:172:18: interface ModuleSpecifierPreferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:173:14: property relativePreference: RelativePreference
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:177:39: parameter syntaxImpliedNodeFormat: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:178:14: property excludeRegexes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:182:17: function getModuleSpecifierPreferences: ({ importModuleSpecifierPreference, importModuleSpecifierEnding, autoImportSpecifierExcludeRegexes }: UserPreferences, host: Pick<ModuleSpecifierResolutionHost, "getDefaultResolutionModeForFile">, compilerOptions: CompilerOptions, importingSourceFile: Pick<SourceFile, "fileName" | "impliedNodeFormat">, oldImportSpecifier?: string | undefined) => ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:183:7: binding importModuleSpecifierPreference: "non-relative" | "project-relative" | "relative" | "shortest" | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:183:40: binding importModuleSpecifierEnding: "auto" | "index" | "js" | "minimal" | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:183:69: binding autoImportSpecifierExcludeRegexes: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:184:5: parameter host: Pick<ModuleSpecifierResolutionHost, "getDefaultResolutionModeForFile">
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:185:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:186:5: parameter importingSourceFile: Pick<SourceFile, "fileName" | "impliedNodeFormat">
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:187:5: parameter oldImportSpecifier: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:189:11: variable filePreferredEnding: ModuleSpecifierEnding
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:199:44: parameter syntaxImpliedNodeFormat: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:200:19: variable impliedNodeFormat: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:201:19: variable preferredEnding: ModuleSpecifierEnding
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:202:19: variable moduleResolution: ModuleResolutionKind
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:214:19: variable allowImportingTsExtension: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:236:14: function getPreferredEnding: (resolutionMode?: ResolutionMode) => ModuleSpecifierEnding
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:236:33: parameter resolutionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:255:17: function updateModuleSpecifier: (compilerOptions: CompilerOptions, importingSourceFile: SourceFile, importingSourceFileName: string, toFileName: string, host: ModuleSpecifierResolutionHost, oldImportSpecifier: string, options?: ModuleSpecifierOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:256:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:257:5: parameter importingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:258:5: parameter importingSourceFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:259:5: parameter toFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:260:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:261:5: parameter oldImportSpecifier: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:262:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:264:11: variable res: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:276:17: function getModuleSpecifier: (compilerOptions: CompilerOptions, importingSourceFile: FutureSourceFile | SourceFile, importingSourceFileName: string, toFileName: string, host: ModuleSpecifierResolutionHost, options?: ModuleSpecifierOptions) => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:277:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:278:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:279:5: parameter importingSourceFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:280:5: parameter toFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:281:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:282:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:288:17: function getNodeModulesPackageName: (compilerOptions: CompilerOptions, importingSourceFile: FutureSourceFile | SourceFile, nodeModulesFileName: string, host: ModuleSpecifierResolutionHost, preferences: UserPreferences, options?: ModuleSpecifierOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:289:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:290:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:291:5: parameter nodeModulesFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:292:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:293:5: parameter preferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:294:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:296:11: variable info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:297:11: variable modulePaths: readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:298:38: parameter modulePath: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:301:10: function getModuleSpecifierWorker: (compilerOptions: CompilerOptions, importingSourceFile: FutureSourceFile | SourceFile, importingSourceFileName: string, toFileName: string, host: ModuleSpecifierResolutionHost, preferences: ModuleSpecifierPreferences, userPreferences: UserPreferences, options?: ModuleSpecifierOptions) => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:302:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:303:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:304:5: parameter importingSourceFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:305:5: parameter toFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:306:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:307:5: parameter preferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:308:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:309:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:311:11: variable info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:312:11: variable modulePaths: readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:313:38: parameter modulePath: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:318:17: function tryGetModuleSpecifiersFromCache: (moduleSymbol: Symbol, importingSourceFile: FutureSourceFile | SourceFile, host: ModuleSpecifierResolutionHost, userPreferences: UserPreferences, options?: ModuleSpecifierOptions) => ModuleSpecifierResult | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:319:5: parameter moduleSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:320:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:321:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:322:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:323:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:325:11: variable result: readonly [kind?: "ambient" | "node_modules" | "paths" | "redirect" | "relative" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:335:10: function tryGetModuleSpecifiersFromCacheWorker: (moduleSymbol: Symbol, importingSourceFile: FutureSourceFile | SourceFile, host: ModuleSpecifierResolutionHost, userPreferences: UserPreferences, options?: ModuleSpecifierOptions) => readonly [kind?: "ambient" | "node_modules" | "paths" | "redirect" | "relative" | undefined, specifiers?: readonly string[] | undefined, moduleFile?: SourceFile, modulePaths?: readonly ModulePath[] | undefined, cache?: ModuleSpecifierCache | undefined]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:336:5: parameter moduleSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:337:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:338:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:339:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:340:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:342:11: variable moduleSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:347:11: variable cache: ModuleSpecifierCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:348:11: variable cached: Readonly<ResolvedModuleSpecifierInfo> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:357:17: function getModuleSpecifiers: (moduleSymbol: Symbol, checker: TypeChecker, compilerOptions: CompilerOptions, importingSourceFile: SourceFile, host: ModuleSpecifierResolutionHost, userPreferences: UserPreferences, options?: ModuleSpecifierOptions) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:358:5: parameter moduleSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:359:5: parameter checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:360:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:361:5: parameter importingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:362:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:363:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:364:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:379:18: interface ModuleSpecifierResult: ModuleSpecifierResult
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:380:14: property kind: "ambient" | "node_modules" | "paths" | "redirect" | "relative" | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:381:14: property moduleSpecifiers: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:382:14: property computedWithoutCache: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:386:17: function getModuleSpecifiersWithCacheInfo: (moduleSymbol: Symbol, checker: TypeChecker, compilerOptions: CompilerOptions, importingSourceFile: FutureSourceFile | SourceFile, host: ModuleSpecifierResolutionHost, userPreferences: UserPreferences, options: ModuleSpecifierOptions | undefined, forAutoImport: boolean) => ModuleSpecifierResult
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:387:5: parameter moduleSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:388:5: parameter checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:389:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:390:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:391:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:392:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:393:5: parameter options: ModuleSpecifierOptions | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:394:5: parameter forAutoImport: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:396:9: variable computedWithoutCache: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:397:11: variable ambient: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:407:10: binding kind: "ambient" | "node_modules" | "paths" | "redirect" | "relative" | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:407:16: binding specifiers: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:407:28: binding moduleSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:407:46: binding modulePaths: readonly ModulePath[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:407:59: binding cache: ModuleSpecifierCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:419:11: variable result: ModuleSpecifierResult
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:433:17: function getLocalModuleSpecifierBetweenFileNames: (importingFile: Pick<SourceFile, "fileName" | "impliedNodeFormat">, targetFileName: string, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, preferences: UserPreferences, options?: ModuleSpecifierOptions) => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:434:5: parameter importingFile: Pick<SourceFile, "fileName" | "impliedNodeFormat">
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:435:5: parameter targetFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:436:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:437:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:438:5: parameter preferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:439:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:441:11: variable info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:442:11: variable importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:453:10: function computeModuleSpecifiers: (modulePaths: readonly ModulePath[], compilerOptions: CompilerOptions, importingSourceFile: FutureSourceFile | SourceFile, host: ModuleSpecifierResolutionHost, userPreferences: UserPreferences, options: ModuleSpecifierOptions | undefined, forAutoImport: boolean) => ModuleSpecifierResult
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:454:5: parameter modulePaths: readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:455:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:456:5: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:457:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:458:5: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:459:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:460:5: parameter forAutoImport: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:462:11: variable info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:463:11: variable preferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:464:11: variable existingSpecifier: string | false | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:464:93: parameter modulePath: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:467:13: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:471:23: variable existingMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:472:23: variable targetMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:476:23: variable specifier: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:487:11: variable importedFileIsInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:487:59: parameter p: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:494:9: variable nodeModulesSpecifiers: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:495:9: variable pathsSpecifiers: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:496:9: variable redirectPathsSpecifiers: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:497:9: variable relativeSpecifiers: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:498:16: variable modulePath: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:499:15: variable specifier: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:511:15: variable local: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:558:10: function isExcludedByRegex: (moduleSpecifier: string, excludeRegexes: readonly string[] | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:558:28: parameter moduleSpecifier: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:558:53: parameter excludeRegexes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:559:33: parameter pattern: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:562:11: interface Info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:563:14: property getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:564:14: property importingSourceFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:565:14: property sourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:566:14: property canonicalSourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:569:10: function getInfo: (importingSourceFileName: string, host: ModuleSpecifierResolutionHost) => Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:569:18: parameter importingSourceFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:569:51: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:571:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:572:11: variable sourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:10: function getLocalModuleSpecifier: { (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences): string; (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences, pathsOnly?: boolean | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:34: parameter moduleFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:58: parameter info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:70: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:104: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:141: parameter importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:581:169: parameter preferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:10: function getLocalModuleSpecifier: { (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences): string; (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences, pathsOnly?: boolean | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:34: parameter moduleFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:58: parameter info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:70: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:104: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:141: parameter importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:169: parameter preferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:582:210: parameter pathsOnly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:10: function getLocalModuleSpecifier: { (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences): string; (moduleFileName: string, info: Info, compilerOptions: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferences: ModuleSpecifierPreferences, pathsOnly?: boolean | undefined): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:34: parameter moduleFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:58: parameter info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:70: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:104: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:141: parameter importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:206: binding getAllowedEndingsInPrefererredOrder: (syntaxImpliedNodeFormat?: ResolutionMode) => ModuleSpecifierEnding[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:243: binding relativePreference: RelativePreference
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:263: binding excludeRegexes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:583:309: parameter pathsOnly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:584:13: binding baseUrl: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:584:22: binding paths: MapLike<string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:584:29: binding rootDirs: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:589:13: binding sourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:589:30: binding canonicalSourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:589:56: binding getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:590:11: variable allowedEndings: [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:591:11: variable relativePath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:597:11: variable baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:598:11: variable relativeToBaseUrl: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:603:11: variable fromPackageJsonImports: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:614:11: variable fromPaths: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:619:11: variable maybeNonRelative: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:624:11: variable relativeIsExcluded: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:625:11: variable nonRelativeIsExcluded: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:638:15: variable projectDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:641:15: variable modulePath: Path
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:642:15: variable sourceIsInternal: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:643:15: variable targetIsInternal: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:656:15: variable nearestTargetPackageJson: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:657:15: variable nearestSourcePackageJson: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:658:15: variable ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:679:10: function packageJsonPathsAreEqual: (a: string | undefined, b: string | undefined, ignoreCase?: boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:679:35: parameter a: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:679:58: parameter b: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:679:81: parameter ignoreCase: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:686:17: function countPathComponents: (path: string) => number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:686:37: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:687:9: variable count: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:688:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:694:10: function comparePathsByRedirectAndNumberOfDirectorySeparators: (a: ModulePath, b: ModulePath) => Comparison
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:694:63: parameter a: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:694:78: parameter b: ModulePath
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:698:10: function getNearestAncestorDirectoryWithPackageJson: (host: ModuleSpecifierResolutionHost, fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:698:53: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:698:90: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:705:9: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:713:17: function forEachFileNameOfModule: <T>(importingFileName: string, importedFileName: string, host: ModuleSpecifierResolutionHost, preferSymlinks: boolean, cb: (fileName: string, isRedirect: boolean) => T | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:714:5: parameter importingFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:715:5: parameter importedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:716:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:717:5: parameter preferSymlinks: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:718:5: parameter cb: (fileName: string, isRedirect: boolean) => T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:718:10: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:718:28: parameter isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:720:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:721:11: variable cwd: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:722:11: variable referenceRedirect: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:723:11: variable importedPath: Path
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:724:11: variable redirects: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:725:11: variable importedFileNames: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:726:11: variable targets: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:726:43: parameter f: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:727:9: variable shouldFilterIgnoredPaths: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:732:15: variable result: false | T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:732:41: parameter p: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:736:11: variable symlinkedDirectories: MultiMap<Path, string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:737:11: variable fullImportedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:738:11: variable result: false | NonNullable<T> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:741:9: parameter realPathDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:742:19: variable symlinkDirectories: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:750:37: parameter target: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:755:23: variable relative: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:756:28: variable symlinkDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:757:27: variable option: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:758:27: variable result: T | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:766:28: parameter p: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:774:10: function getAllModulePaths: (info: Info, importedFileName: string, host: ModuleSpecifierResolutionHost, preferences: UserPreferences, compilerOptions: CompilerOptions, options?: ModuleSpecifierOptions) => readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:775:5: parameter info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:776:5: parameter importedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:777:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:778:5: parameter preferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:779:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:780:5: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:782:11: variable importingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:783:11: variable importedFilePath: Path
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:784:11: variable cache: ModuleSpecifierCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:786:15: variable cached: Readonly<ResolvedModuleSpecifierInfo> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:789:11: variable modulePaths: readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:796:7: variable runtimeDependencyFields: readonly ["dependencies", "peerDependencies", "optionalDependencies"]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:798:10: function getAllRuntimeDependencies: (packageJson: PackageJsonPathFields) => string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:798:36: parameter packageJson: PackageJsonPathFields
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:799:9: variable result: any
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:800:16: variable field: "dependencies" | "optionalDependencies" | "peerDependencies"
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:801:15: variable deps: MapLike<string> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:10: function getAllModulePathsWorker: (info: Info, importedFileName: string, host: ModuleSpecifierResolutionHost, compilerOptions: CompilerOptions, options: ModuleSpecifierOptions) => readonly ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:34: parameter info: Info
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:46: parameter importedFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:72: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:109: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:809:143: parameter options: ModuleSpecifierOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:810:11: variable cache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:811:11: variable links: SymlinkCache | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:817:15: variable state: ModuleResolutionState
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:818:15: variable packageJson: PackageJsonInfo | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:820:19: variable toResolve: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:821:24: variable depName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:822:23: variable resolved: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:828:11: variable allFileNames: Map<string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }>
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:828:44: property path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:828:58: property isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:828:79: property isInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:829:9: variable importedFileFromNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:835:10: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:835:16: parameter isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:836:19: variable isInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:844:11: variable sortedPaths: ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:846:13: variable directory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:849:15: variable directoryStart: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:850:13: variable pathsInDirectory: ModulePath[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:851:33: binding path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:851:39: binding isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:851:51: binding isInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:851:70: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:863:15: variable newDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:868:15: variable remainingPaths: ModulePath[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:868:53: property path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:868:67: property isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:868:88: property isInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:870:15: binding fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:870:27: binding isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:870:39: binding isInNodeModules: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:879:10: function tryGetModuleNameFromAmbientModule: (moduleSymbol: Symbol, checker: TypeChecker) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:879:44: parameter moduleSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:879:66: parameter checker: TypeChecker
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:880:11: variable decl: (ModuleDeclaration & { name: StringLiteral; }) | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:881:9: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:882:33: property name: StringLiteral
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:897:11: variable ambientModuleDeclareCandidates: AmbientModuleDeclaration[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:897:82: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:899:15: variable topNamespace: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:906:15: variable exportAssignment: Identifier | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:908:15: variable exportSymbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:910:15: variable originalExportSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:913:18: function getTopNamespace: (namespaceDeclaration: ModuleDeclaration) => ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:913:34: parameter namespaceDeclaration: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:920:11: variable ambientModuleDeclare: (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:920:101: property name: StringLiteral
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:10: function tryGetModuleNameFromPaths: (relativeToBaseUrl: string, paths: MapLike<readonly string[]>, allowedEndings: ModuleSpecifierEnding[], baseDirectory: string, getCanonicalFileName: GetCanonicalFileName, host: ModuleSpecifierResolutionHost, compilerOptions: CompilerOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:36: parameter relativeToBaseUrl: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:63: parameter paths: MapLike<readonly string[]>
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:98: parameter allowedEndings: ModuleSpecifierEnding[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:139: parameter baseDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:162: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:206: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:926:243: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:927:16: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:928:20: variable patternText: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:929:19: variable normalized: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:930:19: variable pattern: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:931:19: variable indexOfStar: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:968:19: variable candidates: { ending: ModuleSpecifierEnding | undefined; value: string; }[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:968:33: property ending: ModuleSpecifierEnding | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:968:76: property value: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:968:116: parameter ending: ModuleSpecifierEnding
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:977:23: variable prefix: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:978:23: variable suffix: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:979:30: binding ending: ModuleSpecifierEnding | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:979:38: binding value: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:986:31: variable matchedStar: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:994:34: parameter c: { ending: ModuleSpecifierEnding | undefined; value: string; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:995:34: parameter c: { ending: ModuleSpecifierEnding | undefined; value: string; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1002:14: function validateEnding: ({ ending, value }: { ending: ModuleSpecifierEnding | undefined; value: string; }) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1002:31: binding ending: ModuleSpecifierEnding | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1002:39: binding value: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1002:50: property ending: ModuleSpecifierEnding | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1002:93: property value: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1020:10: function tryGetModuleNameFromExportsOrImports: (options: CompilerOptions, host: ModuleSpecifierResolutionHost, targetFilePath: string, packageDirectory: string, packageName: string, exports: unknown, conditions: string[], mode: MatchingMode, isImports: boolean, preferTsExtension: boolean) => { moduleFileToTry: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1021:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1022:5: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1023:5: parameter targetFilePath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1024:5: parameter packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1025:5: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1026:5: parameter exports: unknown
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1027:5: parameter conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1028:5: parameter mode: MatchingMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1029:5: parameter isImports: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1030:5: parameter preferTsExtension: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1031:6: property moduleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1033:15: variable ignoreCase: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1034:15: variable getCommonSourceDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1035:15: variable outputFile: string | false
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1036:15: variable declarationFile: string | false
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1038:15: variable pathOrPattern: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1039:15: variable extensionSwappedTarget: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1040:15: variable canTryTsExtension: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1055:27: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1059:27: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1063:27: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1067:27: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1071:27: variable fragment: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1076:23: variable starPos: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1077:23: variable leadingSlice: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1078:23: variable trailingSlice: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1080:27: variable starReplacement: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1084:27: variable starReplacement: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1088:27: variable starReplacement: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1092:27: variable starReplacement: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1096:27: variable starReplacement: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1097:27: variable substituted: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1098:27: variable jsExtension: Extension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1105:33: parameter e: unknown
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1109:20: variable key: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1111:23: variable subTarget: unknown
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1112:23: variable result: { moduleFileToTry: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:10: function tryGetModuleNameFromExports: (options: CompilerOptions, host: ModuleSpecifierResolutionHost, targetFilePath: string, packageDirectory: string, packageName: string, exports: unknown, conditions: string[]) => { moduleFileToTry: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:38: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:64: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:101: parameter targetFilePath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:125: parameter packageDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:151: parameter packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:172: parameter exports: unknown
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:190: parameter conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1122:215: property moduleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1129:65: parameter k: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1130:19: variable subPackageName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1131:19: variable mode: MatchingMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:10: function tryGetModuleNameFromPackageJsonImports: (moduleFileName: string, sourceDirectory: string, options: CompilerOptions, host: ModuleSpecifierResolutionHost, importMode: ResolutionMode, preferTsExtension: boolean) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:49: parameter moduleFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:73: parameter sourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:98: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:124: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:161: parameter importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1140:189: parameter preferTsExtension: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1145:11: variable ancestorDirectoryWithPackageJson: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1149:11: variable packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1150:11: variable cachedPackageJson: PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1154:11: variable packageJsonContent: any
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1155:11: variable imports: any
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1159:11: variable conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1160:61: parameter k: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1162:15: variable mode: MatchingMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:10: function tryGetModuleNameFromRootDirs: (rootDirs: readonly string[], moduleFileName: string, sourceDirectory: string, getCanonicalFileName: (file: string) => string, allowedEndings: readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]], compilerOptions: CompilerOptions) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:39: parameter rootDirs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:68: parameter moduleFileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:92: parameter sourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:117: parameter getCanonicalFileName: (file: string) => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:140: parameter file: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:165: parameter allowedEndings: readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1169:243: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1170:11: variable normalizedTargetPaths: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1175:11: variable normalizedSourcePaths: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1176:11: variable relativePaths: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1176:58: parameter sourcePath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1177:43: parameter targetPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1179:11: variable shortest: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:10: function tryGetModuleNameAsNodeModule: ({ path, isRedirect }: ModulePath, { getCanonicalFileName, canonicalSourceDirectory }: Info, importingSourceFile: FutureSourceFile | SourceFile, host: ModuleSpecifierResolutionHost, options: CompilerOptions, userPreferences: UserPreferences, packageNameOnly?: boolean | undefined, overrideMode?: ResolutionMode) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:41: binding path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:47: binding isRedirect: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:75: binding getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:97: binding canonicalSourceDirectory: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:131: parameter importingSourceFile: FutureSourceFile | SourceFile
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:183: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:220: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:246: parameter userPreferences: UserPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:280: parameter packageNameOnly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1186:307: parameter overrideMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1190:11: variable parts: NodeModulePathParts
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1197:11: variable preferences: ModuleSpecifierPreferences
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1198:11: variable allowedEndings: [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1199:9: variable moduleSpecifier: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1200:9: variable isPackageRootPath: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1202:13: variable packageRootIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1203:13: variable moduleFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1206:21: binding moduleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1206:38: binding packageRootPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1206:55: binding blockedByExports: true | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1206:73: binding verbatimFromExports: true | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1235:11: variable globalTypingsCacheLocation: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1238:11: variable pathToTopLevelNodeModules: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1244:11: variable nodeModulesDirectoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1245:11: variable packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:14: function tryDirectoryWithPackageJson: (packageRootIndex: number) => { moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; }
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:42: parameter packageRootIndex: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:71: property moduleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:96: property packageRootPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:122: property blockedByExports: true | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1249:147: property verbatimFromExports: true | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1250:15: variable packageRootPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1251:15: variable packageJsonPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1252:13: variable moduleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1253:13: variable maybeBlockedByTypesVersions: boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1254:15: variable cachedPackageJson: PackageJsonInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1256:19: variable packageJsonContent: Record<string, any> | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1257:19: variable importMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1262:23: variable nodeModulesDirectoryName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1263:23: variable packageName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1264:23: variable conditions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1265:23: variable fromExports: { moduleFileToTry: string; } | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1283:19: variable versionPaths: VersionPaths | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1287:23: variable subModuleName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1288:23: variable fromPaths: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1305:19: variable mainFileRelative: any
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1313:23: variable mainExportFile: Path
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1314:23: variable canonicalModuleFileToTry: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1336:19: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1345:10: function tryGetAnyFileFromPath: (host: ModuleSpecifierResolutionHost, path: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1345:32: parameter host: ModuleSpecifierResolutionHost
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1345:69: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1348:11: variable extensions: string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1349:16: variable e: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1350:15: variable fullPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1357:10: function getPathsRelativeToRootDirs: (path: string, rootDirs: readonly string[], getCanonicalFileName: GetCanonicalFileName) => string[] | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1357:37: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1357:51: parameter rootDirs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1357:80: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1358:33: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1359:15: variable relativePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1364:10: function processEnding: (fileName: string, allowedEndings: readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]], options: CompilerOptions, host?: ModuleSpecifierResolutionHost | undefined) => string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1364:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1364:42: parameter allowedEndings: readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1364:120: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1364:146: parameter host: ModuleSpecifierResolutionHost | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1369:11: variable noExtension: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1374:11: variable jsPriority: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1375:11: variable tsPriority: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1389:19: variable withoutIndex: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1404:23: variable extensionlessPriority: number
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1404:72: parameter e: ModuleSpecifierEnding
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1416:17: function tryGetRealFileNameForNonJsDeclarationFileName: (fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1416:63: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1417:11: variable baseName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1419:11: variable noExtension: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1420:11: variable ext: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1424:10: function getJSExtensionForFile: (fileName: string, options: CompilerOptions) => Extension
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1424:32: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1424:50: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1429:17: function tryGetJSExtensionForFile: (fileName: string, options: CompilerOptions) => Extension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1429:42: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1429:60: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1430:11: variable ext: Extension | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1454:10: function getRelativePathIfInSameVolume: (path: string, directoryPath: string, getCanonicalFileName: GetCanonicalFileName) => string | undefined
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1454:40: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1454:54: parameter directoryPath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1454:77: parameter getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1455:11: variable relativePath: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1459:10: function isPathRelativeToParent: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1459:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1463:10: function getDefaultResolutionModeForFile: (file: Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">, host: Pick<ModuleSpecifierResolutionHost, "getDefaultResolutionModeForFile">, compilerOptions: CompilerOptions) => ResolutionMode
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1463:42: parameter file: Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1463:121: parameter host: Pick<ModuleSpecifierResolutionHost, "getDefaultResolutionModeForFile">
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1463:199: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1467:10: function prefersTsExtension: (allowedEndings: readonly ModuleSpecifierEnding[]) => boolean
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1467:29: parameter allowedEndings: readonly ModuleSpecifierEnding[]
+/workspace/tracing-measured-after/src/compiler/moduleSpecifiers.ts:1468:11: variable tsPriority: number

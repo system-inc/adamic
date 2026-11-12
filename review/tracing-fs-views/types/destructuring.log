@@ -1,0 +1,182 @@
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:66:11: interface FlattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:67:5: property context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:68:5: property level: FlattenLevel
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:69:5: property downlevelIteration: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:70:5: property hoistTempVariables: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:71:5: property hasTransformedPriorElement: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:72:5: property emitExpression: (value: Expression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:72:22: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:73:5: property emitBindingOrAssignment: (target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange, original: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:73:31: parameter target: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:73:73: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:73:92: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:73:113: parameter original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:74:5: property createArrayBindingOrAssignmentPattern: (elements: BindingOrAssignmentElement[]) => ArrayBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:74:45: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:75:5: property createObjectBindingOrAssignmentPattern: (elements: BindingOrAssignmentElement[]) => ObjectBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:75:46: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:76:5: property createArrayBindingOrAssignmentElement: (node: Identifier) => BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:76:45: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:77:5: property visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:77:15: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:99:17: function flattenDestructuringAssignment: (node: VariableDeclaration | DestructuringAssignment, visitor: (node: Node) => VisitResult<Node | undefined>, context: TransformationContext, level: FlattenLevel, needsValue?: boolean | undefined, createAssignmentCallback?: ((name: Identifier, value: Expression, location?: TextRange | undefined) => Expression) | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:100:5: parameter node: VariableDeclaration | DestructuringAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:101:5: parameter visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:101:15: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:102:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:103:5: parameter level: FlattenLevel
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:104:5: parameter needsValue: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:105:5: parameter createAssignmentCallback: ((name: Identifier, value: Expression, location?: TextRange | undefined) => Expression) | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:105:33: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:105:51: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:105:70: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:107:9: variable location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:108:9: variable value: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:122:9: variable expressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:123:11: variable flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:130:48: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:131:49: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:180:14: function emitExpression: (expression: Expression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:180:29: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:184:14: function emitBindingOrAssignment: (target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange, original: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:184:38: parameter target: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:184:80: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:184:99: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:184:120: parameter original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:186:15: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:197:10: function bindingOrAssignmentElementAssignsToName: (element: BindingOrAssignmentElement, escapedName: __String) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:197:50: parameter element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:197:87: parameter escapedName: __String
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:198:11: variable target: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:208:10: function bindingOrAssignmentPatternAssignsToName: (pattern: BindingOrAssignmentPattern, escapedName: __String) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:208:50: parameter pattern: BindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:208:87: parameter escapedName: __String
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:209:11: variable elements: readonly BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:210:16: variable element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:218:10: function bindingOrAssignmentElementContainsNonLiteralComputedName: (element: BindingOrAssignmentElement) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:218:67: parameter element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:219:11: variable propertyName: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:223:11: variable target: BindingOrAssignmentElementTarget | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:227:10: function bindingOrAssignmentPatternContainsNonLiteralComputedName: (pattern: BindingOrAssignmentPattern) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:227:67: parameter pattern: BindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:244:17: function flattenDestructuringBinding: (node: ParameterDeclaration | VariableDeclaration, visitor: (node: Node) => VisitResult<Node | undefined>, context: TransformationContext, level: FlattenLevel, rval?: Expression | undefined, hoistTempVariables?: boolean, skipInitializer?: boolean | undefined) => VariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:245:5: parameter node: ParameterDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:246:5: parameter visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:246:15: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:247:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:248:5: parameter level: FlattenLevel
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:249:5: parameter rval: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:250:5: parameter hoistTempVariables: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:251:5: parameter skipInitializer: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:253:9: variable pendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:11: variable pendingDeclarations: { pendingExpressions?: Expression[] | undefined; name: BindingName; value: Expression; location?: TextRange | undefined; original?: Node | undefined; }[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:34: property pendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:81: property name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:100: property value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:119: property location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:254:153: property original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:255:11: variable declarations: VariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:256:11: variable flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:263:48: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:264:49: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:265:48: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:270:13: variable initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:284:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:286:19: variable value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:292:19: variable pendingDeclaration: { pendingExpressions?: Expression[] | undefined; name: BindingName; value: Expression; location?: TextRange | undefined; original?: Node | undefined; }
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:301:18: binding pendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:301:38: binding name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:301:44: binding value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:301:51: binding location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:301:61: binding original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:302:15: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:314:14: function emitExpression: (value: Expression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:314:29: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:318:14: function emitBindingOrAssignment: (target: BindingOrAssignmentElementTarget, value: Expression, location: TextRange | undefined, original: Node | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:318:38: parameter target: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:318:80: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:318:99: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:318:132: parameter original: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:338:10: function flattenBindingOrAssignmentElement: (flattenContext: FlattenContext, element: BindingOrAssignmentElement, value: Expression | undefined, location: TextRange, skipInitializer?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:339:5: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:340:5: parameter element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:341:5: parameter value: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:342:5: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:343:5: parameter skipInitializer: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:345:11: variable bindingTarget: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:347:15: variable initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:10: function flattenObjectBindingOrAssignmentPattern: (flattenContext: FlattenContext, parent: BindingOrAssignmentElement, pattern: ObjectBindingOrAssignmentPattern, value: Expression, location: TextRange) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:50: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:82: parameter parent: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:118: parameter pattern: ObjectBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:161: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:386:180: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:387:11: variable elements: readonly BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:388:11: variable numElements: number
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:394:15: variable reuseIdentifierExpressions: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:397:9: variable bindingElements: BindingOrAssignmentElement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:398:9: variable computedTempVariables: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:399:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:400:15: variable element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:402:19: variable propertyName: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:416:23: variable rhsValue: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:428:19: variable rhsValue: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:10: function flattenArrayBindingOrAssignmentPattern: (flattenContext: FlattenContext, parent: BindingOrAssignmentElement, pattern: ArrayBindingOrAssignmentPattern, value: Expression, location: TextRange) => void
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:49: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:81: parameter parent: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:117: parameter pattern: ArrayBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:159: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:446:178: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:447:11: variable elements: readonly BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:448:11: variable numElements: number
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:476:15: variable reuseIdentifierExpressions: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:479:9: variable bindingElements: BindingOrAssignmentElement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:480:9: variable restContainingElements: [Identifier, BindingOrAssignmentElement][] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:481:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:482:15: variable element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:488:23: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:504:19: variable rhsValue: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:508:19: variable rhsValue: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:516:21: binding id: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:516:25: binding element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:522:10: function isSimpleBindingOrAssignmentElement: (element: BindingOrAssignmentElement) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:522:45: parameter element: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:523:11: variable target: BindingOrAssignmentElementTarget | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:525:11: variable propertyName: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:527:11: variable initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:541:10: function createDefaultValueCheck: (flattenContext: FlattenContext, value: Expression, defaultValue: Expression, location: TextRange) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:541:34: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:541:66: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:541:85: parameter defaultValue: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:541:111: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:556:10: function createDestructuringPropertyAccess: (flattenContext: FlattenContext, value: Expression, propertyName: PropertyName) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:556:44: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:556:76: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:556:95: parameter propertyName: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:557:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:559:15: variable argumentExpression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:563:15: variable argumentExpression: BigIntLiteral | NumericLiteral | StringLiteralLike
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:567:15: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:583:10: function ensureIdentifier: (flattenContext: FlattenContext, value: Expression, reuseIdentifierExpressions: boolean, location: TextRange) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:583:27: parameter flattenContext: FlattenContext
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:583:59: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:583:78: parameter reuseIdentifierExpressions: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:583:115: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:588:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:600:10: function makeArrayBindingPattern: (factory: NodeFactory, elements: BindingOrAssignmentElement[]) => ArrayBindingPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:600:34: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:600:56: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:605:10: function makeArrayAssignmentPattern: (factory: NodeFactory, elements: BindingOrAssignmentElement[]) => ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:605:37: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:605:59: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:610:10: function makeObjectBindingPattern: (factory: NodeFactory, elements: BindingOrAssignmentElement[]) => ObjectBindingPattern
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:610:35: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:610:57: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:615:10: function makeObjectAssignmentPattern: (factory: NodeFactory, elements: BindingOrAssignmentElement[]) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:615:38: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:615:60: parameter elements: BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:620:10: function makeBindingElement: (factory: NodeFactory, name: Identifier) => BindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:620:29: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:620:51: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:624:10: function makeAssignmentElement: (name: Identifier) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/destructuring.ts:624:32: parameter name: Identifier

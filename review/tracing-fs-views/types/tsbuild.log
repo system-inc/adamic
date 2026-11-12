@@ -1,0 +1,48 @@
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:41:13: type UpToDateStatus: ComputingUpstream | ContainerOnly | ErrorReadingFile | ForceBuild | OutOfDateBuildInfo | OutOfDateRoots | OutOfDateWithSelf | OutOfDateWithUpstream | OutputMissing | TsVersionOutOfDate | Unbuildable | UpToDate | UpstreamBlocked | UpstreamOutOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:63:22: interface Unbuildable: Unbuildable
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:64:9: property type: UpToDateStatusType.Unbuildable
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:65:9: property reason: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:71:22: interface ContainerOnly: ContainerOnly
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:72:9: property type: UpToDateStatusType.ContainerOnly
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:79:22: interface UpToDate: UpToDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:80:9: property type: UpToDateStatusType.UpToDate | UpToDateStatusType.UpToDateWithUpstreamTypes | UpToDateStatusType.UpToDateWithInputFileText
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:84:9: property newestInputFileTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:85:9: property newestInputFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:86:9: property oldestOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:92:22: interface OutputMissing: OutputMissing
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:93:9: property type: UpToDateStatusType.OutputMissing
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:97:9: property missingOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:101:22: interface ErrorReadingFile: ErrorReadingFile
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:102:9: property type: UpToDateStatusType.ErrorReadingFile
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:103:9: property fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:109:22: interface OutOfDateWithSelf: OutOfDateWithSelf
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:110:9: property type: UpToDateStatusType.OutOfDateWithSelf
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:111:9: property outOfDateOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:112:9: property newerInputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:118:22: interface OutOfDateBuildInfo: OutOfDateBuildInfo
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:119:9: property type: UpToDateStatusType.OutOfDateBuildInfoWithPendingEmit | UpToDateStatusType.OutOfDateBuildInfoWithErrors | UpToDateStatusType.OutOfDateOptions
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:123:9: property buildInfoFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:126:22: interface OutOfDateRoots: OutOfDateRoots
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:127:9: property type: UpToDateStatusType.OutOfDateRoots
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:128:9: property buildInfoFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:129:9: property inputFile: Path
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:135:22: interface UpstreamOutOfDate: UpstreamOutOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:136:9: property type: UpToDateStatusType.UpstreamOutOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:137:9: property upstreamProjectName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:143:22: interface UpstreamBlocked: UpstreamBlocked
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:144:9: property type: UpToDateStatusType.UpstreamBlocked
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:145:9: property upstreamProjectName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:146:9: property upstreamProjectBlocked: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:152:22: interface ComputingUpstream: ComputingUpstream
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:153:9: property type: UpToDateStatusType.ComputingUpstream
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:156:22: interface TsVersionOutOfDate: TsVersionOutOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:157:9: property type: UpToDateStatusType.TsVersionOutputOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:158:9: property version: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:165:22: interface OutOfDateWithUpstream: OutOfDateWithUpstream
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:166:9: property type: UpToDateStatusType.OutOfDateWithUpstream
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:167:9: property outOfDateOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:168:9: property newerProjectName: string
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:171:22: interface ForceBuild: ForceBuild
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:172:9: property type: UpToDateStatusType.ForceBuild
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:177:17: function resolveConfigFileProjectName: (project: string) => ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuild.ts:177:46: parameter project: string

@@ -1,0 +1,56 @@
+/workspace/tracing-measured-after/src/compiler/performance.ts:15:13: variable onProfilerEvent: ((eventName: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:15:32: parameter eventName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:17:5: variable perfHooks: PerformanceHooks | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:20:5: variable performanceImpl: Performance | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:23:18: interface Timer: Timer
+/workspace/tracing-measured-after/src/compiler/performance.ts:29:17: function createTimerIf: (condition: boolean, measureName: string, startMarkName: string, endMarkName: string) => Timer
+/workspace/tracing-measured-after/src/compiler/performance.ts:29:31: parameter condition: boolean
+/workspace/tracing-measured-after/src/compiler/performance.ts:29:51: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:29:72: parameter startMarkName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:29:95: parameter endMarkName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:34:17: function createTimer: (measureName: string, startMarkName: string, endMarkName: string) => Timer
+/workspace/tracing-measured-after/src/compiler/performance.ts:34:29: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:34:50: parameter startMarkName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:34:73: parameter endMarkName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:35:9: variable enterCount: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:41:14: function enter: () => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:47:14: function exit: () => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:59:14: variable nullTimer: Timer
+/workspace/tracing-measured-after/src/compiler/performance.ts:61:5: variable enabled: boolean
+/workspace/tracing-measured-after/src/compiler/performance.ts:62:5: variable timeorigin: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:63:7: variable marks: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/performance.ts:64:7: variable counts: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/performance.ts:65:7: variable durations: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/performance.ts:74:17: function mark: (markName: string) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:74:22: parameter markName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:76:15: variable count: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:97:17: function measure: (measureName: string, startMarkName?: string | undefined, endMarkName?: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:97:25: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:97:46: parameter startMarkName: string | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:97:70: parameter endMarkName: string | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:99:15: variable end: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:100:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:101:15: variable previousDuration: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:114:17: function getCount: (markName: string) => number
+/workspace/tracing-measured-after/src/compiler/performance.ts:114:26: parameter markName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:125:17: function getDuration: (measureName: string) => number
+/workspace/tracing-measured-after/src/compiler/performance.ts:125:29: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:136:17: function forEachMeasure: (cb: (measureName: string, duration: number) => void) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:136:32: parameter cb: (measureName: string, duration: number) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:136:37: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:136:58: parameter duration: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:137:24: parameter duration: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:137:34: parameter measureName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:141:17: function forEachMark: (cb: (markName: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:141:29: parameter cb: (markName: string) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:141:34: parameter markName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:142:20: parameter _time: number
+/workspace/tracing-measured-after/src/compiler/performance.ts:142:27: parameter markName: string
+/workspace/tracing-measured-after/src/compiler/performance.ts:146:17: function clearMeasures: (name?: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:146:31: parameter name: string | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:153:17: function clearMarks: (name?: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/performance.ts:153:28: parameter name: string | undefined
+/workspace/tracing-measured-after/src/compiler/performance.ts:170:17: function isEnabled: () => boolean
+/workspace/tracing-measured-after/src/compiler/performance.ts:179:17: function enable: (system?: System) => boolean
+/workspace/tracing-measured-after/src/compiler/performance.ts:179:24: parameter system: System
+/workspace/tracing-measured-after/src/compiler/performance.ts:202:17: function disable: () => void

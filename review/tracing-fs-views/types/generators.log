@@ -1,0 +1,527 @@
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:219:6: type Label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:236:6: type OperationArguments: [number] | [Statement] | [Expression | undefined] | [number, Expression] | [Expression, Expression]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:262:6: type CodeBlock: ExceptionBlock | LabeledBlock | LoopBlock | SwitchBlock | WithBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:265:11: interface ExceptionBlock: ExceptionBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:266:5: property kind: CodeBlockKind.Exception
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:267:5: property state: ExceptionBlockState
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:268:5: property startLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:269:5: property catchVariable: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:270:5: property catchLabel: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:271:5: property finallyLabel: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:272:5: property endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:276:11: interface LabeledBlock: LabeledBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:277:5: property kind: CodeBlockKind.Labeled
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:278:5: property labelText: string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:279:5: property isScript: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:280:5: property breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:284:11: interface SwitchBlock: SwitchBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:285:5: property kind: CodeBlockKind.Switch
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:286:5: property isScript: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:287:5: property breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:291:11: interface LoopBlock: LoopBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:292:5: property kind: CodeBlockKind.Loop
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:293:5: property continueLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:294:5: property isScript: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:295:5: property breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:299:11: interface WithBlock: WithBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:300:5: property kind: CodeBlockKind.With
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:301:5: property expression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:302:5: property startLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:303:5: property endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:318:10: function getInstructionName: (instruction: Instruction) => string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:318:29: parameter instruction: Instruction
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:336:17: function transformGenerators: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:336:37: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:336:71: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:338:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:339:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:340:9: binding resumeLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:341:9: binding endLexicalEnvironment: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:342:9: binding hoistFunctionDeclaration: (node: FunctionDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:343:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:346:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:347:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:348:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:349:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:352:9: variable renamedCatchVariables: Map<string, boolean>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:353:9: variable renamedCatchVariableDeclarations: Identifier[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:355:9: variable inGeneratorFunctionBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:356:9: variable inStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:362:9: variable blocks: CodeBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:363:9: variable blockOffsets: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:364:9: variable blockActions: BlockAction[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:365:9: variable blockStack: CodeBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:372:9: variable labelOffsets: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:373:9: variable labelExpressions: Mutable<LiteralExpression>[][] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:374:9: variable nextLabelId: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:381:9: variable operations: OpCode[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:382:9: variable operationArguments: (OperationArguments | undefined)[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:383:9: variable operationLocations: (TextRange | undefined)[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:385:9: variable state: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:389:9: variable blockIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:390:9: variable labelNumber: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:391:9: variable labelNumbers: number[][] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:392:9: variable lastOperationWasAbrupt: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:393:9: variable lastOperationWasCompletion: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:394:9: variable clauses: CaseClause[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:395:9: variable statements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:396:9: variable exceptionBlockStack: ExceptionBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:397:9: variable currentExceptionBlock: ExceptionBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:398:9: variable withBlockStack: WithBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:402:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:402:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:407:15: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:417:14: function visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:417:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:418:15: variable transformFlags: TransformFlags
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:441:14: function visitJavaScriptInStatementContainingYield: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:441:56: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:461:14: function visitJavaScriptInGeneratorFunctionBody: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:461:53: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:500:14: function visitJavaScriptContainingYield: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:500:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:530:14: function visitGenerator: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:530:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:552:14: function visitFunctionDeclaration: (node: FunctionDeclaration) => Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:552:39: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:572:19: variable savedInGeneratorFunctionBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:573:19: variable savedInStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:601:14: function visitFunctionExpression: (node: FunctionExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:601:38: parameter node: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:621:19: variable savedInGeneratorFunctionBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:622:19: variable savedInStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:641:14: function visitAccessorDeclaration: (node: AccessorDeclaration) => AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:641:39: parameter node: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:642:15: variable savedInGeneratorFunctionBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:643:15: variable savedInStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:657:14: function transformGeneratorFunctionBody: (body: Block) => Block
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:657:45: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:659:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:660:15: variable savedInGeneratorFunctionBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:661:15: variable savedInStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:662:15: variable savedBlocks: CodeBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:663:15: variable savedBlockOffsets: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:664:15: variable savedBlockActions: BlockAction[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:665:15: variable savedBlockStack: CodeBlock[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:666:15: variable savedLabelOffsets: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:667:15: variable savedLabelExpressions: Mutable<LiteralExpression>[][] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:668:15: variable savedNextLabelId: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:669:15: variable savedOperations: OpCode[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:670:15: variable savedOperationArguments: (OperationArguments | undefined)[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:671:15: variable savedOperationLocations: (TextRange | undefined)[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:672:15: variable savedState: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:692:15: variable statementOffset: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:696:15: variable buildResult: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:726:14: function visitVariableStatement: (node: VariableStatement) => Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:726:37: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:737:24: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:741:19: variable variables: readonly InitializedVariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:765:14: function visitBinaryExpression: (node: BinaryExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:765:36: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:766:15: variable assoc: Associativity
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:782:14: function visitRightAssociativeBinaryExpression: (node: BinaryExpression) => BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:782:52: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:783:17: binding left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:783:23: binding right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:785:17: variable target: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:825:19: variable operator: BinaryOperator
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:850:14: function visitLeftAssociativeBinaryExpression: (node: BinaryExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:850:51: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:879:14: function visitCommaExpression: (node: BinaryExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:879:35: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:889:13: variable pendingExpressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:894:18: function visit: (node: Expression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:894:24: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:915:14: function visitCommaListExpression: (node: CommaListExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:915:39: parameter node: CommaListExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:917:13: variable pendingExpressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:918:20: variable elem: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:938:14: function visitLogicalBinaryExpression: (node: BinaryExpression) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:938:43: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:968:15: variable resultLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:969:15: variable resultLocal: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:991:14: function visitConditionalExpression: (node: ConditionalExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:991:41: parameter node: ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1011:19: variable whenFalseLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1012:19: variable resultLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1013:19: variable resultLocal: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1031:14: function visitYieldExpression: (node: YieldExpression) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1031:35: parameter node: YieldExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1040:15: variable resumeLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1041:15: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1044:19: variable iterator: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1062:14: function visitArrayLiteralExpression: (node: ArrayLiteralExpression) => ArrayLiteralExpression | CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1062:42: parameter node: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1073:14: function visitElements: (elements: NodeArray<Expression>, leadingElement?: Expression | undefined, location?: Readonly<TextRange> | undefined, multiLine?: boolean | undefined) => ArrayLiteralExpression | CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1073:28: parameter elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1073:61: parameter leadingElement: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1073:90: parameter location: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1073:122: parameter multiLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1084:15: variable numInitialElements: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1086:13: variable temp: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1089:19: variable initialElements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1101:15: variable expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1109:18: function reduceElement: (expressions: Expression[], element: Expression) => Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1109:32: parameter expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1109:59: parameter element: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1111:23: variable hasAssignedTemp: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1137:14: function visitObjectLiteralExpression: (node: ObjectLiteralExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1137:43: parameter node: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1156:15: variable properties: NodeArray<ObjectLiteralElementLike>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1157:15: variable multiLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1158:15: variable numInitialProperties: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1160:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1169:15: variable expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1174:18: function reduceProperty: (expressions: Expression[], property: ObjectLiteralElementLike) => Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1174:33: parameter expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1174:60: parameter property: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1180:19: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1181:19: variable visited: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1197:14: function visitElementAccessExpression: (node: ElementAccessExpression) => ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1197:43: parameter node: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1215:14: function visitCallExpression: (node: CallExpression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1215:34: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1227:21: binding target: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1227:29: binding thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1244:14: function visitNewExpression: (node: NewExpression) => NewExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1244:33: parameter node: NewExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1257:21: binding target: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1257:29: binding thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1280:14: function transformAndEmitStatements: (statements: readonly Statement[], start?: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1280:41: parameter statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1280:75: parameter start: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1281:15: variable numStatements: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1282:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1287:14: function transformAndEmitEmbeddedStatement: (node: Statement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1287:48: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1296:14: function transformAndEmitStatement: (node: Statement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1296:40: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1297:15: variable savedInStatementContainingYield: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1306:14: function transformAndEmitStatementWorker: (node: Statement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1306:46: parameter node: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1343:14: function transformAndEmitBlock: (node: Block) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1343:36: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1352:14: function transformAndEmitExpressionStatement: (node: ExpressionStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1352:50: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1356:14: function transformAndEmitVariableDeclarationList: (node: VariableDeclarationList) => VariableDeclarationList | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1356:54: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1357:20: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1358:19: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1363:15: variable variables: readonly InitializedVariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1364:15: variable numVariables: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1365:13: variable variablesWritten: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1366:13: variable pendingExpressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1368:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1369:23: variable variable: InitializedVariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1387:14: function transformInitializedVariable: (node: InitializedVariableDeclaration) => AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1387:43: parameter node: InitializedVariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1397:14: function transformAndEmitIfStatement: (node: IfStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1397:42: parameter node: IfStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1414:23: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1415:23: variable elseLabel: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1434:14: function transformAndEmitDoStatement: (node: DoStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1434:42: parameter node: DoStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1451:19: variable conditionLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1452:19: variable loopLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1465:14: function visitDoStatement: (node: DoStatement) => DoStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1465:31: parameter node: DoStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1477:14: function transformAndEmitWhileStatement: (node: WhileStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1477:45: parameter node: WhileStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1493:19: variable loopLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1494:19: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1506:14: function visitWhileStatement: (node: WhileStatement) => WhileStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1506:34: parameter node: WhileStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1518:14: function transformAndEmitForStatement: (node: ForStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1518:43: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1538:19: variable conditionLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1539:19: variable incrementLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1540:19: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1542:23: variable initializer: ForInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1584:14: function visitForStatement: (node: ForStatement) => ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1584:32: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1589:15: variable initializer: ForInitializer | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1591:24: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1595:19: variable variables: readonly InitializedVariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1617:14: function transformAndEmitForInStatement: (node: ForInStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1617:45: parameter node: ForInStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1643:19: variable obj: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1644:19: variable keysArray: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1645:19: variable key: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1646:19: variable keysIndex: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1647:19: variable initializer: ForInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1668:19: variable conditionLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1669:19: variable incrementLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1670:19: variable endLoopLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1678:17: variable variable: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1680:28: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1705:14: function visitForInStatement: (node: ForInStatement) => ForInStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1705:34: parameter node: ForInStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1723:15: variable initializer: ForInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1725:24: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1742:14: function transformAndEmitContinueStatement: (node: ContinueStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1742:48: parameter node: ContinueStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1743:15: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1753:14: function visitContinueStatement: (node: ContinueStatement) => Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1753:37: parameter node: ContinueStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1755:19: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1764:14: function transformAndEmitBreakStatement: (node: BreakStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1764:45: parameter node: BreakStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1765:15: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1775:14: function visitBreakStatement: (node: BreakStatement) => Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1775:34: parameter node: BreakStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1777:19: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1786:14: function transformAndEmitReturnStatement: (node: ReturnStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1786:46: parameter node: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1793:14: function visitReturnStatement: (node: ReturnStatement) => ReturnStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1793:35: parameter node: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1800:14: function transformAndEmitWithStatement: (node: WithStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1800:44: parameter node: WithStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1820:14: function transformAndEmitSwitchStatement: (node: SwitchStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1820:46: parameter node: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1854:19: variable caseBlock: CaseBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1855:19: variable numClauses: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1856:19: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1858:19: variable expression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1861:19: variable clauseLabels: number[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1862:17: variable defaultClauseIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1863:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1864:23: variable clause: CaseOrDefaultClause
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1874:17: variable clausesWritten: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1875:17: variable pendingClauses: CaseClause[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1877:21: variable defaultClausesSkipped: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1878:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1879:27: variable clause: CaseOrDefaultClause
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1917:22: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1929:14: function visitSwitchStatement: (node: SwitchStatement) => SwitchStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1929:35: parameter node: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1943:14: function transformAndEmitLabeledStatement: (node: LabeledStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1943:47: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1964:14: function visitLabeledStatement: (node: LabeledStatement) => LabeledStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1964:36: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1978:14: function transformAndEmitThrowStatement: (node: ThrowStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1978:45: parameter node: ThrowStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1986:14: function transformAndEmitTryStatement: (node: TryStatement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:1986:43: parameter node: TryStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2037:14: function containsYield: (node: Node | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2037:28: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2041:14: function countInitialNodesWithoutYield: (nodes: NodeArray<Node>) => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2041:44: parameter nodes: NodeArray<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2042:15: variable numNodes: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2043:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2052:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2052:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2052:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2060:14: function substituteExpression: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2060:35: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2067:14: function substituteExpressionIdentifier: (node: Identifier) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2067:45: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2069:19: variable original: Node
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2071:23: variable declaration: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2073:27: variable name: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2076:31: variable clone: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2088:14: function cacheExpression: (node: Expression) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2088:30: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2093:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2098:14: function declareLocal: (name?: string | undefined) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2098:27: parameter name: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2099:15: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2109:14: function defineLabel: () => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2114:15: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2123:14: function markLabel: (label: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2123:24: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2133:14: function beginBlock: (block: CodeBlock) => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2133:25: parameter block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2141:15: variable index: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2152:14: function endBlock: () => CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2153:15: variable block: CodeBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2156:15: variable index: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2167:14: function peekBlock: () => CodeBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2174:14: function peekBlockKind: () => CodeBlockKind | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2175:15: variable block: CodeBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2184:14: function beginWithBlock: (expression: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2184:29: parameter expression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2185:15: variable startLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2186:15: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2199:14: function endWithBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2201:15: variable block: WithBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2208:14: function beginExceptionBlock: () => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2209:15: variable startLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2210:15: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2227:14: function beginCatchBlock: (variable: VariableDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2227:30: parameter variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2231:13: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2237:19: variable text: string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2249:15: variable exception: ExceptionBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2252:15: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2255:15: variable catchLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2268:14: function beginFinallyBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2271:15: variable exception: ExceptionBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2274:15: variable endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2277:15: variable finallyLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2286:14: function endExceptionBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2288:15: variable exception: ExceptionBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2289:15: variable state: ExceptionBlockState
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2308:14: function beginScriptLoopBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2325:14: function beginLoopBlock: (continueLabel: number) => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2325:29: parameter continueLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2326:15: variable breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2340:14: function endLoopBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2342:15: variable block: SwitchBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2343:15: variable breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2353:14: function beginScriptSwitchBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2366:14: function beginSwitchBlock: () => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2367:15: variable breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2379:14: function endSwitchBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2381:15: variable block: SwitchBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2382:15: variable breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2388:14: function beginScriptLabeledBlock: (labelText: string) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2388:38: parameter labelText: string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2397:14: function beginLabeledBlock: (labelText: string) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2397:32: parameter labelText: string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2398:15: variable breakLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2407:14: function endLabeledBlock: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2409:15: variable block: LabeledBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2420:14: function supportsUnlabeledBreak: (block: CodeBlock) => block is LoopBlock | SwitchBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2420:37: parameter block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2430:14: function supportsLabeledBreakOrContinue: (block: CodeBlock) => block is LabeledBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2430:45: parameter block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2439:14: function supportsUnlabeledContinue: (block: CodeBlock) => block is LoopBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2439:40: parameter block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2443:14: function hasImmediateContainingLabeledBlock: (labelText: string, start: number) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2443:49: parameter labelText: string
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2443:68: parameter start: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2444:18: variable j: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2445:19: variable containingBlock: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2464:14: function findBreakTarget: (labelText?: string | undefined) => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2464:30: parameter labelText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2467:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2468:27: variable block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2478:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2479:27: variable block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2494:14: function findContinueTarget: (labelText?: string | undefined) => number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2494:33: parameter labelText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2497:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2498:27: variable block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2505:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2506:27: variable block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2521:14: function createLabel: (label: number | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2521:26: parameter label: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2527:19: variable expression: NumericLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2544:14: function createInstruction: (instruction: Instruction) => NumericLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2544:32: parameter instruction: Instruction
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2545:15: variable literal: NumericLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2556:14: function createInlineBreak: (label: number, location?: Readonly<TextRange> | undefined) => ReturnStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2556:32: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2556:46: parameter location: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2575:14: function createInlineReturn: (expression?: Expression | undefined, location?: Readonly<TextRange> | undefined) => ReturnStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2575:33: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2575:58: parameter location: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2591:14: function createGeneratorResume: (location?: Readonly<TextRange> | undefined) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2591:36: parameter location: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2605:14: function emitNop: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2614:14: function emitStatement: (node: Statement | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2614:28: parameter node: Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2630:14: function emitAssignment: (left: Expression, right: Expression, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2630:29: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2630:47: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2630:66: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2640:14: function emitBreak: (label: number, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2640:24: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2640:38: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2652:14: function emitBreakWhenTrue: (label: number, condition: Expression, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2652:32: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2652:46: parameter condition: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2652:69: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2664:14: function emitBreakWhenFalse: (label: number, condition: Expression, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2664:33: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2664:47: parameter condition: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2664:70: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2674:14: function emitYieldStar: (expression?: Expression | undefined, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2674:28: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2674:53: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2684:14: function emitYield: (expression?: Expression | undefined, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2684:24: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2684:49: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2694:14: function emitReturn: (expression?: Expression | undefined, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2694:25: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2694:50: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2704:14: function emitThrow: (expression: Expression, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2704:24: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2704:48: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2711:14: function emitEndfinally: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2721:14: function emitWorker: (code: OpCode, args?: OperationArguments | undefined, location?: TextRange | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2721:25: parameter code: OpCode
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2721:39: parameter args: OperationArguments | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2721:66: parameter location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2733:15: variable operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2742:14: function build: () => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2754:15: variable buildResult: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2777:14: function buildStatements: () => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2779:22: variable operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2790:19: variable labelExpression: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2791:19: variable switchStatement: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2805:14: function flushLabel: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2820:14: function flushFinalLabel: (operationIndex: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2820:30: parameter operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2838:14: function isFinalLabelReachable: (operationIndex: number) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2838:36: parameter operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2853:18: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2869:14: function appendLabel: (markLabelEnd: boolean) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2869:26: parameter markLabelEnd: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2878:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2879:27: variable withBlock: WithBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2888:25: binding startLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2888:37: binding catchLabel: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2888:49: binding finallyLabel: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2888:63: binding endLabel: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2936:14: function tryEnterLabel: (operationIndex: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2936:28: parameter operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2941:18: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2960:14: function updateLabelExpressions: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2962:22: variable labelNumber: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2963:23: variable labels: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2965:32: variable label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2966:31: variable expressions: Mutable<LiteralExpression>[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2968:40: variable expression: Mutable<LiteralExpression>
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2981:14: function tryEnterOrLeaveBlock: (operationIndex: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2981:35: parameter operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2984:23: variable block: CodeBlock
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:2985:23: variable blockAction: BlockAction | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3027:14: function writeOperation: (operationIndex: number) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3027:29: parameter operationIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3039:15: variable opcode: OpCode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3047:15: variable args: OperationArguments
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3052:15: variable location: TextRange | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3057:23: variable breakLabel: number | Expression | Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3061:23: variable breakWhenTrueLabel: number | Expression | Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3065:23: variable breakWhenFalseLabel: number | Expression | Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3084:14: function writeStatement: (statement: Statement) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3084:29: parameter statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3102:14: function writeAssign: (left: Expression, right: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3102:26: parameter left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3102:44: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3102:63: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3112:14: function writeThrow: (expression: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3112:25: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3112:49: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3124:14: function writeReturn: (expression: Expression | undefined, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3124:26: parameter expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3124:62: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3150:14: function writeBreak: (label: number, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3150:25: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3150:39: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3175:14: function writeBreakWhenTrue: (label: number, condition: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3175:33: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3175:47: parameter condition: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3175:70: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3205:14: function writeBreakWhenFalse: (label: number, condition: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3205:34: parameter label: number
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3205:48: parameter condition: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3205:71: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3234:14: function writeYield: (expression: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3234:25: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3234:49: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3259:14: function writeYieldStar: (expression: Expression, operationLocation: Readonly<TextRange> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3259:29: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3259:53: parameter operationLocation: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/generators.ts:3280:14: function writeEndfinally: () => void

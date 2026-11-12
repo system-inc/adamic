@@ -1,0 +1,120 @@
+/workspace/tracing-measured-after/src/compiler/tracing.ts:33:12: variable tracing: typeof tracingEnabled | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:41:10: type Mode: "build" | "project" | "server"
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:9: variable fs: { existsSync(path: string): boolean; mkdirSync(path: string, options: { recursive: boolean; }): string | undefined; openSync(path: string, flags: string): number; writeSync(fd: number, data: string): number; closeSync(fd: number): void; writeFileSync(path: string, data: string): void; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:26: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:60: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:74: parameter options: { recursive: boolean; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:85: property recursive: boolean
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:137: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:151: parameter flags: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:185: parameter fd: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:197: parameter data: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:230: parameter fd: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:263: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:43:277: parameter data: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:45:9: variable traceCount: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:46:9: variable traceFd: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:48:9: variable mode: Mode
+/workspace/tracing-measured-after/src/compiler/tracing.ts:50:11: variable typeCatalog: Type[]
+/workspace/tracing-measured-after/src/compiler/tracing.ts:52:9: variable legendPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:53:11: variable legend: TraceRecord[]
+/workspace/tracing-measured-after/src/compiler/tracing.ts:56:15: interface Args: Args
+/workspace/tracing-measured-after/src/compiler/tracing.ts:57:10: parameter key: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:61:21: function startTracing: (tracingMode: Mode, traceDir: string, configFilePath?: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:61:34: parameter tracingMode: Mode
+/workspace/tracing-measured-after/src/compiler/tracing.ts:61:53: parameter traceDir: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:61:71: parameter configFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:68:20: variable e: unknown
+/workspace/tracing-measured-after/src/compiler/tracing.ts:85:15: variable countPart: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:88:15: variable tracePath: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:89:15: variable typesPath: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:101:15: variable meta: { cat: string; ph: string; ts: number; pid: number; tid: number; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:106:26: parameter v: { name: string; args: { name: string; }; cat: string; ph: string; ts: number; pid: number; tid: number; } | { args?: never; name: string; cat: string; ph: string; ts: number; pid: number; tid: number; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:111:21: function stopTracing: () => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:129:21: function recordType: (type: Type) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:129:32: parameter type: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:145:21: function instant: (phase: Phase, name: string, args?: Args | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:145:29: parameter phase: Phase
+/workspace/tracing-measured-after/src/compiler/tracing.ts:145:43: parameter name: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:145:57: parameter args: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:11: variable eventStack: { phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; }[]
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:25: property phase: Phase
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:39: property name: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:53: property args: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:78: property time: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:149:92: property separateBeginAndEnd: boolean
+/workspace/tracing-measured-after/src/compiler/tracing.ts:157:21: function push: (phase: Phase, name: string, args?: Args | undefined, separateBeginAndEnd?: boolean) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:157:26: parameter phase: Phase
+/workspace/tracing-measured-after/src/compiler/tracing.ts:157:40: parameter name: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:157:54: parameter args: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:157:67: parameter separateBeginAndEnd: boolean
+/workspace/tracing-measured-after/src/compiler/tracing.ts:163:21: function pop: (results?: Args | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:163:25: parameter results: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:168:21: function popAll: () => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:169:15: variable endTime: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:170:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:176:11: variable sampleInterval: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:177:14: function writeStackEvent: (index: number, endTime: number, results?: Args | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:177:30: parameter index: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:177:45: parameter endTime: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:177:62: parameter results: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:178:17: binding phase: Phase
+/workspace/tracing-measured-after/src/compiler/tracing.ts:178:24: binding name: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:178:30: binding args: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:178:36: binding time: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:178:42: binding separateBeginAndEnd: boolean
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:14: function writeEvent: (eventType: string, phase: Phase, name: string, args: Args | undefined, extras?: string | undefined, time?: number) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:25: parameter eventType: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:44: parameter phase: Phase
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:58: parameter name: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:72: parameter args: Args | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:96: parameter extras: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:189:113: parameter time: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:202:14: function getLocation: (node: Node | undefined) => { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:202:26: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:203:15: variable file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:212:18: function indexFromOne: (lc: LineAndCharacter) => LineAndCharacter
+/workspace/tracing-measured-after/src/compiler/tracing.ts:212:31: parameter lc: LineAndCharacter
+/workspace/tracing-measured-after/src/compiler/tracing.ts:220:14: function dumpTypes: (types: readonly Type[]) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:220:24: parameter types: readonly Type[]
+/workspace/tracing-measured-after/src/compiler/tracing.ts:223:15: variable typesPath: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:224:15: variable typesFd: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:226:15: variable recursionIdentityMap: Map<object, number>
+/workspace/tracing-measured-after/src/compiler/tracing.ts:231:15: variable numTypes: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:232:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/tracing.ts:233:19: variable type: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:234:19: variable objectFlags: ObjectFlags
+/workspace/tracing-measured-after/src/compiler/tracing.ts:235:19: variable symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/tracing.ts:238:17: variable display: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:248:17: variable indexedAccessProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:250:23: variable indexedAccessType: IndexedAccessType
+/workspace/tracing-measured-after/src/compiler/tracing.ts:257:17: variable referenceProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:259:23: variable referenceType: TypeReference
+/workspace/tracing-measured-after/src/compiler/tracing.ts:262:77: parameter t: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:267:17: variable conditionalProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:269:23: variable conditionalType: ConditionalType
+/workspace/tracing-measured-after/src/compiler/tracing.ts:278:17: variable substitutionProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:280:23: variable substitutionType: SubstitutionType
+/workspace/tracing-measured-after/src/compiler/tracing.ts:287:17: variable reverseMappedProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:289:23: variable reverseMappedType: ReverseMappedType
+/workspace/tracing-measured-after/src/compiler/tracing.ts:297:17: variable evolvingArrayProperties: object
+/workspace/tracing-measured-after/src/compiler/tracing.ts:299:23: variable evolvingArrayType: EvolvingArrayType
+/workspace/tracing-measured-after/src/compiler/tracing.ts:308:17: variable recursionToken: number | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:309:19: variable recursionIdentity: object | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:318:19: variable descriptor: { id: number; intrinsicName: string | undefined; symbolName: string; recursionId: number | undefined; isTuple: boolean | undefined; unionTypes: number[] | undefined; intersectionTypes: number[] | undefined; aliasTypeArguments: number[] | undefined; keyofType: number | undefined; destructuringPattern: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; firstDeclaration: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; flags: string[]; display: string | undefined; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:324:93: parameter t: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:325:113: parameter t: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:326:66: parameter t: Type
+/workspace/tracing-measured-after/src/compiler/tracing.ts:354:21: function dumpLegend: () => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:362:15: interface TraceRecord: TraceRecord
+/workspace/tracing-measured-after/src/compiler/tracing.ts:363:9: property configFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:364:9: property tracePath: string
+/workspace/tracing-measured-after/src/compiler/tracing.ts:365:9: property typesPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:371:14: variable startTracing: (tracingMode: Mode, traceDir: string, configFilePath?: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:373:14: variable dumpTracingLegend: () => void
+/workspace/tracing-measured-after/src/compiler/tracing.ts:376:18: interface TracingNode: TracingNode
+/workspace/tracing-measured-after/src/compiler/tracing.ts:377:5: property tracingPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/tracing.ts:380:15: variable require: (specifier: "fs") => any
+/workspace/tracing-measured-after/src/compiler/tracing.ts:380:25: parameter specifier: "fs"
+/workspace/tracing-measured-after/src/compiler/tracing.ts:381:15: variable process: { readonly pid: number; }
+/workspace/tracing-measured-after/src/compiler/tracing.ts:381:35: property pid: number

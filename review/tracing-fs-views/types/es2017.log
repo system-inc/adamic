@@ -1,0 +1,222 @@
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:104:6: type SuperContainer: ClassDeclaration | ConstructorDeclaration | GetAccessorDeclaration | MethodDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:119:17: function transformES2017: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:119:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:119:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:121:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:122:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:123:9: binding resumeLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:124:9: binding endLexicalEnvironment: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:125:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:128:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:129:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:130:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:136:9: variable enabledSubstitutions: ES2017SubstitutionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:142:9: variable enclosingSuperContainerFlags: NodeCheckFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:144:9: variable enclosingFunctionParameterNames: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:149:9: variable capturedSuperProperties: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:151:9: variable hasSuperElementAccess: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:152:9: variable lexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:154:11: variable substitutedSuperAccessors: boolean[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:156:9: variable contextFlags: ContextFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:159:11: variable previousOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:160:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:168:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:168:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:175:15: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:180:14: function setContextFlag: (flag: ContextFlags, val: boolean) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:180:29: parameter flag: ContextFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:180:49: parameter val: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:184:14: function inContext: (flags: ContextFlags) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:184:24: parameter flags: ContextFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:188:14: function inTopLevelContext: () => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:192:14: function inHasLexicalThisContext: () => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:196:14: function doWithContext: <T, U>(flags: ContextFlags, cb: (value: T) => U, value: T) => U
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:196:34: parameter flags: ContextFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:196:55: parameter cb: (value: T) => U
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:196:60: parameter value: T
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:196:76: parameter value: T
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:197:15: variable contextFlagsToSet: number
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:200:19: variable result: U
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:207:14: function visitDefault: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:207:27: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:211:14: function argumentsVisitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:211:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:233:14: function visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:233:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:284:14: function asyncBodyVisitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:284:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:316:14: function visitCatchClauseInAsyncBody: (node: CatchClause) => CatchClause
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:316:42: parameter node: CatchClause
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:317:15: variable catchClauseNames: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:321:13: variable catchClauseUnshadowedNames: Set<__String> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:322:35: parameter _: __String
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:322:38: parameter escapedName: __String
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:332:19: variable savedEnclosingFunctionParameterNames: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:334:19: variable result: CatchClause
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:343:14: function visitVariableStatementInAsyncBody: (node: VariableStatement) => ExpressionStatement | VariableStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:343:48: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:345:19: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:351:14: function visitForInStatementInAsyncBody: (node: ForInStatement) => ForInStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:351:45: parameter node: ForInStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:362:14: function visitForOfStatementInAsyncBody: (node: ForOfStatement) => ForOfStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:362:45: parameter node: ForOfStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:374:14: function visitForStatementInAsyncBody: (node: ForStatement) => ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:374:43: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:375:15: variable initializer: ForInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:394:14: function visitAwaitExpression: (node: AwaitExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:394:35: parameter node: AwaitExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:411:14: function visitConstructorDeclaration: (node: ConstructorDeclaration) => ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:411:42: parameter node: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:412:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:414:15: variable updated: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:432:14: function visitMethodDeclaration: (node: MethodDeclaration) => MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:432:37: parameter node: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:433:13: variable parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:434:15: variable functionFlags: FunctionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:435:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:437:15: variable updated: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:456:14: function visitGetAccessorDeclaration: (node: GetAccessorDeclaration) => GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:456:42: parameter node: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:457:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:459:15: variable updated: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:471:14: function visitSetAccessorDeclaration: (node: SetAccessorDeclaration) => SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:471:42: parameter node: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:472:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:474:15: variable updated: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:493:14: function visitFunctionDeclaration: (node: FunctionDeclaration) => VisitResult<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:493:39: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:494:13: variable parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:495:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:497:15: variable functionFlags: FunctionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:498:15: variable updated: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:524:14: function visitFunctionExpression: (node: FunctionExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:524:38: parameter node: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:525:13: variable parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:526:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:528:15: variable functionFlags: FunctionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:529:15: variable updated: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:555:14: function visitArrowFunction: (node: ArrowFunction) => ArrowFunction
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:555:33: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:556:13: variable parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:557:15: variable functionFlags: FunctionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:573:14: function recordDeclarationName: ({ name }: BindingElement | ParameterDeclaration | VariableDeclaration, names: Set<__String>) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:573:38: binding name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:573:107: parameter names: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:578:24: variable element: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:586:14: function isVariableDeclarationListWithCollidingName: (node: ForInitializer) => node is VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:586:57: parameter node: ForInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:593:14: function visitVariableDeclarationListWithCollidingNames: (node: VariableDeclarationList, hasReceiver: boolean) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:593:61: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:593:92: parameter hasReceiver: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:596:15: variable variables: readonly InitializedVariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:607:14: function hoistVariableDeclarationList: (node: VariableDeclarationList) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:607:43: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:611:14: function hoistVariable: ({ name }: BindingElement | VariableDeclaration) => undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:611:30: binding name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:616:24: variable element: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:624:14: function transformInitializedVariable: (node: VariableDeclaration) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:624:43: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:625:15: variable converted: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:635:14: function collidesWithParameterName: ({ name }: BindingElement | VariableDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:635:42: binding name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:640:24: variable element: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:649:14: function transformMethodBody: (node: ConstructorDeclaration | MethodDeclaration | AccessorDeclaration) => Block | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:649:34: parameter node: ConstructorDeclaration | MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:652:15: variable savedCapturedSuperProperties: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:653:15: variable savedHasSuperElementAccess: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:657:13: variable updated: Block
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:661:15: variable originalMethod: FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:662:15: variable emitSuperHelpers: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:669:23: variable variableStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:672:23: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:693:14: function createCaptureArgumentsStatement: () => VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:695:15: variable variable: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:696:15: variable statement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:702:14: function transformAsyncFunctionParameterList: (node: FunctionLikeDeclaration) => NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:702:50: parameter node: FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:707:15: variable newParameters: ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:708:20: variable parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:713:27: variable restParameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:724:19: variable newParameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:731:15: variable newParametersArray: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:736:14: function transformAsyncFunctionBody: { (node: FunctionDeclaration | FunctionExpression | MethodDeclaration | AccessorDeclaration, outerParameters: NodeArray<ParameterDeclaration>): Block; (node: ArrowFunction, outerParameters: NodeArray<ParameterDeclaration>): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:736:41: parameter node: FunctionDeclaration | FunctionExpression | MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:736:131: parameter outerParameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:737:14: function transformAsyncFunctionBody: { (node: FunctionDeclaration | FunctionExpression | MethodDeclaration | AccessorDeclaration, outerParameters: NodeArray<ParameterDeclaration>): Block; (node: ArrowFunction, outerParameters: NodeArray<ParameterDeclaration>): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:737:41: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:737:62: parameter outerParameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:738:14: function transformAsyncFunctionBody: { (node: FunctionDeclaration | FunctionExpression | MethodDeclaration | AccessorDeclaration, outerParameters: NodeArray<ParameterDeclaration>): Block; (node: ArrowFunction, outerParameters: NodeArray<ParameterDeclaration>): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:738:41: parameter node: FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:738:72: parameter outerParameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:739:15: variable innerParameters: NodeArray<ParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:742:15: variable original: SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:743:15: variable nodeType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:744:15: variable promiseConstructor: EntityName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:745:15: variable isArrowFunction: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:746:15: variable savedLexicalArgumentsBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:747:15: variable hasLexicalArguments: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:748:15: variable captureLexicalArguments: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:753:13: variable argumentsExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:758:23: variable parameterBindings: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:760:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:762:27: variable originalParameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:763:27: variable outerParameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:785:15: variable savedEnclosingFunctionParameterNames: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:787:20: variable parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:791:15: variable savedCapturedSuperProperties: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:792:15: variable savedHasSuperElementAccess: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:798:15: variable hasLexicalThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:800:13: variable asyncBody: Block
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:803:13: variable result: ConciseBody
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:805:19: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:820:19: variable emitSuperHelpers: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:825:27: variable variableStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:835:19: variable block: Block
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:860:23: variable block: Block
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:874:14: function transformAsyncFunctionBodyWorker: (body: ConciseBody, start?: number | undefined) => Block
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:874:47: parameter body: ConciseBody
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:874:66: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:883:14: function getPromiseConstructor: (type: TypeNode | undefined) => EntityName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:883:36: parameter type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:884:15: variable typeName: EntityNameOrEntityNameExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:886:19: variable serializationKind: TypeReferenceSerializationKind
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:898:14: function enableSubstitutionForAsyncMethodsWithSuper: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:14: function onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:25: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:53: parameter emitCallback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:68: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:926:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:930:19: variable superContainerFlags: number
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:932:23: variable savedEnclosingSuperContainerFlags: NodeCheckFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:941:19: variable savedEnclosingSuperContainerFlags: NodeCheckFlags
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:956:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:956:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:956:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:965:14: function substituteExpression: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:965:35: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:977:14: function substitutePropertyAccessExpression: (node: PropertyAccessExpression) => PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:977:49: parameter node: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:990:14: function substituteElementAccessExpression: (node: ElementAccessExpression) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:990:48: parameter node: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1000:14: function substituteCallExpression: (node: CallExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1000:39: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1001:15: variable expression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1003:19: variable argumentExpression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1018:14: function isSuperContainer: (node: Node) => node is SuperContainer
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1018:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1019:15: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1027:14: function createSuperElementAccessInAsyncMethod: (argumentExpression: Expression, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1027:52: parameter argumentExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1027:84: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1059:17: function createSuperAccessVariableStatement: (factory: NodeFactory, resolver: EmitResolver, node: FunctionLikeDeclaration, names: Set<__String>) => VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1059:52: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1059:74: parameter resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1059:98: parameter node: FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1059:129: parameter names: Set<__String>
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1062:11: variable hasBinding: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1063:11: variable accessors: PropertyAssignment[]
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1064:20: parameter _: __String
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1064:23: parameter key: __String
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1065:15: variable name: string
+/workspace/tracing-measured-after/src/compiler/transformers/es2017.ts:1066:15: variable getterAndSetter: PropertyAssignment[]

@@ -1,0 +1,244 @@
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:31:18: interface SourceMapGeneratorOptions: SourceMapGeneratorOptions
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:32:5: property extendedDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:17: function createSourceMapGenerator: (host: EmitHost, file: string, sourceRoot: string, sourcesDirectoryPath: string, generatorOptions: SourceMapGeneratorOptions) => SourceMapGenerator
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:42: parameter host: EmitHost
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:58: parameter file: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:72: parameter sourceRoot: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:92: parameter sourcesDirectoryPath: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:36:122: parameter generatorOptions: SourceMapGeneratorOptions
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:40:11: binding enter: () => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:40:18: binding exit: () => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:45:9: variable rawSources: string[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:46:9: variable sources: string[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:47:9: variable sourceToSourceIndexMap: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:48:9: variable sourcesContent: (string | null)[] | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:50:9: variable names: string[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:51:9: variable nameToNameIndexMap: Map<string, number> | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:52:9: variable mappingCharCodes: number[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:53:9: variable mappings: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:56:9: variable lastGeneratedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:57:9: variable lastGeneratedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:58:9: variable lastSourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:59:9: variable lastSourceLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:60:9: variable lastSourceCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:61:9: variable lastNameIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:62:9: variable hasLast: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:64:9: variable pendingGeneratedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:65:9: variable pendingGeneratedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:66:9: variable pendingSourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:67:9: variable pendingSourceLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:68:9: variable pendingSourceCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:69:9: variable pendingNameIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:70:9: variable hasPending: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:71:9: variable hasPendingSource: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:72:9: variable hasPendingName: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:86:14: function addSource: (fileName: string) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:86:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:88:15: variable source: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:90:13: variable sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:102:14: function setSourceContent: (sourceIndex: number, content: string | null) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:102:31: parameter sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:102:52: parameter content: string | null
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:115:14: function addName: (name: string) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:115:22: parameter name: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:118:13: variable nameIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:128:14: function isNewGeneratedPosition: (generatedLine: number, generatedCharacter: number) => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:128:37: parameter generatedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:128:60: parameter generatedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:134:14: function isBacktrackingSourcePosition: (sourceIndex: number | undefined, sourceLine: number | undefined, sourceCharacter: number | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:134:43: parameter sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:134:76: parameter sourceLine: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:134:108: parameter sourceCharacter: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:14: function addMapping: (generatedLine: number, generatedCharacter: number, sourceIndex?: number | undefined, sourceLine?: number | undefined, sourceCharacter?: number | undefined, nameIndex?: number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:25: parameter generatedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:48: parameter generatedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:76: parameter sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:98: parameter sourceLine: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:119: parameter sourceCharacter: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:143:145: parameter nameIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:14: function appendSourceMap: (generatedLine: number, generatedCharacter: number, map: RawSourceMap, sourceMapPath: string, start?: LineAndCharacter | undefined, end?: LineAndCharacter | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:30: parameter generatedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:53: parameter generatedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:81: parameter map: RawSourceMap
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:100: parameter sourceMapPath: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:123: parameter start: LineAndCharacter | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:176:149: parameter end: LineAndCharacter | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:181:15: variable sourceIndexToNewSourceIndexMap: number[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:182:13: variable nameIndexToNewNameIndexMap: number[] | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:183:15: variable mappingIterator: MappingsDecoder
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:184:20: variable raw: Mapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:203:17: variable newSourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:204:17: variable newSourceLine: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:205:17: variable newSourceCharacter: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:206:17: variable newNameIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:211:27: variable rawPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:212:27: variable relativePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:213:27: variable combinedPath: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:216:31: variable content: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:234:19: variable rawGeneratedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:235:19: variable newGeneratedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:236:19: variable rawGeneratedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:237:19: variable newGeneratedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:243:14: function shouldCommitMapping: () => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:253:14: function appendMappingCharCode: (charCode: number) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:253:36: parameter charCode: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:262:14: function commitPendingMapping: () => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:316:14: function flushMappingBuffer: () => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:323:14: function toJSON: () => RawSourceMap
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:337:14: function appendBase64VLQ: (inValue: number) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:337:30: parameter inValue: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:352:17: variable currentDigit: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:366:14: variable sourceMapCommentRegExpDontCareLineStart: RegExp
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:368:14: variable sourceMapCommentRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:371:14: variable whitespaceOrMapCommentRegExp: RegExp
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:374:18: interface LineInfo: LineInfo
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:376:17: parameter line: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:380:17: function getLineInfo: (text: string, lineStarts: readonly number[]) => LineInfo
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:380:29: parameter text: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:380:43: parameter lineStarts: readonly number[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:383:22: parameter line: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:392:17: function tryGetSourceMappingURL: (lineInfo: LineInfo) => string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:392:40: parameter lineInfo: LineInfo
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:393:14: variable index: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:394:15: variable line: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:395:15: variable comment: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:407:10: function isStringOrNull: (x: any) => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:407:25: parameter x: any
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:411:10: function isRawSourceMap: (x: any) => x is RawSourceMap
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:411:25: parameter x: any
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:425:17: function tryParseRawSourceMap: (text: string) => RawSourceMap | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:425:38: parameter text: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:427:15: variable parsed: any
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:440:18: interface MappingsDecoder: MappingsDecoder
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:441:14: property pos: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:442:14: property error: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:443:14: property state: Required<Mapping>
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:447:18: interface Mapping: Mapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:448:5: property generatedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:449:5: property generatedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:450:5: property sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:451:5: property sourceLine: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:452:5: property sourceCharacter: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:453:5: property nameIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:457:18: interface SourceMapping: SourceMapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:458:5: property sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:459:5: property sourceLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:460:5: property sourceCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:464:17: function decodeMappings: (mappings: string) => MappingsDecoder
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:464:32: parameter mappings: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:465:9: variable done: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:466:9: variable pos: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:467:9: variable generatedLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:468:9: variable generatedCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:469:9: variable sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:470:9: variable sourceLine: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:471:9: variable sourceCharacter: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:472:9: variable nameIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:473:9: variable error: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:486:9: method next: () => { value: Mapping; done: false; } | { value: never; done: true; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:488:23: variable ch: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:503:21: variable hasSource: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:504:21: variable hasName: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:547:14: function captureMapping: { (hasSource: true, hasName: true): Required<Mapping>; (hasSource: boolean, hasName: boolean): Mapping; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:547:29: parameter hasSource: true
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:547:46: parameter hasName: true
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:548:14: function captureMapping: { (hasSource: true, hasName: true): Required<Mapping>; (hasSource: boolean, hasName: boolean): Mapping; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:548:29: parameter hasSource: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:548:49: parameter hasName: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:549:14: function captureMapping: { (hasSource: true, hasName: true): Required<Mapping>; (hasSource: boolean, hasName: boolean): Mapping; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:549:29: parameter hasSource: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:549:49: parameter hasName: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:560:14: function stopIterating: () => { value: never; done: true; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:560:33: property value: never
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:560:47: property done: true
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:565:14: function setError: (message: string) => void
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:565:23: parameter message: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:571:14: function setErrorAndStopIterating: (message: string) => { value: never; done: true; }
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:571:39: parameter message: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:576:14: function hasReportedError: () => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:580:14: function isSourceMappingSegmentEnd: () => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:586:14: function base64VLQFormatDecode: () => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:587:13: variable moreDigits: boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:588:13: variable shiftCount: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:589:13: variable value: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:595:19: variable currentByte: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:622:17: function sameMapping: <T extends Mapping>(left: T, right: T) => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:622:48: parameter left: T
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:622:57: parameter right: T
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:633:17: function isSourceMapping: (mapping: Mapping) => mapping is SourceMapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:633:33: parameter mapping: Mapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:639:10: function base64FormatEncode: (value: number) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:639:29: parameter value: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:648:10: function base64FormatDecode: (ch: number) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:648:29: parameter ch: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:657:11: interface MappedPosition: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:658:5: property generatedPosition: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:659:5: property source: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:660:5: property sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:661:5: property sourcePosition: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:662:5: property nameIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:665:11: interface SourceMappedPosition: SourceMappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:666:5: property source: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:667:5: property sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:668:5: property sourcePosition: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:671:10: function isSourceMappedPosition: (value: MappedPosition) => value is SourceMappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:671:33: parameter value: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:676:10: function sameMappedPosition: (left: MappedPosition, right: MappedPosition) => boolean
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:676:29: parameter left: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:676:51: parameter right: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:682:10: function compareSourcePositions: (left: SourceMappedPosition, right: SourceMappedPosition) => Comparison
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:682:33: parameter left: SourceMappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:682:61: parameter right: SourceMappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:689:10: function compareGeneratedPositions: (left: MappedPosition, right: MappedPosition) => Comparison
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:689:36: parameter left: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:689:58: parameter right: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:693:10: function getSourcePositionOfMapping: (value: SourceMappedPosition) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:693:37: parameter value: SourceMappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:697:10: function getGeneratedPositionOfMapping: (value: MappedPosition) => number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:697:40: parameter value: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:702:17: function createDocumentPositionMapper: (host: DocumentPositionMapperHost, map: RawSourceMap, mapPath: string) => DocumentPositionMapper
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:702:46: parameter host: DocumentPositionMapperHost
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:702:80: parameter map: RawSourceMap
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:702:99: parameter mapPath: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:703:11: variable mapDirectory: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:704:11: variable sourceRoot: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:705:11: variable generatedAbsoluteFilePath: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:706:11: variable generatedFile: SourceFileLike | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:707:11: variable sourceFileAbsolutePaths: string[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:707:53: parameter source: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:708:11: variable sourceToSourceIndexMap: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:708:73: parameter source: string
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:708:81: parameter i: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:709:9: variable decodedMappings: readonly MappedPosition[] | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:710:9: variable generatedMappings: SortedReadonlyArray<MappedPosition> | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:711:9: variable sourceMappings: readonly SortedReadonlyArray<SourceMappedPosition>[] | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:718:14: function processMapping: (mapping: Mapping) => MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:718:29: parameter mapping: Mapping
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:719:15: variable generatedPosition: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:722:13: variable source: string | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:723:13: variable sourcePosition: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:725:19: variable sourceFile: SourceFileLike | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:740:14: function getDecodedMappings: () => readonly MappedPosition[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:742:19: variable decoder: MappingsDecoder
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:743:19: variable mappings: MappedPosition[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:757:14: function getSourceMappings: (sourceIndex: number) => SortedReadonlyArray<SourceMappedPosition> | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:757:32: parameter sourceIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:759:19: variable lists: SourceMappedPosition[][]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:760:24: variable mapping: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:762:21: variable list: SourceMappedPosition[] | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:766:40: parameter list: SourceMappedPosition[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:771:14: function getGeneratedMappings: () => SortedReadonlyArray<MappedPosition>
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:773:19: variable list: MappedPosition[]
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:774:24: variable mapping: MappedPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:782:14: function getGeneratedPosition: (loc: DocumentPosition) => DocumentPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:782:35: parameter loc: DocumentPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:783:15: variable sourceIndex: number | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:786:15: variable sourceMappings: SortedReadonlyArray<SourceMappedPosition> | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:789:13: variable targetIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:795:15: variable mapping: SourceMappedPosition | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:803:14: function getSourcePosition: (loc: DocumentPosition) => DocumentPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:803:32: parameter loc: DocumentPosition
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:804:15: variable generatedMappings: SortedReadonlyArray<MappedPosition>
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:807:13: variable targetIndex: number
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:813:15: variable mapping: MappedPosition | undefined
+/workspace/tracing-measured-after/src/compiler/sourcemap.ts:823:14: variable identitySourceMapConsumer: DocumentPositionMapper

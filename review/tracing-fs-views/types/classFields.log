@@ -1,0 +1,651 @@
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:244:11: interface PrivateIdentifierInfoBase: PrivateIdentifierInfoBase
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:251:5: property brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:255:5: property isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:260:5: property isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:263:11: interface PrivateIdentifierAccessorInfo: PrivateIdentifierAccessorInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:264:5: property kind: PrivateIdentifierKind.Accessor
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:268:5: property getterName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:272:5: property setterName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:275:11: interface PrivateIdentifierMethodInfo: PrivateIdentifierMethodInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:276:5: property kind: PrivateIdentifierKind.Method
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:280:5: property methodName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:283:11: interface PrivateIdentifierInstanceFieldInfo: PrivateIdentifierInstanceFieldInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:284:5: property kind: PrivateIdentifierKind.Field
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:285:5: property isStatic: false
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:288:11: interface PrivateIdentifierStaticFieldInfo: PrivateIdentifierStaticFieldInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:289:5: property kind: PrivateIdentifierKind.Field
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:290:5: property isStatic: true
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:294:5: property variableName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:297:11: interface PrivateEnvironmentData: PrivateEnvironmentData
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:301:5: property className: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:306:5: property weakSetName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:309:11: interface UntransformedPrivateIdentifierInfo: UntransformedPrivateIdentifierInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:310:5: property kind: "untransformed"
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:313:6: type PrivateIdentifierInfo: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | UntransformedPrivateIdentifierInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:320:11: interface ClassLexicalEnvironment: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:321:5: property facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:325:5: property classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:326:5: property classThis: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:330:5: property superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:342:6: type LexicalEnv: LexicalEnvironment<ClassLexicalEnvironment | undefined, PrivateEnvironmentData, PrivateIdentifierInfo>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:343:6: type PrivateEnv: PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:354:17: function transformClassFields: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:354:38: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:354:72: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:356:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:357:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:358:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:359:9: binding endLexicalEnvironment: () => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:360:9: binding startLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:361:9: binding resumeLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:362:9: binding addBlockScopedVariable: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:364:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:365:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:366:11: variable languageVersion: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:367:11: variable useDefineForClassFields: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:368:11: variable legacyDecorators: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:371:11: variable shouldTransformInitializersUsingSet: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:374:11: variable shouldTransformInitializersUsingDefine: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:375:11: variable shouldTransformInitializers: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:378:11: variable shouldTransformPrivateElementsOrClassStaticBlocks: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:382:11: variable shouldTransformAutoAccessors: Ternary.False | Ternary.Maybe | Ternary.True
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:388:11: variable shouldTransformThisInStaticInitializers: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:392:11: variable shouldTransformSuperInStaticInitializers: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:394:11: variable shouldTransformAnything: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:398:11: variable previousOnSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:401:11: variable previousOnEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:404:9: variable shouldTransformPrivateStaticElementsInFile: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:405:9: variable enabledSubstitutions: ClassPropertySubstitutionFlags
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:407:9: variable classAliases: Identifier[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:413:9: variable pendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:419:9: variable pendingStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:421:9: variable lexicalEnvironment: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:422:11: variable lexicalEnvironmentMap: Map<Node, LexicalEnv>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:425:11: variable noSubstitution: Set<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:427:9: variable currentClassContainer: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:428:9: variable currentClassElement: ClassElement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:429:9: variable shouldSubstituteThisWithClassThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:430:9: variable previousShouldSubstituteThisWithClassThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:434:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:434:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:445:15: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:450:14: function modifierVisitor: (node: ModifierLike) => VisitResult<Modifier | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:450:30: parameter node: ModifierLike
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:459:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:459:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:534:14: function fallbackVisitor: (node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:534:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:541:14: function discardedValueVisitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:541:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:560:14: function heritageClauseVisitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:560:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:574:14: function assignmentTargetVisitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:574:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:587:14: function classElementVisitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:587:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:627:14: function propertyNameVisitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:627:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:639:14: function accessorFieldResultVisitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:639:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:658:14: function visitPrivateIdentifier: (node: PrivateIdentifier) => Identifier | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:658:37: parameter node: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:671:14: function transformPrivateIdentifierInInExpression: (node: PrivateIdentifierInExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:671:55: parameter node: PrivateIdentifierInExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:672:15: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:674:19: variable receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:685:14: function visitPropertyAssignment: (node: PropertyAssignment) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:685:38: parameter node: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:700:14: function visitVariableStatement: (node: VariableStatement) => Statement[] | VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:700:37: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:701:15: variable savedPendingStatements: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:704:15: variable visitedNode: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:705:15: variable statement: Statement[] | VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:713:14: function visitVariableDeclaration: (node: VariableDeclaration) => VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:713:39: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:735:14: function visitParameterDeclaration: (node: ParameterDeclaration) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:735:40: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:759:14: function visitBindingElement: (node: BindingElement) => BindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:759:34: parameter node: BindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:783:14: function visitExportAssignment: (node: ExportAssignment) => ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:783:36: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:800:14: function injectPendingExpressions: (expression: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:800:39: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:815:14: function visitComputedPropertyName: (node: ComputedPropertyName) => ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:815:40: parameter node: ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:816:15: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:820:14: function visitConstructorDeclaration: (node: ConstructorDeclaration) => Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:820:42: parameter node: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:827:14: function shouldTransformClassElementToWeakMap: (node: PrivateIdentifierMethodDeclaration | PrivateIdentifierPropertyDeclaration | PrivateIdentifierAccessorDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:827:51: parameter node: PrivateIdentifierMethodDeclaration | PrivateIdentifierPropertyDeclaration | PrivateIdentifierAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:833:14: function visitMethodOrAccessorDeclaration: (node: MethodDeclaration | AccessorDeclaration) => MethodDeclaration | AccessorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:833:47: parameter node: MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:841:15: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:847:15: variable functionName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:853:49: parameter m: AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | DefaultKeyword | ExportKeyword | InKeyword | OutKeyword | OverrideKeyword | PrivateKeyword | ProtectedKeyword | PublicKeyword | ReadonlyKeyword | StaticKeyword
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:869:14: function setCurrentClassElementAnd: <T, U>(classElement: ClassElement | undefined, visitor: (arg: T) => U, arg: T) => U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:870:9: parameter classElement: ClassElement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:871:9: parameter visitor: (arg: T) => U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:871:19: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:872:9: parameter arg: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:875:19: variable savedCurrentClassElement: ClassElement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:877:19: variable result: U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:884:14: function getHoistedFunctionName: (node: MethodDeclaration | AccessorDeclaration) => Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:884:37: parameter node: MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:886:15: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:903:14: function tryGetClassThis: () => Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:904:15: variable lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:908:14: function transformAutoAccessor: (node: AutoAccessorPropertyDeclaration) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:908:36: parameter node: AutoAccessorPropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:916:15: variable commentRange: TextRange
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:917:15: variable sourceMapRange: SourceMapRange
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:921:15: variable name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:922:13: variable getterName: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:923:13: variable setterName: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:925:19: variable cacheAssignment: (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:931:23: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:933:23: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:934:23: variable assignment: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:941:15: variable modifiers: NodeArray<Modifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:942:15: variable backingField: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:947:15: variable receiver: Identifier | ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:948:15: variable getter: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:954:15: variable setterModifiers: Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:955:15: variable setter: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:963:14: function transformPrivateFieldInitializer: (node: PrivateIdentifierPropertyDeclaration) => ClassStaticBlockDeclaration | PropertyDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:963:47: parameter node: PrivateIdentifierPropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:966:19: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:978:23: variable statement: ExpressionStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1016:14: function transformPublicFieldInitializer: (node: PropertyDeclaration) => ClassStaticBlockDeclaration | PropertyDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1016:46: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1022:19: variable expr: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1031:23: variable initializerStatement: ExpressionStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1033:27: variable staticBlock: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1062:14: function transformFieldInitializer: (node: PropertyDeclaration) => ClassStaticBlockDeclaration | PropertyDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1062:40: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1069:14: function shouldTransformAutoAccessorsInCurrentClass: () => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1075:14: function visitPropertyDeclaration: (node: PropertyDeclaration) => VisitResult<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1075:39: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1088:14: function shouldForceDynamicThis: () => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1098:14: function ensureDynamicThisIfNeeded: (node: Expression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1098:40: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1102:19: variable innerExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1109:14: function createPrivateIdentifierAccess: (info: PrivateIdentifierInfo, receiver: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1109:44: parameter info: PrivateIdentifierInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1109:73: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1115:14: function createPrivateIdentifierAccessHelper: (info: PrivateIdentifierInfo, receiver: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1115:50: parameter info: PrivateIdentifierInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1115:79: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1148:14: function visitPropertyAccessExpression: (node: PropertyAccessExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1148:44: parameter node: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1150:19: variable privateIdentifierInfo: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1169:21: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1169:39: binding superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1169:60: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1175:23: variable superProperty: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1188:14: function visitElementAccessExpression: (node: ElementAccessExpression) => CallExpression | ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1188:43: parameter node: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1196:21: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1196:39: binding superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1196:60: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1203:23: variable superProperty: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1216:14: function visitPreOrPostfixUnaryExpression: (node: PostfixUnaryExpression | PrefixUnaryExpression, discarded: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1216:47: parameter node: PostfixUnaryExpression | PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1216:101: parameter discarded: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1221:19: variable operand: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1224:21: variable info: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1226:27: variable receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1228:29: binding readExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1228:45: binding initializeExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1230:25: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1231:27: variable temp: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1263:25: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1263:43: binding superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1263:64: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1265:27: variable expression: ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1271:25: variable setterName: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1272:25: variable getterName: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1288:29: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1291:31: variable temp: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1308:14: function visitForStatement: (node: ForStatement) => ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1308:32: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1318:14: function visitExpressionStatement: (node: ExpressionStatement) => ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1318:39: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1325:14: function createCopiableReceiverExpr: (receiver: Expression) => { readExpression: Expression; initializeExpression: Expression | undefined; }
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1325:41: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1325:66: property readExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1325:94: property initializeExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1326:15: variable clone: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1333:15: variable readExpression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1334:15: variable initializeExpression: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1338:14: function visitCallExpression: (node: CallExpression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1338:34: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1346:21: binding thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1346:30: binding target: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1375:19: variable invocation: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1388:14: function visitTaggedTemplateExpression: (node: TaggedTemplateExpression) => TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1388:44: parameter node: TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1394:21: binding thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1394:30: binding target: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1414:19: variable invocation: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1431:14: function transformClassStaticBlockDeclaration: (node: ClassStaticBlockDeclaration) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1431:51: parameter node: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1438:23: variable result: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1455:17: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1457:17: parameter statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1462:19: variable iife: ImmediatelyInvokedArrowFunction
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1471:14: function isAnonymousClassNeedingAssignedName: (node: AnonymousFunctionDefinition) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1471:50: parameter node: AnonymousFunctionDefinition
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1473:19: variable staticPropertiesOrClassStaticBlocks: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1478:19: variable hasTransformableStatics: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1480:59: parameter node: ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1489:14: function visitBinaryExpression: (node: BinaryExpression, discarded: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1489:36: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1489:60: parameter discarded: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1494:19: variable savedPendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1502:19: variable expr: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1540:19: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1543:23: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1565:25: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1565:43: binding superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1565:64: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1575:25: variable setterName: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1584:29: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1586:33: variable getterName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1591:35: variable superPropertyGet: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1606:31: variable temp: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1638:14: function visitCommaListExpression: (node: CommaListExpression, discarded: boolean) => CommaListExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1638:39: parameter node: CommaListExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1638:66: parameter discarded: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1639:15: variable elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1645:14: function visitParenthesizedExpression: (node: ParenthesizedExpression, discarded: boolean) => ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1645:43: parameter node: ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1645:74: parameter discarded: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1651:15: variable visitorFunc: Visitor<Node, Node>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1653:15: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1657:14: function createPrivateIdentifierAssignment: (info: PrivateIdentifierInfo, receiver: Expression, right: Expression, operator: AssignmentOperator) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1657:48: parameter info: PrivateIdentifierInfo
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1657:77: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1657:99: parameter right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1657:118: parameter operator: AssignmentOperator
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1663:21: binding readExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1663:37: binding initializeExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1707:14: function getPrivateInstanceMethodsAndAccessors: (node: ClassLikeDeclaration) => readonly (PrivateIdentifierAutoAccessorPropertyDeclaration | PrivateIdentifierMethodDeclaration | PrivateIdentifierAccessorDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1707:52: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1711:14: function getClassFacts: (node: ClassLikeDeclaration) => ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1711:28: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1712:13: variable facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1713:15: variable original: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1720:13: variable containsPublicInstanceFields: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1721:13: variable containsInitializedPublicInstanceFields: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1722:13: variable containsInstancePrivateElements: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1723:13: variable containsInstanceAutoAccessors: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1724:20: variable member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1767:15: variable willHoistInitializersToConstructor: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1779:14: function visitExpressionWithTypeArgumentsInHeritageClause: (node: ExpressionWithTypeArguments) => ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1779:63: parameter node: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1780:15: variable facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1782:19: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1796:14: function visitInNewClassLexicalEnvironment: <T extends ClassLikeDeclaration, U>(node: T, visitor: (node: T, facts: ClassFacts) => U) => U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1796:83: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1796:92: parameter visitor: (node: T, facts: ClassFacts) => U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1796:102: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1796:111: parameter facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1797:15: variable savedCurrentClassContainer: ClassLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1798:15: variable savedPendingExpressions: Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1799:15: variable savedLexicalEnvironment: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1804:15: variable shouldAlwaysTransformPrivateStaticElements: number
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1806:19: variable name: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1823:31: variable prefixName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1831:19: variable privateInstanceMethodsAndAccessors: readonly (PrivateIdentifierAutoAccessorPropertyDeclaration | PrivateIdentifierMethodDeclaration | PrivateIdentifierAccessorDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1840:15: variable facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1849:15: variable result: U
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1857:14: function visitClassDeclaration: (node: ClassDeclaration) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1857:36: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1861:14: function visitClassDeclarationInNewClassLexicalEnvironment: (node: ClassDeclaration, facts: ClassFacts) => Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1861:64: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1861:88: parameter facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1864:13: variable pendingClassReferenceAssignment: BinaryExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1880:23: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1890:15: variable isClassWithConstructorReference: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1891:15: variable isExport: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1892:15: variable isDefault: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1893:13: variable modifiers: NodeArray<Modifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1894:15: variable heritageClauses: NodeArray<HeritageClause> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1895:17: binding members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1895:26: binding prologue: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1897:15: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1914:19: variable staticProperties: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1921:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1929:15: variable alias: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1935:15: variable classDecl: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1952:14: function visitClassExpression: (node: ClassExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1952:35: parameter node: ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1956:14: function visitClassExpressionInNewClassLexicalEnvironment: (node: ClassExpression, facts: ClassFacts) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1956:63: parameter node: ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1956:86: parameter facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1964:15: variable isDecoratedClassDeclaration: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1965:15: variable staticPropertiesOrClassStaticBlocks: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1966:15: variable isClassWithConstructorReference: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1967:15: variable requiresBlockScopedVar: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1969:13: variable temp: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1970:18: function createClassTempVar: () => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1984:19: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1997:15: variable modifiers: NodeArray<Modifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1998:15: variable heritageClauses: NodeArray<HeritageClause> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1999:17: binding members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:1999:26: binding prologue: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2000:15: variable classExpression: ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2009:15: variable expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2016:15: variable hasTransformableStatics: 0 | boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2017:55: parameter node: ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2050:27: variable alias: GeneratedIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2077:14: function visitClassStaticBlockDeclaration: (node: ClassStaticBlockDeclaration) => ClassStaticBlockDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2077:47: parameter node: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2085:14: function visitThisExpression: (node: ThisExpression) => Identifier | ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2085:34: parameter node: ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2091:21: binding classThis: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2091:32: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2098:14: function transformClassMembers: (node: ClassDeclaration | ClassExpression) => { members: NodeArray<ClassElement>; prologue: Expression | undefined; }
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2098:36: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2099:15: variable shouldTransformPrivateStaticElementsInClass: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2103:24: variable member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2109:31: variable privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2122:28: variable member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2124:31: variable storageName: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2132:35: variable privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2140:13: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2143:13: variable syntheticConstructor: ConstructorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2148:13: variable prologue: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2154:13: variable syntheticStaticBlock: ClassStaticBlockDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2156:17: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2161:23: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2162:23: variable arrow: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2174:19: variable block: Block
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2182:17: variable membersArray: ClassElement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2183:19: variable classThisAssignmentBlock: ClassThisAssignmentBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2184:19: variable classNamedEvaluationHelperBlock: ClassNamedEvaluationHelperBlock | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2189:19: variable remainingMembers: readonly ClassElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2190:33: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2199:14: function createBrandCheckWeakSetForPrivateMethods: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2200:17: binding weakSetName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2215:14: function transformConstructor: (constructor: ConstructorDeclaration | undefined, container: ClassDeclaration | ClassExpression) => ConstructorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2215:35: parameter constructor: ConstructorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2215:84: parameter container: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2221:15: variable extendsClauseElement: ExpressionWithTypeArguments | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2222:15: variable isDerivedClass: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2223:15: variable parameters: NodeArray<ParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2224:15: variable body: Block | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:14: function transformConstructorBodyWorker: (statementsOut: Statement[], statementsIn: NodeArray<Statement>, statementOffset: number, superPath: readonly number[], superPathDepth: number, initializerStatements: readonly Statement[], constructor: ConstructorDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:45: parameter statementsOut: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:73: parameter statementsIn: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:109: parameter statementOffset: number
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:134: parameter superPath: readonly number[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:164: parameter superPathDepth: number
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:188: parameter initializerStatements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2249:233: parameter constructor: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2250:15: variable superStatementIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2251:15: variable superStatement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2255:19: variable tryBlockStatements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2267:19: variable tryBlockStatementsArray: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2296:23: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2311:14: function transformConstructorBody: (node: ClassDeclaration | ClassExpression, constructor: ConstructorDeclaration | undefined, isDerivedClass: boolean) => Block | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2311:39: parameter node: ClassDeclaration | ClassExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2311:81: parameter constructor: ConstructorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2311:130: parameter isDerivedClass: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2312:15: variable instanceProperties: readonly PropertyDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2313:13: variable properties: readonly PropertyDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2315:45: parameter property: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2318:15: variable privateMethodsAndAccessors: readonly (PrivateIdentifierAutoAccessorPropertyDeclaration | PrivateIdentifierMethodDeclaration | PrivateIdentifierAccessorDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2319:15: variable needsConstructorBody: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2328:15: variable needsSyntheticConstructor: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2329:13: variable statementOffset: number
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2330:13: variable statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2342:15: variable initializerStatements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2343:15: variable receiver: ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2348:19: variable parameterProperties: readonly PropertyDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2348:68: parameter prop: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2349:19: variable nonParameterProperties: readonly PropertyDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2349:63: parameter prop: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2359:19: variable superStatementIndices: number[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2375:27: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2412:15: variable multiLine: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2434:14: function addPropertyOrClassStaticBlockStatements: (statements: Statement[], properties: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[], receiver: LeftHandSideExpression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2434:54: parameter statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2434:79: parameter properties: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2434:155: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2435:20: variable property: ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2440:19: variable statement: ExpressionStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2449:14: function transformPropertyOrClassStaticBlock: (property: ClassStaticBlockDeclaration | PropertyDeclaration, receiver: LeftHandSideExpression) => ExpressionStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2449:50: parameter property: ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2449:111: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2450:15: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2457:15: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2462:15: variable propertyOriginalNode: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2493:14: function generateInitializedPropertyExpressionsOrClassStaticBlock: (propertiesOrClassStaticBlocks: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[], receiver: LeftHandSideExpression) => Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2493:71: parameter propertiesOrClassStaticBlocks: readonly (ClassStaticBlockDeclaration | PropertyDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2493:166: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2494:15: variable expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2495:20: variable property: ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2496:19: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2519:14: function transformProperty: (property: PropertyDeclaration, receiver: LeftHandSideExpression) => AssignmentExpression<EqualsToken> | CallExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2519:32: parameter property: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2519:63: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2520:15: variable savedCurrentClassElement: ClassElement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2521:15: variable transformed: AssignmentExpression<EqualsToken> | CallExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2533:14: function transformPropertyWorker: (property: PropertyDeclaration, receiver: LeftHandSideExpression) => AssignmentExpression<EqualsToken> | CallExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2533:38: parameter property: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2533:69: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2535:15: variable emitAssignment: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2541:15: variable propertyName: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2552:19: variable privateIdentifierInfo: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2583:15: variable propertyOriginalNode: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2588:13: variable initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2593:19: variable localName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2619:19: variable memberAccess: MemberExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2621:19: variable expression: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2625:19: variable name: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2628:19: variable descriptor: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2633:14: function enableSubstitutionForClassAliases: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2646:14: function enableSubstitutionForClassStaticThisOrSuperReference: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2670:14: function addInstanceMethodStatements: (statements: Statement[], methods: readonly (AutoAccessorPropertyDeclaration | MethodDeclaration | AccessorDeclaration)[], receiver: LeftHandSideExpression) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2670:42: parameter statements: Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2670:67: parameter methods: readonly (AutoAccessorPropertyDeclaration | MethodDeclaration | AccessorDeclaration)[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2670:164: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2675:17: binding weakSetName: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2684:14: function visitInvalidSuperProperty: (node: SuperProperty) => ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2684:40: parameter node: SuperProperty
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2703:14: function getPropertyNameExpressionIfNeeded: (name: PropertyName, shouldHoist: boolean) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2703:48: parameter name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2703:68: parameter shouldHoist: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2705:19: variable cacheAssignment: (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2706:19: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2707:19: variable innerExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2708:19: variable inlinable: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2709:19: variable alreadyTransformed: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2711:23: variable generatedName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2724:14: function startClassLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2728:14: function endClassLexicalEnvironment: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2732:14: function getClassLexicalEnvironment: () => ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2743:14: function getPrivateIdentifierEnvironment: () => PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2751:14: function getPendingExpressions: () => Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2755:14: function addPrivateIdentifierClassElementToEnvironment: (node: GetAccessorDeclaration | MethodDeclaration | PropertyDeclaration | SetAccessorDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2756:9: parameter node: GetAccessorDeclaration | MethodDeclaration | PropertyDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2757:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2758:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2759:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2760:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2761:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2762:9: parameter previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2781:14: function addPrivateIdentifierPropertyDeclarationToEnvironment: (_node: PropertyDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, _previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2782:9: parameter _node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2783:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2784:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2785:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2786:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2787:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2788:9: parameter _previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2791:19: variable brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2793:19: variable variableName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2803:19: variable weakMapName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2823:14: function addPrivateIdentifierMethodDeclarationToEnvironment: (_node: MethodDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, _previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2824:9: parameter _node: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2825:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2826:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2827:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2828:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2829:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2830:9: parameter _previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2832:15: variable methodName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2833:15: variable brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2846:14: function addPrivateIdentifierGetAccessorDeclarationToEnvironment: (_node: GetAccessorDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2847:9: parameter _node: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2848:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2849:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2850:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2851:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2852:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2853:9: parameter previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2855:15: variable getterName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2856:15: variable brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2875:14: function addPrivateIdentifierSetAccessorDeclarationToEnvironment: (_node: SetAccessorDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2876:9: parameter _node: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2877:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2878:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2879:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2880:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2881:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2882:9: parameter previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2884:15: variable setterName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2885:15: variable brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2907:14: function addPrivateIdentifierAutoAccessorPropertyDeclarationToEnvironment: (_node: AutoAccessorPropertyDeclaration, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, _previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2908:9: parameter _node: AutoAccessorPropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2909:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2910:9: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2911:9: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2912:9: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2913:9: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2914:9: parameter _previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2916:15: variable getterName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2917:15: variable setterName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2918:15: variable brandCheckIdentifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2932:14: function addPrivateIdentifierToEnvironment: <T extends PropertyDeclaration | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration>(node: T, name: PrivateIdentifier, addDeclaration: (node: T, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, previousInfo: PrivateIdentifierInfo | undefined) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2933:9: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2934:9: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2935:9: parameter addDeclaration: (node: T, name: PrivateIdentifier, lex: ClassLexicalEnvironment, privateEnv: PrivateEnv, isStatic: boolean, isValid: boolean, previousInfo: PrivateIdentifierInfo | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2936:13: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2937:13: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2938:13: parameter lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2939:13: parameter privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2940:13: parameter isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2941:13: parameter isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2942:13: parameter previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2945:15: variable lex: ClassLexicalEnvironment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2946:15: variable privateEnv: PrivateEnv
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2947:15: variable previousInfo: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2948:15: variable isStatic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2949:15: variable isValid: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2953:14: function createHoistedVariableForClass: (name: string | PrivateIdentifier | undefined, node: ClassStaticBlockDeclaration | PrivateIdentifier, suffix?: string | undefined) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2953:44: parameter name: string | PrivateIdentifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2953:90: parameter node: ClassStaticBlockDeclaration | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2953:145: parameter suffix: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2954:17: binding className: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2955:15: variable prefix: string | GeneratedNamePart
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2956:15: variable identifier: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2970:14: function createHoistedVariableForPrivateName: (name: PrivateIdentifier, suffix?: string | undefined) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2970:50: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2970:75: parameter suffix: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2971:15: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2980:14: function accessPrivateIdentifier: (name: PrivateIdentifier) => PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2980:38: parameter name: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2981:15: variable info: PrivateIdentifierInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2985:14: function wrapPrivateIdentifierForDestructuringTarget: (node: PrivateIdentifierPropertyAccessExpression) => PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2985:58: parameter node: PrivateIdentifierPropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2986:15: variable parameter: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2987:15: variable info: PrivateIdentifierAccessorInfo | PrivateIdentifierInstanceFieldInfo | PrivateIdentifierMethodInfo | PrivateIdentifierStaticFieldInfo | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:2991:13: variable receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3009:14: function visitDestructuringAssignmentTarget: (node: LeftHandSideExpression) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3009:49: parameter node: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3024:21: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3024:39: binding superClassReference: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3024:60: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3029:23: variable name: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3033:27: variable temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3049:14: function visitAssignmentElement: (node: ArrayLiteralExpression | AssignmentExpression<EqualsToken> | ElementAccessExpression | Identifier | ObjectLiteralExpression | PropertyAccessExpression) => ArrayAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3049:37: parameter node: ArrayLiteralExpression | AssignmentExpression<EqualsToken> | ElementAccessExpression | Identifier | ObjectLiteralExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3062:19: variable left: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3063:19: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3069:14: function visitAssignmentRestElement: (node: SpreadElement) => SpreadElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3069:41: parameter node: SpreadElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3071:19: variable expression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3078:14: function visitArrayAssignmentElement: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3078:42: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3086:14: function visitAssignmentProperty: (node: PropertyAssignment) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3086:38: parameter node: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3098:15: variable name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3100:19: variable assignmentElement: ArrayAssignmentElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3105:19: variable assignmentElement: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3112:14: function visitShorthandAssignmentProperty: (node: ShorthandPropertyAssignment) => ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3112:47: parameter node: ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3130:14: function visitAssignmentRestProperty: (node: SpreadAssignment) => SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3130:42: parameter node: SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3132:19: variable expression: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3139:14: function visitObjectAssignmentElement: (node: ObjectLiteralElement) => PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3139:43: parameter node: ObjectLiteralElement
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3147:14: function visitAssignmentPattern: (node: AssignmentPattern) => ArrayLiteralExpression | ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3147:37: parameter node: AssignmentPattern
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:14: function onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:25: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:53: parameter emitCallback: (hint: EmitHint, node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:68: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3178:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3179:15: variable original: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3180:15: variable lex: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3183:19: variable savedLexicalEnvironment: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3184:19: variable savedPreviousShouldSubstituteThisWithClassThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3213:23: variable savedLexicalEnvironment: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3214:23: variable savedPreviousShouldSubstituteThisWithClassThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3227:23: variable savedLexicalEnvironment: LexicalEnv | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3228:23: variable savedShouldSubstituteThisWithClassThis: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3246:14: function onSubstituteNode: (hint: EmitHint, node: Node) => Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3246:31: parameter hint: EmitHint
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3246:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3255:14: function substituteExpression: (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3255:35: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3265:14: function substituteThisExpression: (node: ThisExpression) => Identifier | ParenthesizedExpression | ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3265:39: parameter node: ThisExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3271:21: binding facts: ClassFacts
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3271:28: binding classConstructor: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3271:46: binding classThis: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3272:19: variable substituteThis: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3289:14: function substituteExpressionIdentifier: (node: Identifier) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3289:45: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3293:14: function trySubstituteClassAlias: (node: Identifier) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3293:38: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3301:23: variable declaration: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3303:27: variable classAlias: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3305:31: variable clone: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3318:10: function createPrivateStaticFieldInitializer: (factory: NodeFactory, variableName: Identifier, initializer: Expression | undefined) => AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3318:46: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3318:68: parameter variableName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3318:94: parameter initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3327:10: function createPrivateInstanceFieldInitializer: (factory: NodeFactory, receiver: LeftHandSideExpression, initializer: Expression | undefined, weakMapName: Identifier) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3327:48: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3327:70: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3327:104: parameter initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3327:141: parameter weakMapName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3335:10: function createPrivateInstanceMethodInitializer: (factory: NodeFactory, receiver: LeftHandSideExpression, weakSetName: Identifier) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3335:49: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3335:71: parameter receiver: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3335:105: parameter weakSetName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3343:10: function isReservedPrivateName: (node: PrivateIdentifier) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3343:32: parameter node: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3347:6: type PrivateIdentifierInExpression: BinaryExpression & { readonly left: PrivateIdentifier; readonly token: InKeyword; }
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3347:68: property left: PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3347:102: property token: InKeyword
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3349:10: function isPrivateIdentifierInExpression: (node: BinaryExpression) => node is PrivateIdentifierInExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3349:42: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3354:10: function isStaticPropertyDeclaration: (node: Node) => node is PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3354:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3358:10: function isStaticPropertyDeclarationOrClassStaticBlock: (node: Node) => node is ClassStaticBlockDeclaration | PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/classFields.ts:3358:56: parameter node: Node

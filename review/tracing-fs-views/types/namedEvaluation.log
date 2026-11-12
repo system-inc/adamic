@@ -1,0 +1,138 @@
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:56:10: function getAssignedNameOfIdentifier: (factory: NodeFactory, name: Identifier, expression: WrappedExpression<AnonymousFunctionDefinition>) => StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:56:38: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:56:60: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:56:78: parameter expression: WrappedExpression<AnonymousFunctionDefinition>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:57:11: variable original: Node
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:67:10: function getAssignedNameOfPropertyName: (context: TransformationContext, name: PropertyName, assignedNameText: string | undefined) => { assignedName: StringLiteral; name: PropertyName; } | { assignedName: Identifier; name: ComputedPropertyName; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:67:40: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:67:72: parameter name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:67:92: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:68:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:70:15: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:75:15: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:80:15: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:84:11: variable assignedName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:87:11: variable key: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:88:11: variable assignment: AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:89:11: variable updatedName: ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:101:10: function createClassNamedEvaluationHelperBlock: (context: TransformationContext, assignedName: Expression, thisExpression?: Expression) => ClassNamedEvaluationHelperBlock
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:101:48: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:101:80: parameter assignedName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:101:106: parameter thisExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:107:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:108:11: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:109:11: variable statement: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:110:11: variable body: Block
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:111:11: variable block: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:120:13: type ClassNamedEvaluationHelperBlock: ClassStaticBlockDeclaration & { readonly body: Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }]; }; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:121:14: property body: Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }]; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:122:18: property statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }]
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:126:30: property expression: CallExpression & { readonly expression: Identifier; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:127:34: property expression: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:139:17: function isClassNamedEvaluationHelperBlock: (node: Node) => node is ClassNamedEvaluationHelperBlock
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:139:51: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:144:11: variable statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:156:17: function classHasExplicitlyAssignedName: (node: ClassLikeDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:156:48: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:165:17: function classHasDeclaredOrExplicitlyAssignedName: (node: ClassLikeDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:165:58: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:173:17: function injectClassNamedEvaluationHelperBlockIfMissing: <T extends ClassLikeDeclaration>(context: TransformationContext, node: T, assignedName: Expression, thisExpression?: Expression | undefined) => Extract<ClassDeclaration, Pick<T, "kind">> | Extract<ClassExpression, Pick<T, "kind">>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:174:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:175:5: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:176:5: parameter assignedName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:177:5: parameter thisExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:179:17: function injectClassNamedEvaluationHelperBlockIfMissing: <T extends ClassLikeDeclaration>(context: TransformationContext, node: T, assignedName: Expression, thisExpression?: Expression | undefined) => Extract<ClassDeclaration, Pick<T, "kind">> | Extract<ClassExpression, Pick<T, "kind">>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:180:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:181:5: parameter node: ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:182:5: parameter assignedName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:183:5: parameter thisExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:202:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:203:11: variable namedEvaluationBlock: ClassNamedEvaluationHelperBlock
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:208:11: variable insertionIndex: number
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:209:11: variable leading: ClassElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:210:11: variable trailing: ClassElement[]
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:211:11: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:236:10: function finishTransformNamedEvaluation: (context: TransformationContext, expression: WrappedExpression<AnonymousFunctionDefinition>, assignedName: Expression, ignoreEmptyStringLiteral?: boolean | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:237:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:238:5: parameter expression: WrappedExpression<AnonymousFunctionDefinition>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:239:5: parameter assignedName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:240:5: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:246:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:247:11: variable innerExpression: AnonymousFunctionDefinition
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:249:11: variable updatedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:256:10: function transformNamedEvaluationOfPropertyAssignment: (context: TransformationContext, node: PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:256:55: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:256:87: parameter node: PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:256:131: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:256:167: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:264:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:265:13: binding assignedName: Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:265:27: binding name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:266:11: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:274:10: function transformNamedEvaluationOfShorthandAssignmentProperty: (context: TransformationContext, node: ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:274:64: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:274:96: parameter node: ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:274:149: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:274:185: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:283:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:284:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:286:11: variable objectAssignmentInitializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:294:10: function transformNamedEvaluationOfVariableDeclaration: (context: TransformationContext, node: VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:294:56: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:294:88: parameter node: VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:294:133: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:294:169: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:309:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:310:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:312:11: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:322:10: function transformNamedEvaluationOfParameterDeclaration: (context: TransformationContext, node: ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:322:57: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:322:89: parameter node: ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:322:135: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:322:171: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:339:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:340:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:342:11: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:354:10: function transformNamedEvaluationOfBindingElement: (context: TransformationContext, node: BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => BindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:354:51: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:354:83: parameter node: BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:354:123: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:354:159: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:371:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:372:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:374:11: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:384:10: function transformNamedEvaluationOfPropertyDeclaration: (context: TransformationContext, node: PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:384:56: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:384:88: parameter node: PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:384:133: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:384:169: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:392:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:393:13: binding assignedName: Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:393:27: binding name: PropertyName
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:394:11: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:405:10: function transformNamedEvaluationOfAssignmentExpression: (context: TransformationContext, node: (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression), ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:405:57: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:405:89: parameter node: (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression)
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:405:131: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:405:167: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:432:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:433:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:435:11: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:444:10: function transformNamedEvaluationOfExportAssignment: (context: TransformationContext, node: ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }, ignoreEmptyStringLiteral?: boolean | undefined, assignedNameText?: string | undefined) => ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:444:53: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:444:85: parameter node: ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:444:127: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:444:163: parameter assignedNameText: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:454:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:455:11: variable assignedName: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:457:11: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:469:17: function transformNamedEvaluation: <T extends NamedEvaluation>(context: TransformationContext, node: T, ignoreEmptyStringLiteral?: boolean | undefined, assignedName?: string | undefined) => Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:469:69: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:469:101: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:469:110: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:469:146: parameter assignedName: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:470:17: function transformNamedEvaluation: <T extends NamedEvaluation>(context: TransformationContext, node: T, ignoreEmptyStringLiteral?: boolean | undefined, assignedName?: string | undefined) => Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<AssignmentExpression<AmpersandAmpersandEqualsToken | BarBarEqualsToken | QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>> | Extract<VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, "kind" | (keyof T & "name") | (keyof T & "operatorToken")>>
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:470:42: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:470:74: parameter node: NamedEvaluation
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:470:97: parameter ignoreEmptyStringLiteral: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/namedEvaluation.ts:470:133: parameter assignedName: string | undefined

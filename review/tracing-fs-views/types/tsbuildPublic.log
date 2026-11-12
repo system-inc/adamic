@@ -1,0 +1,852 @@
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:133:7: variable minimumDate: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:135:18: interface BuildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:136:5: property dry: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:137:5: property force: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:138:5: property verbose: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:139:5: property stopBuildOnErrors: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:141:22: property clean: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:142:22: property watch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:143:22: property help: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:145:22: property preserveWatchOutput: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:146:22: property listEmittedFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:147:22: property listFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:148:22: property explainFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:149:22: property pretty: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:150:5: property incremental: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:151:5: property assumeChangesOnlyAffectDirectDependencies: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:152:5: property declaration: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:153:5: property declarationMap: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:154:5: property emitDeclarationOnly: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:155:5: property sourceMap: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:156:5: property inlineSourceMap: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:158:5: property traceResolution: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:159:22: property diagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:160:22: property extendedDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:161:22: property locale: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:162:22: property generateCpuProfile: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:163:22: property generateTrace: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:165:6: parameter option: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:185:13: type ResolvedConfigFilePath: string & { _isResolvedConfigFileName: undefined; } & { __pathBrand: undefined; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:187:10: function getOrCreateValueFromConfigFileMap: <T>(configFileMap: Map<ResolvedConfigFilePath, T>, resolved: ResolvedConfigFilePath, createT: () => T) => T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:187:47: parameter configFileMap: Map<ResolvedConfigFilePath, T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:187:94: parameter resolved: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:187:128: parameter createT: () => T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:188:11: variable existingValue: T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:189:9: variable newValue: T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:197:10: function getOrCreateValueMapFromConfigFileMap: <K extends string, V>(configFileMap: Map<ResolvedConfigFilePath, Map<K, V>>, resolved: ResolvedConfigFilePath) => Map<K, V>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:197:68: parameter configFileMap: Map<ResolvedConfigFilePath, Map<K, V>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:197:123: parameter resolved: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:204:10: function getCurrentTime: (host: { now?: (() => Date) | undefined; }) => Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:204:25: parameter host: { now?: (() => Date) | undefined; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:204:33: property now: (() => Date) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:208:13: type ReportEmitErrorSummary: (errorCount: number, filesInError: (ReportFileInError | undefined)[]) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:208:39: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:208:59: parameter filesInError: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:210:18: interface ReportFileInError: ReportFileInError
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:211:5: property fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:212:5: property line: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:215:18: interface SolutionBuilderHostBase: SolutionBuilderHostBase<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:216:5: property createDirectory: ((path: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:216:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:221:5: property writeFile: ((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:221:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:221:43: parameter data: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:221:57: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:222:5: property getCustomTransformers: ((project: string) => CustomTransformers | undefined) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:222:30: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:224:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:225:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:225:39: parameter date: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:226:16: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:227:27: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:229:5: property reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:230:5: property reportSolutionBuilderStatus: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:234:37: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:237:22: property now: (() => Date) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:240:18: interface SolutionBuilderHost: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:241:5: property reportErrorSummary: ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:244:18: interface SolutionBuilderWithWatchHost: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:248:13: type BuildOrder: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:250:18: interface CircularBuildOrder: CircularBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:251:5: property buildOrder: BuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:252:5: property circularDiagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:255:13: type AnyBuildOrder: BuildOrder | CircularBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:258:17: function isCircularBuildOrder: (buildOrder: AnyBuildOrder) => buildOrder is CircularBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:258:38: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:263:17: function getBuildOrderFromAnyBuildOrder: (anyBuildOrder: AnyBuildOrder) => BuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:263:48: parameter anyBuildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:267:18: interface SolutionBuilder: SolutionBuilder<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:268:11: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:268:29: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:268:68: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:268:99: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:268:124: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:269:11: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:270:21: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:270:38: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:270:77: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:270:108: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:270:133: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:271:21: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:272:31: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:278:49: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:279:40: parameter configFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:279:80: parameter updateLevel: ProgramUpdateLevel | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:286:17: function createBuilderStatusReporter: (system: System, pretty?: boolean | undefined) => DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:286:45: parameter system: System
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:286:61: parameter pretty: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:287:12: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:288:13: variable output: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:294:10: function createSolutionBuilderHostBase: <T extends BuilderProgram>(system: System, createProgram: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportSolutionBuilderStatus?: DiagnosticReporter | undefined) => SolutionBuilderHostBase<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:294:66: parameter system: System
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:294:82: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:294:127: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:294:166: parameter reportSolutionBuilderStatus: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:295:11: variable host: SolutionBuilderHostBase<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:296:53: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:297:54: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:297:60: parameter date: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:298:43: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:305:17: function createSolutionBuilderHost: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>(system?: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportSolutionBuilderStatus?: DiagnosticReporter | undefined, reportErrorSummary?: ReportEmitErrorSummary | undefined) => SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:306:5: parameter system: System
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:307:5: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:308:5: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:309:5: parameter reportSolutionBuilderStatus: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:310:5: parameter reportErrorSummary: ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:312:11: variable host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:317:17: function createSolutionBuilderWithWatchHost: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>(system?: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportSolutionBuilderStatus?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined) => SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:318:5: parameter system: System
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:319:5: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:320:5: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:321:5: parameter reportSolutionBuilderStatus: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:322:5: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:324:11: variable host: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:325:11: variable watchHost: WatchHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:330:10: function getCompilerOptionsOfBuildOptions: (buildOptions: BuildOptions) => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:330:43: parameter buildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:331:11: variable result: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:332:36: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:339:17: function createSolutionBuilder: <T extends BuilderProgram>(host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions) => SolutionBuilder<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:339:65: parameter host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:339:95: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:339:125: parameter defaultOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:343:17: function createSolutionBuilderWithWatch: <T extends BuilderProgram>(host: SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions, baseWatchOptions?: WatchOptions | undefined) => SolutionBuilder<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:343:74: parameter host: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:343:113: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:343:143: parameter defaultOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:343:173: parameter baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:347:6: type ConfigFileCacheEntry: Diagnostic | ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:348:11: interface SolutionBuilderStateCache: SolutionBuilderStateCache
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:349:5: property originalReadFile: (fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:350:5: property originalFileExists: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:351:5: property originalDirectoryExists: ((directoryName: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:352:5: property originalCreateDirectory: ((directory: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:353:5: property originalWriteFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:354:5: property originalReadFileWithCache: (fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:355:5: property originalGetSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:358:11: interface FileWatcherWithModifiedTime: FileWatcherWithModifiedTime
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:359:5: property callbacks: FileWatcherCallback[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:360:5: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:363:5: property modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:366:11: interface BuildInfoCacheEntry: BuildInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:367:5: property path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:368:5: property buildInfo: false | BuildInfo
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:369:5: property modifiedTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:370:5: property latestChangedDtsTime: false | Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:373:11: interface SolutionBuilderState: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:374:14: property host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:375:14: property hostWithWatch: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:376:14: property parseConfigFileHost: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:377:14: property write: ((s: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:377:23: parameter s: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:380:14: property options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:381:14: property baseCompilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:382:14: property rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:383:14: property baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:385:14: property resolvedConfigFilePaths: Map<string, ResolvedConfigFilePath>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:386:14: property configFileCache: Map<ResolvedConfigFilePath, ConfigFileCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:388:14: property projectStatus: Map<ResolvedConfigFilePath, UpToDateStatus>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:389:14: property extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:390:14: property buildInfoCache: Map<ResolvedConfigFilePath, BuildInfoCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:392:14: property builderPrograms: Map<ResolvedConfigFilePath, T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:393:14: property diagnostics: Map<ResolvedConfigFilePath, readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:394:14: property projectPendingBuild: Map<ResolvedConfigFilePath, ProgramUpdateLevel>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:395:14: property projectErrorsReported: Map<ResolvedConfigFilePath, true>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:397:14: property compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:398:14: property moduleResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:399:14: property typeReferenceDirectiveResolutionCache: TypeReferenceDirectiveResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:400:14: property libraryResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:403:5: property buildOrder: AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:404:5: property readFileWithCache: (f: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:404:25: parameter f: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:405:5: property projectCompilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:406:5: property cache: SolutionBuilderStateCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:407:5: property allProjectBuildPending: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:408:5: property needsSummary: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:409:5: property watchAllProjectsPending: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:412:14: property watch: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:413:14: property allWatchedWildcardDirectories: Map<ResolvedConfigFilePath, Map<string, WildcardDirectoryWatcher<FileWatcher>>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:414:14: property allWatchedInputFiles: Map<ResolvedConfigFilePath, Map<string, FileWatcher>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:415:14: property allWatchedConfigFiles: Map<ResolvedConfigFilePath, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:416:14: property allWatchedExtendedConfigFiles: Map<Path, SharedExtendedConfigFileWatcher<ResolvedConfigFilePath>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:417:14: property allWatchedPackageJsonFiles: Map<ResolvedConfigFilePath, Map<Path, FileWatcher>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:418:14: property filesWatched: Map<Path, Date | FileWatcherWithModifiedTime>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:419:14: property outputTimeStamps: Map<ResolvedConfigFilePath, Map<Path, Date>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:421:14: property lastCachedPackageJsonLookups: Map<ResolvedConfigFilePath, Set<string> | undefined>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:423:5: property timerToBuildInvalidatedProject: unknown
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:424:5: property reportFileChangeDetected: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:425:5: property writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:425:16: parameter s: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:10: function createSolutionBuilderState: <T extends BuilderProgram>(watch: boolean, hostOrHostWithWatch: SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], options: BuildOptions, baseWatchOptions: WatchOptions | undefined) => SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:63: parameter watch: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:79: parameter hostOrHostWithWatch: SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:158: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:188: parameter options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:428:211: parameter baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:429:11: variable host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:430:11: variable hostWithWatch: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:433:11: variable baseCompilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:434:11: variable compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:436:41: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:443:9: variable moduleResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:443:67: variable typeReferenceDirectiveResolutionCache: TypeReferenceDirectiveResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:446:51: parameter moduleNames: readonly StringLiteralLike[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:446:64: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:446:80: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:446:101: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:446:110: parameter containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:467:65: parameter typeDirectiveNames: readonly T[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:467:85: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:467:101: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:467:122: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:467:131: parameter containingSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:479:9: variable libraryResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:482:40: parameter libraryName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:482:53: parameter resolveFrom: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:482:66: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:491:34: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:491:44: parameter configFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:493:13: binding watchFile: (file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: WatchType, detailInfo2?: ResolvedConfigFileName | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:493:24: binding watchDirectory: (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: WatchType, detailInfo2?: ResolvedConfigFileName | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:493:40: binding writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:495:11: variable state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:526:28: parameter f: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:554:10: function toPath: <T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:554:43: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:554:75: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:558:10: function toResolvedConfigFilePath: <T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName) => ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:558:61: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:558:93: parameter fileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:559:13: binding resolvedConfigFilePaths: Map<string, ResolvedConfigFilePath>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:560:11: variable path: ResolvedConfigFilePath | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:563:11: variable resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:568:10: function isParsedCommandLine: (entry: ConfigFileCacheEntry) => entry is ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:568:30: parameter entry: ConfigFileCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:572:10: function getCachedParsedConfigFile: <T extends BuilderProgram>(state: SolutionBuilderState<T>, configFilePath: ResolvedConfigFilePath) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:572:62: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:572:94: parameter configFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:573:11: variable value: ConfigFileCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:577:10: function parseConfigFile: <T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:577:52: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:577:84: parameter configFileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:577:124: parameter configFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:578:13: binding configFileCache: Map<ResolvedConfigFilePath, ConfigFileCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:579:11: variable value: ConfigFileCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:585:9: variable diagnostic: Diagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:586:13: binding parseConfigFileHost: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:586:34: binding baseCompilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:586:55: binding baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:586:73: binding extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:586:94: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:587:9: variable parsed: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:593:67: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:603:10: function resolveProjectName: <T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string) => ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:603:55: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:603:87: parameter name: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:607:10: function createBuildOrder: <T extends BuilderProgram>(state: SolutionBuilderState<T>, roots: readonly ResolvedConfigFileName[]) => AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:607:53: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:607:85: parameter roots: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:608:11: variable temporaryMarks: Map<ResolvedConfigFilePath, true>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:609:11: variable permanentMarks: Map<ResolvedConfigFilePath, true>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:610:11: variable circularityReportStack: string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:611:9: variable buildOrder: ResolvedConfigFileName[] | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:612:9: variable circularDiagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:613:16: variable root: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:621:14: function visit: (configFileName: ResolvedConfigFileName, inCircularContext?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:621:20: parameter configFileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:621:60: parameter inCircularContext: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:622:15: variable projPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:640:15: variable parsed: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:642:24: variable ref: ProjectReference
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:643:23: variable resolvedRefPath: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:654:10: function getBuildOrder: <T extends BuilderProgram>(state: SolutionBuilderState<T>) => AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:654:50: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:658:10: function createStateBuildOrder: <T extends BuilderProgram>(state: SolutionBuilderState<T>) => AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:658:58: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:659:11: variable buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:659:68: parameter f: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:665:11: variable currentProjects: Set<ResolvedConfigFilePath>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:667:13: parameter resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:671:11: variable noopOnDelete: { onDeleteValue: (_?: unknown) => void; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:691:53: parameter watcher: SharedExtendedConfigFileWatcher<ResolvedConfigFilePath>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:692:38: parameter project: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:703:30: parameter existingMap: Map<string, WildcardDirectoryWatcher<FileWatcher>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:709:30: parameter existingMap: Map<string, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:715:30: parameter existingMap: Map<Path, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:721:10: function getBuildOrderFor: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined) => AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:721:53: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:721:85: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:721:114: parameter onlyReferences: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:722:11: variable resolvedProject: "" | ResolvedConfigFileName | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:723:11: variable buildOrderFromState: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:726:15: variable projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:727:15: variable projectIndex: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:729:13: parameter configFileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:733:11: variable buildOrder: BuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:740:10: function enableCache: <T extends BuilderProgram>(state: SolutionBuilderState<T>) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:740:48: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:745:13: binding compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:745:27: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:747:11: variable originalReadFileWithCache: (f: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:748:11: variable originalGetSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:751:9: binding originalReadFile: (fileName: string, encoding?: string | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:752:9: binding originalFileExists: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:753:9: binding originalDirectoryExists: ((directory: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:754:9: binding originalCreateDirectory: ((directory: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:755:9: binding originalWriteFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:756:9: binding getSourceFileWithCache: ((fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:757:9: binding readFileWithCache: (fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:760:9: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:761:13: parameter args: [fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:777:10: function disableCache: <T extends BuilderProgram>(state: SolutionBuilderState<T>) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:777:49: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:13: binding cache: SolutionBuilderStateCache
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:20: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:26: binding compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:40: binding extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:61: binding moduleResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:84: binding typeReferenceDirectiveResolutionCache: TypeReferenceDirectiveResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:780:123: binding libraryResolutionCache: ModuleResolutionCache | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:796:10: function clearProjectStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:796:55: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:796:87: parameter resolved: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:801:10: function addProjToQueue: <T extends BuilderProgram>({ projectPendingBuild }: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:801:53: binding projectPendingBuild: Map<ResolvedConfigFilePath, ProgramUpdateLevel>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:801:101: parameter proj: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:801:131: parameter updateLevel: ProgramUpdateLevel
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:802:11: variable value: ProgramUpdateLevel | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:811:10: function setupInitialBuild: <T extends BuilderProgram>(state: SolutionBuilderState<T>, cancellationToken: CancellationToken | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:811:54: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:811:86: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:817:11: variable buildOrder: BuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:818:24: parameter configFileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:835:18: interface InvalidatedProjectBase: InvalidatedProjectBase
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:836:14: property kind: InvalidatedProjectKind
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:837:14: property project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:838:31: property projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:839:31: property buildOrder: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:843:10: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:843:49: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:843:80: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:848:18: interface UpdateOutputFileStampsProject: UpdateOutputFileStampsProject
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:849:14: property kind: InvalidatedProjectKind.UpdateOutputFileStamps
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:853:18: interface BuildInvalidedProject: BuildInvalidedProject<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:854:14: property kind: InvalidatedProjectKind.Build
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:861:19: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:863:27: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:864:26: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:866:29: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:866:54: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:867:24: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:868:28: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:868:53: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:869:46: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:869:85: parameter ignoreSourceFile: ((sourceFile: SourceFile) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:869:105: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:878:10: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:878:41: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:878:72: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:878:111: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:878:139: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:883:13: type InvalidatedProject: BuildInvalidedProject<T> | UpdateOutputFileStampsProject
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:885:10: function doneInvalidatedProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, projectPath: ResolvedConfigFilePath) => ExitStatus.Success | ExitStatus.DiagnosticsPresent_OutputsSkipped
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:886:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:887:5: parameter projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:895:10: function createUpdateOutputFileStampsProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ResolvedConfigFileName, projectPath: ResolvedConfigFilePath, config: ParsedCommandLine, buildOrder: readonly ResolvedConfigFileName[]) => UpdateOutputFileStampsProject
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:896:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:897:5: parameter project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:898:5: parameter projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:899:5: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:900:5: parameter buildOrder: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:902:9: variable updateOutputFileStampsPending: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:931:10: function createBuildOrUpdateInvalidedProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ResolvedConfigFileName, projectPath: ResolvedConfigFilePath, projectIndex: number, config: ParsedCommandLine, status: UpToDateStatus, buildOrder: readonly ResolvedConfigFileName[]) => BuildInvalidedProject<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:932:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:933:5: parameter project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:934:5: parameter projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:935:5: parameter projectIndex: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:936:5: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:937:5: parameter status: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:938:5: parameter buildOrder: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:940:9: variable step: BuildStep
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:941:9: variable program: T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:942:9: variable buildResult: BuildResultFlags | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:954:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:956:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:958:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:962:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:964:32: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:966:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:968:31: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:970:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:974:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:976:35: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:976:47: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:978:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:980:29: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:982:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:984:34: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:984:46: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:986:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:988:52: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:988:71: parameter ignoreSourceFile: ((sourceFile: SourceFile) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:990:17: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:994:16: parameter targetSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:994:34: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:994:45: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:994:64: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:994:82: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:997:21: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1006:14: function done: (cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, customTransformers?: CustomTransformers | undefined) => ExitStatus.Success | ExitStatus.DiagnosticsPresent_OutputsSkipped
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1006:19: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1006:58: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1006:89: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1012:14: function withProgramOrUndefined: <U>(action: (program: T) => U | undefined) => U | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1012:40: parameter action: (program: T) => U | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1012:49: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1017:14: function withProgramOrEmptyArray: <U>(action: (program: T) => readonly U[]) => readonly U[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1017:41: parameter action: (program: T) => readonly U[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1017:50: parameter program: T
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1021:14: function createProgram: () => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1041:17: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1041:23: binding compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1057:19: variable internalMap: Map<Path, PackageJsonInfoCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1062:21: parameter data: PackageJsonInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1073:14: function emit: (writeFileCallback?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, customTransformers?: CustomTransformers | undefined) => EmitResult
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1074:9: parameter writeFileCallback: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1075:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1076:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1082:17: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1082:23: binding compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1083:15: variable emittedOutputs: Map<Path, string>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1084:15: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1085:15: variable isIncremental: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1086:13: variable outputTimeStampMap: Map<Path, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1087:13: variable now: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1088:17: binding emitResult: EmitResult
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1088:29: binding diagnostics: SortedReadonlyArray<Diagnostic>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1090:13: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:14: parameter name: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:20: parameter text: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:26: parameter writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:46: parameter onError: ((message: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:55: parameter sourceFiles: readonly SourceFile[] | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1093:68: parameter data: WriteFileCallbackData | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1094:23: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1099:27: variable isChangedSignature: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1100:27: variable existing: BuildInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1115:23: variable modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1161:14: function executeSteps: (till: BuildStep, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, customTransformers?: CustomTransformers | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1162:9: parameter till: BuildStep
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1163:9: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1164:9: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1165:9: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1168:19: variable currentStep: BuildStep
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1193:11: interface InvalidateProjectCreateInfo: InvalidateProjectCreateInfo
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1194:5: property kind: InvalidatedProjectKind
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1195:5: property status: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1196:5: property project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1197:5: property projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1198:5: property projectIndex: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1199:5: property config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1202:10: function getNextInvalidatedProjectCreateInfo: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder, reportQueue: boolean) => InvalidateProjectCreateInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1203:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1204:5: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1205:5: parameter reportQueue: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1210:13: binding options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1210:22: binding projectPendingBuild: Map<ResolvedConfigFilePath, ProgramUpdateLevel>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1211:14: variable projectIndex: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1212:15: variable project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1213:15: variable projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1214:15: variable updateLevel: ProgramUpdateLevel | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1222:15: variable config: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1250:15: variable status: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1315:10: function createInvalidatedProjectWithInfo: <T extends BuilderProgram>(state: SolutionBuilderState<T>, info: InvalidateProjectCreateInfo, buildOrder: AnyBuildOrder) => BuildInvalidedProject<T> | UpdateOutputFileStampsProject
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1316:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1317:5: parameter info: InvalidateProjectCreateInfo
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1318:5: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1340:10: function getNextInvalidatedProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder, reportQueue: boolean) => InvalidatedProject<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1341:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1342:5: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1343:5: parameter reportQueue: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1345:11: variable info: InvalidateProjectCreateInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:10: function getOldProgram: <T extends BuilderProgram>({ options, builderPrograms, compilerHost }: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, parsed: ParsedCommandLine) => T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:52: binding options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:61: binding builderPrograms: Map<ResolvedConfigFilePath, T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:78: binding compilerHost: CompilerHost & ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:119: parameter proj: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1350:149: parameter parsed: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1352:11: variable value: T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1357:10: function afterProgramDone: <T extends BuilderProgram>(state: SolutionBuilderState<T>, program: T | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1358:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1359:5: parameter program: T | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1370:10: function isFileWatcherWithModifiedTime: (value: Date | FileWatcherWithModifiedTime) => value is FileWatcherWithModifiedTime
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1370:40: parameter value: Date | FileWatcherWithModifiedTime
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1374:10: function getModifiedTime: <T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) => Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1374:52: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1374:84: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1375:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1376:11: variable existing: Date | FileWatcherWithModifiedTime | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1384:11: variable result: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:10: function watchFile: <T extends BuilderProgram>(state: SolutionBuilderState<T>, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType, project?: ResolvedConfigFileName | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:46: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:78: parameter file: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:92: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:123: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:157: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:192: parameter watchType: WatchType
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1392:214: parameter project: ResolvedConfigFileName | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1393:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1394:11: variable existing: Date | FileWatcherWithModifiedTime | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1399:15: variable watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1401:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1401:24: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1401:35: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1402:23: variable existing: Date | FileWatcherWithModifiedTime
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1405:44: parameter cb: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1417:19: variable existing: Date | FileWatcherWithModifiedTime
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1430:10: function getOutputTimeStampMap: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedConfigFilePath: ResolvedConfigFilePath) => Map<Path, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1430:58: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1430:90: parameter resolvedConfigFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1433:9: variable result: Map<Path, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1438:10: function getBuildInfoCacheEntry: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath) => BuildInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1438:59: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1438:91: parameter buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1438:114: parameter resolvedConfigPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1439:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1440:11: variable existing: BuildInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1444:10: function getBuildInfo: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath, modifiedTime: Date | undefined) => BuildInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1444:49: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1444:81: parameter buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1444:104: parameter resolvedConfigPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1444:148: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1445:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1446:11: variable existing: BuildInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1450:11: variable value: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1451:11: variable buildInfo: BuildInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1456:10: function checkConfigFileUpToDateStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string) => OutOfDateWithSelf | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1456:66: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1456:98: parameter configFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1456:118: parameter oldestOutputFileTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1456:146: parameter oldestOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1458:11: variable tsconfigTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1468:10: function getUpToDateStatusWorker: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine, resolvedPath: ResolvedConfigFilePath) => UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1468:60: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1468:92: parameter project: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1468:120: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1473:9: variable referenceStatuses: any
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1474:11: variable force: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1477:20: variable ref: ProjectReference
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1478:19: variable resolvedRef: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1479:19: variable resolvedRefPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1480:19: variable resolvedConfig: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1481:19: variable refStatus: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1511:13: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1512:11: variable buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1513:11: variable isIncremental: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1514:9: variable buildInfoCacheEntry: BuildInfoCacheEntry | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1515:11: variable buildInfoTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1530:11: variable buildInfo: BuildInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1538:11: variable incrementalBuildInfo: IncrementalBuildInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1612:9: variable oldestOutputFileTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1613:9: variable oldestOutputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1614:9: variable newestInputFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1615:9: variable newestInputFileTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1617:9: variable pseudoInputUpToDate: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1618:11: variable seenRoots: Set<Path>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1619:9: variable buildInfoVersionMap: BuildInfoFileVersionMap | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1621:16: variable inputFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1622:15: variable inputTime: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1630:15: variable inputPath: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1633:17: variable version: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1634:17: variable currentVersion: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1638:23: variable resolvedInputPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1640:23: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1662:9: variable existingRoot: any
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1668:14: parameter _resolved: Path | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1668:25: parameter existingRoot: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1674:13: parameter root: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1689:15: variable outputs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1690:15: variable outputTimeStampMap: Map<Path, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1691:20: variable output: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1693:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1695:17: variable outputTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1727:9: variable pseudoUpToDate: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1729:22: binding ref: ProjectReference
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1729:27: binding refStatus: ErrorReadingFile | ForceBuild | OutOfDateBuildInfo | OutOfDateRoots | OutOfDateWithSelf | OutOfDateWithUpstream | OutputMissing | TsVersionOutOfDate | Unbuildable | UpToDate | UpstreamBlocked | UpstreamOutOfDate
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1729:38: binding resolvedConfig: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1729:54: binding resolvedRefPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1747:19: variable newestDeclarationFileContentChangedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1764:11: variable configStatus: OutOfDateWithSelf | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1768:11: variable extendedConfigStatus: OutOfDateWithSelf | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1768:105: parameter configFile: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1772:11: variable packageJsonLookups: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1773:11: variable dependentPackageFileStatus: OutOfDateWithSelf | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1775:9: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1792:10: function hasSameBuildInfo: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoCacheEntry: BuildInfoCacheEntry, resolvedRefPath: ResolvedConfigFilePath) => boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1792:53: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1792:85: parameter buildInfoCacheEntry: BuildInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1792:127: parameter resolvedRefPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1793:11: variable refBuildInfo: BuildInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1797:10: function getUpToDateStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine | undefined, resolvedPath: ResolvedConfigFilePath) => UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1797:54: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1797:86: parameter project: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1797:126: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1802:11: variable prior: UpToDateStatus | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1808:11: variable actual: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1815:10: function updateOutputTimestampsWorker: <T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ParsedCommandLine, projectPath: ResolvedConfigFilePath, verboseMessage: DiagnosticMessage, skipOutputs?: Map<Path, string> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1816:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1817:5: parameter proj: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1818:5: parameter projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1819:5: parameter verboseMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1820:5: parameter skipOutputs: Map<Path, string> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1823:9: variable now: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1824:11: variable buildInfoPath: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1825:11: variable isIncremental: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1838:13: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1839:11: variable outputs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1840:11: variable outputTimeStampMap: Map<Path, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1841:11: variable modifiedOutputs: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1843:13: variable reportVerbose: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1844:20: variable file: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1845:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1862:34: parameter _value: Date
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1862:42: parameter key: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1867:10: function getLatestChangedDtsTime: <T extends BuilderProgram>(state: SolutionBuilderState<T>, options: CompilerOptions, resolvedConfigPath: ResolvedConfigFilePath) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1867:60: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1867:92: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1867:118: parameter resolvedConfigPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1869:11: variable entry: BuildInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1871:11: variable latestChangedDtsTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1878:10: function updateOutputTimestamps: <T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ParsedCommandLine, resolvedPath: ResolvedConfigFilePath) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1878:59: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1878:91: parameter proj: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1878:116: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1889:10: function queueReferencingProjects: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ResolvedConfigFileName, projectPath: ResolvedConfigFilePath, projectIndex: number, config: ParsedCommandLine, buildOrder: readonly ResolvedConfigFileName[], buildResult: BuildResultFlags) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1890:5: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1891:5: parameter project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1892:5: parameter projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1893:5: parameter projectIndex: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1894:5: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1895:5: parameter buildOrder: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1896:5: parameter buildResult: BuildResultFlags
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1903:14: variable index: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1904:15: variable nextProject: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1905:15: variable nextProjectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1908:15: variable nextProjectConfig: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1910:20: variable ref: ProjectReference
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1911:19: variable resolvedRefPath: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1915:19: variable status: UpToDateStatus | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:10: function build: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ((project: string) => CustomTransformers) | undefined, onlyReferences?: boolean | undefined) => ExitStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:42: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:74: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:92: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:131: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:162: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:187: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1949:227: parameter onlyReferences: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1951:11: variable result: ExitStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:10: function buildWorker: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, cancellationToken: CancellationToken | undefined, writeFile: WriteFileCallback | undefined, getCustomTransformers: ((project: string) => CustomTransformers) | undefined, onlyReferences: boolean | undefined) => ExitStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:48: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:80: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:109: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:159: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:201: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:226: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1957:279: parameter onlyReferences: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1958:11: variable buildOrder: AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1963:9: variable reportQueue: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1964:9: variable successfulProjects: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1966:15: variable invalidatedProject: InvalidatedProject<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1979:28: parameter p: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1986:10: function clean: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string | undefined, onlyReferences?: boolean | undefined) => ExitStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1986:42: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1986:74: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1986:92: parameter onlyReferences: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1988:11: variable result: ExitStatus.Success | ExitStatus.InvalidProject_OutputsSkipped | ExitStatus.ProjectReferenceCycle_OutputsSkipped
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1994:10: function cleanWorker: <T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined) => ExitStatus.Success | ExitStatus.InvalidProject_OutputsSkipped | ExitStatus.ProjectReferenceCycle_OutputsSkipped
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1994:48: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1994:80: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1994:109: parameter onlyReferences: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:1995:11: variable buildOrder: AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2003:13: binding options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2003:22: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2004:11: variable filesToDelete: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2005:16: variable proj: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2006:15: variable resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2007:15: variable parsed: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2013:15: variable outputs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2015:15: variable inputFileNames: Set<Path>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2015:61: parameter f: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2016:20: variable output: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2032:117: parameter f: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2038:10: function invalidateProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2038:54: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2038:86: parameter resolved: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2038:120: parameter updateLevel: ProgramUpdateLevel
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2053:10: function invalidateProjectAndScheduleBuilds: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2053:71: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2053:103: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2053:141: parameter updateLevel: ProgramUpdateLevel
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2059:10: function scheduleBuildInvalidatedProject: <T extends BuilderProgram>(state: SolutionBuilderState<T>, time: number, changeDetected: boolean) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2059:68: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2059:100: parameter time: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2059:114: parameter changeDetected: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2060:13: binding hostWithWatch: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2070:10: function buildNextInvalidatedProject: <T extends BuilderProgram>(_timeoutType: string, state: SolutionBuilderState<T>, changeDetected: boolean) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2070:64: parameter _timeoutType: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2070:86: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2070:118: parameter changeDetected: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2072:11: variable buildOrder: AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2078:10: function buildNextInvalidatedProjectWorker: <T extends BuilderProgram>(state: SolutionBuilderState<T>, changeDetected: boolean) => AnyBuildOrder | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2078:70: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2078:102: parameter changeDetected: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2085:9: variable projectsBuilt: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2086:11: variable buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2087:11: variable invalidatedProject: InvalidatedProject<T> | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2095:19: variable info: InvalidateProjectCreateInfo | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2102:19: variable project: BuildInvalidedProject<T> | UpdateOutputFileStampsProject
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2111:10: function watchConfigFile: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2111:52: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2111:84: parameter resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2111:118: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2111:156: parameter parsed: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2127:10: function watchExtendedConfigFiles: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2127:61: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2127:93: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2127:131: parameter parsed: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2132:10: parameter extendedConfigFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2132:34: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2136:105: parameter projectConfigFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2141:9: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2145:10: function watchWildCardDirectories: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2145:61: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2145:93: parameter resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2145:127: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2145:165: parameter parsed: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2150:10: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2150:15: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2153:17: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2164:39: parameter s: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2165:37: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2179:10: function watchInputFiles: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2179:52: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2179:84: parameter resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2179:118: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2179:156: parameter parsed: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2185:29: parameter input: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2200:10: function watchPackageJsonFiles: <T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2200:58: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2200:90: parameter resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2200:124: parameter resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2200:162: parameter parsed: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2206:29: parameter input: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2221:10: function startWatching: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2221:50: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2221:82: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2225:16: variable resolved: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2226:15: variable resolvedPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2227:15: variable cfg: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2246:10: function stopWatching: <T extends BuilderProgram>(state: SolutionBuilderState<T>) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2246:49: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2249:51: parameter watchedWildcardDirectories: Map<string, WildcardDirectoryWatcher<FileWatcher>>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2250:42: parameter watchedWildcardDirectories: Map<string, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2251:48: parameter watchedPacageJsonFiles: Map<Path, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2258:10: function createSolutionBuilderWorker: { <T extends BuilderProgram>(watch: false, host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions): SolutionBuilder<T>; <T extends BuilderProgram>(watch: true, host: SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions, baseWatchOptions?: WatchOptions | undefined): SolutionBuilder<T>; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2258:64: parameter watch: false
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2258:78: parameter host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2258:108: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2258:138: parameter defaultOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:10: function createSolutionBuilderWorker: { <T extends BuilderProgram>(watch: false, host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions): SolutionBuilder<T>; <T extends BuilderProgram>(watch: true, host: SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions, baseWatchOptions?: WatchOptions | undefined): SolutionBuilder<T>; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:64: parameter watch: true
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:77: parameter host: SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:116: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:146: parameter defaultOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2259:176: parameter baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:10: function createSolutionBuilderWorker: { <T extends BuilderProgram>(watch: false, host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions): SolutionBuilder<T>; <T extends BuilderProgram>(watch: true, host: SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions, baseWatchOptions?: WatchOptions | undefined): SolutionBuilder<T>; }
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:64: parameter watch: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:80: parameter hostOrHostWithWatch: SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:159: parameter rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:189: parameter options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2260:212: parameter baseWatchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2261:11: variable state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2263:17: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2263:26: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2263:45: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2263:56: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2264:16: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2265:27: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2265:36: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2265:55: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2265:66: parameter getCustomTransformers: ((project: string) => CustomTransformers) | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2266:26: parameter project: string | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2267:36: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2272:37: parameter project: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2273:19: variable configFileName: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2274:19: variable configFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2277:29: parameter configFilePath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2277:45: parameter updateLevel: ProgramUpdateLevel | undefined
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2282:10: function relName: <T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string) => string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2282:44: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2282:76: parameter path: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2286:10: function reportStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2286:49: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2286:81: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2286:112: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2290:10: function reportWatchStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2290:54: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2290:86: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2290:117: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2294:10: function reportErrors: <T extends BuilderProgram>({ host }: SolutionBuilderState<T>, errors: readonly Diagnostic[]) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2294:51: binding host: SolutionBuilderHost<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2294:84: parameter errors: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2295:20: parameter err: Diagnostic
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2298:10: function reportAndStoreErrors: <T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2298:57: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2298:89: parameter proj: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2298:119: parameter errors: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2306:10: function reportParseConfigFileDiagnostic: <T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2306:68: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2306:100: parameter proj: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2310:10: function reportErrorSummary: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2310:55: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2310:87: parameter buildOrder: AnyBuildOrder
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2313:11: variable canReportSummary: boolean
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2314:13: binding diagnostics: Map<ResolvedConfigFilePath, readonly Diagnostic[]>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2315:9: variable totalErrors: number
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2316:9: variable filesInError: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2325:28: parameter project: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2326:19: variable projectPath: ResolvedConfigFilePath
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2331:51: parameter singleProjectErrors: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2332:51: parameter singleProjectErrors: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2346:10: function reportBuildQueue: <T extends BuilderProgram>(state: SolutionBuilderState<T>, buildQueue: readonly ResolvedConfigFileName[]) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2346:53: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2346:85: parameter buildQueue: readonly ResolvedConfigFileName[]
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2348:88: parameter s: ResolvedConfigFileName
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2352:10: function reportUpToDateStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2352:57: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2352:89: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2352:113: parameter status: UpToDateStatus
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2488:10: function verboseReportProjectStatus: <T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) => void
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2488:63: parameter state: SolutionBuilderState<T>
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2488:95: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/tsbuildPublic.ts:2488:119: parameter status: UpToDateStatus

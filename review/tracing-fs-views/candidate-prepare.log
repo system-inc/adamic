@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/prepare_shards.py", line 39, in <module>
+    print(json.dumps(prepare_shared(args.cache.resolve()), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/lane/prepare_shards.py", line 13, in prepare_shared
+    prepared = prepare(cache)
+               ^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/lane/artifact.py", line 78, in prepare
+    raise RuntimeError(f'{name} exit {result.returncode}; see {scratch}/{name}.log')
+RuntimeError: apply exit 1; see /workspace/tracing-artifacts/b9ddcf9a7e66b8e673007d8eecf56d2325a965698232482ff37ec187d2c3983a.0jv6pk35/apply.log

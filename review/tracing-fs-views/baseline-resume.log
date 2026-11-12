@@ -1,0 +1,185 @@
+Reading diagnostics from src/compiler/diagnosticMessages.json
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 5,
+  "edits": 13,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 3,
+  "javascriptChanging": true,
+  "behaviorChanging": true
+}
+{
+  "files": 1,
+  "edits": 5,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false,
+  "behaviorChanging": false
+}
+{
+  "files": 6,
+  "edits": 12,
+  "javascriptChanging": true,
+  "behaviorChanging": false
+}
+{
+  "files": 2,
+  "edits": 3,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": false
+}
+{
+  "files": 2,
+  "edits": 9,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{
+  "files": 3,
+  "edits": 18,
+  "javascriptChanging": true
+}
+{
+  "files": 2,
+  "edits": 15,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{
+  "files": 5,
+  "rewrites": 28,
+  "left": 0,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 2,
+  "javascriptChanging": false
+}
+{
+  "files": 2,
+  "edits": 4,
+  "javascriptChanging": true
+}
+{"files":2,"edits":4,"javascriptChanging":true}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": false
+}
+{"files":1,"edits":1,"javascriptChanging":true}
+{
+  "files": 17,
+  "edits": 40,
+  "javascriptChanging": true
+}
+{
+  "files": 11,
+  "owners": 25,
+  "calls": 19,
+  "javascriptChanging": true
+}
+{
+  "files": 1,
+  "edits": 1,
+  "javascriptChanging": true
+}
+{"edits":1,"javascriptChanging":true}
+{"files":1,"edits":2,"javascriptChanging":true}
+{
+  "files": 1,
+  "javascriptChanging": true,
+  "before": {
+    "binding": "local let",
+    "references": 5,
+    "roles": [
+      "assignment",
+      "assignment",
+      "checked qualified receiver",
+      "condition",
+      "condition"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 0,
+    "bareNamespaceUses": 0
+  },
+  "after": {
+    "binding": "namespace import",
+    "references": 1,
+    "roles": [
+      "qualified receiver"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 1,
+    "bareNamespaceUses": 0
+  }
+}

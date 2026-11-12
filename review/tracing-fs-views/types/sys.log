@@ -1,0 +1,724 @@
+/workspace/tracing-measured-after/src/compiler/sys.ts:57:18: function setTimeout: (handler: () => void, timeout: number) => Timeout
+/workspace/tracing-measured-after/src/compiler/sys.ts:57:29: parameter handler: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:57:50: parameter timeout: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:58:18: function clearTimeout: (handle: Timeout | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:58:31: parameter handle: Timeout | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:66:17: function generateDjb2Hash: (data: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:66:34: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:67:9: variable acc: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:68:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:81:17: function setStackTraceLimit: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:93:13: type FileWatcherCallback: (fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:93:36: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:93:54: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:93:87: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:94:13: type DirectoryWatcherCallback: (fileName: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:94:41: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:95:11: interface WatchedFile: WatchedFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:96:14: property fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:97:14: property callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:98:5: property mtime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:109:13: type HostWatchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:109:30: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:109:48: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:109:79: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:109:113: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:111:13: type HostWatchDirectory: (fileName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:111:35: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:111:53: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:111:89: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:111:109: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:114:14: variable missingFileModifiedTime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:117:17: function getModifiedTime: (host: { getModifiedTime: (path: string) => Date | undefined; }, fileName: string) => Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:117:33: parameter host: { getModifiedTime: (path: string) => Date | undefined; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:117:41: property getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:117:101: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:121:11: interface Levels: Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:122:5: property Low: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:123:5: property Medium: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:124:5: property High: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:127:10: function createPollingIntervalBasedLevels: (levels: Levels) => { 250: number; 500: number; 2000: number; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:127:43: parameter levels: Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:135:7: variable defaultChunkLevels: Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:136:5: variable pollingChunkSize: { 250: number; 500: number; 2000: number; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:138:12: variable unchangedPollThresholds: { 2000: number; 250: number; 500: number; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:140:10: function setCustomPollingValues: (system: System) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:140:33: parameter system: System
+/workspace/tracing-measured-after/src/compiler/sys.ts:144:11: variable pollingIntervalChanged: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:148:14: function getLevel: (envVar: string, level: keyof Levels) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:148:23: parameter envVar: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:148:39: parameter level: keyof Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:152:14: function getCustomLevels: (baseVariable: string) => Partial<Levels> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:152:30: parameter baseVariable: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:153:13: variable customLevels: Partial<Levels> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:159:18: function setCustomLevel: (level: keyof Levels) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:159:33: parameter level: keyof Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:160:19: variable customLevel: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:167:14: function setCustomLevels: (baseVariable: string, levels: Levels) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:167:30: parameter baseVariable: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:167:52: parameter levels: Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:168:15: variable customLevels: Partial<Levels> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:177:18: function setLevel: (level: keyof Levels) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:177:27: parameter level: keyof Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:182:14: function getCustomPollingBasedLevels: (baseVariable: string, defaultLevels: Levels) => { 250: number; 500: number; 2000: number; } | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:182:42: parameter baseVariable: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:182:64: parameter defaultLevels: Levels
+/workspace/tracing-measured-after/src/compiler/sys.ts:183:15: variable customLevels: Partial<Levels> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:189:11: interface WatchedFileWithIsClosed: WatchedFileWithIsClosed
+/workspace/tracing-measured-after/src/compiler/sys.ts:190:5: property isClosed: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:192:10: function pollWatchedFileQueue: <T extends WatchedFileWithIsClosed>(host: { getModifiedTime: (path: string) => Date | undefined; }, queue: (T | undefined)[], pollIndex: number, chunkSize: number, callbackOnWatchFileStat?: ((watchedFile: T, pollIndex: number, fileChanged: boolean) => void) | undefined) => number
+/workspace/tracing-measured-after/src/compiler/sys.ts:193:5: parameter host: { getModifiedTime: (path: string) => Date | undefined; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:193:13: property getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:194:5: parameter queue: (T | undefined)[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:195:5: parameter pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:196:5: parameter chunkSize: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:197:5: parameter callbackOnWatchFileStat: ((watchedFile: T, pollIndex: number, fileChanged: boolean) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:197:32: parameter watchedFile: T
+/workspace/tracing-measured-after/src/compiler/sys.ts:197:48: parameter pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:197:67: parameter fileChanged: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:199:9: variable definedValueCopyToIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:201:14: variable canVisit: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:202:15: variable watchedFile: T | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:213:15: variable fileChanged: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:235:14: function nextPollIndex: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:248:11: interface WatchedFileWithUnchangedPolls: WatchedFileWithUnchangedPolls
+/workspace/tracing-measured-after/src/compiler/sys.ts:249:5: property unchangedPolls: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:251:10: function createDynamicPriorityPollingWatchFile: (host: { getModifiedTime: (path: string) => Date | undefined; setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; }) => HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:251:48: parameter host: { getModifiedTime: (path: string) => Date | undefined; setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:252:5: property getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:253:5: property setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:255:15: interface PollingIntervalQueue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:256:9: property pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:257:9: property pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:258:9: property pollScheduled: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:261:11: variable watchedFiles: WatchedFileWithUnchangedPolls[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:262:11: variable changedFilesInLastPoll: WatchedFileWithUnchangedPolls[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:263:11: variable lowPollingIntervalQueue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:264:11: variable mediumPollingIntervalQueue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:265:11: variable highPollingIntervalQueue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:268:14: function watchFile: (fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:268:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:268:42: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:268:73: parameter defaultPollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:269:15: variable file: WatchedFileWithUnchangedPolls
+/workspace/tracing-measured-after/src/compiler/sys.ts:288:14: function createPollingIntervalQueue: (pollingInterval: PollingInterval) => PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:288:41: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:289:15: variable queue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:296:14: function pollPollingIntervalQueue: (_timeoutType: string, queue: PollingIntervalQueue) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:296:39: parameter _timeoutType: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:296:61: parameter queue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:308:14: function pollLowPollingIntervalQueue: (_timeoutType: string, queue: PollingIntervalQueue) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:308:42: parameter _timeoutType: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:308:64: parameter queue: PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:321:14: function pollQueue: (queue: (WatchedFileWithUnchangedPolls | undefined)[], pollingInterval: PollingInterval, pollIndex: number, chunkSize: number) => number
+/workspace/tracing-measured-after/src/compiler/sys.ts:321:24: parameter queue: (WatchedFileWithUnchangedPolls | undefined)[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:321:78: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:321:112: parameter pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:321:131: parameter chunkSize: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:330:18: function onWatchFileStat: (watchedFile: WatchedFileWithUnchangedPolls, pollIndex: number, fileChanged: boolean) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:330:34: parameter watchedFile: WatchedFileWithUnchangedPolls
+/workspace/tracing-measured-after/src/compiler/sys.ts:330:78: parameter pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:330:97: parameter fileChanged: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:356:14: function pollingIntervalQueue: (pollingInterval: PollingInterval) => PollingIntervalQueue
+/workspace/tracing-measured-after/src/compiler/sys.ts:356:35: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:367:14: function addToPollingIntervalQueue: (file: WatchedFileWithUnchangedPolls, pollingInterval: PollingInterval) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:367:40: parameter file: WatchedFileWithUnchangedPolls
+/workspace/tracing-measured-after/src/compiler/sys.ts:367:77: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:372:14: function addChangedFileToLowPollingIntervalQueue: (file: WatchedFileWithUnchangedPolls) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:372:54: parameter file: WatchedFileWithUnchangedPolls
+/workspace/tracing-measured-after/src/compiler/sys.ts:377:14: function scheduleNextPollIfNotAlreadyScheduled: (pollingInterval: PollingInterval) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:377:52: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:383:14: function scheduleNextPoll: (pollingInterval: PollingInterval) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:383:31: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:388:10: function createUseFsEventsOnParentDirectoryWatchFile: (fsWatch: FsWatch, useCaseSensitiveFileNames: boolean, getModifiedTime: (path: string) => Date | undefined, fsWatchWithTimestamp: boolean | undefined) => HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:389:5: parameter fsWatch: FsWatch
+/workspace/tracing-measured-after/src/compiler/sys.ts:390:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:391:5: parameter getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:392:5: parameter fsWatchWithTimestamp: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:395:11: variable fileWatcherCallbacks: MultiMap<string, FileWatcherCallback>
+/workspace/tracing-measured-after/src/compiler/sys.ts:396:11: variable fileTimestamps: Map<string, Date> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:397:11: variable dirWatchers: Map<string, DirectoryWatcher>
+/workspace/tracing-measured-after/src/compiler/sys.ts:398:11: variable toCanonicalName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/sys.ts:401:14: function nonPollingWatchFile: (fileName: string, callback: FileWatcherCallback, _pollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:401:34: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:401:52: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:401:83: parameter _pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:401:118: parameter fallbackOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:402:15: variable filePath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:406:15: variable dirPath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:407:15: variable watcher: DirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:424:14: function createDirectoryWatcher: (dirName: string, dirPath: string, fallbackOptions: WatchOptions | undefined) => DirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:424:37: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:424:54: parameter dirPath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:424:71: parameter fallbackOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:425:15: variable watcher: DirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:428:14: parameter eventName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:428:33: parameter relativeFileName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:431:23: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:432:23: variable filePath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:434:23: variable callbacks: "" | FileWatcherCallback[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:436:25: variable currentModifiedTime: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:437:25: variable eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:439:31: variable existingTime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:449:32: variable fileCallback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:464:10: function createFixedChunkSizePollingWatchFile: (host: { getModifiedTime: (path: string) => Date | undefined; setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; }) => HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:464:47: parameter host: { getModifiedTime: (path: string) => Date | undefined; setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:465:5: property getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:466:5: property setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:468:11: variable watchedFiles: (WatchedFileWithIsClosed | undefined)[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:469:9: variable pollIndex: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:470:9: variable pollScheduled: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:473:14: function watchFile: (fileName: string, callback: FileWatcherCallback) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:473:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:473:42: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:474:15: variable file: WatchedFileWithIsClosed
+/workspace/tracing-measured-after/src/compiler/sys.ts:489:14: function pollQueue: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:495:14: function scheduleNextPoll: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:501:11: interface SingleFileWatcher: SingleFileWatcher<T>
+/workspace/tracing-measured-after/src/compiler/sys.ts:502:5: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:503:5: property callbacks: T[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:505:10: function createSingleWatcherPerName: <T extends FileWatcherCallback | FsWatchCallback>(cache: Map<string, SingleFileWatcher<T>>, useCaseSensitiveFileNames: boolean, name: string, callback: T, createWatcher: (callback: T) => FileWatcher) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:506:5: parameter cache: Map<string, SingleFileWatcher<T>>
+/workspace/tracing-measured-after/src/compiler/sys.ts:507:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:508:5: parameter name: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:509:5: parameter callback: T
+/workspace/tracing-measured-after/src/compiler/sys.ts:510:5: parameter createWatcher: (callback: T) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:510:21: parameter callback: T
+/workspace/tracing-measured-after/src/compiler/sys.ts:512:11: variable toCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/sys.ts:513:11: variable path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:514:11: variable existing: SingleFileWatcher<T> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:523:22: parameter param1: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:523:35: parameter param2: never
+/workspace/tracing-measured-after/src/compiler/sys.ts:523:50: parameter param3: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:523:109: parameter cb: T
+/workspace/tracing-measured-after/src/compiler/sys.ts:532:19: variable watcher: SingleFileWatcher<T> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:546:10: function onWatchedFileStat: (watchedFile: WatchedFile, modifiedTime: Date) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:546:28: parameter watchedFile: WatchedFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:546:54: parameter modifiedTime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:547:11: variable oldTime: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:548:11: variable newTime: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:560:17: function getFileWatcherEventKind: (oldTime: number, newTime: number) => FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:560:41: parameter oldTime: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:560:58: parameter newTime: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:569:14: variable ignoredPaths: readonly string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:571:5: variable curSysLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:571:17: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:574:17: function sysLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:574:24: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:579:17: function setSysLog: (logger: (s: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:579:27: parameter logger: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:583:11: interface RecursiveDirectoryWatcherHost: RecursiveDirectoryWatcherHost
+/workspace/tracing-measured-after/src/compiler/sys.ts:584:5: property watchDirectory: HostWatchDirectory
+/workspace/tracing-measured-after/src/compiler/sys.ts:585:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:586:5: property getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:587:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:588:5: property fileSystemEntryExists: FileSystemEntryExists
+/workspace/tracing-measured-after/src/compiler/sys.ts:589:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:590:5: property setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:591:5: property clearTimeout: (timeoutId: any) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:599:10: function createDirectoryWatcherSupportingRecursive: ({ watchDirectory, useCaseSensitiveFileNames, getCurrentDirectory, getAccessibleSortedChildDirectories, fileSystemEntryExists, realpath, setTimeout, clearTimeout, }: RecursiveDirectoryWatcherHost) => HostWatchDirectory
+/workspace/tracing-measured-after/src/compiler/sys.ts:600:5: binding watchDirectory: HostWatchDirectory
+/workspace/tracing-measured-after/src/compiler/sys.ts:601:5: binding useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:602:5: binding getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:603:5: binding getAccessibleSortedChildDirectories: (path: string) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:604:5: binding fileSystemEntryExists: FileSystemEntryExists
+/workspace/tracing-measured-after/src/compiler/sys.ts:605:5: binding realpath: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:606:5: binding setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:607:5: binding clearTimeout: (timeoutId: any) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:609:15: interface ChildDirectoryWatcher: ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:610:9: property dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:612:10: type ChildWatches: readonly ChildDirectoryWatcher[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:613:15: interface HostDirectoryWatcher: HostDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:614:9: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:615:9: property childWatches: ChildWatches
+/workspace/tracing-measured-after/src/compiler/sys.ts:616:9: property refCount: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:617:9: property targetWatcher: ChildDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:618:9: property links: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:621:11: variable cache: Map<Path, HostDirectoryWatcher>
+/workspace/tracing-measured-after/src/compiler/sys.ts:622:11: variable callbackCache: MultiMap<Path, { dirName: string; callback: DirectoryWatcherCallback; }>
+/workspace/tracing-measured-after/src/compiler/sys.ts:622:50: property dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:622:67: property callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:623:11: variable cacheToUpdateChildWatches: Map<Path, { dirName: string; options: WatchOptions | undefined; fileNames: string[]; }>
+/workspace/tracing-measured-after/src/compiler/sys.ts:623:55: property dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:623:72: property options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:623:107: property fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:624:9: variable timerToUpdateChildWatches: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:626:11: variable filePathComparer: (a: string, b: string) => Comparison
+/workspace/tracing-measured-after/src/compiler/sys.ts:627:11: variable toCanonicalFilePath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:627:91: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:629:13: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:629:22: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:629:32: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:629:43: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:637:14: function createDirectoryWatcher: (dirName: string, options: WatchOptions | undefined, callback?: DirectoryWatcherCallback | undefined, link?: string | undefined) => ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:638:9: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:639:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:640:9: parameter callback: DirectoryWatcherCallback | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:641:9: parameter link: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:643:15: variable dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:644:13: variable directoryWatcher: HostDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:652:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:680:15: variable callbackToAdd: { dirName: string; callback: DirectoryWatcherCallback; } | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:688:23: variable directoryWatcher: HostDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:704:10: type InvokeMap: Map<Path, true | string[]>
+/workspace/tracing-measured-after/src/compiler/sys.ts:705:14: function invokeCallbacks: { (dirName: string, dirPath: Path, fileName: string): void; (dirName: string, dirPath: Path, invokeMap: InvokeMap, fileNames: string[] | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:705:30: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:705:47: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:705:62: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:706:14: function invokeCallbacks: { (dirName: string, dirPath: Path, fileName: string): void; (dirName: string, dirPath: Path, invokeMap: InvokeMap, fileNames: string[] | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:706:30: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:706:47: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:706:62: parameter invokeMap: InvokeMap
+/workspace/tracing-measured-after/src/compiler/sys.ts:706:84: parameter fileNames: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:707:14: function invokeCallbacks: { (dirName: string, dirPath: Path, fileName: string): void; (dirName: string, dirPath: Path, invokeMap: InvokeMap, fileNames: string[] | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:707:30: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:707:47: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:707:62: parameter fileNameOrInvokeMap: string | InvokeMap
+/workspace/tracing-measured-after/src/compiler/sys.ts:707:103: parameter fileNames: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:708:13: variable fileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:709:13: variable invokeMap: InvokeMap | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:717:32: parameter callbacks: { dirName: string; callback: DirectoryWatcherCallback; }[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:717:43: parameter rootDirName: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:722:31: variable existing: true | string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:735:42: binding callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:739:44: parameter link: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:740:19: variable toPathInLink: (fileName: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:740:35: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:750:14: function nonSyncUpdateChildWatches: (dirName: string, dirPath: Path, fileName: string, options: WatchOptions | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:750:40: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:750:57: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:750:72: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:750:90: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:752:15: variable parentWatcher: HostDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:765:14: function scheduleUpdateChildWatches: (dirName: string, dirPath: Path, fileName: string, options: WatchOptions | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:765:41: parameter dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:765:58: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:765:73: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:765:91: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:766:15: variable existing: { dirName: string; options: WatchOptions | undefined; fileNames: string[]; } | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:780:14: function onTimerToUpdateChildWatches: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:783:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:784:15: variable invokeMap: Map<Path, string[]>
+/workspace/tracing-measured-after/src/compiler/sys.ts:787:19: variable result: AdamicCollectionIteratorResult<[Path, { dirName: string; options: WatchOptions | undefined; fileNames: string[]; }]>
+/workspace/tracing-measured-after/src/compiler/sys.ts:789:29: binding dirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:789:40: binding dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:789:49: binding options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:789:58: binding fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:793:19: variable hasChanges: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:798:32: parameter callbacks: { dirName: string; callback: DirectoryWatcherCallback; }[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:798:43: parameter rootDirName: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:799:19: variable existing: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:801:38: binding callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:801:48: binding dirName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:812:15: variable elapsed: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:816:14: function removeChildWatches: (parentWatcher: HostDirectoryWatcher | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:816:33: parameter parentWatcher: HostDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:818:15: variable existingChildWatches: ChildWatches
+/workspace/tracing-measured-after/src/compiler/sys.ts:820:20: variable childWatcher: ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:826:14: function closeTargetWatcher: (watcher: HostDirectoryWatcher | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:826:33: parameter watcher: HostDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:833:14: function updateChildWatches: (parentDir: string, parentDirPath: Path, options: WatchOptions | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:833:33: parameter parentDir: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:833:52: parameter parentDirPath: Path
+/workspace/tracing-measured-after/src/compiler/sys.ts:833:73: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:835:15: variable parentWatcher: HostDirectoryWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:837:15: variable target: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:838:13: variable hasChanges: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:839:13: variable newChildWatches: ChildDirectoryWatcher[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:843:142: parameter child: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:844:27: variable childFullName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:850:18: parameter child: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:850:25: parameter childWatcher: ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:872:18: function createAndAddChildDirectoryWatcher: (childName: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:872:52: parameter childName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:873:19: variable result: ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:880:18: function addChildDirectoryWatcher: (childWatcher: ChildDirectoryWatcher) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:880:43: parameter childWatcher: ChildDirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:885:14: function isIgnoredPath: (path: string, options: WatchOptions | undefined) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:885:28: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:885:42: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:886:35: parameter searchPath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:890:14: function isInPath: (path: string, searchPath: string) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:890:23: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:890:37: parameter searchPath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:898:13: type FsWatchCallback: (eventName: "change" | "rename", relativeFileName: string | null | undefined, modifiedTime?: Date | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:898:32: parameter eventName: "change" | "rename"
+/workspace/tracing-measured-after/src/compiler/sys.ts:898:64: parameter relativeFileName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:898:109: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:13: type FsWatch: (fileOrDirectory: string, entryKind: FileSystemEntryKind, callback: FsWatchCallback, recursive: boolean, fallbackPollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:24: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:49: parameter entryKind: FileSystemEntryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:81: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:108: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:128: parameter fallbackPollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:900:170: parameter fallbackOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:902:18: interface FsWatchWorkerWatcher: FsWatchWorkerWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:903:8: parameter eventName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:903:27: parameter listener: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:906:13: type FsWatchWorker: (fileOrDirectory: string, recursive: boolean, callback: FsWatchCallback) => FsWatchWorkerWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:906:30: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:906:55: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:906:75: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:913:10: function createFileWatcherCallback: (callback: FsWatchCallback) => FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:913:36: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:914:13: parameter _fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:914:24: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:914:35: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:917:10: function createFsWatchCallbackForFileWatcherCallback: (fileName: string, callback: FileWatcherCallback, getModifiedTime: (path: string) => Date | undefined) => FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:918:5: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:919:5: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:920:5: parameter getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:922:13: parameter eventName: "change" | "rename"
+/workspace/tracing-measured-after/src/compiler/sys.ts:922:24: parameter _relativeFileName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:922:43: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:935:10: function isIgnoredByWatchOptions: (pathToCheck: string, options: WatchOptions | undefined, useCaseSensitiveFileNames: boolean, getCurrentDirectory: () => string) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:936:5: parameter pathToCheck: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:937:5: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:938:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:939:5: parameter getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:947:10: function createFsWatchCallbackForDirectoryWatcherCallback: (directoryName: string, callback: DirectoryWatcherCallback, options: WatchOptions | undefined, useCaseSensitiveFileNames: boolean, getCurrentDirectory: () => string) => FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:948:5: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:949:5: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:950:5: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:951:5: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:952:5: parameter getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:954:13: parameter eventName: "change" | "rename"
+/workspace/tracing-measured-after/src/compiler/sys.ts:954:24: parameter relativeFileName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:960:19: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:969:13: type FileSystemEntryExists: (fileorDirectrory: string, entryKind: FileSystemEntryKind) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:969:38: parameter fileorDirectrory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:969:64: parameter entryKind: FileSystemEntryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:972:18: interface CreateSystemWatchFunctions: CreateSystemWatchFunctions
+/workspace/tracing-measured-after/src/compiler/sys.ts:974:5: property pollingWatchFileWorker: HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:976:5: property getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:977:5: property setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:978:5: property clearTimeout: (timeoutId: any) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:980:5: property fsWatchWorker: FsWatchWorker
+/workspace/tracing-measured-after/src/compiler/sys.ts:981:5: property fileSystemEntryExists: FileSystemEntryExists
+/workspace/tracing-measured-after/src/compiler/sys.ts:982:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:983:5: property getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:984:5: property fsSupportsRecursiveFsWatch: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:985:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:986:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:988:5: property tscWatchFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:989:5: property useNonPollingWatchers: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:990:5: property tscWatchDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:991:5: property inodeWatching: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:992:5: property fsWatchWithTimestamp: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:993:5: property sysLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:993:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:997:17: function createSystemWatchFunctions: ({ pollingWatchFileWorker, getModifiedTime, setTimeout, clearTimeout, fsWatchWorker, fileSystemEntryExists, useCaseSensitiveFileNames, getCurrentDirectory, fsSupportsRecursiveFsWatch, getAccessibleSortedChildDirectories, realpath, tscWatchFile, useNonPollingWatchers, tscWatchDirectory, inodeWatching, fsWatchWithTimestamp, sysLog, }: CreateSystemWatchFunctions) => { watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:998:5: binding pollingWatchFileWorker: HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:999:5: binding getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1000:5: binding setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any
+/workspace/tracing-measured-after/src/compiler/sys.ts:1001:5: binding clearTimeout: (timeoutId: any) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1002:5: binding fsWatchWorker: FsWatchWorker
+/workspace/tracing-measured-after/src/compiler/sys.ts:1003:5: binding fileSystemEntryExists: FileSystemEntryExists
+/workspace/tracing-measured-after/src/compiler/sys.ts:1004:5: binding useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1005:5: binding getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1006:5: binding fsSupportsRecursiveFsWatch: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1007:5: binding getAccessibleSortedChildDirectories: (path: string) => readonly string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1008:5: binding realpath: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1009:5: binding tscWatchFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1010:5: binding useNonPollingWatchers: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1011:5: binding tscWatchDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1012:5: binding inodeWatching: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1013:5: binding fsWatchWithTimestamp: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1014:5: binding sysLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1015:35: property watchFile: HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1015:61: property watchDirectory: HostWatchDirectory
+/workspace/tracing-measured-after/src/compiler/sys.ts:1016:11: variable pollingWatches: Map<string, SingleFileWatcher<FileWatcherCallback>>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1017:11: variable fsWatches: Map<string, SingleFileWatcher<FsWatchCallback>>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1018:11: variable fsWatchesRecursive: Map<string, SingleFileWatcher<FsWatchCallback>>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1019:9: variable dynamicPollingWatchFile: HostWatchFile | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1020:9: variable fixedChunkSizePollingWatchFile: HostWatchFile | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1021:9: variable nonPollingWatchFile: HostWatchFile | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1022:9: variable hostRecursiveDirectoryWatcher: HostWatchDirectory | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1023:9: variable hitSystemWatcherLimit: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1029:14: function watchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1029:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1029:42: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1029:73: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:1029:107: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1031:15: variable watchFileKind: WatchFileKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1060:14: function ensureDynamicPollingWatchFile: () => HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1064:14: function ensureFixedChunkSizePollingWatchFile: () => HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1068:14: function updateOptionsForWatchFile: (options: WatchOptions | undefined, useNonPollingWatchers?: boolean | undefined) => WatchOptions
+/workspace/tracing-measured-after/src/compiler/sys.ts:1068:40: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1068:75: parameter useNonPollingWatchers: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1095:14: function generateWatchFileOptions: (watchFile: WatchFileKind, fallbackPolling: PollingWatchKind, options: WatchOptions | undefined) => WatchOptions
+/workspace/tracing-measured-after/src/compiler/sys.ts:1096:9: parameter watchFile: WatchFileKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1097:9: parameter fallbackPolling: PollingWatchKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1098:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1100:15: variable defaultFallbackPolling: PollingWatchKind | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1109:14: function watchDirectory: (directoryName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1109:29: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1109:52: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1109:88: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1109:108: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1136:14: function nonRecursiveWatchDirectory: (directoryName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1136:41: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1136:64: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1136:100: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1136:120: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1138:15: variable watchDirectoryOptions: WatchOptions
+/workspace/tracing-measured-after/src/compiler/sys.ts:1139:15: variable watchDirectoryKind: WatchDirectoryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1176:14: function updateOptionsForWatchDirectory: (options: WatchOptions | undefined) => WatchOptions
+/workspace/tracing-measured-after/src/compiler/sys.ts:1176:45: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1186:23: variable defaultFallbackPolling: PollingWatchKind | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1196:14: function pollingWatchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1196:31: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1196:49: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1196:80: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:1196:114: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1202:13: parameter cb: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1205:14: function fsWatch: (fileOrDirectory: string, entryKind: FileSystemEntryKind, callback: FsWatchCallback, recursive: boolean, fallbackPollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1206:9: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1207:9: parameter entryKind: FileSystemEntryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1208:9: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1209:9: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1210:9: parameter fallbackPollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:1211:9: parameter fallbackOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1218:13: parameter cb: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1222:14: function fsWatchHandlingExistenceOnHost: (fileOrDirectory: string, entryKind: FileSystemEntryKind, callback: FsWatchCallback, recursive: boolean, fallbackPollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1223:9: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1224:9: parameter entryKind: FileSystemEntryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1225:9: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1226:9: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1227:9: parameter fallbackPollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/sys.ts:1228:9: parameter fallbackOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1230:13: variable lastDirectoryPartWithDirectorySeparator: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1231:13: variable lastDirectoryPart: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1237:13: variable watcher: FileWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1250:18: function updateWatcher: (createWatcher: () => FileWatcher) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1250:32: parameter createWatcher: () => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1263:18: function watchPresentFileSystemEntry: () => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1269:23: variable presentWatcher: FsWatchWorkerWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1283:20: variable e: unknown
+/workspace/tracing-measured-after/src/compiler/sys.ts:1293:18: function callbackChangingToMissingFileSystemEntry: (event: "change" | "rename", relativeName: string | null | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1293:59: parameter event: "change" | "rename"
+/workspace/tracing-measured-after/src/compiler/sys.ts:1293:87: parameter relativeName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1299:17: variable originalRelativeName: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1312:23: variable modifiedTime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:1333:18: function watchPresentFileSystemEntryWithFsWatchFile: () => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1346:18: function watchMissingFileSystemEntry: () => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1349:18: parameter _fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1349:29: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1349:40: parameter modifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1367:14: function fsWatchWorkerHandlingTimestamp: (fileOrDirectory: string, recursive: boolean, callback: FsWatchCallback) => FsWatchWorkerWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1367:45: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1367:70: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1367:90: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1368:13: variable modifiedTime: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:1369:59: parameter eventName: "change" | "rename"
+/workspace/tracing-measured-after/src/compiler/sys.ts:1369:70: parameter relativeFileName: string | null | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1369:88: parameter currentModifiedTime: Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1385:17: function patchWriteFileEnsuringDirectory: (sys: System) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1385:49: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/sys.ts:1387:11: variable originalWriteFile: (path: string, data: string, writeByteOrderMark?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1388:22: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1388:28: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1388:34: parameter writeBom: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1393:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1393:20: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1393:26: parameter writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1394:13: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1395:13: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1399:13: type BufferEncoding: "ascii" | "base64" | "binary" | "hex" | "latin1" | "ucs-2" | "ucs2" | "utf-8" | "utf16le" | "utf8"
+/workspace/tracing-measured-after/src/compiler/sys.ts:1402:18: interface System: System
+/workspace/tracing-measured-after/src/compiler/sys.ts:1403:5: property args: string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1404:5: property newLine: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1405:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1406:11: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1409:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1409:28: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1410:18: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1411:15: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1411:29: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1411:43: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1417:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1417:30: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1417:61: parameter pollingInterval: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1417:87: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1418:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1418:35: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1418:71: parameter recursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1418:92: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1419:21: property preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1420:17: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1421:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1422:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1423:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1426:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1427:19: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1427:33: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1427:65: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1427:94: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1427:123: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1428:22: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1429:22: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1429:36: parameter time: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:1430:17: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1434:17: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1436:5: property createSHA256Hash: ((data: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1436:43: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1438:10: parameter exitCode: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1439:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1439:55: parameter continuation: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1440:42: parameter continuation: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1442:15: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1443:45: parameter name: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1445:54: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1446:22: property debugMode: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1447:17: parameter callback: (...args: any[]) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1447:31: parameter args: any[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1447:53: parameter ms: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1447:68: parameter args: any[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1448:19: parameter timeoutId: any
+/workspace/tracing-measured-after/src/compiler/sys.ts:1451:19: parameter input: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1452:19: parameter input: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1453:31: parameter baseDir: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1453:48: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1457:22: property storeSignatureInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1460:18: interface FileWatcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1464:11: interface DirectoryWatcher: DirectoryWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1465:5: property referenceCount: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1469:12: variable sys: System
+/workspace/tracing-measured-after/src/compiler/sys.ts:1473:11: variable byteOrderMarkIndicator: "﻿"
+/workspace/tracing-measured-after/src/compiler/sys.ts:1475:14: function getNodeSystem: () => System
+/workspace/tracing-measured-after/src/compiler/sys.ts:1476:15: variable nativePattern: RegExp
+/workspace/tracing-measured-after/src/compiler/sys.ts:1477:13: variable activeSession: "stopping" | Session | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1478:13: variable profilePath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1480:15: variable isMacOs: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1481:15: variable isLinuxOrMacOs: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1483:15: variable statSyncOptions: { readonly throwIfNoEntry: false; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:1485:15: variable platform: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1486:15: variable useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1487:15: variable fsRealpath: ((path: string) => string) | { (path: PathLike, options?: EncodingOption): string; (path: PathLike, options: BufferEncodingOption): NonSharedBuffer; (path: PathLike, options?: EncodingOption): string | NonSharedBuffer; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:1494:15: variable executingFilePath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1496:15: variable fsSupportsRecursiveFsWatch: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1497:15: variable getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1498:17: binding watchFile: HostWatchFile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1498:28: binding watchDirectory: HostWatchDirectory
+/workspace/tracing-measured-after/src/compiler/sys.ts:1510:50: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1519:15: variable nodeSystem: System
+/workspace/tracing-measured-after/src/compiler/sys.ts:1523:13: method write: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1523:19: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1526:13: method getWidthOfTerminal: () => number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1529:13: method writeOutputIsTTY: () => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1537:26: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1541:13: method createDirectory: (directoryName: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1541:29: parameter directoryName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1548:28: variable e: unknown
+/workspace/tracing-measured-after/src/compiler/sys.ts:1556:13: method getExecutingFilePath: () => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1561:13: method getEnvironmentVariable: (name: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1561:36: parameter name: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1570:13: method getMemoryUsage: () => number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1576:13: method getFileSize: (path: string) => number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1576:25: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1577:23: variable stat: Stats | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1583:13: method exit: (exitCode?: number | undefined) => undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1583:18: parameter exitCode: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1590:125: parameter arg: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1591:13: method tryEnableSourceMapsForHost: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1605:23: variable handle: { setBlocking?: (value: boolean) => void; }
+/workspace/tracing-measured-after/src/compiler/sys.ts:1605:70: property setBlocking: ((value: boolean) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1605:85: parameter value: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1610:27: parameter input: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1611:27: parameter input: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1612:23: parameter baseDir: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1612:32: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1614:27: variable modulePath: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1617:24: variable error: unknown
+/workspace/tracing-measured-after/src/compiler/sys.ts:1625:18: function statSync: (path: string) => Stats | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1625:27: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1641:18: function enableCPUProfiler: (path: string, cb: () => void) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1641:36: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1641:50: parameter cb: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1646:19: variable inspector: typeof import("inspector")
+/workspace/tracing-measured-after/src/compiler/sys.ts:1651:19: variable session: Session
+/workspace/tracing-measured-after/src/compiler/sys.ts:1668:18: function cleanupPaths: (profile: Profile) => Profile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1668:31: parameter profile: Profile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1669:17: variable externalFileCounter: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1670:19: variable remappedPaths: Map<string, string>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1671:19: variable normalizedDir: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1673:19: variable fileUrlRoot: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1674:24: variable node: ProfileNode
+/workspace/tracing-measured-after/src/compiler/sys.ts:1676:27: variable url: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1689:18: function disableCPUProfiler: (cb: () => void) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1689:37: parameter cb: () => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1691:23: variable s: Session
+/workspace/tracing-measured-after/src/compiler/sys.ts:1692:54: parameter err: Error | null
+/workspace/tracing-measured-after/src/compiler/sys.ts:1692:61: binding profile: Profile
+/workspace/tracing-measured-after/src/compiler/sys.ts:1718:18: function isFileSystemCaseSensitive: () => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1728:18: function swapCase: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1728:27: parameter s: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1729:37: parameter ch: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1730:23: variable up: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1735:18: function fsWatchFileWorker: (fileName: string, callback: FileWatcherCallback, pollingInterval: number) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1735:36: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1735:54: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1735:85: parameter pollingInterval: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1737:17: variable eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1742:22: function fileChanged: (curr: Stats, prev: Stats) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1742:34: parameter curr: Stats
+/workspace/tracing-measured-after/src/compiler/sys.ts:1742:60: parameter prev: Stats
+/workspace/tracing-measured-after/src/compiler/sys.ts:1745:23: variable isPreviouslyDeleted: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1768:18: function fsWatchWorker: (fileOrDirectory: string, recursive: boolean, callback: FsWatchCallback) => FSWatcher
+/workspace/tracing-measured-after/src/compiler/sys.ts:1769:13: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1770:13: parameter recursive: boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1771:13: parameter callback: FsWatchCallback
+/workspace/tracing-measured-after/src/compiler/sys.ts:1783:18: function readFile: (fileName: string, _encoding?: string | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1783:27: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1783:45: parameter _encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1784:17: variable buffer: Buffer<ArrayBufferLike>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1791:17: variable len: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1796:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1797:27: variable temp: number
+/workspace/tracing-measured-after/src/compiler/sys.ts:1815:18: function writeFile: (fileName: string, data: string, writeByteOrderMark?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1815:28: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1815:46: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1815:60: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1821:17: variable fd: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1834:18: function getAccessibleFileSystemEntries: (path: string) => FileSystemEntries
+/workspace/tracing-measured-after/src/compiler/sys.ts:1834:49: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1836:23: variable entries: Dirent<string>[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1837:23: variable files: string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1838:23: variable directories: string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1839:28: variable dirent: Dirent<string>
+/workspace/tracing-measured-after/src/compiler/sys.ts:1841:27: variable entry: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1849:25: variable stat: Dirent<string> | Stats | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1851:31: variable name: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:18: function readDirectory: (path: string, extensions?: readonly string[] | undefined, excludes?: readonly string[] | undefined, includes?: readonly string[] | undefined, depth?: number | undefined) => string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:32: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:46: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:78: parameter excludes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:108: parameter includes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1878:138: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1882:18: function fileSystemEntryExists: (path: string, entryKind: FileSystemEntryKind) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1882:40: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1882:54: parameter entryKind: FileSystemEntryKind
+/workspace/tracing-measured-after/src/compiler/sys.ts:1883:19: variable stat: Stats | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1897:18: function fileExists: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1897:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1901:18: function directoryExists: (path: string) => boolean
+/workspace/tracing-measured-after/src/compiler/sys.ts:1901:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1905:18: function getDirectories: (path: string) => string[]
+/workspace/tracing-measured-after/src/compiler/sys.ts:1905:33: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1909:18: function fsRealPathHandlingLongPath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1909:45: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1913:18: function realpath: (path: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1913:27: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1922:18: function getModifiedTime: (path: string) => Date | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1922:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1926:18: function setModifiedTime: (path: string, time: Date) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1926:34: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1926:48: parameter time: Date
+/workspace/tracing-measured-after/src/compiler/sys.ts:1935:18: function deleteFile: (path: string) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1935:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1944:18: function createSHA256Hash: (data: string) => string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1944:35: parameter data: string
+/workspace/tracing-measured-after/src/compiler/sys.ts:1945:19: variable hash: Hash
+/workspace/tracing-measured-after/src/compiler/sys.ts:1951:9: variable sys: System | undefined
+/workspace/tracing-measured-after/src/compiler/sys.ts:1963:17: function setSys: (s: System) => void
+/workspace/tracing-measured-after/src/compiler/sys.ts:1963:24: parameter s: System

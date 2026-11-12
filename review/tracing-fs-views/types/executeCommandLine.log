@@ -1,0 +1,397 @@
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:92:11: interface Statistic: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:93:5: property name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:94:5: property value: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:95:5: property type: StatisticType
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:105:10: function countLines: (program: Program) => Map<string, number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:105:21: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:106:11: variable counts: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:107:39: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:108:15: variable key: "Definitions" | "JSON" | "JavaScript" | "Library" | "Other" | "TypeScript"
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:109:15: variable lineCount: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:115:10: function getCountsMap: () => Map<string, number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:116:11: variable counts: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:126:10: function getCountKey: (program: Program, file: SourceFile) => "Definitions" | "JSON" | "JavaScript" | "Library" | "Other" | "TypeScript"
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:126:22: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:126:40: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:134:11: variable path: Path
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:149:10: function updateReportDiagnostic: (sys: System, existing: DiagnosticReporter, options: BuildOptions | CompilerOptions) => DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:150:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:151:5: parameter existing: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:152:5: parameter options: BuildOptions | CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:159:10: function defaultIsPretty: (sys: System) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:159:26: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:169:10: function shouldBePretty: (sys: System, options: BuildOptions | CompilerOptions) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:169:25: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:169:38: parameter options: BuildOptions | CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:176:10: function getOptionsForHelp: (commandLine: ParsedCommandLine) => CommandLineOption[] | SortedReadonlyArray<CommandLineOption>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:176:28: parameter commandLine: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:177:11: variable helpOptions: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:177:75: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:180:32: parameter a: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:180:35: parameter b: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:181:29: parameter v: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:184:10: function printVersion: (sys: System) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:184:23: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:188:10: function createColors: (sys: System) => { bold: (str: string) => string; blue: (str: string) => string; blueBackground: (str: string) => string; brightWhite: (str: string) => string; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:188:23: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:189:11: variable showColors: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:192:20: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:193:20: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:194:30: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:195:27: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:199:14: function bold: (str: string) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:199:19: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:203:11: variable isWindows: "" | boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:204:11: variable isWindowsTerminal: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:205:11: variable isVSCode: "" | boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:207:14: function blue: (str: string) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:207:19: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:220:11: variable supportsRicherColors: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:221:14: function blueBackground: (str: string) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:221:29: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:229:14: function brightWhite: (str: string) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:229:26: parameter str: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:240:10: function getDisplayNameTextOfOption: (option: CommandLineOption) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:240:37: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:244:10: function generateOptionOutput: (sys: System, option: CommandLineOption, rightAlignOfLeft: number, leftAlignOfRight: number) => string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:244:31: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:244:44: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:244:71: parameter rightAlignOfLeft: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:244:97: parameter leftAlignOfRight: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:245:15: interface ValueCandidate: ValueCandidate
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:247:9: property valueType: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:248:9: property possibleValues: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:251:11: variable text: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:252:11: variable colors: { bold: (str: string) => string; blue: (str: string) => string; blueBackground: (str: string) => string; brightWhite: (str: string) => string; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:255:11: variable name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:258:11: variable valueCandidates: ValueCandidate | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:259:11: variable defaultValueDescription: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:265:11: variable terminalWidth: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:269:13: variable description: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:287:19: variable description: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:297:23: variable diagType: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:307:14: function formatDefaultValue: (defaultValue: string | number | boolean | DiagnosticMessage | undefined, type: "boolean" | "list" | "listOrElement" | "number" | "object" | "string" | Map<string, string | number>) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:308:9: parameter defaultValue: string | number | boolean | DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:309:9: parameter type: "boolean" | "list" | "listOrElement" | "number" | "object" | "string" | Map<string, string | number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:314:29: binding value: string | number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:315:24: binding name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:320:14: function showAdditionalInfoOutput: (valueCandidates: ValueCandidate | undefined, option: CommandLineOption) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:320:39: parameter valueCandidates: ValueCandidate | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:320:84: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:321:15: variable ignoreValues: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:322:15: variable ignoredDescriptions: (string | undefined)[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:323:15: variable defaultValueDescription: string | number | boolean | DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:14: function getPrettyOutput: (left: string, right: string, rightAlignOfLeft: number, leftAlignOfRight: number, terminalWidth: number, colorLeft: boolean) => string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:30: parameter left: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:44: parameter right: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:59: parameter rightAlignOfLeft: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:85: parameter leftAlignOfRight: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:111: parameter terminalWidth: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:332:134: parameter colorLeft: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:333:15: variable res: any[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:334:13: variable isFirstLine: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:335:13: variable remainRight: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:336:15: variable rightCharacterNumber: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:338:17: variable curLeft: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:348:19: variable curRight: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:356:14: function getValueCandidate: (option: CommandLineOption) => ValueCandidate | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:356:32: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:373:18: function getValueType: (option: CommandLineOption) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:373:31: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:387:18: function getPossibleValues: (option: CommandLineOption) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:387:36: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:388:17: variable possibleValues: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:405:27: variable inverted: { [value: string]: string[]; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:405:40: parameter value: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:406:42: parameter value: string | number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:406:49: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:412:34: binding synonyms: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:420:10: function generateGroupOptionOutput: (sys: System, optionsList: readonly CommandLineOption[]) => string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:420:36: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:420:49: parameter optionsList: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:421:9: variable maxLength: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:422:16: variable option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:423:15: variable curLength: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:430:11: variable rightAlignOfLeftPart: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:432:11: variable leftAlignOfRightPart: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:433:9: variable lines: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:434:16: variable option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:435:15: variable tmp: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:10: function generateSectionOptionsOutput: (sys: System, sectionName: string, options: readonly CommandLineOption[], subCategory: boolean, beforeOptionsDescription?: string | undefined, afterOptionsDescription?: string | undefined) => string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:39: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:52: parameter sectionName: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:73: parameter options: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:112: parameter subCategory: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:134: parameter beforeOptionsDescription: string | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:445:169: parameter afterOptionsDescription: string | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:446:9: variable res: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:458:11: variable categoryMap: Map<string, CommandLineOption[]>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:459:16: variable option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:463:15: variable curCategory: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:464:15: variable optionsOfCurCategory: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:468:26: parameter value: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:468:33: parameter key: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:478:10: function printEasyHelp: (sys: System, simpleOptions: readonly CommandLineOption[]) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:478:24: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:478:37: parameter simpleOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:479:11: variable colors: { bold: (str: string) => string; blue: (str: string) => string; blueBackground: (str: string) => string; brightWhite: (str: string) => string; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:480:9: variable output: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:491:11: variable cliCommands: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:491:46: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:492:11: variable configOpts: CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:492:45: parameter opt: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:500:16: variable line: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:504:14: function example: (ex: string | string[], desc: DiagnosticMessage) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:504:22: parameter ex: string | string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:504:45: parameter desc: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:505:15: variable examples: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:506:20: variable example: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:513:10: function printAllHelp: (sys: System, compilerOptions: readonly CommandLineOption[], buildOptions: readonly CommandLineOption[], watchOptions: readonly CommandLineOption[]) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:513:23: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:513:36: parameter compilerOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:513:83: parameter buildOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:513:127: parameter watchOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:514:9: variable output: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:516:130: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:517:130: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:518:16: variable line: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:523:10: function printBuildHelp: (sys: System, buildOptions: readonly CommandLineOption[]) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:523:25: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:523:38: parameter buildOptions: readonly CommandLineOption[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:524:9: variable output: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:525:130: parameter option: CommandLineOption
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:526:16: variable line: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:531:10: function getHeader: (sys: System, message: string) => string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:531:20: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:531:33: parameter message: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:532:11: variable colors: { bold: (str: string) => string; blue: (str: string) => string; blueBackground: (str: string) => string; brightWhite: (str: string) => string; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:533:11: variable header: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:534:11: variable terminalWidth: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:535:11: variable tsIconLength: 5
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:537:11: variable tsIconFirstLine: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:538:11: variable tsIconSecondLine: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:542:15: variable rightAlign: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:543:15: variable leftAlign: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:554:10: function printHelp: (sys: System, commandLine: ParsedCommandLine) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:554:20: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:554:33: parameter commandLine: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:563:10: function executeCommandLineWorker: (sys: System, cb: ExecuteCommandLineCallbacks, commandLine: ParsedCommandLine) => number | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:564:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:565:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:566:5: parameter commandLine: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:568:9: variable reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:570:9: variable configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:608:15: variable fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:625:15: variable searchPath: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:626:53: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:647:11: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:648:11: variable commandLineOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:650:9: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:653:15: variable extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:654:15: variable configParseResult: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:745:17: function isBuildCommand: (commandLineArgs: readonly string[]) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:745:32: parameter commandLineArgs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:747:15: variable firstOption: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:754:13: type ExecuteCommandLineCallbacks: (program: BuilderProgram | ParsedCommandLine | Program) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:754:44: parameter program: BuilderProgram | ParsedCommandLine | Program
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:756:17: function executeCommandLine: (system: System, cb: ExecuteCommandLineCallbacks, commandLineArgs: readonly string[]) => number | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:757:5: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:758:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:759:5: parameter commandLineArgs: readonly string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:762:17: binding buildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:762:31: binding watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:762:45: binding projects: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:762:55: binding errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:786:11: variable commandLine: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:786:59: parameter path: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:800:10: function reportWatchModeWithoutSysSupport: (sys: System, reportDiagnostic: DiagnosticReporter) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:800:43: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:800:56: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:810:7: variable defaultJSDocParsingMode: JSDocParsingMode.ParseForTypeErrors
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:812:10: function performBuild: (sys: System, cb: ExecuteCommandLineCallbacks, buildOptions: BuildOptions, watchOptions: WatchOptions | undefined, projects: string[], errors: Diagnostic[]) => number | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:813:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:814:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:815:5: parameter buildOptions: BuildOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:816:5: parameter watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:817:5: parameter projects: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:818:5: parameter errors: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:821:11: variable reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:855:15: variable buildHost: SolutionBuilderWithWatchHost<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:863:15: variable solutionPerformance: SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:865:15: variable onWatchStatusChange: ((diagnostic: Diagnostic, newLine: string, options: CompilerOptions, errorCount?: number | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:866:13: variable reportBuildStatistics: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:867:42: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:867:45: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:867:54: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:867:63: parameter errorCount: number | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:878:15: variable builder: SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:885:11: variable buildHost: SolutionBuilderHost<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:893:11: variable solutionPerformance: SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:895:11: variable builder: SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:896:11: variable exitStatus: ExitStatus
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:902:10: function createReportErrorSummary: (sys: System, options: BuildOptions | CompilerOptions) => ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:902:35: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:902:48: parameter options: BuildOptions | CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:904:10: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:904:22: parameter filesInError: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:908:10: function performCompilation: (sys: System, cb: ExecuteCommandLineCallbacks, reportDiagnostic: DiagnosticReporter, config: ParsedCommandLine) => number | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:909:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:910:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:911:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:912:5: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:914:13: binding fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:914:24: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:914:33: binding projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:915:11: variable host: CompilerHost
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:917:11: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:918:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:919:44: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:922:11: variable programOptions: CreateProgramOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:929:11: variable program: Program
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:930:11: variable exitStatus: ExitStatus
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:933:9: parameter s: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:941:10: function performIncrementalCompilation: (sys: System, cb: ExecuteCommandLineCallbacks, reportDiagnostic: DiagnosticReporter, config: ParsedCommandLine) => number | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:942:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:943:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:944:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:945:5: parameter config: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:947:13: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:947:22: binding fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:947:33: binding projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:949:11: variable host: CompilerHost
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:951:11: variable exitStatus: ExitStatus
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:960:41: parameter builderProgram: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:968:10: function updateSolutionBuilderHost: (sys: System, cb: ExecuteCommandLineCallbacks, buildHost: SolutionBuilderHostBase<EmitAndSemanticDiagnosticsBuilderProgram>, solutionPerformance: SolutionPerformance | undefined) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:969:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:970:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:971:5: parameter buildHost: SolutionBuilderHostBase<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:972:5: parameter solutionPerformance: SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:975:48: parameter program: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:981:10: function updateCreateProgram: <T extends BuilderProgram>(sys: System, host: { createProgram: CreateProgram<T>; }, isBuildMode: boolean) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:981:56: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:981:69: parameter host: { createProgram: CreateProgram<T>; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:981:77: property createProgram: CreateProgram<T>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:981:113: parameter isBuildMode: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:982:11: variable compileUsingBuilder: CreateProgram<T>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:27: parameter rootNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:38: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:47: parameter host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:53: parameter oldProgram: T | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:65: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:983:95: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:992:10: function updateWatchCompilationHost: (sys: System, cb: ExecuteCommandLineCallbacks, watchCompilerHost: WatchCompilerHost<EmitAndSemanticDiagnosticsBuilderProgram>) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:993:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:994:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:995:5: parameter watchCompilerHost: WatchCompilerHost<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:999:11: variable emitFilesUsingBuilder: (program: EmitAndSemanticDiagnosticsBuilderProgram) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1000:44: parameter builderProgram: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1007:10: function createWatchStatusReporter: (sys: System, options: BuildOptions | CompilerOptions) => WatchStatusReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1007:36: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1007:49: parameter options: BuildOptions | CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1011:10: function createWatchOfConfigFile: (system: System, cb: ExecuteCommandLineCallbacks, reportDiagnostic: DiagnosticReporter, configParseResult: ParsedCommandLine, optionsToExtend: CompilerOptions, watchOptionsToExtend: WatchOptions | undefined, extendedConfigCache: Map<string, ExtendedConfigCacheEntry>) => WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1012:5: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1013:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1014:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1015:5: parameter configParseResult: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1016:5: parameter optionsToExtend: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1017:5: parameter watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1018:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1020:11: variable watchCompilerHost: WatchCompilerHostOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1034:10: function createWatchOfFilesAndCompilerOptions: (system: System, cb: ExecuteCommandLineCallbacks, reportDiagnostic: DiagnosticReporter, rootFiles: string[], options: CompilerOptions, watchOptions: WatchOptions | undefined) => WatchOfFilesAndCompilerOptions<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1035:5: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1036:5: parameter cb: ExecuteCommandLineCallbacks
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1037:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1038:5: parameter rootFiles: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1039:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1040:5: parameter watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1042:11: variable watchCompilerHost: WatchCompilerHostOfFilesAndCompilerOptions<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1054:11: interface SolutionPerformance: SolutionPerformance
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1055:27: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1056:32: parameter cb: (s: Statistic) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1056:37: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1060:10: function enableSolutionPerformance: (system: System, options: BuildOptions) => SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1060:36: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1060:52: parameter options: BuildOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1067:10: function createSolutionPerfomrance: () => SolutionPerformance
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1068:9: variable statistics: Map<string, Statistic> | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1075:14: function addAggregateStatistic: (s: Statistic) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1075:36: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1076:15: variable existing: Statistic | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1086:14: function forEachAggreateStatistics: (cb: (s: Statistic) => void) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1086:40: parameter cb: (s: Statistic) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1086:45: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1090:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1095:10: function reportSolutionBuilderTimes: (builder: SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>, solutionPerformance: SolutionPerformance | undefined) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1096:5: parameter builder: SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1097:5: parameter solutionPerformance: SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1106:11: variable statistics: Statistic[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1113:52: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1117:33: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1117:39: parameter duration: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1126:14: function reportSolutionBuilderCountStatistic: (name: string) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1126:50: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1127:15: variable value: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1133:14: function getNameFromSolutionBuilderMarkOrMeasure: (name: string) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1133:54: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1138:10: function canReportDiagnostics: (system: System, compilerOptions: CompilerOptions) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1138:31: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1138:47: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1142:10: function canTrace: (system: System, compilerOptions: CompilerOptions) => string | false | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1142:19: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1142:35: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1146:10: function enableStatisticsAndTracing: (system: System, compilerOptions: CompilerOptions, isBuildMode: boolean) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1146:37: parameter system: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1146:53: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1146:87: parameter isBuildMode: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1156:10: function isSolutionMarkOrMeasure: (name: string) => boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1156:34: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1160:10: function reportStatistics: (sys: System, program: Program, solutionPerformance: SolutionPerformance | undefined) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1160:27: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1160:40: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1160:58: parameter solutionPerformance: SolutionPerformance | undefined
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1161:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1167:9: variable statistics: Statistic[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1170:15: variable memoryUsed: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1173:15: variable lineCounts: Map<string, number>
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1175:25: binding key: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1175:30: binding value: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1180:100: parameter sum: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1180:105: parameter count: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1191:15: variable isPerformanceEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1192:15: variable programTime: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1193:15: variable bindTime: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1194:15: variable checkTime: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1195:15: variable emitTime: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1197:19: variable caches: { assignable: number; identity: number; subtype: number; strictSubtype: number; }
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1203:45: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1203:51: parameter duration: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1230:44: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1233:41: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1243:14: function reportStatisticalValue: (s: Statistic, aggregate: boolean) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1243:37: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1243:51: parameter aggregate: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1248:14: function reportCountStatistic: (name: string, count: number) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1248:35: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1248:49: parameter count: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1252:14: function reportTimeStatistic: (name: string, time: number, aggregate: boolean) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1252:34: parameter name: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1252:48: parameter time: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1252:62: parameter aggregate: boolean
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1257:10: function reportAllStatistics: (sys: System, statistics: Statistic[]) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1257:30: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1257:43: parameter statistics: Statistic[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1258:9: variable nameSize: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1259:9: variable valueSize: number
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1260:16: variable s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1265:15: variable value: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1271:16: variable s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1276:10: function statisticValue: (s: Statistic) => string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1276:25: parameter s: Statistic
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1289:10: function writeConfigFile: (sys: System, reportDiagnostic: DiagnosticReporter, options: CompilerOptions) => void
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1290:5: parameter sys: System
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1291:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1292:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1294:11: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1295:11: variable file: string
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1301:15: variable output: string[]
+/workspace/tracing-measured-after/src/compiler/executeCommandLine.ts:1303:20: variable line: string

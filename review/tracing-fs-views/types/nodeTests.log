@@ -1,0 +1,454 @@
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:235:17: function isNumericLiteral: (node: Node) => node is NumericLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:235:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:239:17: function isBigIntLiteral: (node: Node) => node is BigIntLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:239:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:243:17: function isStringLiteral: (node: Node) => node is StringLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:243:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:247:17: function isJsxText: (node: Node) => node is JsxText
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:247:27: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:251:17: function isRegularExpressionLiteral: (node: Node) => node is RegularExpressionLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:251:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:255:17: function isNoSubstitutionTemplateLiteral: (node: Node) => node is NoSubstitutionTemplateLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:255:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:261:17: function isTemplateHead: (node: Node) => node is TemplateHead
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:261:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:265:17: function isTemplateMiddle: (node: Node) => node is TemplateMiddle
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:265:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:269:17: function isTemplateTail: (node: Node) => node is TemplateTail
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:269:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:275:17: function isDotDotDotToken: (node: Node) => node is DotDotDotToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:275:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:280:17: function isCommaToken: (node: Node) => node is Token<SyntaxKind.CommaToken>
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:280:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:284:17: function isPlusToken: (node: Node) => node is PlusToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:284:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:288:17: function isMinusToken: (node: Node) => node is MinusToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:288:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:292:17: function isAsteriskToken: (node: Node) => node is AsteriskToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:292:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:296:17: function isExclamationToken: (node: Node) => node is ExclamationToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:296:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:300:17: function isQuestionToken: (node: Node) => node is QuestionToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:300:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:304:17: function isColonToken: (node: Node) => node is ColonToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:304:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:308:17: function isQuestionDotToken: (node: Node) => node is QuestionDotToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:308:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:312:17: function isEqualsGreaterThanToken: (node: Node) => node is EqualsGreaterThanToken
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:312:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:318:17: function isIdentifier: (node: Node) => node is Identifier
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:318:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:322:17: function isPrivateIdentifier: (node: Node) => node is PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:322:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:329:17: function isExportModifier: (node: Node) => node is ExportKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:329:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:334:17: function isDefaultModifier: (node: Node) => node is DefaultKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:334:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:339:17: function isAsyncModifier: (node: Node) => node is AsyncKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:339:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:343:17: function isAssertsKeyword: (node: Node) => node is AssertsKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:343:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:347:17: function isAwaitKeyword: (node: Node) => node is AwaitKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:347:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:352:17: function isReadonlyKeyword: (node: Node) => node is ReadonlyKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:352:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:357:17: function isStaticModifier: (node: Node) => node is StaticKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:357:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:362:17: function isAbstractModifier: (node: Node) => node is AbstractKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:362:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:367:17: function isOverrideModifier: (node: Node) => node is OverrideKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:367:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:372:17: function isAccessorModifier: (node: Node) => node is AccessorKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:372:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:377:17: function isSuperKeyword: (node: Node) => node is SuperExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:377:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:382:17: function isImportKeyword: (node: Node) => node is ImportExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:382:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:387:17: function isCaseKeyword: (node: Node) => node is CaseKeyword
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:387:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:393:17: function isQualifiedName: (node: Node) => node is QualifiedName
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:393:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:397:17: function isComputedPropertyName: (node: Node) => node is ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:397:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:403:17: function isTypeParameterDeclaration: (node: Node) => node is TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:403:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:408:17: function isParameter: (node: Node) => node is ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:408:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:412:17: function isDecorator: (node: Node) => node is Decorator
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:412:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:418:17: function isPropertySignature: (node: Node) => node is PropertySignature
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:418:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:422:17: function isPropertyDeclaration: (node: Node) => node is PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:422:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:426:17: function isMethodSignature: (node: Node) => node is MethodSignature
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:426:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:430:17: function isMethodDeclaration: (node: Node) => node is MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:430:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:434:17: function isClassStaticBlockDeclaration: (node: Node) => node is ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:434:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:438:17: function isConstructorDeclaration: (node: Node) => node is ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:438:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:442:17: function isGetAccessorDeclaration: (node: Node) => node is GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:442:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:446:17: function isSetAccessorDeclaration: (node: Node) => node is SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:446:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:450:17: function isCallSignatureDeclaration: (node: Node) => node is CallSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:450:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:454:17: function isConstructSignatureDeclaration: (node: Node) => node is ConstructSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:454:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:458:17: function isIndexSignatureDeclaration: (node: Node) => node is IndexSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:458:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:464:17: function isTypePredicateNode: (node: Node) => node is TypePredicateNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:464:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:468:17: function isTypeReferenceNode: (node: Node) => node is TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:468:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:472:17: function isFunctionTypeNode: (node: Node) => node is FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:472:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:476:17: function isConstructorTypeNode: (node: Node) => node is ConstructorTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:476:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:480:17: function isTypeQueryNode: (node: Node) => node is TypeQueryNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:480:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:484:17: function isTypeLiteralNode: (node: Node) => node is TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:484:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:488:17: function isArrayTypeNode: (node: Node) => node is ArrayTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:488:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:492:17: function isTupleTypeNode: (node: Node) => node is TupleTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:492:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:496:17: function isNamedTupleMember: (node: Node) => node is NamedTupleMember
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:496:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:500:17: function isOptionalTypeNode: (node: Node) => node is OptionalTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:500:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:504:17: function isRestTypeNode: (node: Node) => node is RestTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:504:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:508:17: function isUnionTypeNode: (node: Node) => node is UnionTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:508:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:512:17: function isIntersectionTypeNode: (node: Node) => node is IntersectionTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:512:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:516:17: function isConditionalTypeNode: (node: Node) => node is ConditionalTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:516:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:520:17: function isInferTypeNode: (node: Node) => node is InferTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:520:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:524:17: function isParenthesizedTypeNode: (node: Node) => node is ParenthesizedTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:524:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:528:17: function isThisTypeNode: (node: Node) => node is ThisTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:528:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:532:17: function isTypeOperatorNode: (node: Node) => node is TypeOperatorNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:532:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:536:17: function isIndexedAccessTypeNode: (node: Node) => node is IndexedAccessTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:536:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:540:17: function isMappedTypeNode: (node: Node) => node is MappedTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:540:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:544:17: function isLiteralTypeNode: (node: Node) => node is LiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:544:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:548:17: function isImportTypeNode: (node: Node) => node is ImportTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:548:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:552:17: function isTemplateLiteralTypeSpan: (node: Node) => node is TemplateLiteralTypeSpan
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:552:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:556:17: function isTemplateLiteralTypeNode: (node: Node) => node is TemplateLiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:556:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:562:17: function isObjectBindingPattern: (node: Node) => node is ObjectBindingPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:562:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:566:17: function isArrayBindingPattern: (node: Node) => node is ArrayBindingPattern
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:566:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:570:17: function isBindingElement: (node: Node) => node is BindingElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:570:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:576:17: function isArrayLiteralExpression: (node: Node) => node is ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:576:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:580:17: function isObjectLiteralExpression: (node: Node) => node is ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:580:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:584:17: function isPropertyAccessExpression: (node: Node) => node is PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:584:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:588:17: function isElementAccessExpression: (node: Node) => node is ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:588:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:592:17: function isCallExpression: (node: Node) => node is CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:592:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:596:17: function isNewExpression: (node: Node) => node is NewExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:596:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:600:17: function isTaggedTemplateExpression: (node: Node) => node is TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:600:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:604:17: function isTypeAssertionExpression: (node: Node) => node is TypeAssertion
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:604:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:608:17: function isParenthesizedExpression: (node: Node) => node is ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:608:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:612:17: function isFunctionExpression: (node: Node) => node is FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:612:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:616:17: function isArrowFunction: (node: Node) => node is ArrowFunction
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:616:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:620:17: function isDeleteExpression: (node: Node) => node is DeleteExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:620:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:624:17: function isTypeOfExpression: (node: Node) => node is TypeOfExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:624:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:628:17: function isVoidExpression: (node: Node) => node is VoidExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:628:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:632:17: function isAwaitExpression: (node: Node) => node is AwaitExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:632:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:636:17: function isPrefixUnaryExpression: (node: Node) => node is PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:636:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:640:17: function isPostfixUnaryExpression: (node: Node) => node is PostfixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:640:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:644:17: function isBinaryExpression: (node: Node) => node is BinaryExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:644:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:648:17: function isConditionalExpression: (node: Node) => node is ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:648:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:652:17: function isTemplateExpression: (node: Node) => node is TemplateExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:652:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:656:17: function isYieldExpression: (node: Node) => node is YieldExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:656:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:660:17: function isSpreadElement: (node: Node) => node is SpreadElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:660:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:664:17: function isClassExpression: (node: Node) => node is ClassExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:664:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:668:17: function isOmittedExpression: (node: Node) => node is OmittedExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:668:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:672:17: function isExpressionWithTypeArguments: (node: Node) => node is ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:672:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:676:17: function isAsExpression: (node: Node) => node is AsExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:676:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:680:17: function isSatisfiesExpression: (node: Node) => node is SatisfiesExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:680:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:684:17: function isNonNullExpression: (node: Node) => node is NonNullExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:684:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:688:17: function isMetaProperty: (node: Node) => node is MetaProperty
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:688:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:692:17: function isSyntheticExpression: (node: Node) => node is SyntheticExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:692:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:696:17: function isPartiallyEmittedExpression: (node: Node) => node is PartiallyEmittedExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:696:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:700:17: function isCommaListExpression: (node: Node) => node is CommaListExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:700:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:706:17: function isTemplateSpan: (node: Node) => node is TemplateSpan
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:706:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:710:17: function isSemicolonClassElement: (node: Node) => node is SemicolonClassElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:710:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:716:17: function isBlock: (node: Node) => node is Block
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:716:25: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:720:17: function isVariableStatement: (node: Node) => node is VariableStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:720:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:724:17: function isEmptyStatement: (node: Node) => node is EmptyStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:724:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:728:17: function isExpressionStatement: (node: Node) => node is ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:728:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:732:17: function isIfStatement: (node: Node) => node is IfStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:732:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:736:17: function isDoStatement: (node: Node) => node is DoStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:736:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:740:17: function isWhileStatement: (node: Node) => node is WhileStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:740:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:744:17: function isForStatement: (node: Node) => node is ForStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:744:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:748:17: function isForInStatement: (node: Node) => node is ForInStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:748:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:752:17: function isForOfStatement: (node: Node) => node is ForOfStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:752:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:756:17: function isContinueStatement: (node: Node) => node is ContinueStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:756:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:760:17: function isBreakStatement: (node: Node) => node is BreakStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:760:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:764:17: function isReturnStatement: (node: Node) => node is ReturnStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:764:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:768:17: function isWithStatement: (node: Node) => node is WithStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:768:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:772:17: function isSwitchStatement: (node: Node) => node is SwitchStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:772:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:776:17: function isLabeledStatement: (node: Node) => node is LabeledStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:776:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:780:17: function isThrowStatement: (node: Node) => node is ThrowStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:780:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:784:17: function isTryStatement: (node: Node) => node is TryStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:784:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:788:17: function isDebuggerStatement: (node: Node) => node is DebuggerStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:788:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:792:17: function isVariableDeclaration: (node: Node) => node is VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:792:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:796:17: function isVariableDeclarationList: (node: Node) => node is VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:796:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:800:17: function isFunctionDeclaration: (node: Node) => node is FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:800:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:804:17: function isClassDeclaration: (node: Node) => node is ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:804:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:808:17: function isInterfaceDeclaration: (node: Node) => node is InterfaceDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:808:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:812:17: function isTypeAliasDeclaration: (node: Node) => node is TypeAliasDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:812:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:816:17: function isEnumDeclaration: (node: Node) => node is EnumDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:816:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:820:17: function isModuleDeclaration: (node: Node) => node is ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:820:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:824:17: function isModuleBlock: (node: Node) => node is ModuleBlock
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:824:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:828:17: function isCaseBlock: (node: Node) => node is CaseBlock
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:828:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:832:17: function isNamespaceExportDeclaration: (node: Node) => node is NamespaceExportDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:832:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:836:17: function isImportEqualsDeclaration: (node: Node) => node is ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:836:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:840:17: function isImportDeclaration: (node: Node) => node is ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:840:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:844:17: function isImportClause: (node: Node) => node is ImportClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:844:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:848:17: function isImportTypeAssertionContainer: (node: Node) => node is ImportTypeAssertionContainer
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:848:48: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:853:17: function isAssertClause: (node: Node) => node is AssertClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:853:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:858:17: function isAssertEntry: (node: Node) => node is AssertEntry
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:858:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:862:17: function isImportAttributes: (node: Node) => node is ImportAttributes
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:862:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:866:17: function isImportAttribute: (node: Node) => node is ImportAttribute
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:866:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:870:17: function isNamespaceImport: (node: Node) => node is NamespaceImport
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:870:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:874:17: function isNamespaceExport: (node: Node) => node is NamespaceExport
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:874:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:878:17: function isNamedImports: (node: Node) => node is NamedImports
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:878:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:882:17: function isImportSpecifier: (node: Node) => node is ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:882:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:886:17: function isExportAssignment: (node: Node) => node is ExportAssignment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:886:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:890:17: function isExportDeclaration: (node: Node) => node is ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:890:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:894:17: function isNamedExports: (node: Node) => node is NamedExports
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:894:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:898:17: function isExportSpecifier: (node: Node) => node is ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:898:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:902:17: function isModuleExportName: (node: Node) => node is ModuleExportName
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:902:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:906:17: function isMissingDeclaration: (node: Node) => node is MissingDeclaration
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:906:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:910:17: function isNotEmittedStatement: (node: Node) => node is NotEmittedStatement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:910:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:915:17: function isSyntheticReference: (node: Node) => node is SyntheticReferenceExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:915:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:921:17: function isExternalModuleReference: (node: Node) => node is ExternalModuleReference
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:921:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:927:17: function isJsxElement: (node: Node) => node is JsxElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:927:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:931:17: function isJsxSelfClosingElement: (node: Node) => node is JsxSelfClosingElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:931:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:935:17: function isJsxOpeningElement: (node: Node) => node is JsxOpeningElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:935:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:939:17: function isJsxClosingElement: (node: Node) => node is JsxClosingElement
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:939:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:943:17: function isJsxFragment: (node: Node) => node is JsxFragment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:943:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:947:17: function isJsxOpeningFragment: (node: Node) => node is JsxOpeningFragment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:947:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:951:17: function isJsxClosingFragment: (node: Node) => node is JsxClosingFragment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:951:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:955:17: function isJsxAttribute: (node: Node) => node is JsxAttribute
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:955:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:959:17: function isJsxAttributes: (node: Node) => node is JsxAttributes
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:959:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:963:17: function isJsxSpreadAttribute: (node: Node) => node is JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:963:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:967:17: function isJsxExpression: (node: Node) => node is JsxExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:967:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:971:17: function isJsxNamespacedName: (node: Node) => node is JsxNamespacedName
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:971:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:977:17: function isCaseClause: (node: Node) => node is CaseClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:977:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:981:17: function isDefaultClause: (node: Node) => node is DefaultClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:981:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:985:17: function isHeritageClause: (node: Node) => node is HeritageClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:985:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:989:17: function isCatchClause: (node: Node) => node is CatchClause
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:989:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:995:17: function isPropertyAssignment: (node: Node) => node is PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:995:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:999:17: function isShorthandPropertyAssignment: (node: Node) => node is ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:999:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1003:17: function isSpreadAssignment: (node: Node) => node is SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1003:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1009:17: function isEnumMember: (node: Node) => node is EnumMember
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1009:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1014:17: function isSourceFile: (node: Node) => node is SourceFile
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1014:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1018:17: function isBundle: (node: Node) => node is Bundle
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1018:26: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1026:17: function isJSDocTypeExpression: (node: Node) => node is JSDocTypeExpression
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1026:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1030:17: function isJSDocNameReference: (node: Node) => node is JSDocNameReference
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1030:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1034:17: function isJSDocMemberName: (node: Node) => node is JSDocMemberName
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1034:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1038:17: function isJSDocLink: (node: Node) => node is JSDocLink
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1038:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1042:17: function isJSDocLinkCode: (node: Node) => node is JSDocLinkCode
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1042:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1046:17: function isJSDocLinkPlain: (node: Node) => node is JSDocLinkPlain
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1046:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1050:17: function isJSDocAllType: (node: Node) => node is JSDocAllType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1050:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1054:17: function isJSDocUnknownType: (node: Node) => node is JSDocUnknownType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1054:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1058:17: function isJSDocNullableType: (node: Node) => node is JSDocNullableType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1058:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1062:17: function isJSDocNonNullableType: (node: Node) => node is JSDocNonNullableType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1062:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1066:17: function isJSDocOptionalType: (node: Node) => node is JSDocOptionalType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1066:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1070:17: function isJSDocFunctionType: (node: Node) => node is JSDocFunctionType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1070:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1074:17: function isJSDocVariadicType: (node: Node) => node is JSDocVariadicType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1074:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1078:17: function isJSDocNamepathType: (node: Node) => node is JSDocNamepathType
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1078:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1082:17: function isJSDoc: (node: Node) => node is JSDoc
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1082:25: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1086:17: function isJSDocTypeLiteral: (node: Node) => node is JSDocTypeLiteral
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1086:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1090:17: function isJSDocSignature: (node: Node) => node is JSDocSignature
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1090:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1096:17: function isJSDocAugmentsTag: (node: Node) => node is JSDocAugmentsTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1096:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1100:17: function isJSDocAuthorTag: (node: Node) => node is JSDocAuthorTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1100:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1104:17: function isJSDocClassTag: (node: Node) => node is JSDocClassTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1104:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1108:17: function isJSDocCallbackTag: (node: Node) => node is JSDocCallbackTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1108:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1112:17: function isJSDocPublicTag: (node: Node) => node is JSDocPublicTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1112:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1116:17: function isJSDocPrivateTag: (node: Node) => node is JSDocPrivateTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1116:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1120:17: function isJSDocProtectedTag: (node: Node) => node is JSDocProtectedTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1120:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1124:17: function isJSDocReadonlyTag: (node: Node) => node is JSDocReadonlyTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1124:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1128:17: function isJSDocOverrideTag: (node: Node) => node is JSDocOverrideTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1128:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1132:17: function isJSDocOverloadTag: (node: Node) => node is JSDocOverloadTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1132:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1136:17: function isJSDocDeprecatedTag: (node: Node) => node is JSDocDeprecatedTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1136:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1140:17: function isJSDocSeeTag: (node: Node) => node is JSDocSeeTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1140:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1144:17: function isJSDocEnumTag: (node: Node) => node is JSDocEnumTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1144:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1148:17: function isJSDocParameterTag: (node: Node) => node is JSDocParameterTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1148:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1152:17: function isJSDocReturnTag: (node: Node) => node is JSDocReturnTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1152:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1156:17: function isJSDocThisTag: (node: Node) => node is JSDocThisTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1156:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1160:17: function isJSDocTypeTag: (node: Node) => node is JSDocTypeTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1160:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1164:17: function isJSDocTemplateTag: (node: Node) => node is JSDocTemplateTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1164:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1168:17: function isJSDocTypedefTag: (node: Node) => node is JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1168:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1172:17: function isJSDocUnknownTag: (node: Node) => node is JSDocUnknownTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1172:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1176:17: function isJSDocPropertyTag: (node: Node) => node is JSDocPropertyTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1176:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1180:17: function isJSDocImplementsTag: (node: Node) => node is JSDocImplementsTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1180:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1184:17: function isJSDocSatisfiesTag: (node: Node) => node is JSDocSatisfiesTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1184:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1188:17: function isJSDocThrowsTag: (node: Node) => node is JSDocThrowsTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1188:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1192:17: function isJSDocImportTag: (node: Node) => node is JSDocImportTag
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1192:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1199:17: function isSyntaxList: (n: Node) => n is SyntaxList
+/workspace/tracing-measured-after/src/compiler/factory/nodeTests.ts:1199:30: parameter n: Node

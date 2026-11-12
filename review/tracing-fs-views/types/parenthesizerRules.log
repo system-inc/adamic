@@ -1,0 +1,145 @@
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:54:17: function createParenthesizerRules: (factory: NodeFactory) => ParenthesizerRules
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:54:42: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:55:15: interface BinaryPlusExpression: BinaryPlusExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:56:9: property cachedLiteralKind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:59:9: variable binaryLeftOperandParenthesizerCache: Map<BinaryOperator, (node: Expression) => Expression> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:59:67: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:60:9: variable binaryRightOperandParenthesizerCache: Map<BinaryOperator, (node: Expression) => Expression> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:60:68: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:95:14: function getParenthesizeLeftSideOfBinaryForOperator: (operatorKind: BinaryOperator) => (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:95:57: parameter operatorKind: BinaryOperator
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:97:13: variable parenthesizerRule: ((node: Expression) => Expression) | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:99:33: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:105:14: function getParenthesizeRightSideOfBinaryForOperator: (operatorKind: BinaryOperator) => (node: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:105:58: parameter operatorKind: BinaryOperator
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:107:13: variable parenthesizerRule: ((node: Expression) => Expression) | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:109:33: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:115:14: function mixingBinaryOperatorsRequiresParentheses: (a: SyntaxKind, b: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:115:55: parameter a: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:115:70: parameter b: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:133:14: function binaryOperandNeedsParentheses: (binaryOperator: SyntaxKind, operand: Expression, isLeftSideOfBinary: boolean, leftOperand: Expression | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:133:44: parameter binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:133:72: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:133:93: parameter isLeftSideOfBinary: boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:133:122: parameter leftOperand: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:134:15: variable emittedOperand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:155:15: variable binaryOperatorPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:156:15: variable binaryOperatorAssociativity: Associativity
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:162:15: variable operandPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:215:35: variable leftKind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:231:27: variable operandAssociativity: Associativity
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:242:14: function operatorHasAssociativeProperty: (binaryOperator: SyntaxKind) => binaryOperator is SyntaxKind.CommaToken | SyntaxKind.AsteriskToken | SyntaxKind.AmpersandToken | SyntaxKind.BarToken | SyntaxKind.CaretToken
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:242:45: parameter binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:265:14: function getLiteralKindOfBinaryPlusOperand: (node: Expression) => SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:265:48: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:277:19: variable leftKind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:278:19: variable literalKind: SyntaxKind.Unknown | SyntaxKind.NumericLiteral | SyntaxKind.BigIntLiteral | SyntaxKind.StringLiteral | SyntaxKind.JsxText | SyntaxKind.RegularExpressionLiteral | SyntaxKind.NoSubstitutionTemplateLiteral
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:299:14: function parenthesizeBinaryOperand: (binaryOperator: SyntaxKind, operand: Expression, isLeftSideOfBinary: boolean, leftOperand?: Expression | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:299:40: parameter binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:299:68: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:299:89: parameter isLeftSideOfBinary: boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:299:118: parameter leftOperand: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:300:15: variable skipped: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:312:14: function parenthesizeLeftSideOfBinary: (binaryOperator: SyntaxKind, leftSide: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:312:43: parameter binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:312:71: parameter leftSide: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:316:14: function parenthesizeRightSideOfBinary: (binaryOperator: SyntaxKind, leftSide: Expression | undefined, rightSide: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:316:44: parameter binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:316:72: parameter leftSide: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:316:106: parameter rightSide: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:320:14: function parenthesizeExpressionOfComputedPropertyName: (expression: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:320:59: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:324:14: function parenthesizeConditionOfConditionalExpression: (condition: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:324:59: parameter condition: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:325:15: variable conditionalPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:326:15: variable emittedCondition: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:327:15: variable conditionPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:334:14: function parenthesizeBranchOfConditionalExpression: (branch: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:334:56: parameter branch: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:338:15: variable emittedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:355:14: function parenthesizeExpressionOfExportDefault: (expression: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:355:52: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:356:15: variable check: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:357:13: variable needsParens: boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:372:14: function parenthesizeExpressionOfNew: (expression: Expression) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:372:42: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:373:15: variable leftmostExpr: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:391:14: function parenthesizeLeftSideOfAccess: (expression: Expression, optionalChain?: boolean | undefined) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:391:43: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:391:67: parameter optionalChain: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:398:15: variable emittedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:412:14: function parenthesizeOperandOfPostfixUnary: (operand: Expression) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:412:48: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:417:14: function parenthesizeOperandOfPrefixUnary: (operand: Expression) => UnaryExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:417:47: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:422:14: function parenthesizeExpressionsOfCommaDelimitedList: (elements: NodeArray<Expression>) => NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:422:58: parameter elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:423:15: variable result: readonly Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:427:14: function parenthesizeExpressionForDisallowedComma: (expression: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:427:55: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:428:15: variable emittedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:429:15: variable expressionPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:430:15: variable commaPrecedence: OperatorPrecedence
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:435:14: function parenthesizeExpressionOfExpressionStatement: (expression: Expression) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:435:58: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:436:15: variable emittedExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:438:19: variable callee: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:439:19: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:442:23: variable updated: CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:452:15: variable leftmostExpressionKind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:461:14: function parenthesizeConciseBodyOfArrowFunction: { (body: Expression): Expression; (body: ConciseBody): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:461:53: parameter body: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:462:14: function parenthesizeConciseBodyOfArrowFunction: { (body: Expression): Expression; (body: ConciseBody): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:462:53: parameter body: ConciseBody
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:463:14: function parenthesizeConciseBodyOfArrowFunction: { (body: Expression): Expression; (body: ConciseBody): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:463:53: parameter body: ConciseBody
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:483:14: function parenthesizeCheckTypeOfConditionalType: (checkType: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:483:53: parameter checkType: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:493:14: function parenthesizeExtendsTypeOfConditionalType: (extendsType: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:493:55: parameter extendsType: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:506:14: function parenthesizeConstituentTypeOfUnionType: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:506:53: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:515:14: function parenthesizeConstituentTypesOfUnionType: (members: readonly TypeNode[]) => NodeArray<TypeNode>
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:515:54: parameter members: readonly TypeNode[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:524:14: function parenthesizeConstituentTypeOfIntersectionType: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:524:60: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:533:14: function parenthesizeConstituentTypesOfIntersectionType: (members: readonly TypeNode[]) => NodeArray<TypeNode>
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:533:61: parameter members: readonly TypeNode[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:544:14: function parenthesizeOperandOfTypeOperator: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:544:48: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:552:14: function parenthesizeOperandOfReadonlyTypeOperator: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:552:56: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:573:14: function parenthesizeNonArrayTypeOfPostfixType: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:573:52: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:613:14: function parenthesizeElementTypesOfTupleType: (types: readonly (NamedTupleMember | TypeNode)[]) => NodeArray<TypeNode>
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:613:50: parameter types: readonly (NamedTupleMember | TypeNode)[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:617:14: function parenthesizeElementTypeOfTupleType: (type: NamedTupleMember | TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:617:49: parameter type: NamedTupleMember | TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:622:14: function hasJSDocPostfixQuestion: (type: NamedTupleMember | TypeNode) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:622:38: parameter type: NamedTupleMember | TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:633:14: function parenthesizeTypeOfOptionalType: (type: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:633:45: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:659:14: function parenthesizeLeadingTypeArgument: (node: TypeNode) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:659:46: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:663:14: function parenthesizeOrdinalTypeArgument: (node: TypeNode, i: number) => TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:663:46: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:663:62: parameter i: number
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:667:14: function parenthesizeTypeArguments: (typeArguments: NodeArray<TypeNode> | undefined) => NodeArray<TypeNode> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:667:40: parameter typeArguments: NodeArray<TypeNode> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:675:14: variable nullParenthesizerRules: ParenthesizerRules
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:676:49: parameter _: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:677:50: parameter _: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:678:36: parameter _binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:678:53: parameter leftSide: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:679:37: parameter _binaryOperator: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:679:54: parameter _leftSide: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:679:65: parameter rightSide: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:684:34: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:685:35: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:686:40: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:687:39: parameter operand: Expression
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:688:50: parameter nodes: readonly Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:694:46: parameter nodes: readonly TypeNode[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:696:53: parameter nodes: readonly TypeNode[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:701:42: parameter nodes: readonly (NamedTupleMember | TypeNode)[]
+/workspace/tracing-measured-after/src/compiler/factory/parenthesizerRules.ts:704:32: parameter nodes: readonly TypeNode[] | undefined

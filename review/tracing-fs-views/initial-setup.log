@@ -1,0 +1,28 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: go ready (0.074s)
+Cloning into '/workspace/adamic/cohere'...
+v24.19.0
+setup: node ready (0.082s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.601s)
+setup: tsc ready (TypeScript 6.0.3) (0.736s)
+
+added 3 packages in 479ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.925s
+setup: markdown dependencies ready (1.787s)
+From https://github.com/system-inc/cohere
+ * branch              06af2e399c6c1fb93fd570b774027942747400b4 -> FETCH_HEAD
+Submodule path 'cohere': checked out '06af2e399c6c1fb93fd570b774027942747400b4'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (306.224s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (306.227s)
+go: downloading golang.org/x/tools v0.50.0
+internal/unicodeproperties/unicodeproperties.go:36:2: no required module provides package github.com/system-inc/cohere/unicode_properties; to add it:
+	go get github.com/system-inc/cohere/unicode_properties
+internal/unicodeproperties/unicodeproperties.go:36:2: no required module provides package github.com/system-inc/cohere/unicode_properties; to add it:
+	go get github.com/system-inc/cohere/unicode_properties

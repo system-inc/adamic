@@ -1,0 +1,26 @@
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:35:17: function processTaggedTemplateExpression: (context: TransformationContext, node: TaggedTemplateExpression, visitor: Visitor, currentSourceFile: SourceFile, recordTaggedTemplateString: (temp: Identifier) => void, level: ProcessLevel) => CallExpression | TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:36:5: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:37:5: parameter node: TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:38:5: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:39:5: parameter currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:40:5: parameter recordTaggedTemplateString: (temp: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:40:34: parameter temp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:41:5: parameter level: ProcessLevel
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:44:11: variable tag: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:50:11: variable templateArguments: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:51:11: variable cookedStrings: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:52:11: variable rawStrings: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:53:11: variable template: TemplateLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:59:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:68:20: variable templateSpan: TemplateSpan
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:75:11: variable helperCall: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:84:15: variable tempVar: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:101:10: function createTemplateCooked: (factory: NodeFactory, template: NoSubstitutionTemplateLiteral | TemplateHead | TemplateMiddle | TemplateTail) => StringLiteral | VoidExpression
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:101:31: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:101:53: parameter template: NoSubstitutionTemplateLiteral | TemplateHead | TemplateMiddle | TemplateTail
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:110:10: function getRawLiteral: (factory: NodeFactory, node: TemplateLiteralLikeNode, currentSourceFile: SourceFile) => StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:110:24: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:110:46: parameter node: TemplateLiteralLikeNode
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:110:77: parameter currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:114:9: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/taggedTemplate.ts:123:15: variable isLast: boolean

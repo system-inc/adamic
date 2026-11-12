@@ -1,0 +1,360 @@
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:221:17: function getDeclarationDiagnostics: (host: EmitHost, resolver: EmitResolver, file: SourceFile) => DiagnosticWithLocation[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:222:5: parameter host: EmitHost
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:223:5: parameter resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:224:5: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:226:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:227:11: variable files: readonly SourceFile[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:241:7: variable declarationEmitNodeBuilderFlags: number
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:249:7: variable declarationEmitInternalNodeBuilderFlags: InternalNodeBuilderFlags.AllowUnresolvedNames
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:259:17: function transformDeclarations: (context: TransformationContext) => Transformer<Bundle | SourceFile>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:259:39: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:260:11: variable throwDiagnostic: () => never
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:261:9: variable getSymbolAccessibilityDiagnostic: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:262:9: variable needsDeclare: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:263:9: variable isBundledEmit: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:264:9: variable resultHasExternalModuleIndicator: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:265:9: variable needsScopeFixMarker: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:266:9: variable resultHasScopeMarker: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:267:9: variable enclosingDeclaration: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:268:9: variable lateMarkedStatements: LateVisibilityPaintedStatement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:269:9: variable lateStatementReplacementMap: Map<number, VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:270:9: variable suppressNewDiagnosticContexts: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:272:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:273:11: variable host: EmitHost
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:274:9: variable restoreFallbackNode: () => undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:275:11: variable symbolTracker: SymbolTracker
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:287:9: method pushErrorFallbackNode: (node: Declaration | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:287:31: parameter node: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:288:19: variable currentFallback: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:289:19: variable currentRestore: () => undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:296:9: method popErrorFallbackNode: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:300:9: variable errorNameNode: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:301:9: variable errorFallbackNode: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:303:9: variable currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:304:9: variable rawReferencedFiles: readonly [SourceFile, FileReference][]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:305:9: variable rawTypeReferenceDirectives: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:306:9: variable rawLibReferenceDirectives: readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:307:11: variable resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:308:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:309:11: variable getIsolatedDeclarationError: (node: Node) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:310:13: binding stripInternal: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:310:28: binding isolatedDeclarations: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:313:14: function reportExpandoFunctionErrors: (node: FunctionDeclaration | VariableDeclaration) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:313:42: parameter node: FunctionDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:314:65: parameter p: Symbol
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:316:23: variable errorTarget: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:327:14: function reportInferenceFallback: (node: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:327:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:337:14: function handleSymbolAccessibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:337:45: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:345:32: variable ref: LateVisibilityPaintedStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:355:19: variable errorInfo: SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:369:14: function trackSymbol: (symbol: Symbol, enclosingDeclaration?: Node | undefined, meaning?: SymbolFlags | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:369:26: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:369:42: parameter enclosingDeclaration: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:369:71: parameter meaning: SymbolFlags | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:371:15: variable issuedDiagnostic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:375:14: function reportPrivateInBaseOfClassExpression: (propertyName: string) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:375:51: parameter propertyName: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:386:14: function errorDeclarationNameWithFallback: () => string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:393:14: function reportInaccessibleUniqueSymbolError: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:399:14: function reportCyclicStructureError: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:405:14: function reportInaccessibleThisError: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:411:14: function reportLikelyUnsafeImportRequiredError: (specifier: string, symbolName: string | undefined) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:411:52: parameter specifier: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:411:71: parameter symbolName: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:422:14: function reportTruncationError: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:428:14: function reportNonlocalAugmentation: (containingFile: SourceFile, parentSymbol: Symbol, symbol: Symbol) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:428:41: parameter containingFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:428:69: parameter parentSymbol: Symbol
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:428:91: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:429:15: variable primaryDeclaration: Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:429:68: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:430:15: variable augmentingDeclarations: Declaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:430:68: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:432:24: variable augmentations: Declaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:441:14: function reportNonSerializableProperty: (propertyName: string) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:441:44: parameter propertyName: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:447:14: function transformDeclarationsForJS: (sourceFile: SourceFile) => Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:447:41: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:448:15: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:449:44: parameter s: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:455:15: variable result: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:460:14: function transformRoot: (node: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:460:28: parameter node: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:470:19: variable bundle: Bundle
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:471:39: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:485:31: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:486:31: variable newFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:502:27: variable updated: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:506:19: variable outputFilePath: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:529:13: variable combinedStatements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:534:19: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:540:15: variable outputFilePath: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:543:18: function collectFileReferences: (sourceFile: SourceFile) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:543:40: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:544:98: parameter f: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:549:18: function copyFileReferenceAsSynthetic: (ref: FileReference) => FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:549:47: parameter ref: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:550:19: variable newRef: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:556:18: function getTypeReferences: () => readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:557:59: parameter ref: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:563:18: function getLibReferences: () => readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:564:58: parameter ref: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:570:18: function getReferencedFiles: (outputFilePath: string) => readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:570:37: parameter outputFilePath: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:571:53: binding sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:571:65: binding ref: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:574:23: variable file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:579:21: variable declFileName: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:585:27: variable paths: EmitFileNames
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:591:23: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:599:23: variable newRef: FileReference
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:606:14: function filterBindingPatternInitializers: (name: BindingName) => ArrayBindingPattern | Identifier | ObjectBindingPattern
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:606:47: parameter name: BindingName
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:619:18: function visitBindingElement: <T extends Node>(elem: T) => T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:619:54: parameter elem: T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:620:18: function visitBindingElement: <T extends Node>(elem: T) => T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:620:38: parameter elem: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:638:14: function ensureParameter: (p: ParameterDeclaration, modifierMask?: ModifierFlags | undefined) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:638:30: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:638:55: parameter modifierMask: ModifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:639:13: variable oldDiag: GetSymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:644:15: variable newParam: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:659:14: function shouldPrintWithInitializer: (node: Node) => node is CanHaveLiteralInitializer & { initializer: Expression; }
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:659:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:659:92: property initializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:665:14: function ensureNoInitializer: (node: CanHaveLiteralInitializer) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:665:34: parameter node: CanHaveLiteralInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:667:19: variable unwrappedInitializer: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:675:14: function ensureType: (node: BindingElement | ExportAssignment | ParameterDeclaration | PropertyDeclaration | PropertySignature | VariableDeclaration | SignatureDeclaration, ignorePrivate?: boolean | undefined) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:675:25: parameter node: BindingElement | ExportAssignment | ParameterDeclaration | PropertyDeclaration | PropertySignature | VariableDeclaration | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:675:176: parameter ignorePrivate: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:695:15: variable oldErrorNameNode: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:697:13: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:704:13: variable typeNode: any
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:722:14: function isDeclarationAndNotVisible: (node: NamedDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:722:41: parameter node: NamedDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:747:14: function shouldEmitFunctionProperties: (input: FunctionDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:747:43: parameter input: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:752:15: variable overloadSignatures: Declaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:752:70: parameter decl: Declaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:756:14: function getBindingNameVisible: (elem: BindingElement | OmittedExpression | VariableDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:756:36: parameter elem: BindingElement | OmittedExpression | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:769:14: function updateParamsList: (node: Node, params: NodeArray<ParameterDeclaration>, modifierMask?: ModifierFlags | undefined) => NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:769:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:769:43: parameter params: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:769:84: parameter modifierMask: ModifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:773:15: variable newParams: ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:773:39: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:780:14: function updateAccessorParamsList: (input: AccessorDeclaration, isPrivate: boolean) => NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:780:39: parameter input: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:780:67: parameter isPrivate: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:781:13: variable newParams: ParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:783:19: variable thisParameter: ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:789:17: variable newValueParameter: ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:791:23: variable valueParameter: ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:808:14: function ensureTypeParams: (node: Node, params: NodeArray<TypeParameterDeclaration> | undefined) => NodeArray<TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:808:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:808:43: parameter params: NodeArray<TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:812:14: function isEnclosingDeclaration: (node: Node) => node is ClassDeclaration | InterfaceDeclaration | MappedTypeNode | ModuleDeclaration | SourceFile | TypeAliasDeclaration | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:812:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:823:14: function checkEntityNameVisibility: (entityName: EntityNameOrEntityNameExpression, enclosingDeclaration: Node) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:823:40: parameter entityName: EntityNameOrEntityNameExpression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:823:86: parameter enclosingDeclaration: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:824:15: variable visibilityResult: SymbolVisibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:828:14: function preserveJsDoc: <T extends Node>(updated: T, original: Node) => T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:828:44: parameter updated: T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:828:56: parameter original: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:835:14: function rewriteModuleSpecifier: <T extends Node>(parent: ExportDeclaration | ImportDeclaration | ImportEqualsDeclaration | ImportTypeNode | ModuleDeclaration, input: T | undefined) => T | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:835:53: parameter parent: ExportDeclaration | ImportDeclaration | ImportEqualsDeclaration | ImportTypeNode | ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:835:163: parameter input: T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:840:23: variable newName: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:849:14: function transformImportEqualsDeclaration: (decl: ImportEqualsDeclaration) => ImportEqualsDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:849:47: parameter decl: ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:853:19: variable specifier: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:863:19: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:871:14: function transformImportDeclaration: (decl: ImportDeclaration) => ImportDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:871:41: parameter decl: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:882:15: variable phaseModifier: SyntaxKind.TypeKeyword | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:884:15: variable visibleDefaultBinding: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:902:19: variable namedBindings: NamespaceImport | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:917:15: variable bindingList: ImportSpecifier[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:917:82: parameter b: ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:948:14: function tryGetResolutionModeOverride: (node: ImportAttributes | undefined) => ImportAttributes | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:948:43: parameter node: ImportAttributes | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:949:15: variable mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:953:14: function transformAndReplaceLatePaintedStatements: (statements: NodeArray<Statement>) => NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:953:55: parameter statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:969:19: variable i: LateVisibilityPaintedStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:973:19: variable priorNeedsDeclare: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:975:19: variable result: (ClassDeclaration | VariableStatement)[] | (ExportAssignment | FunctionDeclaration | ModuleDeclaration)[] | ClassDeclaration | EnumDeclaration | FunctionDeclaration | ImportDeclaration | ImportEqualsDeclaration | InterfaceDeclaration | ModuleDeclaration | TypeAliasDeclaration | VariableStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:984:18: function visitLateVisibilityMarkedStatements: (statement: Statement) => readonly Statement[] | Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:984:54: parameter statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:986:23: variable key: number
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:988:27: variable result: readonly Statement[] | Statement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1006:14: function visitDeclarationSubtree: (input: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1006:38: parameter input: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1041:13: variable previousEnclosingDeclaration: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1046:15: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1050:15: variable canProduceDiagnostic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1051:15: variable oldWithinObjectLiteralType: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1052:13: variable shouldEnterSuppressNewDiagnosticsContextContext: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1081:27: variable node: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1086:27: variable node: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1098:27: variable ctor: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1109:27: variable sig: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1218:27: variable checkType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1219:27: variable extendsType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1220:27: variable oldEnclosingDecl: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1222:27: variable trueType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1224:27: variable falseType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1270:18: function cleanup: <T extends Node>(returnValue: T | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1270:42: parameter returnValue: T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1290:14: function isPrivateMethodTypeParameter: (node: TypeParameterDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1290:43: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1294:14: function visitDeclarationStatements: (input: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1294:41: parameter input: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1327:27: variable newId: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1333:27: variable type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1334:27: variable varDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1336:27: variable statement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1345:15: variable result: (ClassDeclaration | VariableStatement)[] | (ExportAssignment | FunctionDeclaration | ModuleDeclaration)[] | ClassDeclaration | EnumDeclaration | FunctionDeclaration | ImportDeclaration | ImportEqualsDeclaration | InterfaceDeclaration | ModuleDeclaration | TypeAliasDeclaration | VariableStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1351:14: function stripExportModifiers: (statement: Statement) => Statement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1351:35: parameter statement: Statement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1358:15: variable modifiers: Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1362:14: function updateModuleDeclarationAndKeyword: (node: ModuleDeclaration, modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined) => ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1363:9: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1364:9: parameter modifiers: readonly ModifierLike[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1365:9: parameter name: ModuleName
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1366:9: parameter body: ModuleBody | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1368:15: variable updated: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1374:15: variable fixed: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1387:14: function transformTopLevelDeclaration: (input: LateVisibilityPaintedStatement) => (ClassDeclaration | VariableStatement)[] | (ExportAssignment | FunctionDeclaration | ModuleDeclaration)[] | ClassDeclaration | EnumDeclaration | FunctionDeclaration | ImportDeclaration | ImportEqualsDeclaration | InterfaceDeclaration | ModuleDeclaration | TypeAliasDeclaration | VariableStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1387:43: parameter input: LateVisibilityPaintedStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1407:13: variable previousEnclosingDeclaration: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1413:15: variable canProdiceDiagnostic: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1414:15: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1419:15: variable previousNeedsDeclare: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1423:23: variable clean: TypeAliasDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1445:23: variable clean: FunctionDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1456:27: variable props: Symbol[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1462:27: variable fakespace: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1466:27: variable exportMappings: [Identifier, string][]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1467:25: variable declarations: (ExportDeclaration | VariableStatement)[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1467:101: parameter p: Symbol
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1471:31: variable nameStr: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1476:31: variable type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1478:31: variable isNonContextualKeywordName: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1479:31: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1483:31: variable varDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1487:65: parameter declaration: ExportDeclaration | VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1493:78: binding gen: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1493:83: binding exp: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1498:27: variable namespaceDecl: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1503:27: variable modifiers: Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1504:27: variable cleanDeclaration: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1515:27: variable namespaceDeclaration: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1522:27: variable exportDefaultDeclaration: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1541:23: variable inner: ModuleBody | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1543:27: variable oldNeedsScopeFix: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1544:27: variable oldHasScopeFix: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1547:27: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1548:25: variable lateStatements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1564:27: variable body: ModuleBlock
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1568:27: variable mods: readonly Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1579:27: variable mods: readonly Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1583:27: variable id: number
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1584:27: variable body: VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1597:23: variable modifiers: NodeArray<Modifier>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1598:23: variable typeParameters: NodeArray<TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1599:23: variable ctor: (ConstructorDeclaration & { body: Block; }) | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1600:21: variable parameterProperties: readonly PropertyDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1602:27: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1603:76: parameter param: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1623:34: function walkBindingPattern: (pattern: BindingPattern) => PropertyDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1623:53: parameter pattern: BindingPattern
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1624:33: variable elems: PropertyDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1625:40: variable elem: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1646:23: variable hasPrivateIdentifier: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1646:66: parameter member: ClassElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1649:23: variable privateIdentifier: PropertyDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1658:23: variable lateIndexes: (IndexSignatureDeclaration | PropertyDeclaration)[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1659:23: variable memberNodes: readonly ClassElement[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1660:23: variable members: NodeArray<ClassElement>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1662:23: variable extendsClause: ExpressionWithTypeArguments | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1666:27: variable oldId: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1667:27: variable newId: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1673:27: variable varDecl: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1674:27: variable statement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1675:27: variable heritageClauses: NodeArray<HeritageClause>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1675:103: parameter clause: HeritageClause
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1677:35: variable firstType: ExpressionWithTypeArguments | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1679:35: variable oldDiag: GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1681:35: variable newClause: HeritageClause
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1681:102: parameter t: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1685:125: parameter t: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1700:27: variable heritageClauses: NodeArray<HeritageClause>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1719:71: parameter m: EnumMember
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1722:31: variable enumValue: EvaluatorResult<string | number | undefined> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1723:31: variable constValue: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1731:31: variable newInitializer: NumericLiteral | PrefixUnaryExpression | StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1743:18: function cleanup: <T extends Node>(node: T | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1743:42: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1762:14: function transformVariableStatement: (input: VariableStatement) => VariableStatement | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1762:41: parameter input: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1764:15: variable nodes: NodeArray<VariableDeclaration>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1767:15: variable modifiers: NodeArray<Modifier>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1768:13: variable declList: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1781:14: function recreateBindingPattern: (d: BindingPattern) => VariableDeclaration[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1781:37: parameter d: BindingPattern
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1782:68: parameter e: BindingElement | OmittedExpression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1785:14: function recreateBindingElement: (e: ArrayBindingElement) => VariableDeclaration[] | VariableDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1785:37: parameter e: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1800:14: function checkName: (node: DeclarationDiagnosticProducing) => void
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1800:24: parameter node: DeclarationDiagnosticProducing
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1801:13: variable oldDiag: GetSymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1808:15: variable decl: LateBoundDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1809:15: variable entityName: EntityNameExpression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1817:14: function shouldStripInternal: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1817:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1821:14: function isScopeMarker: (node: Node) => node is ExportAssignment | ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1821:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1825:14: function hasScopeMarker: (statements: readonly Statement[]) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1825:29: parameter statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1829:14: function ensureModifiers: <T extends HasModifiers>(node: T) => readonly Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1829:54: parameter node: T
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1830:15: variable currentFlags: ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1831:15: variable newFlags: ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1833:47: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1838:14: function ensureModifierFlags: (node: Node) => ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1838:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1839:13: variable mask: number
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1840:13: variable additions: ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1841:15: variable parentIsFile: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1849:14: function transformHeritageClauses: (nodes: NodeArray<HeritageClause> | undefined) => NodeArray<HeritageClause>
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1849:39: parameter nodes: NodeArray<HeritageClause> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1851:24: parameter clause: HeritageClause
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1855:70: parameter t: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1862:13: parameter clause: HeritageClause
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1867:10: function isAlwaysType: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1867:23: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1875:10: function maskModifiers: (factory: NodeFactory, node: Node, modifierMask?: ModifierFlags | undefined, modifierAdditions?: ModifierFlags | undefined) => Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1875:24: parameter factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1875:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1875:58: parameter modifierMask: ModifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1875:88: parameter modifierAdditions: ModifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1879:10: function maskModifierFlags: (node: Node, modifierMask?: ModifierFlags, modifierAdditions?: ModifierFlags) => ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1879:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1879:40: parameter modifierMask: ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1879:112: parameter modifierAdditions: ModifierFlags
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1880:9: variable flags: number
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1892:6: type CanHaveLiteralInitializer: ParameterDeclaration | PropertyDeclaration | PropertySignature | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1893:10: function canHaveLiteralInitializer: (node: Node) => node is CanHaveLiteralInitializer
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1893:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1905:6: type ProcessedDeclarationStatement: ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ImportDeclaration | ImportEqualsDeclaration | InterfaceDeclaration | ModuleDeclaration | TypeAliasDeclaration | VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1918:10: function isPreservedDeclarationStatement: (node: Node) => node is ProcessedDeclarationStatement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1918:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1936:6: type ProcessedComponent: CallSignatureDeclaration | ConditionalTypeNode | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | ExpressionWithTypeArguments | FunctionTypeNode | GetAccessorDeclaration | ImportTypeNode | IndexSignatureDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | SetAccessorDeclaration | TypeParameterDeclaration | TypeReferenceNode | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1956:10: function isProcessedComponent: (node: Node) => node is ProcessedComponent
+/workspace/tracing-measured-after/src/compiler/transformers/declarations.ts:1956:31: parameter node: Node

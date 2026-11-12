@@ -1,0 +1,106 @@
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:110:13: type GetSymbolAccessibilityDiagnostic: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:110:49: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:113:18: interface SymbolAccessibilityDiagnostic: SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:114:5: property errorNode: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:115:5: property diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:116:5: property typeName: QualifiedName | DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:120:13: type DeclarationDiagnosticProducing: BinaryExpression | BindingElement | CallSignatureDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ElementAccessExpression | ExpressionWithTypeArguments | FunctionDeclaration | GetAccessorDeclaration | ImportEqualsDeclaration | IndexSignatureDeclaration | JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag | MethodDeclaration | MethodSignature | ParameterDeclaration | PropertyAccessExpression | PropertyDeclaration | PropertySignature | SetAccessorDeclaration | TypeAliasDeclaration | TypeParameterDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:147:17: function canProduceDiagnostics: (node: Node) => node is DeclarationDiagnosticProducing
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:147:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:173:17: function createGetSymbolAccessibilityDiagnosticForNodeName: (node: DeclarationDiagnosticProducing) => (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:173:67: parameter node: DeclarationDiagnosticProducing
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:173:107: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:183:14: function getAccessorNameVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => { diagnosticMessage: DiagnosticMessage; errorNode: DeclarationDiagnosticProducing; typeName: DeclarationName | undefined; } | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:183:45: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:184:15: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:192:14: function getAccessorNameVisibilityDiagnosticMessage: (symbolAccessibilityResult: SymbolAccessibilityResult) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:192:57: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:214:14: function getMethodNameVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:214:43: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:215:15: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:223:14: function getMethodNameVisibilityDiagnosticMessage: (symbolAccessibilityResult: SymbolAccessibilityResult) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:223:55: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:247:17: function createGetSymbolAccessibilityDiagnosticForNode: (node: DeclarationDiagnosticProducing) => GetSymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:247:63: parameter node: DeclarationDiagnosticProducing
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:279:14: function getVariableDeclarationTypeVisibilityDiagnosticMessage: (symbolAccessibilityResult: SymbolAccessibilityResult) => DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:279:68: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:317:14: function getVariableDeclarationTypeVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:317:56: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:318:15: variable diagnosticMessage: DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:326:14: function getAccessorDeclarationTypeVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:326:56: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:327:13: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:365:14: function getReturnTypeVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:365:43: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:366:13: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:431:14: function getParameterDeclarationTypeVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:431:57: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:432:15: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:440:14: function getParameterDeclarationTypeVisibilityDiagnosticMessage: (symbolAccessibilityResult: SymbolAccessibilityResult) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:440:69: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:511:14: function getTypeParameterConstraintVisibilityError: () => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:513:13: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:573:14: function getHeritageClauseVisibilityError: () => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:574:13: variable diagnosticMessage: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:595:14: function getImportEntityNameVisibilityError: () => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:603:14: function getTypeAliasDeclarationVisibilityError: (symbolAccessibilityResult: SymbolAccessibilityResult) => SymbolAccessibilityDiagnostic
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:603:53: parameter symbolAccessibilityResult: SymbolAccessibilityResult
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:615:17: function createGetIsolatedDeclarationErrors: (resolver: EmitResolver) => (node: Node) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:615:52: parameter resolver: EmitResolver
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:615:78: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:616:11: variable relatedSuggestionByDeclarationKind: { 220: DiagnosticMessage; 219: DiagnosticMessage; 175: DiagnosticMessage; 178: DiagnosticMessage; 179: DiagnosticMessage; 263: DiagnosticMessage; 181: DiagnosticMessage; 170: DiagnosticMessage; 261: DiagnosticMessage; 173: DiagnosticMessage; 172: DiagnosticMessage; 278: DiagnosticMessage; }
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:631:11: variable errorByDeclarationKind: { 219: DiagnosticMessage; 263: DiagnosticMessage; 220: DiagnosticMessage; 175: DiagnosticMessage; 181: DiagnosticMessage; 178: DiagnosticMessage; 179: DiagnosticMessage; 170: DiagnosticMessage; 261: DiagnosticMessage; 173: DiagnosticMessage; 172: DiagnosticMessage; 168: DiagnosticMessage; 306: DiagnosticMessage; 305: DiagnosticMessage; 210: DiagnosticMessage; 278: DiagnosticMessage; 231: DiagnosticMessage; }
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:653:10: type WithIsolatedDeclarationDiagnostic: ArrayLiteralExpression | ArrowFunction | BindingElement | ClassExpression | ComputedPropertyName | ConstructSignatureDeclaration | FunctionDeclaration | FunctionExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment | SpreadElement | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:673:14: function getDiagnostic: (node: Node) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:673:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:674:15: variable heritageClause: HeritageClause | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:724:14: function findNearestDeclaration: (node: Node) => ArrowFunction | ExportAssignment | FunctionDeclaration | FunctionExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration | VariableDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:724:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:725:15: variable result: ExportAssignment | ParameterDeclaration | PropertyDeclaration | Statement | VariableDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:725:43: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:731:42: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:736:14: function createAccessorTypeError: (node: GetAccessorDeclaration | SetAccessorDeclaration) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:736:38: parameter node: GetAccessorDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:737:17: binding getAccessor: GetAccessorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:737:30: binding setAccessor: SetAccessorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:739:15: variable targetNode: GetAccessorDeclaration | ParameterDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:740:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:750:14: function addParentDeclarationRelatedInfo: (node: Node, diag: DiagnosticWithLocation) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:750:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:750:58: parameter diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:751:15: variable parentDeclaration: ArrowFunction | ExportAssignment | FunctionDeclaration | FunctionExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration | VariableDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:753:19: variable targetStr: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:758:14: function createObjectLiteralError: (node: ComputedPropertyName | ShorthandPropertyAssignment | SpreadAssignment) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:758:39: parameter node: ComputedPropertyName | ShorthandPropertyAssignment | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:759:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:763:14: function createArrayLiteralError: (node: ArrayLiteralExpression | SpreadElement) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:763:38: parameter node: ArrayLiteralExpression | SpreadElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:764:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:768:14: function createReturnTypeError: (node: ArrowFunction | ConstructSignatureDeclaration | FunctionDeclaration | FunctionExpression | MethodDeclaration) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:768:36: parameter node: ArrowFunction | ConstructSignatureDeclaration | FunctionDeclaration | FunctionExpression | MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:769:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:774:14: function createBindingElementError: (node: BindingElement) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:774:40: parameter node: BindingElement
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:777:14: function createVariableOrPropertyError: (node: PropertyDeclaration | VariableDeclaration) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:777:44: parameter node: PropertyDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:778:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:779:15: variable targetStr: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:783:14: function createParameterError: (node: ParameterDeclaration) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:783:35: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:787:15: variable addUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:791:15: variable message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:794:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:795:15: variable targetStr: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:799:14: function createClassExpressionError: (node: Expression) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:799:41: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:802:14: function createEntityInTypeNodeError: (node: EntityNameOrEntityNameExpression) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:802:42: parameter node: EntityNameOrEntityNameExpression
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:803:15: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:807:14: function createExpressionError: (node: Node, diagnosticMessage?: DiagnosticMessage | undefined) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:807:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:807:48: parameter diagnosticMessage: DiagnosticMessage | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:808:15: variable parentDeclaration: ArrowFunction | ExportAssignment | FunctionDeclaration | FunctionExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration | VariableDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:809:13: variable diag: DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:811:19: variable targetStr: string
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:812:19: variable parent: Node | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/declarations/diagnostics.ts:812:54: parameter n: Node

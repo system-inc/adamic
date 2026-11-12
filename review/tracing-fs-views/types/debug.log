@@ -1,0 +1,329 @@
+/workspace/tracing-measured-after/src/compiler/debug.ts:105:18: interface LoggingHost: LoggingHost
+/workspace/tracing-measured-after/src/compiler/debug.ts:106:9: parameter level: LogLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:106:26: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:112:9: variable currentAssertionLevel: AssertionLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:113:16: variable currentLogLevel: LogLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:114:16: variable isDebugging: boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:115:16: variable loggingHost: LoggingHost | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:118:10: type AssertionKeys: "assertEachNode" | "assertMissingNode" | "assertNode" | "assertNotNode" | "assertOptionalNode" | "assertOptionalToken"
+/workspace/tracing-measured-after/src/compiler/debug.ts:120:21: function shouldLog: (level: LogLevel) => boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:120:31: parameter level: LogLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:124:14: function logMessage: (level: LogLevel, s: string) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:124:25: parameter level: LogLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:124:42: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:130:21: function log: typeof log
+/workspace/tracing-measured-after/src/compiler/debug.ts:130:25: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:135:25: function error: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:135:31: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:139:25: function warn: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:139:30: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:143:25: function log: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:143:29: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:147:25: function trace: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:147:31: parameter s: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:152:21: function getAssertionLevel: () => AssertionLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:156:21: function setAssertionLevel: (level: AssertionLevel) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:156:39: parameter level: AssertionLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:160:21: function shouldAssert: (level: AssertionLevel) => boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:160:34: parameter level: AssertionLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:170:14: function shouldAssertFunction: <K extends AssertionKeys>(level: AssertionLevel, name: K) => boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:170:60: parameter level: AssertionLevel
+/workspace/tracing-measured-after/src/compiler/debug.ts:170:83: parameter name: K
+/workspace/tracing-measured-after/src/compiler/debug.ts:174:21: function fail: (message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never
+/workspace/tracing-measured-after/src/compiler/debug.ts:174:26: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:174:44: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:177:15: variable e: Error
+/workspace/tracing-measured-after/src/compiler/debug.ts:184:21: function failBadSyntaxKind: (node: Node, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never
+/workspace/tracing-measured-after/src/compiler/debug.ts:184:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:184:51: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:184:69: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:191:21: function assert: (expression: unknown, message?: string | undefined, verboseDebugInfo?: string | (() => string) | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts expression
+/workspace/tracing-measured-after/src/compiler/debug.ts:191:28: parameter expression: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:191:49: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:191:67: parameter verboseDebugInfo: string | (() => string) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:191:111: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:21: function assertEqual: <T>(a: T, b: T, msg?: string | undefined, msg2?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:36: parameter a: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:42: parameter b: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:48: parameter msg: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:62: parameter msg2: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:201:77: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:203:19: variable message: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:208:21: function assertLessThan: (a: number, b: number, msg?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:208:36: parameter a: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:208:47: parameter b: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:208:58: parameter msg: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:208:72: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:214:21: function assertLessThanOrEqual: (a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:214:43: parameter a: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:214:54: parameter b: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:214:65: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:220:21: function assertGreaterThanOrEqual: (a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:220:46: parameter a: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:220:57: parameter b: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:220:68: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:226:21: function assertIsDefined: <T>(value: T, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts value is NonNullable<T>
+/workspace/tracing-measured-after/src/compiler/debug.ts:226:40: parameter value: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:226:50: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:226:68: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:233:21: function checkDefined: <T>(value: T | null | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => T
+/workspace/tracing-measured-after/src/compiler/debug.ts:233:37: parameter value: T | null | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:233:66: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:233:84: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:238:21: function assertEachIsDefined: { <T extends Node>(value: NodeArray<T>, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is NodeArray<T>; <T>(value: readonly T[], message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is readonly NonNullable<T>[]; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:238:57: parameter value: NodeArray<T>
+/workspace/tracing-measured-after/src/compiler/debug.ts:238:78: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:238:96: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:239:21: function assertEachIsDefined: { <T extends Node>(value: NodeArray<T>, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is NodeArray<T>; <T>(value: readonly T[], message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is readonly NonNullable<T>[]; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:239:44: parameter value: readonly T[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:239:65: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:239:83: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:240:21: function assertEachIsDefined: { <T extends Node>(value: NodeArray<T>, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is NodeArray<T>; <T>(value: readonly T[], message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is readonly NonNullable<T>[]; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:240:44: parameter value: readonly T[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:240:65: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:240:83: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:241:20: variable v: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:246:21: function checkEachDefined: <T, A extends readonly T[]>(value: A, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => A
+/workspace/tracing-measured-after/src/compiler/debug.ts:246:65: parameter value: A
+/workspace/tracing-measured-after/src/compiler/debug.ts:246:75: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:246:93: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:251:21: function assertNever: (member: never, message?: string, stackCrawlMark?: AnyFunction | undefined) => never
+/workspace/tracing-measured-after/src/compiler/debug.ts:251:33: parameter member: never
+/workspace/tracing-measured-after/src/compiler/debug.ts:251:48: parameter message: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:251:76: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:252:15: variable detail: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:65: parameter nodes: NodeArray<T>
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:86: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:93: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:116: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:256:134: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:65: parameter nodes: readonly T[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:86: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:93: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:116: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:257:134: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:65: parameter nodes: NodeArray<T> | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:98: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:105: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:128: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:258:146: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:65: parameter nodes: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:98: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:105: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:128: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:259:146: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:36: parameter nodes: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:60: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:68: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:105: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:260:123: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:21: function assertEachNode: { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:36: parameter nodes: readonly Node[] | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:72: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:80: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:117: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:261:135: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:263:17: variable passed: boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:265:28: variable n: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:21: function assertNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:61: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:82: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:89: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:112: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:281:130: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:21: function assertNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:32: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:56: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:64: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:101: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:282:119: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:21: function assertNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:32: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:56: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:64: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:101: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:283:119: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:21: function assertNotNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Exclude<T, U>; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:64: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:85: parameter test: (node: Node) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:92: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:118: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:294:136: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:21: function assertNotNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Exclude<T, U>; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:35: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:59: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:67: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:104: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:295:122: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:21: function assertNotNode: { <T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Exclude<T, U>; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:35: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:59: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:67: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:104: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:296:122: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:21: function assertOptionalNode: { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:69: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:78: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:85: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:108: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:307:126: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:21: function assertOptionalNode: { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:69: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:90: parameter test: (node: T) => node is U
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:97: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:120: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:308:138: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:21: function assertOptionalNode: { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:40: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:64: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:72: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:109: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:309:127: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:21: function assertOptionalNode: { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:40: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:64: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:72: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:109: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:310:127: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:21: function assertOptionalToken: { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:79: parameter node: T
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:88: parameter kind: K
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:97: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:115: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:321:184: property kind: K
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:21: function assertOptionalToken: { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:79: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:100: parameter kind: K
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:109: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:127: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:322:196: property kind: K
+/workspace/tracing-measured-after/src/compiler/debug.ts:323:21: function assertOptionalToken: { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:323:41: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:323:65: parameter kind: SyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:323:95: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:323:113: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:324:21: function assertOptionalToken: { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:324:41: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:324:65: parameter kind: SyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:324:95: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:324:113: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:335:21: function assertMissingNode: (node: Node | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts node is undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:335:39: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:335:63: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:335:81: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:336:21: function assertMissingNode: (node: Node | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts node is undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:336:39: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:336:63: parameter message: string | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:336:81: parameter stackCrawlMark: AnyFunction | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:352:21: function type: <T>(value: unknown) => asserts value is T
+/workspace/tracing-measured-after/src/compiler/debug.ts:352:29: parameter value: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:353:21: function type: <T>(value: unknown) => asserts value is T
+/workspace/tracing-measured-after/src/compiler/debug.ts:353:26: parameter _value: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:357:21: function formatSymbol: (symbol: Symbol) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:357:34: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/debug.ts:358:160: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/debug.ts:364:21: function formatEnum: (value: number | undefined, enumObject: Readonly<Record<string, string | number>>, isFlags?: boolean | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:364:32: parameter value: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:364:43: parameter enumObject: Readonly<Record<string, string | number>>
+/workspace/tracing-measured-after/src/compiler/debug.ts:364:98: parameter isFlags: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:365:15: variable members: SortedReadonlyArray<[number, string]>
+/workspace/tracing-measured-after/src/compiler/debug.ts:370:19: variable result: string[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:371:17: variable remainingFlags: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:372:25: binding enumValue: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:372:36: binding enumName: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:386:25: binding enumValue: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:386:36: binding enumName: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:395:11: variable enumMemberCache: Map<Readonly<Record<string, string | number>>, SortedReadonlyArray<[number, string]>>
+/workspace/tracing-measured-after/src/compiler/debug.ts:397:14: function getEnumMembers: (enumObject: Readonly<Record<string, string | number>>) => SortedReadonlyArray<[number, string]>
+/workspace/tracing-measured-after/src/compiler/debug.ts:397:29: parameter enumObject: Readonly<Record<string, string | number>>
+/workspace/tracing-measured-after/src/compiler/debug.ts:401:15: variable existing: SortedReadonlyArray<[number, string]> | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:406:15: variable result: [number, string][]
+/workspace/tracing-measured-after/src/compiler/debug.ts:407:20: variable name: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:408:19: variable value: string | number | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:414:15: variable sorted: SortedReadonlyArray<[number, string]>
+/workspace/tracing-measured-after/src/compiler/debug.ts:414:60: parameter x: [number, string]
+/workspace/tracing-measured-after/src/compiler/debug.ts:414:63: parameter y: [number, string]
+/workspace/tracing-measured-after/src/compiler/debug.ts:419:21: function formatSyntaxKind: (kind: SyntaxKind | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:419:38: parameter kind: SyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:423:21: function formatSnippetKind: (kind: SnippetKind | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:423:39: parameter kind: SnippetKind | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:427:21: function formatScriptKind: (kind: ScriptKind | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:427:38: parameter kind: ScriptKind | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:431:21: function formatNodeFlags: (flags: NodeFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:431:37: parameter flags: NodeFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:435:21: function formatNodeCheckFlags: (flags: NodeCheckFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:435:42: parameter flags: NodeCheckFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:439:21: function formatModifierFlags: (flags: ModifierFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:439:41: parameter flags: ModifierFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:443:21: function formatTransformFlags: (flags: TransformFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:443:42: parameter flags: TransformFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:447:21: function formatEmitFlags: (flags: EmitFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:447:37: parameter flags: EmitFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:451:21: function formatSymbolFlags: (flags: SymbolFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:451:39: parameter flags: SymbolFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:455:21: function formatTypeFlags: (flags: TypeFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:455:37: parameter flags: TypeFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:459:21: function formatSignatureFlags: (flags: SignatureFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:459:42: parameter flags: SignatureFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:463:21: function formatObjectFlags: (flags: ObjectFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:463:39: parameter flags: ObjectFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:467:21: function formatFlowFlags: (flags: FlowFlags | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:467:37: parameter flags: FlowFlags | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:471:21: function formatRelationComparisonResult: (result: RelationComparisonResult | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:471:52: parameter result: RelationComparisonResult | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:475:21: function formatCheckMode: (mode: CheckMode | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:475:37: parameter mode: CheckMode | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:479:21: function formatSignatureCheckMode: (mode: SignatureCheckMode | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:479:46: parameter mode: SignatureCheckMode | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:483:21: function formatTypeFacts: (facts: TypeFacts | undefined) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:483:37: parameter facts: TypeFacts | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:487:9: variable isDebugInfoEnabled: boolean
+/workspace/tracing-measured-after/src/compiler/debug.ts:489:9: variable flowNodeProto: FlowNode | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:491:14: function attachFlowNodeDebugInfoWorker: (flowNode: FlowNode) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:491:44: parameter flowNode: FlowNode
+/workspace/tracing-measured-after/src/compiler/debug.ts:527:21: function attachFlowNodeDebugInfo: (flowNode: FlowNode) => FlowNode
+/workspace/tracing-measured-after/src/compiler/debug.ts:527:45: parameter flowNode: FlowNode
+/workspace/tracing-measured-after/src/compiler/debug.ts:546:9: variable nodeArrayProto: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:548:14: function attachNodeArrayDebugInfoWorker: (array: NodeArray<Node>) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:548:45: parameter array: NodeArray<Node>
+/workspace/tracing-measured-after/src/compiler/debug.ts:567:21: function attachNodeArrayDebugInfo: (array: NodeArray<Node>) => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:567:46: parameter array: NodeArray<Node>
+/workspace/tracing-measured-after/src/compiler/debug.ts:588:21: function enableDebugInfo: () => void
+/workspace/tracing-measured-after/src/compiler/debug.ts:784:21: function formatVariance: (varianceFlags: VarianceFlags) => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:784:36: parameter varianceFlags: VarianceFlags
+/workspace/tracing-measured-after/src/compiler/debug.ts:785:15: variable variance: number
+/workspace/tracing-measured-after/src/compiler/debug.ts:786:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:800:17: type DebugType: Type & { __debugTypeToString(): string; }
+/workspace/tracing-measured-after/src/compiler/debug.ts:801:18: class DebugTypeMapper: DebugTypeMapper
+/workspace/tracing-measured-after/src/compiler/debug.ts:802:17: property kind: TypeMapKind
+/workspace/tracing-measured-after/src/compiler/debug.ts:803:9: method __debugToString: () => string
+/workspace/tracing-measured-after/src/compiler/debug.ts:809:27: variable source: Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:810:27: variable sourceFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:812:27: variable sourceText: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:813:27: variable target: Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:814:27: variable targetFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:819:27: variable sources: readonly Type[]
+/workspace/tracing-measured-after/src/compiler/debug.ts:820:27: variable targets: readonly Type[] | undefined
+/workspace/tracing-measured-after/src/compiler/debug.ts:824:26: parameter s: Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:824:29: parameter t: string | Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:825:35: variable sFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:827:35: variable sourceText: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:829:35: variable tFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:839:26: parameter s: Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:839:29: parameter t: () => Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:840:35: variable sFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:842:35: variable sourceText: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:843:35: variable target: Type
+/workspace/tracing-measured-after/src/compiler/debug.ts:844:35: variable targetFormatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:851:27: variable mapper1: object
+/workspace/tracing-measured-after/src/compiler/debug.ts:852:27: variable mapper1Formatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:854:27: variable text1: string
+/workspace/tracing-measured-after/src/compiler/debug.ts:855:27: variable mapper2: object
+/workspace/tracing-measured-after/src/compiler/debug.ts:856:27: variable mapper2Formatter: unknown
+/workspace/tracing-measured-after/src/compiler/debug.ts:867:21: function attachDebugPrototypeIfDebug: (mapper: TypeMapper) => TypeMapper
+/workspace/tracing-measured-after/src/compiler/debug.ts:867:49: parameter mapper: TypeMapper

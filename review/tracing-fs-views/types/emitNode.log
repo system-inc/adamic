@@ -1,0 +1,133 @@
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:36:17: function getOrCreateEmitNode: (node: Node) => EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:36:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:46:19: variable sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:62:17: function disposeEmitNodes: (sourceFile: SourceFile | undefined) => void
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:62:34: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:69:11: variable annotatedNodes: Node[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:71:20: variable node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:81:17: function removeAllComments: <T extends Node>(node: T) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:81:51: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:82:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:92:17: function setEmitFlags: <T extends Node>(node: T, emitFlags: EmitFlags) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:92:46: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:92:55: parameter emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:102:17: function addEmitFlags: <T extends Node>(node: T, emitFlags: EmitFlags) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:102:46: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:102:55: parameter emitFlags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:103:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:113:17: function setInternalEmitFlags: <T extends Node>(node: T, emitFlags: InternalEmitFlags) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:113:54: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:113:63: parameter emitFlags: InternalEmitFlags
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:123:17: function addInternalEmitFlags: <T extends Node>(node: T, emitFlags: InternalEmitFlags) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:123:54: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:123:63: parameter emitFlags: InternalEmitFlags
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:124:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:132:17: function getSourceMapRange: (node: Node) => SourceMapRange
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:132:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:139:17: function setSourceMapRange: <T extends Node>(node: T, range: SourceMapRange | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:139:51: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:139:60: parameter range: SourceMapRange | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:147:17: function getTokenSourceMapRange: (node: Node, token: SyntaxKind) => SourceMapRange | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:147:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:147:52: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:154:17: function setTokenSourceMapRange: <T extends Node>(node: T, token: SyntaxKind, range: SourceMapRange | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:154:56: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:154:65: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:154:84: parameter range: SourceMapRange | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:155:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:156:11: variable tokenSourceMapRanges: (SourceMapRange | undefined)[]
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:166:17: function getStartsOnNewLine: (node: Node) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:166:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:175:17: function setStartsOnNewLine: <T extends Node>(node: T, newLine: boolean) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:175:52: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:175:61: parameter newLine: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:183:17: function getCommentRange: (node: Node) => TextRange
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:183:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:190:17: function setCommentRange: <T extends Node>(node: T, range: TextRange) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:190:49: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:190:58: parameter range: TextRange
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:195:17: function getSyntheticLeadingComments: (node: Node) => SynthesizedComment[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:195:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:199:17: function setSyntheticLeadingComments: <T extends Node>(node: T, comments: SynthesizedComment[] | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:199:61: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:199:70: parameter comments: SynthesizedComment[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:204:17: function addSyntheticLeadingComment: <T extends Node>(node: T, kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia, text: string, hasTrailingNewLine?: boolean | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:204:60: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:204:69: parameter kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:204:147: parameter text: string
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:204:161: parameter hasTrailingNewLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:208:17: function getSyntheticTrailingComments: (node: Node) => SynthesizedComment[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:208:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:212:17: function setSyntheticTrailingComments: <T extends Node>(node: T, comments: SynthesizedComment[] | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:212:62: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:212:71: parameter comments: SynthesizedComment[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:217:17: function addSyntheticTrailingComment: <T extends Node>(node: T, kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia, text: string, hasTrailingNewLine?: boolean | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:217:61: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:217:70: parameter kind: SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:217:148: parameter text: string
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:217:162: parameter hasTrailingNewLine: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:221:17: function moveSyntheticComments: <T extends Node>(node: T, original: Node) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:221:55: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:221:64: parameter original: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:224:11: variable emit: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:233:17: function getConstantValue: (node: AccessExpression) => string | number | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:233:34: parameter node: AccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:240:17: function setConstantValue: (node: AccessExpression, value: string | number) => AccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:240:34: parameter node: AccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:240:58: parameter value: string | number
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:241:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:249:17: function addEmitHelper: <T extends Node>(node: T, helper: EmitHelper) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:249:47: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:249:56: parameter helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:250:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:258:17: function addEmitHelpers: <T extends Node>(node: T, helpers: EmitHelper[] | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:258:48: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:258:57: parameter helpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:260:15: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:261:20: variable helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:271:17: function removeEmitHelper: (node: Node, helper: EmitHelper) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:271:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:271:46: parameter helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:272:11: variable helpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:282:17: function getEmitHelpers: (node: Node) => EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:282:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:289:17: function moveEmitHelpers: (source: Node, target: Node, predicate: (helper: EmitHelper) => boolean) => void
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:289:33: parameter source: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:289:47: parameter target: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:289:61: parameter predicate: (helper: EmitHelper) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:289:73: parameter helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:290:11: variable sourceEmitNode: EmitNode | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:291:11: variable sourceEmitHelpers: EmitHelper[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:294:11: variable targetEmitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:295:9: variable helpersRemoved: number
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:296:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:297:15: variable helper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:317:17: function getSnippetElement: (node: Node) => SnippetElement | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:317:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:326:17: function setSnippetElement: <T extends Node>(node: T, snippet: SnippetElement) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:326:51: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:326:60: parameter snippet: SnippetElement
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:327:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:333:17: function ignoreSourceNewlines: <T extends Node>(node: T) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:333:54: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:339:17: function setTypeNode: <T extends Node>(node: T, type: TypeNode) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:339:45: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:339:54: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:340:11: variable emitNode: EmitNode
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:346:17: function getTypeNode: <T extends Node>(node: T) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:346:45: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:351:17: function setIdentifierTypeArguments: <T extends Identifier>(node: T, typeArguments: NodeArray<TypeNode | TypeParameterDeclaration> | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:351:66: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:351:75: parameter typeArguments: NodeArray<TypeNode | TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:357:17: function getIdentifierTypeArguments: (node: Identifier) => NodeArray<TypeNode | TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:357:44: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:362:17: function setIdentifierAutoGenerate: <T extends Identifier | PrivateIdentifier>(node: T, autoGenerate: AutoGenerateInfo | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:362:85: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:362:94: parameter autoGenerate: AutoGenerateInfo | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:368:17: function getIdentifierAutoGenerate: (node: Identifier | PrivateIdentifier) => AutoGenerateInfo | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:368:43: parameter node: Identifier | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:373:17: function setIdentifierGeneratedImportReference: <T extends Identifier | PrivateIdentifier>(node: T, value: ImportSpecifier | undefined) => T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:373:97: parameter node: T
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:373:106: parameter value: ImportSpecifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:379:17: function getIdentifierGeneratedImportReference: (node: Identifier | PrivateIdentifier) => ImportSpecifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitNode.ts:379:55: parameter node: Identifier | PrivateIdentifier

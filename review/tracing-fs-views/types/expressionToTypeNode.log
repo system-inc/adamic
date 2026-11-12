@@ -1,0 +1,388 @@
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:160:6: type SyntacticResult: { type: TypeNode; reportFallback: undefined; } | { type: undefined; reportFallback: true; } | { type: undefined; reportFallback: false; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:161:9: property type: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:161:25: property reportFallback: undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:162:9: property type: undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:162:26: property reportFallback: true
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:163:9: property type: undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:163:26: property reportFallback: false
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:164:10: function syntacticResult: { (type: TypeNode | undefined): SyntacticResult; (type: undefined, reportFallback: boolean): SyntacticResult; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:164:26: parameter type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:165:10: function syntacticResult: { (type: TypeNode | undefined): SyntacticResult; (type: undefined, reportFallback: boolean): SyntacticResult; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:165:26: parameter type: undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:165:43: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:166:10: function syntacticResult: { (type: TypeNode | undefined): SyntacticResult; (type: undefined, reportFallback: boolean): SyntacticResult; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:166:26: parameter type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:166:54: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:169:7: variable notImplemented: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:170:7: variable alreadyReported: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:171:7: variable failed: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:174:17: function createSyntacticTypeNodeBuilder: (options: CompilerOptions, resolver: SyntacticTypeNodeBuilderResolver) => SyntacticNodeBuilder
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:175:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:176:5: parameter resolver: SyntacticTypeNodeBuilderResolver
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:178:11: variable strictNullChecks: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:185:9: method tryReuseExistingTypeNode: (context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:185:34: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:185:76: parameter existing: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:193:14: function reuseNode: { <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T, range?: Node | undefined): T; <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T | undefined, range?: Node | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:193:40: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:193:82: parameter node: T
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:193:91: parameter range: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:194:14: function reuseNode: { <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T, range?: Node | undefined): T; <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T | undefined, range?: Node | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:194:40: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:194:82: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:194:103: parameter range: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:195:14: function reuseNode: { <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T, range?: Node | undefined): T; <T extends Node>(context: SyntacticTypeNodeBuilderContext, node: T | undefined, range?: Node | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:195:40: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:195:82: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:195:103: parameter range: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:198:14: function tryReuseExistingTypeNode: (context: SyntacticTypeNodeBuilderContext, existing: TypeNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:198:39: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:198:81: parameter existing: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:199:17: binding finalizeBoundary: () => boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:199:35: binding startRecoveryScope: () => () => void
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:199:55: binding hadError: () => boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:199:65: binding markError: () => void
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:200:15: variable transformed: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:207:18: function visitExistingNodeTreeSymbols: (node: Node) => Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:207:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:210:19: variable recover: () => void
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:212:19: variable onExitNewScope: (() => void) | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:213:19: variable result: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:233:18: function tryVisitSimpleTypeNode: (node: TypeNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:233:41: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:234:19: variable innerNode: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:243:27: variable typeOperatorNode: TypeOperatorNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:251:18: function tryVisitIndexedAccess: (node: IndexedAccessTypeNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:251:40: parameter node: IndexedAccessTypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:252:19: variable resultObjectType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:259:18: function tryVisitKeyOf: (node: TypeOperatorNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:259:32: parameter node: TypeOperatorNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:261:19: variable type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:268:18: function tryVisitTypeQuery: (node: TypeQueryNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:268:36: parameter node: TypeQueryNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:269:21: binding introducesError: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:269:44: binding exprName: EntityName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:278:19: variable serializedName: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:284:18: function tryVisitTypeReference: (node: TypeReferenceNode) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:284:40: parameter node: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:286:25: binding introducesError: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:286:48: binding newName: EntityName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:287:23: variable typeArguments: NodeArray<TypeNode> | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:290:27: variable updated: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:298:27: variable serializedName: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:306:18: function visitExistingNodeTreeSymbolsWorker: (node: Node) => Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:306:53: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:331:82: parameter t: JSDocPropertyLikeTag
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:332:27: variable name: Identifier
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:333:27: variable overrideTypeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:361:25: variable newTypeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:365:54: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:365:57: parameter i: number
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:380:47: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:380:50: parameter i: number
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:401:31: binding newName: Identifier
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:412:23: variable result: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:421:23: variable result: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:438:23: variable specifier: StringLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:439:23: variable literal: StringLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:463:21: variable visited: ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:474:23: variable result: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:482:31: binding result: EntityNameExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:482:39: binding introducesError: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:487:27: variable computedPropertyNameType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:488:25: variable literal: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:493:31: variable evaluated: EvaluatorResult<string | number | undefined>
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:494:31: variable literalNode: NumericLiteral | StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:515:21: variable parameterName: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:517:35: binding result: Identifier
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:517:43: binding introducesError: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:531:23: variable visited: MappedTypeNode | TupleTypeNode | TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:532:23: variable clone: MappedTypeNode | TupleTypeNode | TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:533:23: variable flags: EmitFlags
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:538:23: variable clone: StringLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:543:23: variable checkType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:545:23: variable disposeScope: () => void
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:546:23: variable extendType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:547:23: variable trueType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:549:23: variable falseType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:567:27: variable result: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:578:22: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor): T; <T extends Node>(node: T | undefined, visitor: Visitor): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:578:53: parameter node: T
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:578:62: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:579:22: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor): T; <T extends Node>(node: T | undefined, visitor: Visitor): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:579:53: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:579:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:580:22: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor): T; <T extends Node>(node: T | undefined, visitor: Visitor): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:580:53: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:580:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:581:23: variable nonlocalNode: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:585:22: function visitNodesWithoutCopyingPositions: (nodes: NodeArray<Node> | undefined, visitor: Visitor, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined) => NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:586:17: parameter nodes: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:587:17: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:588:17: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:588:25: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:589:17: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:590:17: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:592:21: variable result: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:604:22: function getEffectiveDotDotDotForParameter: (p: ParameterDeclaration) => DotDotDotToken | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:604:56: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:609:22: function getNameForJSDocFunctionParameter: (p: ParameterDeclaration, index: number) => string
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:609:55: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:609:80: parameter index: number
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:615:22: function rewriteModuleSpecifier: (parent: ImportTypeNode, lit: StringLiteral) => StringLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:615:45: parameter parent: ImportTypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:615:69: parameter lit: StringLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:616:23: variable newName: string | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:622:14: function serializeExistingTypeNode: { (typeNode: TypeNode, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode; (typeNode: TypeNode | undefined, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:622:40: parameter typeNode: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:622:60: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:622:102: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:623:14: function serializeExistingTypeNode: { (typeNode: TypeNode, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode; (typeNode: TypeNode | undefined, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:623:40: parameter typeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:623:72: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:623:114: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:624:14: function serializeExistingTypeNode: { (typeNode: TypeNode, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode; (typeNode: TypeNode | undefined, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined): TypeNode | undefined; }
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:624:40: parameter typeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:624:72: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:624:114: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:626:13: variable result: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:14: function serializeTypeAnnotationOfDeclaration: (declaredType: TypeNode | undefined, context: SyntacticTypeNodeBuilderContext, node: Declaration, symbol: Symbol | undefined, requiresAddingUndefined?: boolean | undefined, useFallback?: boolean) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:51: parameter declaredType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:87: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:129: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:148: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:176: parameter requiresAddingUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:637:211: parameter useFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:646:13: variable result: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:656:14: function serializeExistingTypeNodeWithFallback: (typeNode: TypeNode | undefined, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined, targetNode?: Node | undefined) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:656:52: parameter typeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:656:84: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:656:126: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:656:150: parameter targetNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:658:15: variable result: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:665:14: function serializeTypeOfAccessor: (accessor: AccessorDeclaration, symbol: Symbol | undefined, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:665:38: parameter accessor: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:665:69: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:665:97: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:669:14: function serializeTypeOfExpression: (expr: Expression, context: SyntacticTypeNodeBuilderContext, addUndefined?: boolean | undefined, preserveLiterals?: boolean | undefined) => TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:669:40: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:669:58: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:669:100: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:669:124: parameter preserveLiterals: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:670:15: variable result: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:673:14: function serializeTypeOfDeclaration: (node: HasInferredType, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:673:41: parameter node: HasInferredType
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:673:64: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:673:80: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:700:14: function typeFromPropertyAssignment: (node: PropertyAssignment | ShorthandPropertyAssignment, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:700:41: parameter node: PropertyAssignment | ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:700:97: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:700:113: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:701:15: variable typeAnnotation: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:702:13: variable result: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:707:19: variable initializer: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:708:19: variable assertionNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:718:14: function serializeReturnTypeForSignature: (node: JSDocSignature | SignatureDeclaration, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:718:46: parameter node: JSDocSignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:718:91: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:718:107: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:741:14: function getTypeAnnotationFromAccessor: (accessor: AccessorDeclaration) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:741:44: parameter accessor: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:748:14: function getTypeAnnotationFromAllAccessorDeclarations: (node: AccessorDeclaration, accessors: AllAccessorDeclarations) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:748:59: parameter node: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:748:86: parameter accessors: AllAccessorDeclarations
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:749:13: variable accessorType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:759:14: function typeFromAccessor: (node: AccessorDeclaration, symbol: Symbol | undefined, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:759:31: parameter node: AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:759:58: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:759:86: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:760:15: variable accessorDeclarations: AllAccessorDeclarations
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:761:15: variable accessorType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:770:14: function typeFromVariable: (node: VariableDeclaration, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:770:31: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:770:58: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:770:74: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:771:15: variable declaredType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:772:13: variable resultType: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:783:14: function typeFromParameter: (node: JSDocParameterTag | ParameterDeclaration, symbol: Symbol | undefined, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:783:32: parameter node: JSDocParameterTag | ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:783:80: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:783:108: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:784:15: variable parent: JSDoc | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:788:15: variable declaredType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:789:15: variable addUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:790:13: variable resultType: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:802:14: function typeFromExpandoProperty: (node: BinaryExpression | ElementAccessExpression | PropertyAccessExpression, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:802:38: parameter node: BinaryExpression | ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:802:115: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:802:131: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:803:15: variable declaredType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:804:13: variable result: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:808:15: variable oldSuppressReportInferenceFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:810:15: variable resultType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:814:14: function typeFromProperty: (node: JSDocPropertyTag | PropertyDeclaration | PropertySignature, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:814:31: parameter node: JSDocPropertyTag | PropertyDeclaration | PropertySignature
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:814:97: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:814:113: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:815:15: variable declaredType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:816:15: variable requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:817:13: variable resultType: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:822:19: variable initializer: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:824:23: variable isReadonly: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:831:14: function inferTypeOfDeclaration: (node: GetAccessorDeclaration | SetAccessorDeclaration | HasInferredType, symbol: Symbol | undefined, context: SyntacticTypeNodeBuilderContext, reportFallback?: boolean) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:832:9: parameter node: GetAccessorDeclaration | SetAccessorDeclaration | HasInferredType
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:833:9: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:834:9: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:835:9: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:846:14: function inferExpressionType: (node: Expression, context: SyntacticTypeNodeBuilderContext, reportFallback?: boolean, requiresAddingUndefined?: boolean | undefined) => TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:846:34: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:846:52: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:846:94: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:846:117: parameter requiresAddingUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:857:14: function inferReturnTypeOfSignatureSignature: (node: JSDocSignature | SignatureDeclaration, context: SyntacticTypeNodeBuilderContext, symbol: Symbol | undefined, reportFallback: boolean) => TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:857:50: parameter node: JSDocSignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:857:95: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:857:137: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:857:165: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:14: function inferAccessorType: (node: GetAccessorDeclaration | SetAccessorDeclaration, allAccessors: AllAccessorDeclarations, context: SyntacticTypeNodeBuilderContext, symbol: Symbol | undefined, reportFallback?: boolean) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:32: parameter node: GetAccessorDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:87: parameter allAccessors: AllAccessorDeclarations
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:126: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:168: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:867:196: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:875:19: variable result: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:880:14: function withNewScope: <R>(context: SyntacticTypeNodeBuilderContext, node: ConditionalTypeNode | IntroducesNewScopeNode, fn: () => R) => R
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:880:30: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:880:72: parameter node: ConditionalTypeNode | IntroducesNewScopeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:880:124: parameter fn: () => R
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:881:15: variable cleanup: () => void
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:882:15: variable result: R
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:886:14: function typeFromTypeAssertion: (expression: Expression, type: TypeNode, context: SyntacticTypeNodeBuilderContext, requiresAddingUndefined: boolean) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:886:36: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:886:60: parameter type: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:886:76: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:886:118: parameter requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:14: function typeFromExpression: (node: Expression | JsxAttributeValue, context: SyntacticTypeNodeBuilderContext, isConstContext?: boolean, requiresAddingUndefined?: boolean, preserveLiterals?: boolean) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:33: parameter node: Expression | JsxAttributeValue
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:71: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:113: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:137: parameter requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:892:170: parameter preserveLiterals: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:917:23: variable asExpression: AsExpression | TypeAssertion
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:920:23: variable unaryExpression: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:943:21: variable typeKind: KeywordTypeSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:944:21: variable primitiveNode: PrimitiveLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:970:14: function typeFromFunctionLikeExpression: (fnNode: ArrowFunction | FunctionExpression, context: SyntacticTypeNodeBuilderContext) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:970:45: parameter fnNode: ArrowFunction | FunctionExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:970:89: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:971:15: variable returnType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:972:15: variable typeParameters: TypeParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:973:15: variable parameters: ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:973:50: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:982:14: function canGetTypeFromArrayLiteral: (arrayLiteral: ArrayLiteralExpression, context: SyntacticTypeNodeBuilderContext, isConstContext: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:982:41: parameter arrayLiteral: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:982:79: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:982:121: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:987:20: variable element: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:995:14: function typeFromArrayLiteral: (arrayLiteral: ArrayLiteralExpression, context: SyntacticTypeNodeBuilderContext, isConstContext: boolean, requiresAddingUndefined: boolean) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:995:35: parameter arrayLiteral: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:995:73: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:995:115: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:995:140: parameter requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1003:15: variable oldNoInferenceFallback: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1005:15: variable elementTypesInfo: TypeNode[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1006:20: variable element: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1014:23: variable expressionType: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1015:23: variable elementType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1019:15: variable tupleType: TupleTypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1024:14: function canGetTypeFromObjectLiteral: (objectLiteral: ObjectLiteralExpression, context: SyntacticTypeNodeBuilderContext) => boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1024:42: parameter objectLiteral: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1024:82: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1025:13: variable result: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1026:20: variable prop: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1044:23: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1053:14: function typeFromObjectLiteral: (objectLiteral: ObjectLiteralExpression, context: SyntacticTypeNodeBuilderContext, isConstContext: boolean, requiresAddingUndefined: boolean) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1053:36: parameter objectLiteral: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1053:76: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1053:118: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1053:143: parameter requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1061:15: variable oldNoInferenceFallback: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1063:15: variable properties: TypeElement[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1064:15: variable oldFlags: NodeBuilderFlags
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1066:20: variable prop: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1069:19: variable name: PropertyName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1070:17: variable newProp: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1090:15: variable typeNode: TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1098:14: function typeFromObjectLiteralPropertyAssignment: (prop: PropertyAssignment, name: PropertyName, context: SyntacticTypeNodeBuilderContext, isConstContext: boolean) => PropertySignature
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1098:54: parameter prop: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1098:80: parameter name: PropertyName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1098:100: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1098:142: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1099:15: variable modifiers: ModifierToken<SyntaxKind.ReadonlyKeyword>[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1102:15: variable expressionResult: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1103:15: variable typeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1113:14: function ensureParameter: (p: ParameterDeclaration, context: SyntacticTypeNodeBuilderContext) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1113:30: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1113:55: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1124:14: function reuseTypeParameters: (typeParameters: NodeArray<TypeParameterDeclaration> | undefined, context: SyntacticTypeNodeBuilderContext) => TypeParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1124:34: parameter typeParameters: NodeArray<TypeParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1124:99: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1125:36: parameter tp: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1126:27: binding tpName: Identifier
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1129:35: parameter m: Modifier
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1137:14: function typeFromObjectLiteralMethod: (method: MethodDeclaration, name: PropertyName, context: SyntacticTypeNodeBuilderContext, isConstContext: boolean) => MethodSignature | PropertySignature
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1137:42: parameter method: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1137:69: parameter name: PropertyName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1137:89: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1137:131: parameter isConstContext: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1138:15: variable returnType: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1139:15: variable typeParameters: TypeParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1140:15: variable parameters: ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1140:50: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1167:14: function typeFromObjectLiteralAccessor: (accessor: GetAccessorDeclaration | SetAccessorDeclaration, name: PropertyName, context: SyntacticTypeNodeBuilderContext) => GetAccessorDeclaration | PropertySignature | SetAccessorDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1167:44: parameter accessor: GetAccessorDeclaration | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1167:103: parameter name: PropertyName
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1167:123: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1168:15: variable allAccessors: AllAccessorDeclarations
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1169:15: variable getAccessorType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1170:15: variable setAccessorType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1174:23: variable parameters: ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1174:60: parameter p: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1198:19: variable foundType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1201:19: variable propertyType: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1203:19: variable propertySignature: PropertySignature
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1212:14: function createUndefinedTypeNode: () => KeywordTypeNode<SyntaxKind.AnyKeyword> | KeywordTypeNode<SyntaxKind.UndefinedKeyword>
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:14: function typeFromPrimitiveLiteral: (node: PrimitiveLiteral, baseType: KeywordTypeSyntaxKind, context: SyntacticTypeNodeBuilderContext, preserveLiterals: boolean, requiresAddingUndefined: boolean) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:39: parameter node: PrimitiveLiteral
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:63: parameter baseType: KeywordTypeSyntaxKind
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:96: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:138: parameter preserveLiterals: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1220:165: parameter requiresAddingUndefined: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1221:13: variable result: any
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1234:14: function addUndefinedIfNeeded: (node: TypeNode, addUndefined: boolean | undefined, owner: Node | undefined, context: SyntacticTypeNodeBuilderContext) => TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1234:35: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1234:51: parameter addUndefined: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1234:86: parameter owner: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1234:111: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1235:15: variable parentDeclaration: Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1236:15: variable optionalDeclaration: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1246:14: function canAddUndefined: (node: TypeNode) => boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1246:30: parameter node: TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1270:14: function createReturnFromSignature: (fn: JSDocSignature | SignatureDeclaration, symbol: Symbol | undefined, context: SyntacticTypeNodeBuilderContext, reportFallback?: boolean) => TypeNode
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1270:40: parameter fn: JSDocSignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1270:83: parameter symbol: Symbol | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1270:111: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1270:153: parameter reportFallback: boolean
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1271:13: variable returnType: SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1272:15: variable returnTypeNode: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1282:14: function typeFromSingleReturnExpression: (declaration: FunctionLikeDeclaration | undefined, context: SyntacticTypeNodeBuilderContext) => SyntacticResult
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1282:45: parameter declaration: FunctionLikeDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1282:95: parameter context: SyntacticTypeNodeBuilderContext
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1283:13: variable candidateExpr: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1285:19: variable flags: FunctionFlags
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1288:19: variable body: ConciseBody | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1290:46: parameter s: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1310:23: variable type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1324:14: function isContextuallyTyped: (node: Node) => Node | undefined
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1324:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/expressionToTypeNode.ts:1325:42: parameter n: Node

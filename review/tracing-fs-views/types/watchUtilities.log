@@ -1,0 +1,363 @@
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:68:18: interface DirectoryStructureHost: DirectoryStructureHost
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:69:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:70:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:70:28: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:73:5: property directoryExists: ((path: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:73:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:74:5: property getDirectories: ((path: string) => string[]) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:74:39: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:5: property readDirectory: ((path: string, extensions?: readonly string[] | undefined, exclude?: readonly string[] | undefined, include?: readonly string[] | undefined, depth?: number | undefined) => string[]) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:37: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:51: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:83: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:112: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:75:141: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:76:5: property realpath: ((path: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:76:27: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:78:5: property createDirectory: ((path: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:78:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:79:5: property writeFile: ((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:79:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:79:43: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:79:57: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:83:18: interface FileAndDirectoryExistence: FileAndDirectoryExistence
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:84:5: property fileExists: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:85:5: property directoryExists: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:89:18: interface CachedDirectoryStructureHost: CachedDirectoryStructureHost
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:90:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:92:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:93:19: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:93:33: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:93:65: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:93:94: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:93:123: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:96:32: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:96:57: parameter fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:97:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:97:39: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:97:55: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:101:6: type Canonicalized: string & { __canonicalized: void; }
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:101:33: property __canonicalized: void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:103:11: interface MutableFileSystemEntries: MutableFileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:104:14: property files: string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:105:14: property directories: string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:106:5: property sortedAndCanonicalizedFiles: SortedArray<Canonicalized> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:107:5: property sortedAndCanonicalizedDirectories: SortedArray<Canonicalized> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:110:11: interface SortedAndCanonicalizedMutableFileSystemEntries: SortedAndCanonicalizedMutableFileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:111:14: property files: string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:112:14: property directories: string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:113:14: property sortedAndCanonicalizedFiles: SortedArray<Canonicalized>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:114:14: property sortedAndCanonicalizedDirectories: SortedArray<Canonicalized>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:118:17: function createCachedDirectoryStructureHost: (host: DirectoryStructureHost, currentDirectory: string, useCaseSensitiveFileNames: boolean) => CachedDirectoryStructureHost | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:118:52: parameter host: DirectoryStructureHost
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:118:82: parameter currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:118:108: parameter useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:123:11: variable cachedReadDirectoryResult: Map<string, false | MutableFileSystemEntries>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:124:11: variable getCanonicalFileName: (name: string) => Canonicalized
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:124:93: parameter name: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:128:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:128:26: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:140:14: function toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:140:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:144:14: function getCachedFileSystemEntries: (rootDirPath: Path) => false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:144:41: parameter rootDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:148:14: function getCachedFileSystemEntriesForBaseDir: (path: Path) => false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:148:51: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:149:15: variable entries: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:162:14: function getBaseNameOfFileName: (fileName: string) => string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:162:36: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:166:14: function createCachedFileSystemEntries: (rootDir: string, rootDirPath: Path) => false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:166:44: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:166:61: parameter rootDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:168:19: variable resultFromHost: MutableFileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:192:14: function tryReadDirectory: (rootDir: string, rootDirPath: Path) => false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:192:31: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:192:48: parameter rootDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:194:15: variable cachedResult: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:209:14: function hasEntry: (entries: SortedReadonlyArray<Canonicalized>, name: Canonicalized) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:209:23: parameter entries: SortedReadonlyArray<Canonicalized>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:209:68: parameter name: Canonicalized
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:211:15: variable index: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:215:14: function writeFile: (fileName: string, data: string, writeByteOrderMark?: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:215:24: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:215:42: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:215:56: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:216:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:217:15: variable result: false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:224:14: function fileExists: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:224:25: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:225:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:226:15: variable result: false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:231:14: function directoryExists: (dirPath: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:231:30: parameter dirPath: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:232:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:236:14: function createDirectory: (dirPath: string) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:236:30: parameter dirPath: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:237:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:238:15: variable result: false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:240:19: variable baseName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:241:19: variable canonicalizedBaseName: Canonicalized
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:242:19: variable canonicalizedDirectories: SortedArray<Canonicalized>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:251:14: function getDirectories: (rootDir: string) => string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:251:29: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:252:15: variable rootDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:253:15: variable result: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:14: function readDirectory: (rootDir: string, extensions?: readonly string[] | undefined, excludes?: readonly string[] | undefined, includes?: readonly string[] | undefined, depth?: number | undefined) => string[]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:28: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:45: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:77: parameter excludes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:107: parameter includes: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:260:137: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:261:15: variable rootDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:262:15: variable rootResult: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:263:13: variable rootSymLinkResult: FileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:269:18: function getFileSystemEntries: (dir: string) => FileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:269:39: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:270:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:274:19: variable result: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:280:18: function getFileSystemEntriesFromHost: (dir: string, path: Path) => FileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:280:47: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:280:60: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:282:19: variable result: FileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:291:14: function realpath: (s: string) => string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:291:23: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:295:14: function clearFirstAncestorEntry: (fileOrDirectoryPath: Path) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:295:38: parameter fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:298:13: parameter ancestor: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:302:14: function addOrDeleteFileOrDirectory: (fileOrDirectory: string, fileOrDirectoryPath: Path) => FileAndDirectoryExistence | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:302:41: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:302:66: parameter fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:303:15: variable existingResult: false | MutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:311:15: variable parentResult: false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:326:15: variable baseName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:327:15: variable fsQueryResult: FileAndDirectoryExistence
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:342:14: function addOrDeleteFile: (fileName: string, filePath: Path, eventKind: FileWatcherEventKind) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:342:30: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:342:48: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:342:64: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:347:15: variable parentResult: false | SortedAndCanonicalizedMutableFileSystemEntries | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:356:14: function updateFilesOfFileSystemEntry: (parentResult: SortedAndCanonicalizedMutableFileSystemEntries, baseName: string, fileExists: boolean) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:356:43: parameter parentResult: SortedAndCanonicalizedMutableFileSystemEntries
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:356:105: parameter baseName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:356:123: parameter fileExists: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:357:15: variable canonicalizedFiles: SortedArray<Canonicalized>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:358:15: variable canonicalizedBaseName: Canonicalized
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:367:19: variable sortedIndex: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:370:23: variable unsortedIndex: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:370:68: parameter entry: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:376:14: function clearCache: () => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:397:18: interface SharedExtendedConfigFileWatcher: SharedExtendedConfigFileWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:398:5: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:399:5: property projects: Set<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:407:17: function updateSharedExtendedConfigFileWatcher: <T>(projectPath: T, options: CompilerOptions | undefined, extendedConfigFilesMap: Map<Path, SharedExtendedConfigFileWatcher<T>>, createExtendedConfigFileWatch: (extendedConfigPath: string, extendedConfigFilePath: Path) => FileWatcher, toPath: (fileName: string) => Path) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:408:5: parameter projectPath: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:409:5: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:410:5: parameter extendedConfigFilesMap: Map<Path, SharedExtendedConfigFileWatcher<T>>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:411:5: parameter createExtendedConfigFileWatch: (extendedConfigPath: string, extendedConfigFilePath: Path) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:411:37: parameter extendedConfigPath: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:411:65: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:412:5: parameter toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:412:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:414:11: variable extendedConfigs: Map<Path, string>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:416:37: parameter watcher: SharedExtendedConfigFileWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:416:46: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:423:30: parameter extendedConfigFileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:423:54: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:424:15: variable existing: SharedExtendedConfigFileWatcher<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:434:27: variable existing: SharedExtendedConfigFileWatcher<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:449:17: function clearSharedExtendedConfigFileWatcher: <T>(projectPath: T, extendedConfigFilesMap: Map<Path, SharedExtendedConfigFileWatcher<T>>) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:450:5: parameter projectPath: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:451:5: parameter extendedConfigFilesMap: Map<Path, SharedExtendedConfigFileWatcher<T>>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:453:36: parameter watcher: SharedExtendedConfigFileWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:463:17: function cleanExtendedConfigCache: (extendedConfigCache: Map<string, ExtendedConfigCacheEntry>, extendedConfigFilePath: Path, toPath: (fileName: string) => Path) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:464:5: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:465:5: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:466:5: parameter toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:466:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:469:36: binding extendedResult: TsConfigSourceFile
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:469:54: parameter key: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:470:54: parameter extendedFile: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:481:17: function updateMissingFilePathsWatch: (program: Program, missingFileWatches: Map<Path, FileWatcher>, createMissingFileWatch: (missingFilePath: Path, missingFileName: string) => FileWatcher) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:482:5: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:483:5: parameter missingFileWatches: Map<Path, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:484:5: parameter createMissingFileWatch: (missingFilePath: Path, missingFileName: string) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:484:30: parameter missingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:484:53: parameter missingFileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:501:18: interface WildcardDirectoryWatcher: WildcardDirectoryWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:502:5: property watcher: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:503:5: property flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:514:17: function updateWatchingWildcardDirectories: <T extends FileWatcher>(existingWatchedForWildcards: Map<string, WildcardDirectoryWatcher<T>>, wildcardDirectories: MapLike<WatchDirectoryFlags> | undefined, watchDirectory: (directory: string, flags: WatchDirectoryFlags) => T) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:515:5: parameter existingWatchedForWildcards: Map<string, WildcardDirectoryWatcher<T>>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:516:5: parameter wildcardDirectories: MapLike<WatchDirectoryFlags> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:517:5: parameter watchDirectory: (directory: string, flags: WatchDirectoryFlags) => T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:517:22: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:517:41: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:537:14: function createWildcardDirectoryWatcher: (directory: string, flags: WatchDirectoryFlags) => WildcardDirectoryWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:537:45: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:537:64: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:545:14: function updateWildcardDirectoryWatcher: (existingWatcher: WildcardDirectoryWatcher<T>, flags: WatchDirectoryFlags, directory: string) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:545:45: parameter existingWatcher: WildcardDirectoryWatcher<T>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:545:91: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:545:119: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:557:18: interface IsIgnoredFileFromWildCardWatchingInput: IsIgnoredFileFromWildCardWatchingInput
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:558:5: property watchedDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:559:5: property fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:560:5: property fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:561:5: property configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:562:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:563:5: property program: BuilderProgram | Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:564:5: property extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:565:5: property currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:566:5: property useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:567:5: property writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:567:16: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:568:5: property toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:568:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:569:5: property getScriptKind: ((fileName: string) => ScriptKind) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:569:22: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:572:17: function isIgnoredFileFromWildCardWatching: ({ watchedDirPath, fileOrDirectory, fileOrDirectoryPath, configFileName, options, program, extraFileExtensions, currentDirectory, useCaseSensitiveFileNames, writeLog, toPath, getScriptKind, }: IsIgnoredFileFromWildCardWatchingInput) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:573:5: binding watchedDirPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:574:5: binding fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:575:5: binding fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:576:5: binding configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:577:5: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:578:5: binding program: BuilderProgram | Program | readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:579:5: binding extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:580:5: binding currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:581:5: binding useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:582:5: binding writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:583:5: binding toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:584:5: binding getScriptKind: ((fileName: string) => ScriptKind) | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:586:11: variable newPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:627:11: variable filePathWithoutExtension: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:628:11: variable realProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:629:11: variable builderProgram: BuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:639:14: function hasSourceFile: (file: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:639:28: parameter file: Path
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:644:50: parameter rootFile: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:647:14: function isSupportedScriptKind: () => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:649:15: variable scriptKind: ScriptKind
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:668:17: function isEmittedFileOfProgram: (program: Program | undefined, file: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:668:40: parameter program: Program | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:668:70: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:684:18: interface WatchFactoryHost: WatchFactoryHost
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:685:15: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:685:29: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:685:60: parameter pollingInterval: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:685:86: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:686:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:686:34: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:686:70: parameter recursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:686:91: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:688:5: property useCaseSensitiveFileNames: boolean | (() => boolean)
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:692:18: interface WatchFactory: WatchFactory<X, Y>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:5: property watchFile: (file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:17: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:31: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:62: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:96: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:131: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:693:147: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:5: property watchDirectory: (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:22: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:41: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:77: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:105: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:140: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:694:156: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:698:13: type GetDetailWatchInfo: (detailInfo1: X, detailInfo2: Y | undefined) => string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:698:41: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:698:57: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:17: function getWatchFactory: <X, Y = undefined>(host: WatchFactoryHost, watchLogLevel: WatchLogLevel, log: (s: string) => void, getDetailWatchInfo?: GetDetailWatchInfo<X, Y> | undefined) => WatchFactory<X, Y>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:51: parameter host: WatchFactoryHost
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:75: parameter watchLogLevel: WatchLogLevel
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:105: parameter log: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:111: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:700:131: parameter getDetailWatchInfo: GetDetailWatchInfo<X, Y> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:702:11: variable plainInvokeFactory: WatchFactory<X, Y>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:703:21: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:703:27: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:703:37: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:703:54: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:704:26: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:704:37: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:704:47: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:704:54: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:706:11: variable triggerInvokingFactory: WatchFactory<X, Y> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:712:11: variable factory: WatchFactory<X, Y>
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:718:11: variable excludeWatcherFactory: (file: string, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => { close: () => void; }
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:727:14: function createExcludeHandlingAddWatch: <T extends keyof WatchFactory<X, Y>>(key: T) => WatchFactory<X, Y>[T]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:727:80: parameter key: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:729:13: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:730:13: parameter cb: DirectoryWatcherCallback | FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:731:13: parameter flags: PollingInterval | WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:732:13: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:733:13: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:734:13: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:31: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:45: parameter cb: DirectoryWatcherCallback | FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:97: parameter flags: PollingInterval | WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:143: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:178: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:736:194: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:740:14: function useCaseSensitiveFileNames: () => boolean
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:746:14: function createExcludeWatcherWithLogging: (file: string, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => { close: () => void; }
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:747:9: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:748:9: parameter flags: PollingInterval | WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:749:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:750:9: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:751:9: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:759:14: function createFileWatcherWithLogging: (file: string, cb: FileWatcherCallback, flags: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:760:9: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:761:9: parameter cb: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:762:9: parameter flags: PollingInterval
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:763:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:764:9: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:765:9: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:768:15: variable watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:777:14: function createDirectoryWatcherWithLogging: (file: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:778:9: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:779:9: parameter cb: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:780:9: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:781:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:782:9: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:783:9: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:785:15: variable watchInfo: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:787:15: variable start: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:788:15: variable watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:789:15: variable elapsed: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:793:23: variable watchInfo: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:795:23: variable start: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:797:23: variable elapsed: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:803:14: function createTriggerLoggingAddWatch: <T extends keyof WatchFactory<X, Y>>(key: T) => WatchFactory<X, Y>[T]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:803:79: parameter key: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:805:13: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:806:13: parameter cb: DirectoryWatcherCallback | FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:807:13: parameter flags: PollingInterval | WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:808:13: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:809:13: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:810:13: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:43: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:57: parameter cb: DirectoryWatcherCallback | FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:109: parameter flags: PollingInterval | WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:155: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:190: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:811:206: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:814:17: parameter args: [fileName: string] | [fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:815:23: variable triggerredInfo: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:817:23: variable start: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:818:28: parameter eventArgs: [fileName: string] | [fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date | undefined]
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:819:23: variable elapsed: number
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:14: function getWatchInfo: <T>(file: string, flags: T, options: WatchOptions | undefined, detailInfo1: X, detailInfo2: Y | undefined, getDetailWatchInfo: GetDetailWatchInfo<X, Y> | undefined) => string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:30: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:44: parameter flags: T
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:54: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:89: parameter detailInfo1: X
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:105: parameter detailInfo2: Y | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:829:133: parameter getDetailWatchInfo: GetDetailWatchInfo<X, Y> | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:835:17: function getFallbackOptions: (options: WatchOptions | undefined) => WatchOptions
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:835:36: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:836:11: variable fallbackPolling: PollingWatchKind | undefined
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:845:17: function closeFileWatcherOf: <T extends { watcher: FileWatcher; }>(objWithWatcher: T) => void
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:845:48: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchUtilities.ts:845:73: parameter objWithWatcher: T

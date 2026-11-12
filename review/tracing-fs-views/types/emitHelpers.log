@@ -1,0 +1,267 @@
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:53:18: interface ESDecorateClassContext: ESDecorateClassContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:57:5: property kind: "class"
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:62:5: property name: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:64:5: property metadata: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:72:18: interface ESDecorateClassElementContext: ESDecorateClassElementContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:76:5: property kind: "accessor" | "field" | "getter" | "method" | "setter"
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:77:5: property name: ESDecorateName
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:78:5: property static: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:79:5: property private: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:80:5: property access: ESDecorateClassElementAccess
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:81:5: property metadata: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:85:18: interface ESDecorateClassElementAccess: ESDecorateClassElementAccess
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:86:5: property get: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:87:5: property set: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:91:13: type ESDecorateName: { computed: true; name: Expression; } | { computed: false; name: Identifier | PrivateIdentifier; }
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:92:9: property computed: true
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:92:25: property name: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:93:9: property computed: false
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:93:26: property name: Identifier | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:96:13: type ESDecorateContext: ESDecorateClassContext | ESDecorateClassElementContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:101:18: interface EmitHelperFactory: EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:102:27: parameter name: string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:104:26: parameter decoratorExpressions: readonly Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:104:71: parameter target: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:104:91: parameter memberName: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:104:116: parameter descriptor: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:105:26: parameter metadataKey: string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:105:47: parameter metadataValue: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:106:23: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:106:47: parameter parameterOffset: number
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:28: parameter ctor: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:46: parameter descriptorIn: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:72: parameter decorators: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:96: parameter contextIn: ESDecorateContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:126: parameter initializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:108:152: parameter extraInitializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:109:33: parameter thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:109:54: parameter initializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:109:80: parameter value: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:111:24: parameter attributesSegments: readonly Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:112:23: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:113:32: parameter generatorFunc: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:113:67: parameter hasLexicalThis: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:114:32: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:115:29: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:117:22: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:117:41: parameter elements: readonly BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:117:90: parameter computedTempVariables: readonly Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:117:148: parameter location: TextRange
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:119:25: parameter hasLexicalThis: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:119:50: parameter argumentsExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:119:95: parameter promiseConstructor: Expression | EntityName | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:119:152: parameter parameters: readonly ParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:119:209: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:121:25: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:122:32: parameter cooked: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:122:64: parameter raw: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:123:29: parameter to: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:123:45: parameter from: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:123:63: parameter packFrom: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:124:25: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:125:33: parameter f: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:125:48: parameter name: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:125:66: parameter prefix: string | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:127:24: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:128:22: parameter iteratorRecord: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:128:50: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:130:27: parameter body: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:132:28: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:134:31: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:135:28: parameter moduleExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:135:58: parameter exportsExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:137:38: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:137:60: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:137:79: parameter kind: PrivateIdentifierKind
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:137:108: parameter f: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:138:38: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:138:60: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:138:79: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:138:98: parameter kind: PrivateIdentifierKind
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:138:127: parameter f: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:139:37: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:139:56: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:141:39: parameter envBinding: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:141:63: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:141:82: parameter async: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:142:34: parameter envBinding: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:144:49: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:148:17: function createEmitHelperFactory: (context: TransformationContext) => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:148:41: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:149:11: variable factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:150:11: variable immutableTrue: () => TrueLiteral
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:151:11: variable immutableFalse: () => FalseLiteral
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:202:14: function getUnscopedHelperName: (name: string) => Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:202:36: parameter name: string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:208:14: function createDecorateHelper: (decoratorExpressions: Expression[], target: Expression, memberName?: Expression | undefined, descriptor?: Expression | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:208:35: parameter decoratorExpressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:208:71: parameter target: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:208:91: parameter memberName: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:208:116: parameter descriptor: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:211:15: variable argumentsArray: Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:228:14: function createMetadataHelper: (metadataKey: string, metadataValue: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:228:35: parameter metadataKey: string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:228:56: parameter metadataValue: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:240:14: function createParamHelper: (expression: Expression, parameterOffset: number, location?: Readonly<TextRange> | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:240:32: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:240:56: parameter parameterOffset: number
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:240:81: parameter location: Readonly<TextRange> | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:257:14: function createESDecorateClassContextObject: (contextIn: ESDecorateClassContext) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:257:49: parameter contextIn: ESDecorateClassContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:258:15: variable properties: PropertyAssignment[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:267:14: function createESDecorateClassElementAccessGetMethod: (elementName: ESDecorateName) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:267:58: parameter elementName: ESDecorateName
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:268:15: variable accessor: ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:289:14: function createESDecorateClassElementAccessSetMethod: (elementName: ESDecorateName) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:289:58: parameter elementName: ESDecorateName
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:290:15: variable accessor: ElementAccessExpression | PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:325:14: function createESDecorateClassElementAccessHasMethod: (elementName: ESDecorateName) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:325:58: parameter elementName: ESDecorateName
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:326:15: variable propertyName: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:351:14: function createESDecorateClassElementAccessObject: (name: ESDecorateName, access: ESDecorateClassElementAccess) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:351:55: parameter name: ESDecorateName
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:351:77: parameter access: ESDecorateClassElementAccess
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:352:15: variable properties: ObjectLiteralElementLike[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:359:14: function createESDecorateClassElementContextObject: (contextIn: ESDecorateClassElementContext) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:359:56: parameter contextIn: ESDecorateClassElementContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:360:15: variable properties: PropertyAssignment[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:371:14: function createESDecorateContextObject: (contextIn: ESDecorateContext) => ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:371:44: parameter contextIn: ESDecorateContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:14: function createESDecorateHelper: (ctor: Expression, descriptorIn: Expression, decorators: Expression, contextIn: ESDecorateContext, initializers: Expression, extraInitializers: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:37: parameter ctor: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:55: parameter descriptorIn: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:81: parameter decorators: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:105: parameter contextIn: ESDecorateContext
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:135: parameter initializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:376:161: parameter extraInitializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:392:14: function createRunInitializersHelper: (thisArg: Expression, initializers: Expression, value?: Expression | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:392:42: parameter thisArg: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:392:63: parameter initializers: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:392:89: parameter value: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:402:14: function createAssignHelper: (attributesSegments: Expression[]) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:402:33: parameter attributesSegments: Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:414:14: function createAwaitHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:414:32: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:419:14: function createAsyncGeneratorHelper: (generatorFunc: FunctionExpression, hasLexicalThis: boolean) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:419:41: parameter generatorFunc: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:419:76: parameter hasLexicalThis: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:437:14: function createAsyncDelegatorHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:437:41: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:447:14: function createAsyncValuesHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:447:38: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:461:14: function createRestHelper: (value: Expression, elements: readonly BindingOrAssignmentElement[], computedTempVariables: readonly Expression[] | undefined, location: Readonly<TextRange>) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:461:31: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:461:50: parameter elements: readonly BindingOrAssignmentElement[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:461:99: parameter computedTempVariables: readonly Expression[] | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:461:157: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:463:15: variable propertyNames: Expression[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:464:13: variable computedTempVariableOffset: number
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:465:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:466:19: variable propertyName: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:470:27: variable temp: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:14: function createAwaiterHelper: (hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: Expression | EntityName | undefined, parameters: readonly ParameterDeclaration[], body: Block) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:34: parameter hasLexicalThis: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:59: parameter argumentsExpression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:104: parameter promiseConstructor: Expression | EntityName | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:161: parameter parameters: readonly ParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:503:206: parameter body: Block
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:506:15: variable generatorFunc: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:533:14: function createExtendsHelper: (name: Identifier) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:533:34: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:542:14: function createTemplateObjectHelper: (cooked: ArrayLiteralExpression, raw: ArrayLiteralExpression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:542:41: parameter cooked: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:542:73: parameter raw: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:551:14: function createSpreadArrayHelper: (to: Expression, from: Expression, packFrom: boolean) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:551:38: parameter to: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:551:54: parameter from: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:551:72: parameter packFrom: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:560:14: function createPropKeyHelper: (expr: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:560:34: parameter expr: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:569:14: function createSetFunctionNameHelper: (f: Expression, name: Expression, prefix?: string | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:569:42: parameter f: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:569:57: parameter name: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:569:75: parameter prefix: string | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:580:14: function createValuesHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:580:33: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:589:14: function createReadHelper: (iteratorRecord: Expression, count: number | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:589:31: parameter iteratorRecord: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:589:59: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:602:14: function createGeneratorHelper: (body: FunctionExpression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:602:36: parameter body: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:613:14: function createImportStarHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:613:37: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:622:14: function createImportStarCallbackHelper: () => Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:627:14: function createImportDefaultHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:627:40: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:636:14: function createExportStarHelper: (moduleExpression: Expression, exportsExpression?: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:636:37: parameter moduleExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:636:67: parameter exportsExpression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:648:14: function createClassPrivateFieldGetHelper: (receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:648:47: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:648:69: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:648:88: parameter kind: PrivateIdentifierKind
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:648:117: parameter f: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:650:13: variable args: any
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:14: function createClassPrivateFieldSetHelper: (receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:47: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:69: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:88: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:107: parameter kind: PrivateIdentifierKind
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:660:136: parameter f: Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:662:13: variable args: any
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:672:14: function createClassPrivateFieldInHelper: (state: Identifier, receiver: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:672:46: parameter state: Identifier
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:672:65: parameter receiver: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:677:14: function createAddDisposableResourceHelper: (envBinding: Expression, value: Expression, async: boolean) => Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:677:48: parameter envBinding: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:677:72: parameter value: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:677:91: parameter async: boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:686:14: function createDisposeResourcesHelper: (envBinding: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:686:43: parameter envBinding: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:691:14: function createRewriteRelativeImportExtensionsHelper: (expression: Expression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:691:58: parameter expression: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:704:17: function compareEmitHelpers: (x: EmitHelper, y: EmitHelper) => Comparison
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:704:36: parameter x: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:704:51: parameter y: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:716:10: function helperString: (input: TemplateStringsArray, ...args: string[]) => (uniqueName: EmitHelperUniqueNameCallback) => string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:716:23: parameter input: TemplateStringsArray
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:716:55: parameter args: string[]
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:717:13: parameter uniqueName: EmitHelperUniqueNameCallback
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:718:13: variable result: string
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:719:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:730:7: variable decorateHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:744:7: variable metadataHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:755:7: variable paramHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:767:7: variable esDecorateHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:802:7: variable runInitializersHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:819:7: variable assignHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:838:7: variable awaitHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:846:7: variable asyncGeneratorHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:866:7: variable asyncDelegator: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:879:7: variable asyncValues: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:895:7: variable restHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:915:7: variable awaiterHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:934:7: variable extendsHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:958:7: variable templateObjectHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:970:7: variable readHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:993:7: variable spreadArrayHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1009:7: variable propKeyHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1020:7: variable setFunctionNameHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1033:7: variable valuesHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1114:7: variable generatorHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1151:7: variable createBindingHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1170:7: variable setModuleDefaultHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1184:7: variable importStarHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1211:7: variable importDefaultHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1221:7: variable exportStarHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1281:7: variable classPrivateFieldGetHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1344:7: variable classPrivateFieldSetHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1369:7: variable classPrivateFieldInHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1380:7: variable addDisposableResourceHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1414:7: variable disposeResourcesHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1451:7: variable rewriteRelativeImportExtensionsHelper: UnscopedEmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1467:14: variable asyncSuperHelper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1475:14: variable advancedAsyncSuperHelper: EmitHelper
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1486:17: function isCallToHelper: (firstSegment: Expression, helperName: __String) => boolean
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1486:32: parameter firstSegment: Expression
+/workspace/tracing-measured-after/src/compiler/factory/emitHelpers.ts:1486:58: parameter helperName: __String

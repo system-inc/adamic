@@ -1,0 +1,24 @@
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:21:17: function transformES2016: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:21:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:21:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:23:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:24:9: binding hoistVariableDeclaration: (node: Identifier) => void
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:29:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:29:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:37:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:37:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:49:14: function visitBinaryExpression: (node: BinaryExpression) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:49:36: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:60:14: function visitExponentiationAssignmentExpression: (node: BinaryExpression) => AssignmentExpression<EqualsToken>
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:60:54: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:61:13: variable target: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:62:13: variable value: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:63:15: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:64:15: variable right: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:67:19: variable expressionTemp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:68:19: variable argumentExpressionTemp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:86:19: variable expressionTemp: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:116:14: function visitExponentiationExpression: (node: BinaryExpression) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:116:44: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:118:15: variable left: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/es2016.ts:119:15: variable right: Expression

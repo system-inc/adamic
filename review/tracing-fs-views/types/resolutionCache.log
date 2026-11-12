@@ -1,0 +1,534 @@
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:82:18: interface HasInvalidatedFromResolutionCache: HasInvalidatedFromResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:83:5: property hasInvalidatedResolutions: HasInvalidatedResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:84:5: property hasInvalidatedLibResolutions: HasInvalidatedLibResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:91:18: interface ResolutionCache: ResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:92:5: property rootDirForResolution: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:93:5: property resolvedModuleNames: Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:94:5: property resolvedTypeReferenceDirectives: Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:95:5: property resolvedLibraries: Map<string, CachedResolvedModuleWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:96:5: property resolvedFileToResolution: Map<Path, Set<ResolutionWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:97:5: property resolutionsWithFailedLookups: Set<ResolutionWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:98:5: property resolutionsWithOnlyAffectingLocations: Set<ResolutionWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:99:5: property directoryWatchesOfFailedLookups: Map<string, DirectoryWatchesOfFailedLookup>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:100:5: property fileWatchesOfAffectingLocations: Map<string, FileWatcherOfAffectingLocation>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:101:5: property packageDirWatchers: Map<Path, PackageDirWatcher>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:102:5: property dirPathToSymlinkPackageRefCount: Map<Path, number>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:107:9: parameter name: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:108:9: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:109:9: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:110:9: parameter getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:111:9: parameter deferWatchingNonRelativeResolution: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:115:9: parameter moduleLiterals: readonly StringLiteralLike[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:116:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:117:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:118:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:119:9: parameter containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:120:9: parameter reusedNames: readonly StringLiteralLike[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:123:9: parameter typeDirectiveReferences: readonly T[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:124:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:125:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:126:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:127:9: parameter containingSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:128:9: parameter reusedNames: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:131:9: parameter libraryName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:132:9: parameter resolveFrom: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:133:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:134:9: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:137:9: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:138:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:142:32: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:143:29: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:144:52: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:145:57: parameter filesWithUnresolvedImports: Map<Path, readonly string[]>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:147:9: parameter customHasInvalidatedResolutions: HasInvalidatedResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:148:9: parameter customHasInvalidatedLibResolutions: HasInvalidatedLibResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:151:55: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:154:41: parameter newProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:154:74: parameter oldProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:166:18: interface ResolutionWithFailedLookupLocations: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:167:5: property failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:168:5: property affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:169:5: property isInvalidated: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:171:5: property files: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:172:5: property alternateResult: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:176:18: interface CachedResolvedModuleWithFailedLookupLocations: CachedResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:180:18: interface CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations: CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:184:18: interface ResolutionCacheHost: ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:185:12: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:186:5: property getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:188:5: property preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:189:42: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:189:61: parameter cb: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:189:91: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:190:32: parameter file: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:190:46: parameter cb: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:192:29: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:192:48: parameter cb: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:192:78: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:196:5: property projectName: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:197:38: parameter externalModuleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:198:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:200:16: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:203:32: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:208:9: parameter moduleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:211:9: parameter moduleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:212:9: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:213:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:214:9: parameter result: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:215:9: parameter data: any
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:220:18: interface FileWatcherOfAffectingLocation: FileWatcherOfAffectingLocation
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:222:5: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:223:5: property resolutions: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:224:5: property files: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:225:5: property symlinks: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:229:18: interface DirectoryWatchesOfFailedLookup: DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:231:5: property watcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:233:5: property refCount: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:235:5: property nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:238:18: interface DirPathToWatcherOfPackageDirWatcher: DirPathToWatcherOfPackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:239:5: property watcher: DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:240:5: property refCount: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:243:18: interface PackageDirWatcher: PackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:244:5: property dirPathToWatcher: Map<Path, DirPathToWatcherOfPackageDirWatcher>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:245:5: property isSymlink: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:249:18: interface DirectoryOfFailedLookupWatch: DirectoryOfFailedLookupWatch
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:250:5: property dir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:251:5: property dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:252:5: property nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:253:5: property packageDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:254:5: property packageDirPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:258:17: function removeIgnoredPath: (path: Path) => Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:258:35: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:264:31: parameter searchPath: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:269:10: function perceivedOsRootLengthForWatching: (pathComponents: Readonly<PathPathComponents>, length: number) => number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:269:43: parameter pathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:269:89: parameter length: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:272:9: variable indexAfterOsRoot: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:273:9: variable isDosStyle: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:310:17: function canWatchDirectoryOrFile: (pathComponents: Readonly<PathPathComponents>, length?: number | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:310:41: parameter pathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:310:87: parameter length: number | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:315:11: variable perceivedOsRootLength: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:320:17: function canWatchDirectoryOrFilePath: (path: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:320:45: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:325:17: function canWatchAtTypes: (atTypes: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:325:33: parameter atTypes: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:330:10: function isInDirectoryPath: (dirComponents: Readonly<PathPathComponents>, fileOrDirComponents: Readonly<PathPathComponents>) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:330:28: parameter dirComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:330:73: parameter fileOrDirComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:332:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:338:10: function canWatchAffectedPackageJsonOrNodeModulesOfAtTypes: (fileOrDirPath: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:338:60: parameter fileOrDirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:343:17: function canWatchAffectingLocation: (filePath: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:343:43: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:348:17: function getDirectoryToWatchFailedLookupLocation: (failedLookupLocation: string, failedLookupLocationPath: Path, rootDir: string, rootPath: Path, rootPathComponents: Readonly<PathPathComponents>, isRootWatchable: boolean, getCurrentDirectory: () => string | undefined, preferNonRecursiveWatch: boolean | undefined) => DirectoryOfFailedLookupWatch | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:349:5: parameter failedLookupLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:350:5: parameter failedLookupLocationPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:351:5: parameter rootDir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:352:5: parameter rootPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:353:5: parameter rootPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:354:5: parameter isRootWatchable: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:355:5: parameter getCurrentDirectory: () => string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:356:5: parameter preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:358:11: variable failedLookupPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:361:11: variable failedLookupComponents: readonly string[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:362:11: variable perceivedOsRootLength: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:365:11: variable nodeModulesIndex: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:367:11: variable lastNodeModulesIndex: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:400:10: function getDirectoryToWatchFromFailedLookupLocationDirectory: (dirComponents: readonly string[], dirPathComponents: Readonly<PathPathComponents>, dirPathComponentsLength: number, perceivedOsRootLength: number, nodeModulesIndex: number, rootPathComponents: Readonly<PathPathComponents>, lastNodeModulesIndex: number, preferNonRecursiveWatch: boolean | undefined) => DirectoryOfFailedLookupWatch | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:401:5: parameter dirComponents: readonly string[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:402:5: parameter dirPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:403:5: parameter dirPathComponentsLength: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:404:5: parameter perceivedOsRootLength: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:405:5: parameter nodeModulesIndex: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:406:5: parameter rootPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:407:5: parameter lastNodeModulesIndex: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:408:5: parameter preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:422:9: variable nonRecursive: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:423:9: variable length: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:425:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:442:10: function getDirectoryOfFailedLookupWatch: (dirComponents: readonly string[], dirPathComponents: Readonly<PathPathComponents>, length: number, lastNodeModulesIndex: number, nonRecursive?: boolean | undefined) => DirectoryOfFailedLookupWatch
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:443:5: parameter dirComponents: readonly string[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:444:5: parameter dirPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:445:5: parameter length: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:446:5: parameter lastNodeModulesIndex: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:447:5: parameter nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:449:9: variable packageDirLength: any
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:468:17: function getDirectoryToWatchFailedLookupLocationFromTypeRoot: (typeRoot: string, typeRootPath: Path, rootPath: Path, rootPathComponents: Readonly<PathPathComponents>, isRootWatchable: boolean, getCurrentDirectory: () => string | undefined, preferNonRecursiveWatch: boolean | undefined, filterCustomPath: (path: Path) => boolean) => Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:469:5: parameter typeRoot: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:470:5: parameter typeRootPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:471:5: parameter rootPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:472:5: parameter rootPathComponents: Readonly<PathPathComponents>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:473:5: parameter isRootWatchable: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:474:5: parameter getCurrentDirectory: () => string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:475:5: parameter preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:476:5: parameter filterCustomPath: (path: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:476:24: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:478:11: variable typeRootPathComponents: PathPathComponents
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:484:11: variable toWatch: DirectoryOfFailedLookupWatch | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:498:17: function getRootDirectoryOfResolutionCache: (rootDirForResolution: string, getCurrentDirectory: () => string | undefined) => string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:498:51: parameter rootDirForResolution: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:498:81: parameter getCurrentDirectory: () => string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:499:11: variable normalized: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:505:10: function getModuleResolutionHost: (resolutionHost: ResolutionCacheHost) => CompilerHost | ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:505:34: parameter resolutionHost: ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:510:17: function createModuleResolutionLoaderUsingGlobalCache: (containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, resolutionHost: ResolutionCacheHost, moduleResolutionCache: ModuleResolutionCache) => ResolutionLoader<StringLiteralLike, ResolvedModuleWithFailedLookupLocations, SourceFile>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:511:5: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:512:5: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:513:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:514:5: parameter resolutionHost: ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:515:5: parameter moduleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:519:19: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:519:31: parameter resoluionMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:532:10: function resolveModuleNameUsingGlobalCache: (resolutionHost: ResolutionCacheHost, moduleResolutionCache: ModuleResolutionCache, moduleName: string, containingFile: string, compilerOptions: CompilerOptions, redirectedReference?: ResolvedProjectReference | undefined, mode?: ResolutionMode) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:533:5: parameter resolutionHost: ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:534:5: parameter moduleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:535:5: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:536:5: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:537:5: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:538:5: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:539:5: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:541:11: variable host: CompilerHost | ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:542:11: variable primaryResult: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:549:11: variable globalCache: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:553:17: binding resolvedModule: ResolvedModuleFull | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:553:33: binding failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:553:56: binding affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:553:76: binding resolutionDiagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:576:13: type GetResolutionWithResolvedFileName: (resolution: T) => R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:576:210: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:579:17: function createResolutionCache: (resolutionHost: ResolutionCacheHost, rootDirForResolution: string, logChangesWhenResolvingModule: boolean) => ResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:579:39: parameter resolutionHost: ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:579:76: parameter rootDirForResolution: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:579:106: parameter logChangesWhenResolvingModule: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:580:9: variable filesWithChangedSetOfUnresolvedImports: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:581:9: variable filesWithInvalidatedResolutions: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:582:9: variable filesWithInvalidatedNonRelativeUnresolvedImports: ReadonlyMap<Path, readonly string[]> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:583:11: variable nonRelativeExternalModuleResolutions: Set<ResolutionWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:585:11: variable resolutionsWithFailedLookups: Set<ResolutionWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:586:11: variable resolutionsWithOnlyAffectingLocations: Set<ResolutionWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:587:11: variable resolvedFileToResolution: Map<Path, Set<ResolutionWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:588:11: variable impliedFormatPackageJsons: Map<Path, readonly string[]>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:590:9: variable hasChangedAutomaticTypeDirectiveNames: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:591:9: variable affectingPathChecksForFile: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:592:9: variable affectingPathChecks: Set<string> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:593:9: variable failedLookupChecks: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:594:9: variable startsWithPathChecks: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:595:9: variable isInDirectoryChecks: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:596:9: variable allModuleAndTypeResolutionsAreInvalidated: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:598:11: variable getCurrentDirectory: () => string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:599:11: variable cachedDirectoryStructureHost: CachedDirectoryStructureHost | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:604:11: variable resolvedModuleNames: Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:605:11: variable moduleResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:611:11: variable resolvedTypeReferenceDirectives: Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:612:11: variable typeReferenceDirectiveResolutionCache: TypeReferenceDirectiveResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:620:11: variable resolvedLibraries: Map<string, CachedResolvedModuleWithFailedLookupLocations>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:621:11: variable libraryResolutionCache: ModuleResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:628:11: variable directoryWatchesOfFailedLookups: Map<Path, DirectoryWatchesOfFailedLookup>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:629:11: variable fileWatchesOfAffectingLocations: Map<string, FileWatcherOfAffectingLocation>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:630:11: variable rootDir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:631:11: variable rootPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:632:11: variable rootPathComponents: PathPathComponents
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:633:11: variable isRootWatchable: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:635:11: variable isSymlinkCache: Map<Path, boolean>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:636:11: variable packageDirWatchers: Map<Path, PackageDirWatcher>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:637:11: variable dirPathToSymlinkPackageRefCount: Map<Path, number>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:640:11: variable typeRootsWatches: Map<string, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:680:14: function clear: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:709:14: function onChangesAffectModuleResolution: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:717:14: function startRecordingFilesWithChangedResolutions: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:721:14: function finishRecordingFilesWithChangedResolutions: () => Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:722:15: variable collected: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:727:14: function isFileWithInvalidatedNonRelativeUnresolvedImports: (path: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:727:64: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:733:15: variable value: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:737:14: function createHasInvalidatedResolutions: (customHasInvalidatedResolutions: HasInvalidatedResolutions, customHasInvalidatedLibResolutions: HasInvalidatedLibResolutions) => HasInvalidatedFromResolutionCache
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:738:9: parameter customHasInvalidatedResolutions: HasInvalidatedResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:739:9: parameter customHasInvalidatedLibResolutions: HasInvalidatedLibResolutions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:743:15: variable collected: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:746:40: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:751:43: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:757:14: function startCachingPerDirectoryResolution: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:771:14: function cleanupLibResolutionWatching: (newProgram: Program | undefined) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:771:43: parameter newProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:772:36: parameter resolution: CachedResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:772:48: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:784:14: function finishCachingPerDirectoryResolution: (newProgram: Program | undefined, oldProgram: Program | undefined) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:784:50: parameter newProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:784:83: parameter oldProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:791:50: parameter newFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:792:23: variable expected: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:793:23: variable existing: readonly string[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:794:26: variable i: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:798:30: variable i: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:805:48: parameter existing: readonly string[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:805:58: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:806:23: variable newFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:808:38: parameter location: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:824:14: function closePackageDirWatcher: (watcher: PackageDirWatcher, packageDirPath: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:824:37: parameter watcher: PackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:824:65: parameter packageDirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:830:14: function closeDirectoryWatchesOfFailedLookup: (watcher: DirectoryWatchesOfFailedLookup, path: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:830:50: parameter watcher: DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:830:91: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:837:14: function closeFileWatcherOfAffectingLocation: (watcher: FileWatcherOfAffectingLocation, path: string) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:837:50: parameter watcher: FileWatcherOfAffectingLocation
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:837:91: parameter path: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:844:15: interface ResolveNamesWithLocalCacheInput: ResolveNamesWithLocalCacheInput<Entry, SourceFile, T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:845:9: property entries: readonly Entry[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:846:9: property containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:847:9: property containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:848:9: property redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:849:9: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:850:9: property reusedNames: readonly Entry[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:851:9: property perFileCache: Map<Path, ModeAwareCache<T>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:852:9: property loader: ResolutionLoader<Entry, T, SourceFile>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:853:9: property getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:854:9: property shouldRetryResolution: (t: T) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:854:33: parameter t: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:855:9: property logChanges: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:856:9: property deferWatchingNonRelativeResolution: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:858:14: function resolveNamesWithLocalCache: <Entry, SourceFile, T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>({ entries, containingFile, containingSourceFile, redirectedReference, options, perFileCache, reusedNames, loader, getResolutionWithResolvedFileName, deferWatchingNonRelativeResolution, shouldRetryResolution, logChanges, }: ResolveNamesWithLocalCacheInput<Entry, SourceFile, T, R>) => readonly T[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:859:9: binding entries: readonly Entry[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:860:9: binding containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:861:9: binding containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:862:9: binding redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:863:9: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:864:9: binding perFileCache: Map<Path, ModeAwareCache<T>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:865:9: binding reusedNames: readonly Entry[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:866:9: binding loader: ResolutionLoader<Entry, T, SourceFile>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:867:9: binding getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:868:9: binding deferWatchingNonRelativeResolution: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:869:9: binding shouldRetryResolution: (t: T) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:870:9: binding logChanges: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:872:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:873:15: variable resolutionsInFile: ModeAwareCache<T>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:874:15: variable resolvedModules: T[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:875:15: variable hasInvalidatedNonRelativeUnresolvedImport: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:878:15: variable program: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:879:15: variable oldRedirect: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:880:15: variable unmatchedRedirects: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:884:15: variable seenNamesInFile: ModeAwareCache<true>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:885:20: variable entry: Entry
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:886:19: variable name: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:887:19: variable mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:888:17: variable resolution: T | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:896:23: variable existingResolution: T | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:916:23: variable host: CompilerHost | ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:918:27: variable resolved: R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:943:30: parameter entry: Entry
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:952:40: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:952:52: parameter name: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:952:58: parameter mode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:963:18: function resolutionIsEqualTo: (oldResolution: T | undefined, newResolution: T | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:963:38: parameter oldResolution: T | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:963:68: parameter newResolution: T | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:970:19: variable oldResult: R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:971:19: variable newResult: R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:982:14: function resolveTypeReferenceDirectiveReferences: <T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:983:9: parameter typeDirectiveReferences: readonly T[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:984:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:985:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:986:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:987:9: parameter containingSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:988:9: parameter reusedNames: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1006:36: parameter resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1011:14: function resolveModuleNameLiterals: (moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1012:9: parameter moduleLiterals: readonly StringLiteralLike[]
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1013:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1014:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1015:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1016:9: parameter containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1017:9: parameter reusedNames: readonly StringLiteralLike[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1035:36: parameter resolution: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1041:14: function resolveLibrary: (libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => CachedResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1042:9: parameter libraryName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1043:9: parameter resolveFrom: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1044:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1045:9: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1047:15: variable host: CompilerHost | ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1048:13: variable resolution: CachedResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1050:19: variable existingResolution: CachedResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1052:19: variable path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1061:23: variable resolved: ResolvedModuleFull | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1079:14: function resolveSingleModuleNameWithoutWatching: (moduleName: string, containingFile: string) => ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1079:53: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1079:73: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1080:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1081:15: variable resolutionsInFile: ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1082:15: variable resolution: CachedResolvedModuleWithFailedLookupLocations | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1084:15: variable data: any
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1085:15: variable host: CompilerHost | ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1087:15: variable result: ResolvedModuleWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1098:14: function isNodeModulesAtTypesDirectory: (dirPath: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1098:44: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1102:14: function watchFailedLookupLocationsOfExternalModuleResolutions: <T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(name: string, resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>, deferWatchingNonRelativeResolution: boolean) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1103:9: parameter name: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1104:9: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1105:9: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1106:9: parameter getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1107:9: parameter deferWatchingNonRelativeResolution: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1117:15: variable resolved: R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1119:19: variable key: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1120:17: variable resolutions: Set<ResolutionWithFailedLookupLocations> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1126:14: function watchFailedLookupLocation: (failedLookupLocation: string, setAtRoot: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1126:40: parameter failedLookupLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1126:70: parameter setAtRoot: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1127:15: variable failedLookupLocationPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1128:15: variable toWatch: DirectoryOfFailedLookupWatch | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1139:21: binding dir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1139:26: binding dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1139:35: binding nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1139:49: binding packageDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1139:61: binding packageDirPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1152:14: function watchFailedLookupLocationOfResolution: (resolution: ResolutionWithFailedLookupLocations) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1152:52: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1155:17: binding failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1155:40: binding affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1155:60: binding alternateResult: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1159:13: variable setAtRoot: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1161:24: variable failedLookupLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1173:14: function watchAffectingLocationsOfResolution: (resolution: ResolutionWithFailedLookupLocations, addToResolutionsWithOnlyAffectingLocations: boolean) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1173:50: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1173:99: parameter addToResolutionsWithOnlyAffectingLocations: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1175:17: binding affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1179:20: variable affectingLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1184:14: function createFileWatcherOfAffectingLocation: (affectingLocation: string, forResolution: boolean) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1184:51: parameter affectingLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1184:78: parameter forResolution: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1185:15: variable fileWatcher: FileWatcherOfAffectingLocation | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1191:13: variable locationToWatch: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1192:13: variable isSymlink: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1193:13: variable symlinkWatcher: FileWatcherOfAffectingLocation | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1202:15: variable resolutions: 0 | 1
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1203:15: variable files: 0 | 1
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1205:19: variable watcher: FileWatcherOfAffectingLocation
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1207:81: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1207:91: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1221:19: variable watcher: FileWatcherOfAffectingLocation
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1224:31: variable symlinkWatcher: FileWatcherOfAffectingLocation | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1241:14: function invalidateAffectingFileWatcher: (path: string, packageJsonMap: Map<Path, PackageJsonInfoCacheEntry> | undefined) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1241:45: parameter path: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1241:59: parameter packageJsonMap: Map<Path, PackageJsonInfoCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1242:15: variable watcher: FileWatcherOfAffectingLocation | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1245:36: parameter path: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1249:14: function watchFailedLookupLocationOfNonRelativeModuleResolutions: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1254:14: function createDirectoryWatcherForPackageDir: (dir: string, dirPath: Path, packageDir: string, packageDirPath: Path, nonRecursive: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1255:9: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1256:9: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1257:9: parameter packageDir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1258:9: parameter packageDirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1259:9: parameter nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1263:13: variable isSymlink: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1264:13: variable packageDirWatcher: PackageDirWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1266:19: variable realPath: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1280:60: parameter watcher: DirPathToWatcherOfPackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1291:15: variable forDirPath: DirPathToWatcherOfPackageDirWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1303:18: function createDirPathToWatcher: () => DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1310:14: function setDirectoryWatcher: (dir: string, dirPath: Path, packageDir: string | undefined, packageDirPath: Path | undefined, nonRecursive: boolean | undefined) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1311:9: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1312:9: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1313:9: parameter packageDir: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1314:9: parameter packageDirPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1315:9: parameter nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1325:14: function createOrAddRefToDirectoryWatchOfFailedLookups: (dir: string, dirPath: Path, nonRecursive: boolean | undefined) => DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1325:60: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1325:73: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1325:88: parameter nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1326:13: variable dirWatcher: DirectoryWatchesOfFailedLookup | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1337:14: function stopWatchFailedLookupLocation: (failedLookupLocation: string, removeAtRoot: boolean) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1337:44: parameter failedLookupLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1337:74: parameter removeAtRoot: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1338:15: variable failedLookupLocationPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1339:15: variable toWatch: DirectoryOfFailedLookupWatch | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1350:21: binding dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1350:30: binding packageDirPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1355:23: variable packageDirWatcher: PackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1356:23: variable forDirPath: DirPathToWatcherOfPackageDirWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1362:31: variable refCount: number
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1379:14: function stopWatchFailedLookupLocationOfResolution: <T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1380:9: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1381:9: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1382:9: parameter getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1387:15: variable resolved: R | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1389:19: variable key: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1390:19: variable resolutions: Set<ResolutionWithFailedLookupLocations> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1394:17: binding failedLookupLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1394:40: binding affectingLocations: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1394:60: binding alternateResult: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1396:17: variable removeAtRoot: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1398:28: variable failedLookupLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1410:24: variable affectingLocation: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1411:23: variable watcher: FileWatcherOfAffectingLocation
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1417:14: function removeDirectoryWatcher: (dirPath: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1417:37: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1418:15: variable dirWatcher: DirectoryWatchesOfFailedLookup
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1423:14: function createDirectoryWatcher: (directory: string, dirPath: Path, nonRecursive: boolean | undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1423:37: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1423:56: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1423:71: parameter nonRecursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1424:79: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1425:19: variable fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1435:14: function removeResolutionsOfFileFromCache: <T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(cache: Map<string, ModeAwareCache<T>>, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1436:9: parameter cache: Map<string, ModeAwareCache<T>>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1437:9: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1438:9: parameter getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1441:15: variable resolutions: ModeAwareCache<T> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1444:37: parameter resolution: T
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1456:14: function removeResolutionsFromProjectReferenceRedirects: (filePath: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1456:61: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1459:15: variable program: Program | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1463:15: variable resolvedProjectReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1467:64: parameter f: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1470:14: function removeResolutionsOfFile: (filePath: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1470:38: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1475:14: function invalidateResolutions: (resolutions: Map<string, ResolutionWithFailedLookupLocations> | Set<ResolutionWithFailedLookupLocations> | undefined, canInvalidate: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1475:36: parameter resolutions: Map<string, ResolutionWithFailedLookupLocations> | Set<ResolutionWithFailedLookupLocations> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1475:154: parameter canInvalidate: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1475:170: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1477:13: variable invalidated: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1478:29: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1481:24: variable containingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1490:14: function invalidateResolutionOfFile: (filePath: Path) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1490:41: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1493:15: variable prevHasChangedAutomaticTypeDirectiveNames: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1503:14: function setFilesWithInvalidatedNonRelativeUnresolvedImports: (filesMap: ReadonlyMap<Path, readonly string[]>) => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1503:66: parameter filesMap: ReadonlyMap<Path, readonly string[]>
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1508:14: function scheduleInvalidateResolutionOfFailedLookupLocation: (fileOrDirectoryPath: Path, isCreatingWatchedDirectory: boolean) => false | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1508:65: parameter fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1508:92: parameter isCreatingWatchedDirectory: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1516:19: variable updatedPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1527:19: variable dirOfFileOrDirectory: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1555:23: variable packagePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1562:14: function invalidatePackageJsonMap: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1563:15: variable packageJsonMap: Map<Path, PackageJsonInfoCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1565:37: parameter _value: PackageJsonInfoCacheEntry
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1565:45: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1569:14: function invalidateResolutionsOfFailedLookupLocations: () => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1582:13: variable invalidated: boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1584:74: parameter f: SourceFile
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1585:50: parameter location: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1607:14: function canInvalidateFailedLookupResolution: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1607:50: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1610:55: parameter location: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1614:14: function isInvalidatedFailedLookup: (locationPath: Path) => true | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1614:40: parameter locationPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1616:70: parameter fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1617:69: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1622:14: function canInvalidatedFailedLookupResolutionWithAffectingLocation: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1622:72: parameter resolution: ResolutionWithFailedLookupLocations
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1623:77: parameter location: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1626:14: function closeTypeRootsWatch: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1630:14: function createTypeRootsWatch: (typeRoot: string) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1630:35: parameter typeRoot: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1633:62: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1634:23: variable fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1648:23: variable dirPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1656:21: parameter dirPath: Path
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1669:14: function updateTypeRootsWatch: () => void
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1670:15: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1686:15: variable typeRoots: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1702:14: function canWatchTypeRootPath: (typeRoot: string) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1702:35: parameter typeRoot: string
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1711:10: function resolutionIsSymlink: (resolution: ResolutionWithFailedLookupLocations) => boolean
+/workspace/tracing-measured-after/src/compiler/resolutionCache.ts:1711:30: parameter resolution: ResolutionWithFailedLookupLocations

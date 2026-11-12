@@ -1,0 +1,189 @@
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:92:17: function transformJsx: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:92:30: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:92:64: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:93:15: interface PerFileState: PerFileState
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:94:9: property importSpecifier: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:95:9: property filenameDeclaration: (VariableDeclaration & { name: Identifier; }) | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:95:55: property name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:96:9: property utilizedImplicitRuntimeImports: Map<string, Map<string, ImportSpecifier>> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:100:9: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:101:31: binding emitHelpers: () => EmitHelperFactory
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:103:11: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:104:9: variable currentSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:105:9: variable currentFileState: PerFileState
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:109:14: function getCurrentFileNameExpression: () => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:113:15: variable declaration: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:114:87: property name: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:118:14: function getJsxFactoryCalleePrimitive: (isStaticChildren: boolean) => "jsx" | "jsxDEV" | "jsxs"
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:118:43: parameter isStaticChildren: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:122:14: function getJsxFactoryCallee: (isStaticChildren: boolean) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:122:34: parameter isStaticChildren: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:123:15: variable type: "jsx" | "jsxDEV" | "jsxs"
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:127:14: function getImplicitJsxFragmentReference: () => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:131:14: function getImplicitImportForName: (name: string) => Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:131:39: parameter name: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:132:15: variable importSource: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:135:15: variable existing: ImportSpecifier | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:142:13: variable specifierSourceImports: Map<string, ImportSpecifier> | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:147:15: variable generatedName: Identifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:148:15: variable specifier: ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:159:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:159:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:167:13: variable visited: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:169:13: variable statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:174:25: binding importSource: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:174:39: binding importSpecifiersMap: Map<string, ImportSpecifier>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:177:27: variable importStatement: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:183:27: variable requireStatement: VariableStatement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:187:108: parameter s: ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:209:14: function visitor: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:209:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:218:14: function visitorWorker: (node: Node) => VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:218:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:237:14: function transformJsxChildToExpression: (node: JsxChild) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:237:44: parameter node: JsxChild
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:259:14: function hasProto: (obj: ObjectLiteralExpression) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:259:23: parameter obj: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:260:36: parameter p: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:269:14: function hasKeyAfterPropsSpread: (node: JsxOpeningLikeElement) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:269:37: parameter node: JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:270:13: variable spread: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:271:20: variable elem: JsxAttributeLike
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:282:14: function shouldUseCreateElement: (node: JsxOpeningLikeElement) => boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:282:37: parameter node: JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:286:14: function visitJsxElement: (node: JsxElement, isChild: boolean) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:286:30: parameter node: JsxElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:286:48: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:287:15: variable tagTransform: (node: JsxOpeningLikeElement, children: readonly JsxChild[] | undefined, isChild: boolean, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:291:14: function visitJsxSelfClosingElement: (node: JsxSelfClosingElement, isChild: boolean) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:291:41: parameter node: JsxSelfClosingElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:291:70: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:292:15: variable tagTransform: (node: JsxOpeningLikeElement, children: readonly JsxChild[] | undefined, isChild: boolean, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:296:14: function visitJsxFragment: (node: JsxFragment, isChild: boolean) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:296:31: parameter node: JsxFragment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:296:50: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:297:15: variable tagTransform: (node: JsxOpeningFragment, children: readonly JsxChild[], isChild: boolean, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:301:14: function convertJsxChildrenToChildrenPropObject: (children: readonly JsxChild[]) => ObjectLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:301:53: parameter children: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:302:15: variable prop: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:306:14: function convertJsxChildrenToChildrenPropAssignment: (children: readonly JsxChild[]) => PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:306:57: parameter children: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:307:15: variable nonWhitespaceChildren: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:309:19: variable result: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:312:15: variable result: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:316:14: function visitJsxOpeningLikeElementJSX: (node: JsxOpeningLikeElement, children: readonly JsxChild[] | undefined, isChild: boolean, location: Readonly<TextRange>) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:316:44: parameter node: JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:316:73: parameter children: readonly JsxChild[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:316:116: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:316:134: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:317:15: variable tagName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:318:15: variable childrenProp: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:319:15: variable keyAttr: JsxAttribute | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:319:58: parameter p: JsxAttribute | JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:320:15: variable attrs: readonly (JsxAttribute | JsxSpreadAttribute)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:320:68: parameter p: JsxAttribute | JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:321:15: variable objectProperties: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:333:14: function visitJsxOpeningLikeElementOrFragmentJSX: (tagName: Expression, objectProperties: Expression, keyAttr: JsxAttribute | undefined, children: readonly JsxChild[], isChild: boolean, location: Readonly<TextRange>) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:334:9: parameter tagName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:335:9: parameter objectProperties: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:336:9: parameter keyAttr: JsxAttribute | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:337:9: parameter children: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:338:9: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:339:9: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:341:15: variable nonWhitespaceChildren: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:342:15: variable isStaticChildren: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:343:15: variable args: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:350:19: variable originalFile: Node
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:359:23: variable lineCol: LineAndCharacter
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:370:15: variable element: CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:382:14: function visitJsxOpeningLikeElementCreateElement: (node: JsxOpeningLikeElement, children: readonly JsxChild[] | undefined, isChild: boolean, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:382:54: parameter node: JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:382:83: parameter children: readonly JsxChild[] | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:382:126: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:382:144: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:383:15: variable tagName: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:384:15: variable attrs: NodeArray<JsxAttributeLike>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:385:15: variable objectProperties: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:388:15: variable callee: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:397:15: variable element: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:413:14: function visitJsxOpeningFragmentJSX: (_node: JsxOpeningFragment, children: readonly JsxChild[], isChild: boolean, location: Readonly<TextRange>) => CallExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:413:41: parameter _node: JsxOpeningFragment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:413:68: parameter children: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:413:99: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:413:117: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:414:13: variable childrenProps: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:416:19: variable result: ObjectLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:431:14: function visitJsxOpeningFragmentCreateElement: (node: JsxOpeningFragment, children: readonly JsxChild[], isChild: boolean, location: Readonly<TextRange>) => LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:431:51: parameter node: JsxOpeningFragment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:431:77: parameter children: readonly JsxChild[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:431:108: parameter isChild: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:431:126: parameter location: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:432:15: variable element: LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:449:14: function transformJsxSpreadAttributeToProps: (node: JsxSpreadAttribute) => readonly (GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment)[] | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:449:49: parameter node: JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:451:56: parameter p: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:456:14: function transformJsxAttributesToObjectProps: (attrs: readonly (JsxAttribute | JsxSpreadAttribute)[], children?: PropertyAssignment | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:456:50: parameter attrs: readonly (JsxAttribute | JsxSpreadAttribute)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:456:105: parameter children: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:457:15: variable target: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:462:14: function transformJsxAttributesToProps: (attrs: readonly (JsxAttribute | JsxSpreadAttribute)[], children?: PropertyAssignment | undefined) => (GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:462:44: parameter attrs: readonly (JsxAttribute | JsxSpreadAttribute)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:462:99: parameter children: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:463:15: variable props: (GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:463:69: parameter attrs: (JsxAttribute | JsxSpreadAttribute)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:463:76: parameter isSpread: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:463:108: parameter attr: JsxAttribute | JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:470:14: function transformJsxAttributesToExpression: (attrs: readonly (JsxAttribute | JsxSpreadAttribute)[], children?: PropertyAssignment | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:470:49: parameter attrs: readonly (JsxAttribute | JsxSpreadAttribute)[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:470:104: parameter children: PropertyAssignment | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:471:15: variable expressions: Expression[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:472:13: variable properties: ObjectLiteralElementLike[]
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:474:20: variable attr: JsxAttribute | JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:479:32: variable prop: ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:511:18: function finishObjectLiteralIfNeeded: () => void
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:519:14: function transformJsxAttributeToObjectLiteralElement: (node: JsxAttribute) => PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:519:58: parameter node: JsxAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:520:15: variable name: Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:521:15: variable expression: Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:525:14: function transformJsxAttributeInitializer: (node: JsxAttributeValue | undefined) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:525:47: parameter node: JsxAttributeValue | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:532:19: variable singleQuote: boolean
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:533:19: variable literal: StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:554:14: function visitJsxText: (node: JsxText) => StringLiteral | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:554:27: parameter node: JsxText
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:555:15: variable fixed: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:574:14: function fixupWhitespaceAndDecodeEntities: (text: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:574:47: parameter text: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:575:13: variable acc: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:577:13: variable firstNonWhitespace: number
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:579:13: variable lastNonWhitespace: number
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:584:18: variable i: number
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:585:19: variable c: number
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:612:14: function addLineOfJsxText: (acc: string | undefined, trimmedLine: string) => string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:612:31: parameter acc: string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:612:56: parameter trimmedLine: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:615:15: variable decoded: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:623:14: function decodeEntities: (text: string) => string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:623:29: parameter text: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:70: parameter match: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:77: parameter _all: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:83: parameter _number: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:92: parameter _digits: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:101: parameter decimal: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:110: parameter hex: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:624:115: parameter word: any
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:632:23: variable ch: number | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:640:14: function tryDecodeEntities: (text: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:640:32: parameter text: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:641:15: variable decoded: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:645:14: function getTagName: (node: JsxElement | JsxOpeningLikeElement) => Expression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:645:25: parameter node: JsxElement | JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:650:19: variable tagName: JsxTagNameExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:668:14: function getAttributeName: (node: JsxAttribute) => Identifier | StringLiteral
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:668:31: parameter node: JsxAttribute
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:669:15: variable name: JsxAttributeName
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:671:19: variable text: string
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:677:14: function visitJsxExpression: (node: JsxExpression) => Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:677:33: parameter node: JsxExpression
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:678:15: variable expression: Expression | undefined
+/workspace/tracing-measured-after/src/compiler/transformers/jsx.ts:683:7: variable entities: Map<string, number>

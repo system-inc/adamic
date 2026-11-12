@@ -1,0 +1,115 @@
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:58:11: interface FileReasonToChainCache: FileReasonToChainCache
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:59:5: property fileIncludeReasonDetails: DiagnosticMessageChain | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:60:5: property redirectInfo: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:61:5: property details: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:65:18: interface LazyConfigDiagnostic: LazyConfigDiagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:66:5: property file: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:67:5: property diagnostic: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:68:5: property args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:72:18: interface ProgramDiagnostics: ProgramDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:73:25: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:74:29: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:74:47: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:74:78: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:75:33: parameter diag: FilePreprocessingDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:76:30: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:78:30: parameter oldProgramDiagnostics: ProgramDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:78:73: parameter isConfigIdentical: boolean
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:85:28: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:89:17: function createProgramDiagnostics: (getCompilerOptionsObjectLiteralSyntax: () => ObjectLiteralExpression | undefined) => ProgramDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:89:42: parameter getCompilerOptionsObjectLiteralSyntax: () => ObjectLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:93:9: variable computedDiagnostics: DiagnosticCollection | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:96:9: variable fileReasons: MultiMap<Path, FileIncludeReason>
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:97:9: variable fileProcessingDiagnostics: FilePreprocessingDiagnostics[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:100:9: variable commonSourceDirectory: string | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:101:9: variable configDiagnostics: DiagnosticCollection | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:102:9: variable lazyConfigDiagnostics: LazyConfigDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:105:9: variable fileReasonsToChain: Map<Path, FileReasonToChainCache> | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:106:9: variable reasonToRelatedInfo: Map<FileIncludeReason, false | DiagnosticWithLocation> | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:109:9: method addConfigDiagnostic: (diag: Diagnostic) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:109:29: parameter diag: Diagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:113:9: method addLazyConfigDiagnostic: (file: SourceFile, message: DiagnosticMessage, ...args: DiagnosticArguments) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:113:33: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:113:39: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:113:51: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:117:9: method addFileProcessingDiagnostic: (diag: FilePreprocessingDiagnostics) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:117:37: parameter diag: FilePreprocessingDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:121:9: method setCommonSourceDirectory: (directory: string) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:121:34: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:125:9: method reuseStateFromOldProgram: (oldProgramDiagnostics: ProgramDiagnostics, isConfigIdentical: boolean) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:125:34: parameter oldProgramDiagnostics: ProgramDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:125:57: parameter isConfigIdentical: boolean
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:135:9: method getFileProcessingDiagnostics: () => FilePreprocessingDiagnostics[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:138:9: method getFileReasons: () => MultiMap<Path, FileIncludeReason>
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:141:9: method getCommonSourceDirectory: () => string | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:144:9: method getConfigDiagnostics: () => DiagnosticCollection | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:147:9: method getLazyConfigDiagnostics: () => LazyConfigDiagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:150:9: method getCombinedDiagnostics: (program: Program) => DiagnosticCollection
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:150:32: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:157:57: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:159:48: parameter diagnostic: FilePreprocessingDiagnostics
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:174:63: parameter d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:179:47: binding file: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:179:53: binding diagnostic: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:179:65: binding args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:190:14: function filePreprocessingLibreferenceDiagnostic: (program: Program, { reason }: FilePreprocessingLibReferenceDiagnostic) => DiagnosticWithLocation
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:190:54: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:190:74: binding reason: ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:191:17: binding file: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:191:23: binding pos: number
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:191:28: binding end: number
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:192:15: variable libReference: FileReference
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:193:15: variable libName: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:194:15: variable unqualifiedLibName: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:195:15: variable suggestion: string | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:14: function createDiagnosticExplainingFile: (program: Program, file: SourceFile | undefined, fileProcessingReason: FileIncludeReason | undefined, diagnostic: DiagnosticMessage, args: DiagnosticArguments) => Diagnostic
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:45: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:63: parameter file: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:93: parameter fileProcessingReason: FileIncludeReason | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:146: parameter diagnostic: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:206:177: parameter args: DiagnosticArguments
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:207:13: variable seenReasons: Set<FileIncludeReason> | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:208:13: variable fileIncludeReasons: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:209:13: variable relatedInfo: DiagnosticWithLocation[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:210:13: variable fileIncludeReasonDetails: DiagnosticMessageChain | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:211:13: variable redirectInfo: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:212:13: variable chain: DiagnosticMessageChain | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:214:15: variable reasons: FileIncludeReason[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:215:13: variable locationReason: ReferencedFile | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:216:13: variable cachedChain: FileReasonToChainCache | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:233:15: variable processedExtraReason: boolean
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:295:15: variable location: ReferenceFileLocation | SyntheticReferenceFileLocation | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:300:18: function processReason: (reason: FileIncludeReason) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:300:32: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:307:18: function populateRelatedInfo: (reason: FileIncludeReason) => void
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:307:38: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:317:18: function cachedFileIncludeDetailsHasProcessedExtraReason: () => boolean
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:322:14: function getFileIncludeReasonToRelatedInformation: (program: Program, reason: FileIncludeReason) => DiagnosticWithLocation | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:322:55: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:322:73: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:323:13: variable relatedInfo: false | DiagnosticWithLocation | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:328:14: function fileIncludeReasonToRelatedInformation: (program: Program, reason: FileIncludeReason) => DiagnosticWithLocation | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:328:52: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:328:70: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:330:19: variable referenceLocation: ReferenceFileLocation | SyntheticReferenceFileLocation
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:331:17: variable message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:356:15: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:357:15: variable rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:358:15: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:360:13: variable configFileNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:361:13: variable message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:365:23: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:366:23: variable matchedByFiles: string | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:372:23: variable matchedByInclude: string | true | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:380:23: variable resolvedProjectReferences: readonly (ResolvedProjectReference | undefined)[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:381:23: variable projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:382:23: variable referencedResolvedRef: ResolvedProjectReference
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:383:23: variable referenceInfo: { sourceFile: SourceFile; index: number; } | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:386:22: parameter resolvedRef: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:386:35: parameter parent: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:386:43: parameter index: number
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:392:25: binding sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:392:37: binding index: number
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:393:23: variable referencesSyntax: ArrayLiteralExpression | undefined
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:393:115: parameter property: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/programDiagnostics.ts:414:23: variable target: string | undefined

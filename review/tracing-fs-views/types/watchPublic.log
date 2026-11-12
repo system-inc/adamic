@@ -1,0 +1,399 @@
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:98:18: interface ReadBuildProgramHost: ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:101:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:103:19: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:103:37: parameter configFilePath: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:105:17: function readBuilderProgram: (compilerOptions: CompilerOptions, host: ReadBuildProgramHost) => EmitAndSemanticDiagnosticsBuilderProgram | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:105:36: parameter compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:105:70: parameter host: ReadBuildProgramHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:106:11: variable buildInfoPath: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:108:9: variable buildInfo: any
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:114:15: variable content: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:122:17: function createIncrementalCompilerHost: (options: CompilerOptions, system?: System) => CompilerHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:122:47: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:122:73: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:123:11: variable host: CompilerHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:127:44: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:131:18: interface IncrementalProgramOptions: IncrementalProgramOptions<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:132:5: property rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:133:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:134:5: property configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:135:5: property projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:136:5: property host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:137:5: property createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:140:17: function createIncrementalProgram: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>({ rootNames, options, configFileParsingDiagnostics, projectReferences, host, createProgram, }: IncrementalProgramOptions<T>) => T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:141:5: binding rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:142:5: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:143:5: binding configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:144:5: binding projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:145:5: binding host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:146:5: binding createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:150:11: variable oldProgram: T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:154:13: type WatchStatusReporter: (diagnostic: Diagnostic, newLine: string, options: CompilerOptions, errorCount?: number | undefined) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:154:36: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:154:60: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:154:77: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:154:103: parameter errorCount: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:13: type CreateProgram: (rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host?: CompilerHost | undefined, oldProgram?: T | undefined, configFileParsingDiagnostics?: readonly Diagnostic[] | undefined, projectReferences?: readonly ProjectReference[] | undefined) => T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:56: parameter rootNames: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:98: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:136: parameter host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:157: parameter oldProgram: T | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:173: parameter configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:156:227: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:159:18: interface WatchHost: WatchHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:161:26: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:161:50: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:161:67: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:161:93: parameter errorCount: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:164:15: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:164:29: parameter callback: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:164:60: parameter pollingInterval: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:164:86: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:166:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:166:34: parameter callback: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:166:70: parameter recursive: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:166:91: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:168:17: parameter callback: (...args: any[]) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:168:31: parameter args: any[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:168:53: parameter ms: number
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:168:68: parameter args: any[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:170:19: parameter timeoutId: any
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:171:5: property preferNonRecursiveWatch: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:173:18: interface ProgramHost: ProgramHost<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:177:5: property createProgram: CreateProgram<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:183:27: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:185:5: property createHash: ((data: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:185:31: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:191:16: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:196:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:196:28: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:199:5: property directoryExists: ((path: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:199:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:201:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:203:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:203:34: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:203:66: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:203:95: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:203:124: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:206:5: property realpath: ((path: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:206:27: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:208:12: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:210:5: property getEnvironmentVariable: ((name: string) => string | undefined) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:210:55: parameter name: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:25: parameter moduleNames: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:48: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:72: parameter reusedNames: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:107: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:166: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:217:192: parameter containingSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:223:37: parameter typeReferenceDirectiveNames: string[] | readonly FileReference[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:223:103: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:223:127: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:223:186: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:223:212: parameter containingFileMode: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:225:9: parameter moduleLiterals: readonly StringLiteralLike[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:226:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:227:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:228:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:229:9: parameter containingSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:230:9: parameter reusedNames: readonly StringLiteralLike[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:233:9: parameter typeDirectiveReferences: readonly T[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:234:9: parameter containingFile: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:235:9: parameter redirectedReference: ResolvedProjectReference | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:236:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:237:9: parameter containingSourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:238:9: parameter reusedNames: readonly T[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:242:9: parameter libraryName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:243:9: parameter resolveFrom: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:244:9: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:245:9: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:251:35: parameter libFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:254:32: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:260:5: property jsDocParsingMode: JSDocParsingMode | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:266:5: property createDirectory: ((path: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:266:41: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:268:5: property writeFile: ((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:268:29: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:268:43: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:268:57: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:271:5: property storeSignatureInfo: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:273:5: property now: (() => Date) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:276:18: interface WatchCompilerHost: WatchCompilerHost<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:281:27: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:284:25: parameter program: T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:290:18: interface WatchCompilerHostOfFilesAndCompilerOptions: WatchCompilerHostOfFilesAndCompilerOptions<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:292:5: property rootFiles: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:295:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:297:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:300:5: property projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:306:18: interface WatchCompilerHostOfConfigFile: WatchCompilerHostOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:308:5: property configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:311:5: property optionsToExtend: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:313:5: property watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:315:5: property extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:321:19: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:321:33: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:321:65: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:321:94: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:321:123: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:329:18: interface WatchCompilerHostOfConfigFile: WatchCompilerHostOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:330:5: property configFileParsingResult: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:331:5: property extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:334:18: interface Watch: Watch<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:352:18: interface WatchOfConfigFile: WatchOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:358:18: interface WatchOfFilesAndCompilerOptions: WatchOfFilesAndCompilerOptions<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:360:25: parameter fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:17: function createWatchCompilerHost: { <T extends BuilderProgram>(configFileName: string, optionsToExtend: CompilerOptions | undefined, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, watchOptionsToExtend?: WatchOptions | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined): WatchCompilerHostOfConfigFile<T>; <T extends BuilderProgram>(rootFiles: string[], options: CompilerOptions, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, projectReferences?: readonly ProjectReference[] | undefined, watchOptions?: WatchOptions | undefined): WatchCompilerHostOfFilesAndCompilerOptions<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:67: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:91: parameter optionsToExtend: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:137: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:153: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:187: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:226: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:267: parameter watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:366:304: parameter extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:17: function createWatchCompilerHost: { <T extends BuilderProgram>(configFileName: string, optionsToExtend: CompilerOptions | undefined, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, watchOptionsToExtend?: WatchOptions | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined): WatchCompilerHostOfConfigFile<T>; <T extends BuilderProgram>(rootFiles: string[], options: CompilerOptions, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, projectReferences?: readonly ProjectReference[] | undefined, watchOptions?: WatchOptions | undefined): WatchCompilerHostOfFilesAndCompilerOptions<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:67: parameter rootFiles: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:88: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:114: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:130: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:164: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:203: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:244: parameter projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:367:293: parameter watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:17: function createWatchCompilerHost: { <T extends BuilderProgram>(configFileName: string, optionsToExtend: CompilerOptions | undefined, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, watchOptionsToExtend?: WatchOptions | undefined, extraFileExtensions?: readonly FileExtensionInfo[] | undefined): WatchCompilerHostOfConfigFile<T>; <T extends BuilderProgram>(rootFiles: string[], options: CompilerOptions, system: System, createProgram?: CreateProgram<T> | undefined, reportDiagnostic?: DiagnosticReporter | undefined, reportWatchStatus?: WatchStatusReporter | undefined, projectReferences?: readonly ProjectReference[] | undefined, watchOptions?: WatchOptions | undefined): WatchCompilerHostOfFilesAndCompilerOptions<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:67: parameter rootFilesOrConfigFileName: string | string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:113: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:151: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:167: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:201: parameter reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:240: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:281: parameter projectReferencesOrWatchOptionsToExtend: readonly ProjectReference[] | WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:368:367: parameter watchOptionsOrExtraFileExtensions: readonly FileExtensionInfo[] | WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:395:11: interface ParsedConfig: ParsedConfig
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:397:5: property parsedCommandLine: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:399:5: property watcher: FileWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:401:5: property watchedDirectories: Map<string, WildcardDirectoryWatcher<FileWatcher>> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:403:5: property updateLevel: ProgramUpdateLevel.RootNamesAndUpdate | ProgramUpdateLevel.Full | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:407:6: type WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile: (WatchCompilerHostOfConfigFile<T> & Partial<WatchCompilerHostOfFilesAndCompilerOptions<T>>) | (WatchCompilerHostOfFilesAndCompilerOptions<T> & Partial<WatchCompilerHostOfConfigFile<T>>)
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:414:17: function createWatchProgram: { <T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptions<T>): WatchOfFilesAndCompilerOptions<T>; <T extends BuilderProgram>(host: WatchCompilerHostOfConfigFile<T>): WatchOfConfigFile<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:414:62: parameter host: WatchCompilerHostOfFilesAndCompilerOptions<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:418:17: function createWatchProgram: { <T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptions<T>): WatchOfFilesAndCompilerOptions<T>; <T extends BuilderProgram>(host: WatchCompilerHostOfConfigFile<T>): WatchOfConfigFile<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:418:62: parameter host: WatchCompilerHostOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:419:17: function createWatchProgram: { <T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptions<T>): WatchOfFilesAndCompilerOptions<T>; <T extends BuilderProgram>(host: WatchCompilerHostOfConfigFile<T>): WatchOfConfigFile<T>; }
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:419:62: parameter host: WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:420:15: interface FilePresentOnHost: FilePresentOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:421:9: property version: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:422:9: property sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:423:9: property fileWatcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:425:10: type FileMissingOnHost: false
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:426:15: interface FilePresenceUnknownOnHost: FilePresenceUnknownOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:427:9: property version: false
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:428:9: property fileWatcher: FileWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:430:10: type FileMayBePresentOnHost: FilePresenceUnknownOnHost | FilePresentOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:431:10: type HostFileInfo: false | FilePresenceUnknownOnHost | FilePresentOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:433:9: variable builderProgram: T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:434:9: variable updateLevel: ProgramUpdateLevel
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:435:9: variable missingFilesMap: Map<Path, FileWatcher>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:436:9: variable watchedWildcardDirectories: Map<string, WildcardDirectoryWatcher<FileWatcher>>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:441:9: variable staleWatches: Map<Path | undefined, string | undefined> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:442:9: variable timerToUpdateProgram: any
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:443:9: variable timerToInvalidateFailedLookupResolutions: any
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:444:9: variable parsedConfigs: Map<Path, ParsedConfig> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:445:9: variable sharedExtendedConfigFileWatchers: Map<Path, SharedExtendedConfigFileWatcher<Path>>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:446:9: variable extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:447:9: variable reportFileChangeDetectedOnCreateProgram: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:449:11: variable sourceFilesCache: Map<string, HostFileInfo>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:450:9: variable missingFilePathsRequestedForRelease: Path[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:451:9: variable hasChangedCompilerOptions: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:453:11: variable useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:454:11: variable currentDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:455:13: binding configFileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:455:46: binding optionsToExtendForConfigFile: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:455:81: binding watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:455:103: binding extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:455:124: binding createProgram: CreateProgram<T>
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:456:22: binding rootFileNames: string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:456:46: binding compilerOptions: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:456:63: binding watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:456:77: binding projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:457:9: variable wildcardDirectories: MapLike<WatchDirectoryFlags> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:458:9: variable configFileParsingDiagnostics: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:459:9: variable canConfigFileJsonReportNoInputFiles: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:460:9: variable hasChangedConfigFileParsingErrors: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:462:11: variable cachedDirectoryStructureHost: CachedDirectoryStructureHost | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:463:11: variable directoryStructureHost: DirectoryStructureHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:464:11: variable parseConfigFileHost: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:467:9: variable newLine: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:483:13: binding watchFile: (file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: WatchType, detailInfo2?: undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:483:24: binding watchDirectory: (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: WatchType, detailInfo2?: undefined) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:483:40: binding writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:484:11: variable getCanonicalFileName: GetCanonicalFileName
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:487:9: variable configFileWatcher: FileWatcher | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:492:11: variable compilerHost: CompilerHost & ResolutionCacheHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:495:11: variable getNewSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:496:35: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:496:48: parameter args: [languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:507:58: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:507:63: parameter cb: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:507:67: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:508:48: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:508:54: parameter cb: FileWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:509:45: parameter dir: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:509:50: parameter cb: DirectoryWatcherCallback
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:509:54: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:520:11: variable resolutionCache: ResolutionCache
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:544:11: variable userProvidedResolution: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:547:11: variable customHasInvalidatedResolutions: (filePath: Path) => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:550:11: variable customHasInvalidLibResolutions: (libFileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:561:14: function close: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:564:36: parameter value: HostFileInfo
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:589:37: parameter config: ParsedConfig
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:600:14: function getResolutionCache: () => ResolutionCache
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:604:14: function getCurrentBuilderProgram: () => T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:608:14: function getCurrentProgram: () => Program | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:612:14: function synchronizeProgram: () => T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:620:15: variable program: T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:628:17: binding hasInvalidatedResolutions: HasInvalidatedResolutions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:628:44: binding hasInvalidatedLibResolutions: HasInvalidatedLibResolutions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:630:13: binding originalReadFile: (fileName: string, encoding?: string | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:631:13: binding originalFileExists: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:632:13: binding originalDirectoryExists: ((directory: string) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:633:13: binding originalCreateDirectory: ((directory: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:634:13: binding originalWriteFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:635:13: binding readFileWithCache: (fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:637:84: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:637:135: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:664:32: parameter configFile: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:664:44: parameter configPath: Path | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:673:23: variable config: ParsedConfig | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:681:14: function createNewProgram: (hasInvalidatedResolutions: HasInvalidatedResolutions, hasInvalidatedLibResolutions: HasInvalidatedLibResolutions) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:681:31: parameter hasInvalidatedResolutions: HasInvalidatedResolutions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:681:85: parameter hasInvalidatedLibResolutions: HasInvalidatedLibResolutions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:688:15: variable needsUpdateInTypeRootWatch: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:695:15: variable oldProgram: Program | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:715:24: variable missingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:724:14: function updateRootFileNames: (files: string[]) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:724:34: parameter files: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:730:14: function updateNewLine: () => string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:734:14: function toPath: (fileName: string) => Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:734:21: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:738:14: function isFileMissingOnHost: (hostSourceFile: HostFileInfo | undefined) => hostSourceFile is false
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:738:34: parameter hostSourceFile: HostFileInfo | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:742:14: function isFilePresenceUnknownOnHost: (hostSourceFile: FileMayBePresentOnHost) => hostSourceFile is FilePresenceUnknownOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:742:42: parameter hostSourceFile: FileMayBePresentOnHost
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:746:14: function fileExists: (fileName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:746:25: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:747:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:14: function getVersionedSourceFileByPath: (fileName: string, path: Path, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:43: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:61: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:73: parameter languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:139: parameter onError: ((message: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:150: parameter message: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:757:176: parameter shouldCreateNewSourceFile: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:758:15: variable hostSourceFile: HostFileInfo | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:765:15: variable impliedNodeFormat: ResolutionMode
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:767:19: variable sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:787:27: variable fileWatcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:799:14: function nextSourceFileVersion: (path: Path) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:799:36: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:800:15: variable hostSourceFile: HostFileInfo | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:812:14: function getSourceVersion: (path: Path, readFileWithCache: (file: string) => string | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:812:31: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:812:43: parameter readFileWithCache: (file: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:812:63: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:813:15: variable hostSourceFile: HostFileInfo | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:817:15: variable text: string | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:821:14: function onReleaseOldSourceFile: (oldSourceFile: SourceFile, _oldOptions: CompilerOptions, hasSourceFileByPath: boolean) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:821:37: parameter oldSourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:821:64: parameter _oldOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:821:94: parameter hasSourceFileByPath: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:822:15: variable hostSourceFileInfo: HostFileInfo | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:844:14: function reportWatchDiagnostic: (message: DiagnosticMessage) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:844:36: parameter message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:850:14: function hasChangedAutomaticTypeDirectiveNames: () => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:854:14: function clearInvalidateResolutionsOfFailedLookupLocations: () => boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:861:14: function scheduleInvalidateResolutionsOfFailedLookupLocations: () => boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:865:15: variable pending: boolean
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:870:14: function invalidateResolutionsOfFailedLookup: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:880:14: function scheduleProgramUpdate: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:892:14: function scheduleProgramReload: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:898:14: function updateProgramWithWatchStatus: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:904:14: function updateProgram: () => T
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:919:14: function reloadFileNamesFromConfigFile: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:943:14: function reloadConfigFile: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:957:14: function parseConfigFile: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:971:14: function setConfigFileParsingResult: (configFileParseResult: ParsedCommandLine) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:971:41: parameter configFileParseResult: ParsedCommandLine
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:982:14: function getParsedCommandLine: (configFileName: string) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:982:35: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:983:15: variable configPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:984:13: variable config: ParsedConfig | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:991:23: variable fileNames: string[]
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1004:15: variable parsedCommandLine: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1018:14: function getParsedCommandLineFromConfigFileHost: (configFileName: string) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1018:53: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1020:15: variable onUnRecoverableConfigFileDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1022:15: variable parsedCommandLine: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1033:14: function onReleaseParsedCommandLine: (fileName: string) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1033:41: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1034:15: variable path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1035:15: variable config: ParsedConfig | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1044:14: function watchFilePath: (path: Path, file: string, callback: (fileName: string, eventKind: FileWatcherEventKind, filePath: Path) => void, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1045:9: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1046:9: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1047:9: parameter callback: (fileName: string, eventKind: FileWatcherEventKind, filePath: Path) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1047:20: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1047:38: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1047:71: parameter filePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1048:9: parameter pollingInterval: PollingInterval
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1049:9: parameter options: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1050:9: parameter watchType: WatchType
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1052:33: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1052:43: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1055:14: function onSourceFileChange: (fileName: string, eventKind: FileWatcherEventKind, path: Path) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1055:33: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1055:51: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1055:84: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1068:14: function updateCachedSystemWithFile: (fileName: string, path: Path, eventKind: FileWatcherEventKind) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1068:41: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1068:59: parameter path: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1068:71: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1074:14: function watchMissingFilePath: (missingFilePath: Path, missingFileName: string) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1074:35: parameter missingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1074:58: parameter missingFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1088:14: function onMissingFileChange: (fileName: string, eventKind: FileWatcherEventKind, missingFilePath: Path) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1088:34: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1088:52: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1088:85: parameter missingFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1103:14: function watchConfigFileWildCardDirectories: () => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1111:14: function watchWildcardDirectory: (directory: string, flags: WatchDirectoryFlags) => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1111:37: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1111:56: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1114:13: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1118:23: variable fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1156:14: function updateExtendedConfigFilesWatches: (forProjectPath: Path, options: CompilerOptions | undefined, watchOptions: WatchOptions | undefined, watchType: "Extended config file" | "Extended config file of referenced project") => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1156:47: parameter forProjectPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1156:69: parameter options: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1156:107: parameter watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1156:147: parameter watchType: "Extended config file" | "Extended config file of referenced project"
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1161:14: parameter extendedConfigFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1161:38: parameter extendedConfigFilePath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1164:22: parameter _fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1164:33: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1169:31: variable projects: Set<Path> | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1172:42: parameter projectPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1179:39: variable config: ParsedConfig | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1194:14: function watchReferencedProject: (configFileName: string, configPath: Path, commandLine: ParsedConfig) => void
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1194:37: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1194:61: parameter configPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1194:79: parameter commandLine: ParsedConfig
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1198:14: parameter _fileName: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1198:25: parameter eventKind: FileWatcherEventKind
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1200:23: variable config: ParsedConfig | undefined
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1213:14: parameter directory: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1213:25: parameter flags: WatchDirectoryFlags
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1216:21: parameter fileOrDirectory: string
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1217:31: variable fileOrDirectoryPath: Path
+/workspace/tracing-measured-after/src/compiler/watchPublic.ts:1224:31: variable config: ParsedConfig | undefined

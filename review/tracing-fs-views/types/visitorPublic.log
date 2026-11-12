@@ -1,0 +1,1055 @@
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:122:17: function visitNode: { <TIn extends Node | undefined, TVisited extends Node | undefined, TOut extends Node>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test: (node: Node) => node is TOut, lift?: ((node: readonly Node[]) => Node) | undefined): TOut | (TIn & undefined) | (TVisited & undefined); <TIn extends Node | undefined, TVisited extends Node | undefined>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test?: ((node: Node) => boolean) | undefined, lift?: ((node: readonly Node[]) => Node) | undefined): Node | (TIn & undefined) | (TVisited & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:123:5: parameter node: TIn
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:124:5: parameter visitor: Visitor<NonNullable<TIn>, TVisited>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:125:5: parameter test: (node: Node) => node is TOut
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:125:12: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:126:5: parameter lift: ((node: readonly Node[]) => Node) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:126:13: parameter node: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:142:17: function visitNode: { <TIn extends Node | undefined, TVisited extends Node | undefined, TOut extends Node>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test: (node: Node) => node is TOut, lift?: ((node: readonly Node[]) => Node) | undefined): TOut | (TIn & undefined) | (TVisited & undefined); <TIn extends Node | undefined, TVisited extends Node | undefined>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test?: ((node: Node) => boolean) | undefined, lift?: ((node: readonly Node[]) => Node) | undefined): Node | (TIn & undefined) | (TVisited & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:143:5: parameter node: TIn
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:144:5: parameter visitor: Visitor<NonNullable<TIn>, TVisited>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:145:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:145:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:146:5: parameter lift: ((node: readonly Node[]) => Node) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:146:13: parameter node: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:148:17: function visitNode: { <TIn extends Node | undefined, TVisited extends Node | undefined, TOut extends Node>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test: (node: Node) => node is TOut, lift?: ((node: readonly Node[]) => Node) | undefined): TOut | (TIn & undefined) | (TVisited & undefined); <TIn extends Node | undefined, TVisited extends Node | undefined>(node: TIn, visitor: Visitor<NonNullable<TIn>, TVisited>, test?: ((node: Node) => boolean) | undefined, lift?: ((node: readonly Node[]) => Node) | undefined): Node | (TIn & undefined) | (TVisited & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:149:5: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:150:5: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:151:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:151:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:152:5: parameter lift: ((node: readonly Node[]) => Node) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:152:13: parameter node: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:159:11: variable visited: VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:161:9: variable visitedNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:194:17: function visitNodes: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:195:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:196:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:197:5: parameter test: (node: Node) => node is TOut
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:197:12: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:198:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:199:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:216:17: function visitNodes: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:217:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:218:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:219:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:219:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:220:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:221:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:223:17: function visitNodes: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:224:5: parameter nodes: NodeArray<Node> | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:225:5: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:226:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:226:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:227:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:228:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:236:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:245:9: variable hasTrailingComma: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:246:9: variable pos: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:247:9: variable end: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:259:11: variable updated: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:262:15: variable updatedArray: NodeArray<Node>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:274:17: function visitArray: { <TIn extends Node, TInArray extends readonly TIn[] | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): readonly TOut[] | (TInArray & undefined); <TIn extends Node, TInArray extends readonly TIn[] | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): readonly Node[] | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:275:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:276:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:277:5: parameter test: (node: Node) => node is TOut
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:277:12: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:278:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:279:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:282:17: function visitArray: { <TIn extends Node, TInArray extends readonly TIn[] | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): readonly TOut[] | (TInArray & undefined); <TIn extends Node, TInArray extends readonly TIn[] | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): readonly Node[] | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:283:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:284:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:285:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:285:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:286:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:287:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:289:17: function visitArray: { <TIn extends Node, TInArray extends readonly TIn[] | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): readonly TOut[] | (TInArray & undefined); <TIn extends Node, TInArray extends readonly TIn[] | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): readonly Node[] | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:290:5: parameter nodes: readonly Node[] | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:291:5: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:292:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:292:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:293:5: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:294:5: parameter count: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:302:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:314:10: function visitArrayWorker: { <TIn extends Node, TInArray extends readonly TIn[], TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start: number, count: number): readonly TOut[]; <TIn extends Node, TInArray extends readonly TIn[]>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: ((node: Node) => boolean) | undefined, start: number, count: number): readonly Node[]; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:315:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:316:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:317:5: parameter test: (node: Node) => node is TOut
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:317:12: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:318:5: parameter start: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:319:5: parameter count: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:321:10: function visitArrayWorker: { <TIn extends Node, TInArray extends readonly TIn[], TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start: number, count: number): readonly TOut[]; <TIn extends Node, TInArray extends readonly TIn[]>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: ((node: Node) => boolean) | undefined, start: number, count: number): readonly Node[]; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:322:5: parameter nodes: TInArray
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:323:5: parameter visitor: Visitor<TIn, Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:324:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:324:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:325:5: parameter start: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:326:5: parameter count: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:328:10: function visitArrayWorker: { <TIn extends Node, TInArray extends readonly TIn[], TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start: number, count: number): readonly TOut[]; <TIn extends Node, TInArray extends readonly TIn[]>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: ((node: Node) => boolean) | undefined, start: number, count: number): readonly Node[]; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:329:5: parameter nodes: readonly Node[]
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:330:5: parameter visitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:331:5: parameter test: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:331:13: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:332:5: parameter start: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:333:5: parameter count: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:335:9: variable updated: Node[] | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:337:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:344:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:345:15: variable node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:346:15: variable visited: VisitResult<Node | undefined>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:355:32: variable visitedNode: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:17: function visitLexicalEnvironment: (statements: NodeArray<Statement>, visitor: Visitor, context: TransformationContext, start?: number | undefined, ensureUseStrict?: boolean | undefined, nodesVisitor?: NodesVisitor) => NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:41: parameter statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:75: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:125: parameter start: number | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:141: parameter ensureUseStrict: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:382:168: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:393:17: function visitParameterList: { (nodes: NodeArray<ParameterDeclaration>, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration>; (nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration> | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:393:36: parameter nodes: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:393:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:393:94: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:393:126: parameter nodesVisitor: NodesVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:394:17: function visitParameterList: { (nodes: NodeArray<ParameterDeclaration>, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration>; (nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration> | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:394:36: parameter nodes: NodeArray<ParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:394:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:394:106: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:394:138: parameter nodesVisitor: NodesVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:395:17: function visitParameterList: { (nodes: NodeArray<ParameterDeclaration>, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration>; (nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor | undefined): NodeArray<ParameterDeclaration> | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:395:36: parameter nodes: NodeArray<ParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:395:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:395:106: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:395:138: parameter nodesVisitor: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:396:9: variable updated: NodeArray<ParameterDeclaration> | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:420:10: function addDefaultValueAssignmentsIfNeeded: (parameters: NodeArray<ParameterDeclaration>, context: TransformationContext) => NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:420:45: parameter parameters: NodeArray<ParameterDeclaration>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:420:90: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:421:9: variable result: ParameterDeclaration[] | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:422:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:423:15: variable parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:424:15: variable updated: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:436:10: function addDefaultValueAssignmentIfNeeded: (parameter: ParameterDeclaration, context: TransformationContext) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:436:44: parameter parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:436:77: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:445:10: function addDefaultValueAssignmentForBindingPattern: (parameter: ParameterDeclaration, context: TransformationContext) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:445:53: parameter parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:445:86: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:446:13: binding factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:474:10: function addDefaultValueAssignmentForInitializer: (parameter: ParameterDeclaration, name: Identifier, initializer: Expression, context: TransformationContext) => ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:474:50: parameter parameter: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:474:83: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:474:101: parameter initializer: Expression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:474:126: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:475:11: variable factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:508:17: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:508:35: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:508:55: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:508:73: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:513:17: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:513:35: parameter node: Block | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:513:67: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:513:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:518:17: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:518:35: parameter node: ConciseBody
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:518:54: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:518:72: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:519:34: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:519:52: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:519:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:519:90: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:519:122: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:520:34: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:520:52: parameter node: Block | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:520:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:520:102: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:520:134: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:521:34: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:521:52: parameter node: ConciseBody
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:521:71: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:521:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:521:121: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:522:17: function visitFunctionBody: { (node: Block, visitor: Visitor, context: TransformationContext): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext): ConciseBody; (node: Block, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block; (node: Block | undefined, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Block | undefined; (node: ConciseBody, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): ConciseBody; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:522:35: parameter node: ConciseBody | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:522:66: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:522:84: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:522:116: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:524:11: variable updated: ConciseBody | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:525:11: variable declarations: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:530:15: variable block: Block
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:531:15: variable statements: NodeArray<Statement>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:540:17: function visitIterationBody: { (body: Statement, visitor: Visitor, context: TransformationContext): Statement; (body: Statement, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Statement; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:540:36: parameter body: Statement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:540:53: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:540:71: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:542:17: function visitIterationBody: { (body: Statement, visitor: Visitor, context: TransformationContext): Statement; (body: Statement, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Statement; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:542:36: parameter body: Statement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:542:53: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:542:71: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:542:103: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:543:17: function visitIterationBody: { (body: Statement, visitor: Visitor, context: TransformationContext): Statement; (body: Statement, visitor: Visitor, context: TransformationContext, nodeVisitor?: NodeVisitor | undefined): Statement; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:543:36: parameter body: Statement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:543:53: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:543:71: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:543:103: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:545:11: variable updated: Statement | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:547:11: variable declarations: Statement[] | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:564:17: function visitCommaListElements: (elements: NodeArray<Expression>, visitor: Visitor, discardVisitor?: Visitor) => NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:564:40: parameter elements: NodeArray<Expression>
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:564:73: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:564:91: parameter discardVisitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:569:9: variable i: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:570:11: variable length: number
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:571:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:572:15: variable discarded: boolean
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:585:17: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined): T; <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined, tokenVisitor?: Visitor | undefined): T | undefined; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:585:48: parameter node: T
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:585:57: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:585:75: parameter context: TransformationContext | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:17: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined): T; <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined, tokenVisitor?: Visitor | undefined): T | undefined; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:48: parameter node: T
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:57: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:75: parameter context: TransformationContext | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:119: parameter nodesVisitor: NodesVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:148: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:587:172: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:17: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined): T; <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined, tokenVisitor?: Visitor | undefined): T | undefined; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:48: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:69: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:87: parameter context: TransformationContext | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:131: parameter nodesVisitor: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:595:165: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:17: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined): T; <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined, tokenVisitor?: Visitor | undefined): T | undefined; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:48: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:69: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:87: parameter context: TransformationContext | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:131: parameter nodesVisitor: NodesVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:160: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:597:184: parameter nodeVisitor: NodeVisitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:17: function visitEachChild: { <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined): T; <T extends Node>(node: T, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); } | undefined, tokenVisitor?: Visitor | undefined): T | undefined; <T extends Node>(node: T | undefined, visitor: Visitor, context: TransformationContext | undefined, nodesVisitor?: NodesVisitor | undefined, tokenVisitor?: Visitor | undefined, nodeVisitor?: NodeVisitor | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:48: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:69: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:124: parameter nodesVisitor: { <TIn extends Node, TInArray extends NodeArray<TIn> | undefined, TOut extends Node>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test: (node: Node) => node is TOut, start?: number | undefined, count?: number | undefined): NodeArray<TOut> | (TInArray & undefined); <TIn extends Node, TInArray extends NodeArray<TIn> | undefined>(nodes: TInArray, visitor: Visitor<TIn, Node | undefined>, test?: ((node: Node) => boolean) | undefined, start?: number | undefined, count?: number | undefined): NodeArray<Node> | (TInArray & undefined); }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:151: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:598:175: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:603:11: variable fn: VisitEachChildFunction<any> | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:6: type VisitEachChildFunction: (node: T, visitor: Visitor, context: TransformationContext, nodesVisitor: NodesVisitor, nodeVisitor: NodeVisitor, tokenVisitor: Visitor | undefined) => T
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:48: parameter node: T
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:57: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:75: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:107: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:135: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:607:161: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:619:6: type VisitEachChildTable: { 167: VisitEachChildFunction<QualifiedName>; 168: VisitEachChildFunction<ComputedPropertyName>; 169: VisitEachChildFunction<TypeParameterDeclaration>; 170: VisitEachChildFunction<ParameterDeclaration>; 171: VisitEachChildFunction<Decorator>; 172: VisitEachChildFunction<PropertySignature>; 173: VisitEachChildFunction<PropertyDeclaration>; 174: VisitEachChildFunction<MethodSignature>; 175: VisitEachChildFunction<MethodDeclaration>; 176: VisitEachChildFunction<ClassStaticBlockDeclaration>; 177: VisitEachChildFunction<ConstructorDeclaration>; 178: VisitEachChildFunction<GetAccessorDeclaration>; 179: VisitEachChildFunction<SetAccessorDeclaration>; 180: VisitEachChildFunction<CallSignatureDeclaration>; 181: VisitEachChildFunction<ConstructSignatureDeclaration>; 182: VisitEachChildFunction<IndexSignatureDeclaration>; 183: VisitEachChildFunction<TypePredicateNode>; 184: VisitEachChildFunction<TypeReferenceNode>; 185: VisitEachChildFunction<FunctionTypeNode>; 186: VisitEachChildFunction<ConstructorTypeNode>; 187: VisitEachChildFunction<TypeQueryNode>; 188: VisitEachChildFunction<TypeLiteralNode>; 189: VisitEachChildFunction<ArrayTypeNode>; 190: VisitEachChildFunction<TupleTypeNode>; 191: VisitEachChildFunction<OptionalTypeNode>; 192: VisitEachChildFunction<RestTypeNode>; 193: VisitEachChildFunction<UnionTypeNode>; 194: VisitEachChildFunction<IntersectionTypeNode>; 195: VisitEachChildFunction<ConditionalTypeNode>; 196: VisitEachChildFunction<InferTypeNode>; 197: VisitEachChildFunction<ParenthesizedTypeNode>; 199: VisitEachChildFunction<TypeOperatorNode>; 200: VisitEachChildFunction<IndexedAccessTypeNode>; 201: VisitEachChildFunction<MappedTypeNode>; 202: VisitEachChildFunction<LiteralTypeNode>; 203: VisitEachChildFunction<NamedTupleMember>; 204: VisitEachChildFunction<TemplateLiteralTypeNode>; 205: VisitEachChildFunction<TemplateLiteralTypeSpan>; 206: VisitEachChildFunction<ImportTypeNode>; 207: VisitEachChildFunction<ObjectBindingPattern>; 208: VisitEachChildFunction<ArrayBindingPattern>; 209: VisitEachChildFunction<BindingElement>; 210: VisitEachChildFunction<ArrayLiteralExpression>; 211: VisitEachChildFunction<ObjectLiteralExpression>; 212: VisitEachChildFunction<PropertyAccessExpression>; 213: VisitEachChildFunction<ElementAccessExpression>; 214: VisitEachChildFunction<CallExpression>; 215: VisitEachChildFunction<NewExpression>; 216: VisitEachChildFunction<TaggedTemplateExpression>; 217: VisitEachChildFunction<TypeAssertion>; 218: VisitEachChildFunction<ParenthesizedExpression>; 219: VisitEachChildFunction<FunctionExpression>; 220: VisitEachChildFunction<ArrowFunction>; 221: VisitEachChildFunction<DeleteExpression>; 222: VisitEachChildFunction<TypeOfExpression>; 223: VisitEachChildFunction<VoidExpression>; 224: VisitEachChildFunction<AwaitExpression>; 225: VisitEachChildFunction<PrefixUnaryExpression>; 226: VisitEachChildFunction<PostfixUnaryExpression>; 227: VisitEachChildFunction<BinaryExpression>; 228: VisitEachChildFunction<ConditionalExpression>; 229: VisitEachChildFunction<TemplateExpression>; 230: VisitEachChildFunction<YieldExpression>; 231: VisitEachChildFunction<SpreadElement>; 232: VisitEachChildFunction<ClassExpression>; 234: VisitEachChildFunction<ExpressionWithTypeArguments>; 235: VisitEachChildFunction<AsExpression>; 236: VisitEachChildFunction<NonNullExpression>; 237: VisitEachChildFunction<MetaProperty>; 239: VisitEachChildFunction<SatisfiesExpression>; 240: VisitEachChildFunction<TemplateSpan>; 242: VisitEachChildFunction<Block>; 244: VisitEachChildFunction<VariableStatement>; 245: VisitEachChildFunction<ExpressionStatement>; 246: VisitEachChildFunction<IfStatement>; 247: VisitEachChildFunction<DoStatement>; 248: VisitEachChildFunction<WhileStatement>; 249: VisitEachChildFunction<ForStatement>; 250: VisitEachChildFunction<ForInStatement>; 251: VisitEachChildFunction<ForOfStatement>; 252: VisitEachChildFunction<ContinueStatement>; 253: VisitEachChildFunction<BreakStatement>; 254: VisitEachChildFunction<ReturnStatement>; 255: VisitEachChildFunction<WithStatement>; 256: VisitEachChildFunction<SwitchStatement>; 257: VisitEachChildFunction<LabeledStatement>; 258: VisitEachChildFunction<ThrowStatement>; 259: VisitEachChildFunction<TryStatement>; 261: VisitEachChildFunction<VariableDeclaration>; 262: VisitEachChildFunction<VariableDeclarationList>; 263: VisitEachChildFunction<FunctionDeclaration>; 264: VisitEachChildFunction<ClassDeclaration>; 265: VisitEachChildFunction<InterfaceDeclaration>; 266: VisitEachChildFunction<TypeAliasDeclaration>; 267: VisitEachChildFunction<EnumDeclaration>; 268: VisitEachChildFunction<ModuleDeclaration>; 269: VisitEachChildFunction<ModuleBlock>; 270: VisitEachChildFunction<CaseBlock>; 271: VisitEachChildFunction<NamespaceExportDeclaration>; 272: VisitEachChildFunction<ImportEqualsDeclaration>; 273: VisitEachChildFunction<ImportDeclaration>; 274: VisitEachChildFunction<ImportClause>; 275: VisitEachChildFunction<NamespaceImport>; 276: VisitEachChildFunction<NamedImports>; 277: VisitEachChildFunction<ImportSpecifier>; 278: VisitEachChildFunction<ExportAssignment>; 279: VisitEachChildFunction<ExportDeclaration>; 280: VisitEachChildFunction<NamedExports>; 281: VisitEachChildFunction<NamespaceExport>; 282: VisitEachChildFunction<ExportSpecifier>; 284: VisitEachChildFunction<ExternalModuleReference>; 285: VisitEachChildFunction<JsxElement>; 286: VisitEachChildFunction<JsxSelfClosingElement>; 287: VisitEachChildFunction<JsxOpeningElement>; 288: VisitEachChildFunction<JsxClosingElement>; 289: VisitEachChildFunction<JsxFragment>; 292: VisitEachChildFunction<JsxAttribute>; 293: VisitEachChildFunction<JsxAttributes>; 294: VisitEachChildFunction<JsxSpreadAttribute>; 295: VisitEachChildFunction<JsxExpression>; 296: VisitEachChildFunction<JsxNamespacedName>; 297: VisitEachChildFunction<CaseClause>; 298: VisitEachChildFunction<DefaultClause>; 299: VisitEachChildFunction<HeritageClause>; 300: VisitEachChildFunction<CatchClause>; 301: VisitEachChildFunction<AssertClause | ImportAttributes>; 302: VisitEachChildFunction<AssertEntry | ImportAttribute>; 303: VisitEachChildFunction<ImportTypeAssertionContainer>; 304: VisitEachChildFunction<PropertyAssignment>; 305: VisitEachChildFunction<ShorthandPropertyAssignment>; 306: VisitEachChildFunction<SpreadAssignment>; 307: VisitEachChildFunction<EnumMember>; 308: VisitEachChildFunction<SourceFile>; 356: VisitEachChildFunction<PartiallyEmittedExpression>; 357: VisitEachChildFunction<CommaListExpression>; }
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:623:7: variable visitEachChildTable: VisitEachChildTable
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:72: parameter node: QualifiedName
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:96: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:111: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:624:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:86: parameter node: ComputedPropertyName
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:92: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:101: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:110: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:125: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:632:138: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:83: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:89: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:98: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:107: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:121: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:640:134: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:75: parameter node: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:81: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:90: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:99: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:650:126: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:64: parameter node: Decorator
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:70: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:79: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:88: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:103: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:662:116: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:80: parameter node: PropertySignature
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:670:131: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:84: parameter node: PropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:108: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:122: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:680:135: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:76: parameter node: MethodSignature
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:100: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:114: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:692:127: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:80: parameter node: MethodDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:704:131: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:79: parameter node: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:85: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:94: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:103: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:718:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:79: parameter node: GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:85: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:94: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:103: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:727:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:79: parameter node: SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:85: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:94: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:103: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:738:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:100: parameter node: ClassStaticBlockDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:106: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:115: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:124: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:139: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:748:152: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:83: parameter node: CallSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:89: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:98: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:107: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:121: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:757:134: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:93: parameter node: ConstructSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:99: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:108: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:117: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:766:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:85: parameter node: IndexSignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:91: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:100: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:109: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:123: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:775:136: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:76: parameter node: TypePredicateNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:785:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:76: parameter node: TypeReferenceNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:100: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:114: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:794:127: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:74: parameter node: FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:98: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:112: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:802:125: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:80: parameter node: ConstructorTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:811:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:68: parameter node: TypeQueryNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:92: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:106: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:821:119: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:72: parameter node: TypeLiteralNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:96: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:110: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:829:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:68: parameter node: ArrayTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:92: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:107: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:836:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:68: parameter node: TupleTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:92: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:106: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:843:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:74: parameter node: OptionalTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:850:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:66: parameter node: RestTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:90: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:105: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:857:118: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:68: parameter node: UnionTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:92: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:106: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:864:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:82: parameter node: IntersectionTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:97: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:106: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:120: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:871:134: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:80: parameter node: ConditionalTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:878:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:68: parameter node: InferTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:92: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:107: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:888:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:70: parameter node: ImportTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:94: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:108: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:895:121: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:102: parameter node: ImportTypeAssertionContainer
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:108: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:117: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:126: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:141: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:906:154: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:78: parameter node: NamedTupleMember
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:914:130: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:80: parameter node: ParenthesizedTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:924:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:74: parameter node: TypeOperatorNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:931:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:80: parameter node: IndexedAccessTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:938:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:66: parameter node: MappedTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:90: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:104: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:946:117: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:72: parameter node: LiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:96: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:111: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:958:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:84: parameter node: TemplateLiteralTypeNode
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:108: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:122: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:965:135: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:92: parameter node: TemplateLiteralTypeSpan
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:116: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:973:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:86: parameter node: ObjectBindingPattern
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:92: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:101: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:110: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:124: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:982:138: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:84: parameter node: ArrayBindingPattern
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:108: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:122: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:989:136: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:74: parameter node: BindingElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:996:126: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:90: parameter node: ArrayLiteralExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:96: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:105: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:114: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:128: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1007:142: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:92: parameter node: ObjectLiteralExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:116: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:130: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1014:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:94: parameter node: PropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:100: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:109: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:118: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:133: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1021:146: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:92: parameter node: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:116: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1036:144: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:74: parameter node: CallExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:98: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:112: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1051:125: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:72: parameter node: NewExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:96: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:110: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1068:123: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:94: parameter node: TaggedTemplateExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:100: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:109: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:118: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:132: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1077:145: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:92: parameter node: TypeAssertion
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:116: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1086:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:92: parameter node: ParenthesizedExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:116: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1094:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:82: parameter node: FunctionExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:97: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:106: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:120: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1101:133: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:72: parameter node: ArrowFunction
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:96: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:110: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1114:123: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:78: parameter node: DeleteExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1126:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:78: parameter node: TypeOfExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1133:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:74: parameter node: VoidExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1140:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:76: parameter node: AwaitExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1147:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:88: parameter node: PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:94: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:103: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:112: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:127: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1154:140: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:90: parameter node: PostfixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:96: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:105: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:114: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:129: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1161:142: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:78: parameter node: BinaryExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1168:130: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:88: parameter node: ConditionalExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:94: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:103: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:112: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:127: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1177:140: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:82: parameter node: TemplateExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:97: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:106: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:120: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1188:133: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:76: parameter node: YieldExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1196:128: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:72: parameter node: SpreadElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:96: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:111: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1204:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:76: parameter node: ClassExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:100: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:114: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1211:127: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:100: parameter node: ExpressionWithTypeArguments
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:106: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:115: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:124: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:138: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1222:151: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:70: parameter node: AsExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1230:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:84: parameter node: SatisfiesExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:108: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:123: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1238:136: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:80: parameter node: NonNullExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1246:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:70: parameter node: MetaProperty
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1258:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:70: parameter node: TemplateSpan
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1266:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:56: parameter node: Block
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:62: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:71: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:80: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:94: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1275:108: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:80: parameter node: VariableStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1282:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:84: parameter node: ExpressionStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:108: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:123: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1290:136: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:68: parameter node: IfStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:92: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:107: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1297:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:68: parameter node: DoStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:92: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:107: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1306:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:74: parameter node: WhileStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1314:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:70: parameter node: ForStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1322:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:74: parameter node: ForInStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1332:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:74: parameter node: ForOfStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1341:126: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:80: parameter node: ContinueStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1351:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:74: parameter node: BreakStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1358:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:76: parameter node: ReturnStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1365:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:72: parameter node: WithStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:96: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:111: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1372:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:76: parameter node: SwitchStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1380:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:78: parameter node: LabeledStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1388:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:74: parameter node: ThrowStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:98: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:113: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1396:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:70: parameter node: TryStatement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1403:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:84: parameter node: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:108: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:123: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1412:136: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:92: parameter node: VariableDeclarationList
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:116: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:130: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1422:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:84: parameter node: FunctionDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:108: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:122: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1429:135: parameter tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:78: parameter node: ClassDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:102: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:116: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1442:129: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:86: parameter node: InterfaceDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:92: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:101: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:110: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:124: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1453:137: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:86: parameter node: TypeAliasDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:92: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:101: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:110: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:124: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1464:137: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:76: parameter node: EnumDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:100: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:114: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1474:127: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:80: parameter node: ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1483:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:68: parameter node: ModuleBlock
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:92: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:106: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1492:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:64: parameter node: CaseBlock
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:70: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:79: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:88: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:102: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1499:116: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:98: parameter node: NamespaceExportDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:104: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:113: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:122: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:137: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1506:150: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:92: parameter node: ImportEqualsDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:116: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:130: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1513:143: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:80: parameter node: ImportDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1523:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:78: parameter node: AssertClause | ImportAttributes
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:102: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:116: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1533:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:76: parameter node: AssertEntry | ImportAttribute
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1541:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:70: parameter node: ImportClause
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1549:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:76: parameter node: NamespaceImport
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1558:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:76: parameter node: NamespaceExport
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1565:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:70: parameter node: NamedImports
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:94: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:108: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1572:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:76: parameter node: ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1579:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:78: parameter node: ExportAssignment
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:102: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:116: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1588:129: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:80: parameter node: ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1596:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:70: parameter node: NamedExports
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:94: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:108: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1607:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:76: parameter node: ExportSpecifier
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:82: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:91: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:100: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:115: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1614:128: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:92: parameter node: ExternalModuleReference
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:98: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:107: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:116: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:131: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1624:144: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:66: parameter node: JsxElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:90: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:104: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1632:117: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:88: parameter node: JsxSelfClosingElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:94: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:103: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:112: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:126: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1641:139: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:80: parameter node: JsxOpeningElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:104: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:118: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1650:131: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:80: parameter node: JsxClosingElement
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:86: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:95: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:104: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:119: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1659:132: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:78: parameter node: JsxNamespacedName
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1666:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:68: parameter node: JsxFragment
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:92: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:106: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1674:119: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:70: parameter node: JsxAttribute
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:76: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:85: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:94: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:109: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1683:122: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:72: parameter node: JsxAttributes
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:96: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:110: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1691:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:82: parameter node: JsxSpreadAttribute
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:97: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:106: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:121: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1698:134: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:72: parameter node: JsxExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:96: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:111: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1705:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:66: parameter node: CaseClause
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:90: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:104: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1713:117: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:72: parameter node: DefaultClause
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:78: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:87: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:96: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:110: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1721:124: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:74: parameter node: HeritageClause
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:80: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:89: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:98: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:112: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1728:126: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:68: parameter node: CatchClause
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:74: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:83: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:92: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:107: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1735:120: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:82: parameter node: PropertyAssignment
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:88: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:97: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:106: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:121: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1744:134: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:100: parameter node: ShorthandPropertyAssignment
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:106: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:115: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:124: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:139: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1752:152: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:78: parameter node: SpreadAssignment
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:84: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:93: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:102: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:117: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1760:130: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:66: parameter node: EnumMember
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:90: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:105: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1768:118: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:66: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:72: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:81: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:90: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:105: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1777:119: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:98: parameter node: PartiallyEmittedExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:104: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:113: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:122: parameter _nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:137: parameter nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1785:150: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:84: parameter node: CommaListExpression
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:90: parameter visitor: Visitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:99: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:108: parameter nodesVisitor: NodesVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:122: parameter _nodeVisitor: NodeVisitor
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1792:136: parameter _tokenVisitor: Visitor | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1805:10: function extractSingleNode: (nodes: readonly Node[]) => Node | undefined
+/workspace/tracing-measured-after/src/compiler/visitorPublic.ts:1805:28: parameter nodes: readonly Node[]

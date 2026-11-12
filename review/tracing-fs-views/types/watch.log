@@ -1,0 +1,360 @@
+/workspace/tracing-measured-after/src/compiler/watch.ts:113:7: variable sysFormatDiagnosticsHost: FormatDiagnosticsHost | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:124:17: function createDiagnosticReporter: (system: System, pretty?: boolean | undefined) => DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:124:42: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:124:58: parameter pretty: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:125:11: variable host: FormatDiagnosticsHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:131:16: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:134:11: variable diagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:135:12: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:145:10: function clearScreenIfNotWatchingForFileChanges: (system: System, diagnostic: Diagnostic, options: CompilerOptions) => boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:145:49: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:145:65: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:145:89: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:160:7: variable screenStartingMessageCodes: number[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:165:10: function getPlainDiagnosticFollowingNewLines: (diagnostic: Diagnostic, newLine: string) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:165:46: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:165:70: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:176:17: function getLocaleTimeString: (system: System) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:176:37: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:192:17: function createWatchStatusReporter: (system: System, pretty?: boolean | undefined) => WatchStatusReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:192:43: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:192:59: parameter pretty: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:194:10: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:194:22: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:194:31: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:196:17: variable output: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:200:10: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:200:22: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:200:31: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:201:17: variable output: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:17: function parseConfigFileWithSystem: (configFileName: string, optionsToExtend: CompilerOptions, extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined, watchOptionsToExtend: WatchOptions | undefined, system: System, reportDiagnostic: DiagnosticReporter) => ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:43: parameter configFileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:67: parameter optionsToExtend: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:101: parameter extendedConfigCache: Map<string, ExtendedConfigCacheEntry> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:173: parameter watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:221: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:219:237: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:220:11: variable host: ParseConfigFileHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:221:48: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:222:11: variable result: ParsedCommandLine | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:228:17: function getErrorCountForSummary: (diagnostics: readonly Diagnostic[]) => number
+/workspace/tracing-measured-after/src/compiler/watch.ts:228:41: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:229:36: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:233:17: function getFilesInErrorForSummary: (diagnostics: readonly Diagnostic[]) => (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:233:43: parameter diagnostics: readonly Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:234:11: variable filesInError: (string | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:234:46: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:236:13: parameter errorDiagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:241:29: parameter fileName: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:246:15: variable diagnosticForFileName: Diagnostic | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:246:57: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:249:21: binding line: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:259:17: function getWatchErrorSummaryDiagnosticMessage: (errorCount: number) => DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/watch.ts:259:55: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:265:10: function prettyPathForFileError: (error: ReportFileInError, cwd: string) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:265:33: parameter error: ReportFileInError
+/workspace/tracing-measured-after/src/compiler/watch.ts:265:59: parameter cwd: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:266:11: variable line: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:275:17: function getErrorSummaryText: (errorCount: number, filesInError: readonly (ReportFileInError | undefined)[], newLine: string, host: HasCurrentDirectory) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:276:5: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:277:5: parameter filesInError: readonly (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:278:5: parameter newLine: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:279:5: parameter host: HasCurrentDirectory
+/workspace/tracing-measured-after/src/compiler/watch.ts:282:11: variable nonNilFiles: ReportFileInError[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:282:45: parameter fileInError: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:283:11: variable distinctFileNamesWithLines: string[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:283:56: parameter fileInError: ReportFileInError
+/workspace/tracing-measured-after/src/compiler/watch.ts:284:18: parameter value: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:284:25: parameter index: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:284:32: parameter self: string[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:286:11: variable firstFileReference: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:288:9: variable messageAndArgs: [message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]]
+/workspace/tracing-measured-after/src/compiler/watch.ts:298:11: variable d: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:299:11: variable suffix: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:303:10: function createTabularErrorsDisplay: (filesInError: (ReportFileInError | undefined)[], host: HasCurrentDirectory) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:303:37: parameter filesInError: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:303:86: parameter host: HasCurrentDirectory
+/workspace/tracing-measured-after/src/compiler/watch.ts:304:11: variable distinctFiles: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:304:48: parameter value: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:304:55: parameter index: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:304:62: parameter self: (ReportFileInError | undefined)[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:304:96: parameter file: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:307:11: variable numberLength: (num: number) => number
+/workspace/tracing-measured-after/src/compiler/watch.ts:307:27: parameter num: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:308:11: variable fileToErrorCount: (readonly [ReportFileInError | undefined, number])[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:308:48: parameter file: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:308:89: parameter fileInError: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:309:11: variable maxErrors: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:309:50: parameter value: readonly [ReportFileInError | undefined, number]
+/workspace/tracing-measured-after/src/compiler/watch.ts:311:11: variable headerRow: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:312:11: variable leftColumnHeadingLength: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:313:11: variable leftPaddingGoal: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:314:11: variable headerPadding: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:316:9: variable tabularData: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:318:30: parameter row: readonly [ReportFileInError | undefined, number]
+/workspace/tracing-measured-after/src/compiler/watch.ts:319:16: binding file: ReportFileInError | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:319:22: binding errorCount: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:320:15: variable errorCountDigitsLength: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:321:15: variable leftPadding: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:325:15: variable fileRef: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:333:17: function isBuilderProgram: <T extends BuilderProgram>(program: BuilderProgram | Program) => program is T
+/workspace/tracing-measured-after/src/compiler/watch.ts:333:60: parameter program: BuilderProgram | Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:337:10: function listFiles: <T extends BuilderProgram>(program: T | Program, write: (s: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:337:46: parameter program: T | Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:337:68: parameter write: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:337:76: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:338:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:343:43: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/watch.ts:350:17: function explainFiles: (program: Program, write: (s: string) => void) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:350:30: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:350:48: parameter write: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:350:56: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:351:11: variable reasons: MultiMap<Path, FileIncludeReason>
+/workspace/tracing-measured-after/src/compiler/watch.ts:352:11: variable relativeFileName: (fileName: string) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:352:31: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:353:16: variable file: SourceFile
+/workspace/tracing-measured-after/src/compiler/watch.ts:355:41: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/watch.ts:356:123: parameter d: DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/watch.ts:361:17: function explainIfFileIsRedirectAndImpliedFormat: (file: SourceFile, options: CompilerOptions, fileNameConvertor?: ((fileName: string) => string) | undefined) => DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:362:5: parameter file: SourceFile
+/workspace/tracing-measured-after/src/compiler/watch.ts:363:5: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:364:5: parameter fileNameConvertor: ((fileName: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:364:26: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:366:9: variable result: DiagnosticMessageChain[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:415:17: function getMatchedFileSpec: (program: Program, fileName: string) => string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:415:36: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:415:54: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:416:11: variable configFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:419:11: variable filePath: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:420:11: variable basePath: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:421:11: variable index: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:421:76: parameter fileSpec: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:426:17: function getMatchedIncludeSpec: (program: Program, fileName: string) => string | true | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:426:39: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:426:57: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:427:11: variable configFile: TsConfigSourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:433:11: variable isJsonFile: boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:434:11: variable basePath: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:435:11: variable useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:436:11: variable index: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:436:81: parameter includeSpec: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:438:15: variable pattern: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:445:17: function fileIncludeReasonToDiagnostics: (program: Program, reason: FileIncludeReason, fileNameConvertor?: ((fileName: string) => string) | undefined) => DiagnosticMessageChain
+/workspace/tracing-measured-after/src/compiler/watch.ts:445:48: parameter program: Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:445:66: parameter reason: FileIncludeReason
+/workspace/tracing-measured-after/src/compiler/watch.ts:445:93: parameter fileNameConvertor: ((fileName: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:445:114: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:446:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:448:15: variable referenceLocation: ReferenceFileLocation | SyntheticReferenceFileLocation
+/workspace/tracing-measured-after/src/compiler/watch.ts:449:15: variable referenceText: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:450:13: variable message: DiagnosticMessage
+/workspace/tracing-measured-after/src/compiler/watch.ts:497:19: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:498:19: variable matchedByFiles: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:500:19: variable matchedByInclude: string | true | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:517:19: variable isOutput: boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:518:19: variable referencedResolvedRef: ResolvedProjectReference
+/workspace/tracing-measured-after/src/compiler/watch.ts:532:19: variable messageAndArgs: [message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]]
+/workspace/tracing-measured-after/src/compiler/watch.ts:544:19: variable target: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:545:19: variable messageAndArgs: [message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]]
+/workspace/tracing-measured-after/src/compiler/watch.ts:553:10: function toFileName: (file: string | SourceFile, fileNameConvertor?: ((fileName: string) => string) | undefined) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:553:21: parameter file: string | SourceFile
+/workspace/tracing-measured-after/src/compiler/watch.ts:553:48: parameter fileNameConvertor: ((fileName: string) => string) | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:553:69: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:554:11: variable fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:563:17: function emitFilesAndReportErrors: <T extends BuilderProgram>(program: T | Program, reportDiagnostic: DiagnosticReporter, write?: ((s: string) => void) | undefined, reportSummary?: ReportEmitErrorSummary | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined) => { emitResult: EmitResult; diagnostics: SortedReadonlyArray<Diagnostic>; }
+/workspace/tracing-measured-after/src/compiler/watch.ts:564:5: parameter program: T | Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:565:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:566:5: parameter write: ((s: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:566:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:567:5: parameter reportSummary: ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:568:5: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:569:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:570:5: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:571:5: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:573:5: property emitResult: EmitResult
+/workspace/tracing-measured-after/src/compiler/watch.ts:574:5: property diagnostics: SortedReadonlyArray<Diagnostic>
+/workspace/tracing-measured-after/src/compiler/watch.ts:576:11: variable options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:579:11: variable allDiagnostics: Diagnostic[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:580:11: variable configFileParsingDiagnosticsLength: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:606:11: variable emitResult: EmitResult
+/workspace/tracing-measured-after/src/compiler/watch.ts:611:11: variable diagnostics: SortedReadonlyArray<Diagnostic>
+/workspace/tracing-measured-after/src/compiler/watch.ts:614:15: variable currentDir: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:615:42: parameter file: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:616:19: variable filepath: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:633:17: function emitFilesAndReportErrorsAndGetExitStatus: <T extends BuilderProgram>(program: T | Program, reportDiagnostic: DiagnosticReporter, write?: ((s: string) => void) | undefined, reportSummary?: ReportEmitErrorSummary | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined) => ExitStatus
+/workspace/tracing-measured-after/src/compiler/watch.ts:634:5: parameter program: T | Program
+/workspace/tracing-measured-after/src/compiler/watch.ts:635:5: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:636:5: parameter write: ((s: string) => void) | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:636:14: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:637:5: parameter reportSummary: ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:638:5: parameter writeFile: WriteFileCallback | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:639:5: parameter cancellationToken: CancellationToken | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:640:5: parameter emitOnlyDtsFiles: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:641:5: parameter customTransformers: CustomTransformers | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:643:13: binding emitResult: EmitResult
+/workspace/tracing-measured-after/src/compiler/watch.ts:643:25: binding diagnostics: SortedReadonlyArray<Diagnostic>
+/workspace/tracing-measured-after/src/compiler/watch.ts:667:14: variable noopFileWatcher: FileWatcher
+/workspace/tracing-measured-after/src/compiler/watch.ts:669:14: variable returnNoopFileWatcher: () => FileWatcher
+/workspace/tracing-measured-after/src/compiler/watch.ts:672:17: function createWatchHost: (system?: System, reportWatchStatus?: WatchStatusReporter | undefined) => WatchHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:672:33: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:672:55: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:673:11: variable onWatchStatusChange: WatchStatusReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:685:13: type WatchType: "Closed Script info" | "Config file" | "Config file for the inferred project root" | "Config file of referened project" | "Directory location for typing installer" | "Extended config file" | "Extended config file of referenced project" | "Failed Lookup Locations" | "File location affecting resolution" | "File location for typing installer" | "Missing file" | "Missing generated file" | "Missing source map file" | "Noop Config file for the inferred project root" | "Source file" | "Type roots" | "Wild card directory" | "Wild card directory of referenced project" | "node_modules for closed script infos and package.jsons affecting module specifier cache" | "node_modules for module specifier cache invalidation" | "package.json file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:687:14: variable WatchType: WatchTypeRegistry
+/workspace/tracing-measured-after/src/compiler/watch.ts:712:18: interface WatchTypeRegistry: WatchTypeRegistry
+/workspace/tracing-measured-after/src/compiler/watch.ts:713:5: property ConfigFile: "Config file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:714:5: property ExtendedConfigFile: "Extended config file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:715:5: property SourceFile: "Source file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:716:5: property MissingFile: "Missing file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:717:5: property WildcardDirectory: "Wild card directory"
+/workspace/tracing-measured-after/src/compiler/watch.ts:718:5: property FailedLookupLocations: "Failed Lookup Locations"
+/workspace/tracing-measured-after/src/compiler/watch.ts:719:5: property AffectingFileLocation: "File location affecting resolution"
+/workspace/tracing-measured-after/src/compiler/watch.ts:720:5: property TypeRoots: "Type roots"
+/workspace/tracing-measured-after/src/compiler/watch.ts:721:5: property ConfigFileOfReferencedProject: "Config file of referened project"
+/workspace/tracing-measured-after/src/compiler/watch.ts:722:5: property ExtendedConfigOfReferencedProject: "Extended config file of referenced project"
+/workspace/tracing-measured-after/src/compiler/watch.ts:723:5: property WildcardDirectoryOfReferencedProject: "Wild card directory of referenced project"
+/workspace/tracing-measured-after/src/compiler/watch.ts:724:5: property PackageJson: "package.json file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:727:5: property ClosedScriptInfo: "Closed Script info"
+/workspace/tracing-measured-after/src/compiler/watch.ts:728:5: property ConfigFileForInferredRoot: "Config file for the inferred project root"
+/workspace/tracing-measured-after/src/compiler/watch.ts:729:5: property NodeModules: "node_modules for closed script infos and package.jsons affecting module specifier cache"
+/workspace/tracing-measured-after/src/compiler/watch.ts:730:5: property MissingSourceMapFile: "Missing source map file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:731:5: property NoopConfigFileForInferredRoot: "Noop Config file for the inferred project root"
+/workspace/tracing-measured-after/src/compiler/watch.ts:732:5: property MissingGeneratedFile: "Missing generated file"
+/workspace/tracing-measured-after/src/compiler/watch.ts:733:5: property NodeModulesForModuleSpecifierCache: "node_modules for module specifier cache invalidation"
+/workspace/tracing-measured-after/src/compiler/watch.ts:734:5: property TypingInstallerLocationFile: "File location for typing installer"
+/workspace/tracing-measured-after/src/compiler/watch.ts:735:5: property TypingInstallerLocationDirectory: "Directory location for typing installer"
+/workspace/tracing-measured-after/src/compiler/watch.ts:739:18: interface WatchFactoryWithLog: WatchFactoryWithLog<X, Y>
+/workspace/tracing-measured-after/src/compiler/watch.ts:740:5: property writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:740:16: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:17: function createWatchFactory: <Y = undefined>(host: WatchFactoryHost & { trace?(s: string): void; }, options: { extendedDiagnostics?: boolean; diagnostics?: boolean; }) => WatchFactoryWithLog<WatchType, Y>
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:51: parameter host: WatchFactoryHost & { trace?(s: string): void; }
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:85: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:106: parameter options: { extendedDiagnostics?: boolean; diagnostics?: boolean; }
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:117: property extendedDiagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:744:148: property diagnostics: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:745:11: variable watchLogLevel: WatchLogLevel
+/workspace/tracing-measured-after/src/compiler/watch.ts:746:11: variable writeLog: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:746:22: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:746:83: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:747:11: variable result: WatchFactoryWithLog<WatchType, Y>
+/workspace/tracing-measured-after/src/compiler/watch.ts:753:17: function createCompilerHostFromProgramHost: <T extends BuilderProgram>(host: ProgramHost<T>, getCompilerOptions: () => CompilerOptions, directoryStructureHost?: DirectoryStructureHost) => CompilerHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:753:77: parameter host: ProgramHost<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:753:99: parameter getCompilerOptions: () => CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:753:142: parameter directoryStructureHost: DirectoryStructureHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:754:11: variable useCaseSensitiveFileNames: boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:755:11: variable compilerHost: CompilerHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:757:14: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:757:24: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:761:32: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:763:14: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:763:20: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:763:26: parameter writeByteOrderMark: boolean
+/workspace/tracing-measured-after/src/compiler/watch.ts:764:13: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:765:13: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:771:21: parameter f: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:772:19: parameter f: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:787:17: function getSourceFileVersionAsHashFromText: (host: Pick<CompilerHost, "createHash">, text: string) => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:787:52: parameter host: Pick<CompilerHost, "createHash">
+/workspace/tracing-measured-after/src/compiler/watch.ts:787:92: parameter text: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:790:13: variable lineEnd: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:791:13: variable lineStart: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:792:18: variable pos: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:793:19: variable ch: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:810:19: variable line: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:826:17: function setGetSourceFileAsHashVersioned: (compilerHost: CompilerHost) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:826:49: parameter compilerHost: CompilerHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:827:11: variable originalGetSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:828:38: parameter args: [fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined]
+/workspace/tracing-measured-after/src/compiler/watch.ts:829:15: variable result: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:842:17: function createProgramHost: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>(system: System, createProgram: CreateProgram<T> | undefined) => ProgramHost<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:842:104: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:842:120: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:843:11: variable getDefaultLibLocation: () => string
+/workspace/tracing-measured-after/src/compiler/watch.ts:849:32: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:850:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:851:20: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:851:26: parameter encoding: string | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:852:26: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:853:25: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:854:25: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:854:31: parameter extensions: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:854:43: parameter exclude: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:854:52: parameter include: readonly string[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:854:61: parameter depth: number | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:857:16: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:858:26: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:859:21: parameter path: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:859:27: parameter data: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:859:33: parameter writeByteOrderMark: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:870:10: function createWatchCompilerHost: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>(system: System | undefined, createProgram: CreateProgram<T> | undefined, reportDiagnostic: DiagnosticReporter, reportWatchStatus?: WatchStatusReporter | undefined) => WatchCompilerHost<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:870:103: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:870:117: parameter createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:870:162: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:870:200: parameter reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:871:11: variable write: (s: string) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:871:20: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:872:11: variable result: WatchCompilerHost<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:874:33: parameter builderProgram: T
+/workspace/tracing-measured-after/src/compiler/watch.ts:875:15: variable compilerOptions: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:876:15: variable newLine: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:882:13: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:897:10: function reportUnrecoverableDiagnostic: (system: System, reportDiagnostic: DiagnosticReporter, diagnostic: Diagnostic) => void
+/workspace/tracing-measured-after/src/compiler/watch.ts:897:40: parameter system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:897:56: parameter reportDiagnostic: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:897:94: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:903:18: interface CreateWatchCompilerHostInput: CreateWatchCompilerHostInput<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:904:5: property system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:905:5: property createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:906:5: property reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:907:5: property reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:911:18: interface CreateWatchCompilerHostOfConfigFileInput: CreateWatchCompilerHostOfConfigFileInput<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:912:5: property configFileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:913:5: property optionsToExtend: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:914:5: property watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:915:5: property extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:922:17: function createWatchCompilerHostOfConfigFile: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>({ configFileName, optionsToExtend, watchOptionsToExtend, extraFileExtensions, system, createProgram, reportDiagnostic, reportWatchStatus, }: CreateWatchCompilerHostOfConfigFileInput<T>) => WatchCompilerHostOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:923:5: binding configFileName: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:924:5: binding optionsToExtend: CompilerOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:925:5: binding watchOptionsToExtend: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:926:5: binding extraFileExtensions: readonly FileExtensionInfo[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:927:5: binding system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:928:5: binding createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:929:5: binding reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:930:5: binding reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:932:11: variable diagnosticReporter: DiagnosticReporter
+/workspace/tracing-measured-after/src/compiler/watch.ts:933:11: variable host: WatchCompilerHostOfConfigFile<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:934:48: parameter diagnostic: Diagnostic
+/workspace/tracing-measured-after/src/compiler/watch.ts:943:18: interface CreateWatchCompilerHostOfFilesAndCompilerOptionsInput: CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:944:5: property rootFiles: string[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:945:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:946:5: property watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:947:5: property projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:954:17: function createWatchCompilerHostOfFilesAndCompilerOptions: <T extends BuilderProgram = EmitAndSemanticDiagnosticsBuilderProgram>({ rootFiles, options, watchOptions, projectReferences, system, createProgram, reportDiagnostic, reportWatchStatus, }: CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>) => WatchCompilerHostOfFilesAndCompilerOptions<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:955:5: binding rootFiles: string[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:956:5: binding options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:957:5: binding watchOptions: WatchOptions | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:958:5: binding projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:959:5: binding system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:960:5: binding createProgram: CreateProgram<T> | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:961:5: binding reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:962:5: binding reportWatchStatus: WatchStatusReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:964:11: variable host: WatchCompilerHostOfFilesAndCompilerOptions<T>
+/workspace/tracing-measured-after/src/compiler/watch.ts:973:18: interface IncrementalCompilationOptions: IncrementalCompilationOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:974:5: property rootNames: readonly string[]
+/workspace/tracing-measured-after/src/compiler/watch.ts:975:5: property options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:976:5: property configFileParsingDiagnostics: readonly Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:977:5: property projectReferences: readonly ProjectReference[] | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:978:5: property host: CompilerHost | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:979:5: property reportDiagnostic: DiagnosticReporter | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:980:5: property reportErrorSummary: ReportEmitErrorSummary | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:981:37: parameter program: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/watch.ts:982:5: property system: System | undefined
+/workspace/tracing-measured-after/src/compiler/watch.ts:986:17: function performIncrementalCompilation: (input: IncrementalCompilationOptions) => ExitStatus
+/workspace/tracing-measured-after/src/compiler/watch.ts:986:47: parameter input: IncrementalCompilationOptions
+/workspace/tracing-measured-after/src/compiler/watch.ts:987:11: variable system: System
+/workspace/tracing-measured-after/src/compiler/watch.ts:988:11: variable host: CompilerHost
+/workspace/tracing-measured-after/src/compiler/watch.ts:989:11: variable builderProgram: EmitAndSemanticDiagnosticsBuilderProgram
+/workspace/tracing-measured-after/src/compiler/watch.ts:990:11: variable exitStatus: ExitStatus
+/workspace/tracing-measured-after/src/compiler/watch.ts:993:9: parameter s: string
+/workspace/tracing-measured-after/src/compiler/watch.ts:994:61: parameter errorCount: number
+/workspace/tracing-measured-after/src/compiler/watch.ts:994:73: parameter filesInError: (ReportFileInError | undefined)[]

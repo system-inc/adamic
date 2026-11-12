@@ -1,0 +1,682 @@
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:296:17: function isExternalModuleNameRelative: (moduleName: string) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:296:46: parameter moduleName: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:303:17: function sortAndDeduplicateDiagnostics: <T extends Diagnostic>(diagnostics: readonly T[]) => SortedReadonlyArray<T>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:303:69: parameter diagnostics: readonly T[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:312:14: variable targetToLibMap: Map<ScriptTarget, string>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:327:17: function getDefaultLibFileName: (options: CompilerOptions) => string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:327:39: parameter options: CompilerOptions
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:328:11: variable target: ScriptTarget
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:348:17: function textSpanEnd: (span: TextSpan) => number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:348:29: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:352:17: function textSpanIsEmpty: (span: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:352:33: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:356:17: function textSpanContainsPosition: (span: TextSpan, position: number) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:356:42: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:356:58: parameter position: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:361:17: function textRangeContainsPositionInclusive: (range: Readonly<TextRange>, position: number) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:361:52: parameter range: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:361:80: parameter position: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:366:17: function textSpanContainsTextSpan: (span: TextSpan, other: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:366:42: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:366:58: parameter other: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:371:17: function textSpanContainsTextRange: (span: TextSpan, range: Readonly<TextRange>) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:371:43: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:371:59: parameter range: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:376:17: function textRangeContainsTextSpan: (range: Readonly<TextRange>, span: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:376:43: parameter range: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:376:71: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:380:17: function textSpanOverlapsWith: (span: TextSpan, other: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:380:38: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:380:54: parameter other: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:384:17: function textSpanOverlap: (span1: TextSpan, span2: TextSpan) => TextSpan | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:384:33: parameter span1: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:384:50: parameter span2: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:385:11: variable overlap: TextSpan | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:389:17: function textSpanIntersectsWithTextSpan: (span: TextSpan, other: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:389:48: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:389:64: parameter other: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:393:17: function textSpanIntersectsWith: (span: TextSpan, start: number, length: number) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:393:40: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:393:56: parameter start: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:393:71: parameter length: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:397:17: function decodedTextSpanIntersectsWith: (start1: number, length1: number, start2: number, length2: number) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:397:47: parameter start1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:397:63: parameter length1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:397:80: parameter start2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:397:96: parameter length2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:398:11: variable end1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:399:11: variable end2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:403:17: function textSpanIntersectsWithPosition: (span: TextSpan, position: number) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:403:48: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:403:64: parameter position: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:408:17: function textRangeIntersectsWithTextSpan: (range: Readonly<TextRange>, span: TextSpan) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:408:49: parameter range: Readonly<TextRange>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:408:77: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:412:17: function textSpanIntersection: (span1: TextSpan, span2: TextSpan) => TextSpan | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:412:38: parameter span1: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:412:55: parameter span2: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:413:11: variable start: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:414:11: variable end: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:423:17: function normalizeSpans: (spans: readonly TextSpan[]) => TextSpan[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:423:32: parameter spans: readonly TextSpan[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:424:26: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:424:57: parameter a: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:424:60: parameter b: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:428:11: variable result: TextSpan[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:429:9: variable i: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:431:13: variable span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:432:13: variable j: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:434:19: variable start: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:435:19: variable end: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:446:17: function createTextSpan: (start: number, length: number) => TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:446:32: parameter start: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:446:47: parameter length: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:457:17: function createTextSpanFromBounds: (start: number, end: number) => TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:457:42: parameter start: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:457:57: parameter end: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:461:17: function textChangeRangeNewSpan: (range: TextChangeRange) => TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:461:40: parameter range: TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:465:17: function textChangeRangeIsUnchanged: (range: TextChangeRange) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:465:44: parameter range: TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:469:17: function createTextChangeRange: (span: TextSpan, newLength: number) => TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:469:39: parameter span: TextSpan
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:469:55: parameter newLength: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:477:14: variable unchangedTextChangeRange: TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:487:17: function collapseTextChangeRangesAcrossMultipleVersions: (changes: readonly TextChangeRange[]) => TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:487:64: parameter changes: readonly TextChangeRange[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:498:11: variable change0: TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:500:9: variable oldStartN: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:501:9: variable oldEndN: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:502:9: variable newEndN: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:504:14: variable i: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:505:15: variable nextChange: TextChangeRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:587:15: variable oldStart1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:588:15: variable oldEnd1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:589:15: variable newEnd1: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:591:15: variable oldStart2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:592:15: variable oldEnd2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:593:15: variable newEnd2: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:603:17: function getTypeParameterOwner: (d: Declaration) => Declaration | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:603:39: parameter d: Declaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:605:18: variable current: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:613:13: type ParameterPropertyDeclaration: ParameterDeclaration & { parent: ConstructorDeclaration; name: Identifier; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:613:69: property parent: ConstructorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:613:101: property name: Identifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:615:17: function isParameterPropertyDeclaration: (node: Node, parent: Node) => node is ParameterPropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:615:48: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:615:60: parameter parent: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:619:17: function isEmptyBindingPattern: (node: BindingName) => node is BindingPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:619:39: parameter node: BindingName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:629:17: function isEmptyBindingElement: (node: ArrayBindingElement) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:629:39: parameter node: ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:636:17: function walkUpBindingElementsAndPatterns: (binding: BindingElement) => ParameterDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:636:50: parameter binding: BindingElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:637:9: variable node: BindingPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:644:10: function getCombinedFlags: (node: Node, getFlags: (n: Node) => number) => number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:644:27: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:644:39: parameter getFlags: (n: Node) => number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:644:50: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:648:9: variable flags: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:662:17: function getCombinedModifierFlags: (node: Declaration) => ModifierFlags
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:662:42: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:667:17: function getCombinedNodeFlagsAlwaysIncludeJSDoc: (node: Declaration) => ModifierFlags
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:667:56: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:678:17: function getCombinedNodeFlags: (node: Node) => NodeFlags
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:678:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:682:10: function getNodeFlags: (node: Node) => NodeFlags
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:682:23: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:687:14: variable supportedLocaleDirectories: readonly ["cs", "de", "es", "fr", "it", "ja", "ko", "pl", "pt-br", "ru", "tr", "zh-cn", "zh-tw"]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:693:17: function validateLocaleAndSetLanguage: (locale: string, sys: { getExecutingFilePath(): string; resolvePath(path: string): string; fileExists(fileName: string): boolean; readFile(fileName: string): string | undefined; }, errors?: Diagnostic[] | undefined) => void
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:694:5: parameter locale: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:695:5: parameter sys: { getExecutingFilePath(): string; resolvePath(path: string): string; fileExists(fileName: string): boolean; readFile(fileName: string): string | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:695:56: parameter path: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:695:90: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:695:127: parameter fileName: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:696:5: parameter errors: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:698:11: variable lowerCaseLocale: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:699:11: variable matchResult: RegExpExecArray | null
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:708:11: variable language: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:709:11: variable territory: string | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:720:14: function trySetLanguageAndTerritory: (language: string, territory: string | undefined, errors?: Diagnostic[] | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:720:41: parameter language: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:720:59: parameter territory: string | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:720:90: parameter errors: Diagnostic[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:721:15: variable compilerFilePath: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:722:15: variable containingDirectoryPath: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:724:13: variable filePath: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:737:13: variable fileContents: string | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:762:17: function getOriginalNode: { (node: Node): Node; <T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T; (node: Node | undefined): Node | undefined; <T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:762:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:763:17: function getOriginalNode: { (node: Node): Node; <T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T; (node: Node | undefined): Node | undefined; <T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:763:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:763:61: parameter nodeTest: (node: Node) => node is T
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:763:72: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:764:17: function getOriginalNode: { (node: Node): Node; <T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T; (node: Node | undefined): Node | undefined; <T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:764:33: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:765:17: function getOriginalNode: { (node: Node): Node; <T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T; (node: Node | undefined): Node | undefined; <T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:765:49: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:765:73: parameter nodeTest: (node: Node) => node is T
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:765:84: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:766:17: function getOriginalNode: { (node: Node): Node; <T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T; (node: Node | undefined): Node | undefined; <T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:766:49: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:766:73: parameter nodeTest: ((node: Node) => node is T) | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:766:85: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:786:17: function findAncestor: { <T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined; (node: Node | undefined, callback: (element: Node) => "quit" | boolean): Node | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:786:46: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:786:70: parameter callback: (element: Node) => element is T
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:786:81: parameter element: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:787:17: function findAncestor: { <T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined; (node: Node | undefined, callback: (element: Node) => "quit" | boolean): Node | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:787:30: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:787:54: parameter callback: (element: Node) => "quit" | boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:787:65: parameter element: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:788:17: function findAncestor: { <T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined; (node: Node | undefined, callback: (element: Node) => "quit" | boolean): Node | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:788:30: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:788:54: parameter callback: (element: Node) => "quit" | boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:788:65: parameter element: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:790:15: variable result: "quit" | boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:807:17: function isParseTreeNode: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:807:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:817:17: function getParseTreeNode: { (node: Node | undefined): Node | undefined; <T extends Node>(node: T | undefined, nodeTest?: ((node: Node) => node is T) | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:817:34: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:826:17: function getParseTreeNode: { (node: Node | undefined): Node | undefined; <T extends Node>(node: T | undefined, nodeTest?: ((node: Node) => node is T) | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:826:50: parameter node: T | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:826:71: parameter nodeTest: ((node: Node) => node is T) | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:826:83: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:827:17: function getParseTreeNode: { (node: Node | undefined): Node | undefined; <T extends Node>(node: T | undefined, nodeTest?: ((node: Node) => node is T) | undefined): T | undefined; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:827:34: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:827:58: parameter nodeTest: ((node: Node) => boolean) | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:827:70: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:842:17: function escapeLeadingUnderscores: (identifier: string) => __String
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:842:42: parameter identifier: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:852:17: function unescapeLeadingUnderscores: (identifier: __String) => string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:852:44: parameter identifier: __String
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:853:11: variable id: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:857:17: function idText: (identifierOrPrivateName: Identifier | PrivateIdentifier) => string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:857:24: parameter identifierOrPrivateName: Identifier | PrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:865:17: function identifierToKeywordKind: (node: Identifier) => KeywordSyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:865:41: parameter node: Identifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:866:11: variable token: SyntaxKind | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:870:17: function symbolName: (symbol: Symbol) => string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:870:28: parameter symbol: Symbol
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:882:10: function nameForNamelessJSDocTypedef: (declaration: JSDocEnumTag | JSDocTypedefTag) => Identifier | PrivateIdentifier | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:882:38: parameter declaration: JSDocEnumTag | JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:883:11: variable hostNode: HasJSDoc
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:899:17: variable expr: Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:907:27: variable arg: Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:925:10: function getDeclarationIdentifier: (node: Declaration | Expression) => Identifier | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:925:35: parameter node: Declaration | Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:926:11: variable name: DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:931:17: function nodeHasName: (statement: Node, name: Identifier) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:931:29: parameter statement: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:931:46: parameter name: Identifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:935:88: parameter d: VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:941:17: function getNameOfJSDocTypedef: (declaration: JSDocTypedefTag) => Identifier | PrivateIdentifier | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:941:39: parameter declaration: JSDocTypedefTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:946:17: function isNamedDeclaration: (node: Node) => node is NamedDeclaration & { name: DeclarationName; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:946:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:946:78: property name: DeclarationName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:951:17: function getNonAssignedNameOfDeclaration: (declaration: Declaration | Expression) => DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:951:49: parameter declaration: Declaration | Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:957:21: binding name: EntityName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:965:19: variable expr: BinaryExpression | CallExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:985:21: binding expression: Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:989:19: variable expr: ElementAccessExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:997:17: function getNameOfDeclaration: (declaration: Declaration | Expression | undefined) => DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:997:38: parameter declaration: Declaration | Expression | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1004:17: function getAssignedName: (node: Node) => DeclarationName | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1004:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1024:17: function getDecorators: (node: HasDecorators) => readonly Decorator[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1024:31: parameter node: HasDecorators
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1030:17: function getModifiers: (node: HasModifiers) => readonly Modifier[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1030:30: parameter node: HasModifiers
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1036:10: function getJSDocParameterTagsWorker: (param: ParameterDeclaration, noCache?: boolean | undefined) => readonly JSDocParameterTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1036:38: parameter param: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1036:67: parameter noCache: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1039:19: variable name: __String
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1040:70: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1043:19: variable i: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1045:19: variable paramTags: JSDocParameterTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1067:17: function getJSDocParameterTags: (param: ParameterDeclaration) => readonly JSDocParameterTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1067:39: parameter param: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1072:17: function getJSDocParameterTagsNoCache: (param: ParameterDeclaration) => readonly JSDocParameterTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1072:46: parameter param: ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1076:10: function getJSDocTypeParameterTagsWorker: (param: TypeParameterDeclaration, noCache?: boolean | undefined) => readonly JSDocTemplateTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1076:42: parameter param: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1076:75: parameter noCache: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1077:11: variable name: __String
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1078:62: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1078:146: parameter tp: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1091:17: function getJSDocTypeParameterTags: (param: TypeParameterDeclaration) => readonly JSDocTemplateTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1091:43: parameter param: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1096:17: function getJSDocTypeParameterTagsNoCache: (param: TypeParameterDeclaration) => readonly JSDocTemplateTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1096:50: parameter param: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1106:17: function hasJSDocParameterTags: (node: ArrowFunction | CallSignatureDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | FunctionDeclaration | FunctionExpression | FunctionTypeNode | GetAccessorDeclaration | IndexSignatureDeclaration | JSDocFunctionType | MethodDeclaration | MethodSignature | SetAccessorDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1106:39: parameter node: ArrowFunction | CallSignatureDeclaration | ConstructSignatureDeclaration | ConstructorDeclaration | ConstructorTypeNode | FunctionDeclaration | FunctionExpression | FunctionTypeNode | GetAccessorDeclaration | IndexSignatureDeclaration | JSDocFunctionType | MethodDeclaration | MethodSignature | SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1111:17: function getJSDocAugmentsTag: (node: Node) => JSDocAugmentsTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1111:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1116:17: function getJSDocImplementsTags: (node: Node) => readonly JSDocImplementsTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1116:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1121:17: function getJSDocClassTag: (node: Node) => JSDocClassTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1121:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1126:17: function getJSDocPublicTag: (node: Node) => JSDocPublicTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1126:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1131:17: function getJSDocPublicTagNoCache: (node: Node) => JSDocPublicTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1131:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1136:17: function getJSDocPrivateTag: (node: Node) => JSDocPrivateTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1136:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1141:17: function getJSDocPrivateTagNoCache: (node: Node) => JSDocPrivateTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1141:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1146:17: function getJSDocProtectedTag: (node: Node) => JSDocProtectedTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1146:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1151:17: function getJSDocProtectedTagNoCache: (node: Node) => JSDocProtectedTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1151:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1156:17: function getJSDocReadonlyTag: (node: Node) => JSDocReadonlyTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1156:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1161:17: function getJSDocReadonlyTagNoCache: (node: Node) => JSDocReadonlyTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1161:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1165:17: function getJSDocOverrideTagNoCache: (node: Node) => JSDocOverrideTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1165:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1170:17: function getJSDocDeprecatedTag: (node: Node) => JSDocDeprecatedTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1170:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1175:17: function getJSDocDeprecatedTagNoCache: (node: Node) => JSDocDeprecatedTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1175:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1180:17: function getJSDocEnumTag: (node: Node) => JSDocEnumTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1180:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1185:17: function getJSDocThisTag: (node: Node) => JSDocThisTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1185:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1190:17: function getJSDocReturnTag: (node: Node) => JSDocReturnTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1190:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1195:17: function getJSDocTemplateTag: (node: Node) => JSDocTemplateTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1195:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1199:17: function getJSDocSatisfiesTag: (node: Node) => JSDocSatisfiesTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1199:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1204:17: function getJSDocTypeTag: (node: Node) => JSDocTypeTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1204:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1206:11: variable tag: JSDocTypeTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1224:17: function getJSDocType: (node: Node) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1224:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1225:9: variable tag: JSDocParameterTag | JSDocTypeTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1227:49: parameter tag: JSDocParameterTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1239:17: function getJSDocReturnType: (node: Node) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1239:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1240:11: variable returnTag: JSDocReturnTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1244:11: variable typeTag: JSDocTypeTag | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1246:15: variable type: TypeNode
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1248:19: variable sig: CallSignatureDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1257:10: function getJSDocTagsWorker: (node: Node, noCache?: boolean | undefined) => readonly JSDocTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1257:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1257:41: parameter noCache: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1259:9: variable tags: readonly JSDocTag[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1262:15: variable comments: readonly (JSDoc | JSDocTag)[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1264:34: parameter j: JSDoc | JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1274:17: function getJSDocTags: (node: Node) => readonly JSDocTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1274:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1279:10: function getFirstJSDocTag: <T extends JSDocTag>(node: Node, predicate: (tag: JSDocTag) => tag is T, noCache?: boolean | undefined) => T | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1279:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1279:59: parameter predicate: (tag: JSDocTag) => tag is T
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1279:71: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1279:99: parameter noCache: boolean | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1284:17: function getAllJSDocTags: <T extends JSDocTag>(node: Node, predicate: (tag: JSDocTag) => tag is T) => readonly T[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1284:53: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1284:65: parameter predicate: (tag: JSDocTag) => tag is T
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1284:77: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1289:17: function getAllJSDocTagsOfKind: (node: Node, kind: SyntaxKind) => readonly JSDocTag[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1289:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1289:51: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1290:38: parameter doc: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1294:17: function getTextOfJSDocComment: (comment?: string | NodeArray<JSDocComment> | undefined) => string | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1294:39: parameter comment: string | NodeArray<JSDocComment> | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1296:24: parameter c: JSDocComment
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1299:10: function formatJSDocLink: (link: JSDocLink | JSDocLinkCode | JSDocLinkPlain) => string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1299:26: parameter link: JSDocLink | JSDocLinkCode | JSDocLinkPlain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1300:11: variable kind: "link" | "linkcode" | "linkplain"
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1303:11: variable name: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1304:11: variable space: "" | " "
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1318:17: function getEffectiveTypeParameterDeclarations: (node: DeclarationWithTypeParameters) => readonly TypeParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1318:55: parameter node: DeclarationWithTypeParameters
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1321:19: variable jsDoc: JSDoc | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1323:44: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1330:42: parameter tag: JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1339:15: variable decls: readonly TypeParameterDeclaration[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1343:15: variable typeTag: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1351:17: function getEffectiveConstraintOfTypeParameter: (node: TypeParameterDeclaration) => TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1351:55: parameter node: TypeParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1359:17: function isMemberName: (node: Node) => node is MemberName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1359:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1364:17: function isGetOrSetAccessorDeclaration: (node: Node) => node is AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1364:47: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1368:17: function isPropertyAccessChain: (node: Node) => node is PropertyAccessChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1368:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1372:17: function isElementAccessChain: (node: Node) => node is ElementAccessChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1372:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1376:17: function isCallChain: (node: Node) => node is CallChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1376:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1380:17: function isOptionalChain: (node: Node) => node is CallChain | ElementAccessChain | NonNullChain | PropertyAccessChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1380:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1381:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1390:17: function isOptionalChainRoot: (node: Node) => node is OptionalChainRoot
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1390:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1399:17: function isExpressionOfOptionalChainRoot: (node: Node) => node is Expression & { parent: OptionalChainRoot; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1399:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1399:85: property parent: OptionalChainRoot
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1416:17: function isOutermostOptionalChain: (node: OptionalChain) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1416:42: parameter node: OptionalChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1422:17: function isNullishCoalesce: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1422:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1426:17: function isConstTypeReference: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1426:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1431:17: function skipPartiallyEmittedExpressions: { (node: Expression): Expression; (node: Node): Node; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1431:49: parameter node: Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1432:17: function skipPartiallyEmittedExpressions: { (node: Expression): Expression; (node: Node): Node; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1432:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1433:17: function skipPartiallyEmittedExpressions: { (node: Expression): Expression; (node: Node): Node; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1433:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1437:17: function isNonNullChain: (node: Node) => node is NonNullChain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1437:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1441:17: function isBreakOrContinueStatement: (node: Node) => node is BreakOrContinueStatement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1441:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1445:17: function isNamedExportBindings: (node: Node) => node is NamedExportBindings
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1445:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1449:17: function isJSDocPropertyLikeTag: (node: Node) => node is JSDocPropertyLikeTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1449:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1462:17: function isNodeKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1462:28: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1471:17: function isTokenKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1471:29: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1480:17: function isToken: (n: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1480:25: parameter n: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1487:17: function isNodeArray: <T extends Node>(array: readonly T[]) => array is NodeArray<T>
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1487:45: parameter array: readonly T[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1494:17: function isLiteralKind: (kind: SyntaxKind) => kind is SyntaxKind.NumericLiteral | SyntaxKind.BigIntLiteral | SyntaxKind.StringLiteral | SyntaxKind.JsxText | SyntaxKind.RegularExpressionLiteral | SyntaxKind.NoSubstitutionTemplateLiteral
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1494:31: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1498:17: function isLiteralExpression: (node: Node) => node is LiteralExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1498:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1503:17: function isLiteralExpressionOfObject: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1503:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1518:17: function isTemplateLiteralKind: (kind: SyntaxKind) => kind is SyntaxKind.NoSubstitutionTemplateLiteral | SyntaxKind.TemplateHead | SyntaxKind.TemplateMiddle | SyntaxKind.TemplateTail
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1518:39: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1522:17: function isTemplateLiteralToken: (node: Node) => node is TemplateLiteralToken
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1522:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1526:17: function isTemplateMiddleOrTemplateTail: (node: Node) => node is TemplateMiddle | TemplateTail
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1526:48: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1527:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1532:17: function isImportOrExportSpecifier: (node: Node) => node is ExportSpecifier | ImportSpecifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1532:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1536:17: function isTypeOnlyImportDeclaration: (node: Node) => node is TypeOnlyImportDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1536:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1550:17: function isTypeOnlyExportDeclaration: (node: Node) => node is TypeOnlyExportDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1550:45: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1562:17: function isTypeOnlyImportOrExportDeclaration: (node: Node) => node is TypeOnlyAliasDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1562:53: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1566:17: function isPartOfTypeOnlyImportOrExportDeclaration: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1566:59: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1570:17: function isStringTextContainingNode: (node: Node) => node is StringLiteral | TemplateLiteralToken
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1570:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1574:17: function isImportAttributeName: (node: Node) => node is ImportAttributeName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1574:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1581:17: function isGeneratedIdentifier: (node: Node) => node is GeneratedIdentifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1581:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1586:17: function isGeneratedPrivateIdentifier: (node: Node) => node is GeneratedPrivateIdentifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1586:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1591:17: function isFileLevelReservedGeneratedIdentifier: (node: GeneratedIdentifier) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1591:56: parameter node: GeneratedIdentifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1592:11: variable flags: GeneratedIdentifierFlags
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1600:17: function isPrivateIdentifierClassElementDeclaration: (node: Node) => node is PrivateClassElementDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1600:60: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1605:17: function isPrivateIdentifierPropertyAccessExpression: (node: Node) => node is PrivateIdentifierPropertyAccessExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1605:61: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1612:17: function isModifierKind: (token: SyntaxKind) => token is SyntaxKind.ConstKeyword | SyntaxKind.DefaultKeyword | SyntaxKind.ExportKeyword | SyntaxKind.InKeyword | SyntaxKind.PrivateKeyword | SyntaxKind.ProtectedKeyword | SyntaxKind.PublicKeyword | SyntaxKind.StaticKeyword | SyntaxKind.AbstractKeyword | SyntaxKind.AccessorKeyword | SyntaxKind.AsyncKeyword | SyntaxKind.DeclareKeyword | SyntaxKind.OutKeyword | SyntaxKind.ReadonlyKeyword | SyntaxKind.OverrideKeyword
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1612:32: parameter token: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1635:17: function isParameterPropertyModifier: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1635:45: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1640:17: function isClassMemberModifier: (idToken: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1640:39: parameter idToken: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1647:17: function isModifier: (node: Node) => node is Modifier
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1647:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1651:17: function isEntityName: (node: Node) => node is EntityName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1651:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1652:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1657:17: function isPropertyName: (node: Node) => node is PropertyName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1657:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1658:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1666:17: function isBindingName: (node: Node) => node is BindingName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1666:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1667:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1675:17: function isFunctionLike: (node: Node | undefined) => node is SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1675:32: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1680:17: function isFunctionLikeOrClassStaticBlockDeclaration: (node: Node | undefined) => node is ClassStaticBlockDeclaration | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1680:61: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1685:17: function isFunctionLikeDeclaration: (node: Node) => node is FunctionLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1685:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1690:17: function isBooleanLiteral: (node: Node) => node is BooleanLiteral
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1690:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1694:10: function isFunctionLikeDeclarationKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1694:40: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1710:17: function isFunctionLikeKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1710:36: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1727:17: function isFunctionOrModuleBlock: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1727:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1732:17: function isClassElement: (node: Node) => node is ClassElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1732:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1733:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1744:17: function isClassLike: (node: Node) => node is ClassLikeDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1744:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1748:17: function isAccessor: (node: Node) => node is AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1748:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1752:17: function isAutoAccessorPropertyDeclaration: (node: Node) => node is AutoAccessorPropertyDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1752:51: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1757:17: function isClassInstanceProperty: (node: Declaration) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1757:41: parameter node: Declaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1765:17: function isMethodOrAccessor: (node: Node) => node is MethodDeclaration | AccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1765:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1778:17: function isModifierLike: (node: Node) => node is ModifierLike
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1778:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1782:17: function isTypeElement: (node: Node) => node is TypeElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1782:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1783:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1794:17: function isClassOrTypeElement: (node: Node) => node is ClassElement | TypeElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1794:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1798:17: function isObjectLiteralElementLike: (node: Node) => node is ObjectLiteralElementLike
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1798:44: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1799:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1815:17: function isTypeNode: (node: Node) => node is TypeNode
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1815:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1819:17: function isFunctionOrConstructorTypeNode: (node: Node) => node is ConstructorTypeNode | FunctionTypeNode
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1819:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1832:17: function isBindingPattern: (node: Node | undefined) => node is BindingPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1832:34: parameter node: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1834:15: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1843:17: function isAssignmentPattern: (node: Node) => node is AssignmentPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1843:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1844:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1849:17: function isArrayBindingElement: (node: Node) => node is ArrayBindingElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1849:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1850:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1860:17: function isDeclarationBindingElement: (bindingElement: BindingOrAssignmentElement) => bindingElement is BindingElement | ParameterDeclaration | VariableDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1860:45: parameter bindingElement: BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1872:17: function isBindingOrAssignmentElement: (node: Node) => node is BindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1872:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1884:17: function isBindingOrAssignmentPattern: (node: BindingOrAssignmentElementTarget) => node is BindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1884:46: parameter node: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1894:17: function isObjectBindingOrAssignmentPattern: (node: BindingOrAssignmentElementTarget) => node is ObjectBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1894:52: parameter node: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1905:17: function isObjectBindingOrAssignmentElement: (node: Node) => node is ObjectBindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1905:52: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1921:17: function isArrayBindingOrAssignmentPattern: (node: BindingOrAssignmentElementTarget) => node is ArrayBindingOrAssignmentPattern
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1921:51: parameter node: BindingOrAssignmentElementTarget
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1932:17: function isArrayBindingOrAssignmentElement: (node: Node) => node is ArrayBindingOrAssignmentElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1932:51: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1948:17: function isPropertyAccessOrQualifiedNameOrImportTypeNode: (node: Node) => node is ImportTypeNode | PropertyAccessExpression | QualifiedName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1948:65: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1949:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1957:17: function isPropertyAccessOrQualifiedName: (node: Node) => node is PropertyAccessExpression | QualifiedName
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1957:49: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1958:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1964:17: function isCallLikeOrFunctionLikeExpression: (node: Node) => node is ArrowFunction | FunctionExpression | CallLikeExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1964:52: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1968:17: function isCallLikeExpression: (node: Node) => node is CallLikeExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1968:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1985:17: function isCallOrNewExpression: (node: Node) => node is CallExpression | NewExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1985:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1989:17: function isTemplateLiteral: (node: Node) => node is TemplateLiteral
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1989:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1990:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1995:17: function isLeftHandSideExpression: (node: Node) => node is LeftHandSideExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1995:42: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1999:10: function isLeftHandSideExpressionKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:1999:39: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2039:17: function isUnaryExpression: (node: Node) => node is UnaryExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2039:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2043:10: function isUnaryExpressionKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2043:32: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2059:17: function isUnaryExpressionWithWrite: (expr: Node) => expr is PostfixUnaryExpression | PrefixUnaryExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2059:44: parameter expr: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2071:17: function isLiteralTypeLiteral: (node: Node) => node is LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2071:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2086:17: function isExpression: (node: Node) => node is Expression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2086:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2090:10: function isExpressionKind: (kind: SyntaxKind) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2090:27: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2108:17: function isAssertionExpression: (node: Node) => node is AssertionExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2108:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2109:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2116:17: function isIterationStatement: { (node: Node, lookInLabeledStatements: false): node is IterationStatement; (node: Node, lookInLabeledStatements: boolean): node is IterationStatement | LabeledStatement; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2116:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2116:50: parameter lookInLabeledStatements: false
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2117:17: function isIterationStatement: { (node: Node, lookInLabeledStatements: false): node is IterationStatement; (node: Node, lookInLabeledStatements: boolean): node is IterationStatement | LabeledStatement; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2117:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2117:50: parameter lookInLabeledStatements: boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2118:17: function isIterationStatement: { (node: Node, lookInLabeledStatements: false): node is IterationStatement; (node: Node, lookInLabeledStatements: boolean): node is IterationStatement | LabeledStatement; }
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2118:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2118:50: parameter lookInLabeledStatements: boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2133:10: function isScopeMarker: (node: Node) => node is ExportAssignment | ExportDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2133:24: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2138:17: function hasScopeMarker: (statements: readonly Statement[]) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2138:32: parameter statements: readonly Statement[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2143:17: function needsScopeMarker: (result: Statement) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2143:34: parameter result: Statement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2148:17: function isExternalModuleIndicator: (result: Statement) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2148:43: parameter result: Statement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2154:17: function isForInOrOfStatement: (node: Node) => node is ForInOrOfStatement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2154:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2160:17: function isConciseBody: (node: Node) => node is ConciseBody
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2160:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2166:17: function isFunctionBody: (node: Node) => node is Block
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2166:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2170:17: function isForInitializer: (node: Node) => node is ForInitializer
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2170:34: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2175:17: function isModuleBody: (node: Node) => node is ModuleBody
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2175:30: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2176:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2183:17: function isNamespaceBody: (node: Node) => node is NamespaceBody
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2183:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2184:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2190:17: function isJSDocNamespaceBody: (node: Node) => node is JSDocNamespaceBody
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2190:38: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2191:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2196:17: function isNamedImportBindings: (node: Node) => node is NamedImportBindings
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2196:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2197:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2203:17: function isModuleOrEnumDeclaration: (node: Node) => node is EnumDeclaration | ModuleDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2203:43: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2208:17: function canHaveSymbol: (node: Node) => node is Declaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2208:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2283:17: function canHaveLocals: (node: Node) => node is HasLocals
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2283:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2321:10: function isDeclarationKind: (kind: SyntaxKind) => kind is SyntaxKind.TypeParameter | SyntaxKind.Parameter | SyntaxKind.PropertySignature | SyntaxKind.PropertyDeclaration | SyntaxKind.MethodSignature | SyntaxKind.MethodDeclaration | SyntaxKind.ClassStaticBlockDeclaration | SyntaxKind.Constructor | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.NamedTupleMember | SyntaxKind.BindingElement | SyntaxKind.FunctionExpression | SyntaxKind.ArrowFunction | SyntaxKind.ClassExpression | SyntaxKind.VariableDeclaration | SyntaxKind.FunctionDeclaration | SyntaxKind.ClassDeclaration | SyntaxKind.InterfaceDeclaration | SyntaxKind.TypeAliasDeclaration | SyntaxKind.EnumDeclaration | SyntaxKind.ModuleDeclaration | SyntaxKind.NamespaceExportDeclaration | SyntaxKind.ImportEqualsDeclaration | SyntaxKind.ImportClause | SyntaxKind.NamespaceImport | SyntaxKind.ImportSpecifier | SyntaxKind.NamespaceExport | SyntaxKind.ExportSpecifier | SyntaxKind.JsxAttribute | SyntaxKind.PropertyAssignment | SyntaxKind.ShorthandPropertyAssignment | SyntaxKind.EnumMember | SyntaxKind.JSDocCallbackTag | SyntaxKind.JSDocTypedefTag | SyntaxKind.JSDocPropertyTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2321:28: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2360:10: function isDeclarationStatementKind: (kind: SyntaxKind) => kind is SyntaxKind.FunctionDeclaration | SyntaxKind.ClassDeclaration | SyntaxKind.InterfaceDeclaration | SyntaxKind.TypeAliasDeclaration | SyntaxKind.EnumDeclaration | SyntaxKind.ModuleDeclaration | SyntaxKind.NamespaceExportDeclaration | SyntaxKind.ImportEqualsDeclaration | SyntaxKind.ImportDeclaration | SyntaxKind.ExportAssignment | SyntaxKind.ExportDeclaration | SyntaxKind.MissingDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2360:37: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2375:10: function isStatementKindButNotDeclarationKind: (kind: SyntaxKind) => kind is SyntaxKind.EmptyStatement | SyntaxKind.VariableStatement | SyntaxKind.ExpressionStatement | SyntaxKind.IfStatement | SyntaxKind.DoStatement | SyntaxKind.WhileStatement | SyntaxKind.ForStatement | SyntaxKind.ForInStatement | SyntaxKind.ForOfStatement | SyntaxKind.ContinueStatement | SyntaxKind.BreakStatement | SyntaxKind.ReturnStatement | SyntaxKind.WithStatement | SyntaxKind.SwitchStatement | SyntaxKind.LabeledStatement | SyntaxKind.ThrowStatement | SyntaxKind.TryStatement | SyntaxKind.DebuggerStatement | SyntaxKind.NotEmittedStatement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2375:47: parameter kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2398:17: function isDeclaration: (node: Node) => node is NamedDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2398:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2406:17: function isDeclarationStatement: (node: Node) => node is DeclarationStatement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2406:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2415:17: function isStatementButNotDeclaration: (node: Node) => node is Statement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2415:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2419:17: function isStatement: (node: Node) => node is Statement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2419:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2420:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2426:10: function isBlockStatement: (node: Node) => node is Block
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2426:27: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2442:17: function isStatementOrBlock: (node: Node) => node is Block | Statement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2442:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2443:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2451:17: function isModuleReference: (node: Node) => node is ModuleReference
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2451:35: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2452:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2460:17: function isJsxTagNameExpression: (node: Node) => node is JsxTagNameExpression
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2460:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2461:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2468:17: function isJsxChild: (node: Node) => node is JsxChild
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2468:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2469:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2477:17: function isJsxAttributeLike: (node: Node) => node is JsxAttributeLike
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2477:36: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2478:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2483:17: function isStringLiteralOrJsxExpression: (node: Node) => node is JsxExpression | StringLiteral
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2483:48: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2484:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2489:17: function isJsxOpeningLikeElement: (node: Node) => node is JsxOpeningLikeElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2489:41: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2490:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2495:17: function isJsxCallLike: (node: Node) => node is JsxCallLike
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2495:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2496:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2504:17: function isCaseOrDefaultClause: (node: Node) => node is CaseOrDefaultClause
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2504:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2505:11: variable kind: SyntaxKind
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2517:17: function isJSDocNode: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2517:29: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2522:17: function isJSDocCommentContainingNode: (node: Node) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2522:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2534:17: function isJSDocTag: (node: Node) => node is JSDocTag
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2534:28: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2538:17: function isSetAccessor: (node: Node) => node is SetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2538:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2542:17: function isGetAccessor: (node: Node) => node is GetAccessorDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2542:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2552:17: function hasJSDocNodes: (node: Node) => node is HasJSDoc
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2552:31: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2555:13: binding jsDoc: JSDocArray | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2564:17: function hasType: (node: Node) => node is HasType
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2564:25: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2573:17: function hasInitializer: (node: Node) => node is HasInitializer
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2573:32: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2578:17: function hasOnlyExpressionInitializer: (node: Node) => node is HasExpressionInitializer
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2578:46: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2592:17: function isObjectLiteralElement: (node: Node) => node is ObjectLiteralElement
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2592:40: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2597:17: function isTypeReferenceType: (node: Node) => node is TypeReferenceType
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2597:37: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2601:7: variable MAX_SMI_X86: 1073741823
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2603:17: function guessIndentation: (lines: string[]) => number | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2603:34: parameter lines: string[]
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2604:9: variable indentation: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2605:16: variable line: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2609:13: variable i: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2625:17: function isStringLiteralLike: (node: FileReference | Node) => node is StringLiteralLike
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2625:37: parameter node: FileReference | Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2629:17: function isJSDocLinkLike: (node: Node) => node is JSDocLink | JSDocLinkCode | JSDocLinkPlain
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2629:33: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2633:17: function hasRestParameter: (s: JSDocSignature | SignatureDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2633:34: parameter s: JSDocSignature | SignatureDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2634:11: variable last: JSDocParameterTag | ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2638:17: function isRestParameter: (node: JSDocParameterTag | ParameterDeclaration) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2638:33: parameter node: JSDocParameterTag | ParameterDeclaration
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2639:11: variable type: TypeNode | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2643:10: function hasInternalAnnotation: (range: CommentRange, sourceFile: SourceFile) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2643:32: parameter range: CommentRange
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2643:53: parameter sourceFile: SourceFile
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2644:11: variable comment: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2648:17: function isInternalDeclaration: (node: Node, sourceFile?: SourceFile | undefined) => boolean
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2648:39: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2648:51: parameter sourceFile: SourceFile | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2650:11: variable parseTreeNode: Node | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2652:15: variable paramIdx: number
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2653:15: variable previousSibling: ParameterDeclaration | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2654:15: variable text: string
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2655:15: variable commentRanges: CommentRange[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2666:11: variable leadingCommentRanges: CommentRange[] | undefined
+/workspace/tracing-measured-after/src/compiler/utilitiesPublic.ts:2667:44: parameter range: CommentRange

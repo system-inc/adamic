@@ -1,0 +1,10 @@
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:17:17: function transformES2019: (context: TransformationContext) => (x: Bundle | SourceFile) => Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:17:33: parameter context: TransformationContext
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:17:67: parameter x: Bundle | SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:18:11: variable factory: NodeFactory
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:21:14: function transformSourceFile: (node: SourceFile) => SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:21:34: parameter node: SourceFile
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:29:14: function visitor: (node: Node) => VisitResult<Node>
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:29:22: parameter node: Node
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:41:14: function visitCatchClause: (node: CatchClause) => CatchClause
+/workspace/tracing-measured-after/src/compiler/transformers/es2019.ts:41:31: parameter node: CatchClause
