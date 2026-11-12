@@ -1,0 +1,9 @@
+// Node leaves out a function field and prints null for each function in an array (#pmjwn79).
+interface Runnable {
+	readonly name: string;
+	readonly run: () => number;
+}
+const runnable: Runnable = { name: 'task', run: () => 1 };
+console.log(JSON.stringify(runnable) ?? '<undefined>');
+const holder: { readonly runs: readonly (() => number)[] } = { runs: [() => 1, () => 2] };
+console.log(JSON.stringify(holder) ?? '<undefined>');
