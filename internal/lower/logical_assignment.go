@@ -10,21 +10,6 @@ func logicalAssignment(kind ast.Kind) bool {
 	return kind == ast.KindBarBarEqualsToken || kind == ast.KindAmpersandAmpersandEqualsToken || kind == ast.KindQuestionQuestionEqualsToken
 }
 
-// logicalAssignmentRight is whether node, through parentheses, is the right of a ??=, ||= or &&=: a value
-// that may be stored into the left's slot, as the right of an = is. viewSite takes only =, so a rule that
-// judges a stored value asks this as well (recordViewSite, #mez92e7).
-func logicalAssignmentRight(node *ast.Node) bool {
-	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
-		node = node.Parent
-	}
-	parent := node.Parent
-	if parent == nil || parent.Kind != ast.KindBinaryExpression {
-		return false
-	}
-	binary := parent.AsBinaryExpression()
-	return logicalAssignment(binary.OperatorToken.Kind) && binary.Right == node
-}
-
 func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 	binary := node.AsBinaryExpression()
 	target := ast.SkipParentheses(binary.Left)
