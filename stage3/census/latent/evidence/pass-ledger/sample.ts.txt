@@ -1,0 +1,3 @@
+function ledgerBodyPassPb47(): number { return 1; }
+function ledgerBodyStopPb47(): number { const box: { x?: number } = { x: 1 }; delete box.x; return 1; }
+function ledgerGenericPb47<T>(value: T): T { return value; }

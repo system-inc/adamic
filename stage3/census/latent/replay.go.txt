@@ -30,7 +30,7 @@ func LatentReplay(ctx context.Context, program *load.Program, where, kind, reaso
 		return LatentFile{}, err
 	}
 	var record LatentFile
-	latentFullSelected(ctx, program, func(value LatentFile) { record = value }, selection)
+	latentFullSelected(ctx, program, func(value LatentFile) { latentAttachPassLedger(&value); record = value }, selection)
 	for _, finding := range record.Findings {
 		if finding.Phase == "lowering" && finding.Where == where && finding.Kind == kind && finding.Reason == reason {
 			return record, nil

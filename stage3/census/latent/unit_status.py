@@ -61,3 +61,8 @@ def unit_counts(units):
     if any(u['status']==DEFERRED for u in units):
         result.update(deferred_summary(units))
     return result
+
+
+def eligibility_units(units):
+    # A pass omission changes coverage, not whether a body was eligible to run.
+    return [{key: value for key, value in unit.items() if key != 'pass_ledger'} for unit in units]

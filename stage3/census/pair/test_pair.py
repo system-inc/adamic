@@ -24,6 +24,19 @@ class PairTests(unittest.TestCase):
             base, head = (pair.load(root / f'{side}.jsonl.gz') for side in ('base', 'head'))
             cls.witnesses[label] = pair.compare(base, head, root / 'tree', TS)
 
+    def test_pass_ledger_is_metadata_not_unit_eligibility_pb47(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'input.ts').write_text('const value = 1;')
+            unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
+            base = [HEADER, dict(file='input.ts', units=[unit], findings=[])]
+            head = [HEADER, dict(file='input.ts', units=[dict(unit, pass_ledger=[
+                dict(name='future-step', status='not_run_scoped')])], findings=[])]
+            result = pair.compare(base, head, root, TS)
+            for view in ('raw_findings', 'distinct_reads'):
+                self.assertEqual(result[view]['unit_first_stop_delta'], [])
+                self.assertEqual(result[view]['regressions'], [])
+
     def test_deferred_is_a_unit_first_stop_zb0q0zd(self):
         unit = dict(where='input.ts:1:1', kind='KindVariableStatement', status='attempted')
         result = self.synthetic('const value = 1;', [], [(1, 'written-any relation', 'deferred')], [unit])
@@ -74,9 +87,9 @@ class PairTests(unittest.TestCase):
 
     def test_caller_metadata_eligibility_mutant_is_red_abrq61p(self):
         source = (HERE / 'pair.py').read_text()
-        needle = "('where', 'status', 'instantiated', 'instantiated_by')"
+        needle = "('where', 'status', 'instantiated', 'instantiated_by', 'pass_ledger')"
         self.assertEqual(source.count(needle), 1)
-        source = source.replace(needle, "('where', 'status', 'instantiated')")
+        source = source.replace(needle, "('where', 'status', 'instantiated', 'pass_ledger')")
         namespace = {'__file__': str(HERE / 'pair.py'), '__name__': 'pair_mutant'}
         exec(compile(source, namespace['__file__'], 'exec'), namespace)
         positive = unittest.FunctionTestCase(

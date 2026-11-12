@@ -1,7 +1,7 @@
 """Independently recount raw evidence, verify body eligibility, and kill report mutants."""
 
 from stream_records import census_records
-from unit_status import attempted, body_eligible, audit_deferred
+from unit_status import attempted, body_eligible, audit_deferred, eligibility_units
 import collections, copy, gzip, hashlib, json, pathlib, sys
 root=pathlib.Path(__file__).resolve().parent; adapted=pathlib.Path(sys.argv[1]).resolve()
 report=json.loads((root/'REPORT.json').read_text()); LABEL='measured on a checker-rejected program'
@@ -85,7 +85,7 @@ before=raw_by_name['main']
 assert planted[0]==before[0]
 assert len(planted)==len(before)
 for a,b in zip(before[1:],planted[1:]):
-    assert a['units']==b['units']
+    assert eligibility_units(a['units'])==eligibility_units(b['units'])
     if a['file']!='src/compiler/binder.ts': assert a==b
     else:
         old={(f['kind'],f['where'],f['reason'],f['text']) for f in a['findings']}

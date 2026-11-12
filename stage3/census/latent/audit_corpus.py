@@ -1,7 +1,7 @@
 """Plant one overlay-only NotYet in a real eligible compiler function."""
 
 from stream_records import census_records
-from unit_status import attempted
+from unit_status import attempted, eligibility_units
 import collections, json, os, pathlib, subprocess, sys
 scratch=pathlib.Path(sys.argv[1]).resolve(); adapted=pathlib.Path(sys.argv[2]).resolve()
 LABEL='measured on a checker-rejected program'
@@ -19,7 +19,7 @@ mutant=census_records([json.loads(l) for l in (evidence/'corpus-mutant.jsonl').r
 assert mutant[0]==baseline[0]
 by_file={r['file']:r for r in mutant[1:]};deltas={}
 for before in baseline[1:]:
- after=by_file[before['file']];assert before['units']==after['units']
+ after=by_file[before['file']];assert eligibility_units(before['units'])==eligibility_units(after['units'])
  key=lambda f:(f['kind'],f['where'],f['reason'],f['text'])
  old={key(f) for f in before['findings']};new={key(f) for f in after['findings']}
  assert not old-new
