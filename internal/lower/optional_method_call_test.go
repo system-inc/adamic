@@ -67,8 +67,9 @@ func TestOptionalMethodCallsLower(t *testing.T) {
 
 // What the optional method call doesn't lower keeps its stop: the chain going on after the call, a
 // library method, a method behind a longer chain or in parentheses, and one whose field may hold null
-// (optionalCall's not yet, or property's for the chain); a presence test of an optional method, which
-// stays refused as a method read as a value (method_presence.go); a class whose method is a getter, which
+// (optionalCall's not yet, or property's for the chain); an optional method held in an alias, which
+// stays refused as a method read as a value, though its presence test lowers
+// (optional_member_presence_test.go); a class whose method is a getter, which
 // Node calls and then calls what it returns, refused before the optional lookup could miss it and give
 // undefined (Lower's and Compiler's road on #vx8qdwg, probed on Home: it stops the plain call too); and the
 // call through a checked view,
@@ -84,7 +85,7 @@ func TestOptionalMethodCallGapsStop(t *testing.T) {
 		{"a method behind a longer chain", ".a", "interface Sized {\n\tsize?(): number;\n}\ninterface Holder {\n\treadonly sized: Sized;\n}\nfunction size(holder: Holder | undefined): string {\n\treturn String(holder?.sized.size?.());\n}\nconsole.log(size({ sized: {} }));\n", optionalCallNotYet},
 		{"parentheses around the callee", ".a", "interface Sized {\n\tsize?(): number;\n}\nfunction size(sized: Sized | undefined): string {\n\treturn String((sized?.size)?.());\n}\nconsole.log(size({}));\n", optionalCallNotYet},
 		{"a field that may hold null", ".a", "interface Sized {\n\tsize?: (() => number) | null;\n}\nfunction size(sized: Sized): string {\n\treturn String(sized.size?.());\n}\nconsole.log(size({}));\n", optionalCallNotYet},
-		{"a presence test", ".a", "interface Sized {\n\tsize?(): number;\n}\nfunction size(sized: Sized): string {\n\tif (sized.size) {\n\t\treturn 'sized';\n\t}\n\treturn 'unsized';\n}\nconsole.log(size({}));\n", "a method read as a value (size would lose its object, and this with it)"},
+		{"an alias", ".a", "interface Sized {\n\tsize?(): number;\n}\nfunction size(sized: Sized): string {\n\tconst held = sized.size;\n\treturn held ? 'sized' : 'unsized';\n}\nconsole.log(size({}));\n", "a method read as a value (size would lose its object, and this with it)"},
 		{"a class whose method is a getter", ".a", "interface Runner {\n\trun?(label: string): string;\n}\nclass Getter {\n\tget run(): (label: string) => string {\n\t\treturn (label: string) => label;\n\t}\n}\nfunction call(runner: Runner): string {\n\treturn runner.run?.('x') ?? 'absent';\n}\nconsole.log(call(new Getter()));\n", "a method sharing its name with a getter"},
 		{"through a checked view", ".ts", "interface Probe {\n    readonly kind: 'Probe';\n    enabled?(): boolean;\n}\nfunction probe(raw: { readonly kind: string }): string {\n    const viewed = raw as Probe;\n    return String(viewed.enabled?.());\n}\nconsole.log(probe({ kind: ['Pro', 'be'].join('') }));\n", ""},
 	} {
