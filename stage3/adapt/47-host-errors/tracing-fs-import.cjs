@@ -36,7 +36,7 @@ function plan({ts, program, tracing, start, startText, metadata, nodes, edit, pl
     const checked = bindings(ts, program, tracing, nodes, done);
     const imports = tracing.statements.filter(ts.isImportDeclaration);
     const helpers = imports.filter(n => n.moduleSpecifier.text === './hostErrors.js');
-    assert.equal(helpers.length, startText === metadata.before ? 0 : 1, 'tracing helper anchor drift');
+    assert.equal(helpers.length, startText === metadata.lazyAfter ? 1 : 0, 'tracing helper anchor drift');
     if (helpers.length) assert.equal(helpers[0].getText(tracing), 'import { errorMessage } from "./hostErrors.js";');
     if (done) return;
     const loads = nodes(ts, start, ts.isTryStatement);
@@ -65,11 +65,13 @@ function plan({ts, program, tracing, start, startText, metadata, nodes, edit, pl
     removeLine(guard, true);
     removeLine(checked.declaration, false);
     const newline = tracing.text.includes('\r\n') ? '\r\n' : '\n';
-    const at = helpers.length ? helpers[0].end : imports[imports.length - 1].end;
+    if (helpers.length) {
+        assert.equal(imports[imports.length - 1], helpers[0], 'tracing helper import position drift');
+        removeLine(helpers[0], false);
+    }
+    const at = imports[imports.length - 1 - helpers.length].end;
     if (!planned.has(tracing)) planned.set(tracing, []);
-    planned.get(tracing).push({start: at, end: at, text:
-        (helpers.length ? '' : `${newline}import { errorMessage } from "./hostErrors.js";`) +
-        `${newline}import * as fs from "node:fs";`});
+    planned.get(tracing).push({start: at, end: at, text: `${newline}import * as fs from "node:fs";`});
 }
 function validatePlanned(ts, program, source, text, metadata, nodes) {
     const host = ts.createCompilerHost(program.getCompilerOptions(), true), original = host.getSourceFile.bind(host);
@@ -82,6 +84,7 @@ function validatePlanned(ts, program, source, text, metadata, nodes) {
     // Removing the complete guard retains its whitespace. Compare precisely
     // after the same deletion from the pinned lazy owner.
     assert.equal(owners[0].getText(changed).replace(/\r\n/g, '\n'), metadata.after, 'unreviewed eager startTracing');
+    assert.equal(changed.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text === './hostErrors.js').length, 0, 'unused tracing helper import remains');
     bindings(ts, planned, changed, nodes, true);
 }
 module.exports = {plan, bindings, validatePlanned};
