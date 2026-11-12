@@ -1,0 +1,13 @@
+// The written closure captures the receiver, a top-level const (a global).
+interface Host {
+	readonly prefix: string;
+	read(name: string): string;
+}
+const host: Host = {
+	prefix: 'p' + '',
+	read(name: string): string {
+		return this.prefix + ' ' + name;
+	},
+};
+host.read = (name: string): string => host.prefix + ' patched ' + name;
+console.log(host.read('a'));
