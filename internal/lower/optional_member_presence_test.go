@@ -122,9 +122,9 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 		// method and field are what each form stops saying, "" where the row doesn't run in that form.
 		method, field string
 		refused       bool
-		// readonly declares the field form's m readonly: a class's method or getter seen as a writable
-		// field is adamic/invariant-mutable's refusal, which runs before lowering and would stop the row
-		// before the presence check could.
+		// readonly declares the field form's m readonly: a class's method or getter, or a held literal's
+		// m of () => number, seen as a writable field that takes undefined is adamic/invariant-mutable's
+		// refusal, which runs before lowering and would stop the row before the check it pins could.
 		readonly bool
 	}{
 		{"a class's getter", ".a", "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false, true},
@@ -137,7 +137,7 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 		{"an alias", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(typeof held);\n", detached, "", true, false},
 		{"a write to an optional method", ".a", optionalPresenceProbe + "const h: H = { n: 1, m: (): number => 1 };\nh.m = (): number => 2;\nconsole.log(probe(h));\n", detached, "", true, false},
 		{"a field's literal method read as a value", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(String(held ? held() : 0));\n", "", "a literal method through a view that erases its receiver", false, false},
-		{"a __proto__ key", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made = { n: 1, m: (): number => 2, __proto__: proto };\nconsole.log(probe(made));\n", "__proto__ in an object literal", "__proto__ in an object literal", true, false},
+		{"a __proto__ key", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made = { n: 1, m: (): number => 2, __proto__: proto };\nconsole.log(probe(made));\n", "__proto__ in an object literal", "__proto__ in an object literal", true, true},
 		{"Object.setPrototypeOf", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = { n: 1 };\nObject.setPrototypeOf(made, proto);\nconsole.log(probe(made));\n", "Object.setPrototypeOf", "Object.setPrototypeOf", true, false},
 		{"Object.create", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = Object.create(proto);\nconsole.log(probe(made));\n", "Object.create", "Object.create", true, false},
 	} {
