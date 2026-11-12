@@ -281,13 +281,17 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.voidDiscards(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkInspectorDoomedContracts(); err != nil {
+		return nil, err
+	}
 	return lowering, nil
 }
 
 type lowering struct {
-	bindGetters map[string]bool // source getter names, memoized for bind receiver admission
-	debug       bool
-	cycleTypes  map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+	inspectorSkippedContracts map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
+	bindGetters               map[string]bool   // source getter names, memoized for bind receiver admission
+	debug                     bool
+	cycleTypes                map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
 	// builds by hand leaves it ModuleFormatEcmaScript.
 	moduleFormat ModuleFormat
