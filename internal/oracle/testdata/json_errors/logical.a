@@ -1,0 +1,4 @@
+// A taken logical name assignment records the ordinary string tag (#z4a9p9e).
+const e = new Error('x');
+e.name &&= 'Changed';
+console.log(JSON.stringify(e) ?? '<undefined>');
