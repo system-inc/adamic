@@ -634,6 +634,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if found, err := l.nodeWatchUseRefusal(node); found {
 		return err
 	}
+	if found, err := l.nodeStatsFieldUseRefusal(node); found {
+		return err
+	}
 	name := l.nodeLibraryMember(node)
 	if name != "" && !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(node)) {
 		return l.notYet(node, name)

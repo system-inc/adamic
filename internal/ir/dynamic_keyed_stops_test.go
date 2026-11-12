@@ -291,42 +291,49 @@ func TestDynamicKeyedStatsLengthsAreNodes(t *testing.T) {
 	}
 }
 
-// statsHeldNames are the fields node_fs_file.c's stat shape holds that Node's Stats has too: its
-// stat_fields, less the private _fsFileMode. A run-time key read answers these from the shape.
-var statsHeldNames = []string{"size", "mtimeMs", "mtime", "atime"}
+// statsHeldNames are the fields node_fs_file.c's stat shape holds, its stat_fields, in its order:
+// Node's fourteen own numbers and then Stats.prototype's four Dates (#6xfkdwj). A run-time key read
+// answers these from the shape.
+var statsHeldNames = []string{"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "size", "blocks", "atimeMs", "mtimeMs", "ctimeMs", "birthtimeMs", "atime", "mtime", "ctime", "birthtime"}
 
-// DynamicKeyedStatsFieldNames is exactly the pinned Node's Stats fields, its own names and then
-// Stats.prototype's date accessors, less the four native holds, in order: a field Node has and the
-// list lacks would read undefined natively where Node answers, and one the list has that native
-// holds would stop where it could answer. Each of the four is one of Node's. Mutant: one name dropped
-// from the list.
+// statsHeldNames is exactly the pinned Node's Stats fields, its own names and then Stats.prototype's
+// date accessors, in order, so native holds every field Node gives and a later enumeration needn't
+// reorder. Each of DynamicKeyedStatsFieldNames, the fields wasm32-wasi stops on, is one of them, in
+// Node's order, and StatsFieldOperations names an operation for each and for nothing else. Mutants:
+// one name dropped from statsHeldNames; one wasm32 name not one of Node's.
 func TestDynamicKeyedStatsFieldNamesAreNodes(t *testing.T) {
 	t.Parallel()
 	layout := dynamicKeyedStatsLayoutOfNode(t)
 	fields := append(slices.Clone(layout.Own), layout.Accessors...)
-	for _, held := range statsHeldNames {
-		if !slices.Contains(fields, held) {
-			t.Errorf("native's Stats holds %s, which isn't one of Node's Stats fields %q", held, fields)
-		}
+	if !slices.Equal(fields, statsHeldNames) {
+		t.Errorf("Node's Stats has the fields %q, where native's stat shape holds %q", fields, statsHeldNames)
 	}
-	unheld := slices.DeleteFunc(fields, func(name string) bool { return slices.Contains(statsHeldNames, name) })
-	if !slices.Equal(unheld, DynamicKeyedStatsFieldNames) {
-		t.Errorf("Node's Stats has the fields %q beyond native's four, where DynamicKeyedStatsFieldNames holds %q", unheld, DynamicKeyedStatsFieldNames)
+	held := slices.DeleteFunc(slices.Clone(fields), func(name string) bool { return !slices.Contains(DynamicKeyedStatsFieldNames, name) })
+	if !slices.Equal(held, DynamicKeyedStatsFieldNames) {
+		t.Errorf("DynamicKeyedStatsFieldNames holds %q, which in Node's order and among Node's fields is %q", DynamicKeyedStatsFieldNames, held)
+	}
+	if len(StatsFieldOperations) != len(DynamicKeyedStatsFieldNames) {
+		t.Errorf("StatsFieldOperations names %d operations for %d fields", len(StatsFieldOperations), len(DynamicKeyedStatsFieldNames))
+	}
+	for _, name := range DynamicKeyedStatsFieldNames {
+		if _, found := StatsFieldOperations[name]; !found {
+			t.Errorf("StatsFieldOperations names no operation for %s", name)
+		}
 	}
 }
 
 // A run-time key read of a Stats is closed against the pinned Node's Stats both ways (Adamic's
 // conditions on #zhrjf2t): every own key of a real fs.statSync result, every accessor and every
 // function of Stats.prototype and StatsBase.prototype is in exactly one of native's held fields
-// (statsHeldNames), DynamicKeyedStatsNames and DynamicKeyedStatsFieldNames, so no name of Node's
-// reaches the undefined a run-time key read gives any other key, and no name in the three is one Node
-// lacks. Object.prototype's names, above StatsBase.prototype, answer as on any object. Mutant: ino
-// dropped from DynamicKeyedStatsFieldNames, so Node's ino would read undefined natively.
+// (statsHeldNames) and DynamicKeyedStatsNames, so no name of Node's reaches the undefined a run-time
+// key read gives any other key, and no name in the two is one Node lacks. Object.prototype's names,
+// above StatsBase.prototype, answer as on any object. Mutant: ino dropped from statsHeldNames, so
+// Node's ino would read undefined natively.
 func TestDynamicKeyedStatsChainIsClosed(t *testing.T) {
 	t.Parallel()
 	layout := dynamicKeyedStatsLayoutOfNode(t)
 	chain := slices.Concat(layout.Own, layout.Accessors, layout.Functions, layout.Neither)
-	tables := map[string][]string{"statsHeldNames": statsHeldNames, "DynamicKeyedStatsNames": DynamicKeyedStatsNames.Names(), "DynamicKeyedStatsFieldNames": DynamicKeyedStatsFieldNames}
+	tables := map[string][]string{"statsHeldNames": statsHeldNames, "DynamicKeyedStatsNames": DynamicKeyedStatsNames.Names()}
 	for _, name := range chain {
 		holders := []string{}
 		for table, names := range tables {
@@ -335,7 +342,7 @@ func TestDynamicKeyedStatsChainIsClosed(t *testing.T) {
 			}
 		}
 		if len(holders) != 1 {
-			t.Errorf("Node's Stats has %s, which %d of the held fields, the functions and the stop list hold (%q), not one", name, len(holders), holders)
+			t.Errorf("Node's Stats has %s, which %d of the held fields and the functions hold (%q), not one", name, len(holders), holders)
 		}
 	}
 	for table, names := range tables {
