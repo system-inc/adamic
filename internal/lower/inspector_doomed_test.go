@@ -49,7 +49,7 @@ func TestInspectorOtherRequireBindingsAreNotDoomed(t *testing.T) {
 	for _, name := range []string{"fs", "source-map-support"} {
 		t.Run(name, func(t *testing.T) {
 			l, file := inspectorDoomedAnalysis(t, "import 'node:process'; const value: typeof import('inspector') = require('"+name+"');")
-			if l.inspectorDoomedBinding(inspectorDoomedNode(t, file, "value", true), map[*ast.Symbol]bool{}) != nil {
+			if root, _ := l.inspectorDoomedBinding(inspectorDoomedNode(t, file, "value", true), map[*ast.Symbol]bool{}); root != nil {
 				t.Fatalf("%s require must not create a doomed binding", name)
 			}
 		})

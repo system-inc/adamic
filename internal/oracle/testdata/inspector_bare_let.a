@@ -1,0 +1,14 @@
+import type { Session } from 'node:inspector';
+function run(): void {
+ let activeSession: Session | "stopping" | undefined;
+ const read = (): void => { console.log(typeof activeSession); console.log(`${!!activeSession}`); };
+ read();
+}
+function deadZone(): void {
+ function read(): void { console.log(typeof activeSession); }
+ try { read(); } catch (error) { if (error instanceof Error) console.log(error.name); }
+ let activeSession: Session | "stopping" | undefined;
+ read();
+}
+run();
+deadZone();

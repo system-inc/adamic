@@ -3,43 +3,130 @@ package lower
 import (
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"strings"
 )
 
-// Only a const whose initializer cannot complete has no value at every read,
-// closures included. Early reads still use the ordinary TDZ/refusal path.
-func (l *lowering) inspectorDoomedBinding(node *ast.Node, seen map[*ast.Symbol]bool) *ast.Node {
+// A const roots at the throwing require. A function-local let also qualifies
+// when every write is either rooted there or typed undefined or a string literal.
+// The second result records let provenance through const aliases as well.
+func (l *lowering) inspectorDoomedBinding(node *ast.Node, seen map[*ast.Symbol]bool) (*ast.Node, bool) {
 	node = ast.SkipOuterExpressions(node, ast.OEKAll)
 	if !ast.IsIdentifier(node) {
-		return nil
+		return nil, false
 	}
 	symbol := l.symbol(node)
-	if symbol == nil || seen[symbol] {
-		return nil
+	if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+		return nil, false
 	}
 	seen[symbol] = true
 	defer delete(seen, symbol)
-	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
-			continue
-		}
-		initializer := declaration.Initializer()
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(declaration.Name()) || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList {
+		return nil, false
+	}
+	list := declaration.Parent
+	initializer := declaration.Initializer()
+	if list.Flags&ast.NodeFlagsConst != 0 {
 		if initializer == nil {
-			continue
+			return nil, false
 		}
 		initializer = ast.SkipOuterExpressions(initializer, ast.OEKAll)
 		if initializer.Kind == ast.KindCallExpression && l.nodeLibraryMember(initializer) == nodeRequireMember && nodeInspectorRequireThrows(initializer) {
-			return l.nodeCommonJSRequireRoot(initializer)
+			return l.nodeCommonJSRequireRoot(initializer), false
 		}
-		switch initializer.Kind {
-		case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression, ast.KindNewExpression:
-			if root := inspectorReceiverRoot(initializer); root != nil {
-				return l.inspectorDoomedBinding(root, seen)
+		if root := inspectorReceiverRoot(initializer); root != nil {
+			return l.inspectorDoomedBinding(root, seen)
+		}
+		return nil, false
+	}
+	function := ast.GetContainingFunction(declaration)
+	if list.Flags&ast.NodeFlagsLet == 0 || ast.IsAssignmentTarget(list) || function == nil || function.Body() == nil || ast.HasSyntacticModifier(list.Parent, ast.ModifierFlagsExport) {
+		return nil, false
+	}
+	// A bare declaration writes undefined only when its declared type includes it.
+	if initializer == nil && !inspectorDeclaredUndefined(l.checker.GetTypeOfSymbol(symbol)) {
+		return nil, false
+	}
+	var require *ast.Node
+	classify := func(value *ast.Node) bool {
+		if root := inspectorReceiverRoot(value); root != nil {
+			if doomed, _ := l.inspectorDoomedBinding(root, seen); doomed != nil {
+				require = doomed
+				return true
+			}
+		}
+		return inspectorOutsideArm(l.checker.GetTypeAtLocation(value))
+	}
+	if initializer != nil && !classify(initializer) {
+		return nil, false
+	}
+	valid := true
+	var visit ast.Visitor
+	visit = func(reference *ast.Node) bool {
+		if !valid {
+			return true
+		}
+		if reference.Kind == ast.KindIdentifier && reference != declaration.Name() && ast.IsAssignmentTarget(reference) {
+			targetSymbol := l.symbol(reference)
+			// Shorthand names have property symbols; the assignment writes their value
+			// symbol, as in the existing realpath reference walk.
+			if reference.Parent != nil && ast.IsShorthandPropertyAssignment(reference.Parent) {
+				targetSymbol = l.checker.GetShorthandAssignmentValueSymbol(reference.Parent)
+			}
+			if targetSymbol != symbol {
+				return reference.ForEachChild(visit)
+			}
+			// Count references, including nested functions and generators. Only a plain
+			// identifier on the left of = supplies a right side we can classify.
+			target := reference
+			for target.Parent != nil && target.Parent.Kind == ast.KindParenthesizedExpression {
+				target = target.Parent
+			}
+			assignment := target.Parent
+			if assignment == nil || assignment.Kind != ast.KindBinaryExpression || assignment.AsBinaryExpression().Left != target || assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken || ast.IsAssignmentTarget(assignment) {
+				valid = false
+			} else {
+				valid = classify(assignment.AsBinaryExpression().Right)
+			}
+		}
+		return !valid || reference.ForEachChild(visit)
+	}
+	function.Body().ForEachChild(visit)
+	if !valid {
+		return nil, false
+	}
+	return require, true
+}
+
+func inspectorDeclaredUndefined(of *checker.Type) bool {
+	if of.Flags()&checker.TypeFlagsUndefined != 0 {
+		return true
+	}
+	if of.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range of.Types() {
+			if inspectorDeclaredUndefined(member) {
+				return true
 			}
 		}
 	}
-	return nil
+	return false
+}
+
+// Exactly undefined and string literal types are outside this inspector arm.
+// Unions count only when every member is one of those types. Null, void, never,
+// broad string, any, unknown and all object types are deliberately unclassified.
+func inspectorOutsideArm(of *checker.Type) bool {
+	if of.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range of.Types() {
+			if !inspectorOutsideArm(member) {
+				return false
+			}
+		}
+		return len(of.Types()) != 0
+	}
+	return of.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsStringLiteral) != 0
 }
 
 func inspectorReceiverRoot(node *ast.Node) *ast.Node {
@@ -77,9 +164,34 @@ func (l *lowering) inspectorDoomedUse(node *ast.Node) (root, require *ast.Node) 
 	if root == nil {
 		return nil, nil
 	}
-	require = l.inspectorDoomedBinding(root, map[*ast.Symbol]bool{})
+	var viaLet bool
+	require, viaLet = l.inspectorDoomedBinding(root, map[*ast.Symbol]bool{})
 	if require == nil {
 		return nil, nil
+	}
+	if viaLet {
+		receiver := node
+		for {
+			core := ast.SkipOuterExpressions(receiver, ast.OEKAll)
+			if ast.IsOptionalChain(core) {
+				return nil, nil
+			}
+			switch core.Kind {
+			case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression, ast.KindCallExpression, ast.KindNewExpression:
+				receiver = core.Expression()
+			default:
+				// The checker must have narrowed the receiver to its inspector object arm.
+				// Keep casts and non-null assertions in the ordinary read, so their own
+				// checks run before the trap rather than reading through an erased hatch.
+				if l.checker.GetTypeAtLocation(receiver).Flags()&checker.TypeFlagsObject == 0 {
+					return nil, nil
+				}
+				if inspectorReceiverRoot(receiver) == root {
+					root = receiver
+				}
+				return root, require
+			}
+		}
 	}
 	return root, require
 }
@@ -128,7 +240,9 @@ func (l *lowering) inspectorDoomedValue(node *ast.Node) (ir.Expression, bool, er
 	if held, known := l.representation(l.checker.GetTypeAtLocation(node)); known {
 		of = held
 	}
-	message := l.nodeLibraryMember(node) + " was reached through " + root.Text() + ", whose require(\"" + nodeCommonJSRequireArgument(require).Text() + "\") throws on every host Adamic targets"
+	// The read retains hatches; the diagnostic names only the binding identifier.
+	name := inspectorReceiverRoot(root)
+	message := l.nodeLibraryMember(node) + " was reached through " + name.Text() + ", whose require(\"" + nodeCommonJSRequireArgument(require).Text() + "\") throws on every host Adamic targets"
 	// A fresh string slot identifies this actual construction, not just its text.
 	index := len(l.result.Strings)
 	l.result.Strings = append(l.result.Strings, message)
