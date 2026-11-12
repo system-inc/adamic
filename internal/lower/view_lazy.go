@@ -138,7 +138,7 @@ func (l *lowering) checkLazyViewReads() error {
 	if len(program.ViewOrigins) == 0 {
 		return unemittableCheckedViewRead(program)
 	}
-	graph, viewed, unknown := viewedAllocations(program, true)
+	graph, viewed, unknown := l.viewedAllocations(program, true)
 	// Wider interfaces and instantiated helpers can give the same member a
 	// different checker type id. Field-name fallback retains the refusal until
 	// the receiver flow proves it cannot receive a viewed allocation.
@@ -231,9 +231,9 @@ func (l *lowering) checkLazyViewReads() error {
 // source itself passes false, because a source no cast reached is the type the
 // checker says it is, as an honest literal spread into a copy that is later
 // cast (snapshot-maybe-number.ts) is.
-func viewedAllocations(program *ir.Program, throughSpreads bool) (*allocationFlowGraph, map[int]bool, bool) {
+func (l *lowering) viewedAllocations(program *ir.Program, throughSpreads bool) (*allocationFlowGraph, map[int]bool, bool) {
 	assignAllocationSites(program)
-	graph := newAllocationFlowGraph(program)
+	graph := l.flowGraph(program)
 	viewed, unknown := graph.viewedFrom(program.ViewOrigins, throughSpreads)
 	return graph, viewed, unknown
 }
