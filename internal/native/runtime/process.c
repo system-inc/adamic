@@ -47,10 +47,14 @@ static bool valid_code(adamic_maybe_number code) {
 	static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
 	// Node builds this RangeError with makeNodeErrorWithCode, so its toString brackets the code (exceptions.c).
 	static const adamic_shape shape = {3, names, references, &adamic_coded_error_methods, kinds};
+	static const char *const shape_json_keys[] = {"code"};
+	static adamic_error_json shape_json = {&shape, shape_json_keys, 1, NULL, false};
+	adamic_register_error_json(&shape_json);
 	adamic_thrown = adamic_object_new(&shape);
 	adamic_thrown->slots[0].reference = adamic_retain(&range_name);
 	adamic_thrown->slots[1].reference = adamic_retain(message);
 	adamic_thrown->slots[2].reference = adamic_retain(&range_code);
+	adamic_object_field_types(adamic_thrown)[2] = adamic_ir_String;
 	adamic_release(number);
 	adamic_release(message);
 	return false;
