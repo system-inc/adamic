@@ -8,6 +8,8 @@ path = root / 'cloud/fast-gate/product-order.json'
 order = json.loads(path.read_text())
 for mode in ('AnyRequire', 'Let', 'Receiver', 'ReadDrop', 'Fallthrough', 'ValueHook'):
     order['waits']['internal/lower TestProduct_InspectorDoomed' + mode + 'Mutant'] = []
+for mode in ('AnyLet', 'WriteScan', 'FlowGate', 'DeclaredType', 'FifthWrite', 'DerivedWrite'):
+    order['waits']['internal/lower TestProduct_InspectorLet' + mode + 'Mutant'] = []
 for mode in ('Axiom', 'ReadDropOracle'):
     order['waits']['internal/oracle TestProduct_InspectorDoomed' + mode + 'Mutant'] = []
 if '--check' in sys.argv:
