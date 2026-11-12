@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"os"
 	"strings"
 	"testing"
 )
@@ -12,9 +11,10 @@ import (
 // order stops in the future-read ruling's words, naming the field, where Node reads undefined (the
 // body, parameter, field and reached rows print undefined, the getter row NaN). A call the walk
 // can't resolve keeps its stop, and a class with a base keeps the escape refusal, since a base
-// constructor's reach isn't followed; Node prints 1 for both. The admitted programs agree with
-// Node in internal/oracle's TestStaticSelfConstructionAgreesWithNode. Mutant:
-// static-self-construction.mutants.md, and every row but the base one lowers.
+// constructor's reach isn't followed; Node prints 1 for both. The admitted programs, tsc's real
+// Version.zero among them, agree with Node in internal/oracle's
+// TestStaticSelfConstructionAgreesWithNode. Mutant: static-self-construction.mutants.md, and every
+// row but the base one lowers.
 func TestStaticSelfConstructionStops(t *testing.T) {
 	t.Parallel()
 	const later = "Adamic 0.1 refuses a static field read before its initializer has run: Box.later; declare the field earlier, or move the read after that field's initialization"
@@ -115,29 +115,6 @@ func TestPrepareStackTraceStaysStopped(t *testing.T) {
 				t.Errorf("got %v, want main.a:%s: %s", err, probe.where, probe.want)
 			}
 		})
-	}
-}
-
-// tsc's real Version.zero (semver.ts:47) with the debug.ts and core.ts functions its constructor reaches
-// passes the static walk through both admissions: Error.captureStackTrace runs no program code, and
-// assert's verboseDebugInfo() is judged by the calls reaching assert, none of which passes one. It then
-// stops at a later wall, debug.ts's assertIsDefined, an asserts predicate over a generic, which isn't
-// this walk's (Node prints 0.0.0-0 first). Main stops it at 92:38, the constructor escape this change
-// lifts; mutant "Parameter calls never known" stops it at 67:111, the indirect call. The predicate wall
-// fell with #8n7eet3 (assertIsDefined proven by its body), so the next stop is the fixture's own driver,
-// `new Version(-1);` at 154:2, a NewExpression as a statement, not tsc's code. Moving it to
-// internal/oracle's TestStaticSelfConstructionAgreesWithNode is Lower's, once that statement lowers or the
-// driver binds the value.
-func TestTscVersionZeroPassesTheStaticWalk(t *testing.T) {
-	t.Parallel()
-	source, err := os.ReadFile("testdata/static_self_construction/tsc_version_zero.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	const want = "/main.ts:154:2: stage 0 can't lower a NewExpression as a statement yet"
-	_, err = lowerSourceAs(t, string(source), ".ts")
-	if err == nil || !strings.HasSuffix(err.Error(), want) {
-		t.Fatalf("got %v, want ...%s", err, want)
 	}
 }
 

@@ -92,8 +92,8 @@ console.log(Debug.checkDefined(find("")));
 console.log("unreached");
 `
 
-// neverCallVersionZero is the core of tsc's Version.zero (tsc_version_zero.ts on #1451npc's branch, at
-// 096155e1): debug.ts's fail, assert, assertIsDefined and checkDefined as stage 3 adapts them, each
+// neverCallVersionZero is the core of tsc's Version.zero
+// (internal/oracle/testdata/static_self_construction/tsc_version_zero.ts):debug.ts's fail, assert, assertIsDefined and checkDefined as stage 3 adapts them, each
 // template literal spelled as a concatenation, and semver.ts's Version with its static zero, reduced to
 // the major, minor and patch its constructor checks, with tryParseComponents reduced to the same three.
 const neverCallVersionZero = `import 'node:process';

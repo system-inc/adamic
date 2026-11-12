@@ -8,9 +8,9 @@ const file=path.join(dir,'src/compiler/core.ts'),originalWrite=fs.writeFileSync;
 let writes=0;fs.writeFileSync=(...args)=>{writes++;return originalWrite(...args);};
 function seed(text){originalWrite(file,text);writes=0;}
 const edits=adapter.owners.reduce((n,p)=>n+p.siteEdits,0);
-seed(raw);assert.deepEqual(adapter.adapt(dir),{files:1,edits,javascriptChanging:false});assert.equal(writes,1);
+seed(raw);assert.deepEqual(adapter.adapt(dir),{files:1,edits,javascriptChanging:true});assert.equal(writes,1);
 const after=fs.readFileSync(file,'utf8'),stat=fs.statSync(file,{bigint:true});writes=0;
-assert.deepEqual(adapter.adapt(dir),{files:0,edits:0,javascriptChanging:false});assert.equal(writes,0);assert.equal(fs.readFileSync(file,'utf8'),after);assert.equal(fs.statSync(file,{bigint:true}).mtimeNs,stat.mtimeNs);
+assert.deepEqual(adapter.adapt(dir),{files:0,edits:0,javascriptChanging:true});assert.equal(writes,0);assert.equal(fs.readFileSync(file,'utf8'),after);assert.equal(fs.statSync(file,{bigint:true}).mtimeNs,stat.mtimeNs);
 const eol=raw.includes('\r\n')?'\r\n':'\n',spell=s=>s.replace(/\n/g,eol),mutations=[];
 for(const pin of adapter.owners){
  const before=spell(pin.before),adapted=spell(pin.after);assert(raw.includes(before));assert(after.includes(adapted));
