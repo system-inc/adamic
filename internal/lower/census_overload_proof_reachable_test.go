@@ -52,3 +52,39 @@ console.log(String(numbers([1]).length));
 		t.Fatalf("want overload 1 of numbers refused, got %v", err)
 	}
 }
+
+// The unreached judgment on its own, with no cast (Lower's should on 91d05030): a loop, a statement kind
+// the proof doesn't walk, sits in a branch whose test narrows the parameter to never under overload 1, so
+// the declaration is proven; the same loop where a path reaches it refuses. In .a, where a literal promise
+// has no call-site check. Mutant: unreached statements walked, and the first program is refused.
+const overloadUnreachedLoopShape = `function one(x: number): 1;
+function one(x: number | string): number;
+function one(x: number | string): number {
+    BEFORE
+    if (x === "s") {
+        let n = 0;
+        for (let i = 0; i < 2; i++) { n = n + i; }
+        return n;
+    }
+    return 1;
+}
+console.log(String(one(3)));
+`
+
+func TestOverloadProofSkipsAnUnreachedLoop(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, strings.Replace(overloadUnreachedLoopShape, "BEFORE", "", 1), ".a")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "1\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 1, as Node prints", code, stdout, stderr)
+	}
+}
+
+func TestOverloadProofRefusesAReachedLoop(t *testing.T) {
+	t.Parallel()
+	source := strings.Replace(overloadUnreachedLoopShape, "BEFORE", "for (let i = 0; i < 2; i++) { }", 1)
+	_, err := lowerSourceAs(t, source, ".a")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of one result 1 cannot be served") {
+		t.Fatalf("want overload 1 of one refused, got %v", err)
+	}
+}
