@@ -1,0 +1,7 @@
+            return result;
+        }
+
+        const parentPath = getDirectoryPath(directory) as P;
+        if (parentPath === directory) {
+            return undefined;
+        }

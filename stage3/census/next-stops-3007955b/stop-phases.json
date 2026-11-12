@@ -1,0 +1,28 @@
+{
+  "-": {
+    "phase": "accepted",
+    "evidence": "Complete resolved root program accepted by lower.Lower."
+  },
+  "sys.ts:1692:17": {
+    "phase": "refusal_scan",
+    "owner": "internal/lower/library_node.go: nodeLibraryRefusal (code)",
+    "evidence": "lower.go:139-143 calls refuse before declareModule and moduleStatements. refusals.go:63 calls mergedFieldRulings; merged_fields.go:84-103 walks merged reads and :134 calls nodeLibraryRefusal. library_node.go:642-643 emits this NotYet; :648 also registers nodeLibraryRefusal as refusal rule 800. owners.json has no matching reason; owner is the emitting file and function (code method)."
+  },
+  "commandLineParser.ts:293:35": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:131 invokes enumInitialization before the module refusal scan. namespaces.go emits the enum-initialization NotYet."
+  },
+  "diagnosticInformationMap.generated.ts:13:45": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:131 invokes enumInitialization before the module refusal scan. namespaces.go emits the enum-initialization NotYet."
+  },
+  "semver.ts:71:9": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:136 invokes namespaceInitialization before the module refusal scan. namespaces.go:279 namespaceInitialization emits the namespace-initialization NotYet."
+  },
+  "path.ts:1105:28": {
+    "phase": "refusal_scan",
+    "owner": "01a11410 (owners.json exact reason)",
+    "evidence": "lower.go:139-143 calls refuse before declareModule and moduleStatements. refusals.go:103-108 runs registered per-node refusal rules. cast_proof.go:155 castRefusal calls castProof at :161; castProof at :195 constructs this Refused reason. castRefusal is registered at :174 as rule 1900. Owner 01a11410 comes from stage3/meter/owners.json by the exact reason (owners.json method)."
+  }
+}

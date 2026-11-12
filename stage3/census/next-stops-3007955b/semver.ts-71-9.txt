@@ -1,0 +1,7 @@
+        const buildArray = build ? isArray(build) ? build : build.split(".") : emptyArray;
+
+        Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), "Invalid argument: prerelease");
+        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), "Invalid argument: build");
+
+        this.major = major;
+        this.minor = minor;

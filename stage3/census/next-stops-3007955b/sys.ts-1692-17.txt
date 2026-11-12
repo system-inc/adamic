@@ -1,0 +1,7 @@
+        function disableCPUProfiler(cb: () => void) {
+            if (activeSession && activeSession !== "stopping") {
+                const s = activeSession;
+                activeSession.post("Profiler.stop", (err, { profile }) => {
+                    if (!err) {
+                        if (statSync(profilePath)?.isDirectory()) {
+                            profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, "-")}+P${process.pid}.cpuprofile`);
