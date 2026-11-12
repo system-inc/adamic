@@ -19,7 +19,8 @@ import (
 // (predicate_false_read.mutants.md): the condition-only arm restored checks the four unread rows; types
 // deciding alone drops "capture of a let assigned later"; a merge counted as a false read checks "read
 // after the sides merge"; holders read check "replaced before the read", whose xs = ["a"] the checker
-// matches against xs; the name after a dot read checks "a property named as the reference".
+// matches against xs; the name after a dot read checks "a property named as the reference"; labels read
+// check "a label named as the reference".
 func TestCheckedPredicateFalseReadDirections(t *testing.T) {
 	t.Parallel()
 	prefix := `function some<T>(array: readonly T[] | undefined): array is readonly T[];
@@ -35,6 +36,7 @@ function some<T>(array: readonly T[] | undefined, predicate?: (value: T) => bool
 		{"read after the sides merge", `function use(xs: readonly string[] | undefined): void { if (some(xs)) console.log("some"); console.log(typeof xs); }`, false},
 		{"replaced before the read", `function use(xs: readonly string[] | undefined): void { if (!some(xs)) { xs = ["a"]; console.log(String(xs.length)); } }`, false},
 		{"a property named as the reference", `function use(xs: readonly string[] | undefined, holder: { readonly xs: number }): void { if (!some(xs)) console.log(String(holder.xs)); }`, false},
+		{"a label named as the reference", `function use(items: readonly string[] | undefined): void { if (!some(items)) { items: for (;;) { break items; } } }`, false},
 		{"false branch", `function use(xs: readonly string[] | undefined): void { if (!some(xs)) console.log(typeof xs); }`, true},
 		{"else", `function use(xs: readonly string[] | undefined): void { if (some(xs)) {} else console.log(typeof xs); }`, true},
 		{"after an early exit", `function use(xs: readonly string[] | undefined): void { if (some(xs)) { return; } console.log(typeof xs); }`, true},

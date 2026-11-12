@@ -1138,7 +1138,9 @@ func (l *lowering) predicateNameReads(node, argument *ast.Node) bool {
 // and a VariableDeclaration of v, neither carrying flow data, and the b in a.b when a local is named b,
 // which it resolves as a name wherever it stands. Read from isMatchingReference, the same holds for a
 // comma, parentheses or a non-null assertion around v and a BindingElement declaring it. A read inside
-// one of those is its own node, which the walks visit.
+// one of those is its own node, which the walks visit. IsExpressionNode is what keeps a label out: the
+// checker matches the label in `v: for (;;) { break v; }` against a local v, and both carry flow (measured
+// on #39wtqdj -6).
 func predicateReadPosition(node *ast.Node) bool {
 	if node.Kind != ast.KindIdentifier && node.Kind != ast.KindThisKeyword && node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression {
 		return false
