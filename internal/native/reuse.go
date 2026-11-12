@@ -599,7 +599,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
+			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, values[index]))
 		}
 		if e.program.UninitializedFields[field.Name] {
 			e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
@@ -644,7 +644,7 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 	lines := []string{}
 	for index, field := range literal.Empty {
 		if e.fieldTypesNeeded() {
-			lines = append(lines, fmt.Sprintf("\tadamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field)))
+			lines = append(lines, fmt.Sprintf("\tadamic_object_field_types(%s)[%d] = %s;", object, index, fieldInitialRepresentation(field, "NULL")))
 		}
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))

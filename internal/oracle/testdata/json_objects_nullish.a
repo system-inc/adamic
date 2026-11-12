@@ -1,7 +1,8 @@
 // A null field prints null and an undefined one is left out (#d9ep7de), whether a literal or a variable
 // wrote it, where the field is held so that the two differ: a string, a number, or a union holding both. A
 // null or undefined reference prints as Node prints it at the top and in an array. A field held as a bare
-// pointer that admits null or undefined is refused until #ckxcnr6 (json_objects_refused/null_variable.a).
+// pointer that admits null or undefined is covered by json_objects_null_variable.a and
+// json_objects_undefined_variable.a.
 interface Box {
 	readonly v: number;
 }

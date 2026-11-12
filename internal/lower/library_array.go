@@ -560,7 +560,7 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 			given = read(index)
 		}
 		if name == "entries" {
-			given = ir.ObjectLiteral{Tuple: true, Fields: []ir.Field{{Name: "0", Value: read(index)}, {Name: "1", Value: value}}}
+			given = ir.ObjectLiteral{Tuple: true, Fields: []ir.Field{{Name: "0", Value: read(index)}, {Name: "1", Value: value, Nullish: l.slotNullish(l.elementTypeOfArray(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))), value.Type())}}}
 		}
 		body = append(body, ir.Declare{Local: bound, Value: given})
 	} else if name == "entries" && binding.Kind == ast.KindArrayBindingPattern {
