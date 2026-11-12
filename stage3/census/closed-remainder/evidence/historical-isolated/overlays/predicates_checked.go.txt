@@ -1,0 +1,900 @@
+package lower
+
+import (
+"os"
+	"fmt"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Only independent whole-type body proofs retire checks. A tag-only summary
+// does not prove an open interface's other fields.
+func (l *lowering) checkedPredicateBodyProven(annotation *ast.Node) bool {
+	if annotation == nil || annotation.Kind != ast.KindTypePredicate {
+		return false
+	}
+	if l.proveFlowPredicate(annotation) == nil {
+		return true
+	}
+	proof, err := l.provePredicate(annotation)
+	return err == nil && !proof.TaggedView
+}
+
+// Callback producers may retain the shared field views required by a tag proof.
+func (l *lowering) checkedPredicateArgumentProven(annotation *ast.Node) bool {
+	if l.proveFlowPredicate(annotation) == nil {
+		return true
+	}
+	if _, err := l.provePredicate(annotation); err != nil {
+		return false
+	}
+	return l.predicateRefusal(annotation) == nil
+}
+
+func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *checker.TypePredicate) predicateTruth {
+	if claim.Kind() == checker.TypePredicateKindAssertsIdentifier {
+		return predicateTrue
+	}
+	directions := predicateTrue
+	index := int(claim.ParameterIndex())
+	if index < 0 || index >= len(call.Arguments.Nodes) {
+		return directions
+	}
+	argument := ast.SkipParentheses(call.Arguments.Nodes[index])
+	if argument.Kind != ast.KindIdentifier && argument.Kind != ast.KindPropertyAccessExpression && argument.Kind != ast.KindElementAccessExpression && argument.Kind != ast.KindThisKeyword {
+		return directions
+	}
+	source := l.checker.GetTypeAtLocation(argument)
+	// Ask the pinned checker whether this call's false condition excludes a part
+	// of the incoming type. The annotation supplies a claim, never body evidence.
+	flow := &ast.FlowNode{Flags: ast.FlowFlagsFalseCondition, Node: call.AsNode(), Antecedent: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
+	narrowed := predicateFlowType(l.checker, argument, source, source, nil, flow)
+	if checker.Checker_isTypeIdenticalTo(l.checker, source, narrowed) {
+		return directions
+	}
+	// Empty branches still count. Read-based flow discovery also covers boolean
+	// aliases, captures, and continuation paths after an early return.
+	if l.predicateUseDirections(call)&predicateFalse != 0 {
+		return predicateEither
+	}
+	conditionNarrows := func(condition *ast.Node, truth bool) bool {
+		if condition == nil || l.predicateConditionDirection(condition, call.AsNode(), truth, 0)&predicateFalse == 0 {
+			return false
+		}
+		flags := ast.FlowFlagsFalseCondition
+		if truth {
+			flags = ast.FlowFlagsTrueCondition
+		}
+		branch := &ast.FlowNode{Flags: flags, Node: condition, Antecedent: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
+		narrowed := predicateFlowType(l.checker, argument, source, source, nil, branch)
+		return !checker.Checker_isTypeIdenticalTo(l.checker, source, narrowed)
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		var condition *ast.Node
+		switch node.Kind {
+		case ast.KindIfStatement:
+			condition = node.AsIfStatement().Expression
+		case ast.KindConditionalExpression:
+			condition = node.AsConditionalExpression().Condition
+		case ast.KindWhileStatement:
+			condition = node.AsWhileStatement().Expression
+		case ast.KindDoStatement:
+			condition = node.AsDoStatement().Expression
+		case ast.KindForStatement:
+			condition = node.AsForStatement().Condition
+		case ast.KindBinaryExpression:
+			binary := node.AsBinaryExpression()
+			if binary.OperatorToken.Kind == ast.KindBarBarToken && conditionNarrows(binary.Left, false) {
+				directions |= predicateFalse
+			}
+		case ast.KindSwitchStatement:
+			// Under switch (true), every case clause's false branch reaches the clauses after it.
+			statement := node.AsSwitchStatement()
+			if ast.SkipParentheses(statement.Expression).Kind == ast.KindTrueKeyword {
+				for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+					if clause.Kind == ast.KindCaseClause && conditionNarrows(clause.Expression(), false) {
+						directions |= predicateFalse
+					}
+				}
+			}
+		}
+		if conditionNarrows(condition, true) || conditionNarrows(condition, false) {
+			directions |= predicateFalse
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	ast.GetSourceFileOfNode(call.AsNode()).AsNode().ForEachChild(visit)
+	return directions
+}
+
+// checkedPredicateUnclassifiedUse names where the call's result goes when the direction walk
+// can't say what the checker narrows there, "" when it can. Climbing through what the checker's
+// narrowType reads through (parentheses, !, && and ||, a comparison with a boolean literal, an
+// assignment's or a comma's right side), it stops at the first other parent. A condition the walk
+// reads, a const alias, a discarded value, or a call's argument is read. Any other parent is a value
+// the walk reads no direction from, so it must not stand in a condition or an alias, and must be one
+// the checker narrows nothing by; anything else is named, so an unread narrowing stops as NotYet
+// instead of going unchecked.
+func (l *lowering) checkedPredicateUnclassifiedUse(call *ast.CallExpression) string {
+	node, parent := call.AsNode(), call.AsNode().Parent
+	for ; parent != nil && checkedPredicateTransparent(parent, node); node, parent = parent, parent.Parent {
+	}
+	// A function whose returns the checker infers a predicate from narrows its callers by this
+	// result, and a call of an inferred predicate is never checked.
+	// A checked closure checks its own claim at each return, whether the claim is its annotation or its
+	// producer's written one (road (B) on #fx9waqy), so it's read as an annotated function is.
+	if function := ast.GetContainingFunction(call.AsNode()); function != nil && function.Type() == nil && !l.checkedPredicateClosure(function) {
+		if signature := l.checker.GetSignatureFromDeclaration(function); signature != nil {
+			if claim := predicateOfSignature(l.checker, signature); claim != nil {
+				if use := l.checkedPredicateInferredUse(call.AsNode(), function, claim, parent != nil && checkedPredicateAlias(parent, node)); use != "" {
+					return "returned from a function the checker infers a type predicate for, " + use
+				}
+			}
+		}
+	}
+	if parent == nil || checkedPredicateCondition(parent, node) || checkedPredicateAlias(parent, node) || parent.Kind == ast.KindExpressionStatement || parent.Kind == ast.KindVoidExpression {
+		return ""
+	}
+	// The checker narrows nothing through a call's argument (#6fas8b6, Lower's ruling of Oct 29). An
+	// assertion of that parameter narrows the true side only, which this call already checks.
+	if (parent.Kind == ast.KindCallExpression || parent.Kind == ast.KindNewExpression) && parent.Expression() != node {
+		return ""
+	}
+	for child, holder := parent, parent.Parent; holder != nil && !ast.IsFunctionLike(holder); child, holder = holder, holder.Parent {
+		if checkedPredicateCondition(holder, child) || checkedPredicateAlias(holder, child) {
+			return "read by " + describe(parent) + " inside a condition"
+		}
+	}
+	switch parent.Kind {
+	case ast.KindBinaryExpression, ast.KindPrefixUnaryExpression, ast.KindConditionalExpression, ast.KindSwitchStatement, ast.KindCaseClause, ast.KindVariableDeclaration,
+		ast.KindTypeOfExpression, ast.KindAwaitExpression, ast.KindAsExpression, ast.KindCallExpression, ast.KindNewExpression, ast.KindTemplateSpan, ast.KindArrayLiteralExpression,
+		ast.KindPropertyAssignment, ast.KindSpreadElement, ast.KindReturnStatement, ast.KindArrowFunction, ast.KindThrowStatement, ast.KindPropertyDeclaration, ast.KindParameter,
+		ast.KindElementAccessExpression, ast.KindForStatement:
+		return ""
+	}
+	return "read by " + describe(parent)
+}
+
+// checkedPredicateInferredUse names what leaves a checked call in function, whose predicate the
+// checker infers, standing on an answer nobody checks, "" when nothing does (#6fas8b6, Lower's ruling
+// of Oct 29). The checker infers the predicate from the one returned expression, so a call elsewhere
+// in the body is any other call, unless it initializes a const the returned expression can narrow
+// through. Inside it, the returned expression must be calls claiming a predicate on the claimed
+// parameter, joined by && and || alone: then the function's true implies a true from one of them,
+// which stands as it does at any call of it, checked, proven or trusted. Its false rests on their
+// false answers, which nothing here checks, so no use of the function may read it: a direct call has
+// to be one whose false direction the walk finds unobservable, and the function passed as a value has
+// to go to a parameter whose type carries no predicate. Any other use, and a function whose uses can't
+// all be found, is named.
+func (l *lowering) checkedPredicateInferredUse(call, function *ast.Node, claim *checker.TypePredicate, aliased bool) string {
+	name := describe(function)
+	if function.Kind == ast.KindFunctionDeclaration && function.Name() != nil {
+		name = function.Name().Text()
+	}
+	returned := checkedPredicateReturned(function)
+	if returned == nil {
+		return name + ", with no one returned expression the walk finds"
+	}
+	inside := false
+	for node := call; node != nil && node != function; node = node.Parent {
+		inside = inside || node == returned
+	}
+	if !inside {
+		if aliased {
+			return name + ", through a const its returned expression can narrow by"
+		}
+		return ""
+	}
+	index := int(claim.ParameterIndex())
+	if claim.Kind() != checker.TypePredicateKindIdentifier || index < 0 || index >= len(function.Parameters()) {
+		return name + ", claiming what isn't a parameter"
+	}
+	if part := l.checkedPredicateInferredPart(returned, l.symbol(function.Parameters()[index].Name())); part != nil {
+		return name + ", whose returned expression holds " + describe(part) + " at " + l.program.Where(part)
+	}
+	// Every use of a function declaration spells its name, but an export's: a namespace object can
+	// reach it by a computed key.
+	if function.Kind != ast.KindFunctionDeclaration || function.Name() == nil {
+		return name + ", whose uses the walk doesn't follow"
+	}
+	if ast.HasSyntacticModifier(function, ast.ModifierFlagsExport) {
+		return name + ", exported"
+	}
+	symbol := l.symbol(function.Name())
+	use := ""
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindIdentifier && node.Text() == name && node != function.Name() && !ast.IsPartOfTypeNode(node) {
+			use = l.checkedPredicateInferredReference(node, symbol)
+		}
+		if use == "" {
+			node.ForEachChild(visit)
+		}
+		return use != ""
+	}
+	for _, file := range l.program.Files() {
+		if file.AsNode().ForEachChild(visit) {
+			return name + ", " + use
+		}
+	}
+	return ""
+}
+
+// checkedPredicateReturned is the one expression the checker infers function's predicate from, as
+// its getTypePredicateFromBody finds it: an arrow's expression body, or the body's one return.
+func checkedPredicateReturned(function *ast.Node) *ast.Node {
+	body := function.Body()
+	if body == nil {
+		return nil
+	}
+	if body.Kind != ast.KindBlock {
+		return body
+	}
+	var returned *ast.Node
+	if ast.ForEachReturnStatement(body, func(statement *ast.Node) bool {
+		if returned != nil || statement.Expression() == nil {
+			return true
+		}
+		returned = statement.Expression()
+		return false
+	}) {
+		return nil
+	}
+	return returned
+}
+
+// checkedPredicateInferredPart is the first part of a returned expression that isn't a call claiming
+// a predicate on parameter, read through parentheses, && and ||, or nil when there is none.
+func (l *lowering) checkedPredicateInferredPart(node *ast.Node, parameter *ast.Symbol) *ast.Node {
+	switch node.Kind {
+	case ast.KindParenthesizedExpression:
+		return l.checkedPredicateInferredPart(node.Expression(), parameter)
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || binary.OperatorToken.Kind == ast.KindBarBarToken {
+			if part := l.checkedPredicateInferredPart(binary.Left, parameter); part != nil {
+				return part
+			}
+			return l.checkedPredicateInferredPart(binary.Right, parameter)
+		}
+	case ast.KindCallExpression:
+		signature := l.checker.GetResolvedSignature(node)
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 || signature == nil {
+			return node
+		}
+		claim := predicateOfSignature(l.checker, signature)
+		if claim == nil || claim.Kind() != checker.TypePredicateKindIdentifier || claim.Type() == nil {
+			return node
+		}
+		index := int(claim.ParameterIndex())
+		if index >= 0 && index < len(node.Arguments()) && parameter != nil && l.symbol(ast.SkipParentheses(node.Arguments()[index])) == parameter {
+			return nil
+		}
+	}
+	return node
+}
+
+// checkedPredicateInferredReference names how identifier uses an inferred predicate, the function
+// declaration symbol names, when the use can read the function's false side, "" when it can't or
+// identifier names something else.
+func (l *lowering) checkedPredicateInferredReference(identifier *ast.Node, symbol *ast.Symbol) string {
+	referenced := l.symbol(identifier)
+	if identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		// A shorthand field's name is the field; the value it stores is the function.
+		referenced = l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
+		if referenced != nil && referenced.Flags&ast.SymbolFlagsAlias != 0 {
+			referenced = l.checker.GetAliasedSymbol(referenced)
+		}
+		if referenced == symbol {
+			return "used at " + l.program.Where(identifier) + " by " + describe(identifier.Parent)
+		}
+	}
+	if referenced != symbol {
+		return ""
+	}
+	reference := identifier
+	for reference.Parent.Kind == ast.KindParenthesizedExpression {
+		reference = reference.Parent
+	}
+	holder := reference.Parent
+	switch {
+	case holder.Kind == ast.KindTypeQuery:
+		// A typeof in a type names the function's type; the value goes wherever it's passed.
+		return ""
+	case holder.Kind == ast.KindCallExpression && holder.Expression() == reference:
+		signature := l.checker.GetResolvedSignature(holder)
+		if signature == nil {
+			return "called at " + l.program.Where(holder) + " with no signature"
+		}
+		if claim := predicateOfSignature(l.checker, signature); claim != nil && l.checkedPredicateDirections(holder.AsCallExpression(), claim)&predicateFalse != 0 {
+			return "whose false side the call at " + l.program.Where(holder) + " reads"
+		}
+		return ""
+	case holder.Kind == ast.KindCallExpression || holder.Kind == ast.KindNewExpression:
+		// The value narrows only where a call through it does: through a parameter typed with a predicate.
+		if parameter := l.slotType(reference); parameter != nil && l.predicateValued(parameter) {
+			return "passed at " + l.program.Where(reference) + " to a parameter typed with a type predicate"
+		}
+		return ""
+	}
+	return "used at " + l.program.Where(identifier) + " by " + describe(holder)
+}
+
+// checkedPredicateTransparent is whether the checker's narrowType reads through parent to child.
+func checkedPredicateTransparent(parent, child *ast.Node) bool {
+	switch parent.Kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindSatisfiesExpression:
+		return true
+	case ast.KindPrefixUnaryExpression:
+		return parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
+			return true
+		case ast.KindEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindCommaToken:
+			return child == binary.Right
+		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken, ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+			other := binary.Left
+			if child == binary.Left {
+				other = binary.Right
+			}
+			return ast.IsBooleanLiteral(ast.SkipParentheses(other)) && !ast.IsAccessExpression(ast.SkipParentheses(child))
+		}
+	}
+	return false
+}
+
+// checkedPredicateCondition is whether child is a condition the binder gives flow conditions to:
+// a statement's or a conditional's test, an operand of && or ||, or a switch (true) case.
+func checkedPredicateCondition(holder, child *ast.Node) bool {
+	switch holder.Kind {
+	case ast.KindIfStatement:
+		return holder.AsIfStatement().Expression == child
+	case ast.KindWhileStatement:
+		return holder.AsWhileStatement().Expression == child
+	case ast.KindDoStatement:
+		return holder.AsDoStatement().Expression == child
+	case ast.KindForStatement:
+		return holder.AsForStatement().Condition == child
+	case ast.KindConditionalExpression:
+		return holder.AsConditionalExpression().Condition == child
+	case ast.KindBinaryExpression:
+		operator := holder.AsBinaryExpression().OperatorToken.Kind
+		return operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken
+	case ast.KindCaseClause:
+		statement := holder.Parent.Parent
+		return holder.Expression() == child && statement.Kind == ast.KindSwitchStatement && ast.SkipParentheses(statement.AsSwitchStatement().Expression).Kind == ast.KindTrueKeyword
+	}
+	return false
+}
+
+// checkedPredicateAlias is whether child initializes a const, which the checker narrows through
+// wherever the const stands in a condition.
+func checkedPredicateAlias(holder, child *ast.Node) bool {
+	return holder.Kind == ast.KindVariableDeclaration && holder.AsVariableDeclaration().Initializer == child && holder.Parent.Flags&ast.NodeFlagsConst != 0
+}
+
+// A tag is a full membership test only when the admitted source has a
+// complete discriminant partition. Open structural domains need a negative
+// view-membership operation, which this train does not provide.
+func (l *lowering) checkedPredicateTagDomain(source, target *checker.Type) bool {
+	return l.checkedPredicateTagDomainSeen(source, target, false, map[[2]*checker.Type]bool{})
+}
+
+// The true check proves the layout only when no source member outside the
+// target can hold the wanted tag (#drwm5pj): two members of one enum sharing a
+// value are one type to the checker, and a field an open numeric enum types,
+// like tsc's kind: SyntaxKind, can hold any of its values. Untagged members and
+// a plain kind: number stay the existing reification's gap.
+func (l *lowering) checkedPredicateTagProvesLayout(source, target *checker.Type) bool {
+	return l.checkedPredicateTagDomainSeen(source, target, true, map[[2]*checker.Type]bool{})
+}
+
+func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, positive bool, seen map[[2]*checker.Type]bool) bool {
+	source, target = l.concrete(source), l.concrete(target)
+	key := [2]*checker.Type{source, target}
+	if seen[key] {
+		return false
+	}
+	seen[key] = true
+	defer delete(seen, key)
+	if l.isArrayType(target) {
+		members := []*checker.Type{source}
+		if source.Flags()&checker.TypeFlagsUnion != 0 {
+			members = source.Types()
+		}
+		for _, member := range members {
+			if !l.isArrayType(member) {
+				continue
+			}
+			from, to := l.elementTypeOfArray(member), l.elementTypeOfArray(target)
+			if !checker.Checker_isTypeIdenticalTo(l.checker, from, to) && !l.checkedPredicateTagDomainSeen(from, to, positive, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if !l.checkedPredicateTagDomainSeen(source, member, positive, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || l.isArrayType(target) {
+		return true
+	}
+	tag := l.fieldLiteral(target, "kind")
+	if tag == nil {
+		return true
+	} // Existing reification names untagged gaps.
+	wanted, ok := predicateLiteral(tag)
+	if !ok {
+		return false
+	}
+	members := []*checker.Type{source}
+	if source.Flags()&checker.TypeFlagsUnion != 0 {
+		members = source.Types()
+	}
+	for _, member := range members {
+		held := l.fieldLiteral(member, "kind")
+		if held == nil && positive {
+			if field := l.checker.GetPropertyOfType(member, "kind"); member.Flags()&checker.TypeFlagsPrimitive == 0 && field != nil && l.openNumericEnumType(l.checker.GetTypeOfSymbol(field)) && l.checker.IsTypeAssignableTo(tag, l.checker.GetTypeOfSymbol(field)) && !l.checker.IsTypeAssignableTo(member, target) {
+				return false
+			}
+			continue
+		}
+		if held == nil {
+			return false
+		}
+		key, ok := predicateLiteral(held)
+		if !ok {
+			return false
+		}
+		if key == wanted && !l.checker.IsTypeAssignableTo(member, target) {
+			return false
+		}
+	}
+	return true
+}
+
+// A direct predicate call names the declaration itself, through a bare name or a
+// namespace/module binding. A structural value with the same member is not that
+// binding; its predicate keeps the check carried by functionValue's forwarder.
+func (l *lowering) directPredicateCallee(callee, declaration *ast.Node) bool {
+	if declaration == nil || declaration.Kind != ast.KindFunctionDeclaration || declaration.Name() == nil {
+		return false
+	}
+	callee = ast.SkipParentheses(callee)
+	switch callee.Kind {
+	case ast.KindIdentifier:
+	case ast.KindPropertyAccessExpression:
+		object := l.symbol(ast.SkipParentheses(callee.Expression()))
+		if object == nil || object.Flags&ast.SymbolFlagsModule == 0 || object.Flags&(ast.SymbolFlagsValue & ^ast.SymbolFlagsModule) != 0 {
+			return false
+		}
+	default:
+		return false
+	}
+	// symbol follows import and re-export aliases with GetAliasedSymbol and maps
+	// the local declaration to its export symbol, on both sides of the comparison.
+	symbol := l.symbol(callee)
+	return symbol != nil && symbol == l.symbol(declaration.Name())
+}
+
+func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Expression, implementation, declaration *ast.Node) (ir.Expression, error) {
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if resolved == nil {
+		return value, nil
+	}
+	if declaration == nil {
+		declaration = resolved.Declaration()
+	}
+	// Inferred predicates still use their existing body proof admission path.
+	if declaration == nil || declaration.Type() == nil || declaration.Type().Kind != ast.KindTypePredicate {
+		return value, nil
+	}
+	if declaration.Kind != ast.KindFunctionDeclaration {
+		if l.checkedPredicateBodyProven(declaration.Type()) || l.predicateParameter(declaration.Type()) != nil || l.checkedPredicateClosure(declaration) {
+			return value, nil
+		}
+		return nil, l.notYet(call.AsNode(), "a checked predicate without a named implementation")
+	}
+	if implementation == nil {
+		implementation = declaration
+	}
+	if !l.checkedAssertionSource(declaration) {
+		return value, nil
+	}
+	claim := predicateOfSignature(l.checker, resolved)
+	if claim == nil || (claim.Type() == nil && (claim.Kind() != checker.TypePredicateKindAssertsIdentifier || len(declaration.TypeParameters()) != 0)) {
+		return nil, l.notYet(call.AsNode(), "a checked predicate without a reifiable target")
+	}
+	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
+	index := int(claim.ParameterIndex())
+	directions := l.checkedPredicateDirections(call, claim)
+	proven := l.checkedPredicateBodyProven(declaration.Type())
+	if declaration.Body() == nil {
+		proven = l.predicateOverloadProven(implementation, declaration)
+	}
+	name := implementation.Name().Text()
+	site := ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: name}
+	if declaration.Body() == nil {
+		site.Overload = l.predicateOverloadOrdinal(implementation, declaration)
+	}
+	sourceName := "missing argument"
+	if index >= 0 && index < len(call.Arguments.Nodes) {
+		sourceName = l.checker.TypeToString(l.checker.GetTypeAtLocation(call.Arguments.Nodes[index]))
+	}
+	targetName := "truthy"
+	if claim.Type() != nil {
+		targetName = l.checker.TypeToString(claim.Type())
+	}
+	l.recordPredicateSite(&site, assertion, proven, directions, sourceName+" -> "+targetName)
+	if proven {
+		return value, nil
+	}
+	if !assertion {
+		if use := l.checkedPredicateUnclassifiedUse(call); use != "" {
+			return nil, l.notYet(call.AsNode(), "a checked predicate result "+use+", which its direction walk doesn't read")
+		}
+	}
+	invoked, ok := value.(ir.Call)
+	if !ok || !l.directPredicateCallee(call.Expression, declaration) {
+		return nil, l.notYet(call.AsNode(), "an indirect call of a checked predicate")
+	}
+	if index < 0 || index >= len(invoked.Arguments) {
+		return nil, l.notYet(call.AsNode(), "a checked predicate on a missing argument")
+	}
+	if (!assertion && invoked.Type() != ir.Boolean) || (assertion && invoked.Type() != 0) {
+		return nil, l.notYet(call.AsNode(), "a checked predicate with a non-boolean result")
+	}
+	wrapper := len(l.result.Functions)
+	// Same-named predicates may share this IR label: native keys include the
+	// semantic body and resolved callee, so the label must not encode encounter order.
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_predicate_check", name), Returns: invoked.Type()})
+	local := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
+		return index
+	}
+	arguments := []ir.Expression{}
+	for i, argument := range invoked.Arguments {
+		if undefined, ok := argument.(ir.Undefined); ok && i < len(l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters) {
+			parameter := l.result.Functions[l.result.CallTargets(invoked)[0]].Parameters[i]
+			undefined.Of = l.result.Locals[parameter].Type
+			argument = undefined
+			invoked.Arguments[i] = argument
+		}
+		parameter := local(fmt.Sprintf("argument_%d", i), argument.Type())
+		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, parameter)
+		arguments = append(arguments, ir.Read{Local: parameter, Of: argument.Type()})
+	}
+	checked := invoked
+	checked.Arguments = arguments
+	body := []ir.Statement{}
+	var returned ir.Expression
+	if assertion {
+		body = append(body, ir.Evaluate{Value: checked})
+	} else {
+		result := local("result", ir.Boolean)
+		body = append(body, ir.Declare{Local: result, Value: checked})
+		returned = ir.Read{Local: result, Of: ir.Boolean}
+	}
+	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
+	check, err := l.checkedPredicateCheck(call.AsNode(), declaration, arguments[index], source, claim.Type(), returned, directions&predicateFalse != 0, local, func(branch string) string {
+		return fmt.Sprintf("predicate %s at %s %s branch: source %s, target %s", name, site.Where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, err
+	}
+	body = append(body, check...)
+	body = append(body, ir.Return{Value: returned})
+	l.result.Functions[wrapper].Body = body
+	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
+}
+
+// recordPredicateSite counts a checked call's directions into PredicateChecks and keeps its site: each
+// direction is proven, checked where the call's direction walk says a caller narrows on it, or
+// unobservable. An asserts claim has one direction.
+func (l *lowering) recordPredicateSite(site *ir.PredicateCallCheck, assertion, proven bool, directions predicateTruth, reason string) {
+	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
+		if assertion && direction == predicateFalse {
+			continue
+		}
+		branch := "true"
+		if direction == predicateFalse {
+			branch = "false"
+		}
+		if assertion {
+			branch = "asserts"
+		}
+		report := ir.PredicateDirectionCheck{Direction: branch, Reason: reason}
+		switch {
+		case proven:
+			report.Status = "proven"
+			l.result.PredicateChecks.Proven++
+		case directions&direction != 0:
+			report.Status = "checked"
+			l.result.PredicateChecks.Checked++
+		default:
+			report.Status = "unobservable"
+			l.result.PredicateChecks.Unobservable++
+		}
+		site.Directions = append(site.Directions, report)
+	}
+	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, *site)
+}
+
+// checkedPredicateCheck is the one check a checked predicate's claim gets, wherever it's checked: at
+// a direct call (checkedPredicateResult) and in the value a predicate becomes (functionValue). result
+// is the predicate's boolean, or nil for an asserts predicate, whose claim holds once it returns.
+// argument is the value the claim names. The true side is always checked, and the false side only
+// where falseToo says a caller narrows on it.
+func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument ir.Expression, source, target *checker.Type, result ir.Expression, falseToo bool, local func(string, ir.Type) int, message func(branch string) string) (statements []ir.Statement, traceFailure error) {
+ if os.Getenv("LWP_TRACE")!="" { defer func(){ reason:=""; if traceFailure!=nil {reason=traceFailure.Error()}; lwp2Write(map[string]any{"event":"predicate_check","unit":latentFindingOwner,"phase":latentFindingPhase,"where":l.program.Where(node),"source":l.typeString(source),"target":l.typeString(target),"false_too":falseToo,"failure":reason}) }() }
+
+	// The truthiness check is only an asserts claim, so a typeless non-asserts caller stops instead of silently getting an asserts check.
+	if target == nil && (result != nil || falseToo) {
+		return nil, l.notYet(node, "a checked predicate without a reifiable target")
+	}
+	// A condition assertion checks the saved argument, not a structural target.
+	if target == nil {
+		membership := ir.Truthy{Value: argument}
+		return []ir.Statement{ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message("asserts"))}}}}}, nil
+	}
+	if falseToo && !l.checkedPredicateTagDomain(source, target) {
+		return nil, l.notYet(node, "checked predicate membership over an open tag domain")
+	}
+	// enum_tag_flow.go's hazards hold here too: a singleton open enum tag reads as a literal. A tag
+	// another member can hold proves no layout, so on the true branch the target is a checked view:
+	// predicateMembership registers its fields, as a .ts cast does, and a lying tag stops at the first
+	// field read (#k1t2wp9). A false branch has no view to read through, so it stays pending. The view
+	// is keyed by the target's type across the program, so a read narrowed by a call through a
+	// predicate's value reads through it too.
+	if (l.enumTagHazardOf(source, "kind") != enumTagNoHazard || !l.checkedPredicateTagProvesLayout(source, target)) && falseToo {
+		return nil, l.notYet(node, "checked predicate membership by an enum tag another member can hold")
+	}
+	// A branded supertype's membership is only that the value is an object, so its negation would stop
+	// every honest false (#c7w6j0y): its false side stays pending.
+	if falseToo && l.brandedMembership(target, map[*checker.Type]bool{}) {
+		return nil, l.notYet(node, "checked predicate membership of a branded supertype on its false branch")
+	}
+	setup, membership, err := l.predicateMembership(declaration, argument, source, target, local, 0)
+	if err != nil {
+		return nil, err
+	}
+	failure := func(branch string, condition ir.Expression) ir.Statement {
+		return ir.If{Condition: condition, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message(branch))}}}}
+	}
+	if result == nil {
+		return append(append([]ir.Statement{}, setup...), failure("asserts", ir.Unary{Operator: ir.Not, Operand: membership})), nil
+	}
+	check := ir.If{Condition: result, Then: append(append([]ir.Statement{}, setup...), failure("true", ir.Unary{Operator: ir.Not, Operand: membership}))}
+	if falseToo {
+		check.Else = append(append([]ir.Statement{}, setup...), failure("false", membership))
+	}
+	return []ir.Statement{check}, nil
+}
+
+// checkedPredicateDeclaration is whether declaration is a predicate R-T80 checks at a direct call: a
+// named .ts function claiming a predicate its body doesn't prove, with a body or an implementation.
+// The direct call checks it, the value it becomes checks it (functionValue), and a program where it
+// escapes as a value walks its false side (predicate_false_flow.go).
+func (l *lowering) checkedPredicateDeclaration(declaration *ast.Node) bool {
+	return declaration != nil && declaration.Kind == ast.KindFunctionDeclaration && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) && l.checkedAssertionSource(declaration) && !l.checkedPredicateBodyProven(declaration.Type())
+}
+
+// checkedPredicateForwarder is the body of the value a checked predicate becomes (#vdt9f1q, ruled
+// Oct 25): functionValue's one forwarder, which every road to the value goes through, so the check
+// travels with it into an argument, a field, an alias or a return. It checks the predicate's own
+// claim, its true side or an asserts on return, at every call through the value; the false side is
+// the walk's (predicate_false_flow.go). forwarder is the forwarder's index, already in the result,
+// and call is its call of the predicate. A target that isn't a checked predicate gets no body here.
+// It's no call site, so PredicateChecks, which counts the calls R-T80 checks, doesn't count it.
+func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol, forwarder int, call ir.Call) ([]ir.Statement, bool, error) {
+	var declaration *ast.Node
+	if symbol != nil {
+		for _, candidate := range symbol.Declarations {
+			if candidate.Body() != nil && l.checkedPredicateDeclaration(candidate) {
+				declaration = candidate
+			}
+		}
+	}
+	if declaration == nil {
+		return nil, false, nil
+	}
+	if len(declaration.TypeParameters()) != 0 {
+		return nil, false, l.notYet(node, "a checked generic predicate used as a value")
+	}
+	signature := l.checker.GetSignatureFromDeclaration(declaration)
+	claim := predicateOfSignature(l.checker, signature)
+	if claim == nil || (claim.Type() == nil && claim.Kind() != checker.TypePredicateKindAssertsIdentifier) {
+		return nil, false, l.notYet(node, "a checked predicate without a reifiable target")
+	}
+	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
+	index := int(claim.ParameterIndex())
+	if index < 0 || index >= len(call.Arguments) || index >= len(signature.Parameters()) {
+		return nil, false, l.notYet(node, "a checked predicate on a missing argument")
+	}
+	if (!assertion && call.Returns != ir.Boolean) || (assertion && call.Returns != 0) {
+		return nil, false, l.notYet(node, "a checked predicate with a non-boolean result")
+	}
+	name := declaration.Name().Text()
+	where := l.program.Where(declaration)
+	source := l.checker.GetTypeOfSymbol(signature.Parameters()[index])
+	sourceName, targetName := l.checker.TypeToString(source), "truthy"
+	if claim.Type() != nil {
+		targetName = l.checker.TypeToString(claim.Type())
+	}
+	local := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: forwarder})
+		return index
+	}
+	body := []ir.Statement{}
+	var result ir.Expression
+	if assertion {
+		body = append(body, ir.Evaluate{Value: call})
+	} else {
+		held := local("result", ir.Boolean)
+		body = append(body, ir.Declare{Local: held, Value: call})
+		result = ir.Read{Local: held, Of: ir.Boolean}
+	}
+	check, err := l.checkedPredicateCheck(node, declaration, call.Arguments[index], source, claim.Type(), result, false, local, func(branch string) string {
+		return fmt.Sprintf("predicate %s used as a value, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, false, err
+	}
+	body = append(body, check...)
+	return append(body, ir.Return{Value: result}), true, nil
+}
+
+// checkedPredicateClosure is whether declaration is an arrow or a function expression in .ts claiming
+// `x is T` with a body that doesn't prove it (#1w5bve2, ruled Oct 27). R-T80 admits it, and the
+// closure is the value, so it checks its own claim at each return (checkedPredicateReturn): every call
+// of it, direct, through a value or as an argument, runs the check, and the check is never erased. An
+// asserts claim, a generic, an async or generator body, a claim on this, and a claimed parameter the
+// body assigns stay refused. The claim is its own annotation, or, for one its producer returns under a
+// written claim, that claim (checkedPredicateClaimNode, road (B) on #fx9waqy).
+func (l *lowering) checkedPredicateClosure(declaration *ast.Node) bool {
+	if declaration == nil || declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	annotation := l.checkedPredicateClaimNode(declaration)
+	if annotation == nil || annotation.AsTypePredicateNode().AssertsModifier != nil || annotation.AsTypePredicateNode().Type == nil {
+		return false
+	}
+	if declaration.Body() == nil || len(declaration.TypeParameters()) != 0 || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) || declaration.Kind == ast.KindFunctionExpression && declaration.AsFunctionExpression().AsteriskToken != nil {
+		return false
+	}
+	// A body proof is read only off the closure's own annotation: a written claim's annotation sits on the
+	// producer's result type, which has no body, so the closure checks it.
+	if !l.checkedAssertionSource(declaration) || annotation == declaration.Type() && l.checkedPredicateBodyProven(annotation) {
+		return false
+	}
+	parameter := l.checkedPredicateClaimed(declaration)
+	if parameter == nil {
+		return false
+	}
+	// The claim names the argument, so a body that assigns the parameter would check another value.
+	symbol := l.symbol(parameter.Name())
+	assigned := false
+	var writes ast.Visitor
+	writes = func(n *ast.Node) bool {
+		if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) && l.symbol(n) == symbol {
+			assigned = true
+		}
+		return assigned || n.ForEachChild(writes)
+	}
+	declaration.Body().ForEachChild(writes)
+	return !assigned
+}
+
+// checkedPredicateClosureCallee is whether callee can only be the checked closure declaration: a const
+// name whose initializer is the closure itself. A let, a namespace export or a field could hold any
+// function of the closure's type by the time it's called, an ambient predicate whose claim nobody
+// checks among them, so a call through one stays an indirect call (mutable.ts).
+func (l *lowering) checkedPredicateClosureCallee(callee, declaration *ast.Node) bool {
+	if !l.checkedPredicateClosure(declaration) || callee.Kind != ast.KindIdentifier {
+		return false
+	}
+	holder := declaration.Parent
+	for holder != nil && holder.Kind == ast.KindParenthesizedExpression {
+		holder = holder.Parent
+	}
+	if holder == nil || holder.Kind != ast.KindVariableDeclaration || holder.Parent == nil || holder.Parent.Flags&ast.NodeFlagsConst == 0 || holder.Name() == nil || holder.Name().Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.symbol(callee)
+	return symbol != nil && symbol == l.symbol(holder.Name())
+}
+
+// checkedPredicateClaimed is the parameter a predicate's claim names, when it's a plain identifier. A
+// claim written on a producer's result type names that type's parameter, which is this function's at the
+// same position.
+func (l *lowering) checkedPredicateClaimed(declaration *ast.Node) *ast.Node {
+	annotation := l.checkedPredicateClaimNode(declaration)
+	if annotation == nil {
+		return nil
+	}
+	name := annotation.AsTypePredicateNode().ParameterName
+	if name == nil || name.Kind != ast.KindIdentifier {
+		return nil
+	}
+	parameters := declaration.Parameters()
+	if annotation != declaration.Type() {
+		index := -1
+		for position, written := range annotation.Parent.Parameters() {
+			if written.Name() != nil && written.Name().Kind == ast.KindIdentifier && written.Name().Text() == name.Text() {
+				index = position
+			}
+		}
+		if index < 0 || index >= len(parameters) {
+			return nil
+		}
+		parameters = parameters[index : index+1]
+		name = parameters[0].Name()
+		if name == nil || name.Kind != ast.KindIdentifier {
+			return nil
+		}
+	}
+	for _, parameter := range parameters {
+		// A default replaces an undefined argument before the body runs, so the local the check
+		// would read isn't the value the caller narrows (Lower, on #1w5bve2): such a claim stays refused.
+		if parameter.Name() != nil && parameter.Name().Kind == ast.KindIdentifier && parameter.Name().Text() == name.Text() && parameter.AsParameterDeclaration().DotDotDotToken == nil && parameter.Initializer() == nil {
+			return parameter
+		}
+	}
+	return nil
+}
+
+// checkedPredicateReturn is a return of value from function, which, when function is a checked
+// closure, checks the claim's true side before it returns: a lying true stops with the located
+// message. The false side is the walk's (#1761dah), as for a predicate's value (#vdt9f1q).
+func (l *lowering) checkedPredicateReturn(function, site *ast.Node, value ir.Expression) ([]ir.Statement, error) {
+	if !l.checkedPredicateClosure(function) {
+		return []ir.Statement{ir.Return{Value: value}}, nil
+	}
+	if value.Type() != ir.Boolean {
+		return nil, l.notYet(site, "a checked predicate with a non-boolean result")
+	}
+	parameter := l.checkedPredicateClaimed(function)
+	local, isLocal := l.locals[l.symbol(parameter.Name())]
+	if !isLocal {
+		return nil, l.notYet(site, "a checked predicate whose parameter isn't a local")
+	}
+	target := l.checker.GetTypeAtLocation(l.checkedPredicateClaimNode(function).AsTypePredicateNode().Type)
+	source := l.checker.GetTypeAtLocation(parameter.Name())
+	name := "an arrow"
+	if function.Kind == ast.KindFunctionExpression {
+		name = "a function expression"
+	}
+	if holder := function.Parent; holder != nil && holder.Kind == ast.KindVariableDeclaration && holder.Name() != nil && holder.Name().Kind == ast.KindIdentifier {
+		name = holder.Name().Text()
+	}
+	where := l.program.Where(function)
+	sourceName, targetName := l.checker.TypeToString(source), l.checker.TypeToString(target)
+	add := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: l.functionIndex})
+		return index
+	}
+	held := add("result", ir.Boolean)
+	result := ir.Read{Local: held, Of: ir.Boolean}
+	check, err := l.checkedPredicateCheck(site, function, ir.Read{Local: local, Of: l.result.Locals[local].Type}, source, target, result, false, add, func(branch string) string {
+		return fmt.Sprintf("predicate %s, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, err
+	}
+	statements := append([]ir.Statement{ir.Declare{Local: held, Value: value}}, check...)
+	return append(statements, ir.Return{Value: result}), nil
+}

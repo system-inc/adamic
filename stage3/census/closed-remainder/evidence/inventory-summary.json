@@ -1,0 +1,24 @@
+{
+  "inventory_source": "481552841c9b5e1496fc6237da10501b707178d0",
+  "distinct_sites": 48,
+  "retained_units": 48,
+  "historical_first_stops": 48,
+  "raw_occurrences": 50,
+  "pair_raw_findings": 48,
+  "raw_owners": 50,
+  "dedup_difference_from_pair": "none",
+  "pair_first_stop_changes": 37,
+  "pair_destinations": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 34
+  },
+  "ordinary_priority_changes": 24,
+  "ordinary_priority_destinations": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 21
+  },
+  "whole_entry_pair_first_stop_changes": 39,
+  "whole_entry_ordinary_priority_changes": 25
+}

@@ -1,0 +1,1511 @@
+[
+  {
+    "unit": "src/compiler/utilitiesPublic.ts:629:1",
+    "name": "isEmptyBindingElement",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:629:1",
+        "where": "src/compiler/utilitiesPublic.ts:630:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilitiesPublic.ts:629:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilitiesPublic.ts:629:1",
+      "where": "src/compiler/utilitiesPublic.ts:630:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilitiesPublic.ts:629:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilitiesPublic.ts:636:1",
+    "name": "walkUpBindingElementsAndPatterns",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:636:1",
+        "where": "src/compiler/utilitiesPublic.ts:638:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilitiesPublic.ts:636:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilitiesPublic.ts:636:1",
+      "where": "src/compiler/utilitiesPublic.ts:638:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilitiesPublic.ts:636:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+    "name": "isOptionalChainRoot",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+        "where": "src/compiler/utilitiesPublic.ts:1391:38"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": null,
+      "passes": [
+        "checkOverloadResults",
+        "forwarderValues",
+        "finishClassCalls",
+        "finishAccessors",
+        "finishToPrimitive",
+        "checkIterableViews",
+        "exceptions",
+        "checkLibrarySpreads",
+        "checkAccessorSpreads",
+        "checkRecordGuardedReads",
+        "checkDynamicKeyedGetters",
+        "checkGeneratorRoads",
+        "NormalizeAsync",
+        "asyncEntrySource",
+        "checkBoundArguments",
+        "checkViewOptionalWrites",
+        "checkViewCopies",
+        "checkViewWidenedReads",
+        "checkHostMemberWrites",
+        "asyncPayloadFailures",
+        "checkPromiseConsumption",
+        "checkViewLogicalWrites",
+        "readiness",
+        "borrow",
+        "counters",
+        "voidDiscards"
+      ]
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+      "where": "src/compiler/utilitiesPublic.ts:1391:38"
+    },
+    "head": null
+  },
+  {
+    "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+    "name": "isRestParameter",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+        "where": "src/compiler/utilitiesPublic.ts:2639:18"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "whole_pass:checkViewWidenedReads",
+        "reason": "a read of field type through type JSDocTypeExpression, which may hold a checked view's value",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:2639:70: stage 0 can't lower a read of field type through type JSDocTypeExpression, which may hold a checked view's value yet",
+        "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+        "where": "src/compiler/utilitiesPublic.ts:2639:70"
+      },
+      "passes": [
+        "checkOverloadResults",
+        "forwarderValues",
+        "finishClassCalls",
+        "finishAccessors",
+        "finishToPrimitive",
+        "checkIterableViews",
+        "exceptions",
+        "checkLibrarySpreads",
+        "checkAccessorSpreads",
+        "checkRecordGuardedReads",
+        "checkDynamicKeyedGetters",
+        "checkGeneratorRoads",
+        "NormalizeAsync",
+        "asyncEntrySource",
+        "checkBoundArguments",
+        "checkViewOptionalWrites",
+        "checkViewCopies",
+        "checkViewWidenedReads"
+      ]
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+      "where": "src/compiler/utilitiesPublic.ts:2639:18"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "whole_pass:checkViewWidenedReads",
+      "reason": "a read of field type through type JSDocTypeExpression, which may hold a checked view's value",
+      "root_kind": "",
+      "text": "src/compiler/utilitiesPublic.ts:2639:70: stage 0 can't lower a read of field type through type JSDocTypeExpression, which may hold a checked view's value yet",
+      "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+      "where": "src/compiler/utilitiesPublic.ts:2639:70"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:2388:1",
+    "name": "entityNameToString",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:2398:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:2388:1",
+        "where": "src/compiler/utilities.ts:2398:17"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:2388:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:2398:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:2388:1",
+      "where": "src/compiler/utilities.ts:2398:17"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:2388:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4176:1",
+    "name": "getAssignmentDeclarationKindWorker",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4177:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4176:1",
+        "where": "src/compiler/utilities.ts:4177:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target BindableObjectDefinePropertyCall",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4117:1: stage 0 can't lower checked predicate overload target BindableObjectDefinePropertyCall yet",
+        "unit": "src/compiler/utilities.ts:4176:1",
+        "where": "src/compiler/utilities.ts:4117:1"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4177:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:4176:1",
+      "where": "src/compiler/utilities.ts:4177:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate overload target BindableObjectDefinePropertyCall",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4117:1: stage 0 can't lower checked predicate overload target BindableObjectDefinePropertyCall yet",
+      "unit": "src/compiler/utilities.ts:4176:1",
+      "where": "src/compiler/utilities.ts:4117:1"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4210:1",
+    "name": "getElementOrPropertyAccessArgumentExpressionOrName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4211:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4210:1",
+        "where": "src/compiler/utilities.ts:4211:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:4210:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4211:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:4210:1",
+      "where": "src/compiler/utilities.ts:4211:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:4210:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4222:1",
+    "name": "getElementOrPropertyAccessName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4222:1",
+        "where": "src/compiler/utilities.ts:4229:13"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:4222:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:4222:1",
+      "where": "src/compiler/utilities.ts:4229:13"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:4222:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4224:1",
+    "name": "getElementOrPropertyAccessName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4224:1",
+        "where": "src/compiler/utilities.ts:4229:13"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:4224:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:4224:1",
+      "where": "src/compiler/utilities.ts:4229:13"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:4224:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:4297:1",
+    "name": "isSpecialPropertyDeclaration",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4300:11: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4297:1",
+        "where": "src/compiler/utilities.ts:4300:11"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:4297:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:4300:11: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:4297:1",
+      "where": "src/compiler/utilities.ts:4300:11"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:4297:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:5182:1",
+    "name": "getExportAssignmentExpression",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5183:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5182:1",
+        "where": "src/compiler/utilities.ts:5183:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": null,
+      "passes": [
+        "checkOverloadResults",
+        "forwarderValues",
+        "finishClassCalls",
+        "finishAccessors",
+        "finishToPrimitive",
+        "checkIterableViews",
+        "exceptions",
+        "checkLibrarySpreads",
+        "checkAccessorSpreads",
+        "checkRecordGuardedReads",
+        "checkDynamicKeyedGetters",
+        "checkGeneratorRoads",
+        "NormalizeAsync",
+        "asyncEntrySource",
+        "checkBoundArguments",
+        "checkViewOptionalWrites",
+        "checkViewCopies",
+        "checkViewWidenedReads",
+        "checkHostMemberWrites",
+        "asyncPayloadFailures",
+        "checkPromiseConsumption",
+        "checkViewLogicalWrites",
+        "readiness",
+        "borrow",
+        "counters",
+        "voidDiscards"
+      ]
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:5183:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:5182:1",
+      "where": "src/compiler/utilities.ts:5183:12"
+    },
+    "head": null
+  },
+  {
+    "unit": "src/compiler/utilities.ts:5385:1",
+    "name": "isDynamicName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5389:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5385:1",
+        "where": "src/compiler/utilities.ts:5389:18"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:5385:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:5389:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:5385:1",
+      "where": "src/compiler/utilities.ts:5389:18"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:5385:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:5467:1",
+    "name": "isProtoSetter",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5468:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5467:1",
+        "where": "src/compiler/utilities.ts:5468:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:5467:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:5468:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:5467:1",
+      "where": "src/compiler/utilities.ts:5468:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:5467:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:6147:1",
+    "name": "hasInvalidEscape",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6148:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6147:1",
+        "where": "src/compiler/utilities.ts:6148:27"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": null,
+      "passes": [
+        "checkOverloadResults",
+        "forwarderValues",
+        "finishClassCalls",
+        "finishAccessors",
+        "finishToPrimitive",
+        "checkIterableViews",
+        "exceptions",
+        "checkLibrarySpreads",
+        "checkAccessorSpreads",
+        "checkRecordGuardedReads",
+        "checkDynamicKeyedGetters",
+        "checkGeneratorRoads",
+        "NormalizeAsync",
+        "asyncEntrySource",
+        "checkBoundArguments",
+        "checkViewOptionalWrites",
+        "checkViewCopies",
+        "checkViewWidenedReads",
+        "checkHostMemberWrites",
+        "asyncPayloadFailures",
+        "checkPromiseConsumption",
+        "checkViewLogicalWrites",
+        "readiness",
+        "borrow",
+        "counters",
+        "voidDiscards"
+      ]
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:6148:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:6147:1",
+      "where": "src/compiler/utilities.ts:6148:27"
+    },
+    "head": null
+  },
+  {
+    "unit": "src/compiler/utilities.ts:6780:1",
+    "name": "getThisParameter",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6782:41: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6780:1",
+        "where": "src/compiler/utilities.ts:6782:41"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:6780:1",
+        "where": "src/compiler/binder.ts:2258:13"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:6782:41: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:6780:1",
+      "where": "src/compiler/utilities.ts:6782:41"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:6780:1",
+      "where": "src/compiler/binder.ts:2258:13"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:11128:1",
+    "name": "getEscapedTextOfJsxAttributeName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11129:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11128:1",
+        "where": "src/compiler/utilities.ts:11129:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:11128:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:11129:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:11128:1",
+      "where": "src/compiler/utilities.ts:11129:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:11128:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:11133:1",
+    "name": "getTextOfJsxAttributeName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11134:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11133:1",
+        "where": "src/compiler/utilities.ts:11134:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:11133:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:11134:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:11133:1",
+      "where": "src/compiler/utilities.ts:11134:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:11133:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:11155:1",
+    "name": "intrinsicTagNameToString",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11156:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11155:1",
+        "where": "src/compiler/utilities.ts:11156:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:11155:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:11156:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:11155:1",
+      "where": "src/compiler/utilities.ts:11156:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:11155:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/utilities.ts:11206:1",
+    "name": "getNameFromImportAttribute",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11207:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11206:1",
+        "where": "src/compiler/utilities.ts:11207:12"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/utilities.ts:11206:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/utilities.ts:11207:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/utilities.ts:11206:1",
+      "where": "src/compiler/utilities.ts:11207:12"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/utilities.ts:11206:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/factory/utilities.ts:1092:1",
+    "name": "getJSDocTypeAliasName",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1096:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1092:1",
+        "where": "src/compiler/factory/utilities.ts:1096:17"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/factory/utilities.ts:1092:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/factory/utilities.ts:1096:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/factory/utilities.ts:1092:1",
+      "where": "src/compiler/factory/utilities.ts:1096:17"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/factory/utilities.ts:1092:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/factory/utilities.ts:1570:1",
+    "name": "formatIdentifierWorker",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1570:1",
+        "where": "src/compiler/factory/utilities.ts:1573:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/factory/utilities.ts:1570:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/factory/utilities.ts:1570:1",
+      "where": "src/compiler/factory/utilities.ts:1573:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/factory/utilities.ts:1570:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/visitorPublic.ts:436:1",
+    "name": "addDefaultValueAssignmentIfNeeded",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/visitorPublic.ts:436:1",
+        "where": "src/compiler/visitorPublic.ts:440:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/visitorPublic.ts:436:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/visitorPublic.ts:436:1",
+      "where": "src/compiler/visitorPublic.ts:440:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/visitorPublic.ts:436:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/transformers/destructuring.ts:522:1",
+    "name": "isSimpleBindingOrAssignmentElement",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:522:1",
+        "where": "src/compiler/transformers/destructuring.ts:524:20"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/transformers/destructuring.ts:522:1",
+        "where": "src/compiler/binder.ts:1109:17"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/transformers/destructuring.ts:522:1",
+      "where": "src/compiler/transformers/destructuring.ts:524:20"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/transformers/destructuring.ts:522:1",
+      "where": "src/compiler/binder.ts:1109:17"
+    }
+  },
+  {
+    "unit": "src/compiler/transformer.ts:202:1",
+    "name": "wrapCustomTransformer",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformer.ts:203:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformer.ts:202:1",
+        "where": "src/compiler/transformer.ts:203:20"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "src/compiler/factory/nodeFactory.ts:6111:21: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "src/compiler/transformer.ts:202:1",
+        "where": "src/compiler/factory/nodeFactory.ts:6111:21"
+      },
+      "passes": []
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/transformer.ts:203:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/transformer.ts:202:1",
+      "where": "src/compiler/transformer.ts:203:20"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "root_kind": "",
+      "text": "src/compiler/factory/nodeFactory.ts:6111:21: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+      "unit": "src/compiler/transformer.ts:202:1",
+      "where": "src/compiler/factory/nodeFactory.ts:6111:21"
+    }
+  },
+  {
+    "unit": "src/compiler/program.ts:885:1",
+    "name": "isExclusivelyTypeOnlyImportOrExport",
+    "body_base": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/program.ts:885:1",
+        "where": "src/compiler/program.ts:886:9"
+      },
+      "passes": []
+    },
+    "body_head": {
+      "status": "attempted",
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "whole_pass:checkViewWidenedReads",
+        "reason": "a read of field isTypeOnly through type ImportClause, which may hold a checked view's value",
+        "root_kind": "",
+        "text": "src/compiler/program.ts:889:9: stage 0 can't lower a read of field isTypeOnly through type ImportClause, which may hold a checked view's value yet",
+        "unit": "src/compiler/program.ts:885:1",
+        "where": "src/compiler/program.ts:889:9"
+      },
+      "passes": [
+        "checkOverloadResults",
+        "forwarderValues",
+        "finishClassCalls",
+        "finishAccessors",
+        "finishToPrimitive",
+        "checkIterableViews",
+        "exceptions",
+        "checkLibrarySpreads",
+        "checkAccessorSpreads",
+        "checkRecordGuardedReads",
+        "checkDynamicKeyedGetters",
+        "checkGeneratorRoads",
+        "NormalizeAsync",
+        "asyncEntrySource",
+        "checkBoundArguments",
+        "checkViewOptionalWrites",
+        "checkViewCopies",
+        "checkViewWidenedReads"
+      ]
+    },
+    "base_scans": [],
+    "head_scans": [],
+    "base": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "checked predicate membership over an open tag domain",
+      "root_kind": "",
+      "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+      "unit": "src/compiler/program.ts:885:1",
+      "where": "src/compiler/program.ts:886:9"
+    },
+    "head": {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "whole_pass:checkViewWidenedReads",
+      "reason": "a read of field isTypeOnly through type ImportClause, which may hold a checked view's value",
+      "root_kind": "",
+      "text": "src/compiler/program.ts:889:9: stage 0 can't lower a read of field isTypeOnly through type ImportClause, which may hold a checked view's value yet",
+      "unit": "src/compiler/program.ts:885:1",
+      "where": "src/compiler/program.ts:889:9"
+    }
+  }
+]

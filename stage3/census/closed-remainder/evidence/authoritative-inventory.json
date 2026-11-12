@@ -1,0 +1,2522 @@
+{
+  "source_branch": "typescript/overload-proof-census",
+  "source_commit": "481552841c9b5e1496fc6237da10501b707178d0",
+  "source_files": [
+    {
+      "path": "shard-0.jsonl.gz",
+      "sha256": "e2c12f7a3934deeb383ddf14b84cda65e54ebed62aa095cf1808c4a9ba05b61c"
+    },
+    {
+      "path": "shard-1.jsonl.gz",
+      "sha256": "b0f1eb44498bf3e4d115b82817aa88c51166e34f690f49cf74f8feb37a0163eb"
+    },
+    {
+      "path": "shard-2.jsonl.gz",
+      "sha256": "cfe5f0bdf47a7f67f733a569e97029ddaa44ff0fff101f4354aa33de378befad"
+    },
+    {
+      "path": "shard-3.jsonl.gz",
+      "sha256": "d8bc3551bb88413ee7a16c6fbdb85a0d556aa2264604af51989a018ce106810c"
+    },
+    {
+      "path": "shard-4.jsonl.gz",
+      "sha256": "2883ca79ef310ff58b02e6c247066cfa705f65ca4d4edd58c48ddcb2dff839cb"
+    },
+    {
+      "path": "shard-5.jsonl.gz",
+      "sha256": "1211973ff603009ea1b670e7842bd72fee3832d1bee6555575bbd1529845c113"
+    },
+    {
+      "path": "shard-6.jsonl.gz",
+      "sha256": "2144b655b9ce2fb1dfdfea2b5ebe7b106fd7c893466390240b1d883d9b00745c"
+    },
+    {
+      "path": "shard-7.jsonl.gz",
+      "sha256": "d729696afa7f8939e064a4dc58e30f77430425d56ed7881dd3793c3321f43a5b"
+    }
+  ],
+  "key_definition": "((source path, source SHA-256, outermost contiguous access-chain UTF-8 byte offset), exact reason); first representative in archived merge order wins",
+  "first_stop_definition": "pair: first lowering/deferred finding whose unit exists; ordinary scan findings excluded",
+  "raw_occurrences": 50,
+  "raw_owner_units": 50,
+  "distinct_findings": 48,
+  "retained_units": 48,
+  "retained_first_stops": 48,
+  "dedup_difference_from_pair": "none",
+  "relevant_source_hashes_match": true,
+  "sites": [
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23861
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:619:1",
+        "where": "src/compiler/utilitiesPublic.ts:620:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        23769
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:619:1",
+        "where": "src/compiler/utilitiesPublic.ts:620:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:619:1",
+          "where": "src/compiler/utilitiesPublic.ts:620:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24351
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:629:1",
+        "where": "src/compiler/utilitiesPublic.ts:630:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        24249
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:629:1",
+        "where": "src/compiler/utilitiesPublic.ts:630:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:629:1",
+          "where": "src/compiler/utilitiesPublic.ts:630:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24625
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:636:1",
+        "where": "src/compiler/utilitiesPublic.ts:638:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        24461
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:636:1",
+        "where": "src/compiler/utilitiesPublic.ts:638:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:636:1",
+          "where": "src/compiler/utilitiesPublic.ts:638:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36332
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:925:1",
+        "where": "src/compiler/utilitiesPublic.ts:927:20"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        36174
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:925:1",
+        "where": "src/compiler/utilitiesPublic.ts:927:20"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:925:1",
+          "where": "src/compiler/utilitiesPublic.ts:927:20"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41226
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1036:1",
+        "where": "src/compiler/utilitiesPublic.ts:1038:13"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        41073
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1036:1",
+        "where": "src/compiler/utilitiesPublic.ts:1038:13"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:1036:1",
+          "where": "src/compiler/utilitiesPublic.ts:1038:13"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          53259
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1319:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1318:1",
+        "where": "src/compiler/utilitiesPublic.ts:1319:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        53120
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1319:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1318:1",
+        "where": "src/compiler/utilitiesPublic.ts:1319:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:1319:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:1318:1",
+          "where": "src/compiler/utilitiesPublic.ts:1319:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          56128
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+        "where": "src/compiler/utilitiesPublic.ts:1391:38"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        56013
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+        "where": "src/compiler/utilitiesPublic.ts:1391:38"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:1391:38: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:1390:1",
+          "where": "src/compiler/utilitiesPublic.ts:1391:38"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102778
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+        "where": "src/compiler/utilitiesPublic.ts:2639:18"
+      },
+      "unit_identity": [
+        "src/compiler/utilitiesPublic.ts",
+        "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+        102669
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+        "where": "src/compiler/utilitiesPublic.ts:2639:18"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+          "where": "src/compiler/utilitiesPublic.ts:2639:18"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          82101
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:2398:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:2388:1",
+        "where": "src/compiler/utilities.ts:2398:17"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        81501
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:2398:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:2388:1",
+        "where": "src/compiler/utilities.ts:2398:17"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:2398:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:2388:1",
+          "where": "src/compiler/utilities.ts:2398:17"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          161973
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4177:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4176:1",
+        "where": "src/compiler/utilities.ts:4177:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        161850
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4177:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4176:1",
+        "where": "src/compiler/utilities.ts:4177:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4177:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4176:1",
+          "where": "src/compiler/utilities.ts:4177:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          163846
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4211:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4210:1",
+        "where": "src/compiler/utilities.ts:4211:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        163637
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4211:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4210:1",
+        "where": "src/compiler/utilities.ts:4211:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4211:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4210:1",
+          "where": "src/compiler/utilities.ts:4211:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          164567
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4222:1",
+        "where": "src/compiler/utilities.ts:4229:13"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        164107
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4222:1",
+        "where": "src/compiler/utilities.ts:4229:13"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4222:1",
+          "where": "src/compiler/utilities.ts:4229:13"
+        },
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4224:1",
+          "where": "src/compiler/utilities.ts:4229:13"
+        },
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4229:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4226:1",
+          "where": "src/compiler/utilities.ts:4229:13"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          167474
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4300:11: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4297:1",
+        "where": "src/compiler/utilities.ts:4300:11"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        167176
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4300:11: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4297:1",
+        "where": "src/compiler/utilities.ts:4300:11"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4300:11: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4297:1",
+          "where": "src/compiler/utilities.ts:4300:11"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          186855
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4752:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4748:1",
+        "where": "src/compiler/utilities.ts:4752:10"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        186694
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:4752:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:4748:1",
+        "where": "src/compiler/utilities.ts:4752:10"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:4752:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:4748:1",
+          "where": "src/compiler/utilities.ts:4752:10"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          203259
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5183:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5182:1",
+        "where": "src/compiler/utilities.ts:5183:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        203144
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5183:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5182:1",
+        "where": "src/compiler/utilities.ts:5183:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:5183:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:5182:1",
+          "where": "src/compiler/utilities.ts:5183:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          211099
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5389:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5385:1",
+        "where": "src/compiler/utilities.ts:5389:18"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        210874
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5389:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5385:1",
+        "where": "src/compiler/utilities.ts:5389:18"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:5389:18: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:5385:1",
+          "where": "src/compiler/utilities.ts:5389:18"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          213124
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5438:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5437:1",
+        "where": "src/compiler/utilities.ts:5438:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        213010
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5438:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5437:1",
+        "where": "src/compiler/utilities.ts:5438:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:5438:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:5437:1",
+          "where": "src/compiler/utilities.ts:5438:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          213361
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5443:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5442:1",
+        "where": "src/compiler/utilities.ts:5443:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        213258
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5443:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5442:1",
+        "where": "src/compiler/utilities.ts:5443:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:5443:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:5442:1",
+          "where": "src/compiler/utilities.ts:5443:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          214369
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5468:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5467:1",
+        "where": "src/compiler/utilities.ts:5468:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        214312
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:5468:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:5467:1",
+        "where": "src/compiler/utilities.ts:5468:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:5468:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:5467:1",
+          "where": "src/compiler/utilities.ts:5468:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          241599
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6148:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6147:1",
+        "where": "src/compiler/utilities.ts:6148:27"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        241501
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6148:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6147:1",
+        "where": "src/compiler/utilities.ts:6148:27"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:6148:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:6147:1",
+          "where": "src/compiler/utilities.ts:6148:27"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          267719
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6782:41: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6780:1",
+        "where": "src/compiler/utilities.ts:6782:41"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        267496
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6782:41: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6780:1",
+        "where": "src/compiler/utilities.ts:6782:41"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:6782:41: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:6780:1",
+          "where": "src/compiler/utilities.ts:6782:41"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          272271
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6910:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6909:1",
+        "where": "src/compiler/utilities.ts:6910:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        272147
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:6910:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:6909:1",
+        "where": "src/compiler/utilities.ts:6910:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:6910:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:6909:1",
+          "where": "src/compiler/utilities.ts:6910:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          298194
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:7539:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:7538:1",
+        "where": "src/compiler/utilities.ts:7539:9"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        298065
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:7539:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:7538:1",
+        "where": "src/compiler/utilities.ts:7539:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:7539:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:7538:1",
+          "where": "src/compiler/utilities.ts:7539:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          447891
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11129:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11128:1",
+        "where": "src/compiler/utilities.ts:11129:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        447794
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11129:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11128:1",
+        "where": "src/compiler/utilities.ts:11129:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:11129:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:11128:1",
+          "where": "src/compiler/utilities.ts:11129:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          448084
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11134:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11133:1",
+        "where": "src/compiler/utilities.ts:11134:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        447996
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11134:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11133:1",
+        "where": "src/compiler/utilities.ts:11134:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:11134:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:11133:1",
+          "where": "src/compiler/utilities.ts:11134:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          448846
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11156:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11155:1",
+        "where": "src/compiler/utilities.ts:11156:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        448745
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11156:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11155:1",
+        "where": "src/compiler/utilities.ts:11156:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:11156:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:11155:1",
+          "where": "src/compiler/utilities.ts:11156:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          451096
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11207:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11206:1",
+        "where": "src/compiler/utilities.ts:11207:12"
+      },
+      "unit_identity": [
+        "src/compiler/utilities.ts",
+        "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+        451006
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/utilities.ts:11207:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/utilities.ts:11206:1",
+        "where": "src/compiler/utilities.ts:11207:12"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/utilities.ts:11207:12: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/utilities.ts:11206:1",
+          "where": "src/compiler/utilities.ts:11207:12"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/nodeConverters.ts",
+          "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+          1552
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+        "where": "src/compiler/factory/nodeConverters.ts:55:13"
+      },
+      "unit_identity": [
+        "src/compiler/factory/nodeConverters.ts",
+        "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+        996
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+        "where": "src/compiler/factory/nodeConverters.ts:55:13"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/nodeConverters.ts:55:13: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+          "where": "src/compiler/factory/nodeConverters.ts:55:13"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/nodeFactory.ts",
+          "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+          326390
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/nodeFactory.ts:7287:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/nodeFactory.ts:7286:1",
+        "where": "src/compiler/factory/nodeFactory.ts:7287:20"
+      },
+      "unit_identity": [
+        "src/compiler/factory/nodeFactory.ts",
+        "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+        326259
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/nodeFactory.ts:7287:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/nodeFactory.ts:7286:1",
+        "where": "src/compiler/factory/nodeFactory.ts:7287:20"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/nodeFactory.ts:7287:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/nodeFactory.ts:7286:1",
+          "where": "src/compiler/factory/nodeFactory.ts:7287:20"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          5266
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:189:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:188:1",
+        "where": "src/compiler/factory/utilities.ts:189:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        5087
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:189:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:188:1",
+        "where": "src/compiler/factory/utilities.ts:189:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:189:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:188:1",
+          "where": "src/compiler/factory/utilities.ts:189:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          6603
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:216:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:215:1",
+        "where": "src/compiler/factory/utilities.ts:216:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        6432
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:216:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:215:1",
+        "where": "src/compiler/factory/utilities.ts:216:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:216:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:215:1",
+          "where": "src/compiler/factory/utilities.ts:216:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          10285
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:310:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:309:1",
+        "where": "src/compiler/factory/utilities.ts:310:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        10151
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:310:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:309:1",
+        "where": "src/compiler/factory/utilities.ts:310:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:310:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:309:1",
+          "where": "src/compiler/factory/utilities.ts:310:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          11283
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:335:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:334:1",
+        "where": "src/compiler/factory/utilities.ts:335:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        11160
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:335:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:334:1",
+        "where": "src/compiler/factory/utilities.ts:335:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:335:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:334:1",
+          "where": "src/compiler/factory/utilities.ts:335:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          11981
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:349:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:348:1",
+        "where": "src/compiler/factory/utilities.ts:349:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        11834
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:349:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:348:1",
+        "where": "src/compiler/factory/utilities.ts:349:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:349:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:348:1",
+          "where": "src/compiler/factory/utilities.ts:349:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          17137
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:466:26: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:465:1",
+        "where": "src/compiler/factory/utilities.ts:466:26"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        16914
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:466:26: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:465:1",
+        "where": "src/compiler/factory/utilities.ts:466:26"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:466:26: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:465:1",
+          "where": "src/compiler/factory/utilities.ts:466:26"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          42018
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1024:21: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1015:1",
+        "where": "src/compiler/factory/utilities.ts:1024:21"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        41458
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1024:21: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1015:1",
+        "where": "src/compiler/factory/utilities.ts:1024:21"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:1024:21: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:1015:1",
+          "where": "src/compiler/factory/utilities.ts:1024:21"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          44665
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1096:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1092:1",
+        "where": "src/compiler/factory/utilities.ts:1096:17"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        44462
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1096:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1092:1",
+        "where": "src/compiler/factory/utilities.ts:1096:17"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:1096:17: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:1092:1",
+          "where": "src/compiler/factory/utilities.ts:1096:17"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          68893
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1570:1",
+        "where": "src/compiler/factory/utilities.ts:1573:9"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        68591
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1570:1",
+        "where": "src/compiler/factory/utilities.ts:1573:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:1573:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:1570:1",
+          "where": "src/compiler/factory/utilities.ts:1573:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/factory/utilities.ts",
+          "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+          76234
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1746:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1739:1",
+        "where": "src/compiler/factory/utilities.ts:1746:27"
+      },
+      "unit_identity": [
+        "src/compiler/factory/utilities.ts",
+        "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+        75659
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/factory/utilities.ts:1746:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/factory/utilities.ts:1739:1",
+        "where": "src/compiler/factory/utilities.ts:1746:27"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/factory/utilities.ts:1746:27: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/factory/utilities.ts:1739:1",
+          "where": "src/compiler/factory/utilities.ts:1746:27"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/visitorPublic.ts",
+          "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+          16816
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/visitorPublic.ts:436:1",
+        "where": "src/compiler/visitorPublic.ts:440:9"
+      },
+      "unit_identity": [
+        "src/compiler/visitorPublic.ts",
+        "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+        16539
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/visitorPublic.ts:436:1",
+        "where": "src/compiler/visitorPublic.ts:440:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/visitorPublic.ts:436:1",
+          "where": "src/compiler/visitorPublic.ts:440:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformers/utilities.ts",
+          "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+          15478
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/utilities.ts:356:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/utilities.ts:355:1",
+        "where": "src/compiler/transformers/utilities.ts:356:9"
+      },
+      "unit_identity": [
+        "src/compiler/transformers/utilities.ts",
+        "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+        15268
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/utilities.ts:356:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/utilities.ts:355:1",
+        "where": "src/compiler/transformers/utilities.ts:356:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformers/utilities.ts:356:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformers/utilities.ts:355:1",
+          "where": "src/compiler/transformers/utilities.ts:356:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformers/destructuring.ts",
+          "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+          8059
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:202:14: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:197:1",
+        "where": "src/compiler/transformers/destructuring.ts:202:14"
+      },
+      "unit_identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        7704
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:202:14: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:197:1",
+        "where": "src/compiler/transformers/destructuring.ts:202:14"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformers/destructuring.ts:202:14: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformers/destructuring.ts:197:1",
+          "where": "src/compiler/transformers/destructuring.ts:202:14"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformers/destructuring.ts",
+          "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+          25262
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:522:1",
+        "where": "src/compiler/transformers/destructuring.ts:524:20"
+      },
+      "unit_identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        25082
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:522:1",
+        "where": "src/compiler/transformers/destructuring.ts:524:20"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformers/destructuring.ts:522:1",
+          "where": "src/compiler/transformers/destructuring.ts:524:20"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformers/destructuring.ts",
+          "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+          27307
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:558:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:556:1",
+        "where": "src/compiler/transformers/destructuring.ts:558:9"
+      },
+      "unit_identity": [
+        "src/compiler/transformers/destructuring.ts",
+        "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        27101
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/destructuring.ts:558:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/destructuring.ts:556:1",
+        "where": "src/compiler/transformers/destructuring.ts:558:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformers/destructuring.ts:558:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformers/destructuring.ts:556:1",
+          "where": "src/compiler/transformers/destructuring.ts:558:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformers/namedEvaluation.ts",
+          "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+          2276
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/namedEvaluation.ts:74:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/namedEvaluation.ts:67:1",
+        "where": "src/compiler/transformers/namedEvaluation.ts:74:9"
+      },
+      "unit_identity": [
+        "src/compiler/transformers/namedEvaluation.ts",
+        "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+        1933
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformers/namedEvaluation.ts:74:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformers/namedEvaluation.ts:67:1",
+        "where": "src/compiler/transformers/namedEvaluation.ts:74:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformers/namedEvaluation.ts:74:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformers/namedEvaluation.ts:67:1",
+          "where": "src/compiler/transformers/namedEvaluation.ts:74:9"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/transformer.ts",
+          "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3",
+          6322
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformer.ts:203:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformer.ts:202:1",
+        "where": "src/compiler/transformer.ts:203:20"
+      },
+      "unit_identity": [
+        "src/compiler/transformer.ts",
+        "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3",
+        6203
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/transformer.ts:203:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/transformer.ts:202:1",
+        "where": "src/compiler/transformer.ts:203:20"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/transformer.ts:203:20: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/transformer.ts:202:1",
+          "where": "src/compiler/transformer.ts:203:20"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/emitter.ts",
+          "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7",
+          30688
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/emitter.ts:836:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/emitter.ts:752:1",
+        "where": "src/compiler/emitter.ts:836:10"
+      },
+      "unit_identity": [
+        "src/compiler/emitter.ts",
+        "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7",
+        27065
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/emitter.ts:836:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/emitter.ts:752:1",
+        "where": "src/compiler/emitter.ts:836:10"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/emitter.ts:836:10: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/emitter.ts:752:1",
+          "where": "src/compiler/emitter.ts:836:10"
+        }
+      ]
+    },
+    {
+      "key": [
+        [
+          "src/compiler/program.ts",
+          "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+          35230
+        ],
+        "checked predicate membership over an open tag domain"
+      ],
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/program.ts:885:1",
+        "where": "src/compiler/program.ts:886:9"
+      },
+      "unit_identity": [
+        "src/compiler/program.ts",
+        "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+        35096
+      ],
+      "historical_first_stop": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate membership over an open tag domain",
+        "root_kind": "",
+        "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+        "unit": "src/compiler/program.ts:885:1",
+        "where": "src/compiler/program.ts:886:9"
+      },
+      "is_historical_first_stop": true,
+      "raw_occurrences": [
+        {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "phase": "lowering",
+          "reason": "checked predicate membership over an open tag domain",
+          "root_kind": "",
+          "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet",
+          "unit": "src/compiler/program.ts:885:1",
+          "where": "src/compiler/program.ts:886:9"
+        }
+      ]
+    }
+  ],
+  "reference_pair_raw_count": 48,
+  "reference_pair_distinct_count": 48,
+  "raw_findings": 48
+}

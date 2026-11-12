@@ -1,0 +1,50 @@
+{
+  "source_commit": "481552841c9b5e1496fc6237da10501b707178d0",
+  "exact_git_object_bytes": true,
+  "files": [
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-0.jsonl.gz",
+      "sha256": "e2c12f7a3934deeb383ddf14b84cda65e54ebed62aa095cf1808c4a9ba05b61c",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-1.jsonl.gz",
+      "sha256": "b0f1eb44498bf3e4d115b82817aa88c51166e34f690f49cf74f8feb37a0163eb",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-2.jsonl.gz",
+      "sha256": "cfe5f0bdf47a7f67f733a569e97029ddaa44ff0fff101f4354aa33de378befad",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-3.jsonl.gz",
+      "sha256": "d8bc3551bb88413ee7a16c6fbdb85a0d556aa2264604af51989a018ce106810c",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-4.jsonl.gz",
+      "sha256": "2883ca79ef310ff58b02e6c247066cfa705f65ca4d4edd58c48ddcb2dff839cb",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-5.jsonl.gz",
+      "sha256": "1211973ff603009ea1b670e7842bd72fee3832d1bee6555575bbd1529845c113",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-6.jsonl.gz",
+      "sha256": "2144b655b9ce2fb1dfdfea2b5ebe7b106fd7c893466390240b1d883d9b00745c",
+      "child_exit_code": 0
+    },
+    {
+      "path": "stage3/census/overload-phantom-78933e52/head/shard-7.jsonl.gz",
+      "sha256": "d729696afa7f8939e064a4dc58e30f77430425d56ed7881dd3793c3321f43a5b",
+      "child_exit_code": 0
+    }
+  ],
+  "reference_code_blobs": {
+    "pair.py": "48fe968600376ff948868ecdfdf99d7472c40e74",
+    "normalize.cjs": "c85c11b7b1af2ad4ff9a148b88ef05c51606e313"
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "argv": [
+      "/workspace/adamic-tools/go/bin/go",
+      "version"
+    ],
+    "child_exit_code": 0,
+    "stdout": "go version go1.27.1 linux/amd64\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/workspace/adamic-tools/bin/node",
+      "--version"
+    ],
+    "child_exit_code": 0,
+    "stdout": "v24.19.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "--version"
+    ],
+    "child_exit_code": 0,
+    "stdout": "Python 3.12.14\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "--version"
+    ],
+    "child_exit_code": 0,
+    "stdout": "git version 2.52.0\n",
+    "stderr": ""
+  }
+]

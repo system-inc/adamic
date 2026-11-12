@@ -1,0 +1,79 @@
+{
+  "head": "efd9bff92ce62bc92463917c6b72882adf32280e",
+  "base": "4bba06cb2dc4a0046c11fc97e9953ec85ed0e638",
+  "prototype": "4cadb42b6f48af2e4a99f334da775f308ea88818",
+  "merged_tree": "9d9feff4b2e8d37287de934ed72a06557fdb98b1",
+  "binaries": {
+    "base": {
+      "sha256": "d331f2a921607ec2ce1ef471e96524debecd85d9fcf96b7bda89d4c5618c6e4e",
+      "bytes": 37174866
+    },
+    "head": {
+      "sha256": "b382bd78751b8c38475b42f293e9df68007c333b18c0f9be1f215c0675fb92c8",
+      "bytes": 37183290
+    },
+    "base-scan": {
+      "sha256": "9ea4ba00436f39dfca13d9e2da59c66eb7713c5eb145817ec9761966268cc3e2",
+      "bytes": 37174774
+    },
+    "head-scan": {
+      "sha256": "ffdcd8aae299e803f18631d083016ee516d36754c7ddae6521eb586fd3b6abf1",
+      "bytes": 37184006
+    },
+    "known": {
+      "sha256": "4958d1cf2d5ad6a7076462e611dcdee84bf6b03e8d2f0a390936236bdc5b00af",
+      "bytes": 36354100
+    },
+    "known-scan": {
+      "sha256": "8826a8184bea5f632fe1f58dbde2d5eabd2efe317fe720f3582eec6c1f11a57a",
+      "bytes": 36352904
+    }
+  },
+  "head_tree": "9d9feff4b2e8d37287de934ed72a06557fdb98b1",
+  "fetched_main": "3007955b6db96ae5f65cedb2e680d77ad1b88664",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "typescript_source": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "paired_mode": "first-error, scoped tail, independent ordinary scans",
+  "preflight_probe": "*l.latentSnapshot()",
+  "ordinary_scan_control": "partitioned by files intersecting the same unit ranges",
+  "changed_paths": [
+    "internal/lower/predicates_checked.go",
+    "internal/lower/predicates_closed_remainder_test.go"
+  ],
+  "primary_first_stop_order": [
+    "lowering",
+    "deferred (pair definition)"
+  ],
+  "primary_counts": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 34
+  },
+  "preflight_trace": {
+    "base": {
+      "events": 347,
+      "shared_result": 0
+    },
+    "head": {
+      "events": 347,
+      "shared_result": 0
+    }
+  },
+  "superseded_standalone_recovery_commit": "78933e52b0abd0da2fce91e73b4b71c1b36dc4e4",
+  "inventory_source_branch": "typescript/overload-proof-census",
+  "inventory_source_commit": "481552841c9b5e1496fc6237da10501b707178d0",
+  "inventory_source_path": "stage3/census/overload-phantom-78933e52/head/shard-[0-7].jsonl.gz",
+  "primary_unit_scope": "48 retained distinct-key representatives",
+  "primary_changed_units": 37,
+  "canonical_scan_priority_counts": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 21
+  },
+  "whole_entry_scan_priority_counts": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 22
+  }
+}

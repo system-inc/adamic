@@ -1,0 +1,40 @@
+[
+  {
+    "side": "base",
+    "range": "3610-4600",
+    "child_exit_code": null,
+    "excluded": true,
+    "reason": "Supervisor status unavailable after runtime reattachment; no exit code inferred.",
+    "relation_trailer_present": false,
+    "termination_signal_sent": "SIGTERM",
+    "pid": 11646
+  },
+  {
+    "side": "head",
+    "range": "3610-4600",
+    "child_exit_code": null,
+    "excluded": true,
+    "reason": "Supervisor status unavailable after runtime reattachment; no exit code inferred.",
+    "relation_trailer_present": false,
+    "termination_signal_sent": "SIGTERM",
+    "pid": 11640
+  },
+  {
+    "side": "known",
+    "range": "3610-4600",
+    "child_exit_code": null,
+    "excluded": true,
+    "reason": "Supervisor status unavailable after runtime reattachment; no exit code inferred.",
+    "relation_trailer_present": false,
+    "termination_signal_sent": "SIGTERM",
+    "pid": 11657
+  },
+  {
+    "side": "known",
+    "range": "3000",
+    "child_exit_code": null,
+    "excluded": true,
+    "reason": "Supervisor status unavailable after runtime reattachment; no exit code inferred.",
+    "relation_trailer_present": true
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "units": 4566,
+  "changed_first_stop_units": 39,
+  "changed_first_stop_counts": {
+    "elsewhere": 36,
+    "lowers": 3
+  },
+  "regressions": 0,
+  "new_panics": 0,
+  "status": [
+    {
+      "side": "base",
+      "argv": [
+        "/workspace/closed-tools/base-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 0,
+      "end": 1500,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 325.36025619199995,
+      "peak_rss_kib": 1096424
+    },
+    {
+      "side": "base",
+      "argv": [
+        "/workspace/closed-tools/base-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 1500,
+      "end": 3000,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 995.5654281779999,
+      "peak_rss_kib": 1555264
+    },
+    {
+      "side": "base",
+      "argv": [
+        "/workspace/closed-tools/base-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 3000,
+      "end": 4600,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 641.750020468,
+      "peak_rss_kib": 2011124
+    },
+    {
+      "side": "head",
+      "argv": [
+        "/workspace/closed-tools/head-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 0,
+      "end": 1500,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 326.38767025800007,
+      "peak_rss_kib": 1117340
+    },
+    {
+      "side": "head",
+      "argv": [
+        "/workspace/closed-tools/head-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 1500,
+      "end": 3000,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 1013.0223264529999,
+      "peak_rss_kib": 1560840
+    },
+    {
+      "side": "head",
+      "argv": [
+        "/workspace/closed-tools/head-census",
+        "/workspace/closed-adapted/src/tsc/tsc.ts"
+      ],
+      "start": 3000,
+      "end": 4600,
+      "mode": "prototype",
+      "skip_refusal_scan": true,
+      "child_exit_code": 0,
+      "deadline_expired": false,
+      "wall_seconds": 640.1221129039999,
+      "peak_rss_kib": 1954836
+    }
+  ]
+}

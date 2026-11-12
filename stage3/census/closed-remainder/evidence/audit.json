@@ -1,0 +1,45 @@
+{
+  "authoritative_successful_children": 12,
+  "statuses": [
+    "census/base/0/status.json",
+    "census/base/1500/status.json",
+    "census/base/3000/status.json",
+    "census/head/0/status.json",
+    "census/head/1500/status.json",
+    "census/head/3000/status.json",
+    "ordinary-scans/base/0/status.json",
+    "ordinary-scans/base/1500/status.json",
+    "ordinary-scans/base/3000/status.json",
+    "ordinary-scans/head/0/status.json",
+    "ordinary-scans/head/1500/status.json",
+    "ordinary-scans/head/3000/status.json"
+  ],
+  "unit_count": 4566,
+  "site_count": 48,
+  "owning_attempts": 48,
+  "regressions": 0,
+  "new_panics": 0,
+  "published_audits_reproduced": true,
+  "input_hashes_unchanged": true,
+  "go_evidence_names_valid": true,
+  "wrapper_exit7_verified": true,
+  "wrapper_child_sigterm_verified": true,
+  "optional_unknown_exit_runs_excluded": true,
+  "superseded_scan_priority_changed_units": 25,
+  "superseded_scan_priority_counts": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 22
+  },
+  "inventory_source": "481552841c9b5e1496fc6237da10501b707178d0",
+  "raw_owning_attempts": 50,
+  "historical_retained_first_stops": 48,
+  "primary_changed_first_stops": 37,
+  "primary_counts": {
+    "lowers": 3,
+    "kind_through_Node": 0,
+    "elsewhere": 34
+  },
+  "reference_pair_key_crosscheck": true,
+  "authoritative_shard_bytes_verified": true
+}

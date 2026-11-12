@@ -1,0 +1,46 @@
+package lower
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/system-inc/adamic/internal/ir"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+func lwp2Write(row any) {
+ f,e:=os.OpenFile(os.Getenv("LWP_TRACE"),os.O_CREATE|os.O_APPEND|os.O_WRONLY,0600);if e!=nil{panic(e)};defer f.Close();if e=json.NewEncoder(f).Encode(row);e!=nil{panic(e)}
+}
+func (l *lowering) lwp2Trace(read ir.Property, reaches ir.AllocationSet, inside bool, lies []viewLie, unentered []viewLie) {
+ entries:=[]map[string]any{}
+ field:=l.viewTypes[read.ViewTypeID]
+ for i,v:=range l.viewSources {
+  lie:=lies[i];held:=lie.held[read.Name]
+  badTop:=lie.liedTop[read.Name];badInside:=lie.liedInside[read.Name]
+  incompatible:=held!=nil&&(field==nil||!l.checker.IsTypeAssignableTo(held,field))
+  kind:="other: structural view";fn:=""
+  if v.cast {kind="CheckedCast"} else if v.narrows {kind="predicate narrowing"}
+  if v.node!=nil && l.narrowOverloadCall(v.node) {
+   kind="overload check call";sig:=l.checker.GetResolvedSignature(v.node);decl:=sig.Declaration();if decl.Name()!=nil{fn=decl.Name().Text()}
+  }
+  target:="";source:="<nil>";if v.target!=nil{target=l.checker.TypeToString(v.target)};if v.source!=nil{source=l.checker.TypeToString(v.source)}
+  where:="";nodeKind:="";if v.node!=nil{where=l.program.Where(v.node);nodeKind=v.node.Kind.String()}
+  entries=append(entries,map[string]any{"index":i,"kind":kind,"function":fn,"where":where,"node_kind":nodeKind,"source":source,"target":target,"entry_ir":fmt.Sprintf("%T",v.entry),"cast":v.cast,"narrows":v.narrows,"lied_top":badTop,"lied_inside":badInside,"held_incompatible":incompatible,"relevant_lie":badTop||inside&&badInside||incompatible,"singleton_vouched_top":viewVouched([]viewLie{lie},read.Name,field,false,l.checker),"singleton_vouched_inside":viewVouched([]viewLie{lie},read.Name,field,true,l.checker)})
+ }
+ overloads:=[]map[string]any{}
+ for id:=range l.overloadCheckCalls {f:=l.result.Functions[id];overloads=append(overloads,map[string]any{"id":id,"name":f.Name})}
+ lwp2Write(map[string]any{"unit":latentFindingOwner,"read_where":read.ViewWhere,"field":read.Name,"receiver":l.typeString(l.viewTypes[read.ViewReceiverTypeID]),"unknown":reaches.Unknown,"reasons":reaches.Reasons,"sites":reaches.Sites,"inside":inside,"vouched_top":viewVouched(lies,read.Name,field,false,l.checker),"vouched_inside":viewVouched(lies,read.Name,field,true,l.checker),"unentered_count":len(unentered),"view_origins":len(l.result.ViewOrigins),"entries":entries,"overload_helpers":overloads})
+}
+var _ *checker.Type
+var _ = strings.Contains
+
+func (p *lowering) lwp2ProbeTrace(original *lowering) {
+ entries:=[]map[string]any{}
+ for _,v:=range p.viewSources[len(original.viewSources):] {
+  kind:="other";if v.cast{kind="CheckedCast"};if v.narrows{kind="predicate narrowing"}
+  site:="";if v.node!=nil{site=p.program.Where(v.node)}
+  source:="<nil>";if v.source!=nil{source=p.checker.TypeToString(v.source)}
+  target:="";if v.target!=nil{target=p.checker.TypeToString(v.target)}
+  entries=append(entries,map[string]any{"kind":kind,"where":site,"source":source,"target":target,"entry_ir":fmt.Sprintf("%T",v.entry)})
+ }
+ lwp2Write(map[string]any{"event":"discarded_preflight_probe","unit":latentFindingOwner,"shares_result":p.result==original.result,"original_views":len(original.viewSources),"probe_views":len(p.viewSources),"entries":entries})
+}
