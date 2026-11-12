@@ -371,7 +371,7 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string, 
 	}
 	converted := e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) && statement.Value.Type() <= ir.Boolean
 	if converted {
-		e.line("if (adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] == 10) {", object, object, slot)
+		e.line("if (adamic_object_field_type(%s, adamic_slot_index(%s, %s)) == 10) {", object, object, slot)
 		boxed := fmt.Sprintf("adamic_box_number(%s)", value)
 		if statement.Value.Type() == ir.Boolean {
 			boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
