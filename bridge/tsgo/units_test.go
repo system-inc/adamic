@@ -304,11 +304,22 @@ func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	// misses the leak. Whether one survives depends on the code the native links: with its archive's cgo built by clang
 	// rather than gcc (toolchain.Env), the default options missed it in 4 of 10 runs on Workshop. Without those roots,
 	// only globals, the heap and thread-local storage reach the result, so the unowned heap result is found every run.
-	options := "LSAN_OPTIONS=use_stacks=0:use_registers=0"
+	//
+	// Without those roots it also can't reach the 24-byte record the Go scheduler allocates when it starts another thread
+	// (runtime.newm), which it does only when the box is busy: at load 41 on Cloud the healthy control reported that and
+	// nothing else (#mcc0a90). Both runs suppress exactly that frame, so the control fails only on the program's own
+	// memory, and the leak check below can't be satisfied by a scheduler thread in place of the unowned result.
+	suppressions := filepath.Join(r.scratch, "region-ownership.supp")
+	if err := os.WriteFile(suppressions, []byte("leak:runtime.newm\n"), 0o644); err != nil {
+		r.t.Fatal(err)
+	}
+	options := "LSAN_OPTIONS=use_stacks=0:use_registers=0:print_suppressions=0:suppressions=" + suppressions
 	command.Env = append(os.Environ(), options)
 	// The control: without those roots LeakSanitizer also reports memory a live frame still holds at exit, so the same
 	// options must find nothing in healthy-region, the owned variant of this program, sanitized too. Then the report
 	// below is the unowned result's, not the options' (Markup's review).
+	// Mutants: the control run on region-native reds it (an owned variant that leaks), and the check run on
+	// healthy-region reds it (a leaking variant with no report).
 	control := r.command(r.product("healthy-region"), r.config(), r.sample())
 	control.Env = append(os.Environ(), options)
 	if output, err := r.run("region-ownership-control", control); err != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
