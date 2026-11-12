@@ -801,6 +801,11 @@ func TestGoBuildKeysTheFilesABuildConstraintLeavesOut(t *testing.T) {
 	if !ignoredFile || ignoredTest {
 		t.Fatalf("a build's key holds ignored_never.go %v, ignored_never_test.go %v, want the first alone: %v", ignoredFile, ignoredTest, built.Files)
 	}
+	// An assembly file behind the same constraint is keyed too (IgnoredOtherFiles, #ntrv3zb).
+	// Mutant: keyInputs without listed.IgnoredOtherFiles.
+	if !slices.Contains(built.Files, directory+"/ignored_never.s") {
+		t.Fatalf("a build's key doesn't hold ignored_never.s, an assembly file a constraint leaves out: %v", built.Files)
+	}
 	tested, err := goRequest{verb: "test -c", output: "ignored.test", pkg: "./" + directory}.keyInputs(root, overlayKey{})
 	if err != nil {
 		t.Fatal(err)
