@@ -4,7 +4,7 @@ Tasks: #mez92e7 and #6jq01hc. Tested source: `d9c11411d498db77f81bca13454ca621c3
 
 ## Results so far
 
-Step 2 PASS: all 83 subtests passed (11 record storage, 12 logical assignment views, 60 declared-key stops). Exit 0; wall time 183 seconds. No failures, so no got/want blocks.
+Step 2 PASS: all 84 subtests passed (11 record storage, 12 logical assignment views, 61 declared-key stops). Exit 0; wall time 183 seconds. No failures, so no got/want blocks.
 Step 1 PASS. Steps 3 and 4 pending.
 
 ## Environment and setup
