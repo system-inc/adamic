@@ -1,0 +1,17 @@
+// A generator written in place yields one object into a consumer's one-read IterableIterator<T>
+// parameter, whose for-of returns the first item's field (#7wn0t67): the return closes the
+// generator while it is suspended at its yield, as Node's return() does. internal/flow's
+// TestFlowGeneratorsTraced follows the trace across the yield, the consumer's points running while
+// the generator is parked, and trace_named.a is its twin through a named generator.
+function consume(items: IterableIterator<{ n: number }>): number {
+    for (const item of items) {
+        return item.n;
+    }
+    return 0;
+}
+function run(v: { n: number }): number {
+    return consume((function* () {
+        yield v;
+    })());
+}
+console.log(String(run({ n: 1 })));
