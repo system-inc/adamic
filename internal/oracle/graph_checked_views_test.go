@@ -13,7 +13,8 @@ import (
 // read through it retains as any read does, and a write through it takes writeProperty's graph hold.
 // Each row puts the viewed objects on a cycle 1,000 times in a function, so every turn's cycle is a
 // graph region that must free whole, and holds the answer to Node and the counted build. The views are
-// .ts, where a downcast stays a checked view (in .a it's refused, #m8dvvmf).
+// .ts, where a downcast stays a checked view (in .a it's refused, #m8dvvmf). A legacy view's field
+// can't hold a reference yet, so the tagged cast's cycle runs through the holder of its value.
 //
 // Mutant: graphAdoptionBoundary's refusal of ViewOrigins and CheckedFields put back stops every row
 // before it lowers.
@@ -25,36 +26,39 @@ function identifier(node: Node): Identifier { return node as Identifier; }
 `
 	for _, c := range []struct{ name, source string }{
 		{"a checked read", nodes + `function turn(index: number): string {
-	const a: Node = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) } as Identifier;
+	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
 	const b: Node = { kind: 'number', pos: index, next: a };
 	a.next = b;
-	return identifier(a).name;
+	const seen: Node = a;
+	return identifier(seen).name;
 }
 let last = '';
 for (let index = 0; index < 1000; index++) last = turn(index);
 console.log(last);
 `},
 		{"a checked write", nodes + `function turn(index: number): string {
-	const a: Node = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) } as Identifier;
-	const b: Node = { kind: 'number', pos: index, next: a };
-	const view = identifier(a);
+	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
+	const b: Node = { kind: 'number', pos: index, next: undefined };
+	const seen: Node = a;
+	const view = identifier(seen);
 	view.next = b;
+	b.next = view;
 	return view.name + ' ' + String(a.next === b);
 }
 let last = '';
 for (let index = 0; index < 1000; index++) last = turn(index);
 console.log(last);
 `},
-		{"a tagged cast", `type First = { readonly kind: 'a'; readonly name: string; next: Item | undefined };
-type Second = { readonly kind: 'b'; readonly name: string; next: Item | undefined };
-type Third = { readonly kind: 'c'; readonly name: string; next: Item | undefined };
+		{"a tagged cast", `type First = { readonly kind: 'a'; readonly name: string };
+type Second = { readonly kind: 'b'; readonly name: string };
+type Third = { readonly kind: 'c'; readonly name: string };
 type Item = First | Second | Third;
+interface Holder { item: Item; self: Holder | undefined }
 function narrow(value: Item): First | Second { return value as First | Second; }
 function turn(index: number): string {
-	const a: Item = { kind: 'a', name: 'a' + String(index), next: undefined };
-	const b: Item = { kind: 'c', name: 'c', next: a };
-	a.next = b;
-	return narrow(a).name;
+	const holder: Holder = { item: { kind: 'a', name: 'a' + String(index) }, self: undefined };
+	holder.self = holder;
+	return narrow(holder.item).name;
 }
 let last = '';
 for (let index = 0; index < 1000; index++) last = turn(index);

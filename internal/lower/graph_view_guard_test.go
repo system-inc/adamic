@@ -58,6 +58,9 @@ interface ChoiceB { readonly kind: 'b'; other: Link }
 type Choice = ChoiceA | ChoiceB
 interface HoldsChoice { value: Choice }
 interface AlsoChoice { value: Choice }
+type HostCollator = Intl.Collator
+type HostCollators = readonly Intl.Collator[]
+type HostOrBase = Intl.Collator | Base
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -276,5 +279,38 @@ console.log(String(read({ a: 1 })));
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in that narrows a union of object types") {
 		t.Fatalf("got %v, want the refusal of in over a union of object types", err)
+	}
+}
+
+// A view whose side holds a host object's type stays NotYet in a graph program, since the host binding
+// holds where the object came from (viewHosted, slice 3 of #ztpcwrr). Intl.Collator is the host type
+// lowering knows without an import. A source program meets earlier host-view stops first (a collator
+// seen through a view stops at the relation, #zjndrx5, and a view as NodeJS.ErrnoException at
+// no-optional-widening), so this is a backstop judged on a kept lowering, as viewPairGuard's rows are.
+// Mutant: viewHosted returning nil passes every refused row.
+func TestGraphHostViewIsNotYet(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	for _, row := range []struct{ name, source, target, want string }{
+		{"a host source", "HostCollator", "Base", "a view of Collator, a host object's type, in a graph program"},
+		{"a host element", "Base", "HostCollators", "a view as Collator, a host object's type, in a graph program"},
+		{"a host arm", "HostOrBase", "Base", "a view of Collator, a host object's type, in a graph program"},
+		{"no host", "Derived", "Base", ""},
+	} {
+		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target]}}
+		if types[row.source] == nil || types[row.target] == nil {
+			t.Fatalf("%s: a type isn't declared", row.name)
+		}
+		err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).graphAdoptionBoundary()
+		if row.want == "" {
+			if err != nil {
+				t.Errorf("%s: got %v, want the boundary to pass", row.name, err)
+			}
+			continue
+		}
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
+			t.Errorf("%s: got %v, want NotYet holding %q", row.name, err, row.want)
+		}
 	}
 }
