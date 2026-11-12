@@ -771,3 +771,14 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   and validates all qualified bindings; 65 stops adding ambient require
   and keeps the readonly process.pid declaration. Evidence belongs on
   typescript/tracing-fs-import-evidence.
+
+- z5d0jye, Nov 12 2026, type-only: amend 40-explicit-any rule 103 to emit
+  `interface PathPathComponents extends Array<Path>` with the existing undefined
+  phantom marker, matching Adamic's phantomExtension shape. The type is internal;
+  no API sanction or lane files change. Ten JavaScript outputs and both public
+  declaration files are byte-identical; Adamic types and stock tsc have zero
+  diagnostics on all 79 roots. Full apply passes, 40's post-stage replay makes
+  zero edits, and restoring the intersection fails 40's check. The path.ts full
+  latent census is unchanged: 20 NotYet, 6 Refused, 32 Boundary sites; no changed
+  sites. The existing getPathComponents overload-result refusal remains for
+  Optimizer's follow-up. Evidence: typescript/path-components-evidence.

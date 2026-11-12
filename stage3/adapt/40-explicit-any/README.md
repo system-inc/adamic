@@ -1,5 +1,38 @@
 # Explicit any owner adaptation (partial)
 
+Rule 103 also owns PathPathComponents's declaration shape (optimizer task
+z5d0jye). The brand planner accepts the pristine any intersection, the previous
+undefined intersection, or the final one-line interface, and emits:
+`export interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined; }`.
+The interface extends one base and adds only the erased marker, matching
+`internal/lower/brand_mint.go`'s phantomExtension contract, as SortedArray does.
+The original `__pathComponensBrand` spelling is intentional. No value code changes.
+
+PathPathComponents is internal: it is absent from TypeScript 6.0.3's
+`tests/baselines/reference/api/typescript.d.ts` and from
+`stage3/lane/sanctioned-api.json`. This amendment needs no API sanction and
+changes no lane files. No other adaptation pins the declaration.
+
+Run `NODE_PATH=stage3/api/node_modules node stage3/adapt/40-explicit-any/path-components-check.cjs TREE`
+after full apply. This read-only check rejects a restoring mutant containing
+the old undefined intersection. `classes.cjs.plan` handles all three reviewed
+states through the existing brand-edit plan; replay of the interface has zero
+edits. `class-proof.cjs` independently reconstructs the whole declaration for
+rule 103, preserving its existing source and emission comparisons.
+
+The before/after proof, complete use inventory, and single-file full latent
+census are on `typescript/path-components-evidence`, outside stage3/adapt.
+On main tip d4693fc61d2d01fb4e1e993667ae5028da109cc3, both full applies pass;
+40's post-stage replay changes zero of 747 files, and the restoring mutant exits
+1. All ten emitted JavaScript outputs and both public declaration files are
+byte-identical. Adamic types over 79 roots and stock tsc under Adamic's options
+both report zero diagnostics before and after. There are 13 identifier uses:
+one declaration, one overload return type, one import, ten Readonly references,
+and no casts. The path.ts-only full latent census has 20 NotYet, 6 Refused and
+32 Boundary sites on both sides, with no changed sites. The existing
+getPathComponents overload-result refusal remains for Optimizer's follow-up.
+
+
 The ResolvedConfigFileName amendment (#666zzs5) is a separate pinned never-to-undefined
 phantom-brand class in this adaptation, with its own per-adaptation API sanction.
 See [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md) for the proof and validation.

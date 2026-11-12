@@ -13,6 +13,19 @@ function enclosing(node) {
 function declarationProjection(text, contracts) {
     const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];let aliasNeeded=false;
     function visit(n) {
+        if (className === 'brands' && ts.isTypeAliasDeclaration(n)) {
+            const rule = rules.find(r => r.after && r.owner === n.name.text);
+            if (rule) {
+                assert(ts.isIntersectionTypeNode(n.type) && n.type.types.length === 2);
+                const base = n.type.types[0], marker = n.type.types[1];
+                assert.equal(base.getText(src), 'Path[]');
+                assert(ts.isTypeLiteralNode(marker) && marker.members.length === 1);
+                const keyword = n.getChildren(src).find(c => c.kind === ts.SyntaxKind.TypeKeyword);
+                edits.push([keyword.getStart(src), marker.getStart(src), 'interface PathPathComponents extends Array<Path> ']);
+                assert.equal(text[n.end - 1], ';');
+                edits.push([n.end - 1, n.end, '']);
+            }
+        }
         if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end,className==='brands'?'undefined':'Readonly<Record<string, string | number>>']);
         if(className==='diagnostic'&&ts.isParameter(n)&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) {
             if(n.type?.kind===ts.SyntaxKind.AnyKeyword)edits.push([n.type.getStart(src),n.type.end,'string | number']);
@@ -42,6 +55,11 @@ function expectedSource(text,file) {
             assert.equal(lines[r.line-1].replace(/\r$/,''),r.originalLine,'independent enum owner reconstruction');
             const at=lines[r.line-1].indexOf('any',r.column-1);assert.equal(at,r.column-1);
             lines[r.line-1]=lines[r.line-1].slice(0,at)+r.replacement+lines[r.line-1].slice(at+3);continue;
+        }
+        if (r.after) {
+            assert.equal(lines[r.line-1].replace(/\r$/, ''), r.upstream, 'independent whole brand owner reconstruction');
+            lines[r.line-1] = r.after + (lines[r.line-1].endsWith('\r') ? '\r' : '');
+            continue;
         }
         const key=r.key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         const expression=new RegExp('('+ (r.key.startsWith(' ')?'"'+key+'"':key) +'\\??:\\s*)any\\b','g');
