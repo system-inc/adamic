@@ -5,7 +5,8 @@
 - Step 2: PASS, all 11 pin subtests; exit 0; wall time 155 seconds.
 - Step 1: PASS, gofmt emitted nothing and go vet exited 0.
 - Step 3: all four mutants detected (exit 1 each), restored, and clean-diff checked. Mutant 2 panicked; mutant 3 had an additional red.
-- Steps 4, 4b: pending.
+- Step 4: PASS, full lower suite exit 0; wall time 844 seconds (14m 04s); no failures.
+- Step 4b: pending.
 
 ## Identity and environment
 
@@ -490,3 +491,19 @@ gate cache: probe hits=0 misses=0
 FAIL	github.com/system-inc/adamic/internal/oracle	19.712s
 FAIL
 ```
+
+## Step 4 — full lower suite
+
+```sh
+go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1
+```
+
+Exit 0. Wall time 844 seconds (14m 04s), measured around the entire command including compilation. Go reported 827.621 seconds for the test execution. Every failing test / first error line: none. Environment failures: none reported.
+
+Complete `/tmp/lower.log`, verbatim:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	827.621s
+```
+
+Checkpoint history: step-2 report `b1608dd3e`; step-3 report `79202b616`. Each was committed and pushed immediately after the respective step; all report commits descend from the requested source HEAD with no force pushes.
