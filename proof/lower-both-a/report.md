@@ -5,7 +5,8 @@ Tasks: #mez92e7 and #6jq01hc. Tested source: `d9c11411d498db77f81bca13454ca621c3
 ## Results so far
 
 Step 2 PASS: all 84 subtests passed (11 record storage, 12 logical assignment views, 61 declared-key stops). Exit 0; wall time 183 seconds. No failures, so no got/want blocks.
-Step 1 PASS. Steps 3 and 4 pending.
+Step 3 PASS: exit 0; wall time 884 seconds (14m 44s); no failing tests and no environment failures.
+Step 1 PASS. Step 4 pending.
 
 ## Environment and setup
 
@@ -122,3 +123,19 @@ Every suite/subtest result, verbatim:
     --- PASS: TestRecordDeclaredKeyStopsArePinned/g02_heritage.ts (0.65s)
     --- PASS: TestRecordDeclaredKeyStopsArePinned/c00_control_declared_write.ts (0.49s)
 ```
+
+## Step 3: full lower suite
+
+Command: `go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1`.
+
+Exit 0; wall time 884 seconds (14m 44s). Every failing test and first error line: none. Environment failures: none.
+
+Complete output:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	866.791s
+```
+
+## Report checkpoints
+
+After step 2: `718b12198bf1fbf1da967af3291223c7c1dfa750`, pushed to `proof/lower-both-a-report`. Count correction: `a2ac16e55` (new commit, pushed; no amend or force). This update records step 3 before step 4 starts.
