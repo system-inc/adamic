@@ -17,6 +17,7 @@ var gccRuntimeUnits = []string{
 	"closure.c",
 	"construction.c",
 	"count.c",
+	"date.c",
 	"directory.c",
 	"dtoa.c",
 	"exceptions.c",
@@ -534,3 +535,6 @@ func TestGCCRuntimeNodeProcess(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit
 
 func TestProduct_GCCRuntimeProcess(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "process.c") }
 func TestGCCRuntimeProcess(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "process.c") }
+
+func TestProduct_GCCRuntimeDate(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "date.c") }
+func TestGCCRuntimeDate(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "date.c") }

@@ -20,7 +20,7 @@ func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 		"host_watch_file": ir.Number, "host_unwatch_file": ir.Number,
 		"host_watch": ir.Object, "host_watch_on": ir.Object,
 		"host_stdout_columns": ir.MaybeNumber, "host_stdout_is_tty": ir.MaybeBoolean,
-		"host_stdout_write": ir.Number, "date_time": ir.Number, "host_realpath": ir.String,
+		"host_stdout_write": ir.Number, "date_time": ir.Number, "date_iso_string": ir.String, "host_realpath": ir.String,
 	}
 	for operation, result := range operations {
 		t.Run(operation, func(t *testing.T) {

@@ -182,6 +182,8 @@
 `runtime-file:construction.c`
 `runtime-file:count.c`
 `runtime-file:count.h`
+# Pure Date formatting has automatic locals only; errors use exceptions.c's existing state.
+`runtime-file:date.c`
 `runtime-file:directory.c`
 `runtime-file:dtoa.c`
 `runtime-file:dynamic_keyed_names.h`

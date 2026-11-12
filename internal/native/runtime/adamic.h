@@ -1592,6 +1592,10 @@ _Static_assert(ADAMIC_NUMBER_STRING_MAX_UNITS * 1000 < ADAMIC_STRING_MAX_UNITS,
 // Leave one extra byte for snprintf's terminator when writing the exponent.
 #define ADAMIC_NUMBER_FORMAT_MAX (ADAMIC_NUMBER_STRING_MAX_UNITS + 1)
 
+// Date.prototype.toISOString of a clipped time value: owned UTC text, or NULL with
+// a catchable RangeError pending for an invalid time value. No host clock or timezone.
+adamic_string *adamic_date_to_iso_string(double milliseconds);
+
 // adamic_number_format writes value as JavaScript's String(value) does and returns the length. The
 // buffer is not terminated.
 size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]);
