@@ -48,7 +48,9 @@ func optionalPresenceSlotReads(program *ir.Program, name string) int {
 // method shorthand (an own slot, Compiler's ruling 1 on #p2n17c4 shape 1) and a literal without m, through
 // ?., and with the call the test guards. A slot written after the literal is built is read as written;
 // the literal gives m, since a write to a field some literal omits is absentOptionalWrite's not yet, and
-// the form is the field's, since a write to an optional method stays refused (below). The last two rows
+// the form is the field's, since a write to an optional method stays refused (below). Its m's type holds
+// undefined, as tsc's own host types write it, since under exactOptionalPropertyTypes no other optional
+// field takes undefined, in a literal or written in. The last two rows
 // were refused on main as a method read as a value: method_presence_test.go's typeof row and
 // optional_method_call_test.go's presence test, whose places now hold an alias, which stays refused. The
 // oracle holds what these run to (internal/oracle/optional_member_presence_test.go). Mutants are in
@@ -57,7 +59,7 @@ func TestOptionalMemberPresenceLowers(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
 		// only is the one form a row runs in, "" for both; an alone row's source declares its own
-		// interface, a method's.
+		// interface.
 		name, only, source, read string
 		alone                    bool
 	}{
@@ -69,7 +71,7 @@ func TestOptionalMemberPresenceLowers(t *testing.T) {
 		{"a literal's method shorthand", "", optionalPresenceProbe + "console.log(probe({ n: 1, m() { return 1; } }));\nconsole.log(probe({ n: 2 }));\n", "m", false},
 		{"the call the test guards keeps its receiver", "", "function probe(h: H): string {\n\tif (h.m) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';\n}\nconsole.log(probe({ n: 3, m() { return this.n; } }));\nconsole.log(probe({ n: 4 }));\n", "m", false},
 		{"through ?.", "", "function probe(h: H | undefined): string {\n\treturn h?.m ? 'has' : 'none';\n}\nconsole.log(probe(undefined));\n" + optionalPresenceCalls, "m", false},
-		{"a slot written after the literal is built", "field", optionalPresenceProbe + "const h: H = { n: 1, m: undefined };\nconsole.log(probe(h));\nh.m = (): number => 2;\nconsole.log(probe(h));\nh.m = undefined;\nconsole.log(probe(h));\n", "m", false},
+		{"a slot written after the literal is built", "field", optionalPresenceDeclared("m?: (() => number) | undefined;") + optionalPresenceProbe + "const h: H = { n: 1, m: undefined };\nconsole.log(probe(h));\nh.m = (): number => 2;\nconsole.log(probe(h));\nh.m = undefined;\nconsole.log(probe(h));\n", "m", true},
 		{"typeof an optional method of a const literal", "method", "interface Maybe {\n\tm?(): number;\n}\nconst maybe: Maybe = { m() { return 1; } };\nconsole.log(typeof maybe.m);\n", "m", true},
 		{"a presence test of an optional method on {}", "method", "interface Sized {\n\tsize?(): number;\n}\nfunction size(sized: Sized): string {\n\tif (sized.size) {\n\t\treturn 'sized';\n\t}\n\treturn 'unsized';\n}\nconsole.log(size({}));\n", "size", true},
 	} {
@@ -106,7 +108,8 @@ func TestOptionalMemberPresenceLowers(t *testing.T) {
 // is the field form's alone. A non-presence read of a field holding a literal method keeps
 // erasedMethodField's stop, so the scan's bypass is the presence test's alone. A literal can't set its
 // prototype (Lower's must): a __proto__ key, Object.setPrototypeOf and Object.create are each refused by
-// another rule, held here. No record row: a record literal reaching an H receiver needs a cast, so
+// another rule, held here. The __proto__ literal gives its own m, since one without it is
+// adamic/no-optional-widening's refusal first, which says nothing of the key. No record row: a record literal reaching an H receiver needs a cast, so
 // checkOptionalMemberPresence's record stop is pinned by no program yet (mutants M8).
 func TestOptionalMemberPresenceStops(t *testing.T) {
 	t.Parallel()
@@ -119,20 +122,24 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 		// method and field are what each form stops saying, "" where the row doesn't run in that form.
 		method, field string
 		refused       bool
+		// readonly declares the field form's m readonly: a class's method or getter seen as a writable
+		// field is adamic/invariant-mutable's refusal, which runs before lowering and would stop the row
+		// before the presence check could.
+		readonly bool
 	}{
-		{"a class's getter", ".a", "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false},
-		{"a literal's getter", ".a", optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false},
-		{"a class instance", ".a", "class C {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new C()));\nconsole.log(probe({ n: 2 }));\n", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", false},
-		{"a spread", ".a", optionalPresenceProbe + "const base: H = { n: 1, m: (): number => 1 };\nconsole.log(probe({ ...base }));\n", "a presence test of optional member m whose receiver may be an object a spread made", "a presence test of optional member m whose receiver may be an object a spread made", false},
-		{"an arrow's parameter", ".a", "const probe = (h: H): string => (h.m ? 'has' : 'none');\n" + optionalPresenceCalls, unknown, unknown, false},
-		{"an exported entry function's parameter", ".ts", "export " + optionalPresenceProbe + optionalPresenceCalls, unknown, unknown, false},
-		{"a Map's value", ".ts", optionalPresenceProbe + "const held = new Map<string, H>();\nheld.set('a', { n: 1, m: (): number => 1 });\nconsole.log(probe(held.get('a')!));\n", unknown, unknown, false},
-		{"an alias", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(typeof held);\n", detached, "", true},
-		{"a write to an optional method", ".a", optionalPresenceProbe + "const h: H = { n: 1, m: undefined };\nh.m = (): number => 2;\nconsole.log(probe(h));\n", detached, "", true},
-		{"a field's literal method read as a value", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(String(held ? held() : 0));\n", "", "a literal method through a view that erases its receiver", false},
-		{"a __proto__ key", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made = { n: 1, __proto__: proto };\nconsole.log(probe(made));\n", "__proto__ in an object literal", "__proto__ in an object literal", true},
-		{"Object.setPrototypeOf", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = { n: 1 };\nObject.setPrototypeOf(made, proto);\nconsole.log(probe(made));\n", "Object.setPrototypeOf", "Object.setPrototypeOf", true},
-		{"Object.create", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = Object.create(proto);\nconsole.log(probe(made));\n", "Object.create", "Object.create", true},
+		{"a class's getter", ".a", "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false, true},
+		{"a literal's getter", ".a", optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false, false},
+		{"a class instance", ".a", "class C {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new C()));\nconsole.log(probe({ n: 2 }));\n", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", false, true},
+		{"a spread", ".a", optionalPresenceProbe + "const base: H = { n: 1, m: (): number => 1 };\nconsole.log(probe({ ...base }));\n", "a presence test of optional member m whose receiver may be an object a spread made", "a presence test of optional member m whose receiver may be an object a spread made", false, false},
+		{"an arrow's parameter", ".a", "const probe = (h: H): string => (h.m ? 'has' : 'none');\n" + optionalPresenceCalls, unknown, unknown, false, false},
+		{"an exported entry function's parameter", ".ts", "export " + optionalPresenceProbe + optionalPresenceCalls, unknown, unknown, false, false},
+		{"a Map's value", ".ts", optionalPresenceProbe + "const held = new Map<string, H>();\nheld.set('a', { n: 1, m: (): number => 1 });\nconsole.log(probe(held.get('a')!));\n", unknown, unknown, false, false},
+		{"an alias", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(typeof held);\n", detached, "", true, false},
+		{"a write to an optional method", ".a", optionalPresenceProbe + "const h: H = { n: 1, m: (): number => 1 };\nh.m = (): number => 2;\nconsole.log(probe(h));\n", detached, "", true, false},
+		{"a field's literal method read as a value", ".a", "const h: H = { n: 1, m() { return 1; } };\nconst held = h.m;\nconsole.log(String(held ? held() : 0));\n", "", "a literal method through a view that erases its receiver", false, false},
+		{"a __proto__ key", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made = { n: 1, m: (): number => 2, __proto__: proto };\nconsole.log(probe(made));\n", "__proto__ in an object literal", "__proto__ in an object literal", true, false},
+		{"Object.setPrototypeOf", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = { n: 1 };\nObject.setPrototypeOf(made, proto);\nconsole.log(probe(made));\n", "Object.setPrototypeOf", "Object.setPrototypeOf", true, false},
+		{"Object.create", ".a", optionalPresenceProbe + "const proto: H = { n: 0, m: (): number => 1 };\nconst made: H = Object.create(proto);\nconsole.log(probe(made));\n", "Object.create", "Object.create", true, false},
 	} {
 		for _, form := range optionalPresenceForms {
 			want := probe.method
@@ -142,7 +149,11 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 			if want == "" {
 				continue
 			}
-			source := optionalPresenceDeclared(form.member) + probe.source
+			member := form.member
+			if probe.readonly && form.name == "field" {
+				member = "readonly " + member
+			}
+			source := optionalPresenceDeclared(member) + probe.source
 			t.Run(probe.name+" "+form.name+probe.extension, func(t *testing.T) {
 				t.Parallel()
 				_, err := lowerSourceAs(t, source, probe.extension)
@@ -164,12 +175,14 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 // of one of their names diverges on a literal without its own (Node finds the prototype's, native reads
 // no slot). toString is one the library's Object interface declares, which the check asks by symbol;
 // __lookupGetter__ is one Node has that the library doesn't, which the check takes by its two leading
-// underscores. Mutants M9 and M10.
+// underscores. H holds a required n beside the name, as a host's interface does: an H of optional members
+// alone, one of them toString, takes a string too, so representation holds it as a union, and its read is
+// dynamicProperty's not yet for a prototype name before this check is reached. Mutants M9 and M10.
 func TestOptionalMemberPresenceOfAnObjectPrototypeNameStops(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"toString", "__lookupGetter__"} {
 		for _, member := range []string{name + "?(): string;", name + "?: () => string;"} {
-			source := "interface H {\n\t" + member + "\n}\nfunction probe(h: H): string {\n\treturn h." + name + " ? 'has' : 'none';\n}\nconsole.log(probe({}));\n"
+			source := optionalPresenceDeclared(member) + "function probe(h: H): string {\n\treturn h." + name + " ? 'has' : 'none';\n}\nconsole.log(probe({ n: 1 }));\n"
 			want := "a presence test of optional member " + name + ", a name Object.prototype holds too"
 			t.Run(member, func(t *testing.T) {
 				t.Parallel()
