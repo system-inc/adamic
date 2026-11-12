@@ -1,0 +1,22 @@
+{
+  "appliedMain": "fb1c8d3b72de2686c486cf97685079589308dafd",
+  "finalMain": "0c7052759671347775615af5b4a8028dd8688af8",
+  "changed": [
+    "bridge/tsgo/units_test.go"
+  ],
+  "compilerAndAdaptationInputsIdentical": true,
+  "testGoFiles": [
+    "bridge_test.go",
+    "coverage_test.go",
+    "product_cache_test.go",
+    "product_inputs_test.go",
+    "product_units_test.go",
+    "products_test.go",
+    "registered_units_test.go",
+    "units_test.go"
+  ],
+  "productionGoFiles": [
+    "header.go"
+  ],
+  "explanation": "Only a non-embedded Go test changed. Full apply, stock tsc, and emission inputs are byte-identical. Compiler builds, types, and censuses are refreshed after rebase."
+}

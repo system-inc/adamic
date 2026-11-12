@@ -1,0 +1,72 @@
+{
+  "count": 11,
+  "onlyChange": "PathPathComponents -> PathPathComponents<Path>",
+  "sites": [
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1011:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1012:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:492:1",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:494:1",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:495:1",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:623:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:908:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:909:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:977:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:978:5",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/path.ts:492:1",
+      "before": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+      "after": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    }
+  ]
+}

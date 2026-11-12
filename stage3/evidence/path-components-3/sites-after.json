@@ -1,0 +1,350 @@
+[
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1011:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1012:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1015:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1015:29: stage 0 can't lower reading fromComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1023:9",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1023:16: stage 0 can't lower reading toComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1026:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1026:24: stage 0 can't lower reading toComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1028:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1028:20: stage 0 can't lower reading fromComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1031:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1031:33: stage 0 can't lower reading components yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1049:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1049:126: stage 0 can't lower a generic function value without a concrete contextual signature yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1051:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1051:147: stage 0 can't lower reading getCanonicalFileName yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:1052:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:1052:38: stage 0 can't lower reading pathComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:492:1",
+    "reason": "function signature or prologue failed; continued at next declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:494:1",
+    "reason": "function signature or prologue failed; continued at next declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:495:1",
+    "reason": "function signature or prologue failed; continued at next declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:513:38",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:516:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:623:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:646:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:646:9: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:661:13",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:661:13: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:672:13",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:672:13: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:677:17",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:677:21: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:684:18",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:684:22: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:705:14",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:705:18: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:718:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:718:12: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:908:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:909:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:910:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:910:35: stage 0 can't lower reading aComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:911:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:911:25: stage 0 can't lower reading sharedLength yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:917:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:917:26: stage 0 can't lower reading aComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:977:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:978:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:979:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:979:9: stage 0 can't lower reading childComponents yet"
+  },
+  {
+    "kind": "Boundary",
+    "where": "src/compiler/path.ts:984:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/path.ts:984:25: stage 0 can't lower reading parentComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1015:29",
+    "reason": "reading fromComponents",
+    "text": "src/compiler/path.ts:1015:29: stage 0 can't lower reading fromComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1023:16",
+    "reason": "reading toComponents",
+    "text": "src/compiler/path.ts:1023:16: stage 0 can't lower reading toComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1026:24",
+    "reason": "reading toComponents",
+    "text": "src/compiler/path.ts:1026:24: stage 0 can't lower reading toComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1028:20",
+    "reason": "reading fromComponents",
+    "text": "src/compiler/path.ts:1028:20: stage 0 can't lower reading fromComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1031:33",
+    "reason": "reading components",
+    "text": "src/compiler/path.ts:1031:33: stage 0 can't lower reading components yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1049:126",
+    "reason": "a generic function value without a concrete contextual signature",
+    "text": "src/compiler/path.ts:1049:126: stage 0 can't lower a generic function value without a concrete contextual signature yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1051:147",
+    "reason": "reading getCanonicalFileName",
+    "text": "src/compiler/path.ts:1051:147: stage 0 can't lower reading getCanonicalFileName yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:1052:38",
+    "reason": "reading pathComponents",
+    "text": "src/compiler/path.ts:1052:38: stage 0 can't lower reading pathComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:646:9",
+    "reason": "a value of type any",
+    "text": "src/compiler/path.ts:646:9: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:661:13",
+    "reason": "a value of type any",
+    "text": "src/compiler/path.ts:661:13: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:672:13",
+    "reason": "a value of type any",
+    "text": "src/compiler/path.ts:672:13: stage 0 can't lower a value of type any yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:677:21",
+    "reason": "reading normalized",
+    "text": "src/compiler/path.ts:677:21: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:684:22",
+    "reason": "reading normalized",
+    "text": "src/compiler/path.ts:684:22: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:705:18",
+    "reason": "reading normalized",
+    "text": "src/compiler/path.ts:705:18: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:718:12",
+    "reason": "reading normalized",
+    "text": "src/compiler/path.ts:718:12: stage 0 can't lower reading normalized yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:910:35",
+    "reason": "reading aComponents",
+    "text": "src/compiler/path.ts:910:35: stage 0 can't lower reading aComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:911:25",
+    "reason": "reading sharedLength",
+    "text": "src/compiler/path.ts:911:25: stage 0 can't lower reading sharedLength yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:917:26",
+    "reason": "reading aComponents",
+    "text": "src/compiler/path.ts:917:26: stage 0 can't lower reading aComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:979:9",
+    "reason": "reading childComponents",
+    "text": "src/compiler/path.ts:979:9: stage 0 can't lower reading childComponents yet"
+  },
+  {
+    "kind": "NotYet",
+    "where": "src/compiler/path.ts:984:25",
+    "reason": "reading parentComponents",
+    "text": "src/compiler/path.ts:984:25: stage 0 can't lower reading parentComponents yet"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:1103:28",
+    "reason": "a cast the runtime can't check",
+    "text": "src/compiler/path.ts:1103:28: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:492:1",
+    "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+    "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:513:45",
+    "reason": "a cast the runtime can't check",
+    "text": "src/compiler/path.ts:513:45: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:513:45",
+    "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+    "text": "src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:516:12",
+    "reason": "a cast the runtime can't check",
+    "text": "src/compiler/path.ts:516:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "kind": "Refused",
+    "where": "src/compiler/path.ts:516:12",
+    "reason": "an unproven relation from string to T: the source is not assignable to the target",
+    "text": "src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  }
+]

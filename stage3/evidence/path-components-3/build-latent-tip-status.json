@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/path-components-3-final-proof/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/path-components-3-final-proof/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 0.31619674100056727
+}

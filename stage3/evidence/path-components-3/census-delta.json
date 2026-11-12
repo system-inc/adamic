@@ -1,0 +1,240 @@
+{
+  "before": {
+    "uniqueSites": 58,
+    "counts": {
+      "Boundary": 32,
+      "NotYet": 20,
+      "Refused": 6
+    },
+    "pathSites": 58,
+    "pathCounts": {
+      "Boundary": 32,
+      "NotYet": 20,
+      "Refused": 6
+    },
+    "events": 102,
+    "files": [
+      "src/compiler/path.ts"
+    ],
+    "units": {
+      "total": 81,
+      "functions": 74,
+      "skipped_checker_body": 0,
+      "attempted_functions": 70,
+      "attempted_statements": 7,
+      "panicked_units": 0,
+      "deferred_body_bytes": 570,
+      "deferred_generic_instantiation": 4,
+      "instantiated_generics": 1,
+      "never_reached": [
+        {
+          "where": "src/compiler/path.ts:1092:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 0,
+          "body_end": 0
+        },
+        {
+          "where": "src/compiler/path.ts:1094:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 0,
+          "body_end": 0
+        },
+        {
+          "where": "src/compiler/path.ts:1096:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 43712,
+          "body_end": 44047
+        }
+      ]
+    },
+    "checkerDiagnostics": 0
+  },
+  "after": {
+    "uniqueSites": 58,
+    "counts": {
+      "Boundary": 32,
+      "NotYet": 20,
+      "Refused": 6
+    },
+    "pathSites": 58,
+    "pathCounts": {
+      "Boundary": 32,
+      "NotYet": 20,
+      "Refused": 6
+    },
+    "events": 102,
+    "files": [
+      "src/compiler/path.ts"
+    ],
+    "units": {
+      "total": 81,
+      "functions": 74,
+      "skipped_checker_body": 0,
+      "attempted_functions": 70,
+      "attempted_statements": 7,
+      "panicked_units": 0,
+      "deferred_body_bytes": 570,
+      "deferred_generic_instantiation": 4,
+      "instantiated_generics": 1,
+      "never_reached": [
+        {
+          "where": "src/compiler/path.ts:1092:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 0,
+          "body_end": 0
+        },
+        {
+          "where": "src/compiler/path.ts:1094:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 0,
+          "body_end": 0
+        },
+        {
+          "where": "src/compiler/path.ts:1096:1",
+          "name": "forEachAncestorDirectory",
+          "body_start": 43745,
+          "body_end": 44080
+        }
+      ]
+    },
+    "checkerDiagnostics": 0
+  },
+  "removed": [
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1011:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1012:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:492:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:494:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:495:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:623:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:908:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:909:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:977:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:978:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/path.ts:492:1",
+      "reason": "overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    }
+  ],
+  "added": [
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1011:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:1012:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:492:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:494:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:495:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:623:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:908:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:909:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:977:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Boundary",
+      "where": "src/compiler/path.ts:978:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Refused",
+      "where": "src/compiler/path.ts:492:1",
+      "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+      "text": "src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result"
+    }
+  ],
+  "delta": 0,
+  "countDefinition": "unique (kind, where, reason, text) across all attempts, with tree prefix removed"
+}

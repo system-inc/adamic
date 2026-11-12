@@ -1,0 +1,61 @@
+{
+  "results": [
+    {
+      "input": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+      "eol": "\"\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+      "eol": "\"\\r\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };",
+      "eol": "\"\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };",
+      "eol": "\"\\r\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined; }",
+      "eol": "\"\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined; }",
+      "eol": "\"\\r\\n\"",
+      "edits": 1,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined; }",
+      "eol": "\"\\n\"",
+      "edits": 0,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    },
+    {
+      "input": "export interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined; }",
+      "eol": "\"\\r\\n\"",
+      "edits": 0,
+      "replayEdits": 0,
+      "javascriptIdentical": true
+    }
+  ],
+  "driftMutantsRejected": 5
+}

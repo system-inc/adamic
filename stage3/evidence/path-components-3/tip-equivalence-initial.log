@@ -1,0 +1,6 @@
+go list child_exit=0
+Traceback (most recent call last):
+  File "/workspace/scratch/path-components-3-final-proof/tip-equivalence.py", line 7, in <module>
+    p=json.loads(r.stdout);assert 'units_test.go' in p['TestGoFiles'];assert 'units_test.go' not in p['GoFiles'];assert 'units_test.go' not in p.get('EmbedFiles',[])
+                                                     ~^^^^^^^^^^^^^^^
+KeyError: 'TestGoFiles'

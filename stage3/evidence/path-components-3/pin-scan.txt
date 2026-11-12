@@ -1,0 +1,33 @@
+stage3/adapt/41-explicit-any-remaining/evidence/void-mutant-census.json:9078:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/timers/mutant.json:9078:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/timers/after.json:9080:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/final-census.json:9078:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/before-census.json:9101:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/any-mutant-census.json:9098:      "reason": "a function returning PathPathComponents",
+stage3/adapt/41-explicit-any-remaining/evidence/any-after-census.json:9100:      "reason": "a function returning PathPathComponents",
+stage3/adapt/40-explicit-any/evidence/sites.json:849:    "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+stage3/adapt/40-explicit-any/evidence/classification.json:1367:      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+stage3/adapt/40-explicit-any/evidence/brands-void/member-audit.json:112:    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };\r\n",
+stage3/adapt/40-explicit-any/evidence/brands-void/member-audit.json:117:        "owner": "PathPathComponents",
+stage3/adapt/40-explicit-any/evidence/brands-undefined-3/member-audit.json:112:    "search": "/workspace/scratch/brands3/retyped-tree/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };\r\n",
+stage3/adapt/40-explicit-any/evidence/brands-undefined-3/member-audit.json:117:        "owner": "PathPathComponents",
+stage3/adapt/40-explicit-any/evidence/brands-undefined/member-audit-oct29.json:112:    "search": "/tmp/brands-after/census-adapted/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };\r\n",
+stage3/adapt/40-explicit-any/evidence/brands-undefined/member-audit-oct29.json:117:        "owner": "PathPathComponents",
+stage3/adapt/40-explicit-any/evidence/brands-undefined/census-delta.md:208:| a value of type Readonly<PathPathComponents> | 7 | 5 | -2 |
+stage3/adapt/40-explicit-any/evidence/brands-undefined/census-delta.json:1698:      "reason": "a value of type Readonly<PathPathComponents>",
+stage3/adapt/40-explicit-any/evidence/brands/source.patch:69:-export type PathPathComponents = Path[] & { __pathComponensBrand: any; };
+stage3/adapt/40-explicit-any/evidence/brands/source.patch:70:+export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };
+stage3/adapt/40-explicit-any/evidence/brands/before.json:698:      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };"
+stage3/adapt/40-explicit-any/evidence/brands/before.json:1369:      "owner": "PathPathComponents"
+stage3/adapt/40-explicit-any/evidence/before.json:638:      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };"
+stage3/adapt/40-explicit-any/evidence/after.json:620:      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };"
+stage3/adapt/40-explicit-any/class-rules.json:69:      "owner": "PathPathComponents",
+stage3/adapt/40-explicit-any/class-rules.json:70:      "upstream": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };",
+stage3/adapt/40-explicit-any/class-rules.json:71:      "before": "export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };",
+stage3/adapt/40-explicit-any/class-rules.json:72:      "after": "export interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined; }",
+stage3/adapt/40-explicit-any/class-rules.json:73:      "previous": "export interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined; }"
+stage3/adapt/40-explicit-any/README.md:3:Rule 103 also owns PathPathComponents's declaration shape (optimizer task
+stage3/adapt/40-explicit-any/README.md:7:`export interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined; }`.
+stage3/adapt/40-explicit-any/README.md:14:PathPathComponents is internal: it is absent from TypeScript 6.0.3's
+stage3/adapt/40-explicit-any/README.md:38:PathPathComponents to PathPathComponents<Path>; every site is listed in the
+stage3/adapt/40-explicit-any/CLASSIFICATION.md:120:- 103: `src/compiler/path.ts:457:67`

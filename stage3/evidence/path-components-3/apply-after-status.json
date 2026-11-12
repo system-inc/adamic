@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/apply.py",
+    "--adapt-checkout",
+    "/workspace/scratch/path-components-after"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 696.9125463239998
+}

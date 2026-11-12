@@ -1,0 +1,9 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "PathPathComponents|path\\.ts:457|path\\.ts.{0,30}457",
+    "stage3/adapt"
+  ],
+  "exit_code": 0
+}

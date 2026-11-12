@@ -1,0 +1,82 @@
+{
+  "changedSources": [
+    "compiler/path.ts"
+  ],
+  "onlyReviewedDeclarationChanged": true,
+  "javascript": [
+    {
+      "file": "_tsc.js",
+      "bytes": 6227135,
+      "sha256": "cbeb71fde0a41040237b6246f44b6ca8eb41ab5da40e03e6ea33618cbb95e4e8"
+    },
+    {
+      "file": "_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "file": "tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "file": "tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "file": "typescript.js",
+      "bytes": 9136687,
+      "sha256": "1cd4c38977a16cfacb23c9bfb81b5f46a83f7217dccae9a705a848362ac86c78"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "file": "watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    },
+    {
+      "file": "run.js",
+      "bytes": 13170484,
+      "sha256": "287162d1e70dc447d3b20e7b25d3221a396b6e08f583bd20fcee2edc136ee43d"
+    }
+  ],
+  "publicDeclarations": [
+    {
+      "file": "lib/typescript.d.ts",
+      "bytes": 588452,
+      "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263"
+    },
+    {
+      "file": "lib/tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "bytes": 593506,
+      "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd"
+    },
+    {
+      "file": "built/local/tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "stockDiagnostics": 0,
+  "roots": 79
+}
