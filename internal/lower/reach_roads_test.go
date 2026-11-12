@@ -385,6 +385,45 @@ func TestReachLateReferenceIsACompilerBug(t *testing.T) {
 	}
 }
 
+// checkFlowLiveness holds only the graphs that noted their dead (flowGraph, iterableViewFlowGraph), so a
+// pass that builds one with newAllocationFlowGraph or newIterableViewFlowGraph directly judges by a
+// liveness nothing checks again: host_member_write.go did, from #fj0vqtf wave 1 until this test. This
+// reads every source file of the package and allows those two calls only inside their wrappers.
+// Mutant 11: host_member_write.go's graph built by newAllocationFlowGraph again.
+func TestEveryLoweringGraphNotesItsDead(t *testing.T) {
+	t.Parallel()
+	files, err := filepath.Glob("*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	wrappers := map[string]bool{"flowGraph": true, "iterableViewFlowGraph": true}
+	constructors := map[string]bool{"newAllocationFlowGraph": true, "newIterableViewFlowGraph": true}
+	set := token.NewFileSet()
+	for _, file := range files {
+		if strings.HasSuffix(file, "_test.go") {
+			continue
+		}
+		parsed, err := parser.ParseFile(set, file, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range parsed.Decls {
+			function, isFunction := declaration.(*ast.FuncDecl)
+			if !isFunction || function.Body == nil || wrappers[function.Name.Name] {
+				continue
+			}
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				if call, isCall := node.(*ast.CallExpr); isCall {
+					if name, isName := call.Fun.(*ast.Ident); isName && constructors[name.Name] {
+						t.Errorf("%s: %s builds a flow graph with %s; build it through l.flowGraph or l.iterableViewFlowGraph, so checkFlowLiveness holds it", set.Position(call.Pos()), function.Name.Name, name.Name)
+					}
+				}
+				return true
+			})
+		}
+	}
+}
+
 // Road 3's negatives: a writer that's called keeps its write and what it's passed; one exported from
 // the entry module can be called by outside code with anything, and one made a function value can be
 // called through it with anything, so each keeps its write and the parameter it writes is unknown.
