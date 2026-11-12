@@ -265,19 +265,32 @@ func (l *lowering) narrowedNullishPropertyReadGap(node *ast.Node) error {
 		}
 		return nil
 	}
-	if !l.codeBetween(observation.from, node, l.appendsBetween(observation, node, numeric)) {
-		return nil
-	}
-	if numeric || writes.everyName {
+	if l.propertyWriteMayRunBetween(node, key.Text(), numeric, observation.from, observation.target, l.appendsBetween(observation, node, numeric)) {
 		return stop
 	}
-	reach := l.reachBetween(observation.from, node)
-	for _, target := range writes.named[key.Text()] {
-		if target != observation.target && l.writeMayRunBetween(target, observation.from, node, reach) {
-			return stop
+	return nil
+}
+
+// propertyWriteMayRunBetween is whether a write of the property name may run between from and the read:
+// something that can run program code completes there (codeBetween, past the calls exempt holds), and
+// then a number spells the name, some write could reach any name, or a write of the name other than
+// observed, the narrowing's own target, may run (writeMayRunBetween). A never read asks it too
+// (never_read.go), for each name on its path.
+func (l *lowering) propertyWriteMayRunBetween(read *ast.Node, name string, numeric bool, from int, observed *ast.Node, exempt map[*ast.Node]bool) bool {
+	if !l.codeBetween(from, read, exempt) {
+		return false
+	}
+	writes := l.propertyWritesOf()
+	if numeric || writes.everyName {
+		return true
+	}
+	reach := l.reachBetween(from, read)
+	for _, target := range writes.named[name] {
+		if target != observed && l.writeMayRunBetween(target, from, read, reach) {
+			return true
 		}
 	}
-	return nil
+	return false
 }
 
 // nullishObservation is where a read narrowed to a nullish unit was last seen holding the value the
