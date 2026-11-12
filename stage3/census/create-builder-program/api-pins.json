@@ -1,0 +1,129 @@
+{
+  "typescript": "6.0.3",
+  "names": {
+    "createBuilderProgram": {
+      "typescriptDts": false,
+      "sanctionedApi": false
+    },
+    "BuilderProgramKind": {
+      "typescriptDts": false,
+      "sanctionedApi": false
+    },
+    "BuilderCreationParameters": {
+      "typescriptDts": false,
+      "sanctionedApi": false
+    },
+    "getBuilderCreationParameters": {
+      "typescriptDts": false,
+      "sanctionedApi": false
+    },
+    "BuilderProgram": {
+      "typescriptDts": true,
+      "sanctionedApi": true
+    },
+    "SemanticDiagnosticsBuilderProgram": {
+      "typescriptDts": true,
+      "sanctionedApi": false
+    },
+    "EmitAndSemanticDiagnosticsBuilderProgram": {
+      "typescriptDts": true,
+      "sanctionedApi": false
+    },
+    "createSemanticDiagnosticsBuilderProgram": {
+      "typescriptDts": true,
+      "sanctionedApi": false
+    },
+    "createEmitAndSemanticDiagnosticsBuilderProgram": {
+      "typescriptDts": true,
+      "sanctionedApi": false
+    }
+  },
+  "publicOverloadsAndBuilderInterfacesUnchanged": {
+    "base": true,
+    "checked": true,
+    "typed-old": true
+  },
+  "publicDeclarations": [
+    "export interface BuilderProgram {\r\n    /** @internal */\r\n    state: ReusableBuilderProgramState;\r\n    /** @internal */\r\n    hasChangedEmitSignature?(): boolean;\r\n    /**\r\n     * Returns current program\r\n     */\r\n    getProgram(): Program;\r\n    /**\r\n     * Returns current program that could be undefined if the program was released\r\n     *\r\n     * @internal\r\n     */\r\n    getProgramOrUndefined(): Program | undefined;\r\n    /**\r\n     * Releases reference to the program, making all the other operations that need program to fail.\r\n     *\r\n     * @internal\r\n     */\r\n    releaseProgram(): void;\r\n    /**\r\n     * Get compiler options of the program\r\n     */\r\n    getCompilerOptions(): CompilerOptions;\r\n    /**\r\n     * Get the source file in the program with file name\r\n     */\r\n    getSourceFile(fileName: string): SourceFile | undefined;\r\n    /**\r\n     * Get a list of files in the program\r\n     */\r\n    getSourceFiles(): readonly SourceFile[];\r\n    /**\r\n     * Get the diagnostics for compiler options\r\n     */\r\n    getOptionsDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];\r\n    /**\r\n     * Get the diagnostics that dont belong to any file\r\n     */\r\n    getGlobalDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];\r\n    /**\r\n     * Get the diagnostics from config file parsing\r\n     */\r\n    getConfigFileParsingDiagnostics(): readonly Diagnostic[];\r\n    /**\r\n     * Get the syntax diagnostics, for all source files if source file is not supplied\r\n     */\r\n    getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];\r\n    /**\r\n     * Get the declaration diagnostics, for all source files if source file is not supplied\r\n     */\r\n    getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[];\r\n    /**\r\n     * Get all the dependencies of the file\r\n     */\r\n    getAllDependencies(sourceFile: SourceFile): readonly string[];\r\n\r\n    /**\r\n     * Gets the semantic diagnostics from the program corresponding to this state of file (if provided) or whole program\r\n     * The semantic diagnostics are cached and managed here\r\n     * Note that it is assumed that when asked about semantic diagnostics through this API,\r\n     * the file has been taken out of affected files so it is safe to use cache or get from program and cache the diagnostics\r\n     * In case of SemanticDiagnosticsBuilderProgram if the source file is not provided,\r\n     * it will iterate through all the affected files, to ensure that cache stays valid and yet provide a way to get all semantic diagnostics\r\n     */\r\n    getSemanticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];\r\n    /**\r\n     * Emits the JavaScript and declaration files.\r\n     * When targetSource file is specified, emits the files corresponding to that source file,\r\n     * otherwise for the whole program.\r\n     * In case of EmitAndSemanticDiagnosticsBuilderProgram, when targetSourceFile is specified,\r\n     * it is assumed that that file is handled from affected file list. If targetSourceFile is not specified,\r\n     * it will only emit all the affected files instead of whole program\r\n     *\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    emit(targetSourceFile?: SourceFile, writeFile?: WriteFileCallback, cancellationToken?: CancellationToken, emitOnlyDtsFiles?: boolean, customTransformers?: CustomTransformers): EmitResult;\r\n    /** @internal */\r\n    emitBuildInfo(writeFile?: WriteFileCallback, cancellationToken?: CancellationToken): EmitResult;\r\n    /**\r\n     * Get the current directory of the program\r\n     */\r\n    getCurrentDirectory(): string;\r\n    /** @internal */\r\n    close(): void;\r\n}",
+    "export interface SemanticDiagnosticsBuilderProgram extends BuilderProgram {\r\n    /**\r\n     * Gets the semantic diagnostics from the program for the next affected file and caches it\r\n     * Returns undefined if the iteration is complete\r\n     */\r\n    getSemanticDiagnosticsOfNextAffectedFile(cancellationToken?: CancellationToken, ignoreSourceFile?: (sourceFile: SourceFile) => boolean): AffectedFileResult<readonly Diagnostic[]>;\r\n}",
+    "export interface EmitAndSemanticDiagnosticsBuilderProgram extends SemanticDiagnosticsBuilderProgram {\r\n    /**\r\n     * Emits the next affected file's emit result (EmitResult and sourceFiles emitted) or returns undefined if iteration is complete\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    emitNextAffectedFile(writeFile?: WriteFileCallback, cancellationToken?: CancellationToken, emitOnlyDtsFiles?: boolean, customTransformers?: CustomTransformers): AffectedFileResult<EmitResult>;\r\n}",
+    "export function createSemanticDiagnosticsBuilderProgram(\r\n    newProgram: Program,\r\n    host: BuilderProgramHost,\r\n    oldProgram?: SemanticDiagnosticsBuilderProgram,\r\n    configFileParsingDiagnostics?: readonly Diagnostic[],\r\n): SemanticDiagnosticsBuilderProgram;",
+    "export function createSemanticDiagnosticsBuilderProgram(\r\n    rootNames: readonly string[] | undefined,\r\n    options: CompilerOptions | undefined,\r\n    host?: CompilerHost,\r\n    oldProgram?: SemanticDiagnosticsBuilderProgram,\r\n    configFileParsingDiagnostics?: readonly Diagnostic[],\r\n    projectReferences?: readonly ProjectReference[],\r\n): SemanticDiagnosticsBuilderProgram;",
+    "export function createEmitAndSemanticDiagnosticsBuilderProgram(\r\n    newProgram: Program,\r\n    host: BuilderProgramHost,\r\n    oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram,\r\n    configFileParsingDiagnostics?: readonly Diagnostic[],\r\n): EmitAndSemanticDiagnosticsBuilderProgram;",
+    "export function createEmitAndSemanticDiagnosticsBuilderProgram(\r\n    rootNames: readonly string[] | undefined,\r\n    options: CompilerOptions | undefined,\r\n    host?: CompilerHost,\r\n    oldProgram?: EmitAndSemanticDiagnosticsBuilderProgram,\r\n    configFileParsingDiagnostics?: readonly Diagnostic[],\r\n    projectReferences?: readonly ProjectReference[],\r\n): EmitAndSemanticDiagnosticsBuilderProgram;"
+  ],
+  "exactOwnerPins": [
+    {
+      "label": "base",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "expected": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "actual": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "unchanged": true
+    },
+    {
+      "label": "base",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitNextAffectedFileOrDtsErrors",
+      "expected": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "actual": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "unchanged": true
+    },
+    {
+      "label": "base",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.getWriteFileCallback",
+      "expected": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "actual": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "unchanged": true
+    },
+    {
+      "label": "checked",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "expected": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "actual": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "unchanged": true
+    },
+    {
+      "label": "checked",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitNextAffectedFileOrDtsErrors",
+      "expected": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "actual": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "unchanged": true
+    },
+    {
+      "label": "checked",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.getWriteFileCallback",
+      "expected": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "actual": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "unchanged": true
+    },
+    {
+      "label": "typed-old",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "expected": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "actual": "97d55d6a1909a8ede4db4f873ffd6e519f3ca643f37ac5eb73d5f40f751345b7",
+      "unchanged": true
+    },
+    {
+      "label": "typed-old",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.emitNextAffectedFileOrDtsErrors",
+      "expected": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "actual": "ba32f704ae36654d0c81c0c16389aa8c68f5500d0a5687753b8c3dfe4bcfc02f",
+      "unchanged": true
+    },
+    {
+      "label": "typed-old",
+      "pin": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "owner": "createBuilderProgram.getWriteFileCallback",
+      "expected": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "actual": "3be72bf4f965089196a29b5c07a25e199a99d1b818ed20f3ce9567c466058150",
+      "unchanged": true
+    }
+  ]
+}

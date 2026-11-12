@@ -1,0 +1,26 @@
+{
+  "adaptedWholeFunctionExecuted": true,
+  "oldStateTruthy": true,
+  "programIdentity": true,
+  "diagnosticsIdentity": true,
+  "crossKind": {
+    "returnedSameObject": true,
+    "missingMethod": "undefined"
+  },
+  "plainBase": {
+    "returnedSameObject": true,
+    "missingMethod": "undefined"
+  },
+  "errors": [
+    {
+      "method": "emitNextAffectedFile",
+      "name": "TypeError",
+      "message": "value[name] is not a function"
+    },
+    {
+      "method": "getSemanticDiagnosticsOfNextAffectedFile",
+      "name": "TypeError",
+      "message": "value[name] is not a function"
+    }
+  ]
+}

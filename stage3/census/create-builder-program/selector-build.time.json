@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/cbp-tool/overlay.json",
+    "-o",
+    "/workspace/cbp-tool/entry-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 16.6300229200001,
+  "user_seconds": 29.302137,
+  "system_seconds": 6.588497,
+  "peak_rss_kib": 1517528
+}

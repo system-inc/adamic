@@ -1,0 +1,45 @@
+{
+  "adaptation-grep": {
+    "command": [
+      "rg",
+      "-n",
+      "--max-columns",
+      "500",
+      "--max-columns-preview",
+      "createBuilderProgram|builder\\.ts",
+      "/workspace/orm-main/stage3/adapt"
+    ],
+    "exit_code": 0,
+    "lines": 2994
+  },
+  "affected-owner-grep": {
+    "command": [
+      "rg",
+      "-n",
+      "--max-columns",
+      "500",
+      "--max-columns-preview",
+      "getBuilderCreationParameters|BuilderCreationParameters|createSemanticDiagnosticsBuilderProgram|createEmitAndSemanticDiagnosticsBuilderProgram",
+      "/workspace/orm-main/stage3/adapt"
+    ],
+    "exit_code": 0,
+    "lines": 32
+  },
+  "whole-checkout-grep": {
+    "command": [
+      "rg",
+      "-n",
+      "--max-columns",
+      "500",
+      "--max-columns-preview",
+      "\\bcreateBuilderProgram\\b",
+      "/workspace/orm-adapted",
+      "--glob",
+      "!.git/**",
+      "--glob",
+      "!node_modules/**"
+    ],
+    "exit_code": 0,
+    "lines": 6
+  }
+}

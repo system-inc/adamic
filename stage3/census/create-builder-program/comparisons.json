@@ -1,0 +1,984 @@
+{
+  "checked": {
+    "units": [
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:1686:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builder.ts:267:1: stage 0 can't lower a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram) yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builder.ts:1686:1",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:267:1"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1691:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1691:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:1691:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builder.ts:267:1: stage 0 can't lower a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram) yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builder.ts:1691:1",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:267:1"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 105423,
+            "body_start": 77581,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1696:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1696:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 105402,
+            "body_start": 77560,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:1696:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builder.ts:267:1: stage 0 can't lower a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram) yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builder.ts:1696:1",
+            "where": "/workspace/cbp-checked/src/compiler/builder.ts:267:1"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:162:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:162:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:162:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:162:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:168:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:168:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:168:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:168:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 8233,
+            "body_start": 7847,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:176:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:176:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 8553,
+            "body_start": 7847,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:176:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:176:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:195:36"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:201:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:201:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:205:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:205:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:207:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:207:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:211:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:211:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 10010,
+            "body_start": 9617,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:215:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:215:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 10751,
+            "body_start": 9937,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:219:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "in when a possibly absent spread has no property presence descriptors",
+            "root_kind": "",
+            "text": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+            "unit": "/workspace/cbp-checked/src/compiler/builderPublic.ts:219:1",
+            "where": "/workspace/cbp-checked/src/compiler/builderPublic.ts:238:36"
+          }
+        },
+        "status": "moved"
+      }
+    ],
+    "cleared": 0,
+    "moved": 9,
+    "unchanged": 0,
+    "new_stops_from_clean_units": 0,
+    "new_panics": 0,
+    "overload_result_first_stops": 0,
+    "raw_first_stop_sites": 3
+  },
+  "typed-old": {
+    "units": [
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1686:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builder.ts:1686:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1691:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1691:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1691:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builder.ts:1691:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builder.ts",
+          "createBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 105423,
+            "body_start": 77581,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1696:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builder.ts:1696:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 105498,
+            "body_start": 77656,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1696:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builder.ts:1696:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:162:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:162:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:162:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:162:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:168:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:168:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:168:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:168:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createSemanticDiagnosticsBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 8233,
+            "body_start": 7847,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:176:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:176:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 8233,
+            "body_start": 7847,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:176:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:176:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          1
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:201:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:201:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:201:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:201:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          2
+        ],
+        "base": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:207:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:207:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:207:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:207:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      },
+      {
+        "key": [
+          "src/compiler/builderPublic.ts",
+          "createEmitAndSemanticDiagnosticsBuilderProgram",
+          3
+        ],
+        "base": {
+          "unit": {
+            "body_end": 10010,
+            "body_start": 9617,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/orm-adapted/src/compiler/builderPublic.ts:215:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+            "root_kind": "",
+            "text": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1: Adamic 0.1 refuses overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined; make the implementation result covariant with every overload result",
+            "unit": "/workspace/orm-adapted/src/compiler/builderPublic.ts:215:1",
+            "where": "/workspace/orm-adapted/src/compiler/builder.ts:1686:1"
+          }
+        },
+        "head": {
+          "unit": {
+            "body_end": 10010,
+            "body_start": 9617,
+            "checker_diagnostics": [],
+            "instantiated": false,
+            "kind": "KindFunctionDeclaration",
+            "measurement": "measured on a checker-clean entry-root program",
+            "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+            "status": "attempted",
+            "where": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:215:1"
+          },
+          "first": {
+            "depth": 0,
+            "kind": "Refused",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2",
+            "root_kind": "",
+            "text": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5: Adamic 0.1 refuses overload 1 of createBuilderProgram parameter builderCreationParameters cannot be served by implementation parameter 2; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+            "unit": "/workspace/cbp-typed-old/src/compiler/builderPublic.ts:215:1",
+            "where": "/workspace/cbp-typed-old/src/compiler/builder.ts:1688:5"
+          }
+        },
+        "status": "moved"
+      }
+    ],
+    "cleared": 0,
+    "moved": 9,
+    "unchanged": 0,
+    "new_stops_from_clean_units": 0,
+    "new_panics": 0,
+    "overload_result_first_stops": 0,
+    "raw_first_stop_sites": 1
+  }
+}

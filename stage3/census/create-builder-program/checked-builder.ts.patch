@@ -1,0 +1,17 @@
+--- a/src/compiler/builder.ts
++++ b/src/compiler/builder.ts
+@@ -1686,12 +1686,12 @@
+ export function createBuilderProgram(
+     kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram,
+     builderCreationParameters: BuilderCreationParameters,
+-): SemanticDiagnosticsBuilderProgram;
++): BuilderProgram | undefined;
+ /** @internal */
+ export function createBuilderProgram(
+     kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,
+     builderCreationParameters: BuilderCreationParameters,
+-): EmitAndSemanticDiagnosticsBuilderProgram;
++): BuilderProgram | undefined;
+ /** @internal */
+ export function createBuilderProgram(
+     kind: BuilderProgramKind,

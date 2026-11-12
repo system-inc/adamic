@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/orm-build-main/entry-census-scan",
+    "/workspace/cbp-checked/src/tsc/tsc.ts",
+    "/workspace/op2-report/stage3/census/create-builder-program/checked-census.jsonl"
+  ],
+  "exit_code": -15,
+  "timed_out": false,
+  "wall_seconds": 55.06482714699996,
+  "user_seconds": 53.718142,
+  "system_seconds": 2.753229,
+  "peak_rss_kib": 908256
+}

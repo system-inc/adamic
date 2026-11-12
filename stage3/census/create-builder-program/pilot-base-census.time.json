@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/orm-build-main/entry-census-scan",
+    "/workspace/orm-adapted/src/tsc/tsc.ts",
+    "/workspace/op2-report/stage3/census/create-builder-program/base-census.jsonl"
+  ],
+  "exit_code": -15,
+  "timed_out": false,
+  "wall_seconds": 109.9477774070001,
+  "user_seconds": 110.630279,
+  "system_seconds": 2.688398,
+  "peak_rss_kib": 940032
+}

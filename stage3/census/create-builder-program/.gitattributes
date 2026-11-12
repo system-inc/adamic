@@ -1,0 +1,3 @@
+# Unified-diff context prefixes and original CRLF source are evidence bytes.
+*.patch -whitespace
+*.ts.txt whitespace=cr-at-eol

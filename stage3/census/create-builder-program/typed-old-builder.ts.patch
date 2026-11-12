@@ -1,0 +1,60 @@
+--- a/src/compiler/builder.ts
++++ b/src/compiler/builder.ts
+@@ -1596,27 +1596,27 @@
+ }
+ 
+ /** @internal */
+-export interface BuilderCreationParameters {
++export interface BuilderCreationParameters<T extends BuilderProgram = BuilderProgram> {
+     newProgram: Program;
+     host: BuilderProgramHost;
+-    oldProgram: BuilderProgram | undefined;
++    oldProgram: T | undefined;
+     configFileParsingDiagnostics: readonly Diagnostic[];
+ }
+ 
+ /** @internal */
+-export function getBuilderCreationParameters(newProgramOrRootNames: Program | readonly string[] | undefined, hostOrOptions: BuilderProgramHost | CompilerOptions | undefined, oldProgramOrHost?: BuilderProgram | CompilerHost, configFileParsingDiagnosticsOrOldProgram?: readonly Diagnostic[] | BuilderProgram, configFileParsingDiagnostics?: readonly Diagnostic[], projectReferences?: readonly ProjectReference[]): BuilderCreationParameters {
++export function getBuilderCreationParameters<T extends BuilderProgram = BuilderProgram>(newProgramOrRootNames: Program | readonly string[] | undefined, hostOrOptions: BuilderProgramHost | CompilerOptions | undefined, oldProgramOrHost?: T | CompilerHost, configFileParsingDiagnosticsOrOldProgram?: readonly Diagnostic[] | T, configFileParsingDiagnostics?: readonly Diagnostic[], projectReferences?: readonly ProjectReference[]): BuilderCreationParameters<T> {
+     let host: BuilderProgramHost;
+     let newProgram: Program;
+-    let oldProgram: BuilderProgram;
++    let oldProgram: T;
+     if (newProgramOrRootNames === undefined) {
+         Debug.assert(hostOrOptions === undefined);
+         host = oldProgramOrHost as CompilerHost;
+-        oldProgram = configFileParsingDiagnosticsOrOldProgram as BuilderProgram;
++        oldProgram = configFileParsingDiagnosticsOrOldProgram as T;
+         Debug.assert(!!oldProgram);
+         newProgram = oldProgram.getProgram();
+     }
+     else if (isArray(newProgramOrRootNames)) {
+-        oldProgram = configFileParsingDiagnosticsOrOldProgram as BuilderProgram;
++        oldProgram = configFileParsingDiagnosticsOrOldProgram as T;
+         newProgram = createProgram({
+             rootNames: newProgramOrRootNames,
+             options: hostOrOptions as CompilerOptions,
+@@ -1630,7 +1630,7 @@
+     else {
+         newProgram = newProgramOrRootNames;
+         host = hostOrOptions as BuilderProgramHost;
+-        oldProgram = oldProgramOrHost as BuilderProgram;
++        oldProgram = oldProgramOrHost as T;
+         configFileParsingDiagnostics = configFileParsingDiagnosticsOrOldProgram as readonly Diagnostic[];
+     }
+     return { host, newProgram, oldProgram, configFileParsingDiagnostics: configFileParsingDiagnostics || emptyArray };
+@@ -1685,12 +1685,12 @@
+ /** @internal */
+ export function createBuilderProgram(
+     kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram,
+-    builderCreationParameters: BuilderCreationParameters,
++    builderCreationParameters: BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>,
+ ): SemanticDiagnosticsBuilderProgram;
+ /** @internal */
+ export function createBuilderProgram(
+     kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,
+-    builderCreationParameters: BuilderCreationParameters,
++    builderCreationParameters: BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>,
+ ): EmitAndSemanticDiagnosticsBuilderProgram;
+ /** @internal */
+ export function createBuilderProgram(

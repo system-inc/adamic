@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/cbp-tool/entry-census",
+    "/workspace/cbp-checked/src/tsc/tsc.ts",
+    "/workspace/op2-report/stage3/census/create-builder-program/checked-census.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 10.628865459999815,
+  "user_seconds": 9.03474,
+  "system_seconds": 1.550449,
+  "peak_rss_kib": 557092
+}

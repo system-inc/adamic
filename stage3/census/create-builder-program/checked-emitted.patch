@@ -1,0 +1,22 @@
+--- base/builderPublic.js
++++ checked/builderPublic.js
+@@ -1,9 +1,17 @@
+ import { BuilderProgramKind, createBuilderProgram, createRedirectedBuilderProgram, getBuilderCreationParameters, } from "./_namespaces/ts.js";
+ export function createSemanticDiagnosticsBuilderProgram(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences) {
+-    return createBuilderProgram(BuilderProgramKind.SemanticDiagnosticsBuilderProgram, getBuilderCreationParameters(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences));
++    const builder = createBuilderProgram(BuilderProgramKind.SemanticDiagnosticsBuilderProgram, getBuilderCreationParameters(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences));
++    if (builder === undefined || !("getSemanticDiagnosticsOfNextAffectedFile" in builder) || typeof builder.getSemanticDiagnosticsOfNextAffectedFile !== "function") {
++        throw new Error("Builder program does not have the requested kind");
++    }
++    return builder;
+ }
+ export function createEmitAndSemanticDiagnosticsBuilderProgram(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences) {
+-    return createBuilderProgram(BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, getBuilderCreationParameters(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences));
++    const builder = createBuilderProgram(BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, getBuilderCreationParameters(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences));
++    if (builder === undefined || !("getSemanticDiagnosticsOfNextAffectedFile" in builder) || typeof builder.getSemanticDiagnosticsOfNextAffectedFile !== "function" || !("emitNextAffectedFile" in builder) || typeof builder.emitNextAffectedFile !== "function") {
++        throw new Error("Builder program does not have the requested kind");
++    }
++    return builder;
+ }
+ export function createAbstractBuilder(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences) {
+     const { newProgram, configFileParsingDiagnostics: newConfigFileParsingDiagnostics } = getBuilderCreationParameters(newProgramOrRootNames, hostOrOptions, oldProgramOrHost, configFileParsingDiagnosticsOrOldProgram, configFileParsingDiagnostics, projectReferences);

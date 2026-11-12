@@ -1,0 +1,710 @@
+{
+  "label": "typed-old",
+  "tree": "/workspace/cbp-typed-old",
+  "main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "typescript": "6.0.3",
+  "roots": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts"
+  ],
+  "ambientRoot": "/workspace/orm-main/internal/load/node_types/node_modules/@types/node/index.d.ts",
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/orm-main/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "diagnostics": [
+    {
+      "file": "src/compiler/builder.ts",
+      "start": 74548,
+      "code": 2304,
+      "text": "Cannot find name 'THost'."
+    }
+  ],
+  "wholeCheckoutTsFiles": 712,
+  "references": [
+    {
+      "location": "src/compiler/builder.ts:1686:17",
+      "parent": "FunctionDeclaration",
+      "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>,\r\n): SemanticDiagnosticsBuilderProgram;"
+    },
+    {
+      "location": "src/compiler/builder.ts:1691:17",
+      "parent": "FunctionDeclaration",
+      "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>,\r\n): EmitAndSemanticDiagnosticsBuilderProgram;"
+    },
+    {
+      "location": "src/compiler/builder.ts:1696:17",
+      "parent": "FunctionDeclaration",
+      "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind,\r\n    { newProgram, host, oldProgram, configFileParsingDiagnostics }: BuilderCreationParameters,\r\n) {\r\n    // Return same program if underlying program doesnt change\r\n    let oldState = oldProgram && oldProgram.state;\r\n    if (oldState && newProgram === oldState.program && configFileParsingDiagnostics === newProgram.getConfigFileParsingDiagnostics()) {\r\n        newProgram = undefined!;\r\n        oldState = undefined;\r\n        return oldProgram;\r\n    }\r\n\r\n    const state = createBuilderProgramState(newProgram, oldState);\r\n    newProgram.getBuildInfo = () => getBuildInfo(toBuilderProgramStateWithDefinedProgram(state));\r\n\r\n    // To ensure that we arent storing any references to old program or new program without state\r\n    newProgram = undefined!;\r\n    oldProgram = undefined;\r\n    oldState = undefined;\r\n\r\n    const builderProgram = createRedirectedBuilderProgram(state, configFileParsingDiagnostics);\r\n    builderProgram.state = state;\r\n    builderProgram.hasChangedEmitSignature = () => !!state.hasChangedEmitSignature;\r\n    builderProgram.getAllDependencies = sourceFile =>\r\n        BuilderState.getAllDependencies(\r\n            state,\r\n            Debug.checkDefined(state.program),\r\n            sourceFile,\r\n        );\r\n    builderProgram.getSemanticDiagnostics = getSemanticDiagnostics;\r\n    builderProgram.getDeclarationDiagnostics = getDeclarationDiagnostics;\r\n    builderProgram.emit = emit;\r\n    builderProgram.releaseProgram = () => releaseCache(state);\r\n\r\n    if (kind === BuilderProgramKind.SemanticDiagnosticsBuilderProgram) {\r\n        (builderProgram as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;\r\n    }\r\n    else if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;\r\n        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).emitNextAffectedFile = emitNextAffectedFile;\r\n        builderProgram.emitBuildInfo = emitBuildInfo;\r\n    }\r\n    else {\r\n        notImplemented();\r\n    }\r\n    return builderProgram;\r\n\r\n    function emitBuildInfo(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n    ): EmitResult {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (getBuildInfoEmitPending(state)) {\r\n            const result = state.program.emitBuildInfo(\r\n                writeFile || host.writeFile?.bind(host),\r\n                cancellationToken,\r\n            );\r\n            state.buildInfoEmitPending = false;\r\n            return result;\r\n        }\r\n        return emitSkippedWithNoDiagnostics;\r\n    }\r\n\r\n    /**\r\n     * Emits the next affected file's emit result (EmitResult and sourceFiles emitted) or returns undefined if iteration is complete\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emitNextAffectedFileOrDtsErrors(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n        isForDtsErrors: boolean,\r\n    ): AffectedFileResult<EmitResult> {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        let affected = getNextAffectedFile(state, cancellationToken, host);\r\n        const programEmitKind = getBuilderFileEmit(state.compilerOptions);\r\n        let emitKind: BuilderFileEmit = !isForDtsErrors ?\r\n            emitOnlyDtsFiles ?\r\n                programEmitKind & BuilderFileEmit.AllDts :\r\n                programEmitKind :\r\n            BuilderFileEmit.DtsErrors;\r\n        if (!affected) {\r\n            if (!state.compilerOptions.outFile) {\r\n                const pendingAffectedFile = getNextAffectedFilePendingEmit(\r\n                    state,\r\n                    emitOnlyDtsFiles,\r\n                    isForDtsErrors,\r\n                );\r\n                if (pendingAffectedFile) {\r\n                    // Emit pending affected file\r\n                    ({ affectedFile: affected, emitKind } = pendingAffectedFile);\r\n                }\r\n                else {\r\n                    const pendingForDiagnostics = getNextPendingEmitDiagnosticsFile(\r\n                        state,\r\n                        isForDtsErrors,\r\n                    );\r\n                    if (pendingForDiagnostics) {\r\n                        (state.seenEmittedFiles ??= new Map()).set(\r\n                            pendingForDiagnostics.affectedFile.resolvedPath,\r\n                            pendingForDiagnostics.seenKind | getBuilderFileEmitAllDts(isForDtsErrors),\r\n                        );\r\n                        return {\r\n                            result: { emitSkipped: true, diagnostics: pendingForDiagnostics.diagnostics },\r\n                            affected: pendingForDiagnostics.affectedFile,\r\n                        };\r\n                    }\r\n                }\r\n            }\r\n            else {\r\n                // Emit program if it was pending emit\r\n                if (state.programEmitPending) {\r\n                    emitKind = getPendingEmitKindWithSeen(\r\n                        state.programEmitPending,\r\n                        state.seenProgramEmit,\r\n                        emitOnlyDtsFiles,\r\n                        isForDtsErrors,\r\n                    );\r\n                    if (emitKind) affected = state.program!;\r\n                }\r\n                // Pending emit diagnostics\r\n                if (!affected && state.emitDiagnosticsPerFile?.size) {\r\n                    const seenKind = state.seenProgramEmit || BuilderFileEmit.None;\r\n                    if (!(seenKind & getBuilderFileEmitAllDts(isForDtsErrors))) {\r\n                        state.seenProgramEmit = getBuilderFileEmitAllDts(isForDtsErrors) | seenKind;\r\n                        const diagnostics: Diagnostic[] = [];\r\n                        state.emitDiagnosticsPerFile.forEach(d => addRange(diagnostics, d));\r\n                        return {\r\n                            result: { emitSkipped: true, diagnostics },\r\n                            affected: state.program,\r\n                        };\r\n                    }\r\n                }\r\n            }\r\n\r\n            if (!affected) {\r\n                // Emit buildinfo if pending\r\n                if (isForDtsErrors || !getBuildInfoEmitPending(state)) return undefined;\r\n                const affected = state.program;\r\n                const result = affected.emitBuildInfo(\r\n                    writeFile || host.writeFile?.bind(host),\r\n                    cancellationToken,\r\n                );\r\n                state.buildInfoEmitPending = false;\r\n                return { result, affected };\r\n            }\r\n        }\r\n        // Determine if we can do partial emit\r\n        let emitOnly: EmitOnly | undefined;\r\n        if (emitKind & BuilderFileEmit.AllJs) emitOnly = EmitOnly.Js;\r\n        if (emitKind & BuilderFileEmit.AllDts) emitOnly = emitOnly === undefined ? EmitOnly.Dts : undefined;\r\n        // Actual emit without buildInfo as we want to emit it later so the state is updated\r\n        const result = !isForDtsErrors ?\r\n            state.program.emit(\r\n                affected === state.program ? undefined : affected as SourceFile,\r\n                getWriteFileCallback(writeFile, customTransformers),\r\n                cancellationToken,\r\n                emitOnly,\r\n                customTransformers,\r\n                /*forceDtsEmit*/ undefined,\r\n                /*skipBuildInfo*/ true,\r\n            ) :\r\n            {\r\n                emitSkipped: true,\r\n                diagnostics: state.program.getDeclarationDiagnostics(\r\n                    affected === state.program ? undefined : affected as SourceFile,\r\n                    cancellationToken,\r\n                ),\r\n            };\r\n        if (affected !== state.program) {\r\n            // update affected files\r\n            const affectedSourceFile = affected as SourceFile;\r\n            state.seenAffectedFiles!.add(affectedSourceFile.resolvedPath);\r\n            if (state.affectedFilesIndex !== undefined) state.affectedFilesIndex++;\r\n            // Change in changeSet/affectedFilesPendingEmit, buildInfo needs to be emitted\r\n            state.buildInfoEmitPending = true;\r\n            // Update the pendingEmit for the file\r\n            const existing = state.seenEmittedFiles?.get(affectedSourceFile.resolvedPath) || BuilderFileEmit.None;\r\n            (state.seenEmittedFiles ??= new Map()).set(affectedSourceFile.resolvedPath, emitKind | existing);\r\n            const existingPending = state.affectedFilesPendingEmit?.get(affectedSourceFile.resolvedPath) || programEmitKind;\r\n            const pendingKind = getPendingEmitKind(existingPending, emitKind | existing);\r\n            if (pendingKind) (state.affectedFilesPendingEmit ??= new Map()).set(affectedSourceFile.resolvedPath, pendingKind);\r\n            else state.affectedFilesPendingEmit?.delete(affectedSourceFile.resolvedPath);\r\n            if (result.diagnostics.length) (state.emitDiagnosticsPerFile ??= new Map()).set(affectedSourceFile.resolvedPath, result.diagnostics);\r\n        }\r\n        else {\r\n            // No more changes remaining to emit\r\n            state.changedFilesSet.clear();\r\n            // Update program emit kind\r\n            state.programEmitPending = state.changedFilesSet.size ?\r\n                getPendingEmitKind(programEmitKind, emitKind) :\r\n                state.programEmitPending ?\r\n                getPendingEmitKind(state.programEmitPending, emitKind) :\r\n                undefined;\r\n            state.seenProgramEmit = emitKind | (state.seenProgramEmit || BuilderFileEmit.None);\r\n            setEmitDiagnosticsPerFile(result.diagnostics);\r\n            state.buildInfoEmitPending = true;\r\n        }\r\n        return { result, affected };\r\n    }\r\n\r\n    function setEmitDiagnosticsPerFile(diagnostics: readonly Diagnostic[]) {\r\n        // Update the d.ts diagnostics since they always come with Location, skip diagnsotics without file,\r\n        // they could be semantic diagnsotic with noEmitOnError or other kind of diagnostics\r\n        let emitDiagnosticsPerFile: Map<Path, Diagnostic[]> | undefined;\r\n        diagnostics.forEach(d => {\r\n            if (!d.file) return; // Dont cache without fileName\r\n            let diagnostics = emitDiagnosticsPerFile?.get(d.file.resolvedPath);\r\n            if (!diagnostics) (emitDiagnosticsPerFile ??= new Map()).set(d.file.resolvedPath, diagnostics = []);\r\n            diagnostics.push(d);\r\n        });\r\n        if (emitDiagnosticsPerFile) state.emitDiagnosticsPerFile = emitDiagnosticsPerFile;\r\n    }\r\n\r\n    /**\r\n     * Emits the next affected file's emit result (EmitResult and sourceFiles emitted) or returns undefined if iteration is complete\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emitNextAffectedFile(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): AffectedFileResult<EmitResult> {\r\n        return emitNextAffectedFileOrDtsErrors(\r\n            writeFile,\r\n            cancellationToken,\r\n            emitOnlyDtsFiles,\r\n            customTransformers,\r\n            /*isForDtsErrors*/ false,\r\n        );\r\n    }\r\n\r\n    function getWriteFileCallback(\r\n        writeFile: WriteFileCallback | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): WriteFileCallback | undefined {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (!getEmitDeclarations(state.compilerOptions)) return writeFile || host.writeFile?.bind(host);\r\n        return (fileName, text, writeByteOrderMark, onError, sourceFiles, data) => {\r\n            if (isDeclarationFileName(fileName)) {\r\n                if (!state.compilerOptions.outFile) {\r\n                    Debug.assert(sourceFiles?.length === 1);\r\n                    let emitSignature;\r\n                    if (!customTransformers) {\r\n                        const file = sourceFiles[0]!;\r\n                        const info = state.fileInfos.get(file.resolvedPath)!;\r\n                        if (info.signature === file.version) {\r\n                            const signature = computeSignatureWithDiagnostics(\r\n                                state.program,\r\n                                file,\r\n                                text,\r\n                                host,\r\n                                data,\r\n                            );\r\n                            // With d.ts diagnostics they are also part of the signature so emitSignature will be different from it since its just hash of d.ts\r\n                            if (!data?.diagnostics?.length) emitSignature = signature;\r\n                            if (signature !== file.version) { // Update it\r\n                                if (host.storeSignatureInfo) (state.signatureInfo ??= new Map()).set(file.resolvedPath, SignatureInfo.StoredSignatureAtEmit);\r\n                                if (state.affectedFiles) {\r\n                                    // Keep old signature so we know what to undo if cancellation happens\r\n                                    const existing = state.oldSignatures?.get(file.resolvedPath);\r\n                                    if (existing === undefined) (state.oldSignatures ??= new Map()).set(file.resolvedPath, info.signature || false);\r\n                                    info.signature = signature;\r\n                                }\r\n                                else {\r\n                                    // These are directly committed\r\n                                    info.signature = signature;\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n\r\n                    // Store d.ts emit hash so later can be compared to check if d.ts has changed.\r\n                    // Currently we do this only for composite projects since these are the only projects that can be referenced by other projects\r\n                    // and would need their d.ts change time in --build mode\r\n                    if (state.compilerOptions.composite) {\r\n                        const filePath = sourceFiles[0]!.resolvedPath;\r\n                        emitSignature = handleNewSignature(state.emitSignatures?.get(filePath), emitSignature);\r\n                        if (!emitSignature) return data!.skippedDtsWrite = true;\r\n                        (state.emitSignatures ??= new Map()).set(filePath, emitSignature);\r\n                    }\r\n                }\r\n                else if (state.compilerOptions.composite) {\r\n                    const newSignature = handleNewSignature(state.outSignature, /*newSignature*/ undefined);\r\n                    if (!newSignature) return data!.skippedDtsWrite = true;\r\n                    state.outSignature = newSignature;\r\n                }\r\n            }\r\n            if (writeFile) writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else if (host.writeFile) host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else state.program.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n\r\n            /**\r\n             * Compare to existing computed signature and store it or handle the changes in d.ts map option from before\r\n             * returning undefined means that, we dont need to emit this d.ts file since its contents didnt change\r\n             */\r\n            function handleNewSignature(oldSignatureFormat: EmitSignature | undefined, newSignature: string | undefined) {\r\n                const oldSignature = !oldSignatureFormat || isString(oldSignatureFormat) ? oldSignatureFormat : oldSignatureFormat[0];\r\n                newSignature ??= computeSignature(text, host, data);\r\n                // Dont write dts files if they didn't change\r\n                if (newSignature === oldSignature) {\r\n                    // If the signature was encoded as string the dts map options match so nothing to do\r\n                    if (oldSignatureFormat === oldSignature) return undefined;\r\n                    // Mark as differsOnlyInMap so that --build can reverse the timestamp so that\r\n                    // the downstream projects dont detect this as change in d.ts file\r\n                    else if (data) data.differsOnlyInMap = true;\r\n                    else data = { differsOnlyInMap: true };\r\n                }\r\n                else {\r\n                    state.hasChangedEmitSignature = true;\r\n                    state.latestChangedDtsFile = fileName;\r\n                }\r\n                return newSignature;\r\n            }\r\n        };\r\n    }\r\n\r\n    /**\r\n     * Emits the JavaScript and declaration files.\r\n     * When targetSource file is specified, emits the files corresponding to that source file,\r\n     * otherwise for the whole program.\r\n     * In case of EmitAndSemanticDiagnosticsBuilderProgram, when targetSourceFile is specified,\r\n     * it is assumed that that file is handled from affected file list. If targetSourceFile is not specified,\r\n     * it will only emit all the affected files instead of whole program\r\n     *\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emit(\r\n        targetSourceFile: SourceFile | undefined,\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): EmitResult {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            assertSourceFileOkWithoutNextAffectedCall(state, targetSourceFile);\r\n        }\r\n        const result = handleNoEmitOptions(builderProgram, targetSourceFile, writeFile, cancellationToken);\r\n        if (result) return result;\r\n\r\n        // Emit only affected files if using builder for emit\r\n        if (!targetSourceFile) {\r\n            if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n                // Emit and report any errors we ran into.\r\n                let sourceMaps: SourceMapEmitResult[] = [];\r\n                let emitSkipped = false;\r\n                let diagnostics: Diagnostic[] | undefined;\r\n                let emittedFiles: string[] = [];\r\n\r\n                let affectedEmitResult: AffectedFileResult<EmitResult>;\r\n                while (\r\n                    affectedEmitResult = emitNextAffectedFile(\r\n                        writeFile,\r\n                        cancellationToken,\r\n                        emitOnlyDtsFiles,\r\n                        customTransformers,\r\n                    )\r\n                ) {\r\n                    emitSkipped = emitSkipped || affectedEmitResult.result.emitSkipped;\r\n                    diagnostics = addRange(diagnostics, affectedEmitResult.result.diagnostics);\r\n                    emittedFiles = addRange(emittedFiles, affectedEmitResult.result.emittedFiles);\r\n                    sourceMaps = addRange(sourceMaps, affectedEmitResult.result.sourceMaps);\r\n                }\r\n                return {\r\n                    emitSkipped,\r\n                    diagnostics: diagnostics || emptyArray,\r\n                    emittedFiles,\r\n                    sourceMaps,\r\n                };\r\n            }\r\n            // In non Emit builder, clear affected files pending emit\r\n            else {\r\n                clearAffectedFilesPendingEmit(\r\n                    state,\r\n                    emitOnlyDtsFiles,\r\n                    /*isForDtsErrors*/ false,\r\n                );\r\n            }\r\n        }\r\n        const emitResult = state.program.emit(\r\n            targetSourceFile,\r\n            getWriteFileCallback(writeFile, customTransformers),\r\n            cancellationToken,\r\n            emitOnlyDtsFiles,\r\n            customTransformers,\r\n        );\r\n        handleNonEmitBuilderWithEmitOrDtsErrors(\r\n            targetSourceFile,\r\n            emitOnlyDtsFiles,\r\n            /*isForDtsErrors*/ false,\r\n            emitResult.diagnostics,\r\n        );\r\n        return emitResult;\r\n    }\r\n\r\n    function handleNonEmitBuilderWithEmitOrDtsErrors(\r\n        targetSourceFile: SourceFile | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        isForDtsErrors: boolean,\r\n        diagnostics: EmitResult[\"diagnostics\"],\r\n    ) {\r\n        if (!targetSourceFile && kind !== BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            clearAffectedFilesPendingEmit(state, emitOnlyDtsFiles, isForDtsErrors);\r\n            setEmitDiagnosticsPerFile(diagnostics);\r\n        }\r\n    }\r\n\r\n    function getDeclarationDiagnostics(\r\n        sourceFile?: SourceFile,\r\n        cancellationToken?: CancellationToken,\r\n    ): readonly DiagnosticWithLocation[] {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            assertSourceFileOkWithoutNextAffectedCall(state, sourceFile);\r\n            let affectedEmitResult: AffectedFileResult<EmitResult>;\r\n            let diagnostics: Diagnostic[] | undefined;\r\n            while (\r\n                affectedEmitResult = emitNextAffectedFileOrDtsErrors(\r\n                    /*writeFile*/ undefined,\r\n                    cancellationToken,\r\n                    /*emitOnlyDtsFiles*/ undefined,\r\n                    /*customTransformers*/ undefined,\r\n                    /*isForDtsErrors*/ true,\r\n                )\r\n            ) {\r\n                if (!sourceFile) diagnostics = addRange(diagnostics, affectedEmitResult.result.diagnostics);\r\n            }\r\n            return (\r\n                !sourceFile ? diagnostics : state.emitDiagnosticsPerFile?.get(sourceFile.resolvedPath)\r\n            ) as readonly DiagnosticWithLocation[] | undefined || emptyArray;\r\n        }\r\n        else {\r\n            const result = state.program.getDeclarationDiagnostics(sourceFile, cancellationToken);\r\n            handleNonEmitBuilderWithEmitOrDtsErrors(\r\n                sourceFile,\r\n                /*emitOnlyDtsFiles*/ undefined,\r\n                /*isForDtsErrors*/ true,\r\n                result,\r\n            );\r\n            return result;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Return the semantic diagnostics for the next affected file or undefined if iteration is complete\r\n     * If provided ignoreSourceFile would be called before getting the diagnostics and would ignore the sourceFile if the returned value was true\r\n     */\r\n    function getSemanticDiagnosticsOfNextAffectedFile(\r\n        cancellationToken: CancellationToken | undefined,\r\n        ignoreSourceFile?: (sourceFile: SourceFile) => boolean,\r\n    ): AffectedFileResult<readonly Diagnostic[]> {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        while (true) {\r\n            const affected = getNextAffectedFile(state, cancellationToken, host);\r\n            let result;\r\n            if (!affected) {\r\n                if (state.checkPending && !state.compilerOptions.noCheck) {\r\n                    state.checkPending = undefined;\r\n                    state.buildInfoEmitPending = true;\r\n                }\r\n                return undefined; // Done\r\n            }\r\n            else if (affected !== state.program) {\r\n                // Get diagnostics for the affected file if its not ignored\r\n                const affectedSourceFile = affected as SourceFile;\r\n                if (!ignoreSourceFile || !ignoreSourceFile(affectedSourceFile)) {\r\n                    result = getSemanticDiagnosticsOfFile(state, affectedSourceFile, cancellationToken);\r\n                }\r\n                state.seenAffectedFiles!.add(affectedSourceFile.resolvedPath);\r\n                state.affectedFilesIndex!++;\r\n                // Change in changeSet, buildInfo needs to be emitted\r\n                state.buildInfoEmitPending = true;\r\n                if (!result) continue;\r\n            }\r\n            else {\r\n                // When whole program is affected, get all semantic diagnostics (eg when --out or --outFile is specified)\r\n                let diagnostics: Diagnostic[] | undefined;\r\n                const semanticDiagnosticsPerFile: BuilderProgramState[\"semanticDiagnosticsPerFile\"] = new Map();\r\n                state.program.getSourceFiles().forEach(sourceFile =>\r\n                    diagnostics = addRange(\r\n                        diagnostics,\r\n                        getSemanticDiagnosticsOfFile(\r\n                            state,\r\n                            sourceFile,\r\n                            cancellationToken,\r\n                            semanticDiagnosticsPerFile,\r\n                        ),\r\n                    )\r\n                );\r\n                state.semanticDiagnosticsPerFile = semanticDiagnosticsPerFile;\r\n                result = diagnostics || emptyArray;\r\n                state.changedFilesSet.clear();\r\n                state.programEmitPending = getBuilderFileEmit(state.compilerOptions);\r\n                if (!state.compilerOptions.noCheck) state.checkPending = undefined;\r\n                state.buildInfoEmitPending = true;\r\n            }\r\n            return { result, affected };\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Gets the semantic diagnostics from the program corresponding to this state of file (if provided) or whole program\r\n     * The semantic diagnostics are cached and managed here\r\n     * Note that it is assumed that when asked about semantic diagnostics through this API,\r\n     * the file has been taken out of affected files so it is safe to use cache or get from program and cache the diagnostics\r\n     * In case of SemanticDiagnosticsBuilderProgram if the source file is not provided,\r\n     * it will iterate through all the affected files, to ensure that cache stays valid and yet provide a way to get all semantic diagnostics\r\n     */\r\n    function getSemanticDiagnostics(\r\n        sourceFile: SourceFile | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n    ): readonly Diagnostic[] {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        assertSourceFileOkWithoutNextAffectedCall(state, sourceFile);\r\n        if (sourceFile) {\r\n            return getSemanticDiagnosticsOfFile(state, sourceFile, cancellationToken);\r\n        }\r\n\r\n        // When semantic builder asks for diagnostics of the whole program,\r\n        // ensure that all the affected files are handled\r\n        while (true) {\r\n            const affectedResult = getSemanticDiagnosticsOfNextAffectedFile(cancellationToken);\r\n            if (!affectedResult) break;\r\n            // If we already calculated diagnostics for all files, return them\r\n            if (affectedResult.affected === state.program) return affectedResult.result;\r\n        }\r\n\r\n        let diagnostics: Diagnostic[] | undefined;\r\n        for (const sourceFile of state.program.getSourceFiles()) {\r\n            diagnostics = addRange(diagnostics, getSemanticDiagnosticsOfFile(state, sourceFile, cancellationToken));\r\n        }\r\n        if (state.checkPending && !state.compilerOptions.noCheck) {\r\n            state.checkPending = undefined;\r\n            state.buildInfoEmitPending = true;\r\n        }\r\n        return diagnostics || emptyArray;\r\n    }\r\n}"
+    },
+    {
+      "location": "src/compiler/builderPublic.ts:6:5",
+      "parent": "ImportSpecifier",
+      "text": "createBuilderProgram"
+    },
+    {
+      "location": "src/compiler/builderPublic.ts:184:12",
+      "parent": "CallExpression",
+      "text": "createBuilderProgram(\r\n        BuilderProgramKind.SemanticDiagnosticsBuilderProgram,\r\n        getBuilderCreationParameters(\r\n            newProgramOrRootNames,\r\n            hostOrOptions,\r\n            oldProgramOrHost,\r\n            configFileParsingDiagnosticsOrOldProgram,\r\n            configFileParsingDiagnostics,\r\n            projectReferences,\r\n        ),\r\n    )"
+    },
+    {
+      "location": "src/compiler/builderPublic.ts:223:12",
+      "parent": "CallExpression",
+      "text": "createBuilderProgram(\r\n        BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,\r\n        getBuilderCreationParameters(\r\n            newProgramOrRootNames,\r\n            hostOrOptions,\r\n            oldProgramOrHost,\r\n            configFileParsingDiagnosticsOrOldProgram,\r\n            configFileParsingDiagnostics,\r\n            projectReferences,\r\n        ),\r\n    )"
+    }
+  ],
+  "calls": [
+    {
+      "location": "src/compiler/builderPublic.ts:184:12",
+      "call": "createBuilderProgram(\r\n        BuilderProgramKind.SemanticDiagnosticsBuilderProgram,\r\n        getBuilderCreationParameters(\r\n            newProgramOrRootNames,\r\n            hostOrOptions,\r\n            oldProgramOrHost,\r\n            configFileParsingDiagnosticsOrOldProgram,\r\n            configFileParsingDiagnostics,\r\n            projectReferences,\r\n        ),\r\n    )",
+      "overload": 1,
+      "declaration": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>,\r\n): SemanticDiagnosticsBuilderProgram;",
+      "signature": "(kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>): SemanticDiagnosticsBuilderProgram",
+      "argumentTypes": [
+        "BuilderProgramKind.SemanticDiagnosticsBuilderProgram",
+        "BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>"
+      ]
+    },
+    {
+      "location": "src/compiler/builderPublic.ts:223:12",
+      "call": "createBuilderProgram(\r\n        BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,\r\n        getBuilderCreationParameters(\r\n            newProgramOrRootNames,\r\n            hostOrOptions,\r\n            oldProgramOrHost,\r\n            configFileParsingDiagnosticsOrOldProgram,\r\n            configFileParsingDiagnostics,\r\n            projectReferences,\r\n        ),\r\n    )",
+      "overload": 2,
+      "declaration": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>,\r\n): EmitAndSemanticDiagnosticsBuilderProgram;",
+      "signature": "(kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, builderCreationParameters: BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>): EmitAndSemanticDiagnosticsBuilderProgram",
+      "argumentTypes": [
+        "BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram",
+        "BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>"
+      ]
+    }
+  ],
+  "overloads": [
+    {
+      "location": "src/compiler/builder.ts:1686:1",
+      "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.SemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<SemanticDiagnosticsBuilderProgram>,\r\n): SemanticDiagnosticsBuilderProgram;"
+    },
+    {
+      "location": "src/compiler/builder.ts:1691:1",
+      "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,\r\n    builderCreationParameters: BuilderCreationParameters<EmitAndSemanticDiagnosticsBuilderProgram>,\r\n): EmitAndSemanticDiagnosticsBuilderProgram;"
+    }
+  ],
+  "implementation": {
+    "location": "src/compiler/builder.ts:1696:1",
+    "signature": "(kind: BuilderProgramKind, { newProgram, host, oldProgram, configFileParsingDiagnostics }: BuilderCreationParameters<BuilderProgram>): BuilderProgram | undefined",
+    "text": "export function createBuilderProgram(\r\n    kind: BuilderProgramKind,\r\n    { newProgram, host, oldProgram, configFileParsingDiagnostics }: BuilderCreationParameters,\r\n) {\r\n    // Return same program if underlying program doesnt change\r\n    let oldState = oldProgram && oldProgram.state;\r\n    if (oldState && newProgram === oldState.program && configFileParsingDiagnostics === newProgram.getConfigFileParsingDiagnostics()) {\r\n        newProgram = undefined!;\r\n        oldState = undefined;\r\n        return oldProgram;\r\n    }\r\n\r\n    const state = createBuilderProgramState(newProgram, oldState);\r\n    newProgram.getBuildInfo = () => getBuildInfo(toBuilderProgramStateWithDefinedProgram(state));\r\n\r\n    // To ensure that we arent storing any references to old program or new program without state\r\n    newProgram = undefined!;\r\n    oldProgram = undefined;\r\n    oldState = undefined;\r\n\r\n    const builderProgram = createRedirectedBuilderProgram(state, configFileParsingDiagnostics);\r\n    builderProgram.state = state;\r\n    builderProgram.hasChangedEmitSignature = () => !!state.hasChangedEmitSignature;\r\n    builderProgram.getAllDependencies = sourceFile =>\r\n        BuilderState.getAllDependencies(\r\n            state,\r\n            Debug.checkDefined(state.program),\r\n            sourceFile,\r\n        );\r\n    builderProgram.getSemanticDiagnostics = getSemanticDiagnostics;\r\n    builderProgram.getDeclarationDiagnostics = getDeclarationDiagnostics;\r\n    builderProgram.emit = emit;\r\n    builderProgram.releaseProgram = () => releaseCache(state);\r\n\r\n    if (kind === BuilderProgramKind.SemanticDiagnosticsBuilderProgram) {\r\n        (builderProgram as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;\r\n    }\r\n    else if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;\r\n        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).emitNextAffectedFile = emitNextAffectedFile;\r\n        builderProgram.emitBuildInfo = emitBuildInfo;\r\n    }\r\n    else {\r\n        notImplemented();\r\n    }\r\n    return builderProgram;\r\n\r\n    function emitBuildInfo(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n    ): EmitResult {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (getBuildInfoEmitPending(state)) {\r\n            const result = state.program.emitBuildInfo(\r\n                writeFile || host.writeFile?.bind(host),\r\n                cancellationToken,\r\n            );\r\n            state.buildInfoEmitPending = false;\r\n            return result;\r\n        }\r\n        return emitSkippedWithNoDiagnostics;\r\n    }\r\n\r\n    /**\r\n     * Emits the next affected file's emit result (EmitResult and sourceFiles emitted) or returns undefined if iteration is complete\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emitNextAffectedFileOrDtsErrors(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n        isForDtsErrors: boolean,\r\n    ): AffectedFileResult<EmitResult> {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        let affected = getNextAffectedFile(state, cancellationToken, host);\r\n        const programEmitKind = getBuilderFileEmit(state.compilerOptions);\r\n        let emitKind: BuilderFileEmit = !isForDtsErrors ?\r\n            emitOnlyDtsFiles ?\r\n                programEmitKind & BuilderFileEmit.AllDts :\r\n                programEmitKind :\r\n            BuilderFileEmit.DtsErrors;\r\n        if (!affected) {\r\n            if (!state.compilerOptions.outFile) {\r\n                const pendingAffectedFile = getNextAffectedFilePendingEmit(\r\n                    state,\r\n                    emitOnlyDtsFiles,\r\n                    isForDtsErrors,\r\n                );\r\n                if (pendingAffectedFile) {\r\n                    // Emit pending affected file\r\n                    ({ affectedFile: affected, emitKind } = pendingAffectedFile);\r\n                }\r\n                else {\r\n                    const pendingForDiagnostics = getNextPendingEmitDiagnosticsFile(\r\n                        state,\r\n                        isForDtsErrors,\r\n                    );\r\n                    if (pendingForDiagnostics) {\r\n                        (state.seenEmittedFiles ??= new Map()).set(\r\n                            pendingForDiagnostics.affectedFile.resolvedPath,\r\n                            pendingForDiagnostics.seenKind | getBuilderFileEmitAllDts(isForDtsErrors),\r\n                        );\r\n                        return {\r\n                            result: { emitSkipped: true, diagnostics: pendingForDiagnostics.diagnostics },\r\n                            affected: pendingForDiagnostics.affectedFile,\r\n                        };\r\n                    }\r\n                }\r\n            }\r\n            else {\r\n                // Emit program if it was pending emit\r\n                if (state.programEmitPending) {\r\n                    emitKind = getPendingEmitKindWithSeen(\r\n                        state.programEmitPending,\r\n                        state.seenProgramEmit,\r\n                        emitOnlyDtsFiles,\r\n                        isForDtsErrors,\r\n                    );\r\n                    if (emitKind) affected = state.program!;\r\n                }\r\n                // Pending emit diagnostics\r\n                if (!affected && state.emitDiagnosticsPerFile?.size) {\r\n                    const seenKind = state.seenProgramEmit || BuilderFileEmit.None;\r\n                    if (!(seenKind & getBuilderFileEmitAllDts(isForDtsErrors))) {\r\n                        state.seenProgramEmit = getBuilderFileEmitAllDts(isForDtsErrors) | seenKind;\r\n                        const diagnostics: Diagnostic[] = [];\r\n                        state.emitDiagnosticsPerFile.forEach(d => addRange(diagnostics, d));\r\n                        return {\r\n                            result: { emitSkipped: true, diagnostics },\r\n                            affected: state.program,\r\n                        };\r\n                    }\r\n                }\r\n            }\r\n\r\n            if (!affected) {\r\n                // Emit buildinfo if pending\r\n                if (isForDtsErrors || !getBuildInfoEmitPending(state)) return undefined;\r\n                const affected = state.program;\r\n                const result = affected.emitBuildInfo(\r\n                    writeFile || host.writeFile?.bind(host),\r\n                    cancellationToken,\r\n                );\r\n                state.buildInfoEmitPending = false;\r\n                return { result, affected };\r\n            }\r\n        }\r\n        // Determine if we can do partial emit\r\n        let emitOnly: EmitOnly | undefined;\r\n        if (emitKind & BuilderFileEmit.AllJs) emitOnly = EmitOnly.Js;\r\n        if (emitKind & BuilderFileEmit.AllDts) emitOnly = emitOnly === undefined ? EmitOnly.Dts : undefined;\r\n        // Actual emit without buildInfo as we want to emit it later so the state is updated\r\n        const result = !isForDtsErrors ?\r\n            state.program.emit(\r\n                affected === state.program ? undefined : affected as SourceFile,\r\n                getWriteFileCallback(writeFile, customTransformers),\r\n                cancellationToken,\r\n                emitOnly,\r\n                customTransformers,\r\n                /*forceDtsEmit*/ undefined,\r\n                /*skipBuildInfo*/ true,\r\n            ) :\r\n            {\r\n                emitSkipped: true,\r\n                diagnostics: state.program.getDeclarationDiagnostics(\r\n                    affected === state.program ? undefined : affected as SourceFile,\r\n                    cancellationToken,\r\n                ),\r\n            };\r\n        if (affected !== state.program) {\r\n            // update affected files\r\n            const affectedSourceFile = affected as SourceFile;\r\n            state.seenAffectedFiles!.add(affectedSourceFile.resolvedPath);\r\n            if (state.affectedFilesIndex !== undefined) state.affectedFilesIndex++;\r\n            // Change in changeSet/affectedFilesPendingEmit, buildInfo needs to be emitted\r\n            state.buildInfoEmitPending = true;\r\n            // Update the pendingEmit for the file\r\n            const existing = state.seenEmittedFiles?.get(affectedSourceFile.resolvedPath) || BuilderFileEmit.None;\r\n            (state.seenEmittedFiles ??= new Map()).set(affectedSourceFile.resolvedPath, emitKind | existing);\r\n            const existingPending = state.affectedFilesPendingEmit?.get(affectedSourceFile.resolvedPath) || programEmitKind;\r\n            const pendingKind = getPendingEmitKind(existingPending, emitKind | existing);\r\n            if (pendingKind) (state.affectedFilesPendingEmit ??= new Map()).set(affectedSourceFile.resolvedPath, pendingKind);\r\n            else state.affectedFilesPendingEmit?.delete(affectedSourceFile.resolvedPath);\r\n            if (result.diagnostics.length) (state.emitDiagnosticsPerFile ??= new Map()).set(affectedSourceFile.resolvedPath, result.diagnostics);\r\n        }\r\n        else {\r\n            // No more changes remaining to emit\r\n            state.changedFilesSet.clear();\r\n            // Update program emit kind\r\n            state.programEmitPending = state.changedFilesSet.size ?\r\n                getPendingEmitKind(programEmitKind, emitKind) :\r\n                state.programEmitPending ?\r\n                getPendingEmitKind(state.programEmitPending, emitKind) :\r\n                undefined;\r\n            state.seenProgramEmit = emitKind | (state.seenProgramEmit || BuilderFileEmit.None);\r\n            setEmitDiagnosticsPerFile(result.diagnostics);\r\n            state.buildInfoEmitPending = true;\r\n        }\r\n        return { result, affected };\r\n    }\r\n\r\n    function setEmitDiagnosticsPerFile(diagnostics: readonly Diagnostic[]) {\r\n        // Update the d.ts diagnostics since they always come with Location, skip diagnsotics without file,\r\n        // they could be semantic diagnsotic with noEmitOnError or other kind of diagnostics\r\n        let emitDiagnosticsPerFile: Map<Path, Diagnostic[]> | undefined;\r\n        diagnostics.forEach(d => {\r\n            if (!d.file) return; // Dont cache without fileName\r\n            let diagnostics = emitDiagnosticsPerFile?.get(d.file.resolvedPath);\r\n            if (!diagnostics) (emitDiagnosticsPerFile ??= new Map()).set(d.file.resolvedPath, diagnostics = []);\r\n            diagnostics.push(d);\r\n        });\r\n        if (emitDiagnosticsPerFile) state.emitDiagnosticsPerFile = emitDiagnosticsPerFile;\r\n    }\r\n\r\n    /**\r\n     * Emits the next affected file's emit result (EmitResult and sourceFiles emitted) or returns undefined if iteration is complete\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emitNextAffectedFile(\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): AffectedFileResult<EmitResult> {\r\n        return emitNextAffectedFileOrDtsErrors(\r\n            writeFile,\r\n            cancellationToken,\r\n            emitOnlyDtsFiles,\r\n            customTransformers,\r\n            /*isForDtsErrors*/ false,\r\n        );\r\n    }\r\n\r\n    function getWriteFileCallback(\r\n        writeFile: WriteFileCallback | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): WriteFileCallback | undefined {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (!getEmitDeclarations(state.compilerOptions)) return writeFile || host.writeFile?.bind(host);\r\n        return (fileName, text, writeByteOrderMark, onError, sourceFiles, data) => {\r\n            if (isDeclarationFileName(fileName)) {\r\n                if (!state.compilerOptions.outFile) {\r\n                    Debug.assert(sourceFiles?.length === 1);\r\n                    let emitSignature;\r\n                    if (!customTransformers) {\r\n                        const file = sourceFiles[0]!;\r\n                        const info = state.fileInfos.get(file.resolvedPath)!;\r\n                        if (info.signature === file.version) {\r\n                            const signature = computeSignatureWithDiagnostics(\r\n                                state.program,\r\n                                file,\r\n                                text,\r\n                                host,\r\n                                data,\r\n                            );\r\n                            // With d.ts diagnostics they are also part of the signature so emitSignature will be different from it since its just hash of d.ts\r\n                            if (!data?.diagnostics?.length) emitSignature = signature;\r\n                            if (signature !== file.version) { // Update it\r\n                                if (host.storeSignatureInfo) (state.signatureInfo ??= new Map()).set(file.resolvedPath, SignatureInfo.StoredSignatureAtEmit);\r\n                                if (state.affectedFiles) {\r\n                                    // Keep old signature so we know what to undo if cancellation happens\r\n                                    const existing = state.oldSignatures?.get(file.resolvedPath);\r\n                                    if (existing === undefined) (state.oldSignatures ??= new Map()).set(file.resolvedPath, info.signature || false);\r\n                                    info.signature = signature;\r\n                                }\r\n                                else {\r\n                                    // These are directly committed\r\n                                    info.signature = signature;\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n\r\n                    // Store d.ts emit hash so later can be compared to check if d.ts has changed.\r\n                    // Currently we do this only for composite projects since these are the only projects that can be referenced by other projects\r\n                    // and would need their d.ts change time in --build mode\r\n                    if (state.compilerOptions.composite) {\r\n                        const filePath = sourceFiles[0]!.resolvedPath;\r\n                        emitSignature = handleNewSignature(state.emitSignatures?.get(filePath), emitSignature);\r\n                        if (!emitSignature) return data!.skippedDtsWrite = true;\r\n                        (state.emitSignatures ??= new Map()).set(filePath, emitSignature);\r\n                    }\r\n                }\r\n                else if (state.compilerOptions.composite) {\r\n                    const newSignature = handleNewSignature(state.outSignature, /*newSignature*/ undefined);\r\n                    if (!newSignature) return data!.skippedDtsWrite = true;\r\n                    state.outSignature = newSignature;\r\n                }\r\n            }\r\n            if (writeFile) writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else if (host.writeFile) host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else state.program.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n\r\n            /**\r\n             * Compare to existing computed signature and store it or handle the changes in d.ts map option from before\r\n             * returning undefined means that, we dont need to emit this d.ts file since its contents didnt change\r\n             */\r\n            function handleNewSignature(oldSignatureFormat: EmitSignature | undefined, newSignature: string | undefined) {\r\n                const oldSignature = !oldSignatureFormat || isString(oldSignatureFormat) ? oldSignatureFormat : oldSignatureFormat[0];\r\n                newSignature ??= computeSignature(text, host, data);\r\n                // Dont write dts files if they didn't change\r\n                if (newSignature === oldSignature) {\r\n                    // If the signature was encoded as string the dts map options match so nothing to do\r\n                    if (oldSignatureFormat === oldSignature) return undefined;\r\n                    // Mark as differsOnlyInMap so that --build can reverse the timestamp so that\r\n                    // the downstream projects dont detect this as change in d.ts file\r\n                    else if (data) data.differsOnlyInMap = true;\r\n                    else data = { differsOnlyInMap: true };\r\n                }\r\n                else {\r\n                    state.hasChangedEmitSignature = true;\r\n                    state.latestChangedDtsFile = fileName;\r\n                }\r\n                return newSignature;\r\n            }\r\n        };\r\n    }\r\n\r\n    /**\r\n     * Emits the JavaScript and declaration files.\r\n     * When targetSource file is specified, emits the files corresponding to that source file,\r\n     * otherwise for the whole program.\r\n     * In case of EmitAndSemanticDiagnosticsBuilderProgram, when targetSourceFile is specified,\r\n     * it is assumed that that file is handled from affected file list. If targetSourceFile is not specified,\r\n     * it will only emit all the affected files instead of whole program\r\n     *\r\n     * The first of writeFile if provided, writeFile of BuilderProgramHost if provided, writeFile of compiler host\r\n     * in that order would be used to write the files\r\n     */\r\n    function emit(\r\n        targetSourceFile: SourceFile | undefined,\r\n        writeFile: WriteFileCallback | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        customTransformers: CustomTransformers | undefined,\r\n    ): EmitResult {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            assertSourceFileOkWithoutNextAffectedCall(state, targetSourceFile);\r\n        }\r\n        const result = handleNoEmitOptions(builderProgram, targetSourceFile, writeFile, cancellationToken);\r\n        if (result) return result;\r\n\r\n        // Emit only affected files if using builder for emit\r\n        if (!targetSourceFile) {\r\n            if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n                // Emit and report any errors we ran into.\r\n                let sourceMaps: SourceMapEmitResult[] = [];\r\n                let emitSkipped = false;\r\n                let diagnostics: Diagnostic[] | undefined;\r\n                let emittedFiles: string[] = [];\r\n\r\n                let affectedEmitResult: AffectedFileResult<EmitResult>;\r\n                while (\r\n                    affectedEmitResult = emitNextAffectedFile(\r\n                        writeFile,\r\n                        cancellationToken,\r\n                        emitOnlyDtsFiles,\r\n                        customTransformers,\r\n                    )\r\n                ) {\r\n                    emitSkipped = emitSkipped || affectedEmitResult.result.emitSkipped;\r\n                    diagnostics = addRange(diagnostics, affectedEmitResult.result.diagnostics);\r\n                    emittedFiles = addRange(emittedFiles, affectedEmitResult.result.emittedFiles);\r\n                    sourceMaps = addRange(sourceMaps, affectedEmitResult.result.sourceMaps);\r\n                }\r\n                return {\r\n                    emitSkipped,\r\n                    diagnostics: diagnostics || emptyArray,\r\n                    emittedFiles,\r\n                    sourceMaps,\r\n                };\r\n            }\r\n            // In non Emit builder, clear affected files pending emit\r\n            else {\r\n                clearAffectedFilesPendingEmit(\r\n                    state,\r\n                    emitOnlyDtsFiles,\r\n                    /*isForDtsErrors*/ false,\r\n                );\r\n            }\r\n        }\r\n        const emitResult = state.program.emit(\r\n            targetSourceFile,\r\n            getWriteFileCallback(writeFile, customTransformers),\r\n            cancellationToken,\r\n            emitOnlyDtsFiles,\r\n            customTransformers,\r\n        );\r\n        handleNonEmitBuilderWithEmitOrDtsErrors(\r\n            targetSourceFile,\r\n            emitOnlyDtsFiles,\r\n            /*isForDtsErrors*/ false,\r\n            emitResult.diagnostics,\r\n        );\r\n        return emitResult;\r\n    }\r\n\r\n    function handleNonEmitBuilderWithEmitOrDtsErrors(\r\n        targetSourceFile: SourceFile | undefined,\r\n        emitOnlyDtsFiles: boolean | undefined,\r\n        isForDtsErrors: boolean,\r\n        diagnostics: EmitResult[\"diagnostics\"],\r\n    ) {\r\n        if (!targetSourceFile && kind !== BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            clearAffectedFilesPendingEmit(state, emitOnlyDtsFiles, isForDtsErrors);\r\n            setEmitDiagnosticsPerFile(diagnostics);\r\n        }\r\n    }\r\n\r\n    function getDeclarationDiagnostics(\r\n        sourceFile?: SourceFile,\r\n        cancellationToken?: CancellationToken,\r\n    ): readonly DiagnosticWithLocation[] {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        if (kind === BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram) {\r\n            assertSourceFileOkWithoutNextAffectedCall(state, sourceFile);\r\n            let affectedEmitResult: AffectedFileResult<EmitResult>;\r\n            let diagnostics: Diagnostic[] | undefined;\r\n            while (\r\n                affectedEmitResult = emitNextAffectedFileOrDtsErrors(\r\n                    /*writeFile*/ undefined,\r\n                    cancellationToken,\r\n                    /*emitOnlyDtsFiles*/ undefined,\r\n                    /*customTransformers*/ undefined,\r\n                    /*isForDtsErrors*/ true,\r\n                )\r\n            ) {\r\n                if (!sourceFile) diagnostics = addRange(diagnostics, affectedEmitResult.result.diagnostics);\r\n            }\r\n            return (\r\n                !sourceFile ? diagnostics : state.emitDiagnosticsPerFile?.get(sourceFile.resolvedPath)\r\n            ) as readonly DiagnosticWithLocation[] | undefined || emptyArray;\r\n        }\r\n        else {\r\n            const result = state.program.getDeclarationDiagnostics(sourceFile, cancellationToken);\r\n            handleNonEmitBuilderWithEmitOrDtsErrors(\r\n                sourceFile,\r\n                /*emitOnlyDtsFiles*/ undefined,\r\n                /*isForDtsErrors*/ true,\r\n                result,\r\n            );\r\n            return result;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Return the semantic diagnostics for the next affected file or undefined if iteration is complete\r\n     * If provided ignoreSourceFile would be called before getting the diagnostics and would ignore the sourceFile if the returned value was true\r\n     */\r\n    function getSemanticDiagnosticsOfNextAffectedFile(\r\n        cancellationToken: CancellationToken | undefined,\r\n        ignoreSourceFile?: (sourceFile: SourceFile) => boolean,\r\n    ): AffectedFileResult<readonly Diagnostic[]> {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        while (true) {\r\n            const affected = getNextAffectedFile(state, cancellationToken, host);\r\n            let result;\r\n            if (!affected) {\r\n                if (state.checkPending && !state.compilerOptions.noCheck) {\r\n                    state.checkPending = undefined;\r\n                    state.buildInfoEmitPending = true;\r\n                }\r\n                return undefined; // Done\r\n            }\r\n            else if (affected !== state.program) {\r\n                // Get diagnostics for the affected file if its not ignored\r\n                const affectedSourceFile = affected as SourceFile;\r\n                if (!ignoreSourceFile || !ignoreSourceFile(affectedSourceFile)) {\r\n                    result = getSemanticDiagnosticsOfFile(state, affectedSourceFile, cancellationToken);\r\n                }\r\n                state.seenAffectedFiles!.add(affectedSourceFile.resolvedPath);\r\n                state.affectedFilesIndex!++;\r\n                // Change in changeSet, buildInfo needs to be emitted\r\n                state.buildInfoEmitPending = true;\r\n                if (!result) continue;\r\n            }\r\n            else {\r\n                // When whole program is affected, get all semantic diagnostics (eg when --out or --outFile is specified)\r\n                let diagnostics: Diagnostic[] | undefined;\r\n                const semanticDiagnosticsPerFile: BuilderProgramState[\"semanticDiagnosticsPerFile\"] = new Map();\r\n                state.program.getSourceFiles().forEach(sourceFile =>\r\n                    diagnostics = addRange(\r\n                        diagnostics,\r\n                        getSemanticDiagnosticsOfFile(\r\n                            state,\r\n                            sourceFile,\r\n                            cancellationToken,\r\n                            semanticDiagnosticsPerFile,\r\n                        ),\r\n                    )\r\n                );\r\n                state.semanticDiagnosticsPerFile = semanticDiagnosticsPerFile;\r\n                result = diagnostics || emptyArray;\r\n                state.changedFilesSet.clear();\r\n                state.programEmitPending = getBuilderFileEmit(state.compilerOptions);\r\n                if (!state.compilerOptions.noCheck) state.checkPending = undefined;\r\n                state.buildInfoEmitPending = true;\r\n            }\r\n            return { result, affected };\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Gets the semantic diagnostics from the program corresponding to this state of file (if provided) or whole program\r\n     * The semantic diagnostics are cached and managed here\r\n     * Note that it is assumed that when asked about semantic diagnostics through this API,\r\n     * the file has been taken out of affected files so it is safe to use cache or get from program and cache the diagnostics\r\n     * In case of SemanticDiagnosticsBuilderProgram if the source file is not provided,\r\n     * it will iterate through all the affected files, to ensure that cache stays valid and yet provide a way to get all semantic diagnostics\r\n     */\r\n    function getSemanticDiagnostics(\r\n        sourceFile: SourceFile | undefined,\r\n        cancellationToken: CancellationToken | undefined,\r\n    ): readonly Diagnostic[] {\r\n        Debug.assert(isBuilderProgramStateWithDefinedProgram(state));\r\n        assertSourceFileOkWithoutNextAffectedCall(state, sourceFile);\r\n        if (sourceFile) {\r\n            return getSemanticDiagnosticsOfFile(state, sourceFile, cancellationToken);\r\n        }\r\n\r\n        // When semantic builder asks for diagnostics of the whole program,\r\n        // ensure that all the affected files are handled\r\n        while (true) {\r\n            const affectedResult = getSemanticDiagnosticsOfNextAffectedFile(cancellationToken);\r\n            if (!affectedResult) break;\r\n            // If we already calculated diagnostics for all files, return them\r\n            if (affectedResult.affected === state.program) return affectedResult.result;\r\n        }\r\n\r\n        let diagnostics: Diagnostic[] | undefined;\r\n        for (const sourceFile of state.program.getSourceFiles()) {\r\n            diagnostics = addRange(diagnostics, getSemanticDiagnosticsOfFile(state, sourceFile, cancellationToken));\r\n        }\r\n        if (state.checkPending && !state.compilerOptions.noCheck) {\r\n            state.checkPending = undefined;\r\n            state.buildInfoEmitPending = true;\r\n        }\r\n        return diagnostics || emptyArray;\r\n    }\r\n}"
+  },
+  "returns": [
+    {
+      "owner": "createBuilderProgram",
+      "location": "src/compiler/builder.ts:1705:9",
+      "text": "return oldProgram;",
+      "type": "BuilderProgram | undefined",
+      "outer": true
+    },
+    {
+      "owner": "createBuilderProgram",
+      "location": "src/compiler/builder.ts:1741:5",
+      "text": "return builderProgram;",
+      "type": "BuilderProgram",
+      "outer": true
+    },
+    {
+      "owner": "emitBuildInfo",
+      "location": "src/compiler/builder.ts:1754:13",
+      "text": "return result;",
+      "type": "EmitResult",
+      "outer": false
+    },
+    {
+      "owner": "emitBuildInfo",
+      "location": "src/compiler/builder.ts:1756:9",
+      "text": "return emitSkippedWithNoDiagnostics;",
+      "type": "EmitResult",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFileOrDtsErrors",
+      "location": "src/compiler/builder.ts:1800:25",
+      "text": "return {\r\n                            result: { emitSkipped: true, diagnostics: pendingForDiagnostics.diagnostics },\r\n                            affected: pendingForDiagnostics.affectedFile,\r\n                        };",
+      "type": "{ result: { emitSkipped: true; diagnostics: readonly Diagnostic[]; }; affected: SourceFile; }",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFileOrDtsErrors",
+      "location": "src/compiler/builder.ts:1825:25",
+      "text": "return {\r\n                            result: { emitSkipped: true, diagnostics },\r\n                            affected: state.program,\r\n                        };",
+      "type": "{ result: { emitSkipped: true; diagnostics: Diagnostic[]; }; affected: Program; }",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFileOrDtsErrors",
+      "location": "src/compiler/builder.ts:1835:72",
+      "text": "return undefined;",
+      "type": "undefined",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFileOrDtsErrors",
+      "location": "src/compiler/builder.ts:1842:17",
+      "text": "return { result, affected };",
+      "type": "{ result: EmitResult; affected: Program; }",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFileOrDtsErrors",
+      "location": "src/compiler/builder.ts:1896:9",
+      "text": "return { result, affected };",
+      "type": "{ result: EmitResult; affected: SourceFile | Program; }",
+      "outer": false
+    },
+    {
+      "owner": "<arrow/function expression>",
+      "location": "src/compiler/builder.ts:1904:26",
+      "text": "return;",
+      "type": "undefined",
+      "outer": false
+    },
+    {
+      "owner": "emitNextAffectedFile",
+      "location": "src/compiler/builder.ts:1923:9",
+      "text": "return emitNextAffectedFileOrDtsErrors(\r\n            writeFile,\r\n            cancellationToken,\r\n            emitOnlyDtsFiles,\r\n            customTransformers,\r\n            /*isForDtsErrors*/ false,\r\n        );",
+      "type": "AffectedFileResult<EmitResult>",
+      "outer": false
+    },
+    {
+      "owner": "getWriteFileCallback",
+      "location": "src/compiler/builder.ts:1937:58",
+      "text": "return writeFile || host.writeFile?.bind(host);",
+      "type": "WriteFileCallback | undefined",
+      "outer": false
+    },
+    {
+      "owner": "getWriteFileCallback",
+      "location": "src/compiler/builder.ts:1938:9",
+      "text": "return (fileName, text, writeByteOrderMark, onError, sourceFiles, data) => {\r\n            if (isDeclarationFileName(fileName)) {\r\n                if (!state.compilerOptions.outFile) {\r\n                    Debug.assert(sourceFiles?.length === 1);\r\n                    let emitSignature;\r\n                    if (!customTransformers) {\r\n                        const file = sourceFiles[0]!;\r\n                        const info = state.fileInfos.get(file.resolvedPath)!;\r\n                        if (info.signature === file.version) {\r\n                            const signature = computeSignatureWithDiagnostics(\r\n                                state.program,\r\n                                file,\r\n                                text,\r\n                                host,\r\n                                data,\r\n                            );\r\n                            // With d.ts diagnostics they are also part of the signature so emitSignature will be different from it since its just hash of d.ts\r\n                            if (!data?.diagnostics?.length) emitSignature = signature;\r\n                            if (signature !== file.version) { // Update it\r\n                                if (host.storeSignatureInfo) (state.signatureInfo ??= new Map()).set(file.resolvedPath, SignatureInfo.StoredSignatureAtEmit);\r\n                                if (state.affectedFiles) {\r\n                                    // Keep old signature so we know what to undo if cancellation happens\r\n                                    const existing = state.oldSignatures?.get(file.resolvedPath);\r\n                                    if (existing === undefined) (state.oldSignatures ??= new Map()).set(file.resolvedPath, info.signature || false);\r\n                                    info.signature = signature;\r\n                                }\r\n                                else {\r\n                                    // These are directly committed\r\n                                    info.signature = signature;\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n\r\n                    // Store d.ts emit hash so later can be compared to check if d.ts has changed.\r\n                    // Currently we do this only for composite projects since these are the only projects that can be referenced by other projects\r\n                    // and would need their d.ts change time in --build mode\r\n                    if (state.compilerOptions.composite) {\r\n                        const filePath = sourceFiles[0]!.resolvedPath;\r\n                        emitSignature = handleNewSignature(state.emitSignatures?.get(filePath), emitSignature);\r\n                        if (!emitSignature) return data!.skippedDtsWrite = true;\r\n                        (state.emitSignatures ??= new Map()).set(filePath, emitSignature);\r\n                    }\r\n                }\r\n                else if (state.compilerOptions.composite) {\r\n                    const newSignature = handleNewSignature(state.outSignature, /*newSignature*/ undefined);\r\n                    if (!newSignature) return data!.skippedDtsWrite = true;\r\n                    state.outSignature = newSignature;\r\n                }\r\n            }\r\n            if (writeFile) writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else if (host.writeFile) host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else state.program.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n\r\n            /**\r\n             * Compare to existing computed signature and store it or handle the changes in d.ts map option from before\r\n             * returning undefined means that, we dont need to emit this d.ts file since its contents didnt change\r\n             */\r\n            function handleNewSignature(oldSignatureFormat: EmitSignature | undefined, newSignature: string | undefined) {\r\n                const oldSignature = !oldSignatureFormat || isString(oldSignatureFormat) ? oldSignatureFormat : oldSignatureFormat[0];\r\n                newSignature ??= computeSignature(text, host, data);\r\n                // Dont write dts files if they didn't change\r\n                if (newSignature === oldSignature) {\r\n                    // If the signature was encoded as string the dts map options match so nothing to do\r\n                    if (oldSignatureFormat === oldSignature) return undefined;\r\n                    // Mark as differsOnlyInMap so that --build can reverse the timestamp so that\r\n                    // the downstream projects dont detect this as change in d.ts file\r\n                    else if (data) data.differsOnlyInMap = true;\r\n                    else data = { differsOnlyInMap: true };\r\n                }\r\n                else {\r\n                    state.hasChangedEmitSignature = true;\r\n                    state.latestChangedDtsFile = fileName;\r\n                }\r\n                return newSignature;\r\n            }\r\n        };",
+      "type": "(fileName: string, text: string, writeByteOrderMark: boolean, onError: ((message: string) => void) | undefined, sourceFiles: readonly SourceFile[] | undefined, data: WriteFileCallbackData | undefined) => true | undefined",
+      "outer": false
+    },
+    {
+      "owner": "<arrow/function expression>",
+      "location": "src/compiler/builder.ts:1978:45",
+      "text": "return data!.skippedDtsWrite = true;",
+      "type": "true",
+      "outer": false
+    },
+    {
+      "owner": "<arrow/function expression>",
+      "location": "src/compiler/builder.ts:1984:40",
+      "text": "return data!.skippedDtsWrite = true;",
+      "type": "true",
+      "outer": false
+    },
+    {
+      "owner": "handleNewSignature",
+      "location": "src/compiler/builder.ts:2002:62",
+      "text": "return undefined;",
+      "type": "undefined",
+      "outer": false
+    },
+    {
+      "owner": "handleNewSignature",
+      "location": "src/compiler/builder.ts:2012:17",
+      "text": "return newSignature;",
+      "type": "string",
+      "outer": false
+    },
+    {
+      "owner": "emit",
+      "location": "src/compiler/builder.ts:2040:21",
+      "text": "return result;",
+      "type": "EmitResult",
+      "outer": false
+    },
+    {
+      "owner": "emit",
+      "location": "src/compiler/builder.ts:2065:17",
+      "text": "return {\r\n                    emitSkipped,\r\n                    diagnostics: diagnostics || emptyArray,\r\n                    emittedFiles,\r\n                    sourceMaps,\r\n                };",
+      "type": "{ emitSkipped: boolean; diagnostics: Diagnostic[]; emittedFiles: string[]; sourceMaps: SourceMapEmitResult[]; }",
+      "outer": false
+    },
+    {
+      "owner": "emit",
+      "location": "src/compiler/builder.ts:2094:9",
+      "text": "return emitResult;",
+      "type": "EmitResult",
+      "outer": false
+    },
+    {
+      "owner": "getDeclarationDiagnostics",
+      "location": "src/compiler/builder.ts:2129:13",
+      "text": "return (\r\n                !sourceFile ? diagnostics : state.emitDiagnosticsPerFile?.get(sourceFile.resolvedPath)\r\n            ) as readonly DiagnosticWithLocation[] | undefined || emptyArray;",
+      "type": "readonly DiagnosticWithLocation[]",
+      "outer": false
+    },
+    {
+      "owner": "getDeclarationDiagnostics",
+      "location": "src/compiler/builder.ts:2141:13",
+      "text": "return result;",
+      "type": "readonly DiagnosticWithLocation[]",
+      "outer": false
+    },
+    {
+      "owner": "getSemanticDiagnosticsOfNextAffectedFile",
+      "location": "src/compiler/builder.ts:2162:17",
+      "text": "return undefined;",
+      "type": "undefined",
+      "outer": false
+    },
+    {
+      "owner": "getSemanticDiagnosticsOfNextAffectedFile",
+      "location": "src/compiler/builder.ts:2198:13",
+      "text": "return { result, affected };",
+      "type": "{ result: readonly Diagnostic[]; affected: SourceFile | Program; }",
+      "outer": false
+    },
+    {
+      "owner": "getSemanticDiagnostics",
+      "location": "src/compiler/builder.ts:2217:13",
+      "text": "return getSemanticDiagnosticsOfFile(state, sourceFile, cancellationToken);",
+      "type": "readonly Diagnostic[]",
+      "outer": false
+    },
+    {
+      "owner": "getSemanticDiagnostics",
+      "location": "src/compiler/builder.ts:2226:60",
+      "text": "return affectedResult.result;",
+      "type": "readonly Diagnostic[]",
+      "outer": false
+    },
+    {
+      "owner": "getSemanticDiagnostics",
+      "location": "src/compiler/builder.ts:2237:9",
+      "text": "return diagnostics || emptyArray;",
+      "type": "Diagnostic[]",
+      "outer": false
+    }
+  ],
+  "emission": {
+    "emitSkipped": false,
+    "diagnostics": [],
+    "options": {
+      "noEmit": false,
+      "allowImportingTsExtensions": false,
+      "target": "ES2024",
+      "module": "ESNext",
+      "newLine": "LF",
+      "sourceMap": false,
+      "declaration": false
+    },
+    "outputs": {
+      "corePublic.js": {
+        "bytes": 655,
+        "sha256": "7b3a6c31d78e176625829918ff261052ccc54832b6758fa3eec02deb003ea873"
+      },
+      "core.js": {
+        "bytes": 65368,
+        "sha256": "b02b0f43b917ae11e77162e5f510fb75a2bd536c14d54f5e120c010732ac3c85"
+      },
+      "debug.js": {
+        "bytes": 20853,
+        "sha256": "2b27d6f2775c05c287063f7376acec45bc0688d524a588f37c5b186d8a5e0f87"
+      },
+      "semver.js": {
+        "bytes": 15996,
+        "sha256": "9fdb7eff152fb719f72c501de88d0d72123a66c877d7415de717017969c784f1"
+      },
+      "performanceCore.js": {
+        "bytes": 2268,
+        "sha256": "9f859bbebeb46ce36eafd2c36f0cd884d6d6616778a513fced11bc6579c0e34d"
+      },
+      "performance.js": {
+        "bytes": 5154,
+        "sha256": "6c599304121e3fb3e9e8bcaa13d5c785f0dcca06cd88f67b711be855a8b3e012"
+      },
+      "_namespaces/ts.performance.js": {
+        "bytes": 97,
+        "sha256": "b4c5a298201d544304cebf59ffbf2e0bb196531a2e7cf0afe166262de43a14af"
+      },
+      "tracing.js": {
+        "bytes": 13462,
+        "sha256": "3a6234f463b8339d9fc94762d23c3516e0630727514c3c350fa462c3a52f5045"
+      },
+      "types.js": {
+        "bytes": 139716,
+        "sha256": "d59f6c60111e7ff43e20d24fe7db2f0616a0b0887441f8be655fcb180e3519d3"
+      },
+      "hostErrors.js": {
+        "bytes": 672,
+        "sha256": "e2e927f83d42942d49bb1f212c5061f3932a9c9dd68066a8e5a2e37d43ee01a7"
+      },
+      "sys.js": {
+        "bytes": 69462,
+        "sha256": "a40e2fcd2d89c26d115189d3b68235bd4479d7cc44f32ef74bb074b1ea49845a"
+      },
+      "path.js": {
+        "bytes": 30907,
+        "sha256": "fab25ceb206936fe9ebfbef52be026d38af8c091814e70f13044cf0b055ce922"
+      },
+      "diagnosticInformationMap.generated.js": {
+        "bytes": 532213,
+        "sha256": "f69080e6a300af060824e67341bf7119439535bd0594e5a3d837206e31d5646d"
+      },
+      "scanner.js": {
+        "bytes": 205588,
+        "sha256": "4a942f304654a882ccd6488fd24f608878e0f18517c17eda7790d33d6e983fbf"
+      },
+      "utilitiesPublic.js": {
+        "bytes": 84358,
+        "sha256": "6e665f6d0434916a1ef371cb85936e13138d4d4417937c482732e21b8b928d88"
+      },
+      "utilities.js": {
+        "bytes": 423615,
+        "sha256": "e9b04b35823e9cea6a5d17f35d01852c251aec4a92234760fb40add59dffeff7"
+      },
+      "factory/baseNodeFactory.js": {
+        "bytes": 1572,
+        "sha256": "9805a991bd70b83a4f05de0410dd3f7929db5ff5124b8cc844e9c8f2e0d91944"
+      },
+      "factory/parenthesizerRules.js": {
+        "bytes": 30982,
+        "sha256": "715566a8d75e30427c80fe4f910f5b93fe8bdae2ccccb2e16fa7687f74866581"
+      },
+      "factory/nodeConverters.js": {
+        "bytes": 5714,
+        "sha256": "8931626a7342497e7811ba9c653b1ea2a93734d4082c567f7820efe3fdde0584"
+      },
+      "factory/nodeFactory.js": {
+        "bytes": 272765,
+        "sha256": "0d5660dccc1aa7672aaca09761d295368792d9be773d53e7ff08ec23a284c9cf"
+      },
+      "factory/emitNode.js": {
+        "bytes": 10050,
+        "sha256": "9f96dd559ed495676645f1fc48b59d08e2d6a407647203160c0882dc22b4c69c"
+      },
+      "factory/emitHelpers.js": {
+        "bytes": 58667,
+        "sha256": "6481308419897e25c54dd0c0980107ecbfb3e57a0fec7b850126df4e95a4e5cd"
+      },
+      "factory/nodeTests.js": {
+        "bytes": 23060,
+        "sha256": "01c12dec887ddabe94226a3ef2ea3cfda95865b8ce6f8904bae833a4e343410c"
+      },
+      "factory/nodeChildren.js": {
+        "bytes": 1858,
+        "sha256": "d03b2b69fe7390bfed28bc10e613da97d123136c111538199f1db649be9fb4c3"
+      },
+      "factory/utilities.js": {
+        "bytes": 54051,
+        "sha256": "d2ee97b7dc8116f2326da7681e711d8e3e73e55f629339cf4ccf5afb2f355fa0"
+      },
+      "factory/utilitiesPublic.js": {
+        "bytes": 1869,
+        "sha256": "f3bbf763c869423665ecafdab3af687f5b04570140c380e9957b9859112569f6"
+      },
+      "parser.js": {
+        "bytes": 475550,
+        "sha256": "587003642951bfcba9a0c56c9816299d49e27b2707083f8a11dbe578c582be63"
+      },
+      "commandLineParser.js": {
+        "bytes": 162968,
+        "sha256": "7c3ed5cfd2ac0244b607fead20a9d65bd9bc261c405db0ca8564a462a1576e3b"
+      },
+      "moduleNameResolver.js": {
+        "bytes": 150489,
+        "sha256": "6848bcbf37c4753294ffffef355a1b412708bd2d84cd1f73095c6a0b1d2fdcbe"
+      },
+      "binder.js": {
+        "bytes": 175666,
+        "sha256": "bda6c9db9dfd0fff3b2e7ccf3587927d4a1d83cd69f808fdb86d2b160b63b45e"
+      },
+      "symbolWalker.js": {
+        "bytes": 6864,
+        "sha256": "8e89d16313f9ab0eae31d906259d22fa29b104ab35039714697e34dcf93fe4e8"
+      },
+      "checker.js": {
+        "bytes": 2893389,
+        "sha256": "151494041a243612d5581370cb8e572978f8116e213621e2bf400f6f483bb4a1"
+      },
+      "visitorPublic.js": {
+        "bytes": 65548,
+        "sha256": "5e305861446ad171c2c5b8f3eb766deb0fbadcf6105dc26d3139f10564b354c8"
+      },
+      "sourcemap.js": {
+        "bytes": 28503,
+        "sha256": "9c7a165543c0a01e29b0a8ffb4d8bcaaade15a21885c84d45a2aebece1dbc061"
+      },
+      "transformers/utilities.js": {
+        "bytes": 26782,
+        "sha256": "aad936c0fce864a5248e5d3b3e022ff7a30c58b24467d44e638066a9ed5d32bc"
+      },
+      "transformers/destructuring.js": {
+        "bytes": 26270,
+        "sha256": "d2eda176437dcc272d847373b93c7835392d28dca847ee8de6ba3e25b0add7e7"
+      },
+      "transformers/classThis.js": {
+        "bytes": 3458,
+        "sha256": "6381f02976538ab7e87105eb45389f2d5fd3cd904deed9d996a31dac90a433d2"
+      },
+      "transformers/namedEvaluation.js": {
+        "bytes": 17927,
+        "sha256": "45cf239d84ed36df0b02184ae10aa17e7a8ac3ae73358dc81b50f3b9dc7d2db5"
+      },
+      "transformers/taggedTemplate.js": {
+        "bytes": 4648,
+        "sha256": "53dc0924a00bef483c6c24baf74481da6be38ba837d2e738615d9e7c388325ba"
+      },
+      "transformers/ts.js": {
+        "bytes": 100775,
+        "sha256": "291cfa91ee20d6f30f93ec5955e4421afe7da522abe8951c4e0903ebc9117a2e"
+      },
+      "transformers/classFields.js": {
+        "bytes": 134151,
+        "sha256": "2ca84767b571ecd804badc32f009e2abad40358fbee8556d8c6699b7e17da048"
+      },
+      "transformers/typeSerializer.js": {
+        "bytes": 22584,
+        "sha256": "773a44f581bee07cc8ab1f4557c2ea97bc31d2a091668d284dbd36dc5e9cdb82"
+      },
+      "transformers/legacyDecorators.js": {
+        "bytes": 32085,
+        "sha256": "f6e57f2e49f389a79556446c1b4425bd1aaf0b475518d0247c999de85b251cdd"
+      },
+      "transformers/esDecorators.js": {
+        "bytes": 109299,
+        "sha256": "c8964ef2ae56bc39274a417889c6106baf8fe832040816c73a12c2e4bff6e42a"
+      },
+      "transformers/es2017.js": {
+        "bytes": 41832,
+        "sha256": "a2637edfee50e32caa487fe351f796f45e9fa6fd98ef5d8e334c99d513602de3"
+      },
+      "transformers/es2018.js": {
+        "bytes": 57394,
+        "sha256": "41fda081bf51b91d0ac1ace0d2b9b2ba0b8d03912d231b1dc511f0d804078332"
+      },
+      "transformers/es2019.js": {
+        "bytes": 1141,
+        "sha256": "45dbb2d351367dfce39dbb1351fcee8e53063747c60cadd27017840d40927237"
+      },
+      "transformers/es2020.js": {
+        "bytes": 11304,
+        "sha256": "8d5458e3fbc976871dc630c7c396b8db6bf54c067fbf958036a6db4bbfd0d5b2"
+      },
+      "transformers/es2021.js": {
+        "bytes": 3072,
+        "sha256": "9c225337aa7f6ff29d751ad2498a6e3f50f0a191bbf8a894148845c6e8cb256a"
+      },
+      "transformers/esnext.js": {
+        "bytes": 28597,
+        "sha256": "625bb599f843f585fd292faf817c386425022302f04a37db4aa92ee1800fd412"
+      },
+      "transformers/jsx.js": {
+        "bytes": 31634,
+        "sha256": "1491c4bd8a7535771579cc012b7daf6a4dfd4f07700b51d55eddc0c0787989c8"
+      },
+      "transformers/es2016.js": {
+        "bytes": 3453,
+        "sha256": "f237bf6782178b13c36309d006e51265c68bd0a87dd2cf1df2fec01080b079d0"
+      },
+      "transformers/es2015.js": {
+        "bytes": 193255,
+        "sha256": "18f7f72aec5d21793ae44d9b3d8eb52fa148e04e873b9ea1456b21932c54c552"
+      },
+      "transformers/generators.js": {
+        "bytes": 100593,
+        "sha256": "c956ca89fccefd0e678333d5e98fc49938712a4dd67818fd3967906362f89600"
+      },
+      "transformers/module/module.js": {
+        "bytes": 89634,
+        "sha256": "6946c73d1c571f20f237691e6c88051a881116168f46b28691df10ff1fa97119"
+      },
+      "transformers/module/system.js": {
+        "bytes": 70904,
+        "sha256": "549ea9e9b8b762a91750dda04cdb19e5c936d5cac97d06cecd43e95fe6ea61e8"
+      },
+      "transformers/module/esnextAnd2015.js": {
+        "bytes": 14866,
+        "sha256": "9c1e32542e0bbc2d89d36b1cf46ff6ea7224272179c1816ab53f976157a912b5"
+      },
+      "transformers/module/impliedNodeFormatDependent.js": {
+        "bytes": 3254,
+        "sha256": "afea0345575cd764dbb1b4fcdd02e7711a15d8ea3aca12357ed20d0ce6c86955"
+      },
+      "transformers/declarations/diagnostics.js": {
+        "bytes": 41145,
+        "sha256": "4dd16539f49992214e35f796178b9e1706d01ac826651ba49564014116ad4209"
+      },
+      "transformers/declarations.js": {
+        "bytes": 84653,
+        "sha256": "4f1890c8ef04b1e19eb9e6e5fa9caed1e81101e1d5dd4b6d112c7100c9f718fa"
+      },
+      "transformer.js": {
+        "bytes": 26961,
+        "sha256": "000659b9f851423f329f23b1ac519875deb85ca507ffcc7ccd08cf27363ab0f9"
+      },
+      "emitter.js": {
+        "bytes": 236357,
+        "sha256": "ecc6ee944e584a713d453305212583318e95d1870d636f703de16264d8571386"
+      },
+      "watchUtilities.js": {
+        "bytes": 26514,
+        "sha256": "acfaa36be90fd6279dadf8b827782d6e4227e3439ba75d5fc7c0674bd93b374a"
+      },
+      "program.js": {
+        "bytes": 230989,
+        "sha256": "9272d9ae40cd95055b43fc6fe9d419dcbb7dddd2dadab1b802707d71bc6d19c6"
+      },
+      "programDiagnostics.js": {
+        "bytes": 17436,
+        "sha256": "773e15e1f4b8bee8f5541b7b1bb721975670afd20914509d7426ca32554bdac0"
+      },
+      "builderStatePublic.js": {
+        "bytes": 38,
+        "sha256": "9a8d8acea63fd6863fa638ef5264ee0e433d172e97a30df30c6a193e6a06455d"
+      },
+      "builderState.js": {
+        "bytes": 21513,
+        "sha256": "a10c531037dac9859cc26f8533c6086a1fff2e341a5c1ce33e482c2199c39702"
+      },
+      "builder.js": {
+        "bytes": 92065,
+        "sha256": "ad9c9af3b9bf2a78010c6eaad9ae3c4fceb802725c56732243ee143b33252244"
+      },
+      "builderPublic.js": {
+        "bytes": 1706,
+        "sha256": "a7db9f9b2a7ede597cdd42abda22f16376cd1c9abcebc82a3bc216b7e0dd87da"
+      },
+      "resolutionCache.js": {
+        "bytes": 64086,
+        "sha256": "292021472b79ca104dd66c526a4e281542568f6386ce8c2c4ee239b6dd8d2685"
+      },
+      "watch.js": {
+        "bytes": 36159,
+        "sha256": "989c3de8d010a3b74333abd3b4c9220e55195de0e596b925113f4ae4ce3dcdba"
+      },
+      "watchPublic.js": {
+        "bytes": 41055,
+        "sha256": "e52c860d14fb03449cfda60295c1996850b2c5eddfaade1ec22f59b032a16ee7"
+      },
+      "tsbuild.js": {
+        "bytes": 2493,
+        "sha256": "e4050f85b1a295486747247be22124242811906e77a347411ab73103251d3ee3"
+      },
+      "tsbuildPublic.js": {
+        "bytes": 84713,
+        "sha256": "c03caf918a2280c9616952ea62f54e30976df0d7827d2c3c1d2d78a78756390e"
+      },
+      "executeCommandLine.js": {
+        "bytes": 47147,
+        "sha256": "45e6631bc3c998248367d5bf9073928b04847e7196fbf82f9bef58ad7e7cde1e"
+      },
+      "expressionToTypeNode.js": {
+        "bytes": 58841,
+        "sha256": "4903e2830ffe8b4b2c6d958c1aea7a718f0db1f006574ad999760c8d07a23635"
+      },
+      "_namespaces/ts.js": {
+        "bytes": 3242,
+        "sha256": "a9d9602dcee57fc7c2ab922e02e652663242aeca83f4e9f0286bef147d2bc7e0"
+      },
+      "moduleSpecifiers.js": {
+        "bytes": 69700,
+        "sha256": "f0b0934269517a3d97682a72abf36e6da91860127b642f0614add2a8741a01f5"
+      },
+      "_namespaces/ts.moduleSpecifiers.js": {
+        "bytes": 107,
+        "sha256": "b8d642c6ebc6199690a49ca2b814d76838dde2aaf670fb87bc7f262f27f67a8d"
+      }
+    }
+  }
+}

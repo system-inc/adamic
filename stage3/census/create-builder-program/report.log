@@ -1,0 +1,57 @@
+{
+  "main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "same_747_original_hashes": true,
+  "stock_79_roots_diagnostics": {
+    "base": 0,
+    "checked": 0,
+    "typed-old": 0
+  },
+  "all_checkout_direct_callers": 2,
+  "all_returns_inventoried": 27,
+  "counterexample_stock_diagnostics": 0,
+  "observable_counterexamples": 2,
+  "selected_baseline_matches_previous_nine_exactly": true,
+  "units_per_side": {
+    "base": 9,
+    "checked": 9,
+    "typed-old": 9
+  },
+  "candidate_unit_counts": {
+    "checked": {
+      "cleared": 0,
+      "moved": 9,
+      "unchanged": 0,
+      "new_stops_from_clean_units": 0,
+      "new_panics": 0,
+      "overload_result_first_stops": 0,
+      "raw_first_stop_sites": 3
+    },
+    "typed-old": {
+      "cleared": 0,
+      "moved": 9,
+      "unchanged": 0,
+      "new_stops_from_clean_units": 0,
+      "new_panics": 0,
+      "overload_result_first_stops": 0,
+      "raw_first_stop_sites": 1
+    }
+  },
+  "emission": {
+    "checked": {
+      "byte_identical": false,
+      "files_compared": 79,
+      "changed_files": [
+        "builderPublic.js"
+      ]
+    },
+    "typed-old": {
+      "byte_identical": true,
+      "files_compared": 79,
+      "changed_files": []
+    }
+  },
+  "public_factory_overloads_and_builder_interfaces_unchanged": true,
+  "exact_nested_owner_pins_verified": 9,
+  "all_final_child_exits_zero": true,
+  "all_final_children_below_30_minutes": true
+}

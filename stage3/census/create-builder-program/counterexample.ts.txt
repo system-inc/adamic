@@ -1,0 +1,9 @@
+import { type Program, type BuilderProgramHost, createSemanticDiagnosticsBuilderProgram, createBuilderProgram, BuilderProgramKind } from "./_namespaces/ts.js";
+export function witnesses(program: Program, host: BuilderProgramHost) {
+ const old = createSemanticDiagnosticsBuilderProgram(program, host);
+ const wrongKind = createBuilderProgram(BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram, {newProgram: program, host, oldProgram: old, configFileParsingDiagnostics: program.getConfigFileParsingDiagnostics()});
+ wrongKind.emitNextAffectedFile();
+ const { getSemanticDiagnosticsOfNextAffectedFile: ignored, ...plain } = old;
+ const wrongBase = createBuilderProgram(BuilderProgramKind.SemanticDiagnosticsBuilderProgram, {newProgram: program, host, oldProgram: plain, configFileParsingDiagnostics: program.getConfigFileParsingDiagnostics()});
+ wrongBase.getSemanticDiagnosticsOfNextAffectedFile();
+}

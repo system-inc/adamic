@@ -1,0 +1,42 @@
+--- a/src/compiler/builderPublic.ts
++++ b/src/compiler/builderPublic.ts
+@@ -181,7 +181,7 @@
+     configFileParsingDiagnostics?: readonly Diagnostic[],
+     projectReferences?: readonly ProjectReference[],
+ ) {
+-    return createBuilderProgram(
++    const builder = createBuilderProgram(
+         BuilderProgramKind.SemanticDiagnosticsBuilderProgram,
+         getBuilderCreationParameters(
+             newProgramOrRootNames,
+@@ -192,6 +192,10 @@
+             projectReferences,
+         ),
+     );
++    if (builder === undefined || !("getSemanticDiagnosticsOfNextAffectedFile" in builder) || typeof builder.getSemanticDiagnosticsOfNextAffectedFile !== "function") {
++        throw new Error("Builder program does not have the requested kind");
++    }
++    return builder as SemanticDiagnosticsBuilderProgram;
+ }
+ 
+ /**
+@@ -220,7 +224,7 @@
+     configFileParsingDiagnostics?: readonly Diagnostic[],
+     projectReferences?: readonly ProjectReference[],
+ ) {
+-    return createBuilderProgram(
++    const builder = createBuilderProgram(
+         BuilderProgramKind.EmitAndSemanticDiagnosticsBuilderProgram,
+         getBuilderCreationParameters(
+             newProgramOrRootNames,
+@@ -231,6 +235,10 @@
+             projectReferences,
+         ),
+     );
++    if (builder === undefined || !("getSemanticDiagnosticsOfNextAffectedFile" in builder) || typeof builder.getSemanticDiagnosticsOfNextAffectedFile !== "function" || !("emitNextAffectedFile" in builder) || typeof builder.emitNextAffectedFile !== "function") {
++        throw new Error("Builder program does not have the requested kind");
++    }
++    return builder as EmitAndSemanticDiagnosticsBuilderProgram;
+ }
+ 
+ /**
