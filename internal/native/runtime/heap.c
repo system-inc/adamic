@@ -293,6 +293,13 @@ static void deallocate(adamic_heap *heap) {
 // one logical allocation, and must happen before aliases or owned slots exist.
 void *adamic_heap_graph_storage(void *value, size_t size) {
 	adamic_heap *old = value;
+	// The move frees the original, so it must be memory this heap allocated. A count of zero is a
+	// constant the program spelled out or a host object built in static storage, such as the stdout
+	// handle (node_process.c), never freed (#yzpahn3, Runtime's guard on #jawqwv7). Both adoptions
+	// refuse it before they get here; this keeps any later caller from freeing one.
+	if (old->references == 0) {
+		adamic_panic("compiler bug: adoption would move an immortal or static value", sizeof "compiler bug: adoption would move an immortal or static value" - 1);
+	}
 	if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
 		adamic_panic("region allocation too large", sizeof "region allocation too large" - 1);
 	}
