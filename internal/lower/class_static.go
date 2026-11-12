@@ -311,7 +311,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 				value = ir.Undefined{Of: of}
 			}
 			if err == nil {
-				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: l.uninitializedDeclaration(member), Unset: l.placeholderOrigin(member.Name()) != "", Site: l.staticWriteSite(declaration.Name())}}
+				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Nullish: l.fieldNullish(initializer, value), Define: true, Uninitialized: l.uninitializedDeclaration(member), Unset: l.placeholderOrigin(member.Name()) != "", Site: l.staticWriteSite(declaration.Name())}}
 			}
 			available[member.Name().Text()] = true
 		}

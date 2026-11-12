@@ -63,9 +63,9 @@ const jsonObjectsNullPointers = "12 {\"target\":null}\n13 {}\n3 {}\n10 {}\n11 {}
 
 const jsonObjectsNullPointerStop = "NotYet: JSON.stringify a reference field holding null or undefined that the allocation doesn't record which"
 
-// A null pointer in an object slot reads by its byte, and one whose byte says only Object stops: the backstop for
-// an allocation lowering's reach couldn't see. Lowering refuses every type that shows such a field (#ckxcnr6), and
-// the JavaScript backend holds a real null, so no program reaches it on both backends alike; this harness pins it.
+// A null pointer in an object slot reads by its byte, and one whose byte says only object stops.
+// Nullable writes now leave a semantic tag; a cast can hide that contract from the writer. This
+// harness pins the backstop for an allocation whose last write did not record its nullish meaning.
 func TestJSONObjectsNullPointers(t *testing.T) {
 	t.Parallel()
 	binary := jsonObjectsRuntimeBinary(t, "", "")
