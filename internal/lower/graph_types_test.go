@@ -57,12 +57,6 @@ func TestGraphSeedsOnlyTypedCycleRefusals(t *testing.T) {
 func TestGraphAdoptionBoundaryNamesOffendingNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, marker, what string }{
-		{"checked view", interfaceCastSource + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`, "node as Identifier", "a checked-view adapter in a graph program"},
-		{"legacy checked view", `type First={readonly kind:'a';readonly name:string};
-type Second={readonly kind:'b';readonly name:string};
-type Third={readonly kind:'c';readonly name:string};
-function narrow(value:First|Second|Third):First|Second{return value as First|Second;}
-console.log(narrow({kind:'a',name:'kept'}).name);`, "value as First|Second", "a checked-view adapter in a graph program"},
 		{"dynamic literal", `const source: {visible:number;[key:string]:number|string} = {visible:1};
 source['late']=2;
 console.log(Object.keys(source).join(','));`, "{visible:1}", "a dynamic-shape object in a graph program"},
@@ -86,13 +80,8 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			// The checked views are .ts, where their casts stay checked views: in .a a downcast whose checks no
-			// proof erases is refused at the same node (#m8dvvmf), before graph adoption is reached.
+			// Checked views left this table with slice 3 (#ef727kr): a graph program holds them now.
 			extension := ".a"
-			switch probe.name {
-			case "checked view", "legacy checked view":
-				extension = ".ts"
-			}
 			directory := t.TempDir()
 			main := filepath.Join(directory, "main"+extension)
 			cause := filepath.Join(directory, "cause"+extension)
