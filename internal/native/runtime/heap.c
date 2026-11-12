@@ -1,9 +1,10 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
-// A measurement, never to land (#w7cg3be): past ADAMIC_HEAP_SPARE_CAP bytes of spares on a thread, a
-// chunk joining them gives its pages back to the kernel, all but the page its header is on (SPARE_RETURN
-// below). Unset, every spare is kept and heap.c compiles as main's does. measure/heap-spares/run.sh
-// rewrites the line below for each build.
+// A measurement, never to land (#w7cg3be, Memory's design on #vea9pph): while a thread's committed
+// spares hold at most ADAMIC_HEAP_SPARE_CAP bytes, a new spare stays committed; past it, the chunk gives
+// its pages back to the kernel, all but the page its header is on, and goes on the thread's released
+// list (SPARE_RETURN below). 0 returns every spare. Unset, every spare is kept and heap.c compiles as
+// main's does. measure/heap-spares/run.sh rewrites the line below for each build.
 // #define ADAMIC_HEAP_SPARE_CAP ((size_t)0)
 // madvise and sysconf under -std=c11 on glibc.
 #if defined(ADAMIC_HEAP_SPARE_CAP) && defined(__linux__)
@@ -117,8 +118,12 @@ static _Thread_local chunk *spares;
 static _Thread_local chunk *owned_chunks;
 
 #if SPARE_RETURN
-// The chunks on this thread's spares, and the kernel's page, read once before main.
+// The chunks on this thread's committed spares, the spares whose pages went back, the cap as a value
+// (a literal 0 would make the test below one the compiler calls always true), and the kernel's page,
+// read once before main.
 static _Thread_local size_t spare_count;
+static _Thread_local chunk *released;
+static const size_t spare_cap = ADAMIC_HEAP_SPARE_CAP;
 static uintptr_t spare_page;
 
 __attribute__((constructor)) static void read_spare_page(void) {
@@ -171,6 +176,10 @@ static chunk *new_chunk(size_t class) {
 		spares = each->next;
 #if SPARE_RETURN
 		spare_count--;
+	} else if (released != NULL) {
+		// A committed spare first, so reuse up to the cap never faults, then a released one.
+		each = released;
+		released = each->next;
 #endif
 	} else {
 		each = malloc(CHUNK);
@@ -253,14 +262,17 @@ static void give_local(void *slot, chunk *each) {
 		// any class can carve. Chunks are kept for the program's life, as malloc keeps what it's given
 		// back, but shared: a program peaks at the chunks it holds at once, not at every class's peak.
 		unlist_chunk(each);
+#if SPARE_RETURN
+		if ((spare_count + 1) * CHUNK > spare_cap) {
+			return_spare(each);
+			each->next = released;
+			released = each;
+			return;
+		}
+		spare_count++;
+#endif
 		each->next = spares;
 		spares = each;
-#if SPARE_RETURN
-		spare_count++;
-		if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) {
-			return_spare(each);
-		}
-#endif
 	}
 }
 
@@ -596,6 +608,18 @@ void adamic_heap_thread_end(void) {
 	adamic_slab_quarantine_drain(give);
 #endif
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
+#if SPARE_RETURN
+	// An ending thread's committed spares go back too, its own lists alone, so a worker that ends holds
+	// none of them.
+	while (spares != NULL) {
+		chunk *each = spares;
+		spares = each->next;
+		return_spare(each);
+		each->next = released;
+		released = each;
+	}
+	spare_count = 0;
+#endif
 	// The region blocks this thread kept for its next region (region.c, #yecmp1d).
 	adamic_region_thread_end();
 	free(freeing);

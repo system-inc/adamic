@@ -2,8 +2,8 @@
 # run.sh: heap.c's spare chunks returned past a per-thread cap, timed against keep-forever (#w7cg3be,
 # a measurement, never to land). Run from the commit's worktree: bash measure/heap-spares/run.sh
 #
-# It lays the submodules, builds adamic four times with heap.c's ADAMIC_HEAP_SPARE_CAP line rewritten
-# (unset, 1, 4 and 16 MB), builds each program with each adamic, checks every program prints the same
+# It lays the submodules, builds adamic five times with heap.c's ADAMIC_HEAP_SPARE_CAP line rewritten
+# (unset, 0, 1, 4 and 16 MB), builds each program with each adamic, checks every program prints the same
 # under every cap, then times them under GNU time, glibc as shipped and pinned, interleaved, best of 5
 # by wall. heap_churn's idle memory is the last VmRSS read every 5 ms while it runs, three takes a cap.
 # Everything is written under $TMPDIR; the table is the log's last lines, ending with == end.
@@ -15,14 +15,14 @@ root=$(pwd)
 work=$(mktemp -d "$TMPDIR/heap-spares.XXXXXX")
 heap=$root/internal/native/runtime/heap.c
 here=$root/measure/heap-spares
-caps=(keep 1 4 16)
+caps=(keep 0 1 4 16)
 everyday=(keep 1)
 rounds=5
 pinned=(MALLOC_MMAP_THRESHOLD_=131072 MALLOC_TRIM_THRESHOLD_=131072)
 
-say() { echo "$*"; }
+say() { echo "[$((SECONDS / 60))m$((SECONDS % 60))s] $*"; }
 finish() {
-	say "== end"
+	echo "== end"
 	exit "$1"
 }
 fail() {
@@ -166,8 +166,8 @@ cp "$data" "$idle" "$work/out/heap_churn.keep" "$TMPDIR/" 2> /dev/null
 
 # The table: per program, cap and mode, the best wall's run (wall, user, sys s; minor faults; max RSS
 # MB), and idle MB for each take.
-say "== table: best of $rounds by wall (that run's user, sys, minor faults, max RSS); idle is the last VmRSS, 3 takes"
-say "program     cap  | shipped: wall  user  sys   faults  maxMB  idleMB          | pinned: wall  user  sys   faults  maxMB  idleMB"
+echo "== table: best of $rounds by wall (that run's user, sys, minor faults, max RSS); idle is the last VmRSS, 3 takes"
+echo "program     cap  | s: wall  user   sys   faults  maxMB  idleMB          | p: wall  user   sys   faults  maxMB  idleMB"
 awk -v order="$(for row in "${live[@]}"; do IFS='|' read -r name source environment which <<< "$row"; for cap in $(row_caps "$which"); do printf '%s:%s ' "$name" "$cap"; done; done)" '
 	FILENAME == ARGV[1] {
 		key = $1 ":" $2 ":" $3
