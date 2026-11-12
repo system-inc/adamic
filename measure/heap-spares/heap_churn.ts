@@ -2,8 +2,11 @@
 // held is module-level, so every object lives on the heap's size classes, never in a statement's
 // region. Each round's shape, two, four or seven fields, and its labels' length change with the
 // round, so several classes churn. After the last round nothing is held, and the program spins for
-// 400 ms so its idle memory can be read before it prints.
+// 400 ms. It reads its own resident memory three times and writes it to stderr, so stdout stays the
+// same under every cap: at its peak, just after the last round is built; dropped, just after it's let
+// go; and idle, after the spin, before anything exits.
 
+import { readFileSync } from 'node:fs';
 import { performance } from 'node:perf_hooks';
 
 interface Item {
@@ -41,13 +44,34 @@ function made(round: number, index: number): Item {
 	return item;
 }
 
+// residentKilobytes is VmRSS from /proc/self/status, or -1 where there's none (macOS).
+function residentKilobytes(): number {
+	try {
+		const status = readFileSync('/proc/self/status', 'utf8');
+		for (const line of status.split('\n')) {
+			if (line.startsWith('VmRSS:')) {
+				const value = line.slice(6).trim();
+				const space = value.indexOf(' ');
+				return Number(space < 0 ? value : value.slice(0, space));
+			}
+		}
+	} catch (error) {
+		return -1;
+	}
+	return -1;
+}
+
 let held: Item[] = [];
+let peak = 0;
 let checksum = 0;
 for (let round = 0; round < rounds; round += 1) {
 	// The last round's objects are freed here, before this round's are made.
 	held = [];
 	for (let index = 0; index < count; index += 1) {
 		held.push(made(round, index));
+	}
+	if (round === rounds - 1) {
+		peak = residentKilobytes();
 	}
 	let total = 0;
 	for (const item of held) {
@@ -56,10 +80,13 @@ for (let round = 0; round < rounds; round += 1) {
 	checksum = (checksum * 31 + total) % 1000000007;
 }
 held = [];
+const dropped = residentKilobytes();
 
 const start = performance.now();
 let spins = 0;
 while (performance.now() - start < 400) {
 	spins += 1;
 }
+const idle = residentKilobytes();
+console.error(`rss peak ${peak} dropped ${dropped} idle ${idle}`);
 console.log(`${rounds} rounds of ${count}, checksum ${checksum}, held ${held.length}, spun ${spins > 0}`);
