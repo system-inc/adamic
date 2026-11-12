@@ -1,0 +1,14 @@
+{
+  "command": [
+    "env",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/scratch/ancestor/B/src/compiler/path.ts",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/workspace/scratch/ancestor/latent",
+    "/workspace/scratch/ancestor/B/src/compiler",
+    "/workspace/adamic/stage3/census/for-each-ancestor/B-census.jsonl"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 32.51383450000003
+}

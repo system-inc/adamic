@@ -1,0 +1,87 @@
+--- baseline/src/compiler/path.ts
++++ C/src/compiler/path.ts
+@@ -1091,18 +1091,17 @@
+  *
+  * @internal
+  */
+-export function forEachAncestorDirectory<T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined;
+ /** @internal */
+ export function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined;
+ /** @internal */
+-export function forEachAncestorDirectory<T, P extends string>(directory: P, callback: (directory: P) => T | undefined): T | undefined {
++export function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined {
+     while (true) {
+         const result = callback(directory);
+         if (result !== undefined) {
+             return result;
+         }
+ 
+-        const parentPath = getDirectoryPath(directory) as P;
++        const parentPath = getDirectoryPath(directory);
+         if (parentPath === directory) {
+             return undefined;
+         }
+@@ -1112,6 +1111,23 @@
+ }
+ 
+ /** @internal */
++export function forEachAncestorDirectoryPath<T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined {
++    while (true) {
++        const result = callback(directory);
++        if (result !== undefined) {
++            return result;
++        }
++
++        const parentPath = getDirectoryPath(directory);
++        if (parentPath === directory) {
++            return undefined;
++        }
++
++        directory = parentPath;
++    }
++}
++
++/** @internal */
+ export function isNodeModulesDirectory(dirPath: Path): boolean {
+     return endsWith(dirPath, "/node_modules");
+ }
+--- baseline/src/compiler/watchUtilities.ts
++++ C/src/compiler/watchUtilities.ts
+@@ -21,7 +21,7 @@
+     type FileWatcherCallback,
+     FileWatcherEventKind,
+     find,
+-    forEachAncestorDirectory,
++    forEachAncestorDirectoryPath,
+     getAllowJSCompilerOption,
+     getBaseFileName,
+     getDirectoryPath,
+@@ -293,7 +293,7 @@
+     }
+ 
+     function clearFirstAncestorEntry(fileOrDirectoryPath: Path) {
+-        forEachAncestorDirectory(
++        forEachAncestorDirectoryPath(
+             getDirectoryPath(fileOrDirectoryPath),
+             ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,
+         );
+--- baseline/src/typingsInstallerCore/typingsInstaller.ts
++++ C/src/typingsInstallerCore/typingsInstaller.ts
+@@ -1,7 +1,7 @@
+ import {
+     combinePaths,
+     Debug,
+-    forEachAncestorDirectory,
++    forEachAncestorDirectoryPath,
+     forEachKey,
+     getBaseFileName,
+     getDirectoryPath,
+@@ -255,7 +255,7 @@
+             this.sendResponse(response);
+             return;
+         }
+-        const cwd = forEachAncestorDirectory(getDirectoryPath(fileName), directory => {
++        const cwd = forEachAncestorDirectoryPath(getDirectoryPath(fileName), directory => {
+             if (this.installTypingHost.fileExists(combinePaths(directory, "package.json"))) {
+                 return directory;
+             }

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "env",
+    "PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/ancestor/overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/ancestor/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 140.39255870399995
+}

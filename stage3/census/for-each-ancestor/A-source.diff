@@ -1,0 +1,23 @@
+--- baseline/src/compiler/path.ts
++++ A/src/compiler/path.ts
+@@ -1091,18 +1091,17 @@
+  *
+  * @internal
+  */
+-export function forEachAncestorDirectory<T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined;
+ /** @internal */
+ export function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined;
+ /** @internal */
+-export function forEachAncestorDirectory<T, P extends string>(directory: P, callback: (directory: P) => T | undefined): T | undefined {
++export function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined {
+     while (true) {
+         const result = callback(directory);
+         if (result !== undefined) {
+             return result;
+         }
+ 
+-        const parentPath = getDirectoryPath(directory) as P;
++        const parentPath = getDirectoryPath(directory);
+         if (parentPath === directory) {
+             return undefined;
+         }

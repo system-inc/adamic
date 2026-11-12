@@ -1,0 +1,53 @@
+--- baseline/compiler/path.js
++++ C/compiler/path.js
+@@ -42,6 +42,7 @@
+ exports.getRelativePathFromFile = getRelativePathFromFile;
+ exports.getRelativePathToDirectoryOrUrl = getRelativePathToDirectoryOrUrl;
+ exports.forEachAncestorDirectory = forEachAncestorDirectory;
++exports.forEachAncestorDirectoryPath = forEachAncestorDirectoryPath;
+ exports.isNodeModulesDirectory = isNodeModulesDirectory;
+ const ts_js_1 = require("./_namespaces/ts.js");
+ /**
+@@ -813,6 +814,20 @@
+     }
+ }
+ /** @internal */
++function forEachAncestorDirectoryPath(directory, callback) {
++    while (true) {
++        const result = callback(directory);
++        if (result !== undefined) {
++            return result;
++        }
++        const parentPath = getDirectoryPath(directory);
++        if (parentPath === directory) {
++            return undefined;
++        }
++        directory = parentPath;
++    }
++}
++/** @internal */
+ function isNodeModulesDirectory(dirPath) {
+     return (0, ts_js_1.endsWith)(dirPath, "/node_modules");
+ }
+--- baseline/compiler/watchUtilities.js
++++ C/compiler/watchUtilities.js
+@@ -171,7 +171,7 @@
+         return host.realpath ? host.realpath(s) : s;
+     }
+     function clearFirstAncestorEntry(fileOrDirectoryPath) {
+-        (0, ts_js_1.forEachAncestorDirectory)((0, ts_js_1.getDirectoryPath)(fileOrDirectoryPath), ancestor => cachedReadDirectoryResult.delete((0, ts_js_1.ensureTrailingDirectorySeparator)(ancestor)) ? true : undefined);
++        (0, ts_js_1.forEachAncestorDirectoryPath)((0, ts_js_1.getDirectoryPath)(fileOrDirectoryPath), ancestor => cachedReadDirectoryResult.delete((0, ts_js_1.ensureTrailingDirectorySeparator)(ancestor)) ? true : undefined);
+     }
+     function addOrDeleteFileOrDirectory(fileOrDirectory, fileOrDirectoryPath) {
+         const existingResult = getCachedFileSystemEntries(fileOrDirectoryPath);
+--- baseline/typingsInstallerCore/typingsInstaller.js
++++ C/typingsInstallerCore/typingsInstaller.js
+@@ -161,7 +161,7 @@
+             this.sendResponse(response);
+             return;
+         }
+-        const cwd = (0, ts_js_1.forEachAncestorDirectory)((0, ts_js_1.getDirectoryPath)(fileName), directory => {
++        const cwd = (0, ts_js_1.forEachAncestorDirectoryPath)((0, ts_js_1.getDirectoryPath)(fileName), directory => {
+             if (this.installTypingHost.fileExists((0, ts_js_1.combinePaths)(directory, "package.json"))) {
+                 return directory;
+             }

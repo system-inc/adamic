@@ -1,0 +1,14 @@
+go: cannot load module ../../../cohere/TypeScript/tsc listed in go.work file: open ../../../cohere/TypeScript/tsc/go.mod: no such file or directory
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/for-each-ancestor/build-overlay.py", line 7, in <module>
+    exec(compile(s,str(source),'exec'),{'__file__':str(source),'__name__':'__main__'})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/census/latent/make_overlay.py", line 55, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    str(scratch / 'internal_lower_lower.go'), str(state_output)], check=True, cwd=territory)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/adamic/stage3/census/latent/statecopy', '/workspace/adamic', '/workspace/scratch/ancestor/overlay/internal_lower_lower.go.txt', '/workspace/scratch/ancestor/overlay/internal_lower_latent_state.go.txt']' returned non-zero exit status 1.

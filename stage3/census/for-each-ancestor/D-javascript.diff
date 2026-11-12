@@ -1,0 +1,16 @@
+--- baseline/compiler/path.js
++++ D/compiler/path.js
+@@ -798,7 +798,12 @@
+     }
+     return getPathFromPathComponents(pathComponents);
+ }
+-/** @internal */
++//// Path Traversal
++/**
++ * Calls `callback` on `directory` and every ancestor directory it has, returning the first defined result.
++ *
++ * @internal
++ */
+ function forEachAncestorDirectory(directory, callback) {
+     while (true) {
+         const result = callback(directory);

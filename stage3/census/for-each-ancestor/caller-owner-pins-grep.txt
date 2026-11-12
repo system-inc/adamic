@@ -1,0 +1,24 @@
+stage3/adapt/32-indexed-reads-program/wave6/sites.json:3232:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave6/sites.json:3244:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave6/sites.json:3256:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave6/sites.json:3268:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave6/sites.json:3280:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave5/sites.json:3232:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave5/sites.json:3244:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave5/sites.json:3256:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave5/sites.json:3268:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/wave5/sites.json:3280:    "file": "watchUtilities.ts",
+stage3/adapt/40-explicit-any/evidence/sites.json:1678:    "file": "src/compiler/watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/sites.json:3259:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/sites.json:3271:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/sites.json:3283:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/sites.json:3295:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/sites.json:3307:    "file": "watchUtilities.ts",
+stage3/adapt/32-indexed-reads-program/adapt.cjs:6:const files = ["corePublic.ts", "performanceCore.ts", "types.ts", "expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts", "builderPublic.ts", "builderState.ts", "builderStatePublic.ts", "watch.ts", "watchPublic.ts", "watchUtilities.ts", "re [... omitted end of long line]
+stage3/adapt/32-indexed-reads-program/adapt.cjs:81:    if (file === "watchUtilities.ts") require("./watch-protocol.cjs").validate(ts, source);
+stage3/adapt/99-correctness-core-multimap/owners.json:314:    "before": "import {\n    addToSeen,\n    arrayFrom,\n    AssertionLevel,\n    CachedDirectoryStructureHost,\n    canWatchDirectoryOrFilePath,\n    cleanExtendedConfigCache,\n    clearMap,\n    clearSharedExtendedConfigFileWatcher,\n    closeFileW [... omitted end of long line]
+stage3/adapt/99-correctness-core-multimap/owners.json:315:    "after": "import {\n    multiMapAddValue,\n    multiMapRemoveValue,\n    addToSeen,\n    arrayFrom,\n    AssertionLevel,\n    CachedDirectoryStructureHost,\n    canWatchDirectoryOrFilePath,\n    cleanExtendedConfigCache,\n    clearMap,\n    clear [... omitted end of long line]
+stage3/adapt/99-correctness-axolotl-x/owners.json:77:    "before": "export function createWatchProgram<T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>): WatchOfFilesAndCompilerOptions<T> | WatchOfConfigFile<T> {\n    interface FilePresentOnHost {\n        versi [... omitted end of long line]
+stage3/adapt/99-correctness-axolotl-x/owners.json:78:    "after": "export function createWatchProgram<T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>): WatchOfFilesAndCompilerOptions<T> | WatchOfConfigFile<T> {\n    interface FilePresentOnHost {\n        versio [... omitted end of long line]
+
+rg child exit: 0

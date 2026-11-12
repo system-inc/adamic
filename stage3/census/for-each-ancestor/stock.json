@@ -1,0 +1,2471 @@
+{
+  "main": "2f32716054f245622c2ac3c8f692d00fa51e66e9",
+  "typescript": "6.0.3",
+  "candidates": {
+    "baseline": {
+      "roots": [
+        "/workspace/scratch/ancestor/baseline/src/compiler/binder.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/builder.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/builderPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/builderState.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/checker.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/core.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/corePublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/debug.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/emitter.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/hostErrors.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/parser.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/path.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/performance.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/performanceCore.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/program.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/scanner.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/semver.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/sourcemap.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/sys.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/tracing.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformer.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/tsbuild.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/types.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/utilities.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/watch.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/watchPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/ancestor/baseline/src/compiler/transformers/module/system.ts"
+      ],
+      "diagnostics": [],
+      "callerDiagnostics": [],
+      "emitSkipped": false,
+      "outputs": {
+        "compiler/corePublic.js": {
+          "bytes": 811,
+          "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+        },
+        "compiler/core.js": {
+          "bytes": 70745,
+          "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+        },
+        "compiler/debug.js": {
+          "bytes": 21329,
+          "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+        },
+        "compiler/semver.js": {
+          "bytes": 16341,
+          "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+        },
+        "compiler/performanceCore.js": {
+          "bytes": 3808,
+          "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+        },
+        "compiler/performance.js": {
+          "bytes": 5635,
+          "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+        },
+        "compiler/_namespaces/ts.performance.js": {
+          "bytes": 872,
+          "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+        },
+        "compiler/tracing.js": {
+          "bytes": 15213,
+          "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+        },
+        "compiler/types.js": {
+          "bytes": 143574,
+          "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+        },
+        "compiler/hostErrors.js": {
+          "bytes": 829,
+          "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+        },
+        "compiler/sys.js": {
+          "bytes": 72516,
+          "sha256": "6df8d6e336246143911b81c3eed68d5005330a8dcf6e6861f293a32824a98cac"
+        },
+        "compiler/path.js": {
+          "bytes": 33368,
+          "sha256": "9be17f7d41172923d13715c2704d72aa9f590a679d7b29ad99a2ca557cc10e38"
+        },
+        "compiler/diagnosticInformationMap.generated.js": {
+          "bytes": 555738,
+          "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+        },
+        "compiler/scanner.js": {
+          "bytes": 216916,
+          "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+        },
+        "compiler/utilitiesPublic.js": {
+          "bytes": 99903,
+          "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+        },
+        "compiler/utilities.js": {
+          "bytes": 482062,
+          "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+        },
+        "compiler/factory/baseNodeFactory.js": {
+          "bytes": 1717,
+          "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+        },
+        "compiler/factory/parenthesizerRules.js": {
+          "bytes": 32288,
+          "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+        },
+        "compiler/factory/nodeConverters.js": {
+          "bytes": 6263,
+          "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+        },
+        "compiler/factory/nodeFactory.js": {
+          "bytes": 281618,
+          "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+        },
+        "compiler/factory/emitNode.js": {
+          "bytes": 12057,
+          "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+        },
+        "compiler/factory/emitHelpers.js": {
+          "bytes": 59048,
+          "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+        },
+        "compiler/factory/nodeTests.js": {
+          "bytes": 34856,
+          "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+        },
+        "compiler/factory/nodeChildren.js": {
+          "bytes": 2138,
+          "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+        },
+        "compiler/factory/utilities.js": {
+          "bytes": 59239,
+          "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+        },
+        "compiler/factory/utilitiesPublic.js": {
+          "bytes": 2364,
+          "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+        },
+        "compiler/parser.js": {
+          "bytes": 497565,
+          "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+        },
+        "compiler/commandLineParser.js": {
+          "bytes": 171860,
+          "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+        },
+        "compiler/moduleNameResolver.js": {
+          "bytes": 157674,
+          "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+        },
+        "compiler/symbolWalker.js": {
+          "bytes": 7201,
+          "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+        },
+        "compiler/moduleSpecifiers.js": {
+          "bytes": 72613,
+          "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+        },
+        "compiler/_namespaces/ts.moduleSpecifiers.js": {
+          "bytes": 882,
+          "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+        },
+        "compiler/checker.js": {
+          "bytes": 3047690,
+          "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+        },
+        "compiler/visitorPublic.js": {
+          "bytes": 69679,
+          "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+        },
+        "compiler/sourcemap.js": {
+          "bytes": 30859,
+          "sha256": "ee5f9d12feff56afc12a18485ab44595aeda058f3930399ad2f73675ab4b3189"
+        },
+        "compiler/transformers/utilities.js": {
+          "bytes": 29212,
+          "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+        },
+        "compiler/transformers/destructuring.js": {
+          "bytes": 26919,
+          "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+        },
+        "compiler/transformers/classThis.js": {
+          "bytes": 3692,
+          "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+        },
+        "compiler/transformers/namedEvaluation.js": {
+          "bytes": 18386,
+          "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+        },
+        "compiler/transformers/taggedTemplate.js": {
+          "bytes": 4833,
+          "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+        },
+        "compiler/transformers/ts.js": {
+          "bytes": 105516,
+          "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+        },
+        "compiler/transformers/classFields.js": {
+          "bytes": 140129,
+          "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+        },
+        "compiler/transformers/typeSerializer.js": {
+          "bytes": 23451,
+          "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+        },
+        "compiler/transformers/legacyDecorators.js": {
+          "bytes": 33375,
+          "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+        },
+        "compiler/transformers/esDecorators.js": {
+          "bytes": 114343,
+          "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+        },
+        "compiler/transformers/es2017.js": {
+          "bytes": 43911,
+          "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+        },
+        "compiler/transformers/es2018.js": {
+          "bytes": 60417,
+          "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+        },
+        "compiler/transformers/es2019.js": {
+          "bytes": 1278,
+          "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+        },
+        "compiler/transformers/es2020.js": {
+          "bytes": 12026,
+          "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+        },
+        "compiler/transformers/es2021.js": {
+          "bytes": 3109,
+          "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+        },
+        "compiler/transformers/esnext.js": {
+          "bytes": 29449,
+          "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+        },
+        "compiler/transformers/jsx.js": {
+          "bytes": 32232,
+          "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+        },
+        "compiler/transformers/es2016.js": {
+          "bytes": 3754,
+          "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+        },
+        "compiler/transformers/es2015.js": {
+          "bytes": 203358,
+          "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+        },
+        "compiler/transformers/generators.js": {
+          "bytes": 104383,
+          "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+        },
+        "compiler/transformers/module/module.js": {
+          "bytes": 93195,
+          "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+        },
+        "compiler/transformers/module/system.js": {
+          "bytes": 72942,
+          "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+        },
+        "compiler/transformers/module/esnextAnd2015.js": {
+          "bytes": 15184,
+          "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+        },
+        "compiler/transformers/module/impliedNodeFormatDependent.js": {
+          "bytes": 3464,
+          "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+        },
+        "compiler/transformers/declarations/diagnostics.js": {
+          "bytes": 44506,
+          "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+        },
+        "compiler/transformers/declarations.js": {
+          "bytes": 87948,
+          "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+        },
+        "compiler/transformer.js": {
+          "bytes": 29405,
+          "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+        },
+        "compiler/emitter.js": {
+          "bytes": 247956,
+          "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+        },
+        "compiler/watchUtilities.js": {
+          "bytes": 27443,
+          "sha256": "5ad8356a7c3b7f34df7f5c2b3e3a04e7f876da9fbad5781b50ce1a9c13f53486"
+        },
+        "compiler/program.js": {
+          "bytes": 240886,
+          "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+        },
+        "compiler/programDiagnostics.js": {
+          "bytes": 17767,
+          "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+        },
+        "compiler/builderStatePublic.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "compiler/builderState.js": {
+          "bytes": 21862,
+          "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+        },
+        "compiler/builder.js": {
+          "bytes": 95135,
+          "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+        },
+        "compiler/builderPublic.js": {
+          "bytes": 2012,
+          "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+        },
+        "compiler/resolutionCache.js": {
+          "bytes": 65294,
+          "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+        },
+        "compiler/watch.js": {
+          "bytes": 38558,
+          "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+        },
+        "compiler/watchPublic.js": {
+          "bytes": 41475,
+          "sha256": "f6d547af319ee769fc8eb877a7ce72dec71001ace697b58f62798c81b1e10b51"
+        },
+        "compiler/tsbuild.js": {
+          "bytes": 2698,
+          "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+        },
+        "compiler/tsbuildPublic.js": {
+          "bytes": 87662,
+          "sha256": "af2540dc4bc09a73c65ffa0712f06c9d977c277046788d3a7e15403ede569fd6"
+        },
+        "compiler/executeCommandLine.js": {
+          "bytes": 49443,
+          "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+        },
+        "compiler/expressionToTypeNode.js": {
+          "bytes": 61549,
+          "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+        },
+        "compiler/_namespaces/ts.js": {
+          "bytes": 6325,
+          "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+        },
+        "compiler/binder.js": {
+          "bytes": 186163,
+          "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+        },
+        "jsTyping/shared.js": {
+          "bytes": 2974,
+          "sha256": "5faced60f2a73c7530cd1de78227fe62bb23ad4f2271019444b969d10b8dc1f5"
+        },
+        "jsTyping/types.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "jsTyping/_namespaces/ts.server.js": {
+          "bytes": 909,
+          "sha256": "044a4caf5991881791d902a467927259830902f33252e7726102c16da7dbd5f0"
+        },
+        "jsTyping/jsTyping.js": {
+          "bytes": 17858,
+          "sha256": "065cf3a3fbe5b461c01f6061cdbe279df081047c520dbd88a3935d4c34aa1864"
+        },
+        "jsTyping/_namespaces/ts.JsTyping.js": {
+          "bytes": 866,
+          "sha256": "fcffbbc9ce1396b9565b0f0f85c9d3cdbb2eba5b11c5eb772a30733d0c769e19"
+        },
+        "jsTyping/_namespaces/ts.js": {
+          "bytes": 1971,
+          "sha256": "bd4b60dc184b379e21a470e51c65df02cdd015391443d8aa9fb7109c992d8acc"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.js": {
+          "bytes": 889,
+          "sha256": "5fcc81eb9408f98987cf097a6f6fff01115503c45e4ba51b00314b116dc22744"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.js": {
+          "bytes": 1934,
+          "sha256": "dddb771127c288f5dea8d2c76fedb51c4ba6ff2b5ecc07d941257ec47d966f44"
+        },
+        "typingsInstallerCore/_namespaces/ts.js": {
+          "bytes": 1931,
+          "sha256": "05639941d2c91efaf4bd89413480191115ed556b997d58b44b9cf176fc098f82"
+        },
+        "typingsInstallerCore/typingsInstaller.js": {
+          "bytes": 21219,
+          "sha256": "ab9f4d856496d1ee83093688416ecaa393c33ec74c48b1c3d97b9efa386f31a4"
+        }
+      },
+      "calls": [
+        {
+          "owners": [
+            "getDefaultTypeRoots"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 503,
+          "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => undefined): undefined"
+        },
+        {
+          "owners": [
+            "forEachAncestorDirectoryStoppingAtGlobalCache"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 3057,
+          "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined"
+        },
+        {
+          "owners": [
+            "clearFirstAncestorEntry",
+            "createCachedDirectoryStructureHost"
+          ],
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 296,
+          "expression": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )",
+          "signature": "(directory: Path, callback: (directory: Path) => true | undefined): true | undefined"
+        },
+        {
+          "owners": [
+            "findConfigFile"
+          ],
+          "file": "src/compiler/program.ts",
+          "line": 330,
+          "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        },
+        {
+          "owners": [
+            "installPackage",
+            "TypingsInstaller"
+          ],
+          "file": "src/typingsInstallerCore/typingsInstaller.ts",
+          "line": 258,
+          "expression": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })",
+          "signature": "(directory: Path, callback: (directory: Path) => Path | undefined): Path | undefined"
+        }
+      ]
+    },
+    "A": {
+      "roots": [
+        "/workspace/scratch/ancestor/A/src/compiler/binder.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/builder.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/builderPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/builderState.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/checker.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/core.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/corePublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/debug.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/emitter.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/hostErrors.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/parser.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/path.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/performance.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/performanceCore.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/program.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/scanner.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/semver.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/sourcemap.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/sys.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/tracing.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformer.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/tsbuild.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/types.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/utilities.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/watch.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/watchPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/ancestor/A/src/compiler/transformers/module/system.ts"
+      ],
+      "diagnostics": [],
+      "callerDiagnostics": [],
+      "emitSkipped": false,
+      "outputs": {
+        "compiler/corePublic.js": {
+          "bytes": 811,
+          "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+        },
+        "compiler/core.js": {
+          "bytes": 70745,
+          "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+        },
+        "compiler/debug.js": {
+          "bytes": 21329,
+          "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+        },
+        "compiler/semver.js": {
+          "bytes": 16341,
+          "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+        },
+        "compiler/performanceCore.js": {
+          "bytes": 3808,
+          "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+        },
+        "compiler/performance.js": {
+          "bytes": 5635,
+          "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+        },
+        "compiler/_namespaces/ts.performance.js": {
+          "bytes": 872,
+          "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+        },
+        "compiler/tracing.js": {
+          "bytes": 15213,
+          "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+        },
+        "compiler/types.js": {
+          "bytes": 143574,
+          "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+        },
+        "compiler/hostErrors.js": {
+          "bytes": 829,
+          "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+        },
+        "compiler/sys.js": {
+          "bytes": 72516,
+          "sha256": "6df8d6e336246143911b81c3eed68d5005330a8dcf6e6861f293a32824a98cac"
+        },
+        "compiler/path.js": {
+          "bytes": 33368,
+          "sha256": "9be17f7d41172923d13715c2704d72aa9f590a679d7b29ad99a2ca557cc10e38"
+        },
+        "compiler/diagnosticInformationMap.generated.js": {
+          "bytes": 555738,
+          "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+        },
+        "compiler/scanner.js": {
+          "bytes": 216916,
+          "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+        },
+        "compiler/utilitiesPublic.js": {
+          "bytes": 99903,
+          "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+        },
+        "compiler/utilities.js": {
+          "bytes": 482062,
+          "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+        },
+        "compiler/factory/baseNodeFactory.js": {
+          "bytes": 1717,
+          "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+        },
+        "compiler/factory/parenthesizerRules.js": {
+          "bytes": 32288,
+          "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+        },
+        "compiler/factory/nodeConverters.js": {
+          "bytes": 6263,
+          "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+        },
+        "compiler/factory/nodeFactory.js": {
+          "bytes": 281618,
+          "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+        },
+        "compiler/factory/emitNode.js": {
+          "bytes": 12057,
+          "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+        },
+        "compiler/factory/emitHelpers.js": {
+          "bytes": 59048,
+          "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+        },
+        "compiler/factory/nodeTests.js": {
+          "bytes": 34856,
+          "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+        },
+        "compiler/factory/nodeChildren.js": {
+          "bytes": 2138,
+          "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+        },
+        "compiler/factory/utilities.js": {
+          "bytes": 59239,
+          "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+        },
+        "compiler/factory/utilitiesPublic.js": {
+          "bytes": 2364,
+          "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+        },
+        "compiler/parser.js": {
+          "bytes": 497565,
+          "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+        },
+        "compiler/commandLineParser.js": {
+          "bytes": 171860,
+          "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+        },
+        "compiler/moduleNameResolver.js": {
+          "bytes": 157674,
+          "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+        },
+        "compiler/symbolWalker.js": {
+          "bytes": 7201,
+          "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+        },
+        "compiler/moduleSpecifiers.js": {
+          "bytes": 72613,
+          "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+        },
+        "compiler/_namespaces/ts.moduleSpecifiers.js": {
+          "bytes": 882,
+          "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+        },
+        "compiler/checker.js": {
+          "bytes": 3047690,
+          "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+        },
+        "compiler/visitorPublic.js": {
+          "bytes": 69679,
+          "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+        },
+        "compiler/sourcemap.js": {
+          "bytes": 30859,
+          "sha256": "ee5f9d12feff56afc12a18485ab44595aeda058f3930399ad2f73675ab4b3189"
+        },
+        "compiler/transformers/utilities.js": {
+          "bytes": 29212,
+          "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+        },
+        "compiler/transformers/destructuring.js": {
+          "bytes": 26919,
+          "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+        },
+        "compiler/transformers/classThis.js": {
+          "bytes": 3692,
+          "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+        },
+        "compiler/transformers/namedEvaluation.js": {
+          "bytes": 18386,
+          "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+        },
+        "compiler/transformers/taggedTemplate.js": {
+          "bytes": 4833,
+          "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+        },
+        "compiler/transformers/ts.js": {
+          "bytes": 105516,
+          "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+        },
+        "compiler/transformers/classFields.js": {
+          "bytes": 140129,
+          "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+        },
+        "compiler/transformers/typeSerializer.js": {
+          "bytes": 23451,
+          "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+        },
+        "compiler/transformers/legacyDecorators.js": {
+          "bytes": 33375,
+          "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+        },
+        "compiler/transformers/esDecorators.js": {
+          "bytes": 114343,
+          "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+        },
+        "compiler/transformers/es2017.js": {
+          "bytes": 43911,
+          "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+        },
+        "compiler/transformers/es2018.js": {
+          "bytes": 60417,
+          "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+        },
+        "compiler/transformers/es2019.js": {
+          "bytes": 1278,
+          "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+        },
+        "compiler/transformers/es2020.js": {
+          "bytes": 12026,
+          "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+        },
+        "compiler/transformers/es2021.js": {
+          "bytes": 3109,
+          "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+        },
+        "compiler/transformers/esnext.js": {
+          "bytes": 29449,
+          "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+        },
+        "compiler/transformers/jsx.js": {
+          "bytes": 32232,
+          "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+        },
+        "compiler/transformers/es2016.js": {
+          "bytes": 3754,
+          "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+        },
+        "compiler/transformers/es2015.js": {
+          "bytes": 203358,
+          "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+        },
+        "compiler/transformers/generators.js": {
+          "bytes": 104383,
+          "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+        },
+        "compiler/transformers/module/module.js": {
+          "bytes": 93195,
+          "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+        },
+        "compiler/transformers/module/system.js": {
+          "bytes": 72942,
+          "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+        },
+        "compiler/transformers/module/esnextAnd2015.js": {
+          "bytes": 15184,
+          "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+        },
+        "compiler/transformers/module/impliedNodeFormatDependent.js": {
+          "bytes": 3464,
+          "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+        },
+        "compiler/transformers/declarations/diagnostics.js": {
+          "bytes": 44506,
+          "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+        },
+        "compiler/transformers/declarations.js": {
+          "bytes": 87948,
+          "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+        },
+        "compiler/transformer.js": {
+          "bytes": 29405,
+          "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+        },
+        "compiler/emitter.js": {
+          "bytes": 247956,
+          "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+        },
+        "compiler/watchUtilities.js": {
+          "bytes": 27443,
+          "sha256": "5ad8356a7c3b7f34df7f5c2b3e3a04e7f876da9fbad5781b50ce1a9c13f53486"
+        },
+        "compiler/program.js": {
+          "bytes": 240886,
+          "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+        },
+        "compiler/programDiagnostics.js": {
+          "bytes": 17767,
+          "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+        },
+        "compiler/builderStatePublic.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "compiler/builderState.js": {
+          "bytes": 21862,
+          "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+        },
+        "compiler/builder.js": {
+          "bytes": 95135,
+          "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+        },
+        "compiler/builderPublic.js": {
+          "bytes": 2012,
+          "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+        },
+        "compiler/resolutionCache.js": {
+          "bytes": 65294,
+          "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+        },
+        "compiler/watch.js": {
+          "bytes": 38558,
+          "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+        },
+        "compiler/watchPublic.js": {
+          "bytes": 41475,
+          "sha256": "f6d547af319ee769fc8eb877a7ce72dec71001ace697b58f62798c81b1e10b51"
+        },
+        "compiler/tsbuild.js": {
+          "bytes": 2698,
+          "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+        },
+        "compiler/tsbuildPublic.js": {
+          "bytes": 87662,
+          "sha256": "af2540dc4bc09a73c65ffa0712f06c9d977c277046788d3a7e15403ede569fd6"
+        },
+        "compiler/executeCommandLine.js": {
+          "bytes": 49443,
+          "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+        },
+        "compiler/expressionToTypeNode.js": {
+          "bytes": 61549,
+          "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+        },
+        "compiler/_namespaces/ts.js": {
+          "bytes": 6325,
+          "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+        },
+        "compiler/binder.js": {
+          "bytes": 186163,
+          "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+        },
+        "jsTyping/shared.js": {
+          "bytes": 2974,
+          "sha256": "5faced60f2a73c7530cd1de78227fe62bb23ad4f2271019444b969d10b8dc1f5"
+        },
+        "jsTyping/types.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "jsTyping/_namespaces/ts.server.js": {
+          "bytes": 909,
+          "sha256": "044a4caf5991881791d902a467927259830902f33252e7726102c16da7dbd5f0"
+        },
+        "jsTyping/jsTyping.js": {
+          "bytes": 17858,
+          "sha256": "065cf3a3fbe5b461c01f6061cdbe279df081047c520dbd88a3935d4c34aa1864"
+        },
+        "jsTyping/_namespaces/ts.JsTyping.js": {
+          "bytes": 866,
+          "sha256": "fcffbbc9ce1396b9565b0f0f85c9d3cdbb2eba5b11c5eb772a30733d0c769e19"
+        },
+        "jsTyping/_namespaces/ts.js": {
+          "bytes": 1971,
+          "sha256": "bd4b60dc184b379e21a470e51c65df02cdd015391443d8aa9fb7109c992d8acc"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.js": {
+          "bytes": 889,
+          "sha256": "5fcc81eb9408f98987cf097a6f6fff01115503c45e4ba51b00314b116dc22744"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.js": {
+          "bytes": 1934,
+          "sha256": "dddb771127c288f5dea8d2c76fedb51c4ba6ff2b5ecc07d941257ec47d966f44"
+        },
+        "typingsInstallerCore/_namespaces/ts.js": {
+          "bytes": 1931,
+          "sha256": "05639941d2c91efaf4bd89413480191115ed556b997d58b44b9cf176fc098f82"
+        },
+        "typingsInstallerCore/typingsInstaller.js": {
+          "bytes": 21219,
+          "sha256": "ab9f4d856496d1ee83093688416ecaa393c33ec74c48b1c3d97b9efa386f31a4"
+        }
+      },
+      "calls": [
+        {
+          "owners": [
+            "getDefaultTypeRoots"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 503,
+          "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => undefined): undefined"
+        },
+        {
+          "owners": [
+            "forEachAncestorDirectoryStoppingAtGlobalCache"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 3057,
+          "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined"
+        },
+        {
+          "owners": [
+            "clearFirstAncestorEntry",
+            "createCachedDirectoryStructureHost"
+          ],
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 296,
+          "expression": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )",
+          "signature": "(directory: string, callback: (directory: string) => true | undefined): true | undefined"
+        },
+        {
+          "owners": [
+            "findConfigFile"
+          ],
+          "file": "src/compiler/program.ts",
+          "line": 330,
+          "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        },
+        {
+          "owners": [
+            "installPackage",
+            "TypingsInstaller"
+          ],
+          "file": "src/typingsInstallerCore/typingsInstaller.ts",
+          "line": 258,
+          "expression": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        }
+      ]
+    },
+    "B": {
+      "roots": [
+        "/workspace/scratch/ancestor/B/src/compiler/binder.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/builder.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/builderPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/builderState.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/checker.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/core.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/corePublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/debug.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/emitter.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/hostErrors.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/parser.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/path.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/performance.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/performanceCore.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/program.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/scanner.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/semver.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/sourcemap.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/sys.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/tracing.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformer.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/tsbuild.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/types.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/utilities.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/watch.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/watchPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/ancestor/B/src/compiler/transformers/module/system.ts"
+      ],
+      "diagnostics": [],
+      "callerDiagnostics": [],
+      "emitSkipped": false,
+      "outputs": {
+        "compiler/corePublic.js": {
+          "bytes": 811,
+          "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+        },
+        "compiler/core.js": {
+          "bytes": 70745,
+          "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+        },
+        "compiler/debug.js": {
+          "bytes": 21329,
+          "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+        },
+        "compiler/semver.js": {
+          "bytes": 16341,
+          "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+        },
+        "compiler/performanceCore.js": {
+          "bytes": 3808,
+          "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+        },
+        "compiler/performance.js": {
+          "bytes": 5635,
+          "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+        },
+        "compiler/_namespaces/ts.performance.js": {
+          "bytes": 872,
+          "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+        },
+        "compiler/tracing.js": {
+          "bytes": 15213,
+          "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+        },
+        "compiler/types.js": {
+          "bytes": 143574,
+          "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+        },
+        "compiler/hostErrors.js": {
+          "bytes": 829,
+          "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+        },
+        "compiler/sys.js": {
+          "bytes": 72516,
+          "sha256": "6df8d6e336246143911b81c3eed68d5005330a8dcf6e6861f293a32824a98cac"
+        },
+        "compiler/path.js": {
+          "bytes": 33368,
+          "sha256": "9be17f7d41172923d13715c2704d72aa9f590a679d7b29ad99a2ca557cc10e38"
+        },
+        "compiler/diagnosticInformationMap.generated.js": {
+          "bytes": 555738,
+          "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+        },
+        "compiler/scanner.js": {
+          "bytes": 216916,
+          "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+        },
+        "compiler/utilitiesPublic.js": {
+          "bytes": 99903,
+          "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+        },
+        "compiler/utilities.js": {
+          "bytes": 482062,
+          "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+        },
+        "compiler/factory/baseNodeFactory.js": {
+          "bytes": 1717,
+          "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+        },
+        "compiler/factory/parenthesizerRules.js": {
+          "bytes": 32288,
+          "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+        },
+        "compiler/factory/nodeConverters.js": {
+          "bytes": 6263,
+          "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+        },
+        "compiler/factory/nodeFactory.js": {
+          "bytes": 281618,
+          "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+        },
+        "compiler/factory/emitNode.js": {
+          "bytes": 12057,
+          "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+        },
+        "compiler/factory/emitHelpers.js": {
+          "bytes": 59048,
+          "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+        },
+        "compiler/factory/nodeTests.js": {
+          "bytes": 34856,
+          "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+        },
+        "compiler/factory/nodeChildren.js": {
+          "bytes": 2138,
+          "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+        },
+        "compiler/factory/utilities.js": {
+          "bytes": 59239,
+          "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+        },
+        "compiler/factory/utilitiesPublic.js": {
+          "bytes": 2364,
+          "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+        },
+        "compiler/parser.js": {
+          "bytes": 497565,
+          "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+        },
+        "compiler/commandLineParser.js": {
+          "bytes": 171860,
+          "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+        },
+        "compiler/moduleNameResolver.js": {
+          "bytes": 157674,
+          "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+        },
+        "compiler/symbolWalker.js": {
+          "bytes": 7201,
+          "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+        },
+        "compiler/moduleSpecifiers.js": {
+          "bytes": 72613,
+          "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+        },
+        "compiler/_namespaces/ts.moduleSpecifiers.js": {
+          "bytes": 882,
+          "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+        },
+        "compiler/checker.js": {
+          "bytes": 3047690,
+          "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+        },
+        "compiler/visitorPublic.js": {
+          "bytes": 69679,
+          "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+        },
+        "compiler/sourcemap.js": {
+          "bytes": 30859,
+          "sha256": "ee5f9d12feff56afc12a18485ab44595aeda058f3930399ad2f73675ab4b3189"
+        },
+        "compiler/transformers/utilities.js": {
+          "bytes": 29212,
+          "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+        },
+        "compiler/transformers/destructuring.js": {
+          "bytes": 26919,
+          "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+        },
+        "compiler/transformers/classThis.js": {
+          "bytes": 3692,
+          "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+        },
+        "compiler/transformers/namedEvaluation.js": {
+          "bytes": 18386,
+          "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+        },
+        "compiler/transformers/taggedTemplate.js": {
+          "bytes": 4833,
+          "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+        },
+        "compiler/transformers/ts.js": {
+          "bytes": 105516,
+          "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+        },
+        "compiler/transformers/classFields.js": {
+          "bytes": 140129,
+          "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+        },
+        "compiler/transformers/typeSerializer.js": {
+          "bytes": 23451,
+          "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+        },
+        "compiler/transformers/legacyDecorators.js": {
+          "bytes": 33375,
+          "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+        },
+        "compiler/transformers/esDecorators.js": {
+          "bytes": 114343,
+          "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+        },
+        "compiler/transformers/es2017.js": {
+          "bytes": 43911,
+          "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+        },
+        "compiler/transformers/es2018.js": {
+          "bytes": 60417,
+          "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+        },
+        "compiler/transformers/es2019.js": {
+          "bytes": 1278,
+          "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+        },
+        "compiler/transformers/es2020.js": {
+          "bytes": 12026,
+          "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+        },
+        "compiler/transformers/es2021.js": {
+          "bytes": 3109,
+          "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+        },
+        "compiler/transformers/esnext.js": {
+          "bytes": 29449,
+          "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+        },
+        "compiler/transformers/jsx.js": {
+          "bytes": 32232,
+          "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+        },
+        "compiler/transformers/es2016.js": {
+          "bytes": 3754,
+          "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+        },
+        "compiler/transformers/es2015.js": {
+          "bytes": 203358,
+          "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+        },
+        "compiler/transformers/generators.js": {
+          "bytes": 104383,
+          "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+        },
+        "compiler/transformers/module/module.js": {
+          "bytes": 93195,
+          "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+        },
+        "compiler/transformers/module/system.js": {
+          "bytes": 72942,
+          "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+        },
+        "compiler/transformers/module/esnextAnd2015.js": {
+          "bytes": 15184,
+          "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+        },
+        "compiler/transformers/module/impliedNodeFormatDependent.js": {
+          "bytes": 3464,
+          "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+        },
+        "compiler/transformers/declarations/diagnostics.js": {
+          "bytes": 44506,
+          "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+        },
+        "compiler/transformers/declarations.js": {
+          "bytes": 87948,
+          "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+        },
+        "compiler/transformer.js": {
+          "bytes": 29405,
+          "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+        },
+        "compiler/emitter.js": {
+          "bytes": 247956,
+          "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+        },
+        "compiler/watchUtilities.js": {
+          "bytes": 27443,
+          "sha256": "5ad8356a7c3b7f34df7f5c2b3e3a04e7f876da9fbad5781b50ce1a9c13f53486"
+        },
+        "compiler/program.js": {
+          "bytes": 240886,
+          "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+        },
+        "compiler/programDiagnostics.js": {
+          "bytes": 17767,
+          "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+        },
+        "compiler/builderStatePublic.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "compiler/builderState.js": {
+          "bytes": 21862,
+          "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+        },
+        "compiler/builder.js": {
+          "bytes": 95135,
+          "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+        },
+        "compiler/builderPublic.js": {
+          "bytes": 2012,
+          "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+        },
+        "compiler/resolutionCache.js": {
+          "bytes": 65294,
+          "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+        },
+        "compiler/watch.js": {
+          "bytes": 38558,
+          "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+        },
+        "compiler/watchPublic.js": {
+          "bytes": 41475,
+          "sha256": "f6d547af319ee769fc8eb877a7ce72dec71001ace697b58f62798c81b1e10b51"
+        },
+        "compiler/tsbuild.js": {
+          "bytes": 2698,
+          "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+        },
+        "compiler/tsbuildPublic.js": {
+          "bytes": 87662,
+          "sha256": "af2540dc4bc09a73c65ffa0712f06c9d977c277046788d3a7e15403ede569fd6"
+        },
+        "compiler/executeCommandLine.js": {
+          "bytes": 49443,
+          "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+        },
+        "compiler/expressionToTypeNode.js": {
+          "bytes": 61549,
+          "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+        },
+        "compiler/_namespaces/ts.js": {
+          "bytes": 6325,
+          "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+        },
+        "compiler/binder.js": {
+          "bytes": 186163,
+          "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+        },
+        "jsTyping/shared.js": {
+          "bytes": 2974,
+          "sha256": "5faced60f2a73c7530cd1de78227fe62bb23ad4f2271019444b969d10b8dc1f5"
+        },
+        "jsTyping/types.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "jsTyping/_namespaces/ts.server.js": {
+          "bytes": 909,
+          "sha256": "044a4caf5991881791d902a467927259830902f33252e7726102c16da7dbd5f0"
+        },
+        "jsTyping/jsTyping.js": {
+          "bytes": 17858,
+          "sha256": "065cf3a3fbe5b461c01f6061cdbe279df081047c520dbd88a3935d4c34aa1864"
+        },
+        "jsTyping/_namespaces/ts.JsTyping.js": {
+          "bytes": 866,
+          "sha256": "fcffbbc9ce1396b9565b0f0f85c9d3cdbb2eba5b11c5eb772a30733d0c769e19"
+        },
+        "jsTyping/_namespaces/ts.js": {
+          "bytes": 1971,
+          "sha256": "bd4b60dc184b379e21a470e51c65df02cdd015391443d8aa9fb7109c992d8acc"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.js": {
+          "bytes": 889,
+          "sha256": "5fcc81eb9408f98987cf097a6f6fff01115503c45e4ba51b00314b116dc22744"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.js": {
+          "bytes": 1934,
+          "sha256": "dddb771127c288f5dea8d2c76fedb51c4ba6ff2b5ecc07d941257ec47d966f44"
+        },
+        "typingsInstallerCore/_namespaces/ts.js": {
+          "bytes": 1931,
+          "sha256": "05639941d2c91efaf4bd89413480191115ed556b997d58b44b9cf176fc098f82"
+        },
+        "typingsInstallerCore/typingsInstaller.js": {
+          "bytes": 21219,
+          "sha256": "ab9f4d856496d1ee83093688416ecaa393c33ec74c48b1c3d97b9efa386f31a4"
+        }
+      },
+      "calls": [
+        {
+          "owners": [
+            "getDefaultTypeRoots"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 503,
+          "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => undefined): undefined"
+        },
+        {
+          "owners": [
+            "forEachAncestorDirectoryStoppingAtGlobalCache"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 3057,
+          "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined"
+        },
+        {
+          "owners": [
+            "clearFirstAncestorEntry",
+            "createCachedDirectoryStructureHost"
+          ],
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 296,
+          "expression": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )",
+          "signature": "(directory: Path, callback: (directory: Path) => true | undefined): true | undefined"
+        },
+        {
+          "owners": [
+            "findConfigFile"
+          ],
+          "file": "src/compiler/program.ts",
+          "line": 330,
+          "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        },
+        {
+          "owners": [
+            "installPackage",
+            "TypingsInstaller"
+          ],
+          "file": "src/typingsInstallerCore/typingsInstaller.ts",
+          "line": 258,
+          "expression": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })",
+          "signature": "(directory: Path, callback: (directory: Path) => Path | undefined): Path | undefined"
+        }
+      ]
+    },
+    "C": {
+      "roots": [
+        "/workspace/scratch/ancestor/C/src/compiler/binder.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/builder.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/builderPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/builderState.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/checker.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/core.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/corePublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/debug.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/emitter.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/hostErrors.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/parser.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/path.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/performance.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/performanceCore.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/program.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/scanner.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/semver.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/sourcemap.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/sys.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/tracing.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformer.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/tsbuild.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/types.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/utilities.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/watch.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/watchPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/ancestor/C/src/compiler/transformers/module/system.ts"
+      ],
+      "diagnostics": [],
+      "callerDiagnostics": [],
+      "emitSkipped": false,
+      "outputs": {
+        "compiler/corePublic.js": {
+          "bytes": 811,
+          "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+        },
+        "compiler/core.js": {
+          "bytes": 70745,
+          "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+        },
+        "compiler/debug.js": {
+          "bytes": 21329,
+          "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+        },
+        "compiler/semver.js": {
+          "bytes": 16341,
+          "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+        },
+        "compiler/performanceCore.js": {
+          "bytes": 3808,
+          "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+        },
+        "compiler/performance.js": {
+          "bytes": 5635,
+          "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+        },
+        "compiler/_namespaces/ts.performance.js": {
+          "bytes": 872,
+          "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+        },
+        "compiler/tracing.js": {
+          "bytes": 15213,
+          "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+        },
+        "compiler/types.js": {
+          "bytes": 143574,
+          "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+        },
+        "compiler/hostErrors.js": {
+          "bytes": 829,
+          "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+        },
+        "compiler/sys.js": {
+          "bytes": 72516,
+          "sha256": "6df8d6e336246143911b81c3eed68d5005330a8dcf6e6861f293a32824a98cac"
+        },
+        "compiler/path.js": {
+          "bytes": 33827,
+          "sha256": "d5424f568c95ff8ceab158265d89ebe4745cbff490a7339c7d6f2aa39f09a7ee"
+        },
+        "compiler/diagnosticInformationMap.generated.js": {
+          "bytes": 555738,
+          "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+        },
+        "compiler/scanner.js": {
+          "bytes": 216916,
+          "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+        },
+        "compiler/utilitiesPublic.js": {
+          "bytes": 99903,
+          "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+        },
+        "compiler/utilities.js": {
+          "bytes": 482062,
+          "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+        },
+        "compiler/factory/baseNodeFactory.js": {
+          "bytes": 1717,
+          "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+        },
+        "compiler/factory/parenthesizerRules.js": {
+          "bytes": 32288,
+          "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+        },
+        "compiler/factory/nodeConverters.js": {
+          "bytes": 6263,
+          "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+        },
+        "compiler/factory/nodeFactory.js": {
+          "bytes": 281618,
+          "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+        },
+        "compiler/factory/emitNode.js": {
+          "bytes": 12057,
+          "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+        },
+        "compiler/factory/emitHelpers.js": {
+          "bytes": 59048,
+          "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+        },
+        "compiler/factory/nodeTests.js": {
+          "bytes": 34856,
+          "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+        },
+        "compiler/factory/nodeChildren.js": {
+          "bytes": 2138,
+          "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+        },
+        "compiler/factory/utilities.js": {
+          "bytes": 59239,
+          "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+        },
+        "compiler/factory/utilitiesPublic.js": {
+          "bytes": 2364,
+          "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+        },
+        "compiler/parser.js": {
+          "bytes": 497565,
+          "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+        },
+        "compiler/commandLineParser.js": {
+          "bytes": 171860,
+          "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+        },
+        "compiler/moduleNameResolver.js": {
+          "bytes": 157674,
+          "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+        },
+        "compiler/symbolWalker.js": {
+          "bytes": 7201,
+          "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+        },
+        "compiler/moduleSpecifiers.js": {
+          "bytes": 72613,
+          "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+        },
+        "compiler/_namespaces/ts.moduleSpecifiers.js": {
+          "bytes": 882,
+          "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+        },
+        "compiler/checker.js": {
+          "bytes": 3047690,
+          "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+        },
+        "compiler/visitorPublic.js": {
+          "bytes": 69679,
+          "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+        },
+        "compiler/sourcemap.js": {
+          "bytes": 30859,
+          "sha256": "ee5f9d12feff56afc12a18485ab44595aeda058f3930399ad2f73675ab4b3189"
+        },
+        "compiler/transformers/utilities.js": {
+          "bytes": 29212,
+          "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+        },
+        "compiler/transformers/destructuring.js": {
+          "bytes": 26919,
+          "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+        },
+        "compiler/transformers/classThis.js": {
+          "bytes": 3692,
+          "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+        },
+        "compiler/transformers/namedEvaluation.js": {
+          "bytes": 18386,
+          "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+        },
+        "compiler/transformers/taggedTemplate.js": {
+          "bytes": 4833,
+          "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+        },
+        "compiler/transformers/ts.js": {
+          "bytes": 105516,
+          "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+        },
+        "compiler/transformers/classFields.js": {
+          "bytes": 140129,
+          "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+        },
+        "compiler/transformers/typeSerializer.js": {
+          "bytes": 23451,
+          "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+        },
+        "compiler/transformers/legacyDecorators.js": {
+          "bytes": 33375,
+          "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+        },
+        "compiler/transformers/esDecorators.js": {
+          "bytes": 114343,
+          "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+        },
+        "compiler/transformers/es2017.js": {
+          "bytes": 43911,
+          "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+        },
+        "compiler/transformers/es2018.js": {
+          "bytes": 60417,
+          "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+        },
+        "compiler/transformers/es2019.js": {
+          "bytes": 1278,
+          "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+        },
+        "compiler/transformers/es2020.js": {
+          "bytes": 12026,
+          "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+        },
+        "compiler/transformers/es2021.js": {
+          "bytes": 3109,
+          "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+        },
+        "compiler/transformers/esnext.js": {
+          "bytes": 29449,
+          "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+        },
+        "compiler/transformers/jsx.js": {
+          "bytes": 32232,
+          "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+        },
+        "compiler/transformers/es2016.js": {
+          "bytes": 3754,
+          "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+        },
+        "compiler/transformers/es2015.js": {
+          "bytes": 203358,
+          "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+        },
+        "compiler/transformers/generators.js": {
+          "bytes": 104383,
+          "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+        },
+        "compiler/transformers/module/module.js": {
+          "bytes": 93195,
+          "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+        },
+        "compiler/transformers/module/system.js": {
+          "bytes": 72942,
+          "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+        },
+        "compiler/transformers/module/esnextAnd2015.js": {
+          "bytes": 15184,
+          "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+        },
+        "compiler/transformers/module/impliedNodeFormatDependent.js": {
+          "bytes": 3464,
+          "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+        },
+        "compiler/transformers/declarations/diagnostics.js": {
+          "bytes": 44506,
+          "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+        },
+        "compiler/transformers/declarations.js": {
+          "bytes": 87948,
+          "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+        },
+        "compiler/transformer.js": {
+          "bytes": 29405,
+          "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+        },
+        "compiler/emitter.js": {
+          "bytes": 247956,
+          "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+        },
+        "compiler/watchUtilities.js": {
+          "bytes": 27447,
+          "sha256": "ea1f435bb0e9d55bf9726689cb84cce58d98bdedea0fb3054e5f007ffa158d86"
+        },
+        "compiler/program.js": {
+          "bytes": 240886,
+          "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+        },
+        "compiler/programDiagnostics.js": {
+          "bytes": 17767,
+          "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+        },
+        "compiler/builderStatePublic.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "compiler/builderState.js": {
+          "bytes": 21862,
+          "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+        },
+        "compiler/builder.js": {
+          "bytes": 95135,
+          "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+        },
+        "compiler/builderPublic.js": {
+          "bytes": 2012,
+          "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+        },
+        "compiler/resolutionCache.js": {
+          "bytes": 65294,
+          "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+        },
+        "compiler/watch.js": {
+          "bytes": 38558,
+          "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+        },
+        "compiler/watchPublic.js": {
+          "bytes": 41475,
+          "sha256": "f6d547af319ee769fc8eb877a7ce72dec71001ace697b58f62798c81b1e10b51"
+        },
+        "compiler/tsbuild.js": {
+          "bytes": 2698,
+          "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+        },
+        "compiler/tsbuildPublic.js": {
+          "bytes": 87662,
+          "sha256": "af2540dc4bc09a73c65ffa0712f06c9d977c277046788d3a7e15403ede569fd6"
+        },
+        "compiler/executeCommandLine.js": {
+          "bytes": 49443,
+          "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+        },
+        "compiler/expressionToTypeNode.js": {
+          "bytes": 61549,
+          "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+        },
+        "compiler/_namespaces/ts.js": {
+          "bytes": 6325,
+          "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+        },
+        "compiler/binder.js": {
+          "bytes": 186163,
+          "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+        },
+        "jsTyping/shared.js": {
+          "bytes": 2974,
+          "sha256": "5faced60f2a73c7530cd1de78227fe62bb23ad4f2271019444b969d10b8dc1f5"
+        },
+        "jsTyping/types.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "jsTyping/_namespaces/ts.server.js": {
+          "bytes": 909,
+          "sha256": "044a4caf5991881791d902a467927259830902f33252e7726102c16da7dbd5f0"
+        },
+        "jsTyping/jsTyping.js": {
+          "bytes": 17858,
+          "sha256": "065cf3a3fbe5b461c01f6061cdbe279df081047c520dbd88a3935d4c34aa1864"
+        },
+        "jsTyping/_namespaces/ts.JsTyping.js": {
+          "bytes": 866,
+          "sha256": "fcffbbc9ce1396b9565b0f0f85c9d3cdbb2eba5b11c5eb772a30733d0c769e19"
+        },
+        "jsTyping/_namespaces/ts.js": {
+          "bytes": 1971,
+          "sha256": "bd4b60dc184b379e21a470e51c65df02cdd015391443d8aa9fb7109c992d8acc"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.js": {
+          "bytes": 889,
+          "sha256": "5fcc81eb9408f98987cf097a6f6fff01115503c45e4ba51b00314b116dc22744"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.js": {
+          "bytes": 1934,
+          "sha256": "dddb771127c288f5dea8d2c76fedb51c4ba6ff2b5ecc07d941257ec47d966f44"
+        },
+        "typingsInstallerCore/_namespaces/ts.js": {
+          "bytes": 1931,
+          "sha256": "05639941d2c91efaf4bd89413480191115ed556b997d58b44b9cf176fc098f82"
+        },
+        "typingsInstallerCore/typingsInstaller.js": {
+          "bytes": 21223,
+          "sha256": "83d816e92f07b324770e8b81af32bff34551d4f15ffe610b79f60023bd6c98ed"
+        }
+      },
+      "calls": [
+        {
+          "owners": [
+            "getDefaultTypeRoots"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 503,
+          "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => undefined): undefined"
+        },
+        {
+          "owners": [
+            "forEachAncestorDirectoryStoppingAtGlobalCache"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 3057,
+          "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined"
+        },
+        {
+          "owners": [
+            "clearFirstAncestorEntry",
+            "createCachedDirectoryStructureHost"
+          ],
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 296,
+          "expression": "forEachAncestorDirectoryPath(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )",
+          "signature": "(directory: Path, callback: (directory: Path) => true | undefined): true | undefined"
+        },
+        {
+          "owners": [
+            "findConfigFile"
+          ],
+          "file": "src/compiler/program.ts",
+          "line": 330,
+          "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        },
+        {
+          "owners": [
+            "installPackage",
+            "TypingsInstaller"
+          ],
+          "file": "src/typingsInstallerCore/typingsInstaller.ts",
+          "line": 258,
+          "expression": "forEachAncestorDirectoryPath(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })",
+          "signature": "(directory: Path, callback: (directory: Path) => Path | undefined): Path | undefined"
+        }
+      ]
+    },
+    "D": {
+      "roots": [
+        "/workspace/scratch/ancestor/D/src/compiler/binder.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/builder.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/builderPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/builderState.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/checker.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/core.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/corePublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/debug.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/emitter.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/hostErrors.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/parser.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/path.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/performance.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/performanceCore.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/program.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/scanner.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/semver.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/sourcemap.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/sys.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/tracing.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformer.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/tsbuild.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/types.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/utilities.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/watch.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/watchPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/watchUtilities.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/ancestor/D/src/compiler/transformers/module/system.ts"
+      ],
+      "diagnostics": [],
+      "callerDiagnostics": [],
+      "emitSkipped": false,
+      "outputs": {
+        "compiler/corePublic.js": {
+          "bytes": 811,
+          "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+        },
+        "compiler/core.js": {
+          "bytes": 70745,
+          "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+        },
+        "compiler/debug.js": {
+          "bytes": 21329,
+          "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+        },
+        "compiler/semver.js": {
+          "bytes": 16341,
+          "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+        },
+        "compiler/performanceCore.js": {
+          "bytes": 3808,
+          "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+        },
+        "compiler/performance.js": {
+          "bytes": 5635,
+          "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+        },
+        "compiler/_namespaces/ts.performance.js": {
+          "bytes": 872,
+          "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+        },
+        "compiler/tracing.js": {
+          "bytes": 15213,
+          "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+        },
+        "compiler/types.js": {
+          "bytes": 143574,
+          "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+        },
+        "compiler/hostErrors.js": {
+          "bytes": 829,
+          "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+        },
+        "compiler/sys.js": {
+          "bytes": 72516,
+          "sha256": "6df8d6e336246143911b81c3eed68d5005330a8dcf6e6861f293a32824a98cac"
+        },
+        "compiler/path.js": {
+          "bytes": 33503,
+          "sha256": "f687f566bc9a2bc01bd983a63f7d83c414e10a061f099445020ff959450c1d5d"
+        },
+        "compiler/diagnosticInformationMap.generated.js": {
+          "bytes": 555738,
+          "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+        },
+        "compiler/scanner.js": {
+          "bytes": 216916,
+          "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+        },
+        "compiler/utilitiesPublic.js": {
+          "bytes": 99903,
+          "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+        },
+        "compiler/utilities.js": {
+          "bytes": 482062,
+          "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+        },
+        "compiler/factory/baseNodeFactory.js": {
+          "bytes": 1717,
+          "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+        },
+        "compiler/factory/parenthesizerRules.js": {
+          "bytes": 32288,
+          "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+        },
+        "compiler/factory/nodeConverters.js": {
+          "bytes": 6263,
+          "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+        },
+        "compiler/factory/nodeFactory.js": {
+          "bytes": 281618,
+          "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+        },
+        "compiler/factory/emitNode.js": {
+          "bytes": 12057,
+          "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+        },
+        "compiler/factory/emitHelpers.js": {
+          "bytes": 59048,
+          "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+        },
+        "compiler/factory/nodeTests.js": {
+          "bytes": 34856,
+          "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+        },
+        "compiler/factory/nodeChildren.js": {
+          "bytes": 2138,
+          "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+        },
+        "compiler/factory/utilities.js": {
+          "bytes": 59239,
+          "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+        },
+        "compiler/factory/utilitiesPublic.js": {
+          "bytes": 2364,
+          "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+        },
+        "compiler/parser.js": {
+          "bytes": 497565,
+          "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+        },
+        "compiler/commandLineParser.js": {
+          "bytes": 171860,
+          "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+        },
+        "compiler/moduleNameResolver.js": {
+          "bytes": 157674,
+          "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+        },
+        "compiler/symbolWalker.js": {
+          "bytes": 7201,
+          "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+        },
+        "compiler/moduleSpecifiers.js": {
+          "bytes": 72613,
+          "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+        },
+        "compiler/_namespaces/ts.moduleSpecifiers.js": {
+          "bytes": 882,
+          "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+        },
+        "compiler/checker.js": {
+          "bytes": 3047690,
+          "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+        },
+        "compiler/visitorPublic.js": {
+          "bytes": 69679,
+          "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+        },
+        "compiler/sourcemap.js": {
+          "bytes": 30859,
+          "sha256": "ee5f9d12feff56afc12a18485ab44595aeda058f3930399ad2f73675ab4b3189"
+        },
+        "compiler/transformers/utilities.js": {
+          "bytes": 29212,
+          "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+        },
+        "compiler/transformers/destructuring.js": {
+          "bytes": 26919,
+          "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+        },
+        "compiler/transformers/classThis.js": {
+          "bytes": 3692,
+          "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+        },
+        "compiler/transformers/namedEvaluation.js": {
+          "bytes": 18386,
+          "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+        },
+        "compiler/transformers/taggedTemplate.js": {
+          "bytes": 4833,
+          "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+        },
+        "compiler/transformers/ts.js": {
+          "bytes": 105516,
+          "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+        },
+        "compiler/transformers/classFields.js": {
+          "bytes": 140129,
+          "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+        },
+        "compiler/transformers/typeSerializer.js": {
+          "bytes": 23451,
+          "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+        },
+        "compiler/transformers/legacyDecorators.js": {
+          "bytes": 33375,
+          "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+        },
+        "compiler/transformers/esDecorators.js": {
+          "bytes": 114343,
+          "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+        },
+        "compiler/transformers/es2017.js": {
+          "bytes": 43911,
+          "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+        },
+        "compiler/transformers/es2018.js": {
+          "bytes": 60417,
+          "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+        },
+        "compiler/transformers/es2019.js": {
+          "bytes": 1278,
+          "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+        },
+        "compiler/transformers/es2020.js": {
+          "bytes": 12026,
+          "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+        },
+        "compiler/transformers/es2021.js": {
+          "bytes": 3109,
+          "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+        },
+        "compiler/transformers/esnext.js": {
+          "bytes": 29449,
+          "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+        },
+        "compiler/transformers/jsx.js": {
+          "bytes": 32232,
+          "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+        },
+        "compiler/transformers/es2016.js": {
+          "bytes": 3754,
+          "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+        },
+        "compiler/transformers/es2015.js": {
+          "bytes": 203358,
+          "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+        },
+        "compiler/transformers/generators.js": {
+          "bytes": 104383,
+          "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+        },
+        "compiler/transformers/module/module.js": {
+          "bytes": 93195,
+          "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+        },
+        "compiler/transformers/module/system.js": {
+          "bytes": 72942,
+          "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+        },
+        "compiler/transformers/module/esnextAnd2015.js": {
+          "bytes": 15184,
+          "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+        },
+        "compiler/transformers/module/impliedNodeFormatDependent.js": {
+          "bytes": 3464,
+          "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+        },
+        "compiler/transformers/declarations/diagnostics.js": {
+          "bytes": 44506,
+          "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+        },
+        "compiler/transformers/declarations.js": {
+          "bytes": 87948,
+          "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+        },
+        "compiler/transformer.js": {
+          "bytes": 29405,
+          "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+        },
+        "compiler/emitter.js": {
+          "bytes": 247956,
+          "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+        },
+        "compiler/watchUtilities.js": {
+          "bytes": 27443,
+          "sha256": "5ad8356a7c3b7f34df7f5c2b3e3a04e7f876da9fbad5781b50ce1a9c13f53486"
+        },
+        "compiler/program.js": {
+          "bytes": 240886,
+          "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+        },
+        "compiler/programDiagnostics.js": {
+          "bytes": 17767,
+          "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+        },
+        "compiler/builderStatePublic.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "compiler/builderState.js": {
+          "bytes": 21862,
+          "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+        },
+        "compiler/builder.js": {
+          "bytes": 95135,
+          "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+        },
+        "compiler/builderPublic.js": {
+          "bytes": 2012,
+          "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+        },
+        "compiler/resolutionCache.js": {
+          "bytes": 65294,
+          "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+        },
+        "compiler/watch.js": {
+          "bytes": 38558,
+          "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+        },
+        "compiler/watchPublic.js": {
+          "bytes": 41475,
+          "sha256": "f6d547af319ee769fc8eb877a7ce72dec71001ace697b58f62798c81b1e10b51"
+        },
+        "compiler/tsbuild.js": {
+          "bytes": 2698,
+          "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+        },
+        "compiler/tsbuildPublic.js": {
+          "bytes": 87662,
+          "sha256": "af2540dc4bc09a73c65ffa0712f06c9d977c277046788d3a7e15403ede569fd6"
+        },
+        "compiler/executeCommandLine.js": {
+          "bytes": 49443,
+          "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+        },
+        "compiler/expressionToTypeNode.js": {
+          "bytes": 61549,
+          "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+        },
+        "compiler/_namespaces/ts.js": {
+          "bytes": 6325,
+          "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+        },
+        "compiler/binder.js": {
+          "bytes": 186163,
+          "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+        },
+        "jsTyping/shared.js": {
+          "bytes": 2974,
+          "sha256": "5faced60f2a73c7530cd1de78227fe62bb23ad4f2271019444b969d10b8dc1f5"
+        },
+        "jsTyping/types.js": {
+          "bytes": 77,
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        "jsTyping/_namespaces/ts.server.js": {
+          "bytes": 909,
+          "sha256": "044a4caf5991881791d902a467927259830902f33252e7726102c16da7dbd5f0"
+        },
+        "jsTyping/jsTyping.js": {
+          "bytes": 17858,
+          "sha256": "065cf3a3fbe5b461c01f6061cdbe279df081047c520dbd88a3935d4c34aa1864"
+        },
+        "jsTyping/_namespaces/ts.JsTyping.js": {
+          "bytes": 866,
+          "sha256": "fcffbbc9ce1396b9565b0f0f85c9d3cdbb2eba5b11c5eb772a30733d0c769e19"
+        },
+        "jsTyping/_namespaces/ts.js": {
+          "bytes": 1971,
+          "sha256": "bd4b60dc184b379e21a470e51c65df02cdd015391443d8aa9fb7109c992d8acc"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.typingsInstaller.js": {
+          "bytes": 889,
+          "sha256": "5fcc81eb9408f98987cf097a6f6fff01115503c45e4ba51b00314b116dc22744"
+        },
+        "typingsInstallerCore/_namespaces/ts.server.js": {
+          "bytes": 1934,
+          "sha256": "dddb771127c288f5dea8d2c76fedb51c4ba6ff2b5ecc07d941257ec47d966f44"
+        },
+        "typingsInstallerCore/_namespaces/ts.js": {
+          "bytes": 1931,
+          "sha256": "05639941d2c91efaf4bd89413480191115ed556b997d58b44b9cf176fc098f82"
+        },
+        "typingsInstallerCore/typingsInstaller.js": {
+          "bytes": 21219,
+          "sha256": "ab9f4d856496d1ee83093688416ecaa393c33ec74c48b1c3d97b9efa386f31a4"
+        }
+      },
+      "calls": [
+        {
+          "owners": [
+            "getDefaultTypeRoots"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 503,
+          "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => undefined): undefined"
+        },
+        {
+          "owners": [
+            "forEachAncestorDirectoryStoppingAtGlobalCache"
+          ],
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 3057,
+          "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined"
+        },
+        {
+          "owners": [
+            "clearFirstAncestorEntry",
+            "createCachedDirectoryStructureHost"
+          ],
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 296,
+          "expression": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )",
+          "signature": "(directory: string, callback: (directory: string) => true | undefined): true | undefined"
+        },
+        {
+          "owners": [
+            "findConfigFile"
+          ],
+          "file": "src/compiler/program.ts",
+          "line": 330,
+          "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        },
+        {
+          "owners": [
+            "installPackage",
+            "TypingsInstaller"
+          ],
+          "file": "src/typingsInstallerCore/typingsInstaller.ts",
+          "line": 258,
+          "expression": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })",
+          "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined"
+        }
+      ]
+    }
+  }
+}

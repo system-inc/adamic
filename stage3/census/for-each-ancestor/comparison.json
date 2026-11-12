@@ -1,0 +1,43 @@
+{
+  "baseline": {
+    "roots": 79,
+    "diagnostics": 0,
+    "emitted_js_files": 89,
+    "javascript_byte_identical": true,
+    "changed_js": []
+  },
+  "A": {
+    "roots": 79,
+    "diagnostics": 0,
+    "emitted_js_files": 89,
+    "javascript_byte_identical": true,
+    "changed_js": []
+  },
+  "B": {
+    "roots": 79,
+    "diagnostics": 0,
+    "emitted_js_files": 89,
+    "javascript_byte_identical": true,
+    "changed_js": []
+  },
+  "C": {
+    "roots": 79,
+    "diagnostics": 0,
+    "emitted_js_files": 89,
+    "javascript_byte_identical": false,
+    "changed_js": [
+      "compiler/path.js",
+      "compiler/watchUtilities.js",
+      "typingsInstallerCore/typingsInstaller.js"
+    ]
+  },
+  "D": {
+    "roots": 79,
+    "diagnostics": 0,
+    "emitted_js_files": 89,
+    "javascript_byte_identical": false,
+    "changed_js": [
+      "compiler/path.js"
+    ]
+  }
+}

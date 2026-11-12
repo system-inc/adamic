@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "--branch",
+    "v6.0.3",
+    "https://github.com/microsoft/TypeScript.git",
+    "/workspace/scratch/ancestor/upstream"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 20.782556780999982
+}

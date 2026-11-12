@@ -1,0 +1,13 @@
+{
+  "command": [
+    "npm",
+    "ci",
+    "--prefix",
+    "stage3/api",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 1.0246352829999807
+}
