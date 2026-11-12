@@ -32,6 +32,11 @@ mkdir "$TMPDIR" "$GOCACHE" || exit 64
 reproducible="-trimpath -ldflags=-buildid= -buildvcs=false"
 started=$(date -u +%FT%TZ)
 echo "block-report: $(uname -n), $(nproc) cores, $(go version), commit $sha, go flags $reproducible $GOFLAGS, proxy $GOPROXY"
+# The job is asked at a commit carrying these scripts on top of the block (#highfive: a job lays exactly its commit), so
+# the report names the block, its parent, and shows that the scripts are the only difference.
+block=$(git rev-parse --verify 'HEAD^' 2> /dev/null || true)
+echo "block-report: the block is $block, this commit's parent; what this commit adds to it:"
+[ -z "$block" ] || git diff --stat "$block" HEAD | sed 's/^/block-report:   /'
 
 step() {
 	local name=$1 begun=$SECONDS
