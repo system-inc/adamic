@@ -1,6 +1,6 @@
 // json_objects.c's null-pointer reading, from the allocation alone: an object whose one reference slot holds a
-// null pointer, under each representation byte its last write could leave. Lowering refuses every program whose
-// type shows such a field held as a bare pointer (#ckxcnr6), so only this harness reaches the stop.
+// null pointer, under each representation byte its last write could leave. Nullable writes record their nullish
+// meaning; a cast can hide that contract from the writer, so the untagged pointer still reaches the stop.
 #include "json_stringify.h"
 #include <stdio.h>
 #include <string.h>

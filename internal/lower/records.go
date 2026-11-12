@@ -457,6 +457,7 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 	}
 	result := ir.RecordCall{Method: name, Arguments: []ir.Expression{r}, Element: of, Returns: ir.Array}
 	if name == "entries" {
+		result.ElementNullish = l.slotNullish(l.recordElement(l.checker.GetTypeAtLocation(args[0])), of)
 		l.unplannedAllocation(node, l.recordElement(l.checker.GetTypeAtLocation(args[0])), "a record's entries")
 	}
 	if name == "hasOwn" {

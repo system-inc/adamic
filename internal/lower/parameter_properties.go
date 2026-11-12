@@ -39,7 +39,7 @@ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]i
 		if err != nil {
 			return nil, err
 		}
-		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: parameter.Name().Text(), Value: fit(ir.Read{Local: local, Of: l.result.Locals[local].Type}, of), Site: l.writeSite(declaration.Name())})
+		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: parameter.Name().Text(), Value: fit(ir.Read{Local: local, Of: l.result.Locals[local].Type}, of), Nullish: l.slotNullish(l.checker.GetTypeAtLocation(parameter.Name()), of), Site: l.writeSite(declaration.Name())})
 	}
 	return statements, nil
 }
