@@ -2,11 +2,20 @@
 
 ## Decisive results
 
-- Step 2: PASS, all 11 pin subtests; exit 0; wall time 155 seconds.
-- Step 1: PASS, gofmt emitted nothing and go vet exited 0.
-- Step 3: all four mutants detected (exit 1 each), restored, and clean-diff checked. Mutant 2 panicked; mutant 3 had an additional red.
-- Step 4: PASS, full lower suite exit 0; wall time 844 seconds (14m 04s); no failures.
-- Step 4b: pending.
+- Unmodified pins: PASS, all 11 subtests; exit 0; wall time 155 seconds.
+- All four documented mutants were detected (exit 1 each). Each Old text occurred exactly once, and every restoration passed `git diff --exit-code`.
+- Full lower suite: PASS, exit 0; wall time 844 seconds (14m 04s); no failing tests or reported environment failures.
+- IR suite: PASS, exit 0; wall time 74 seconds; no failures.
+- Formatting and vet: PASS; both emitted nothing.
+
+Mutation results require two qualifications: mutant 2's &&= case panicked in the native emitter, aborting three controls before they reported terminal results; mutant 3 also reddened the instantiation-expression test beyond its two documented reds. Mutant 4 was detected by the wrong stop position rather than a native crash. Complete observations, got/want diagnostics and logs follow; none are classified as environment failures.
+
+| Mutant | Exit | Wall seconds | Red subtests | Restore diff exit |
+|---|---:|---:|---|---:|
+| Shorthand dropped | 1 | 45.190 | f02_shorthand.ts | 0 |
+| Logical assignments dropped | 1 | 26.496 | f05_logical_assignment.ts; f05b_or_assignment.ts; f05c_and_assignment.ts (panic) | 0 |
+| Binding check dropped | 1 | 41.465 | f07_constraint_binding.ts; f07b_written_type_argument.ts; f07c_instantiation_expression.ts | 0 |
+| Instantiation expression unbound | 1 | 44.000 | f07c_instantiation_expression.ts | 0 |
 
 ## Identity and environment
 
@@ -507,3 +516,21 @@ ok  	github.com/system-inc/adamic/internal/lower	827.621s
 ```
 
 Checkpoint history: step-2 report `b1608dd3e`; step-3 report `79202b616`. Each was committed and pushed immediately after the respective step; all report commits descend from the requested source HEAD with no force pushes.
+
+## Step 4b — IR suite
+
+```sh
+go test ./internal/ir -count=1 -timeout 30m
+```
+
+Exit 0; wall time 74 seconds. Every failure: none. Complete output, verbatim:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	56.239s
+```
+
+## Final integrity and publication
+
+Verified source HEAD's parent is exactly `219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205`. All four temporary edits were restored before the full suites. Final code matches requested source HEAD; the sole changed path relative to that HEAD is `proof/lower-mez2-a/report.md`. The working tree was clean before this final report update.
+
+Published successive report checkpoints after step 2 (`b1608dd3e`), step 3 (`79202b616`) and step 4 (`fa5097820`), on the same report branch. This final report adds step 4b and the consolidated results. Only this report is committed; every push targets `origin proof/lower-mez2-a-report`, without force. No compiler change was committed or pushed.
