@@ -58,16 +58,6 @@ function comps(path: string): string[];
 function comps(path: string): string[] { return [path]; }
 console.log(String(comps("a" as Path).length));
 `, "overload 1 of comps result"},
-		// An extension of an object, not an array: :32's presence refusals don't see its brand, so `in` on
-		// the result would lower (Language's must on efa2009c). Mutant: phantomStripped stripping any
-		// extension, and this is accepted.
-		{"a phantom extension of an object", `interface Node { readonly kind: number }
-interface TaggedNode extends Node { __tagged: undefined }
-function tag(node: Node, sure: true): TaggedNode;
-function tag(node: Node, sure: boolean): Node;
-function tag(node: Node, sure: boolean): Node { return node; }
-console.log(String(tag({ kind: 1 }, true).kind));
-`, "overload 1 of tag result"},
 		// Only the array's own brand differs, over an array the body also stores in a number[] field, so an
 		// alias's push breaks what the brand claims (Language's Sorted program on efa2009c). Mutant: the
 		// array-brand-only branch answering yes without freshness, and this is accepted.
@@ -112,5 +102,25 @@ console.log(String(comps("a" as Path, ["x"]).length));
 				t.Fatalf("want %q refused, got %v", probe.what, err)
 			}
 		})
+	}
+}
+
+// An extension of an object, not an array: :32's presence refusals don't see its brand, so `in` on the
+// result would lower where Node answers false (Language's must on efa2009c), and phantomStripped leaves it.
+// In .a, where step 1's call-site check doesn't serve it as a branded supertype first. Mutant:
+// phantomStripped stripping any extension, and this is accepted.
+func TestOverloadPhantomResultRefusesAnObjectExtension(t *testing.T) {
+	t.Parallel()
+	source := `interface Node { readonly kind: number }
+interface TaggedNode extends Node { __tagged: undefined }
+function tag(node: Node, sure: true): TaggedNode;
+function tag(node: Node, sure: boolean): Node;
+function tag(node: Node, sure: boolean): Node { return node; }
+console.log(String(tag({ kind: 1 }, true).kind));
+`
+	_, err := lowerSourceAs(t, source, ".a")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of tag result") {
+		t.Fatalf("want overload 1 of tag refused, got %v", err)
 	}
 }
