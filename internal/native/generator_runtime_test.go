@@ -3,11 +3,14 @@ package native
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // generatorLeaked reads the counts line a counted build writes last to stderr (count.c): empty when
@@ -22,6 +25,72 @@ func generatorLeaked(stderr string) string {
 		return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d)", allocations-frees-regions, allocations, frees)
 	}
 	return ""
+}
+
+// generatorMutantRuntime is control, the control's archive, with only its generator.o replaced by one compiled from
+// files, whose generator.c is the mutant's. Through cachedRuntime a mutant compiled all 76 of the runtime's sources
+// again for a one-file edit (TestGeneratorRuntimeInitialize took 42 to 51 s cold on a quiet 4-CPU box, 157 clang
+// calls); now it compiles one (#xxhbdqb). The object is compileRuntime's own, handed the runtime's headers and
+// generator.c alone, so it has the control's flags, prefix maps and feature defines in adamic.h, compiled from inside a
+// directory laid out as the control's. The archive sits there beside those headers, which buildHarnessWithLibrary's -I
+// reads beside it.
+func generatorMutantRuntime(t *testing.T, files []runtimeFile, flags []string, compiler, control string) string {
+	t.Helper()
+	var kept []runtimeFile
+	for _, file := range files {
+		if file.name == "generator.c" || !strings.HasSuffix(file.name, ".c") {
+			kept = append(kept, file)
+		}
+	}
+	directory := t.TempDir()
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := compileRuntime(kept, flags, compiler, directory, 1, jobserver, ""); err != nil {
+		t.Fatal(err)
+	}
+	// compileRuntime archived generator.o alone as runtime.a there; the control's whole archive takes its place.
+	library := filepath.Join(directory, "runtime.a")
+	contents, err := os.ReadFile(control)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(library, contents, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	before := generatorArchiveMembers(t, compiler, library)
+	if !slices.Contains(before, "generator.o") {
+		t.Fatalf("the control's archive holds no generator.o to replace: %q", before)
+	}
+	// r replaces the member named as the object is, generator.o as compileRuntime names it, where it sits; s writes the
+	// symbol index again, which Apple's ar would otherwise leave naming the control's object. ZERO_AR_DATE as
+	// compileRuntime archives.
+	archive := toolchain.Command(archiverName(compiler), "rs", library, filepath.Join(directory, "generator.o"))
+	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
+	if output, err := archive.CombinedOutput(); err != nil {
+		t.Fatalf("replacing generator.o: %v\n%s", err, output)
+	}
+	// A member added beside the control's generator.o rather than over it would link two generators.
+	if after := generatorArchiveMembers(t, compiler, library); !slices.Equal(before, after) {
+		t.Fatalf("replacing generator.o changed the archive's members:\nbefore %q\nafter  %q", before, after)
+	}
+	return library
+}
+
+// generatorArchiveMembers are the names of library's members as its archiver lists them, sorted.
+func generatorArchiveMembers(t *testing.T, compiler, library string) []string {
+	t.Helper()
+	command := toolchain.Command(archiverName(compiler), "t", library)
+	var stderr strings.Builder
+	command.Stderr = &stderr
+	output, err := command.Output()
+	if err != nil {
+		t.Fatalf("listing %s: %v\n%s", library, err, stderr.String())
+	}
+	members := strings.Split(strings.TrimSpace(string(output)), "\n")
+	slices.Sort(members)
+	return members
 }
 
 // generatorRuntimeGuard runs one mode of the hand-written generator harness, a stand-in for what the
@@ -47,6 +116,8 @@ func generatorRuntimeGuard(t *testing.T, mode, want, old, replacement, diagnosti
 	if old != "" {
 		mutants = append(mutants, true)
 	}
+	// The control runs first, so its archive is here when the mutant's is made from it.
+	var control string
 	for _, mutant := range mutants {
 		if mutant {
 			found := false
@@ -65,9 +136,15 @@ func generatorRuntimeGuard(t *testing.T, mode, want, old, replacement, diagnosti
 				t.Fatal("missing runtime file generator.c")
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
-		if err != nil {
-			t.Fatal(err)
+		var library string
+		if mutant {
+			library = generatorMutantRuntime(t, files, flags, compiler, control)
+		} else {
+			control, err = cachedRuntime(files, flags, compiler, version, cache)
+			if err != nil {
+				t.Fatal(err)
+			}
+			library = control
 		}
 		binary := buildHarnessWithLibrary(t, string(source), flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary, mode)
