@@ -217,9 +217,10 @@ bool adamic_timer_cancel(adamic_timer_handle handle) {
     timer_entry *entry = timer_find(handle);
     if (entry == NULL) return false;
     timer_unlink(entry);
-    /* Node's unenroll (lib/timers.js): L.remove, then, for a referenced timer alone, its duration's list
-     * deleted when it's empty, even when the timer wasn't in it (a repeat cleared in its own callback);
-     * an unreferenced timer's empty list stays, with its expiry and id, for the next insert to reuse. */
+    /* Node's unenroll (lib/timers.js:71-104, the deletion at :89-97): L.remove, then, for a referenced
+     * timer alone, its duration's list deleted when it's empty, even when the timer wasn't in it (a
+     * repeat cleared in its own callback); an unreferenced timer's empty list stays, with its expiry
+     * and id, for the next insert to reuse. */
     timer_list_remove(entry);
     if (entry->referenced) {
         timer_list *list = timer_list_of(entry->delay);
