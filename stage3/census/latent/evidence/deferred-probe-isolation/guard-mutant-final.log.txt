@@ -1,0 +1,8 @@
+=== RUN   TestLatentDeferredProbeOwnsPredicateRegistrationsHcxsh1k
+=== PAUSE TestLatentDeferredProbeOwnsPredicateRegistrationsHcxsh1k
+=== CONT  TestLatentDeferredProbeOwnsPredicateRegistrationsHcxsh1k
+    latent_deferred_probe_test.go:66: deferred probe leaked IR registrations: CheckedFields before=map[] after=map[3806:kind:true 3806:text:true]
+--- FAIL: TestLatentDeferredProbeOwnsPredicateRegistrationsHcxsh1k (0.06s)
+FAIL
+FAIL	command-line-arguments	0.067s
+FAIL

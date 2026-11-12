@@ -487,12 +487,15 @@ type latentDeferredFailure struct { cause error }
 func (e *latentDeferredFailure) Error() string { return e.cause.Error() }
 func (e *latentDeferredFailure) Unwrap() error { return e.cause }
 
-// Probe the production registry without changing the unit's refusal state.
+// Probe the production registry on an isolated snapshot: refusal state, IR checked
+// fields and other lowering-owned registrations cannot leak into the unit.
+// Immutable checker/AST identities and explicitly shared pure caches retain their
+// normal latentSnapshot policy.
 func (l *lowering) latentDeferredStop(node *ast.Node) error {
     for _, finding := range latentFindings {
         if (finding.Unit == latentFindingOwner || finding.Unit == l.program.Where(node)) && (finding.Phase == "refusal_scan" || finding.Phase == "contract_scan") && (finding.Kind == "Refused" || finding.Kind == "NotYet") { return nil }
     }
-    probe := *l
+    probe := *l.latentSnapshot()
     probe.refusal = refusalPass{}
     ordinary := probe.refuseNode(node)
     return latent.DeferredStop(ordinary, probe.refusal.deferred)
