@@ -177,6 +177,13 @@ func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.
 	if err != nil {
 		return nil, err
 	}
+	// The check's call is where its value enters a view, for checkViewWidenedReads (view_widened.go): a
+	// read through a wider type the result is assigned or passed to is weighed as the predicate road's is
+	// (Language's q06, #z5d0jye).
+	if l.overloadCheckCalls == nil {
+		l.overloadCheckCalls = map[int]bool{}
+	}
+	l.overloadCheckCalls[check] = true
 	message := fmt.Sprintf("overload %d of %s result at %s: expected %s", ordinal, name, l.program.Where(node), l.checker.TypeToString(promised))
 	body := append(append([]ir.Statement{}, setup...), ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}, ir.Return{Value: read})
 	l.result.Functions[check].Body = body
