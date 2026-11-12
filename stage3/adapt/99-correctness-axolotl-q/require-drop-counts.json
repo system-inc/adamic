@@ -1,0 +1,213 @@
+{
+  "runtimeInputCases": 1,
+  "runtimeInputCaseTitles": [
+    "unittests:: config:: showConfig Shows tsconfig for single option/generateCpuProfile Correct output for config/showConfig/Shows tsconfig for single option/generateCpuProfile/tsconfig.json"
+  ],
+  "runtimeInputEvents": [
+    {
+      "kind": "commandLine",
+      "value": [
+        "--generateCpuProfile",
+        "someString"
+      ],
+      "test": "unittests:: config:: showConfig Shows tsconfig for single option/generateCpuProfile Correct output for config/showConfig/Shows tsconfig for single option/generateCpuProfile/tsconfig.json",
+      "pid": 13932
+    }
+  ],
+  "node": "v24.19.0",
+  "inputSearch": {
+    "sourcePin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "searched": [
+      "tests/cases",
+      "src/testRunner",
+      "src/harness"
+    ],
+    "files": 19905,
+    "caseFiles": 19585,
+    "hits": [],
+    "matching": "case insensitive generateCpuProfile substring, directives/config/options/args included",
+    "literalOccurrences": 0,
+    "generatedInput": {
+      "source": "src/testRunner/unittests/config/showConfig.ts",
+      "registrationLines": [
+        136,
+        179,
+        214
+      ],
+      "case": "Shows tsconfig for single option/generateCpuProfile",
+      "args": [
+        "--generateCpuProfile",
+        "someString"
+      ],
+      "explanation": "Generated from ts.optionDeclarations, so the option name is absent as a literal in the case inputs. The reference baseline retains generateCpuProfile: ./someString."
+    }
+  },
+  "runtimeCounts": {
+    "enableCPUProfiler": 0,
+    "getNodeSystem": 9
+  },
+  "processes": [
+    {
+      "pid": 13932,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config2.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13950,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config5.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13933,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config3.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13952,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config6.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13925,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config0.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13939,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config4.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13959,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config7.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13926,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js",
+        "--config=\"/tmp/adamic-gate/ts-tests2/task-config1.json\""
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    },
+    {
+      "pid": 13918,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/99q-measured-tree/built/local/run.js"
+      ],
+      "counts": {
+        "getNodeSystem": 1,
+        "enableCPUProfiler": 0
+      }
+    }
+  ],
+  "oracleCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 4.82
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 3.376
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 552.427
+    }
+  },
+  "baselineDiffs": [
+    "api/typescript.d.ts"
+  ],
+  "rawOutcomeEvents": {
+    "pass": 212732,
+    "fail": 2,
+    "pending": 0
+  },
+  "inputCaseOutcomes": {
+    "unittests:: config:: showConfig Shows tsconfig for single option/generateCpuProfile Correct output for config/showConfig/Shows tsconfig for single option/generateCpuProfile/tsconfig.json": {
+      "pass": 1,
+      "fail": 0,
+      "pending": 0
+    }
+  },
+  "laneVerdict": "pass",
+  "decision": "Adamic ruling (1), #nqp4p7g: retain this measurement as evidence, following tracing and adaptation 47; no harness runtime-count pin."
+}

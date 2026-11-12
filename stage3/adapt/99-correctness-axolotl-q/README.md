@@ -12,7 +12,7 @@ backend changes, or partial-root fallback were used.
 | H02 deduplicate | Keep one type argument: `deduplicated.map<T>(i => array[i]!)` in deduplicateRelational | Removes all remaining historical CW020-CW023 relations with no new core.ts finding. No helper return annotation or caller type argument is needed. |
 | H01 indicesOf | Keep `<T>(array: readonly T[])` | Removes erased unknown-array storage at line 684, with no new finding. |
 | H04 cartesianProductWorker | Keep `result: T[][]` | Removes the writable readonly-element view at line 2551, with no new finding. |
-| H05 isNodeLikeSystem | Keep `!process.browser` | The adapted ambient declares `browser?: unknown`; removes the cast refusal at line 2611, with no new finding. |
+| H05 isNodeLikeSystem | Keep `!process.browser`; drop the `typeof require` test | JavaScript-changing: the oracle now takes the Node path. The adapted ambient still declares `browser?: unknown`. |
 | H03 elementAt | Drop | Directly removing its two any casts removes the old findings but exposes method-value and callable-ABI refusals at line 1066, and an erased any-element return at line 1329. |
 | concatenate | Drop, blocked on caller work | The two truthful mixed overload results are `T[] | undefined` and `readonly T[] | undefined`. They add six checker.ts diagnostics, so cannot meet the zero-diagnostic contract in this core-only change. Public declarations remain identical. |
 | or | Scout only | Callback predicate contracts and the returned predicate need lowering work; no edit or owner pin. |
@@ -81,7 +81,7 @@ adapt.cjs pins only the four accepted top-level function owners by complete exac
 before/after text and SHA-256. Missing, duplicate, nested, changed and mixed-state
 owners are refused before any write. Every source is reread before writing. Foreign
 selectIndex edits and LF/CRLF survive. Complete core.ts JavaScript must match with
-comments kept and removed. Replay preserves bytes and mtime and writes zero files.
+comments kept and removed after restoring only H05's require test for that check. Replay preserves bytes and mtime and writes zero files.
 No skipWhile, clear, filterMutate or createQueue owner is pinned or edited.
 
 sort.json records Python's actual directory sort. On this base the predecessor is
@@ -95,3 +95,51 @@ node stage3/adapt/99-correctness-axolotl-q/contract.cjs BEFORE_TREE
 node stage3/adapt/99-correctness-axolotl-q/concatenate-witness.cjs BEFORE_TREE
 node stage3/adapt/99-correctness-axolotl-q/compare.cjs BEFORE_TREE AFTER_TREE CENSUS_TREE
 ```
+
+## H05 require-test amendment (#nqp4p7g, #00qn5az)
+
+This amendment changes JavaScript. On the oracle, which runs adapted source as
+an ES module, isNodeLikeSystem goes from false to true. On a host with
+process.nextTick but no require, tsc now takes the Node path. The function
+otherwise keeps its existing text. CLI's landed node:perf_hooks import lets
+tryGetPerformance take the perf_hooks path under this guard.
+
+`--generateCpuProfile` is the flag whose newly enabled oracle path reaches
+the uncaught bare `require("inspector")` in getNodeSystem's returned
+enableCPUProfiler method. The ruled divergence is recorded in
+`internal/oracle/testdata/backend_divergences.json`, rows 2 and 3
+(`node-without-inspector`, #cn4yapb): ES-module source has no require, while the
+modeled host raises ERR_INSPECTOR_NOT_AVAILABLE at this load. This amendment
+adds no workaround for it.
+
+The complete lane has one case passing `--generateCpuProfile`:
+`unittests:: config:: showConfig Shows tsconfig for single option/generateCpuProfile Correct output for config/showConfig/Shows tsconfig for single option/generateCpuProfile/tsconfig.json`.
+It is generated from option declarations and passes
+`["--generateCpuProfile", "someString"]`. At upstream v6.0.3,
+`src/testRunner/unittests/config/showConfig.ts:27` calls
+`let commandLine = ts.parseCommandLine(commandLinesArgs);`, line 34 calls
+`const initResult = ts.convertToTSConfig(commandLine, configPath, configParseHost);`,
+and line 37 writes the resolved options to the baseline:
+`Harness.Baseline.runBaseline(outputFileName, JSON.stringify(initResult, null, 4) + "\n");`.
+The callback ends at line 38. It never calls executeCommandLine and therefore
+never reaches enableCPUProfiler or its require("inspector"). The whole-lane
+measurement records 0 profiler entries, with 9 getNodeSystem control entries.
+
+This is a property of that unit test, not a general early exit for CLI
+`--showConfig`. In upstream `src/compiler/executeCommandLine.ts:787-793`,
+`if (commandLine.options.generateCpuProfile && system.enableCPUProfiler)` calls
+`system.enableCPUProfiler(...)` before executeCommandLineWorker. The worker's
+showConfig write and successful exit are later, at lines 666-667 or 706-707.
+A real `tsc --showConfig --generateCpuProfile <file>` command line does reach
+enableCPUProfiler and its bare `require("inspector")`. On the ES-module oracle
+that throws `require is not defined`. The covering ruled divergence is
+`internal/oracle/testdata/backend_divergences.json`, rows 2 and 3
+(`node-without-inspector`, #cn4yapb). This path is reachable.
+
+Adamic's ruling (1) on #nqp4p7g accepts the retained whole-lane measurement as
+evidence, following the tracing and adaptation 47 precedents. It is not an
+automatic runtime-count pin in the harness. See [require-drop-PROOF.md](require-drop-PROOF.md)
+and [require-drop-counts.json](require-drop-counts.json) for the measurement and
+remaining validation.
+Historical type-only proof files above describe the original 99q run, not this
+JavaScript-changing amendment.

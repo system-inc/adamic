@@ -1,0 +1,311 @@
+{
+  "base": "730e7c26e590af0c57c545ba0cb905b09e4bee54",
+  "node": "v24.19.0",
+  "setup": {
+    "exit": 0,
+    "seconds": 718.319,
+    "finalReplayExit": 0,
+    "finalReplaySeconds": 41.091,
+    "go": "go1.27.1",
+    "clang": "20.1.8",
+    "submodules": true
+  },
+  "apply": {
+    "mainExit": 0,
+    "tipExit": 0,
+    "mode": "full stage3/apply.sh --build-product from the pinned source"
+  },
+  "sourceScope": {
+    "sourceFiles": 747,
+    "changedSources": [
+      "compiler/core.ts"
+    ],
+    "onlyRequestedH05Change": true,
+    "mainCoreSha256": "265f558b9089f9fc51a25b1e5848c12f416fa831a615d754748b22bc6e33e256",
+    "tipCoreSha256": "25dc38a4b7991bde22ccf9c1a4b6446b7b2d9176ebca6f4b77d35b25826d0cc7"
+  },
+  "witnesses": {
+    "node": "v24.19.0",
+    "runner": "oracle/node.mjs",
+    "mode": "module; stripTypeScriptTypes transform; source owners and full performanceCore",
+    "main": {
+      "isNodeLikeSystem": false,
+      "requireType": "undefined",
+      "shouldWriteNativeEvents": true,
+      "samePerformance": true,
+      "path": "browser global"
+    },
+    "tip": {
+      "isNodeLikeSystem": true,
+      "requireType": "undefined",
+      "shouldWriteNativeEvents": false,
+      "samePerformance": true,
+      "path": "node:perf_hooks"
+    }
+  },
+  "identity": {
+    "main": {
+      "rawEvents": {
+        "pass": 212732,
+        "fail": 2,
+        "pending": 0
+      },
+      "normalizedCounts": {
+        "pass": 106366,
+        "fail": 1,
+        "pending": 0
+      },
+      "normalizedSha256": "61b98459713bf84d52f00222ecbafc36adfe60279ef9cbcd665c4778d1e83c63",
+      "referenceReads": 60933,
+      "distinctReferenceFiles": 60931,
+      "identitiesEqualMain": true,
+      "referenceReadMultisetEqualMain": true,
+      "identityAdditions": 0,
+      "identityRemovals": 0
+    },
+    "measured": {
+      "rawEvents": {
+        "pass": 212732,
+        "fail": 2,
+        "pending": 0
+      },
+      "normalizedCounts": {
+        "pass": 106366,
+        "fail": 1,
+        "pending": 0
+      },
+      "normalizedSha256": "61b98459713bf84d52f00222ecbafc36adfe60279ef9cbcd665c4778d1e83c63",
+      "referenceReads": 60933,
+      "distinctReferenceFiles": 60931,
+      "identitiesEqualMain": true,
+      "referenceReadMultisetEqualMain": true,
+      "identityAdditions": 0,
+      "identityRemovals": 0
+    },
+    "tip": {
+      "rawEvents": {
+        "pass": 212732,
+        "fail": 2,
+        "pending": 0
+      },
+      "normalizedCounts": {
+        "pass": 106366,
+        "fail": 1,
+        "pending": 0
+      },
+      "normalizedSha256": "61b98459713bf84d52f00222ecbafc36adfe60279ef9cbcd665c4778d1e83c63",
+      "referenceReads": 60933,
+      "distinctReferenceFiles": 60931,
+      "identitiesEqualMain": true,
+      "referenceReadMultisetEqualMain": true,
+      "identityAdditions": 0,
+      "identityRemovals": 0
+    }
+  },
+  "laneVerdicts": {
+    "main": "pass",
+    "tip": "pass"
+  },
+  "oracleRuns": {
+    "main": {
+      "node": "v24.19.0",
+      "runners": "all",
+      "tests": null,
+      "workers": 8,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "seconds": 8.86
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "seconds": 47.208
+        },
+        "tests": {
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--workers=8",
+            "--lint=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 706.087
+        }
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ]
+    },
+    "tip": {
+      "node": "v24.19.0",
+      "runners": "all",
+      "tests": null,
+      "workers": 8,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "phases": {
+        "install": {
+          "command": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "exit": 0,
+          "seconds": 5.223
+        },
+        "build": {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exit": 0,
+          "seconds": 42.709
+        },
+        "tests": {
+          "command": [
+            "npm",
+            "test",
+            "--",
+            "--workers=8",
+            "--lint=false",
+            "--no-colors"
+          ],
+          "exit": 1,
+          "seconds": 757.68
+        }
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ]
+    }
+  },
+  "publicDeclarations": [
+    {
+      "file": "typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 593506,
+      "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd"
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "types": {
+    "roots": 79,
+    "exit": 0,
+    "diagnostics": 0
+  },
+  "replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true
+  },
+  "contract": {
+    "refusals": 29,
+    "secondRun": {
+      "files": 0,
+      "edits": 0,
+      "writes": 0,
+      "bytesAndMtimePreserved": true
+    },
+    "foreignEditPreserved": true,
+    "crlfAndLfPreserved": true
+  },
+  "generateShardsCheck": {
+    "command": "python3 stage3/lane/generate_shards.py --check",
+    "exit": 0
+  },
+  "goLane": {
+    "command": "go test -count=1 -parallel=2 -timeout=60m ./stage3/lane/",
+    "exit": 0,
+    "seconds": 2784.981,
+    "filtered": false,
+    "manifestShards": 398,
+    "dependencies": "Temporary link to the oracle dependency install; both package.json and package-lock.json were byte-identical to stage3/typescript; link removed after the run."
+  },
+  "goFixtures": {
+    "command": "go test -count=1 -parallel=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/",
+    "exit": 0,
+    "seconds": 177.976
+  },
+  "mutant": {
+    "node": "v24.19.0",
+    "mutation": "Restore the require test in H05 after text; recompute its temporary after hash",
+    "applied": {
+      "files": 1,
+      "edits": 4,
+      "javascriptChanging": true
+    },
+    "result": {
+      "isNodeLikeSystem": false,
+      "requireType": "undefined"
+    },
+    "temporaryMutationRemoved": true
+  },
+  "measurement": {
+    "inputCases": 1,
+    "enableCPUProfiler": 0,
+    "getNodeSystemControl": 9,
+    "policy": "measurement evidence accepted by Adamic ruling (1), #nqp4p7g; no automatic harness pin"
+  },
+  "requireAudit": {
+    "compiler": {
+      "comment": 32,
+      "string": 2,
+      "reachable": 4
+    },
+    "wholeTree": {
+      "exclusions": [
+        ".git",
+        "root node_modules",
+        "root built"
+      ],
+      "scope": "all remaining adapted-tree text, including nested corpus node_modules",
+      "files": 4343,
+      "hits": 10676,
+      "counts": {
+        "dead": 0,
+        "string": 10514,
+        "comment": 66,
+        "reachable": 96
+      },
+      "byContext": {
+        "upstream build/test or shipped CommonJS infrastructure / reachable": 92,
+        "upstream build/test or shipped CommonJS infrastructure / string": 93,
+        "upstream build/test or shipped CommonJS infrastructure / comment": 34,
+        "corpus or documentation data / string": 10415,
+        "adapted compiler / comment": 32,
+        "adapted compiler / string": 6,
+        "adapted compiler / reachable": 4
+      },
+      "interpretation": "Corpus files and baselines are strings consumed by the harness. Infrastructure code runs in its own declared CommonJS/build context; only compiler calls belong to the newly enabled isNodeLikeSystem paths."
+    }
+  },
+  "outsideAdaptationPinEdits": []
+}

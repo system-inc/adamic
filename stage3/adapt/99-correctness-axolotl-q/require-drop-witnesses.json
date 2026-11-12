@@ -1,0 +1,19 @@
+{
+  "node": "v24.19.0",
+  "runner": "oracle/node.mjs",
+  "mode": "module; stripTypeScriptTypes transform; source owners and full performanceCore",
+  "main": {
+    "isNodeLikeSystem": false,
+    "requireType": "undefined",
+    "shouldWriteNativeEvents": true,
+    "samePerformance": true,
+    "path": "browser global"
+  },
+  "tip": {
+    "isNodeLikeSystem": true,
+    "requireType": "undefined",
+    "shouldWriteNativeEvents": false,
+    "samePerformance": true,
+    "path": "node:perf_hooks"
+  }
+}
