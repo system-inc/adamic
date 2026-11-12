@@ -20,6 +20,11 @@ type viewSource struct {
 	cast, narrows  bool
 	entry          ir.Expression
 	node           *ast.Node
+	// checkCall is one past the index of the overload result check function whose call admits the value
+	// into this view (overloadResultCheck), or 0. That call is where the value enters it: the caller's
+	// local holds the result as the call's declared type, never a narrowing, so narrowedEntries finds no
+	// read of it (#z5d0jye, Language's q06 on step 1's road, Optimizer's matched pair).
+	checkCall int
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw
@@ -92,9 +97,13 @@ func (l *lowering) checkViewWidenedReads() error {
 	}
 	lies := make([]viewLie, len(l.viewSources))
 	entryLocals := map[int]bool{}
+	entryCalls := map[int]bool{}
 	var unentered []viewLie
 	for i, view := range l.viewSources {
 		lies[i] = l.viewLie(view)
+		if view.checkCall != 0 {
+			entryCalls[view.checkCall-1] = true
+		}
 		read, isRead := view.entry.(ir.Read)
 		switch {
 		case view.cast:
@@ -118,6 +127,10 @@ func (l *lowering) checkViewWidenedReads() error {
 			}
 		case ir.Read:
 			if entryLocals[value.Local] {
+				return viewedValueSite
+			}
+		case ir.Call:
+			if entryCalls[value.Function] {
 				return viewedValueSite
 			}
 		case ir.Property:

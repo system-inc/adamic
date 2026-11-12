@@ -173,9 +173,17 @@ func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.
 	result := local("result", value.Type())
 	l.result.Functions[check].Parameters = []int{result}
 	read := ir.Read{Local: result, Of: value.Type()}
+	views := len(l.viewSources)
 	setup, membership, err := l.predicateMembership(node, read, produced, promised, local, 0)
 	if err != nil {
 		return nil, err
+	}
+	// A view predicateMembership registered admits the value at this check's call, which the caller's
+	// local then holds as the call's declared type, so the call is its entry for checkViewWidenedReads
+	// (view_widened.go): a read through a wider type it's assigned to is weighed as the predicate road's
+	// is (Language's q06, #z5d0jye).
+	for index := views; index < len(l.viewSources); index++ {
+		l.viewSources[index].checkCall = check + 1
 	}
 	message := fmt.Sprintf("overload %d of %s result at %s: expected %s", ordinal, name, l.program.Where(node), l.checker.TypeToString(promised))
 	body := append(append([]ir.Statement{}, setup...), ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}, ir.Return{Value: read})
