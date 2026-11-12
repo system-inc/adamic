@@ -1,0 +1,23 @@
+// An undefined reference written from a variable omits its key, including after a present write.
+interface B {
+	readonly v: number;
+}
+class Link {
+	target: B | undefined;
+	constructor(target: B | undefined) {
+		this.target = target;
+	}
+}
+function show(target: B | undefined): void {
+	const link = new Link(target);
+	console.log(JSON.stringify(link) ?? '<undefined>');
+	const literal = { target };
+	console.log(JSON.stringify(literal) ?? '<undefined>');
+	const copied = { ...literal, target };
+	console.log(JSON.stringify(copied) ?? '<undefined>');
+	link.target = { v: 2 };
+	link.target = target;
+	console.log(JSON.stringify(link) ?? '<undefined>');
+}
+show({ v: 1 });
+show(undefined);

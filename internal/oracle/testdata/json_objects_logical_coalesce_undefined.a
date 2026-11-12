@@ -1,0 +1,8 @@
+class B { readonly n: number = 1; }
+class C { b: B | undefined = undefined; }
+function maybeUndefined(present: boolean): B | undefined { return present ? new B() : undefined; }
+const c = new C();
+c.b ??= maybeUndefined(false);
+console.log(JSON.stringify(c) ?? "undefined");
+c.b ??= maybeUndefined(true);
+console.log(JSON.stringify(c) ?? "undefined");

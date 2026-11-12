@@ -395,7 +395,7 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string, 
 		e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 	}
 	if e.fieldTypesNeeded() {
-		e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldRepresentation(statement.Value))
+		e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, slotRepresentation(fieldRepresentation(statement.Value), statement.Nullish, slot+"->reference"))
 	}
 	if converted {
 		e.line("}")

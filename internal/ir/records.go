@@ -6,11 +6,13 @@ package ir
 // with record, key and value its arguments: it returns false, storing nothing, when the key is hidden
 // already, for the caller to throw.
 type RecordCall struct {
-	Method    string
-	Arguments []Expression
-	Element   Type
-	Returns   Type
-	Site      int
+	// ElementNullish is the semantic null-pointer tag for an entries tuple value.
+	ElementNullish Type
+	Method         string
+	Arguments      []Expression
+	Element        Type
+	Returns        Type
+	Site           int
 	// GraphTypes plans the new array "values" and "entries" make, as an ArraySlice's plans its own:
 	// graphFlows marks its site where a graph value is demanded through it (lower/graph_flow.go).
 	GraphTypes []int

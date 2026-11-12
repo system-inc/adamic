@@ -1158,6 +1158,9 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
+	// Nullish is the semantic tag for a null pointer written from Value, or zero
+	// when its static type admits neither null nor undefined in bare pointer storage.
+	Nullish Type
 	// Absent reserves a typed slot without an observable own property.
 	Absent bool
 	// Uninitialized reserves storage without making its typed value readable.
@@ -1447,6 +1450,8 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
+		// Nullish has the same value contract as Field.Nullish.
+		Nullish       Type
 		DeclaredType  string // printed declared field type for checked-write diagnostics
 		Record        bool   // write into counted own-key storage
 		Uninitialized bool
