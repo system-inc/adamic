@@ -40,9 +40,9 @@ func TestHostMethodDetachesThroughOrStayRefused(t *testing.T) {
 	t.Parallel()
 	const hosts = "interface System {\n    directoryExists(path: string): boolean;\n    createDirectory(path: string): void;\n}\ninterface CompilerHost {\n    directoryExists?(path: string): boolean;\n    createDirectory?(path: string): void;\n}\nconst system: System = { directoryExists: (path: string): boolean => path.length > 1, createDirectory: (path: string): void => {\n    console.log(path);\n} };\n"
 	for _, probe := range []struct{ name, source string }{
-		{"program.ts:459's directoryExists", hosts + "function exists(compilerHost: CompilerHost, path: string): boolean {\n    return (compilerHost.directoryExists || system.directoryExists)(path);\n}\nconsole.log(exists({}, '/a'));\n"},
+		{"program.ts:459's directoryExists", hosts + "function exists(compilerHost: CompilerHost, path: string): boolean {\n    return (compilerHost.directoryExists || system.directoryExists)(path);\n}\nconsole.log(String(exists({}, '/a')));\n"},
 		{"program.ts:478's createDirectory", hosts + "function creator(compilerHost: CompilerHost): (path: string) => void {\n    return path => (compilerHost.createDirectory || system.createDirectory)(path);\n}\ncreator({})('/a');\n"},
-		{"program.ts:1602's hasInvalidatedResolutions", "interface ProgramHost {\n    hasInvalidatedResolutions?(fileName: string): boolean;\n}\nfunction returnFalse(): false {\n    return false;\n}\nfunction invalidated(host: ProgramHost, fileName: string): boolean {\n    const hasInvalidatedResolutions = host.hasInvalidatedResolutions || returnFalse;\n    return hasInvalidatedResolutions(fileName);\n}\nconsole.log(invalidated({}, 'a.ts'));\n"},
+		{"program.ts:1602's hasInvalidatedResolutions", "interface ProgramHost {\n    hasInvalidatedResolutions?(fileName: string): boolean;\n}\nfunction returnFalse(): false {\n    return false;\n}\nfunction invalidated(host: ProgramHost, fileName: string): boolean {\n    const hasInvalidatedResolutions = host.hasInvalidatedResolutions || returnFalse;\n    return hasInvalidatedResolutions(fileName);\n}\nconsole.log(String(invalidated({}, 'a.ts')));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
