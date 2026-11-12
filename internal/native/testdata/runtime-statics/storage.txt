@@ -568,3 +568,15 @@
 `node_fs_watch_impl.h:fs_watch_source:1`
 `node_fs_watch_impl.h:fs_watch_generation:1`
 `node_fs_watch_impl.h:fs_watch_test_read_error:1`
+
+# Error own-key tables publish once under error_json_lock, as shape_types does.
+# The head and each entry's registered flag use release/acquire publication;
+# next and the shape, key pointer and count are immutable after publication.
+`exceptions.c:error_json_entries:1`
+`exceptions.c:error_json_lock:1`
+`exceptions.c:error_shape_json:1`
+`exceptions.c:absent_message_shape_json:1`
+`process.c:shape_json:1`
+`node_fs_directory.c:coded_error_shape_json:1`
+`node_fs_file.c:shape_json:1`
+`node_fs_watch_impl.h:watch_error_shape_json:1`
