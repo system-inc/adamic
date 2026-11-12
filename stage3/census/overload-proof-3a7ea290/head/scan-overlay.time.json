@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "/workspace/op2-report/stage3/census/overload-proof-3a7ea290/scan_overlay.py",
+    "/workspace/op2-build-head/entry-overlay",
+    "/workspace/op2-build-head/scan-overlay"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.03195448800033773,
+  "user_seconds": 0.017568999999999998,
+  "system_seconds": 0.004543,
+  "peak_rss_kib": 8832
+}

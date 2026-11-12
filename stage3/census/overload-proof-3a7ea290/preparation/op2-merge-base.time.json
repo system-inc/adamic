@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/workspace/op2-report/stage3/census/overload-proof-3a7ea290/merge.py",
+    "/workspace/op2-build-base/latent.jsonl",
+    "/workspace/op2-build-base/shard-0.jsonl",
+    "/workspace/op2-build-base/shard-1.jsonl",
+    "/workspace/op2-build-base/shard-2.jsonl",
+    "/workspace/op2-build-base/shard-3.jsonl",
+    "/workspace/op2-build-base/shard-4.jsonl",
+    "/workspace/op2-build-base/shard-5.jsonl",
+    "/workspace/op2-build-base/shard-6.jsonl",
+    "/workspace/op2-build-base/shard-7.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 2.3237208310001733,
+  "user_seconds": 1.192676,
+  "system_seconds": 1.074479,
+  "peak_rss_kib": 376980
+}

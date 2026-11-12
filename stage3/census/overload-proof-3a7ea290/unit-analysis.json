@@ -1,0 +1,2651 @@
+{
+  "header": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "first-error",
+    "measurement": "measured on a checker-clean entry-root program",
+    "roots": [
+      "/workspace/op2-adapted/src/tsc/tsc.ts"
+    ],
+    "sources": [
+      "/workspace/op2-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/op2-adapted/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/op2-adapted/src/compiler/_namespaces/ts.ts",
+      "/workspace/op2-adapted/src/compiler/binder.ts",
+      "/workspace/op2-adapted/src/compiler/builder.ts",
+      "/workspace/op2-adapted/src/compiler/builderPublic.ts",
+      "/workspace/op2-adapted/src/compiler/builderState.ts",
+      "/workspace/op2-adapted/src/compiler/builderStatePublic.ts",
+      "/workspace/op2-adapted/src/compiler/checker.ts",
+      "/workspace/op2-adapted/src/compiler/commandLineParser.ts",
+      "/workspace/op2-adapted/src/compiler/core.ts",
+      "/workspace/op2-adapted/src/compiler/corePublic.ts",
+      "/workspace/op2-adapted/src/compiler/debug.ts",
+      "/workspace/op2-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/op2-adapted/src/compiler/emitter.ts",
+      "/workspace/op2-adapted/src/compiler/executeCommandLine.ts",
+      "/workspace/op2-adapted/src/compiler/expressionToTypeNode.ts",
+      "/workspace/op2-adapted/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/op2-adapted/src/compiler/factory/emitHelpers.ts",
+      "/workspace/op2-adapted/src/compiler/factory/emitNode.ts",
+      "/workspace/op2-adapted/src/compiler/factory/nodeChildren.ts",
+      "/workspace/op2-adapted/src/compiler/factory/nodeConverters.ts",
+      "/workspace/op2-adapted/src/compiler/factory/nodeFactory.ts",
+      "/workspace/op2-adapted/src/compiler/factory/nodeTests.ts",
+      "/workspace/op2-adapted/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/op2-adapted/src/compiler/factory/utilities.ts",
+      "/workspace/op2-adapted/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/op2-adapted/src/compiler/hostErrors.ts",
+      "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts",
+      "/workspace/op2-adapted/src/compiler/moduleSpecifiers.ts",
+      "/workspace/op2-adapted/src/compiler/parser.ts",
+      "/workspace/op2-adapted/src/compiler/path.ts",
+      "/workspace/op2-adapted/src/compiler/performance.ts",
+      "/workspace/op2-adapted/src/compiler/performanceCore.ts",
+      "/workspace/op2-adapted/src/compiler/program.ts",
+      "/workspace/op2-adapted/src/compiler/programDiagnostics.ts",
+      "/workspace/op2-adapted/src/compiler/resolutionCache.ts",
+      "/workspace/op2-adapted/src/compiler/scanner.ts",
+      "/workspace/op2-adapted/src/compiler/semver.ts",
+      "/workspace/op2-adapted/src/compiler/sourcemap.ts",
+      "/workspace/op2-adapted/src/compiler/symbolWalker.ts",
+      "/workspace/op2-adapted/src/compiler/sys.ts",
+      "/workspace/op2-adapted/src/compiler/tracing.ts",
+      "/workspace/op2-adapted/src/compiler/transformer.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/classFields.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/classThis.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/declarations.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2015.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2016.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2017.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2018.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2019.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2020.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/es2021.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/esDecorators.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/esnext.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/generators.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/jsx.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/module/module.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/module/system.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/ts.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/op2-adapted/src/compiler/transformers/utilities.ts",
+      "/workspace/op2-adapted/src/compiler/tsbuild.ts",
+      "/workspace/op2-adapted/src/compiler/tsbuildPublic.ts",
+      "/workspace/op2-adapted/src/compiler/types.ts",
+      "/workspace/op2-adapted/src/compiler/utilities.ts",
+      "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts",
+      "/workspace/op2-adapted/src/compiler/visitorPublic.ts",
+      "/workspace/op2-adapted/src/compiler/watch.ts",
+      "/workspace/op2-adapted/src/compiler/watchPublic.ts",
+      "/workspace/op2-adapted/src/compiler/watchUtilities.ts",
+      "/workspace/op2-adapted/src/tsc/_namespaces/ts.ts",
+      "/workspace/op2-adapted/src/tsc/tsc.ts"
+    ],
+    "status": "measurement"
+  },
+  "units": 4565,
+  "attempted_base": 4061,
+  "attempted_head": 4061,
+  "no_stop_base": 3176,
+  "no_stop_head": 3178,
+  "overload_result_base": 67,
+  "overload_result_head": 61,
+  "concatenate": [
+    {
+      "unit": {
+        "body_end": 99035,
+        "body_start": 97974,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getJSDocCommentRanges",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:261:1"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 205390,
+        "body_start": 205125,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getAllSuperTypeNodes",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null
+    },
+    {
+      "unit": {
+        "body_end": 408062,
+        "body_start": 407336,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getRequiresAtTopOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an array of RequireOrImportCall",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:675:12: stage 0 can't lower an array of RequireOrImportCall yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:675:12"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 34565,
+        "body_start": 33361,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getConditions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 46640,
+        "body_start": 46372,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSemanticDiagnosticsOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null
+    }
+  ],
+  "getSupportedExtensions": [
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      }
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9992:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 401534,
+        "body_start": 400860,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9994:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 408620,
+        "body_start": 408239,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isSupportedSourceFileName",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10146:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 171953,
+        "body_start": 167406,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getFileNamesFromConfigSpecs",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/commandLineParser.ts:3950:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:9990:1"
+      }
+    }
+  ],
+  "writeTokenText": [
+    {
+      "unit": {
+        "body_end": 272380,
+        "body_start": 48954,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "createPrinter",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of writeTokenText result void cannot be served by implementation result number",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/emitter.ts:4949:5: Adamic 0.1 refuses overload 1 of writeTokenText result void cannot be served by implementation result number; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1",
+        "where": "/workspace/op2-adapted/src/compiler/emitter.ts:4949:5"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/nodeFactory.ts:6111:21: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/nodeFactory.ts:6111:21"
+      }
+    }
+  ],
+  "historical_43": [
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipPartiallyEmittedExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "skipPartiallyEmittedExpressions",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipPartiallyEmittedExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:1432:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "skipPartiallyEmittedExpressions",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1432:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 58293,
+        "body_start": 58198,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipPartiallyEmittedExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:1433:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "skipPartiallyEmittedExpressions",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1433:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 78885,
+        "body_start": 78794,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isLeftHandSideExpression",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:1995:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "isLeftHandSideExpression",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1995:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 80752,
+        "body_start": 80668,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isUnaryExpression",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:2039:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "isUnaryExpression",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:2039:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 82433,
+        "body_start": 82354,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isExpression",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:2086:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilitiesPublic.ts",
+        "KindFunctionDeclaration",
+        "isExpression",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1: Adamic 0.1 refuses overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:2086:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilitiesPublic.ts:1431:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getThisContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3180:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3180:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getThisContainer",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getThisContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3182:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3182:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3182:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getThisContainer",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3182:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getThisContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3184:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3184:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3184:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getThisContainer",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3184:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getThisContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3186:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3186:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3186:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getThisContainer",
+        3
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3186:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 120735,
+        "body_start": 117696,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getThisContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3187:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3187:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3187:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3245:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getThisContainer",
+        4
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3187:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 122939,
+        "body_start": 122534,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getNewTargetContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3291:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3291:1",
+        "where": "/workspace/op2-adapted/src/compiler/binder.ts:2258:13"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3291:1",
+        "where": "/workspace/op2-adapted/src/compiler/binder.ts:2258:13"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getNewTargetContainer",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1: Adamic 0.1 refuses overload 1 of getThisContainer result ThisContainer cannot be served by implementation result ArrowFunction | ComputedPropertyName | ThisContainer; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3291:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3180:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSuperContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3333:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3333:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3333:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getSuperContainer",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1: Adamic 0.1 refuses overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSuperContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3335:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3335:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3335:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getSuperContainer",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1: Adamic 0.1 refuses overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3335:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 126043,
+        "body_start": 124295,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSuperContainer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3336:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3336:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3336:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3362:24"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getSuperContainer",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1: Adamic 0.1 refuses overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3336:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3333:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeCanBeDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3469:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3469:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeCanBeDecorated",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeCanBeDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3471:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3471:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3471:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeCanBeDecorated",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3471:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeCanBeDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3473:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3473:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3473:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeCanBeDecorated",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3473:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeCanBeDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3475:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3475:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3475:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeCanBeDecorated",
+        3
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3475:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 132358,
+        "body_start": 130238,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeCanBeDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3477:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3477:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "checked predicate overload target NamedDeclaration & { name: DeclarationName; }",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1: stage 0 can't lower checked predicate overload target NamedDeclaration & { name: DeclarationName; } yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3477:1",
+        "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:946:1"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeCanBeDecorated",
+        4
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3477:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeIsDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3523:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeIsDecorated",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3523:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeIsDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3525:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeIsDecorated",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3525:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeIsDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3527:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeIsDecorated",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3527:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 133010,
+        "body_start": 132891,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "nodeIsDecorated",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3529:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "nodeIsDecorated",
+        3
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1: Adamic 0.1 refuses overload 1 of nodeCanBeDecorated result true cannot be served by implementation result boolean; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3529:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:3469:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 154326,
+        "body_start": 153689,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getExpandoInitializer",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:3992:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3992:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:3992:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "getExpandoInitializer",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:3992:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 193944,
+        "body_start": 193754,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isCompoundLikeAssignment",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:4927:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:4927:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:4927:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "isCompoundLikeAssignment",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:4927:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipParentheses",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipParentheses",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipParentheses",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5041:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipParentheses",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:5041:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 197835,
+        "body_start": 197599,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipParentheses",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5043:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipParentheses",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:5043:1",
+        "where": "/workspace/overload-adapted/src/compiler/utilities.ts:5039:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 215637,
+        "body_start": 215008,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isAnonymousFunctionDefinition",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5483:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/emitHelpers.ts:424:37: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5483:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/emitHelpers.ts:424:37"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/emitHelpers.ts:424:37: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5483:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/emitHelpers.ts:424:37"
+      },
+      "mapping_key": [
+        "src/compiler/utilities.ts",
+        "KindFunctionDeclaration",
+        "isAnonymousFunctionDefinition",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/utilities.ts:5483:1",
+        "where": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 31979,
+        "body_start": 1313,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "createParenthesizerRules",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/factory/parenthesizerRules.ts:54:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/factory/parenthesizerRules.ts:54:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/factory/parenthesizerRules.ts:54:1",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/destructuring.ts:192:9"
+      },
+      "mapping_key": [
+        "src/compiler/factory/parenthesizerRules.ts",
+        "KindFunctionDeclaration",
+        "createParenthesizerRules",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of parenthesizeConciseBodyOfArrowFunction result Expression cannot be served by implementation result ConciseBody",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/factory/parenthesizerRules.ts:461:5: Adamic 0.1 refuses overload 1 of parenthesizeConciseBodyOfArrowFunction result Expression cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/factory/parenthesizerRules.ts:54:1",
+        "where": "/workspace/overload-adapted/src/compiler/factory/parenthesizerRules.ts:461:5"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipOuterExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/factory/utilities.ts:656:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/factory/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipOuterExpressions",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:656:1",
+        "where": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipOuterExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/factory/utilities.ts:658:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/factory/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipOuterExpressions",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:658:1",
+        "where": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 25111,
+        "body_start": 25002,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "skipOuterExpressions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/factory/utilities.ts:660:1"
+      },
+      "base": null,
+      "head": null,
+      "mapping_key": [
+        "src/compiler/factory/utilities.ts",
+        "KindFunctionDeclaration",
+        "skipOuterExpressions",
+        3
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of skipOuterExpressions result T cannot be served by implementation result Node",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1: Adamic 0.1 refuses overload 1 of skipOuterExpressions result T cannot be served by implementation result Node; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:660:1",
+        "where": "/workspace/overload-adapted/src/compiler/factory/utilities.ts:654:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:508:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:508:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:513:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:513:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:513:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        1
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:513:1",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:518:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:518:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:518:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        2
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:518:1",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:519:18"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:519:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:519:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        3
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:519:18",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:520:18"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:520:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:520:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        4
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:520:18",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:521:18"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:521:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:521:18",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        5
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:521:18",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 22437,
+        "body_start": 21870,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "visitFunctionBody",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:522:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:522:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a branded supertype inside a checked predicate's array target",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:522:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:526:9"
+      },
+      "mapping_key": [
+        "src/compiler/visitorPublic.ts",
+        "KindFunctionDeclaration",
+        "visitFunctionBody",
+        6
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1: Adamic 0.1 refuses overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:522:1",
+        "where": "/workspace/overload-adapted/src/compiler/visitorPublic.ts:508:1"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 45762,
+        "body_start": 3036,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2017",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/es2017.ts:119:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/op2-adapted/src/compiler/transformers/es2017.ts:119:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:587:119: Adamic 0.1 refuses overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/op2-adapted/src/compiler/transformers/es2017.ts:119:1",
+        "where": "/workspace/op2-adapted/src/compiler/visitorPublic.ts:587:119"
+      },
+      "mapping_key": [
+        "src/compiler/transformers/es2017.ts",
+        "KindFunctionDeclaration",
+        "transformES2017",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/transformers/es2017.ts:736:5: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/transformers/es2017.ts:119:1",
+        "where": "/workspace/overload-adapted/src/compiler/transformers/es2017.ts:736:5"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    },
+    {
+      "unit": {
+        "body_end": 69988,
+        "body_start": 3955,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "transformES2018",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/transformers/es2018.ts:154:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a possibly absent optional own field",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/emitNode.ts:262:13: stage 0 can't lower writing a possibly absent optional own field yet",
+        "unit": "/workspace/op2-adapted/src/compiler/transformers/es2018.ts:154:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/emitNode.ts:262:13"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a possibly absent optional own field",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/emitNode.ts:262:13: stage 0 can't lower writing a possibly absent optional own field yet",
+        "unit": "/workspace/op2-adapted/src/compiler/transformers/es2018.ts:154:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/emitNode.ts:262:13"
+      },
+      "mapping_key": [
+        "src/compiler/transformers/es2018.ts",
+        "KindFunctionDeclaration",
+        "transformES2018",
+        0
+      ],
+      "original_overload_stop": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody",
+        "root_kind": "",
+        "text": "/workspace/overload-adapted/src/compiler/transformers/es2018.ts:1220:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result",
+        "unit": "/workspace/overload-adapted/src/compiler/transformers/es2018.ts:154:1",
+        "where": "/workspace/overload-adapted/src/compiler/transformers/es2018.ts:1220:5"
+      },
+      "result_stop_clear_base": true,
+      "result_stop_clear_head": true
+    }
+  ],
+  "first_stop_changes": [
+    {
+      "unit": {
+        "body_end": 99035,
+        "body_start": 97974,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getJSDocCommentRanges",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:261:1"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 205390,
+        "body_start": 205125,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getAllSuperTypeNodes",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null
+    },
+    {
+      "unit": {
+        "body_end": 408062,
+        "body_start": 407336,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getRequiresAtTopOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an array of RequireOrImportCall",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:675:12: stage 0 can't lower an array of RequireOrImportCall yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:675:12"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 34565,
+        "body_start": 33361,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getConditions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 23705,
+        "body_start": 17923,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "decodeMappings",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/sourcemap.ts:464:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of captureMapping result Required<Mapping> cannot be served by implementation result Mapping",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/sourcemap.ts:547:5: Adamic 0.1 refuses overload 1 of captureMapping result Required<Mapping> cannot be served by implementation result Mapping; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/sourcemap.ts:464:1",
+        "where": "/workspace/op2-adapted/src/compiler/sourcemap.ts:547:5"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an uninitialized object field without a supported declared slot type",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/sourcemap.ts:562:18: stage 0 can't lower an uninitialized object field without a supported declared slot type yet",
+        "unit": "/workspace/op2-adapted/src/compiler/sourcemap.ts:464:1",
+        "where": "/workspace/op2-adapted/src/compiler/sourcemap.ts:562:18"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 272380,
+        "body_start": 48954,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "createPrinter",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of writeTokenText result void cannot be served by implementation result number",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/emitter.ts:4949:5: Adamic 0.1 refuses overload 1 of writeTokenText result void cannot be served by implementation result number; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1",
+        "where": "/workspace/op2-adapted/src/compiler/emitter.ts:4949:5"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "writing a checked object field without its source-slot type certificate",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/factory/nodeFactory.ts:6111:21: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+        "unit": "/workspace/op2-adapted/src/compiler/emitter.ts:1211:1",
+        "where": "/workspace/op2-adapted/src/compiler/factory/nodeFactory.ts:6111:21"
+      }
+    },
+    {
+      "unit": {
+        "body_end": 46640,
+        "body_start": 46372,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSemanticDiagnosticsOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null
+    }
+  ]
+}

@@ -1,0 +1,645 @@
+{
+  "calls": [
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(xs, ys)",
+      "unit": "/workspace/op2-adapted/src/compiler/core.ts:963:1",
+      "unit_name": "combine",
+      "where": "/workspace/op2-adapted/src/compiler/core.ts:966:43"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(\r\n                // to handle\r\n                // ... parameters, /** @internal */\r\n                // public param: string\r\n                getTrailingCommentRanges(text, skipTrivia(text, previousSibling.end + 1, /*stopAfterLineBreak*/ false, /*stopAtComments*/ true)),\r\n                getLeadingCommentRanges(text, node.pos),\r\n            )",
+      "unit": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:2648:1",
+      "unit_name": "isInternalDeclaration",
+      "where": "/workspace/op2-adapted/src/compiler/utilitiesPublic.ts:2656:15"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(getTrailingCommentRanges(text, node.pos), getLeadingCommentRanges(text, node.pos))",
+      "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+      "unit_name": "getJSDocCommentRanges",
+      "where": "/workspace/op2-adapted/src/compiler/utilities.ts:2769:9"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+      "index": 8,
+      "overload_count": 8,
+      "text": "concatenate(singleElementArray(getEffectiveBaseTypeNode(node)), getEffectiveImplementsTypeNodes(node))",
+      "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1",
+      "unit_name": "getAllSuperTypeNodes",
+      "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5229:29"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+      "index": 4,
+      "overload_count": 8,
+      "text": "concatenate(requires, statement.declarationList.declarations.map(d =\u003e d.initializer))",
+      "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+      "unit_name": "getRequiresAtTopOfFile",
+      "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10133:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+      "index": 5,
+      "overload_count": 8,
+      "text": "concatenate([finishNode(textOnly, commentStart, commentEnd)], comments)",
+      "unit": "/workspace/op2-adapted/src/compiler/parser.ts:1437:1",
+      "unit_name": "Parser",
+      "where": "/workspace/op2-adapted/src/compiler/parser.ts:9508:39"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[] | undefined): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+      "index": 3,
+      "overload_count": 8,
+      "text": "concatenate(conditions, options.customConditions)",
+      "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+      "unit_name": "getConditions",
+      "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:12"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(concatenate(normalExitLabel.antecedent, exceptionLabel.antecedent), returnLabel.antecedent)",
+      "unit": "/workspace/op2-adapted/src/compiler/binder.ts:509:1",
+      "unit_name": "createBinder",
+      "where": "/workspace/op2-adapted/src/compiler/binder.ts:1688:39"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(normalExitLabel.antecedent, exceptionLabel.antecedent)",
+      "unit": "/workspace/op2-adapted/src/compiler/binder.ts:509:1",
+      "unit_name": "createBinder",
+      "where": "/workspace/op2-adapted/src/compiler/binder.ts:1688:51"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+      "index": 4,
+      "overload_count": 8,
+      "text": "concatenate(result, getOwnKeys(deps))",
+      "unit": "/workspace/op2-adapted/src/compiler/moduleSpecifiers.ts:798:1",
+      "unit_name": "getAllRuntimeDependencies",
+      "where": "/workspace/op2-adapted/src/compiler/moduleSpecifiers.ts:803:22"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[] | undefined): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+      "index": 3,
+      "overload_count": 8,
+      "text": "concatenate(valueSymbol.declarations!, typeSymbol.declarations)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:4025:43"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(bestContainers, alternativeContainers)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:5420:16"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[] | undefined): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+      "index": 3,
+      "overload_count": 8,
+      "text": "concatenate(concatenate([container], additionalContainers), reexportContainers)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:5431:31"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate([container], additionalContainers)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:5431:43"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(contained, nonContained)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:5622:16"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(result, [index])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:5648:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(exportedMember.declarations, s.declarations)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:12285:46"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(outerTypeParameters, getInferTypeParameters(node as ConditionalTypeNode))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:13089:32"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(getOuterTypeParametersOfClassOrInterface(symbol), getLocalTypeParametersOfClassOrInterfaceOrTypeAlias(symbol))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:13156:16"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(outerTypeParameters, localTypeParameters)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:13488:39"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(earlySymbol.declarations, lateSymbol.declarations)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:13907:56"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(typeArguments, [thisArgument || target.thisType!])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14062:106"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(callSignatures, getSignaturesOfType(instantiatedBaseType, SignatureKind.Call))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14106:34"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(constructSignatures, getSignaturesOfType(instantiatedBaseType, SignatureKind.Construct))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14107:39"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(indexInfos, filter(inheritedIndexInfos, info =\u003e !findIndexInfo(indexInfos, info.keyType)))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14109:30"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(source.typeParameters ?? emptyArray, [source.thisType!])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14121:32"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(typeArguments, [type])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14123:102"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(sig.parameters.slice(0, restIndex), restParams)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14218:20"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(left.compositeKind !== TypeFlags.Intersection \u0026\u0026 left.compositeSignatures || [left], [right])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:14477:38"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[] | undefined): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+      "index": 3,
+      "overload_count": 8,
+      "text": "concatenate(computedPropertySymbols, filter(siblingSymbols, s =\u003e s !== indexSymbol))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:16748:40"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(type.target.outerTypeParameters, type.target.localTypeParameters?.map(() =\u003e errorType))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:16964:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+      "index": 4,
+      "overload_count": 8,
+      "text": "concatenate(type.target.outerTypeParameters, getEffectiveTypeArguments(node, type.target.localTypeParameters!))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:16968:58"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+      "index": 4,
+      "overload_count": 8,
+      "text": "concatenate(type.target.outerTypeParameters, type.target.localTypeParameters?.map(() =\u003e errorType) || emptyArray)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:16975:48"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(type.outerTypeParameters, fillMissingTypeArguments(typeArgumentsFromTypeReferenceNode(node), typeParameters, minTypeArgumentCount, isJs))",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:17024:35"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(propertyTypes, indexKeyTypes)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:18976:29"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(types.slice(0, types.length - 1), [getSpreadType(lastLeft, right, symbol, objectFlags, readonly)])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:20199:48"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(leftProp.declarations, rightProp.declarations)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:20226:42"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(propTypes, indexTypes)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:27263:45"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(filter(candidates, t =\u003e !isObjectOrArrayLiteralType(t)), [literalsType])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:27580:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(\r\n                    map(\r\n                        filter(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment =\u003e {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) \u0026\u0026 isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        }),\r\n                        prop =\u003e ([() =\u003e getContextFreeTypeOfExpression(prop.kind === SyntaxKind.PropertyAssignment ? prop.initializer : prop.name), prop.symbol.escapedName] as const),\r\n                    ),\r\n                    map(\r\n                        filter(getPropertiesOfType(contextualType), s =\u003e !!(s.flags \u0026 SymbolFlags.Optional) \u0026\u0026 !!node?.symbol?.members \u0026\u0026 !node.symbol.members.has(s.escapedName) \u0026\u0026 isDiscriminantProperty(contextualType, s.escapedName)),\r\n                        s =\u003e [() =\u003e undefinedType, s.escapedName] as const,\r\n                    ),\r\n                )",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:32637:17"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(\r\n                    map(\r\n                        filter(node.properties, p =\u003e !!p.symbol \u0026\u0026 p.kind === SyntaxKind.JsxAttribute \u0026\u0026 isDiscriminantProperty(contextualType, p.symbol.escapedName) \u0026\u0026 (!p.initializer || isPossiblyDiscriminantValue(p.initializer))),\r\n                        prop =\u003e ([!(prop as JsxAttribute).initializer ? (() =\u003e trueType) : (() =\u003e getContextFreeTypeOfExpression((prop as JsxAttribute).initializer!)), prop.symbol.escapedName] as const),\r\n                    ),\r\n                    map(\r\n                        filter(getPropertiesOfType(contextualType), s =\u003e {\r\n                            if (!(s.flags \u0026 SymbolFlags.Optional) || !node?.symbol?.members) {\r\n                                return false;\r\n                            }\r\n                            const element = node.parent.parent;\r\n                            if (s.escapedName === jsxChildrenPropertyName \u0026\u0026 isJsxElement(element) \u0026\u0026 getSemanticJsxChildren(element.children).length) {\r\n                                return false;\r\n                            }\r\n                            return !node.symbol.members.has(s.escapedName) \u0026\u0026 isDiscriminantProperty(contextualType, s.escapedName);\r\n                        }),\r\n                        s =\u003e [() =\u003e undefinedType, s.escapedName] as const,\r\n                    ),\r\n                )",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:32672:17"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(left.compositeKind === TypeFlags.Intersection \u0026\u0026 left.compositeSignatures || [left], [right])",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:33185:38"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(primitives, candidates)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:35291:26"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+      "index": 6,
+      "overload_count": 8,
+      "text": "concatenate(context.inferredTypeParameters, uniqueTypeParameters)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:41577:89"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+      "index": 6,
+      "overload_count": 8,
+      "text": "concatenate(context.inferredTypeParameters, result)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:41631:79"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(deferredGlobalDiagnostics, semanticDiagnostics)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:49746:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(currentGlobalDiagnostics, semanticDiagnostics)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:49752:24"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(patternAmbientModules, file.patternAmbientModules)",
+      "unit": "/workspace/op2-adapted/src/compiler/checker.ts:1489:1",
+      "unit_name": "createTypeChecker",
+      "where": "/workspace/op2-adapted/src/compiler/checker.ts:51597:41"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+      "index": 8,
+      "overload_count": 8,
+      "text": "concatenate\u003cModifierLike\u003e(modifiers, factory.createModifiersFromModifierFlags(ModifierFlags.Ambient))",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/ts.ts:235:1",
+      "unit_name": "transformTypeScript",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/ts.ts:1318:17"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(\r\n            visited.statements,\r\n            taggedTemplateStringDeclarations \u0026\u0026 [\r\n                factory.createVariableStatement(/*modifiers*/ undefined, factory.createVariableDeclarationList(taggedTemplateStringDeclarations)),\r\n            ],\r\n        )",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/es2018.ts:154:1",
+      "unit_name": "transformES2018",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/es2018.ts:572:27"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(prologue, statements)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "unit_name": "transformES2015",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/es2015.ts:798:50"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(statements, statement.statements)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "unit_name": "transformES2015",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/es2015.ts:3102:92"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(rawReferencedFiles, map(sourceFile.referencedFiles, f =\u003e [sourceFile, f]))",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:544:34"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(rawTypeReferenceDirectives, sourceFile.typeReferenceDirectives)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:545:42"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(rawLibReferenceDirectives, sourceFile.libReferenceDirectives)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:546:41"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate(elems, walkBindingPattern(elem.name))",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:1628:45"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+      "index": 6,
+      "overload_count": 8,
+      "text": "concatenate(concatenate(concatenate\u003cClassElement\u003e(privateIdentifier, lateIndexes), parameterProperties), visitNodes(input.members, visitDeclarationSubtree, isClassElement))",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:1659:37"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+      "index": 8,
+      "overload_count": 8,
+      "text": "concatenate(concatenate\u003cClassElement\u003e(privateIdentifier, lateIndexes), parameterProperties)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:1659:49"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+      "index": 7,
+      "overload_count": 8,
+      "text": "concatenate\u003cClassElement\u003e(privateIdentifier, lateIndexes)",
+      "unit": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:259:1",
+      "unit_name": "transformDeclarations",
+      "where": "/workspace/op2-adapted/src/compiler/transformers/declarations.ts:1659:61"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(sourceFile.additionalSyntacticDiagnostics, sourceFile.parseDiagnostics)",
+      "unit": "/workspace/op2-adapted/src/compiler/program.ts:1516:1",
+      "unit_name": "createProgram",
+      "where": "/workspace/op2-adapted/src/compiler/program.ts:2839:20"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(\r\n            filterSemanticDiagnostics(getBindAndCheckDiagnosticsForFile(sourceFile, cancellationToken, nodesToCheck), options),\r\n            getProgramDiagnostics(sourceFile),\r\n        )",
+      "unit": "/workspace/op2-adapted/src/compiler/program.ts:1516:1",
+      "unit_name": "createProgram",
+      "where": "/workspace/op2-adapted/src/compiler/program.ts:2864:16"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(\r\n            programDiagnostics.getCombinedDiagnostics(program).getGlobalDiagnostics(),\r\n            getOptionsDiagnosticsOfConfigFile(),\r\n        )",
+      "unit": "/workspace/op2-adapted/src/compiler/program.ts:1516:1",
+      "unit_name": "createProgram",
+      "where": "/workspace/op2-adapted/src/compiler/program.ts:3269:46"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: T[], array2: T[]): T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+      "index": 1,
+      "overload_count": 8,
+      "text": "concatenate(diagnostics, programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(resolvedRef.sourceFile.fileName))",
+      "unit": "/workspace/op2-adapted/src/compiler/program.ts:1516:1",
+      "unit_name": "createProgram",
+      "where": "/workspace/op2-adapted/src/compiler/program.ts:3279:27"
+    },
+    {
+      "declaration_text": "export function concatenate\u003cT\u003e(array1: readonly T[], array2: readonly T[]): readonly T[];",
+      "declaration_where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+      "index": 2,
+      "overload_count": 8,
+      "text": "concatenate(\r\n        getBinderAndCheckerDiagnosticsOfFile(state, sourceFile, cancellationToken, semanticDiagnosticsPerFile),\r\n        state.program.getProgramDiagnostics(sourceFile),\r\n    )",
+      "unit": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1",
+      "unit_name": "getSemanticDiagnosticsOfFile",
+      "where": "/workspace/op2-adapted/src/compiler/builder.ts:1065:12"
+    }
+  ],
+  "checker_diagnostics": 0
+}

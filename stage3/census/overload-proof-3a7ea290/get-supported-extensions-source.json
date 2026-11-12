@@ -1,0 +1,8 @@
+{
+  "source": "src/compiler/utilities.ts",
+  "source_sha256": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+  "start_byte": 400722,
+  "end_byte": 401534,
+  "start_line": 9994,
+  "text": "export function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][] {\r\n    const needJsExtensions = options && getAllowJSCompilerOption(options);\r\n\r\n    if (!extraFileExtensions || extraFileExtensions.length === 0) {\r\n        return needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\r\n    }\r\n\r\n    const builtins = needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\r\n    const flatBuiltins = flatten(builtins);\r\n    const extensions = [\r\n        ...builtins,\r\n        ...mapDefined(extraFileExtensions, x => x.scriptKind === ScriptKind.Deferred || needJsExtensions && isJSLike(x.scriptKind) && !flatBuiltins.includes(x.extension as Extension) ? [x.extension] : undefined),\r\n    ];\r\n\r\n    return extensions;\r\n}"
+}

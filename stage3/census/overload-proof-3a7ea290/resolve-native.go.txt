@@ -1,0 +1,43 @@
+// Read-only checker evidence. Compiled only through a scratch main overlay.
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/scanner"
+ "github.com/system-inc/adamic/internal/load"
+)
+func main() {
+ p,err:=load.LatentLoad([]string{os.Args[1]});if err!=nil {panic(err)}
+ diagnostics:=p.LatentDiagnostics();if len(diagnostics)!=0 {panic(fmt.Sprint(diagnostics))}
+ p.LatentEntryReach()
+ rows:=[]map[string]any{}
+ text:=func(n *ast.Node)string {sf:=ast.GetSourceFileOfNode(n);return sf.Text()[scanner.GetTokenPosOfNode(n,sf,false):n.End()]}
+ for _,file:=range p.Files(){
+  checker,release:=p.Checker(context.Background(),file)
+  for _,unit:=range file.Statements.Nodes {
+   var visit func(*ast.Node)bool
+   visit=func(n *ast.Node)bool {
+    if n.Kind==ast.KindCallExpression {
+     call:=n.AsCallExpression()
+     if strings.TrimSpace(text(call.Expression))=="concatenate" {
+      sig:=checker.GetResolvedSignature(n);if sig==nil||sig.Declaration()==nil {panic("missing resolved declaration")}
+      d:=sig.Declaration();sym:=checker.GetSymbolAtLocation(d.Name());index,count:=0,0
+      for _,candidate:=range sym.Declarations {if candidate.Kind==ast.KindFunctionDeclaration&&candidate.Body()==nil {count++;if candidate==d {index=count}}}
+      if index==0 {panic("resolved signature not an overload")}
+      rows=append(rows,map[string]any{"unit":p.Where(unit),"unit_name":func()string{if unit.Name()!=nil{return unit.Name().Text()};return ""}(),"where":p.Where(n),"text":text(n),"declaration_where":p.Where(d),"declaration_text":text(d),"index":index,"overload_count":count})
+     }
+    }
+    n.ForEachChild(visit);return false
+   }
+   visit(unit)
+  }
+  release()
+ }
+ output:=map[string]any{"checker_diagnostics":len(diagnostics),"calls":rows}
+ f,err:=os.Create(os.Args[2]);if err!=nil {panic(err)};defer f.Close();encoder:=json.NewEncoder(f);encoder.SetIndent("","  ");if err:=encoder.Encode(output);err!=nil {panic(err)}
+ fmt.Println("native resolved calls",len(rows))
+}

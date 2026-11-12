@@ -1,0 +1,151 @@
+{
+  "base": "17c6378de039f08283edea73ee75cfd4ba32a55a",
+  "head": "3a7ea290fca9e3f3325ffa8206a861b22f441583",
+  "prior_census_commit": "83e07d2fbfe08a2b10272416ab1dac77dcb7588f",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_changed": false,
+  "adaptation_paths_checked": [
+    "stage3/source.json",
+    "stage3/apply.py",
+    "stage3/apply.sh",
+    "stage3/api",
+    "stage3/adapt"
+  ],
+  "shared_adapted_tree": "/workspace/op2-adapted",
+  "mode": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_SHARDS": "8",
+    "GOMEMLIMIT": "3GiB",
+    "CENSUS_SKIP_SCAN": "1 for shards 2-7; unset for 0-1"
+  },
+  "head_changed_paths": [
+    "internal/lower/census_overload_proof.go",
+    "internal/lower/census_overload_proof_widened_test.go",
+    "internal/lower/census_small.go",
+    "internal/lower/predicates.go"
+  ],
+  "builds": {
+    "base": {
+      "scan_binary_sha256": "8b5ceccbf23a683c3e607649bb31effd5328c0239db42fc03a42f905bb462c52",
+      "scan_overlay": {
+        "Replace": {
+          "/workspace/op2-base/internal/lower/lower.go": "/workspace/op2-build-base/latent-overlay/internal_lower_lower.go",
+          "/workspace/op2-base/internal/lower/entries_records.go": "/workspace/op2-build-base/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/op2-base/internal/lower/latent_state.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/op2-base/internal/lower/statements.go": "/workspace/op2-build-base/latent-overlay/internal_lower_statements.go",
+          "/workspace/op2-base/internal/lower/latent_relation_overflow.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/op2-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/op2-base/internal/lower/latent_full.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/op2-base/internal/lower/latent_units.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/op2-base/internal/lower/latent_timing.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/op2-base/internal/lower/latent_replay.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/op2-base/internal/lower/refusals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_refusals.go",
+          "/workspace/op2-base/internal/load/load.go": "/workspace/op2-build-base/latent-overlay/internal_load_load.go",
+          "/workspace/op2-base/internal/load/latent_hook.go": "/workspace/op2-build-base/entry-overlay/entry_load_hook.go",
+          "/workspace/op2-base/internal/lower/expression.go": "/workspace/op2-build-base/latent-overlay/internal_lower_expression.go",
+          "/workspace/op2-base/internal/lower/functions.go": "/workspace/op2-build-base/latent-overlay/internal_lower_functions.go",
+          "/workspace/op2-base/internal/lower/generic.go": "/workspace/op2-build-base/latent-overlay/internal_lower_generic.go",
+          "/workspace/op2-base/internal/lower/locals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_locals.go",
+          "/workspace/op2-base/internal/lower/latent_hook.go": "/workspace/op2-build-base/scan-overlay/units.go",
+          "/workspace/op2-base/stage3/census/latent/tool/main.go": "/workspace/op2-build-base/entry-overlay/entry_main.go",
+          "/workspace/op2-base/stage3/census/latent/replay/worker/main.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/op2-base/internal/lower/latent_piece.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/op2-base/internal/lower/latent_progress.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/op2-base/internal/lower/latent_speculative.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      },
+      "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+      "binary_sha256": "4c450ee688da76f1d2629af068aad70d8808bf6c5568145cbb5103c63ab848ce",
+      "overlay_inputs_from_own_tree": true,
+      "entry_overlay": {
+        "Replace": {
+          "/workspace/op2-base/internal/lower/lower.go": "/workspace/op2-build-base/latent-overlay/internal_lower_lower.go",
+          "/workspace/op2-base/internal/lower/entries_records.go": "/workspace/op2-build-base/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/op2-base/internal/lower/latent_state.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/op2-base/internal/lower/statements.go": "/workspace/op2-build-base/latent-overlay/internal_lower_statements.go",
+          "/workspace/op2-base/internal/lower/latent_relation_overflow.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/op2-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/op2-base/internal/lower/latent_full.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/op2-base/internal/lower/latent_units.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/op2-base/internal/lower/latent_timing.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/op2-base/internal/lower/latent_replay.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/op2-base/internal/lower/refusals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_refusals.go",
+          "/workspace/op2-base/internal/load/load.go": "/workspace/op2-build-base/latent-overlay/internal_load_load.go",
+          "/workspace/op2-base/internal/load/latent_hook.go": "/workspace/op2-build-base/entry-overlay/entry_load_hook.go",
+          "/workspace/op2-base/internal/lower/expression.go": "/workspace/op2-build-base/latent-overlay/internal_lower_expression.go",
+          "/workspace/op2-base/internal/lower/functions.go": "/workspace/op2-build-base/latent-overlay/internal_lower_functions.go",
+          "/workspace/op2-base/internal/lower/generic.go": "/workspace/op2-build-base/latent-overlay/internal_lower_generic.go",
+          "/workspace/op2-base/internal/lower/locals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_locals.go",
+          "/workspace/op2-base/internal/lower/latent_hook.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_hook.go",
+          "/workspace/op2-base/stage3/census/latent/tool/main.go": "/workspace/op2-build-base/entry-overlay/entry_main.go",
+          "/workspace/op2-base/stage3/census/latent/replay/worker/main.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/op2-base/internal/lower/latent_piece.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/op2-base/internal/lower/latent_progress.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/op2-base/internal/lower/latent_speculative.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      }
+    },
+    "head": {
+      "scan_binary_sha256": "dc496f9ce71edb52148290e24d3588cdaf6f9a616fc4459b3bfd61560c04428c",
+      "scan_overlay": {
+        "Replace": {
+          "/workspace/op2-head/internal/lower/lower.go": "/workspace/op2-build-head/latent-overlay/internal_lower_lower.go",
+          "/workspace/op2-head/internal/lower/entries_records.go": "/workspace/op2-build-head/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/op2-head/internal/lower/latent_state.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/op2-head/internal/lower/statements.go": "/workspace/op2-build-head/latent-overlay/internal_lower_statements.go",
+          "/workspace/op2-head/internal/lower/latent_relation_overflow.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/op2-head/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/op2-build-head/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/op2-head/internal/lower/latent_full.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/op2-head/internal/lower/latent_units.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/op2-head/internal/lower/latent_timing.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/op2-head/internal/lower/latent_replay.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/op2-head/internal/lower/refusals.go": "/workspace/op2-build-head/latent-overlay/internal_lower_refusals.go",
+          "/workspace/op2-head/internal/load/load.go": "/workspace/op2-build-head/latent-overlay/internal_load_load.go",
+          "/workspace/op2-head/internal/load/latent_hook.go": "/workspace/op2-build-head/entry-overlay/entry_load_hook.go",
+          "/workspace/op2-head/internal/lower/expression.go": "/workspace/op2-build-head/latent-overlay/internal_lower_expression.go",
+          "/workspace/op2-head/internal/lower/functions.go": "/workspace/op2-build-head/latent-overlay/internal_lower_functions.go",
+          "/workspace/op2-head/internal/lower/generic.go": "/workspace/op2-build-head/latent-overlay/internal_lower_generic.go",
+          "/workspace/op2-head/internal/lower/locals.go": "/workspace/op2-build-head/latent-overlay/internal_lower_locals.go",
+          "/workspace/op2-head/internal/lower/latent_hook.go": "/workspace/op2-build-head/scan-overlay/units.go",
+          "/workspace/op2-head/stage3/census/latent/tool/main.go": "/workspace/op2-build-head/entry-overlay/entry_main.go",
+          "/workspace/op2-head/stage3/census/latent/replay/worker/main.go": "/workspace/op2-build-head/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/op2-head/internal/lower/latent_piece.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/op2-head/internal/lower/latent_progress.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/op2-head/internal/lower/latent_speculative.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      },
+      "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+      "binary_sha256": "dc097a77ac8f8e190ff562c25f19e441cff006f28e2897ec6d89f0961b3c4391",
+      "overlay_inputs_from_own_tree": true,
+      "entry_overlay": {
+        "Replace": {
+          "/workspace/op2-head/internal/lower/lower.go": "/workspace/op2-build-head/latent-overlay/internal_lower_lower.go",
+          "/workspace/op2-head/internal/lower/entries_records.go": "/workspace/op2-build-head/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/op2-head/internal/lower/latent_state.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/op2-head/internal/lower/statements.go": "/workspace/op2-build-head/latent-overlay/internal_lower_statements.go",
+          "/workspace/op2-head/internal/lower/latent_relation_overflow.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/op2-head/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/op2-build-head/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/op2-head/internal/lower/latent_full.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/op2-head/internal/lower/latent_units.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/op2-head/internal/lower/latent_timing.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/op2-head/internal/lower/latent_replay.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/op2-head/internal/lower/refusals.go": "/workspace/op2-build-head/latent-overlay/internal_lower_refusals.go",
+          "/workspace/op2-head/internal/load/load.go": "/workspace/op2-build-head/latent-overlay/internal_load_load.go",
+          "/workspace/op2-head/internal/load/latent_hook.go": "/workspace/op2-build-head/entry-overlay/entry_load_hook.go",
+          "/workspace/op2-head/internal/lower/expression.go": "/workspace/op2-build-head/latent-overlay/internal_lower_expression.go",
+          "/workspace/op2-head/internal/lower/functions.go": "/workspace/op2-build-head/latent-overlay/internal_lower_functions.go",
+          "/workspace/op2-head/internal/lower/generic.go": "/workspace/op2-build-head/latent-overlay/internal_lower_generic.go",
+          "/workspace/op2-head/internal/lower/locals.go": "/workspace/op2-build-head/latent-overlay/internal_lower_locals.go",
+          "/workspace/op2-head/internal/lower/latent_hook.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_hook.go",
+          "/workspace/op2-head/stage3/census/latent/tool/main.go": "/workspace/op2-build-head/entry-overlay/entry_main.go",
+          "/workspace/op2-head/stage3/census/latent/replay/worker/main.go": "/workspace/op2-build-head/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/op2-head/internal/lower/latent_piece.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/op2-head/internal/lower/latent_progress.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/op2-head/internal/lower/latent_speculative.go": "/workspace/op2-build-head/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      }
+    }
+  },
+  "head_proof_sha256": "2dcfc86acbfd5c9142d3c3fe4200c67a0e57df8ba2869df379742e5769611a53"
+}

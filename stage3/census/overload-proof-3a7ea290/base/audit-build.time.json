@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/op2-build-base/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/op2-build-base/audit-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 3.2370818350000263,
+  "user_seconds": 2.281019,
+  "system_seconds": 1.528546,
+  "peak_rss_kib": 1467596
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/audit.py",
+    "/workspace/op2-build-base/audit-census"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.2646537069999795,
+  "user_seconds": 0.193987,
+  "system_seconds": 0.0851,
+  "peak_rss_kib": 31856
+}

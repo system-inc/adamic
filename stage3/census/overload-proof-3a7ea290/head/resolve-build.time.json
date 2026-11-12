@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/op2-build-head/resolve-overlay.json",
+    "-o",
+    "/workspace/op2-build-head/resolve-native",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 3.9233043630001703,
+  "user_seconds": 1.6921659999999998,
+  "system_seconds": 0.717702,
+  "peak_rss_kib": 1369968
+}

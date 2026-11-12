@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/op2-build-base/entry-census-scan",
+    "/workspace/op2-fixture/main.ts",
+    "/workspace/op2-build-base/fixture-scan-s1.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.11923197099986282,
+  "user_seconds": 0.040255,
+  "system_seconds": 0.016492,
+  "peak_rss_kib": 32092
+}

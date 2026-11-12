@@ -1,0 +1,27 @@
+{
+  "Replace": {
+    "/workspace/op2-base/internal/lower/lower.go": "/workspace/op2-build-base/latent-overlay/internal_lower_lower.go",
+    "/workspace/op2-base/internal/lower/entries_records.go": "/workspace/op2-build-base/latent-overlay/internal_lower_entries_records.go",
+    "/workspace/op2-base/internal/lower/latent_state.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_state.go",
+    "/workspace/op2-base/internal/lower/statements.go": "/workspace/op2-build-base/latent-overlay/internal_lower_statements.go",
+    "/workspace/op2-base/internal/lower/latent_relation_overflow.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+    "/workspace/op2-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "/workspace/op2-base/internal/lower/latent_full.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_full.go",
+    "/workspace/op2-base/internal/lower/latent_units.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_units.go",
+    "/workspace/op2-base/internal/lower/latent_timing.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_timing.go",
+    "/workspace/op2-base/internal/lower/latent_replay.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_replay.go",
+    "/workspace/op2-base/internal/lower/refusals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_refusals.go",
+    "/workspace/op2-base/internal/load/load.go": "/workspace/op2-build-base/latent-overlay/internal_load_load.go",
+    "/workspace/op2-base/internal/load/latent_hook.go": "/workspace/op2-build-base/entry-overlay/entry_load_hook.go",
+    "/workspace/op2-base/internal/lower/expression.go": "/workspace/op2-build-base/latent-overlay/internal_lower_expression.go",
+    "/workspace/op2-base/internal/lower/functions.go": "/workspace/op2-build-base/latent-overlay/internal_lower_functions.go",
+    "/workspace/op2-base/internal/lower/generic.go": "/workspace/op2-build-base/latent-overlay/internal_lower_generic.go",
+    "/workspace/op2-base/internal/lower/locals.go": "/workspace/op2-build-base/latent-overlay/internal_lower_locals.go",
+    "/workspace/op2-base/internal/lower/latent_hook.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_hook.go",
+    "/workspace/op2-base/stage3/census/latent/tool/main.go": "/workspace/op2-report/stage3/census/overload-proof-3a7ea290/resolve-native.go.txt",
+    "/workspace/op2-base/stage3/census/latent/replay/worker/main.go": "/workspace/op2-build-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+    "/workspace/op2-base/internal/lower/latent_piece.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_piece.go",
+    "/workspace/op2-base/internal/lower/latent_progress.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_progress.go",
+    "/workspace/op2-base/internal/lower/latent_speculative.go": "/workspace/op2-build-base/latent-overlay/internal_lower_latent_speculative.go"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/op2-build-base/resolve-native",
+    "/workspace/op2-adapted/src/tsc/tsc.ts",
+    "/workspace/op2-report/stage3/census/overload-proof-3a7ea290/concatenate-native-base.json"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 4.624760474000141,
+  "user_seconds": 2.68588,
+  "system_seconds": 0.36549899999999996,
+  "peak_rss_kib": 351840
+}

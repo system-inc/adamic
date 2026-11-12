@@ -1,0 +1,42 @@
+{
+  "base": {
+    "sources": 81,
+    "units": 4565,
+    "attempted": 4061,
+    "status_counts": {
+      "attempted": 4061,
+      "deferred_generic_instantiation": 504
+    },
+    "unit_shards_disjoint_and_complete": true,
+    "per_unit_timings_complete": true,
+    "independent_stock_catalog_complete": true,
+    "raw_archived_stream_equals_remerge": true,
+    "all_child_exits_zero_and_below_30_minutes": true
+  },
+  "head": {
+    "sources": 81,
+    "units": 4565,
+    "attempted": 4061,
+    "status_counts": {
+      "attempted": 4061,
+      "deferred_generic_instantiation": 504
+    },
+    "unit_shards_disjoint_and_complete": true,
+    "per_unit_timings_complete": true,
+    "independent_stock_catalog_complete": true,
+    "raw_archived_stream_equals_remerge": true,
+    "all_child_exits_zero_and_below_30_minutes": true
+  },
+  "headers_equal": true,
+  "requested_unit_group_sizes": [
+    5,
+    5,
+    1
+  ],
+  "historical_cohort_size": 43,
+  "native_checker_diagnostics": 0,
+  "native_resolutions_equal_and_stock_agrees": true,
+  "fixture_composition_both_sides_pass": true,
+  "archive_hashes_verified": true,
+  "no_dot_go_evidence": true
+}

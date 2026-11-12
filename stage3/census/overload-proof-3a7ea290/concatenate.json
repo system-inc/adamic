@@ -1,0 +1,695 @@
+{
+  "config": "/workspace/op2-adapted/src/tsc/tsconfig.json",
+  "options": {
+    "rootDir": "/workspace/op2-adapted/src",
+    "outDir": "/workspace/op2-adapted/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [],
+    "noEmit": true
+  },
+  "diagnostics": [
+    {
+      "code": 2339,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'node:perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2503,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2503,
+      "message": "Cannot find namespace 'NodeJS'."
+    },
+    {
+      "code": 2339,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name '__dirname'."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2345,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 7006,
+      "message": "Parameter 'err' implicitly has an 'any' type."
+    },
+    {
+      "code": 7031,
+      "message": "Binding element 'profile' implicitly has an 'any' type."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  ],
+  "results": [
+    {
+      "unit": {
+        "body_end": 99035,
+        "body_start": 97974,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getJSDocCommentRanges",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:2761:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:261:1"
+      },
+      "calls": [
+        {
+          "where": "/workspace/op2-adapted/src/compiler/utilities.ts:2769:9",
+          "text": "concatenate(getTrailingCommentRanges(text, node.pos), getLeadingCommentRanges(text, node.pos))",
+          "resolved_declaration": {
+            "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+            "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;",
+            "index": 7,
+            "overload_count": 8
+          },
+          "all_overloads": [
+            {
+              "index": 1,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+            },
+            {
+              "index": 2,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+            },
+            {
+              "index": 3,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+            },
+            {
+              "index": 4,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;"
+            },
+            {
+              "index": 5,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+            },
+            {
+              "index": 6,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+            },
+            {
+              "index": 7,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+            },
+            {
+              "index": 8,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": {
+        "body_end": 205390,
+        "body_start": 205125,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getAllSuperTypeNodes",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:5227:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null,
+      "calls": [
+        {
+          "where": "/workspace/op2-adapted/src/compiler/utilities.ts:5229:29",
+          "text": "concatenate(singleElementArray(getEffectiveBaseTypeNode(node)), getEffectiveImplementsTypeNodes(node))",
+          "resolved_declaration": {
+            "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+            "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;",
+            "index": 8,
+            "overload_count": 8
+          },
+          "all_overloads": [
+            {
+              "index": 1,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+            },
+            {
+              "index": 2,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+            },
+            {
+              "index": 3,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+            },
+            {
+              "index": 4,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;"
+            },
+            {
+              "index": 5,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+            },
+            {
+              "index": 6,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+            },
+            {
+              "index": 7,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+            },
+            {
+              "index": 8,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": {
+        "body_end": 408062,
+        "body_start": 407336,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getRequiresAtTopOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an array of RequireOrImportCall",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:675:12: stage 0 can't lower an array of RequireOrImportCall yet",
+        "unit": "/workspace/op2-adapted/src/compiler/utilities.ts:10125:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:675:12"
+      },
+      "calls": [
+        {
+          "where": "/workspace/op2-adapted/src/compiler/utilities.ts:10133:24",
+          "text": "concatenate(requires, statement.declarationList.declarations.map(d => d.initializer))",
+          "resolved_declaration": {
+            "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+            "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+            "index": 4,
+            "overload_count": 8
+          },
+          "all_overloads": [
+            {
+              "index": 1,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+            },
+            {
+              "index": 2,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+            },
+            {
+              "index": 3,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+            },
+            {
+              "index": 4,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;"
+            },
+            {
+              "index": 5,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+            },
+            {
+              "index": 6,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+            },
+            {
+              "index": 7,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+            },
+            {
+              "index": 8,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": {
+        "body_end": 34565,
+        "body_start": 33361,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getConditions",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "unit": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:755:1",
+        "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:36"
+      },
+      "calls": [
+        {
+          "where": "/workspace/op2-adapted/src/compiler/moduleNameResolver.ts:780:12",
+          "text": "concatenate(conditions, options.customConditions)",
+          "resolved_declaration": {
+            "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+            "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];",
+            "index": 3,
+            "overload_count": 8
+          },
+          "all_overloads": [
+            {
+              "index": 1,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+            },
+            {
+              "index": 2,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+            },
+            {
+              "index": 3,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+            },
+            {
+              "index": 4,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;"
+            },
+            {
+              "index": 5,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+            },
+            {
+              "index": 6,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+            },
+            {
+              "index": 7,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+            },
+            {
+              "index": 8,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": {
+        "body_end": 46640,
+        "body_start": 46372,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSemanticDiagnosticsOfFile",
+        "status": "attempted",
+        "where": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+        "root_kind": "",
+        "text": "/workspace/op2-adapted/src/compiler/core.ts:656:1: Adamic 0.1 refuses overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "unit": "/workspace/op2-adapted/src/compiler/builder.ts:1058:1",
+        "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1"
+      },
+      "head": null,
+      "calls": [
+        {
+          "where": "/workspace/op2-adapted/src/compiler/builder.ts:1065:12",
+          "text": "concatenate(\r\n        getBinderAndCheckerDiagnosticsOfFile(state, sourceFile, cancellationToken, semanticDiagnosticsPerFile),\r\n        state.program.getProgramDiagnostics(sourceFile),\r\n    )",
+          "resolved_declaration": {
+            "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+            "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];",
+            "index": 2,
+            "overload_count": 8
+          },
+          "all_overloads": [
+            {
+              "index": 1,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:656:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[]): T[];"
+            },
+            {
+              "index": 2,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:658:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[]): readonly T[];"
+            },
+            {
+              "index": 3,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:660:1",
+              "text": "export function concatenate<T>(array1: T[], array2: T[] | undefined): T[];"
+            },
+            {
+              "index": 4,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:662:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;"
+            },
+            {
+              "index": 5,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:664:1",
+              "text": "export function concatenate<T>(array1: readonly T[], array2: readonly T[] | undefined): readonly T[];"
+            },
+            {
+              "index": 6,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:666:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+            },
+            {
+              "index": 7,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:668:1",
+              "text": "export function concatenate<T>(array1: T[] | undefined, array2: T[] | undefined): T[] | undefined;"
+            },
+            {
+              "index": 8,
+              "where": "/workspace/op2-adapted/src/compiler/core.ts:670:1",
+              "text": "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[] | undefined): readonly T[] | undefined;"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
