@@ -8,6 +8,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -328,5 +329,22 @@ func TestGraphHostViewIsNotYet(t *testing.T) {
 		if !errors.As(err, &notYet) || !strings.HasPrefix(notYet.What, row.want) || !strings.Contains(notYet.What, held) {
 			t.Errorf("%s: got %v, want the host view stop, starting %q", row.name, err, row.want)
 		}
+	}
+}
+
+// A dynamic-shape node that reaches graphAdoptionBoundary with no site lowering kept is refused at the
+// program, as the decode stop is, instead of panicking in Where(nil) (#kvzbhqr: Correctness's slice-3
+// census met it on 23 units). The node is set directly on the kept graph program, since every source
+// road records its site. Mutant: the nil guard removed panics here.
+func TestGraphDynamicShapeWithoutSiteIsRefused(t *testing.T) {
+	t.Parallel()
+	lowered, _, _ := graphViewGuardLowering(t)
+	lowered.viewSources = nil
+	lowered.graphDynamicSite = nil
+	lowered.result.Main = append(lowered.result.Main, ir.Evaluate{Value: ir.DynamicProperty{Object: ir.Undefined{}, Name: "late"}})
+	err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).graphAdoptionBoundary()
+	var refused *Refused
+	if !errors.As(err, &refused) || refused.What != "a dynamic-shape object in a graph program" || refused.Where != lowered.result.Source {
+		t.Fatalf("got %v, want the dynamic-shape refusal at the program %q", err, lowered.result.Source)
 	}
 }
