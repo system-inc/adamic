@@ -1,0 +1,34 @@
+{
+  "adapted_source_files_checked": 747,
+  "adapted_sources_unchanged": true,
+  "compiler_sources_unchanged": true,
+  "headers_identical": true,
+  "completed_reach_files": 81,
+  "stream_integrity": {
+    "parent-latent.jsonl": {
+      "sha256": "add802d5352c04234ec163359fabdff0f75ece71dbeb432596876813c9cb734c",
+      "bytes": 17223278,
+      "archived_as": "parent-latent.jsonl.gz"
+    },
+    "parent-latent-times.jsonl": {
+      "sha256": "49ef14f1c46e58f7ad547ce7385e223e0d5b20a750155607bd9e6fce3ab443f5",
+      "bytes": 771031,
+      "archived_as": "parent-latent-times.jsonl"
+    },
+    "head-latent.jsonl": {
+      "sha256": "21411a40b4918ca4626aad44cb291eac241cc4e2a02eafd6a7de65cf109f6439",
+      "bytes": 17223296,
+      "archived_as": "head-latent.jsonl.gz"
+    },
+    "head-latent-times.jsonl": {
+      "sha256": "0a92590adfdf130521c50066283851dbb7959510ac58660ecf985feb6ca63c7c",
+      "bytes": 771057,
+      "archived_as": "head-latent-times.jsonl"
+    }
+  },
+  "original_cohort_sizes": [
+    43,
+    67
+  ],
+  "all_overloaded_value_first_stops_classified": 1
+}

@@ -10,6 +10,12 @@ Parent: `19ab1c58c0f1672074e57fee57e5bb04cc21c0fc`. Head: `02d4821168875c03fa66b
 
 Both compilers were built from their own SHA and exact submodule pins. Both use the base meter instrumentation and the same single tree produced by 19ab1c58 stage3/apply.sh, from pinned TypeScript 6.0.3 `050880ce59e30b356b686bd3144efe24f875ebc8`. `LATENT_FULL=0` and `LATENT_ASSERT_NO_OUTPUT=1`. The completed headers match exactly. Both entry programs are checker-clean. The two processes ran concurrently after setup, apply and both builds completed; timing includes that overlap.
 
+## Result
+
+Only createScanner changes first stop: from `NotYet: a PostfixUnaryExpression` at `src/compiler/scanner.ts:2365:62` to `NotYet: an overloaded function as a value` at `src/compiler/scanner.ts:2190:68`. The stopped identifier is the third argument in `scanConflictMarkerTrivia(text!, pos, error)`. It is a callback value, so the guard is fail-closed and correct. The callee is scanConflictMarkerTrivia. There are no overloaded-value first stops on call callees. See [manual-review.json](manual-review.json).
+
+createScanner remains blocked. The disappearing postfix finding is an earlier-first-stop effect, not a newly lowered unit. Total units with no lowering first stop remain 3177. All original 43 and other 67 cohort first-stop findings are unchanged from the fresh parent; the original 43 result stops are already clear on both sides, and 16 of those units lower on both sides.
+
 ## Counts
 
 | Measure | Parent 19ab1c58 | Head 02d48211 |

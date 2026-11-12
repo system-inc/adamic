@@ -5,3 +5,7 @@ classify child_exit=0
 start report
 report child_exit=0
 start checkpoint-analysis
+checkpoint-analysis child_exit=0
+start validation
+validation child_exit=0
+report and validation complete; ready for review
