@@ -18,12 +18,15 @@ import (
 )
 
 // The .a witnesses are also source Node inputs. A temporary .ts copy explicitly
-// opts into checked admission; the identical .a lying bodies remain refused.
+// opts into checked admission; the identical .a lying bodies remain refused. false's
+// empty branches read nothing, so its lying false side is unobservable and it agrees
+// with Node; false_read's else reads the value, so its false side stops (#39wtqdj).
 func TestCheckedPredicateBranches(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, nodeOut, checkedOut, branch string }{
 		{"true", "claimed\n", "", "true"},
-		{"false", "continued\n", "", "false"},
+		{"false", "continued\n", "", ""},
+		{"false_read", "number\ncontinued\n", "", "false"},
 		{"asserts", "called\nasserted\n", "called\n", "asserts"},
 		{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", ""},
 	} {
@@ -98,7 +101,7 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, diagnostic string }{
 		{"untagged", `interface Narrow { value: number } function claim(value: {value:number|string}): value is Narrow {return true;} claim({value:"text"});`, "checked predicate overload target Narrow"},
-		{"open tag", `interface Numeric {kind:1;value:number} interface Textual {kind:1;value:string} function claim(value:Numeric|Textual):value is Numeric{return false;} function use(value:Numeric|Textual):void{if(claim(value)){}else{}} use({kind:1,value:"text"});`, "checked predicate membership over an open tag domain"},
+		{"open tag", `interface Numeric {kind:1;value:number} interface Textual {kind:1;value:string} function claim(value:Numeric|Textual):value is Numeric{return false;} function use(value:Numeric|Textual):void{if(claim(value)){}else{console.log(String(value.kind))}} use({kind:1,value:"text"});`, "checked predicate membership over an open tag domain"},
 		{"overload in .a", `function claim(value:number|string):value is number;function claim(value:number|string):boolean{return true;} claim("text");`, "the overload implementation does not prove both directions"},
 		// 0.1 refuses == outright, so a loose comparison with false never reaches the direction walk.
 		{"loose false comparison", `interface Expression { readonly kind: 'E'; readonly e: number } interface Statement { readonly kind: 'S'; readonly s: string } type Node = Expression | Statement; function isS(n: Node): n is Statement { return false; } function f(n: Node): number { if (isS(n) == false) return n.e; return 0; } console.log(String(f({ kind: 'S', s: 'x' })));`, "refuses ==; use ===, which doesn't coerce"},

@@ -53,61 +53,93 @@ func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *c
 	if checker.Checker_isTypeIdenticalTo(l.checker, source, narrowed) {
 		return directions
 	}
-	// Empty branches still count. Read-based flow discovery also covers boolean
-	// aliases, captures, and continuation paths after an early return.
-	if l.predicateUseDirections(call)&predicateFalse != 0 {
+	// The false side is checked only where a read observes it (#39wtqdj, Adamic's ruling of Nov 11, which
+	// reads rulings.md:137 as :146 reads a bodyless overload). Read-based flow discovery covers boolean
+	// aliases, captures, and continuation paths after an early return, and keeps a read where the two sides
+	// merge that the false side still narrows; predicateFalseRead adds every read the false side reaches
+	// before they merge, by the flow graph alone. A false side nothing reads makes no claim the program can
+	// see: its check is dropped, and recordPredicateSite counts the direction unobservable.
+	if l.predicateUseDirections(call)&predicateFalse != 0 || l.predicateFalseRead(call, argument) {
 		return predicateEither
 	}
-	conditionNarrows := func(condition *ast.Node, truth bool) bool {
-		if condition == nil || l.predicateConditionDirection(condition, call.AsNode(), truth, 0)&predicateFalse == 0 {
-			return false
-		}
-		flags := ast.FlowFlagsFalseCondition
-		if truth {
-			flags = ast.FlowFlagsTrueCondition
-		}
-		branch := &ast.FlowNode{Flags: flags, Node: condition, Antecedent: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
-		narrowed := predicateFlowType(l.checker, argument, source, source, nil, branch)
-		return !checker.Checker_isTypeIdenticalTo(l.checker, source, narrowed)
-	}
+	return directions
+}
+
+// predicateFalseRead is whether a read of argument, the reference call narrows, sits where the checker's
+// flow graph carries call's false answer to it, decided by the graph and never by comparing types
+// (Language's condition on #39wtqdj): walking the read's flow chain back, some path meets a condition that
+// narrows by the false answer before any assignment replacing the reference, whatever other narrowings
+// stand between, and no path meets one that narrows by the true answer alone. A read both sides reach
+// stands after they merge, where predicateUseDirections' test, the read's type with and without the false
+// side, decides. That covers a false branch, an else, the code after an early exit on the true side, a
+// conditional's or an && or || operand, a const alias, a switch (true) clause, a closure made on the false
+// path, and a later call of the same predicate on the same reference. A finally's reduced label, which the
+// checker reads with fewer antecedents than the graph holds, can make a path look merged that isn't, so
+// behind one a false meeting counts alone. Flow graphs never cross files, so the call's own file holds
+// every read.
+func (l *lowering) predicateFalseRead(call *ast.CallExpression, argument *ast.Node) bool {
+	read := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		var condition *ast.Node
-		switch node.Kind {
-		case ast.KindIfStatement:
-			condition = node.AsIfStatement().Expression
-		case ast.KindConditionalExpression:
-			condition = node.AsConditionalExpression().Condition
-		case ast.KindWhileStatement:
-			condition = node.AsWhileStatement().Expression
-		case ast.KindDoStatement:
-			condition = node.AsDoStatement().Expression
-		case ast.KindForStatement:
-			condition = node.AsForStatement().Condition
-		case ast.KindBinaryExpression:
-			binary := node.AsBinaryExpression()
-			if binary.OperatorToken.Kind == ast.KindBarBarToken && conditionNarrows(binary.Left, false) {
-				directions |= predicateFalse
-			}
-		case ast.KindSwitchStatement:
-			// Under switch (true), every case clause's false branch reaches the clauses after it.
-			statement := node.AsSwitchStatement()
-			if ast.SkipParentheses(statement.Expression).Kind == ast.KindTrueKeyword {
-				for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
-					if clause.Kind == ast.KindCaseClause && conditionNarrows(clause.Expression(), false) {
-						directions |= predicateFalse
-					}
-				}
+		if !predicateCannotMatch(node, argument) && l.predicateNameReads(node, argument) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
+			if flow := node.FlowNodeData(); flow != nil {
+				read = l.predicateFalseReaches(flow.FlowNode, call.AsNode(), argument)
+			} else {
+				// A read the flow graph doesn't place can't be shown unreached by the false answer, so it
+				// keeps the check. predicateNameReads admits only read positions, never a declaration or
+				// an assignment, which carry no flow data; the kinds it admits all carry it today.
+				read = true
 			}
 		}
-		if conditionNarrows(condition, true) || conditionNarrows(condition, false) {
-			directions |= predicateFalse
-		}
-		node.ForEachChild(visit)
-		return false
+		return read || node.ForEachChild(visit)
 	}
 	ast.GetSourceFileOfNode(call.AsNode()).AsNode().ForEachChild(visit)
-	return directions
+	return read
+}
+
+// predicateFalseReaches is predicateFalseRead's test for one read, from its flow node: whether the paths
+// back from it meet call's false answer and none meets its true answer alone, each path ending at the
+// first condition of call it meets or at a write-only assignment to reference, as predicateFlowDirections
+// ends it.
+func (l *lowering) predicateFalseReaches(flow *ast.FlowNode, call, reference *ast.Node) bool {
+	falseMet, trueMet, reduced := false, false, false
+	seen := map[*ast.FlowNode]bool{}
+	var walk func(*ast.FlowNode)
+	walk = func(flow *ast.FlowNode) {
+		if flow == nil || seen[flow] {
+			return
+		}
+		seen[flow] = true
+		if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {
+			return
+		}
+		var met predicateTruth
+		if flow.Flags&ast.FlowFlagsCondition != 0 {
+			met = l.predicateConditionDirection(flow.Node, call, flow.Flags&ast.FlowFlagsTrueCondition != 0, 0)
+		}
+		if flow.Flags&ast.FlowFlagsSwitchClause != 0 {
+			met = l.predicateSwitchDirection(flow.Node.AsFlowSwitchClauseData(), call)
+		}
+		if met != 0 {
+			// A condition the walk reads both ways at once, as an || compared with true, carries the false
+			// answer on this path, so it counts as false, never as a merge.
+			falseMet = falseMet || met&predicateFalse != 0
+			trueMet = trueMet || met == predicateTrue
+			return
+		}
+		reduced = reduced || flow.Flags&ast.FlowFlagsReduceLabel != 0
+		walk(flow.Antecedent)
+		for list := flow.Antecedents; list != nil; list = list.Next {
+			walk(list.Flow)
+		}
+		if flow.Flags&ast.FlowFlagsStart != 0 && flow.Node != nil {
+			if outer := flow.Node.FlowNodeData(); outer != nil {
+				walk(outer.FlowNode)
+			}
+		}
+	}
+	walk(flow)
+	return falseMet && (!trueMet || reduced)
 }
 
 // checkedPredicateUnclassifiedUse names where the call's result goes when the direction walk
