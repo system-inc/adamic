@@ -68,6 +68,26 @@ func newIterableViewFlowGraph(program *ir.Program) *allocationFlowGraph {
 // functions are only ever called directly, whose closures the MakeClosure arm then leaves alone.
 func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *allocationFlowGraph {
 	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}, unknownWrites: map[int]string{}}
+	// pass hands a call's arguments to its target's parameters, by position. An omitted argument is
+	// undefined where the parameter is optional or has a default: OptionalParameters is keyed by the
+	// local the argument arrives in, a default's incoming local among them (functions.go's signature),
+	// and the default itself is the Coalesce or Conditional the body declares over it. Undefined reaches
+	// no allocation, and a parameter that only ever gets it still reaches none. A required or rest
+	// parameter's omitted argument stays unknown, and so does any omitted argument where a spread may
+	// move what lands at that position.
+	pass := func(target int, arguments []ir.Expression, spread []bool) {
+		function := &program.Functions[target]
+		for i, param := range function.Parameters {
+			switch {
+			case i < len(arguments):
+				graph.sources[param+1] = append(graph.sources[param+1], arguments[i])
+			case function.OptionalParameters[param] && !slices.Contains(spread, true):
+				graph.sources[param+1] = append(graph.sources[param+1], ir.Undefined{Of: program.Locals[param].Type})
+			default:
+				graph.unknownParameters[param+1] = true
+			}
+		}
+	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			graph.noteWrites(reflect.ValueOf(node))
@@ -98,13 +118,7 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, param := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
-						} else {
-							graph.unknownParameters[param+1] = true
-						}
-					}
+					pass(target, value.Arguments, value.Spread)
 				}
 			case ir.CallClosure:
 				targets := program.ClosureTargets(value)
@@ -113,13 +127,7 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, param := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
-						} else {
-							graph.unknownParameters[param+1] = true
-						}
-					}
+					pass(target, value.Arguments, value.Spread)
 				}
 
 			}
@@ -421,6 +429,18 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 		follow(value.Value)
 	case ir.CheckedCast:
 		follow(value.Value)
+	case ir.Undefined, ir.Null:
+		// Neither is an allocation, so neither adds a site. A value that's only ever one of them
+		// reaches no site, which ReachingAllocations reports as Unknown, never as a proof.
+	case ir.Coalesce:
+		// Value ?? Fallback is Value when it's present and Fallback otherwise: a default's
+		// declaration over its incoming argument (functions.go's lowerBody) is one. A non-null
+		// assertion lowers to Value ?? panic (non_null.go), which hands on Value itself or stops,
+		// so its Fallback is no value and isn't followed.
+		follow(value.Value)
+		if value.Panic == nil {
+			follow(value.Fallback)
+		}
 	default:
 		unknown(fmt.Sprintf("untracked source %T", expression))
 	}
