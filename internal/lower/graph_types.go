@@ -974,18 +974,21 @@ func (f *cycleFinder) viewHosted(proven *checker.Type, seen map[*checker.Type]bo
 		return nil
 	}
 	seen[proven] = true
-	proven = f.l.checker.GetNonNullableType(f.l.concrete(proven))
-	if viewPairScalar(proven) || f.viewPairFunction(proven) {
-		return nil
-	}
+	proven = f.l.concrete(proven)
 	// A type parameter declared in a Node file carries a library name of its own, so it's judged by its
-	// constraint, which is what it can hold (library_node_callbacks_test.go's walk does the same).
+	// constraint, which is what it can hold (library_node_callbacks_test.go's walk does the same). It's
+	// judged before GetNonNullableType, which makes an unconstrained T into T & {}, whose arm T is
+	// already seen here.
 	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
 		constraint := f.l.checker.GetBaseConstraintOfType(proven)
 		if constraint == nil || constraint == proven || constraint.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny) != 0 {
 			return proven
 		}
 		return f.viewHosted(constraint, seen)
+	}
+	proven = f.l.checker.GetNonNullableType(proven)
+	if viewPairScalar(proven) || f.viewPairFunction(proven) {
+		return nil
 	}
 	if _, host := f.l.nodeHostObject(proven); host {
 		return proven
