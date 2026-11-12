@@ -12,7 +12,13 @@ function owner(node) {
 function plan(text, file) {
     const selected = rules.brands.filter(r => r.file === file);
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    for (const rule of selected.filter(r => r.after)) {
+        const owners = source.statements.filter(n =>
+            (ts.isInterfaceDeclaration(n) || ts.isTypeAliasDeclaration(n)) && n.name.text === rule.owner);
+        if (owners.length !== 1) throw Error('missing or duplicate brand owner: ' + rule.id);
+    }
     const found = new Set(), edits = [], contracts = [];
+    let removed = 0;
     function visit(node) {
         if ((ts.isPropertySignature(node) || ts.isPropertyDeclaration(node)) && node.name && node.type) {
             const key = node.name.text;
@@ -22,7 +28,18 @@ function plan(text, file) {
                 if (found.has(rule.id) || node.initializer) throw Error('unreviewed brand initialization');
                 found.add(rule.id);
                 contracts.push({key, owner: owner(node)});
-                if (node.type.kind === ts.SyntaxKind.AnyKeyword) edits.push({start: node.type.getStart(source), end: node.type.end, value: rule.replacement});
+                if (node.type.kind === ts.SyntaxKind.AnyKeyword) removed++;
+                if (rule.after) {
+                    // Rule 103 owns the complete erased declaration as well as its marker.
+                    let declaration = node.parent;
+                    if (ts.isTypeLiteralNode(declaration)) declaration = declaration.parent.parent;
+                    const spelling = declaration.getText(source);
+                    if (declaration.parent !== source || declaration.name?.text !== rule.owner ||
+                        ![rule.upstream, rule.before, rule.previous, rule.after].includes(spelling))
+                        throw Error('unreviewed brand owner shape: ' + rule.id);
+                    if (spelling !== rule.after) edits.push({start: declaration.getStart(source), end: declaration.end, value: rule.after});
+                }
+                else if (node.type.kind === ts.SyntaxKind.AnyKeyword) edits.push({start: node.type.getStart(source), end: node.type.end, value: rule.replacement});
                 else if (node.type.kind !== ts.SyntaxKind.UndefinedKeyword) throw Error('unreviewed brand type: ' + key);
             }
         }
@@ -31,7 +48,7 @@ function plan(text, file) {
     visit(source);
     if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);
     for (const e of edits.sort((a,b) => b.start-a.start)) text = text.slice(0,e.start)+e.value+text.slice(e.end);
-    return {text, removed: edits.length, contracts};
+    return {text, removed, contracts};
 }
 // Phantom markers may occur only in erased declarations, never as values.
 function auditBrands(text, file) {
