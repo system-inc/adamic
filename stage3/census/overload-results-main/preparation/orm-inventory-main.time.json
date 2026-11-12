@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "/workspace/op2-report/stage3/census/overload-results-main/inventory.cjs",
+    "/workspace/orm-build-main/latent.jsonl",
+    "/workspace/op2-report/stage3/census/overload-results-main/main-inventory.json"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1.6724933899999996,
+  "user_seconds": 2.166177,
+  "system_seconds": 0.5952419999999999,
+  "peak_rss_kib": 349584
+}

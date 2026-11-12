@@ -1,0 +1,89 @@
+{
+  "main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "landed": {
+    "abebb00b": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+    "a57ffec0": "a57ffec0d6037086adc4847ee9410d74b8b50522",
+    "dd4c82e1": "dd4c82e159072c2b3ead05396ac10ad5ffa895c2",
+    "9ae9f988": "9ae9f9888b29ef3108952246ce755a707c722c2f"
+  },
+  "report_parent": "481552841c9b5e1496fc6237da10501b707178d0",
+  "comparison": {
+    "report_commit": "481552841c9b5e1496fc6237da10501b707178d0",
+    "census": "overload-phantom-78933e52",
+    "overload_result_first_stops": 45,
+    "no_first_stop_units": 3187
+  },
+  "source": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+  "shared_adapted_tree": "/workspace/orm-adapted",
+  "mode": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_SHARDS": "8",
+    "GOMEMLIMIT": "3GiB",
+    "CENSUS_SKIP_SCAN": "1 for shards 2-7; unset for 0-1"
+  },
+  "binary_sha256": "8dfc08a963d1e7ef2ca4e642bd1223423f27f32c2b608900702704ffc854d4cf",
+  "scan_binary_sha256": "1c67cfbd685d448cac02741c76ab35ac6691da34905e2d8ba47a2261370688f8",
+  "overlay_inputs_from_own_tree": true,
+  "entry_overlay": {
+    "Replace": {
+      "/workspace/orm-main/internal/lower/lower.go": "/workspace/orm-build-main/latent-overlay/internal_lower_lower.go",
+      "/workspace/orm-main/internal/lower/entries_records.go": "/workspace/orm-build-main/latent-overlay/internal_lower_entries_records.go",
+      "/workspace/orm-main/internal/lower/latent_state.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_state.go",
+      "/workspace/orm-main/internal/lower/statements.go": "/workspace/orm-build-main/latent-overlay/internal_lower_statements.go",
+      "/workspace/orm-main/internal/lower/latent_relation_overflow.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_relation_overflow.go",
+      "/workspace/orm-main/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/orm-build-main/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "/workspace/orm-main/internal/lower/latent_full.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_full.go",
+      "/workspace/orm-main/internal/lower/latent_units.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_units.go",
+      "/workspace/orm-main/internal/lower/latent_timing.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_timing.go",
+      "/workspace/orm-main/internal/lower/latent_replay.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_replay.go",
+      "/workspace/orm-main/internal/lower/refusals.go": "/workspace/orm-build-main/latent-overlay/internal_lower_refusals.go",
+      "/workspace/orm-main/internal/load/load.go": "/workspace/orm-build-main/latent-overlay/internal_load_load.go",
+      "/workspace/orm-main/internal/load/latent_hook.go": "/workspace/orm-build-main/entry-overlay/entry_load_hook.go",
+      "/workspace/orm-main/internal/lower/expression.go": "/workspace/orm-build-main/latent-overlay/internal_lower_expression.go",
+      "/workspace/orm-main/internal/lower/functions.go": "/workspace/orm-build-main/latent-overlay/internal_lower_functions.go",
+      "/workspace/orm-main/internal/lower/generic.go": "/workspace/orm-build-main/latent-overlay/internal_lower_generic.go",
+      "/workspace/orm-main/internal/lower/locals.go": "/workspace/orm-build-main/latent-overlay/internal_lower_locals.go",
+      "/workspace/orm-main/internal/lower/latent_hook.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_hook.go",
+      "/workspace/orm-main/stage3/census/latent/tool/main.go": "/workspace/orm-build-main/entry-overlay/entry_main.go",
+      "/workspace/orm-main/stage3/census/latent/replay/worker/main.go": "/workspace/orm-build-main/latent-overlay/stage3_census_latent_replay_worker_main.go",
+      "/workspace/orm-main/internal/lower/latent_piece.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_piece.go",
+      "/workspace/orm-main/internal/lower/latent_progress.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_progress.go",
+      "/workspace/orm-main/internal/lower/latent_speculative.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_speculative.go"
+    }
+  },
+  "scan_overlay": {
+    "Replace": {
+      "/workspace/orm-main/internal/lower/lower.go": "/workspace/orm-build-main/latent-overlay/internal_lower_lower.go",
+      "/workspace/orm-main/internal/lower/entries_records.go": "/workspace/orm-build-main/latent-overlay/internal_lower_entries_records.go",
+      "/workspace/orm-main/internal/lower/latent_state.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_state.go",
+      "/workspace/orm-main/internal/lower/statements.go": "/workspace/orm-build-main/latent-overlay/internal_lower_statements.go",
+      "/workspace/orm-main/internal/lower/latent_relation_overflow.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_relation_overflow.go",
+      "/workspace/orm-main/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/orm-build-main/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "/workspace/orm-main/internal/lower/latent_full.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_full.go",
+      "/workspace/orm-main/internal/lower/latent_units.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_units.go",
+      "/workspace/orm-main/internal/lower/latent_timing.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_timing.go",
+      "/workspace/orm-main/internal/lower/latent_replay.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_replay.go",
+      "/workspace/orm-main/internal/lower/refusals.go": "/workspace/orm-build-main/latent-overlay/internal_lower_refusals.go",
+      "/workspace/orm-main/internal/load/load.go": "/workspace/orm-build-main/latent-overlay/internal_load_load.go",
+      "/workspace/orm-main/internal/load/latent_hook.go": "/workspace/orm-build-main/entry-overlay/entry_load_hook.go",
+      "/workspace/orm-main/internal/lower/expression.go": "/workspace/orm-build-main/latent-overlay/internal_lower_expression.go",
+      "/workspace/orm-main/internal/lower/functions.go": "/workspace/orm-build-main/latent-overlay/internal_lower_functions.go",
+      "/workspace/orm-main/internal/lower/generic.go": "/workspace/orm-build-main/latent-overlay/internal_lower_generic.go",
+      "/workspace/orm-main/internal/lower/locals.go": "/workspace/orm-build-main/latent-overlay/internal_lower_locals.go",
+      "/workspace/orm-main/internal/lower/latent_hook.go": "/workspace/orm-build-main/scan-overlay/units.go",
+      "/workspace/orm-main/stage3/census/latent/tool/main.go": "/workspace/orm-build-main/entry-overlay/entry_main.go",
+      "/workspace/orm-main/stage3/census/latent/replay/worker/main.go": "/workspace/orm-build-main/latent-overlay/stage3_census_latent_replay_worker_main.go",
+      "/workspace/orm-main/internal/lower/latent_piece.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_piece.go",
+      "/workspace/orm-main/internal/lower/latent_progress.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_progress.go",
+      "/workspace/orm-main/internal/lower/latent_speculative.go": "/workspace/orm-build-main/latent-overlay/internal_lower_latent_speculative.go"
+    }
+  },
+  "input_matches_prior": false,
+  "changed_input_files": 2
+}

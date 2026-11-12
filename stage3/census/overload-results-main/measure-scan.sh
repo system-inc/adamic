@@ -1,0 +1,26 @@
+#!/bin/bash
+set -eu
+source /workspace/adamic-tools/env.sh
+label=$1
+shard=$2
+scripts=/workspace/op2-report/stage3/census/overload-results-main
+build=/workspace/orm-build-$label
+# Clear unrelated census modes and mutants inherited from a shell.
+while IFS='=' read -r name value; do
+ case "$name" in LATENT_*|CENSUS_*) unset "$name";; esac
+done < <(env)
+export GOMEMLIMIT=3GiB
+export LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1
+export CENSUS_SHARDS=8 CENSUS_SHARD=$shard
+export LATENT_TIMES="$build/shard-$shard-times.jsonl"
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/op2-upstream
+binary="$build/entry-census"
+if test "$shard" -ge 2; then
+ export CENSUS_SKIP_SCAN=1
+ binary="$build/entry-census-scan"
+fi
+set +e
+python3 "$scripts/run.py" "$build/shard-$shard.log" "$build/shard-$shard.time.json" "$binary" /workspace/orm-adapted/src/tsc/tsc.ts "$build/shard-$shard.jsonl"
+rc=$?
+echo "measurement child_exit=$rc"
+exit "$rc"

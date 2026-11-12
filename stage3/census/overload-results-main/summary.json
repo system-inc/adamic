@@ -1,0 +1,319 @@
+{
+  "main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "header": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "first-error",
+    "measurement": "measured on a checker-clean entry-root program",
+    "roots": [
+      "/workspace/orm-adapted/src/tsc/tsc.ts"
+    ],
+    "sources": [
+      "/workspace/orm-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/orm-adapted/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/orm-adapted/src/compiler/_namespaces/ts.ts",
+      "/workspace/orm-adapted/src/compiler/binder.ts",
+      "/workspace/orm-adapted/src/compiler/builder.ts",
+      "/workspace/orm-adapted/src/compiler/builderPublic.ts",
+      "/workspace/orm-adapted/src/compiler/builderState.ts",
+      "/workspace/orm-adapted/src/compiler/builderStatePublic.ts",
+      "/workspace/orm-adapted/src/compiler/checker.ts",
+      "/workspace/orm-adapted/src/compiler/commandLineParser.ts",
+      "/workspace/orm-adapted/src/compiler/core.ts",
+      "/workspace/orm-adapted/src/compiler/corePublic.ts",
+      "/workspace/orm-adapted/src/compiler/debug.ts",
+      "/workspace/orm-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/orm-adapted/src/compiler/emitter.ts",
+      "/workspace/orm-adapted/src/compiler/executeCommandLine.ts",
+      "/workspace/orm-adapted/src/compiler/expressionToTypeNode.ts",
+      "/workspace/orm-adapted/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/orm-adapted/src/compiler/factory/emitHelpers.ts",
+      "/workspace/orm-adapted/src/compiler/factory/emitNode.ts",
+      "/workspace/orm-adapted/src/compiler/factory/nodeChildren.ts",
+      "/workspace/orm-adapted/src/compiler/factory/nodeConverters.ts",
+      "/workspace/orm-adapted/src/compiler/factory/nodeFactory.ts",
+      "/workspace/orm-adapted/src/compiler/factory/nodeTests.ts",
+      "/workspace/orm-adapted/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/orm-adapted/src/compiler/factory/utilities.ts",
+      "/workspace/orm-adapted/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/orm-adapted/src/compiler/hostErrors.ts",
+      "/workspace/orm-adapted/src/compiler/moduleNameResolver.ts",
+      "/workspace/orm-adapted/src/compiler/moduleSpecifiers.ts",
+      "/workspace/orm-adapted/src/compiler/parser.ts",
+      "/workspace/orm-adapted/src/compiler/path.ts",
+      "/workspace/orm-adapted/src/compiler/performance.ts",
+      "/workspace/orm-adapted/src/compiler/performanceCore.ts",
+      "/workspace/orm-adapted/src/compiler/program.ts",
+      "/workspace/orm-adapted/src/compiler/programDiagnostics.ts",
+      "/workspace/orm-adapted/src/compiler/resolutionCache.ts",
+      "/workspace/orm-adapted/src/compiler/scanner.ts",
+      "/workspace/orm-adapted/src/compiler/semver.ts",
+      "/workspace/orm-adapted/src/compiler/sourcemap.ts",
+      "/workspace/orm-adapted/src/compiler/symbolWalker.ts",
+      "/workspace/orm-adapted/src/compiler/sys.ts",
+      "/workspace/orm-adapted/src/compiler/tracing.ts",
+      "/workspace/orm-adapted/src/compiler/transformer.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/classFields.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/classThis.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/declarations.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/destructuring.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2015.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2016.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2017.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2018.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2019.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2020.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/es2021.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/esDecorators.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/esnext.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/generators.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/jsx.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/module/module.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/module/system.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/ts.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/orm-adapted/src/compiler/transformers/utilities.ts",
+      "/workspace/orm-adapted/src/compiler/tsbuild.ts",
+      "/workspace/orm-adapted/src/compiler/tsbuildPublic.ts",
+      "/workspace/orm-adapted/src/compiler/types.ts",
+      "/workspace/orm-adapted/src/compiler/utilities.ts",
+      "/workspace/orm-adapted/src/compiler/utilitiesPublic.ts",
+      "/workspace/orm-adapted/src/compiler/visitorPublic.ts",
+      "/workspace/orm-adapted/src/compiler/watch.ts",
+      "/workspace/orm-adapted/src/compiler/watchPublic.ts",
+      "/workspace/orm-adapted/src/compiler/watchUtilities.ts",
+      "/workspace/orm-adapted/src/tsc/_namespaces/ts.ts",
+      "/workspace/orm-adapted/src/tsc/tsc.ts"
+    ],
+    "status": "measurement"
+  },
+  "units": 4566,
+  "attempted": 4063,
+  "no_first_stop_units": 3186,
+  "canonical_overload_result_first_stops": 56,
+  "categories": {
+    "result": {
+      "functions": {
+        "arrayFrom": {
+          "observations": 4,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 4,
+          "handoff": 4
+        },
+        "arrayToMap": {
+          "observations": 2,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 2,
+          "handoff": 2
+        },
+        "convertOptionsFromJson": {
+          "observations": 2,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 2,
+          "handoff": 2
+        },
+        "createBuilderProgram": {
+          "observations": 9,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 9,
+          "handoff": 9
+        },
+        "filter": {
+          "observations": 19,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 19,
+          "handoff": 19
+        },
+        "getDiagnostics": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": 1
+        },
+        "getParseTreeNode": {
+          "observations": 2,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 2,
+          "handoff": 2
+        },
+        "getPathComponents": {
+          "observations": 11,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 11,
+          "handoff": null
+        },
+        "getProperties": {
+          "observations": 3,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 3,
+          "handoff": 3
+        },
+        "injectClassNamedEvaluationHelperBlockIfMissing": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": 1
+        },
+        "sameMap": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": 1
+        },
+        "transformNamedEvaluation": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": 1
+        }
+      },
+      "totals": {
+        "observations": 56,
+        "raw": 12,
+        "distinct": 12,
+        "first_stop_units": 56
+      },
+      "present_functions": [
+        "arrayFrom",
+        "arrayToMap",
+        "convertOptionsFromJson",
+        "createBuilderProgram",
+        "filter",
+        "getDiagnostics",
+        "getParseTreeNode",
+        "getPathComponents",
+        "getProperties",
+        "injectClassNamedEvaluationHelperBlockIfMissing",
+        "sameMap",
+        "transformNamedEvaluation"
+      ],
+      "listed_but_absent": [],
+      "unlisted_present": [
+        "getPathComponents"
+      ],
+      "handoff_total": 45
+    },
+    "parameter": {
+      "functions": {
+        "assertEachNode": {
+          "observations": 4,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 4,
+          "handoff": null
+        },
+        "assertNode": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": null
+        },
+        "convertOrRepopulateDiagnosticMessageChainArray": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": null
+        },
+        "getSupportedExtensionsWithJsonIfResolveJsonModule": {
+          "observations": 5,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 5,
+          "handoff": null
+        },
+        "reduceLeft": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": null
+        },
+        "visitArray": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": null
+        },
+        "visitArrayWorker": {
+          "observations": 1,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 1,
+          "handoff": null
+        },
+        "visitEachChild": {
+          "observations": 6,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 6,
+          "handoff": 6
+        },
+        "visitNode": {
+          "observations": 4,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 4,
+          "handoff": null
+        },
+        "visitNodes": {
+          "observations": 2,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 2,
+          "handoff": null
+        },
+        "visitParameterList": {
+          "observations": 3,
+          "raw": 1,
+          "distinct": 1,
+          "first_stop_units": 3,
+          "handoff": 3
+        }
+      },
+      "totals": {
+        "observations": 29,
+        "raw": 11,
+        "distinct": 11,
+        "first_stop_units": 29
+      },
+      "present_functions": [
+        "assertEachNode",
+        "assertNode",
+        "convertOrRepopulateDiagnosticMessageChainArray",
+        "getSupportedExtensionsWithJsonIfResolveJsonModule",
+        "reduceLeft",
+        "visitArray",
+        "visitArrayWorker",
+        "visitEachChild",
+        "visitNode",
+        "visitNodes",
+        "visitParameterList"
+      ],
+      "listed_but_absent": [],
+      "unlisted_present": [],
+      "handoff_total": 27
+    }
+  }
+}

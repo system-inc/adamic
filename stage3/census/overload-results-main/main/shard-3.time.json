@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/orm-build-main/entry-census-scan",
+    "/workspace/orm-adapted/src/tsc/tsc.ts",
+    "/workspace/orm-build-main/shard-3.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 121.09385887799999,
+  "user_seconds": 124.405547,
+  "system_seconds": 3.343998,
+  "peak_rss_kib": 992256
+}
