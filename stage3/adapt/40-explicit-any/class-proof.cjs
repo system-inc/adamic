@@ -13,6 +13,32 @@ function enclosing(node) {
 function declarationProjection(text, contracts) {
     const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];let aliasNeeded=false;
     function visit(n) {
+        if (className === 'brands' && (ts.isTypeAliasDeclaration(n) || ts.isInterfaceDeclaration(n))) {
+            const rule = rules.find(r => r.after && r.owner === n.name.text);
+            if (rule) {
+                const upstream = ts.createSourceFile('upstream.ts', rule.upstream, ts.ScriptTarget.Latest, true);
+                if (ts.isTypeAliasDeclaration(n)) {
+                    const original = upstream.statements[0];
+                    assert(ts.isTypeAliasDeclaration(original) && ts.isIntersectionTypeNode(original.type));
+                    assert(ts.isIntersectionTypeNode(n.type) && n.type.types.length === original.type.types.length);
+                    assert.equal(n.type.types[0].getText(src), original.type.types[0].getText(upstream));
+                }
+                const replacement = ts.createSourceFile('replacement.ts', rule.after, ts.ScriptTarget.Latest, true);
+                assert.equal(replacement.parseDiagnostics.length, 0);
+                assert.equal(replacement.statements.length, 1);
+                const declaration = replacement.statements[0];
+                assert(ts.isInterfaceDeclaration(declaration) && declaration.name.text === rule.owner);
+                // Match the emitter's enclosing declaration modifiers and indentation.
+                const projected = ts.factory.updateInterfaceDeclaration(declaration, n.modifiers,
+                    declaration.name, declaration.typeParameters, declaration.heritageClauses, declaration.members);
+                const indent = text.slice(text.lastIndexOf('\n', n.getStart(src) - 1) + 1, n.getStart(src));
+                assert(/^\s*$/.test(indent));
+                const printed = ts.createPrinter({newLine: ts.NewLineKind.LineFeed})
+                    .printNode(ts.EmitHint.Unspecified, projected, replacement).replace(/\n/g, '\n' + indent);
+                edits.push([n.getStart(src), n.end, printed]);
+                return; // The complete rule-owned declaration includes its marker annotation.
+            }
+        }
         if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end,className==='brands'?'undefined':'Readonly<Record<string, string | number>>']);
         if(className==='diagnostic'&&ts.isParameter(n)&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) {
             if(n.type?.kind===ts.SyntaxKind.AnyKeyword)edits.push([n.type.getStart(src),n.type.end,'string | number']);
@@ -42,6 +68,11 @@ function expectedSource(text,file) {
             assert.equal(lines[r.line-1].replace(/\r$/,''),r.originalLine,'independent enum owner reconstruction');
             const at=lines[r.line-1].indexOf('any',r.column-1);assert.equal(at,r.column-1);
             lines[r.line-1]=lines[r.line-1].slice(0,at)+r.replacement+lines[r.line-1].slice(at+3);continue;
+        }
+        if (r.after) {
+            assert.equal(lines[r.line-1].replace(/\r$/, ''), r.upstream, 'independent whole brand owner reconstruction');
+            lines[r.line-1] = r.after + (lines[r.line-1].endsWith('\r') ? '\r' : '');
+            continue;
         }
         const key=r.key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         const expression=new RegExp('('+ (r.key.startsWith(' ')?'"'+key+'"':key) +'\\??:\\s*)any\\b','g');

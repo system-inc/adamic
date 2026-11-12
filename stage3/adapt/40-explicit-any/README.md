@@ -1,5 +1,48 @@
 # Explicit any owner adaptation (partial)
 
+Rule 103 also owns PathPathComponents's declaration shape (optimizer task
+z5d0jye). The brand planner accepts exactly four reviewed declarations: the
+upstream any intersection, the undefined intersection, the previous non-generic
+interface, and this final generic interface:
+`export interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined; }`.
+Every other spelling is refused; replay of the final interface makes zero edits.
+The extension carries its base's own type argument, as SortedArray<T> does,
+so Adamic can retain a phantom array extension as its base. All 13 uses remain
+bare and obtain Path from the default. The original `__pathComponensBrand`
+spelling is intentional. No value code or consumer declaration changes.
+
+PathPathComponents is internal: it is absent from TypeScript 6.0.3's
+`tests/baselines/reference/api/typescript.d.ts` and from
+`stage3/lane/sanctioned-api.json`. This amendment adds no API sanction row. However, sanctioned-api.json pins
+class-rules.json as a proof input: regenerate its proof hash and shard-plan.json’s
+runtime hash whenever that rule file changes. The sanction count remains 267, so
+test_check.py’s count stays unchanged. No other adaptation pins the declaration.
+
+Run `NODE_PATH=stage3/api/node_modules node stage3/adapt/40-explicit-any/path-components-check.cjs TREE`
+after full apply. This read-only check rejects a restoring mutant containing
+the previous non-generic interface. `classes.cjs.plan` handles the four states
+through the existing brand-edit plan. `class-proof.cjs` independently reconstructs
+the declaration from rule.after and rule.owner, retaining the emitted scope's
+modifiers and indentation; its projection contains no hardcoded owner or base.
+
+The fresh before/after proofs, complete use inventory and path.ts-only full
+latent census are recorded on `typescript/path-components-evidence`, outside
+stage3/adapt, in `stage3/evidence/path-components-3`.
+
+Both fresh full applies pass at fb1c8d3b72de2686c486cf97685079589308dafd.
+Final main base 0c7052759671347775615af5b4a8028dd8688af8 changes only an excluded
+Go test: every adaptation and emission input is byte-identical. The compiler
+builds, type checks and censuses are refreshed on that final base; see the
+separate tip-equivalence evidence. The generic post-40 replay changes zero of 747 files; restoring the
+non-generic interface makes the check exit 1. All ten JavaScript outputs and
+both public d.ts files are byte-identical. Adamic types reports zero diagnostics
+on all 79 roots, and stock tsc under Adamic's options reports zero on both trees.
+All 13 uses remain bare, including ten Readonly references and zero casts.
+The path.ts-only full census retains 20 NotYet, 6 Refused and 32 Boundary sites.
+Eleven finding identities at ten locations change only the displayed type from
+PathPathComponents to PathPathComponents<Path>; every site is listed in the
+separate evidence. The getPathComponents overload-result refusal remains.
+
 The ResolvedConfigFileName amendment (#666zzs5) is a separate pinned never-to-undefined
 phantom-brand class in this adaptation, with its own per-adaptation API sanction.
 See [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md) for the proof and validation.
