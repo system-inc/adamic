@@ -262,12 +262,22 @@ var functionReferenceFields = map[string]int{
 // of the two, with no fixed point to reach.
 func runningFunctions(program *ir.Program) []bool {
 	running := make([]bool, len(program.Functions))
+	mark := func(held int64, offset int) {
+		if function := held - int64(offset); function >= 0 && function < int64(len(running)) {
+			running[function] = true
+		}
+	}
+	// record reads an index of any integer width, signed or not, so a field whose type is narrower
+	// than int, or a named integer type, still names its function.
 	var record func(reflect.Value, int)
 	record = func(value reflect.Value, offset int) {
 		switch value.Kind() {
-		case reflect.Int:
-			if function := int(value.Int()) - offset; function >= 0 && function < len(running) {
-				running[function] = true
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			mark(value.Int(), offset)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			// Past len(running)+offset it names no function, and it could overflow int64.
+			if held := value.Uint(); held <= uint64(len(running)+offset) {
+				mark(int64(held), offset)
 			}
 		case reflect.Slice, reflect.Array:
 			for i := 0; i < value.Len(); i++ {

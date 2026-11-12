@@ -170,8 +170,9 @@ File: internal/lower/view_flow.go, functionReferenceFields. Delete this line:
 ```
 
 Expected: TestReachRunningWriterKeepsItsWrite/exported_from_the_entry_module is known, the first literal alone, though
-outside code can call the exported writer with anything. The field guard goes red as in 3a, and
-TestFunctionFieldTablesAgree too, which lists Export.Function as outside localFields and so counted.
+outside code can call the exported writer with anything. The field guard goes red too, "IR field Export.Function holds
+an integer, in Export, which only this table covers", and so does TestFunctionFieldTablesAgree, which lists
+Export.Function as outside localFields and so counted.
 
 ## 3c. A function value not counted as naming its function
 
@@ -185,8 +186,9 @@ Expected: TestReachRunningWriterKeepsItsWrite/made_a_function_value is known, th
 by a let, so no Local.ConstantClosure names it, is taken for a function that never runs. The field guard and
 TestFunctionFieldTablesAgree go red as in 3a.
 
-Every other entry of functionReferenceFields, deleted, has the field guard as its witness: each one's field name
-matches the guard's pattern. Program.AsyncEntry has no other: a program with top-level await moves Main into the
+Every other entry of functionReferenceFields, deleted, has the field guard as its witness: a field statements and
+expressions hold matches the guard's name pattern, and every integer field of the other structs a program holds is
+asked about whatever its name. Program.AsyncEntry has no other: a program with top-level await moves Main into the
 function it names, so dropping it would drop the whole module's writes, and no pin here lowers an async module.
 
 ## 4. A non-null assertion's panic followed as a fallback
@@ -287,3 +289,27 @@ New:
 Expected: TestReachWriterNamedOnlyByAMethod reaches only current's own literal, the method's writer taken for one that
 never runs. TestFunctionFieldTablesAgree goes red too: localFields says Method.Function is a function's index, offset
 zero.
+
+## 10. An integer field outside localFields' reach left unclassified
+
+File: internal/ir/ir.go, Class.
+
+Old:
+
+```go
+	StaticParent int   // one-based hidden parent slot, zero for a root
+```
+
+New:
+
+```go
+	StaticParent int   // one-based hidden parent slot, zero for a root
+	StaticInit   int
+```
+
+StaticInit is named outside the old name pattern, so a guard that only asked about function-looking names would stay
+green, and no statement or expression holds a Class, so localFields doesn't ask either.
+
+Expected: TestFunctionReferenceFieldsAreEveryFunctionField goes red, "IR field Class.StaticInit holds an integer, in
+Class, which only this table covers". No other test in reach_roads_test.go reads it: runningFunctions reads only
+the fields functionReferenceFields names.
