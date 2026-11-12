@@ -1841,5 +1841,8 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.voidDiscards(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkInspectorDoomedContracts(); err != nil {
+		return nil, err
+	}
 	return lowering, nil
 }

@@ -239,6 +239,14 @@ func TestRuledBackendDivergencesSayTheMeasuredErrors(t *testing.T) {
 	}
 	rows := map[string]int{}
 	for _, row := range ruledBackendDivergences {
+		if row.fixture == "internal/oracle/testdata/node_inspector_doomed.a" {
+			native := run{stdout: []byte(inspectorUnavailableCode + "\n")}
+			node := run{stdout: []byte("none\n")}
+			if row.name != "node-without-inspector" || row.node == nil || disagreement(node, *row.node) != "" || disagreement(native, row.native) != "" || disagreement(native, row.javascript) != "" {
+				t.Errorf("doomed inspector row differs from its measured code-only outcomes")
+			}
+			continue
+		}
 		family, named := families[row.name]
 		if !named {
 			continue

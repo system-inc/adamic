@@ -635,6 +635,10 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 		return err
 	}
 	name := l.nodeLibraryMember(node)
+	if root, _ := l.inspectorDoomedUse(node); root != nil {
+		// The scan also visits deferred bodies. Actual lowering records this use.
+		return nil
+	}
 	if name != "" && !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(node)) {
 		return l.notYet(node, name)
 	}

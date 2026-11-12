@@ -265,6 +265,7 @@ func (l *lowering) mayHoldNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	if binding := &l.optionalReceiverBinding; binding.receiver == node && binding.call == l.optionalReceiverCall {
 		binding.uses++
 		return binding.read, nil
@@ -578,6 +579,10 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
+	if value, handled, err := l.inspectorDoomedValue(node); handled {
+		return value, err
+	}
 	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
 		value, err := l.enumNeverValue(node)
 		if err != nil {
@@ -1396,6 +1401,7 @@ func boxedSlot(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	l.noteOverloadCall(node)
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
@@ -1701,6 +1707,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	l.noteOverloadCall(node)
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {

@@ -134,6 +134,9 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	if err := l.nodeLibraryRefusal(node); err != nil {
 		return err
 	}
+	if root, _ := l.inspectorDoomedUse(node); root != nil {
+		return nil // Syntax only: actual lowering records the guarded obligation.
+	}
 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
 		return err
 	}
