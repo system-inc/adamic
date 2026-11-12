@@ -29,8 +29,10 @@ const plans = ['core.ts', 'performanceCore.ts', 'tracing.ts'].map(name => {
         if (!after.includes('declare const require:')) after += '\ndeclare const require: (specifier: "perf_hooks") => any;\n';
     }
     if (name === 'tracing.ts') {
-        after = once(after, 'let fs: typeof import("fs");', 'let fs: { existsSync(path: string): boolean; mkdirSync(path: string, options: { recursive: boolean }): string | undefined; openSync(path: string, flags: string): number; writeSync(fd: number, data: string): number; closeSync(fd: number): void; writeFileSync(path: string, data: string): void; };');
-        if (!after.includes('declare const require:')) after += '\ndeclare const require: (specifier: "fs") => any;\ndeclare const process: { readonly pid: number };\n';
+        assert(after.includes('import * as fs from "node:fs";'), 'tracing builtin import drift');
+        assert(!after.includes('declare const require:'), 'tracing lazy require declaration restored');
+        if (!after.includes('declare const process:')) after += '\ndeclare const process: { readonly pid: number };\n';
+        assert(after.includes('declare const process: { readonly pid: number };'), 'tracing process declaration drift');
     }
     unchanged(before, after);
     return {file, before, after};

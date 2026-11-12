@@ -35,7 +35,9 @@ const originalRead = emit(func(originalSys, "readFile").getText(originalSys));
 const adaptedRead = emit(func(adaptedSys, "readFile").getText(adaptedSys));
 assert.equal(adaptedRead, originalRead, "byte assertions must erase identically");
 const tracingOriginal = one(func(file(before, "tracing.ts"), "startTracing"), ts.isCatchClause);
-const tracingAdapted = one(func(file(after, "tracing.ts"), "startTracing"), ts.isCatchClause);
+assert.equal(nodes(ts, func(file(after, "tracing.ts"), "startTracing"), ts.isTryStatement).length, 0, "empty loader try must be gone");
+const lazy = parse("tracing.ts", require("./meta-spread-pins.json").lazyAfter);
+const tracingAdapted = one(func(lazy, "startTracing"), ts.isCatchClause);
 function traceCatch(node, helperText) {
     return vm.runInContext(emit(`${helperText}\nfunction run(e: unknown) ${node.block.getText()}\nrun;`), vm.createContext({ Error }));
 }
