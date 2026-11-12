@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/tmp/tracing-8777346a/overlay-final/overlay.json",
+    "-o",
+    "/tmp/tracing-8777346a/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 241.01170992851257
+}

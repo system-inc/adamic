@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "exec gofmt -w /tmp/tracing-8777346a/overlay-final/*.go"
+  ],
+  "exit_code": 0,
+  "seconds": 0.06617879867553711
+}

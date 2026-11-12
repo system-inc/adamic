@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/full_audit.py",
+    "/tmp/tracing-8777346a/latent",
+    "/tmp/tracing-8777346a/full-audit-evidence"
+  ],
+  "exit_code": 1,
+  "seconds": 0.3669724464416504
+}

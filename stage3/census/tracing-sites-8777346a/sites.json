@@ -1,0 +1,456 @@
+{
+  "provenance": {
+    "base": "8777346abe4d888c0182e301b1ffec76bd45ae04",
+    "source_sha256": "e6d9a83d1df04c864a1b1c311a3270b538e13e2ba4cf228362cf993bf2034787",
+    "source_bytes": 15958,
+    "source_path": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts",
+    "environment": {
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TIMES": "/tmp/tracing-8777346a/unit-times.jsonl"
+    },
+    "other_LATENT_variables": [],
+    "child_result": {
+      "command": [
+        "/tmp/tracing-8777346a/latent",
+        "/tmp/tracing-8777346a/adapted/src/compiler",
+        "/tmp/tracing-8777346a/raw.jsonl"
+      ],
+      "exit_code": 0,
+      "seconds": 42.68802285194397
+    },
+    "checker_diagnostics": 0,
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "deduplication": [
+      "kind",
+      "where",
+      "reason",
+      "text"
+    ],
+    "boundary_markers_excluded": 21,
+    "dependency_findings_excluded": 7
+  },
+  "distinct_site_count": 16,
+  "sites": [
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 66,
+      "column": 22,
+      "location": "66:22",
+      "kind": "NotYet",
+      "reason": "a call returning any",
+      "source_expression": "require(\"fs\")",
+      "source_line": "                fs = require(\"fs\");",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:61:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:66:22: stage 0 can't lower a call returning any yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 98,
+      "column": 19,
+      "location": "98:19",
+      "kind": "NotYet",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "source_expression": "tracingEnabled",
+      "source_line": "        tracing = tracingEnabled; // only when traceFd is properly set",
+      "phases": [
+        "refusal_scan"
+      ],
+      "occurrences": [
+        {
+          "phase": "refusal_scan",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:61:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:98:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 98,
+      "column": 19,
+      "location": "98:19",
+      "kind": "NotYet",
+      "reason": "reading tracingEnabled",
+      "source_expression": "tracingEnabled",
+      "source_line": "        tracing = tracingEnabled; // only when traceFd is properly set",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:61:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:98:19: stage 0 can't lower reading tracingEnabled yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 166,
+      "column": 9,
+      "location": "166:9",
+      "kind": "NotYet",
+      "reason": "assigning a field of a value",
+      "source_expression": "eventStack.length--",
+      "source_line": "        eventStack.length--;",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:163:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:166:9: stage 0 can't lower assigning a field of a value yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 173,
+      "column": 9,
+      "location": "173:9",
+      "kind": "NotYet",
+      "reason": "assigning a field of a value",
+      "source_expression": "eventStack.length = 0",
+      "source_line": "        eventStack.length = 0;",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:168:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:173:9: stage 0 can't lower assigning a field of a value yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 185,
+      "column": 44,
+      "location": "185:44",
+      "kind": "NotYet",
+      "reason": "a spread into record storage from a fixed object",
+      "source_expression": "...args",
+      "source_line": "            writeEvent(\"X\", phase, name, { ...args, results }, `\"dur\":${endTime - time}`, time);",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:177:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:185:44: stage 0 can't lower a spread into record storage from a fixed object yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 196,
+      "column": 67,
+      "location": "196:67",
+      "kind": "NotYet",
+      "reason": "JSON.stringify recursive array types",
+      "source_expression": "args",
+      "source_line": "        if (args) fs.writeSync(traceFd, `,\"args\":${JSON.stringify(args)}`);",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:189:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:196:67: stage 0 can't lower JSON.stringify recursive array types yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 252,
+      "column": 46,
+      "location": "252:46",
+      "kind": "NotYet",
+      "reason": "reading indexedAccessType",
+      "source_expression": "indexedAccessType",
+      "source_line": "                    indexedAccessObjectType: indexedAccessType.objectType?.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:252:46: stage 0 can't lower reading indexedAccessType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 261,
+      "column": 39,
+      "location": "261:39",
+      "kind": "NotYet",
+      "reason": "reading referenceType",
+      "source_expression": "referenceType",
+      "source_line": "                    instantiatedType: referenceType.target?.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:261:39: stage 0 can't lower reading referenceType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 271,
+      "column": 43,
+      "location": "271:43",
+      "kind": "NotYet",
+      "reason": "reading conditionalType",
+      "source_expression": "conditionalType",
+      "source_line": "                    conditionalCheckType: conditionalType.checkType?.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:271:43: stage 0 can't lower reading conditionalType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 282,
+      "column": 43,
+      "location": "282:43",
+      "kind": "NotYet",
+      "reason": "reading substitutionType",
+      "source_expression": "substitutionType",
+      "source_line": "                    substitutionBaseType: substitutionType.baseType?.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:282:43: stage 0 can't lower reading substitutionType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 291,
+      "column": 46,
+      "location": "291:46",
+      "kind": "NotYet",
+      "reason": "reading reverseMappedType",
+      "source_expression": "reverseMappedType",
+      "source_line": "                    reverseMappedSourceType: reverseMappedType.source?.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:291:46: stage 0 can't lower reading reverseMappedType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 301,
+      "column": 47,
+      "location": "301:47",
+      "kind": "NotYet",
+      "reason": "reading evolvingArrayType",
+      "source_expression": "evolvingArrayType",
+      "source_line": "                    evolvingArrayElementType: evolvingArrayType.elementType.id,",
+      "phases": [
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:301:47: stage 0 can't lower reading evolvingArrayType yet"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 340,
+      "column": 14,
+      "location": "340:14",
+      "kind": "Refused",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "source_expression": "fs as { writeSync(fd: number, data: string | undefined): number }",
+      "source_line": "            (fs as { writeSync(fd: number, data: string | undefined): number }).writeSync(typesFd, JSON.stringify(descriptor));",
+      "phases": [
+        "refusal_scan",
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "refusal_scan",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:220:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:340:14: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 359,
+      "column": 10,
+      "location": "359:10",
+      "kind": "Refused",
+      "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "source_expression": "fs as { writeFileSync(path: string, data: string | undefined): void }",
+      "source_line": "        (fs as { writeFileSync(path: string, data: string | undefined): void }).writeFileSync(legendPath, JSON.stringify(legend));",
+      "phases": [
+        "refusal_scan",
+        "lowering"
+      ],
+      "occurrences": [
+        {
+          "phase": "refusal_scan",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:354:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        },
+        {
+          "phase": "lowering",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:354:5",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:359:10: Adamic 0.1 refuses a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 380,
+      "column": 1,
+      "location": "380:1",
+      "kind": "Refused",
+      "reason": "an ambient value declaration",
+      "source_expression": "declare const require: (specifier: \"fs\") => any;",
+      "source_line": "declare const require: (specifier: \"fs\") => any;",
+      "phases": [
+        "refusal_scan"
+      ],
+      "occurrences": [
+        {
+          "phase": "refusal_scan",
+          "unit": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:380:1",
+          "text": "/tmp/tracing-8777346a/adapted/src/compiler/tracing.ts:380:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
+        }
+      ]
+    }
+  ],
+  "requested_checks": [
+    {
+      "line": 311,
+      "column": 34,
+      "source_expression": "recursionIdentityMap.get(recursionIdentity)",
+      "status": "absent from the stream",
+      "findings": []
+    },
+    {
+      "line": 313,
+      "column": 38,
+      "source_expression": "recursionIdentityMap.size",
+      "status": "absent from the stream",
+      "findings": []
+    },
+    {
+      "line": 314,
+      "column": 21,
+      "source_expression": "recursionIdentityMap.set(recursionIdentity, recursionToken)",
+      "status": "absent from the stream",
+      "findings": []
+    },
+    {
+      "line": 340,
+      "column": 14,
+      "source_expression": "fs as { writeSync(fd: number, data: string | undefined): number }",
+      "status": "reported",
+      "findings": [
+        {
+          "kind": "Refused",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "phases": [
+            "refusal_scan",
+            "lowering"
+          ],
+          "location": "340:14"
+        }
+      ]
+    },
+    {
+      "line": 359,
+      "column": 10,
+      "source_expression": "fs as { writeFileSync(path: string, data: string | undefined): void }",
+      "status": "reported",
+      "findings": [
+        {
+          "kind": "Refused",
+          "reason": "a function taking string seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "phases": [
+            "refusal_scan",
+            "lowering"
+          ],
+          "location": "359:10"
+        }
+      ]
+    },
+    {
+      "line": 380,
+      "column": 1,
+      "source_expression": "declare const require: (specifier: \"fs\") => any;",
+      "status": "reported",
+      "findings": [
+        {
+          "kind": "Refused",
+          "reason": "an ambient value declaration",
+          "phases": [
+            "refusal_scan"
+          ],
+          "location": "380:1"
+        }
+      ]
+    },
+    {
+      "line": 381,
+      "column": 1,
+      "source_expression": "declare const process: { readonly pid: number };",
+      "status": "absent from the stream",
+      "findings": []
+    }
+  ]
+}
