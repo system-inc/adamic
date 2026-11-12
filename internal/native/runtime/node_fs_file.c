@@ -131,7 +131,12 @@ static void node_system_error(int error, const char *operation, const char *path
         if (number) { thrown->slots[index].number = -(double)error; }
         else if (encoded) { thrown->slots[index].reference = node_system_error_path(value, given); }
         else { thrown->slots[index].reference = text(value); }
+        adamic_object_field_types(thrown)[index] = number ? adamic_ir_Number : adamic_ir_String;
+        // UVException omits a falsy watch path; filename is still its own string.
+        if (strcmp(name, "path") == 0 && strcmp(operation, "watch") == 0 && given != NULL && given->length == 0)
+            adamic_object_initialized(thrown)[index] = 0;
     }
+    adamic_error_initialize(thrown);
     free(standard);
     adamic_thrown = thrown;
 }
@@ -515,6 +520,9 @@ static void realpath_system_error(const adamic_string *path, char *name, int err
     static const bool references[] = {true, true, true, true, true, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
     static const adamic_shape shape = {6, names, references, &adamic_error_methods, kinds};
+    static const char *const shape_json_keys[] = {"errno", "code", "syscall", "path"};
+    static adamic_error_json shape_json = {&shape, shape_json_keys, 4, NULL, false};
+    adamic_register_error_json(&shape_json);
     // Node records the encoded path, including lone-surrogate replacement.
     node_system_error(error, operation, name, NULL, NULL, path, &shape);
     free(name);
