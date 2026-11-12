@@ -1,24 +1,43 @@
 package lower
 
 import (
+	"go/ast"
+	"go/parser"
+	"go/token"
+	"go/types"
+	"path/filepath"
+	"regexp"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// ReachingAllocations' roads through optional arguments and absent values (reach_roads.mutants.md
-// names the one-line change that turns each back): an omitted argument to an optional or defaulted
-// parameter is undefined, undefined and null add no site, and a non-null assertion hands on its value.
-// Each pin lowers a small TypeScript program and asks the flow graph which object literals a
-// module-level variable can hold, by the literal's tag. tsc's ts.sys (src/compiler/sys.ts:1462), a
-// let declared undefined and filled from getNodeSystem's literal, then read through `sys!`, is the
-// shape they're for (#p2n17c4).
+// ReachingAllocations' roads through optional arguments, absent values and functions that never run
+// (reach_roads.mutants.md names the one-line change that turns each back): an omitted argument to an
+// optional or defaulted parameter is undefined, undefined and null add no site, a function that never
+// runs makes no writes, and a non-null assertion hands on its value. Each pin lowers a small
+// TypeScript program and asks the flow graph which object literals a module-level variable can hold,
+// by the literal's tag. tsc's ts.sys (src/compiler/sys.ts:1462), a let declared undefined and filled
+// from getNodeSystem's literal, then read through `sys!`, is the shape they're for (#p2n17c4), and
+// the ts.sys pins near the end hold it and its twin.
 
 // reachProgram lowers source as main.ts and numbers its allocation sites.
 func reachProgram(t *testing.T, source string) *ir.Program {
 	t.Helper()
 	program, err := lowerSourceAs(t, source, ".ts")
+	if err != nil {
+		t.Fatalf("lowering: %v", err)
+	}
+	assignAllocationSites(program)
+	return program
+}
+
+// reachModules lowers several modules from main.ts and numbers their allocation sites.
+func reachModules(t *testing.T, modules map[string]string) *ir.Program {
+	t.Helper()
+	program, err := lowerModules(t, modules)
 	if err != nil {
 		t.Fatalf("lowering: %v", err)
 	}
@@ -273,4 +292,342 @@ const named = made as Named;
 console.log(named.tag);
 `)
 	wantSites(t, reachOfGlobal(t, program, "named"), literalSite(t, program, "labeled"))
+}
+
+// Road 3: a function nothing calls, exports or makes a value of never runs, so its write is no write.
+// Mutant 3.
+func TestReachUncalledWriterMakesNoWrite(t *testing.T) {
+	t.Parallel()
+	program := reachProgram(t, reachBox+`let current: Box = { tag: 'first' };
+function replace(next: Box): void {
+	current = next;
+}
+console.log(current.tag);
+`)
+	wantSites(t, reachOfGlobal(t, program, "current"), literalSite(t, program, "first"))
+}
+
+// Road 3 reads a field that holds a function's index plus one as that, and one that holds the index
+// as that. Each pin is a writer into a module-level let that one field alone names, and wants the
+// literal it writes reached. Lowering itself never leaves a const arrow or a nested declaration named
+// only by its local's one-based field (its binding is declared with a MakeClosure too), nor a method
+// only by its literal's table (a class's Methods name it as well), so each program is built as IR.
+// writerProgram is current, declared with literal -1, and function 1, which writes literal -2 into
+// it; main is what Main does after the declaration, and locals the locals past current. Function 0
+// does nothing and is never the writer: a field read as an index at its zero value names function 0,
+// as every local's NestedFunction would under mutant 8, current's included, so a writer at 0 would
+// be named by fields that don't name it.
+func writerProgram(locals []ir.Local, main ...ir.Statement) *ir.Program {
+	return &ir.Program{
+		Locals: append([]ir.Local{{Name: "current", Type: ir.Object, Global: true, Function: -1}}, locals...),
+		Functions: []ir.Function{
+			{Name: "idle"},
+			{
+				Name:    "replace",
+				Closure: true,
+				Body:    []ir.Statement{ir.Assign{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-2}}}},
+			},
+		},
+		Main: append([]ir.Statement{ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}}}}, main...),
+	}
+}
+
+// A writer named only by its local's NestedFunction, one-based, and called through the local, as a
+// nested declaration is. Mutant 8.
+func TestReachWriterNamedOnlyByAOneBasedField(t *testing.T) {
+	t.Parallel()
+	program := writerProgram(
+		[]ir.Local{{Name: "replace", Type: ir.Closure, Global: true, Function: -1, NestedFunction: 2}},
+		ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 1, Of: ir.Closure}}},
+	)
+	wantSites(t, newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -2, -1)
+}
+
+// A writer named only by an object literal's method table, Method.Function, and called through the
+// object, as a call through an interface finds a class's method. Mutant 9.
+func TestReachWriterNamedOnlyByAMethod(t *testing.T) {
+	t.Parallel()
+	program := writerProgram(
+		[]ir.Local{{Name: "holder", Type: ir.Object, Global: true, Function: -1}},
+		ir.Declare{Local: 1, Value: ir.ObjectLiteral{GraphTypes: []int{-3}, Methods: []ir.Method{{Name: "replace", Function: 1}}}},
+		ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: ir.Read{Local: 1, Of: ir.Object}, Name: "replace", Method: true, Of: ir.Closure}}},
+	)
+	wantSites(t, newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object}), -2, -1)
+}
+
+// Road 3's negatives: a writer that's called keeps its write and what it's passed; one exported from
+// the entry module can be called by outside code with anything, and one made a function value can be
+// called through it with anything, so each keeps its write and the parameter it writes is unknown.
+// The function value is held by a let, so MakeClosure is the only field that names it (a const
+// would name it by Local.ConstantClosure too). Mutants 3a, 3b and 3c.
+func TestReachRunningWriterKeepsItsWrite(t *testing.T) {
+	t.Parallel()
+	t.Run("called", func(t *testing.T) {
+		t.Parallel()
+		program := reachProgram(t, reachBox+`let current: Box = { tag: 'first' };
+function replace(next: Box): void {
+	current = next;
+}
+replace({ tag: 'second' });
+console.log(current.tag);
+`)
+		wantSites(t, reachOfGlobal(t, program, "current"), literalSite(t, program, "first"), literalSite(t, program, "second"))
+	})
+	t.Run("exported from the entry module", func(t *testing.T) {
+		t.Parallel()
+		program := reachProgram(t, reachBox+`let current: Box = { tag: 'first' };
+export function replace(next: Box): void {
+	current = next;
+}
+console.log(current.tag);
+`)
+		wantUnknown(t, reachOfGlobal(t, program, "current"))
+	})
+	t.Run("made a function value", func(t *testing.T) {
+		t.Parallel()
+		program := reachProgram(t, reachBox+`let current: Box = { tag: 'first' };
+let replace = (next: Box): void => {
+	current = next;
+};
+console.log(current.tag);
+`)
+		wantUnknown(t, reachOfGlobal(t, program, "current"), "parameter may receive untracked or omitted arguments")
+	})
+}
+
+// ts.sys, sys.ts:1462: a module's exported let, initialized by an arrow called where it's written,
+// whose inner let is undefined until a call fills it with a const object literal, returned with !.
+// setSys, exported from a module that isn't the entry and called by nothing, writes it too. The read
+// is exactly the literal. Mutants 2, 3 and 4 each turn it Unknown.
+const reachSystem = `export interface System {
+	tag: string;
+}
+
+function isNodeLikeSystem(): boolean {
+	return true;
+}
+
+function getNodeSystem(): System {
+	const nodeSystem: System = { tag: 'node' };
+	return nodeSystem;
+}
+
+export let sys: System = (() => {
+	let sys: System | undefined;
+	if (isNodeLikeSystem()) {
+		sys = getNodeSystem();
+	}
+	return sys!;
+})();
+
+export function setSys(s: System): void {
+	sys = s;
+}
+`
+
+// reachOfTagRead is what the flow graph says the object Main's one read of a tag field reads from can
+// be, asked of the expression lowering made for that object, as a consumer would ask it.
+func reachOfTagRead(t *testing.T, program *ir.Program) ir.AllocationSet {
+	t.Helper()
+	objects := []ir.Expression{}
+	walk(program.Main, func(node any) bool {
+		if property, isProperty := node.(ir.Property); isProperty && property.Name == "tag" {
+			objects = append(objects, property.Object)
+		}
+		return true
+	})
+	if len(objects) != 1 {
+		t.Fatalf("Main reads a tag field %d times, want once", len(objects))
+	}
+	return newAllocationFlowGraph(program).ReachingAllocations(objects[0])
+}
+
+// wantKnownClosureCalls fails unless Main calls a function value and every such call's targets are
+// known: the arrow sys's initializer calls where it's written is one, and its result is demanded only
+// if ClosureTargets names it.
+func wantKnownClosureCalls(t *testing.T, program *ir.Program) {
+	t.Helper()
+	calls := 0
+	walk(program.Main, func(node any) bool {
+		if call, isCall := node.(ir.CallClosure); isCall {
+			calls++
+			if program.ClosureTargets(call).Unknown {
+				t.Errorf("a call through a function value in Main has Unknown targets: %#v", call.Closure)
+			}
+		}
+		return true
+	})
+	if calls == 0 {
+		t.Errorf("Main calls no function value: the arrow called where it's written lowered some other way")
+	}
+}
+
+func TestReachSystemIsItsLiteral(t *testing.T) {
+	t.Parallel()
+	program := reachModules(t, map[string]string{
+		"sys.ts":  reachSystem,
+		"main.ts": "import { sys } from './sys';\nconsole.log(sys.tag);\n",
+	})
+	wantKnownClosureCalls(t, program)
+	wantSites(t, reachOfGlobal(t, program, "sys"), literalSite(t, program, "node"))
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"))
+}
+
+// tsc reads it as ts.sys, through a namespace import of a barrel that re-exports sys.ts with export *
+// (src/compiler/_namespaces/ts.ts). That read is the module's global, not a field of a namespace
+// object, so it's no projection, which a program with any call through a function value would leave
+// Unknown (shape_flow.go's projectedSources).
+func TestReachSystemThroughANamespaceBarrelIsItsLiteral(t *testing.T) {
+	t.Parallel()
+	program := reachModules(t, map[string]string{
+		"sys.ts":  reachSystem,
+		"ts.ts":   "export * from './sys';\n",
+		"main.ts": "import * as ts from './ts';\nconsole.log(ts.sys.tag);\n",
+	})
+	wantKnownClosureCalls(t, program)
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"))
+}
+
+// Its twin: setSys called once with another literal is a write that runs, so the read is both.
+func TestReachSystemSetOnceIsBothLiterals(t *testing.T) {
+	t.Parallel()
+	program := reachModules(t, map[string]string{
+		"sys.ts":  reachSystem,
+		"main.ts": "import { setSys, sys } from './sys';\nsetSys({ tag: 'other' });\nconsole.log(sys.tag);\n",
+	})
+	wantSites(t, reachOfGlobal(t, program, "sys"), literalSite(t, program, "node"), literalSite(t, program, "other"))
+	wantSites(t, reachOfTagRead(t, program), literalSite(t, program, "node"), literalSite(t, program, "other"))
+}
+
+// functionReferenceFields must name every IR field that can hold a function, or a function some node
+// names would be taken for one that never runs and its writes dropped. Every field whose name says it
+// may hold one, of an integer type, a slice of one or a map keyed by one, is in that table or in the
+// list here of fields that don't, each with why.
+func TestFunctionReferenceFieldsAreEveryFunctionField(t *testing.T) {
+	t.Parallel()
+	notFunctions := map[string]string{
+		"Local.Function":              "the function that declares the local, which says nothing about whether it runs",
+		"CallClosure.FunctionType":    "a checker type ID",
+		"Program.FunctionTypeTargets": "every function a checker function type could be by assignability alone; a function is a value only by a counted node",
+		"Class.StaticParent":          "a one-based hidden parent slot of a class's static side",
+		"FunctionTargets.Functions":   "ClosureTargets' answer, which no program holds",
+	}
+	named := regexp.MustCompile(`Function|Direct|Comparator|Factory|Constructor|Method|Getter|Setter|Entry|Parent|Closure|Thunk|Target|Forward`)
+	integer := regexp.MustCompile(`\bint\b`)
+	// Reads: internal/ir/*.go
+	files, err := filepath.Glob("../ir/*.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := map[string]bool{}
+	for _, path := range files {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		ast.Inspect(file, func(node ast.Node) bool {
+			declaration, isType := node.(*ast.TypeSpec)
+			if !isType {
+				return true
+			}
+			structure, isStruct := declaration.Type.(*ast.StructType)
+			if !isStruct {
+				return true
+			}
+			for _, field := range structure.Fields.List {
+				for _, name := range field.Names {
+					key := declaration.Name.Name + "." + name.Name
+					found[key] = true
+					if !name.IsExported() || !named.MatchString(name.Name) || !integer.MatchString(types.ExprString(field.Type)) {
+						continue
+					}
+					if _, counted := functionReferenceFields[key]; !counted && notFunctions[key] == "" {
+						t.Errorf("IR field %s may hold a function: count it in functionReferenceFields, or say here why it doesn't", key)
+					}
+				}
+			}
+			return true
+		})
+	}
+	for key := range functionReferenceFields {
+		if !found[key] {
+			t.Errorf("functionReferenceFields names %s, which no IR struct has", key)
+		}
+	}
+	for key := range notFunctions {
+		if !found[key] {
+			t.Errorf("the list of fields that hold no function names %s, which no IR struct has", key)
+		}
+	}
+}
+
+// localFieldFunction is what local_uses.go's localFields says of a field it classes as naming a
+// function: true, with its offset, one where its why says the index is plus one and zero otherwise.
+func localFieldFunction(why string) (int, bool) {
+	if !strings.Contains(why, "function") || !strings.Contains(why, "index") {
+		return 0, false
+	}
+	if strings.Contains(why, "plus one") {
+		return 1, true
+	}
+	return 0, true
+}
+
+// functionReferenceFields and local_uses.go's localFields each class IR fields that hold a function's
+// index, the second by its why. On every field both name, they agree, offset included; each field one
+// names as a function, the other names too, unless it's listed here with why the other doesn't.
+// localFields covers the fields of statements and expressions and the structs they hold, so the
+// fields of a program, class, local, function, export or view contract are functionReferenceFields'
+// alone.
+func TestFunctionFieldTablesAgree(t *testing.T) {
+	t.Parallel()
+	const outside = "not a field of a statement, an expression or a struct one holds, which localFields covers"
+	notInLocalFields := map[string]string{
+		"Local.NestedFunction":           outside,
+		"Local.ConstantClosure":          outside,
+		"Class.Constructor":              outside,
+		"Class.Methods":                  outside,
+		"Accessor.Getter":                outside,
+		"Accessor.Setter":                outside,
+		"ViewContract.Functions":         outside,
+		"Program.MethodTargets":          outside,
+		"Program.StructuralMethodThunks": outside,
+		"Program.AsyncEntry":             outside,
+		"Export.Function":                outside,
+		"Function.ForwardsArguments":     outside,
+		"Function.NestedParent":          outside,
+		"Function.ForwardedNestedParent": outside,
+		"Function.ReferenceParents":      outside,
+	}
+	for field, classed := range localFields {
+		offset, names := localFieldFunction(classed.why)
+		if !names {
+			continue
+		}
+		counted, listed := functionReferenceFields[field]
+		if !listed {
+			t.Errorf("localFields says %s is %q, which functionReferenceFields doesn't count", field, classed.why)
+		} else if counted != offset {
+			t.Errorf("localFields says %s is %q, offset %d, but functionReferenceFields offsets it by %d", field, classed.why, offset, counted)
+		}
+	}
+	for field := range functionReferenceFields {
+		_, excluded := notInLocalFields[field]
+		classed, listed := localFields[field]
+		_, names := localFieldFunction(classed.why)
+		switch {
+		case excluded && listed:
+			t.Errorf("%s is listed here as outside localFields, which classes it as %q", field, classed.why)
+		case !excluded && !(listed && names):
+			t.Errorf("functionReferenceFields counts %s, which localFields doesn't class as a function's index: class it there, or say here why not", field)
+		}
+	}
+	for field := range notInLocalFields {
+		if _, counted := functionReferenceFields[field]; !counted {
+			t.Errorf("%s is listed here, but functionReferenceFields doesn't count it", field)
+		}
+	}
 }
