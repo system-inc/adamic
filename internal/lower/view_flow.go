@@ -217,11 +217,11 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 var functionReferenceFields = map[string]int{
 	// Calls: a direct or virtual call's function (a virtual call's targets are MethodTargets'),
 	// a sibling call's code, a sort's named comparator, a generator's step.
-	"Call.Function":          0,
-	"CallClosure.Direct":     1,
-	"ArraySort.Comparator":   0,
-	"GeneratorNext.Function": 0,
-	"IteratorNext.Function":  0,
+	"Call.Function":           0,
+	"CallClosure.Direct":      1,
+	"ArraySort.Comparator":    0,
+	"GeneratorNext.Functions": 0,
+	"IteratorNext.Function":   0,
 	// Function values and method tables: each is a road an opaque call can run it by.
 	"MakeClosure.Function":           0,
 	"BoundClosure.Function":          0,
