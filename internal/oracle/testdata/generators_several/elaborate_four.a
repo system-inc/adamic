@@ -1,0 +1,48 @@
+// tsc's elaborateElementwise shape (checker.ts), one view fed by generators of four functions
+// (#qk8rztp S3c-2): elaborate holds four nested function* declarations that yield the same type,
+// and each one's direct call goes into the one-read Iterable<T> parameter of one nested callee, whose
+// for-of dispatches every frame through one step, resumed by the frame's own code. One function never
+// yields at all, so its frame finishes on the first step. The generators read their parent's
+// parameters through its cells, and yield objects of built strings, so a missed release or an extra
+// one is a real leak or a use after free.
+interface Element {
+    readonly label: string;
+    readonly size: number;
+}
+function elaborate(tag: string, count: number): string {
+    function* fromArray(): Generator<Element, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield { label: `${tag}a${String(index)}`, size: index };
+        }
+    }
+    function* fromObject(): Generator<Element, void, undefined> {
+        yield { label: `${tag}o`, size: count * 10 };
+    }
+    function* fromChildren(): Generator<Element, void, undefined> {
+        for (let index = count; index > 0; index--) {
+            yield { label: `${tag}c${String(index)}`, size: index * 2 };
+        }
+    }
+    function* fromNothing(): Generator<Element, void, undefined> {
+        if (count > 100) {
+            yield { label: `${tag}never`, size: -1 };
+        }
+    }
+    function elaborateElementwise(elements: Iterable<Element>): string {
+        let seen = '';
+        let total = 0;
+        for (const element of elements) {
+            seen += `${element.label};`;
+            total += element.size;
+        }
+        return `${seen}=${String(total)}`;
+    }
+    const parts: string[] = [];
+    parts.push(elaborateElementwise(fromArray()));
+    parts.push(elaborateElementwise(fromObject()));
+    parts.push(elaborateElementwise(fromChildren()));
+    parts.push(elaborateElementwise(fromNothing()));
+    return parts.join(' | ');
+}
+console.log(elaborate(`t${String(1)}`, 2));
+console.log(elaborate(`z${String(0)}`, 0));
