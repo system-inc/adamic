@@ -23,10 +23,14 @@ var checkedPredicateFixtures = []struct {
 	name, nodeOut, checkedOut, branch, source, target, guard string
 	checked, unobservable                                    int
 }{
-	{"true", "claimed\n", "", "true", "string | number", "number", "", 2, 0},
+	// isNumber's false side has no branch, so nothing reads value there: its check is dropped and counted
+	// unobservable (#39wtqdj), and the true side's lie still stops it.
+	{"true", "claimed\n", "", "true", "string | number", "number", "", 1, 1},
 	{"true_unused", "continued\n", "", "true", "\"text\"", "number", "", 1, 1},
-	{"false", "continued\n", "", "false", "string | number", "number", "", 2, 0},
-	{"false_alias", "continued\n", "", "false", "string | number", "number", "", 2, 0},
+	// isNumber lies on its false side, and nothing reads value there, so the false check is dropped and
+	// counted unobservable, and the program prints as Node does (#39wtqdj, Adamic's ruling of Nov 11).
+	{"false", "continued\n", "", "", "", "", "", 1, 1},
+	{"false_alias", "continued\n", "", "", "", "", "", 1, 1},
 	{"false_compound_unchanged", "continued\n", "", "", "", "", "", 1, 1},
 	{"asserts", "called\nasserted\n", "called\n", "asserts", "string | number", "number", "", 1, 0},
 	{"valid", "argument\ncalled\nnumber\nargument\ncalled\nstring\n", "", "", "", "", "", 1, 1},

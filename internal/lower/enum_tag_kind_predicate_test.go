@@ -70,7 +70,8 @@ func TestKindPredicateCallIsItsComparison(t *testing.T) {
 // Node; a predicate whose declared type is narrower than what its body proves is refused, fail
 // closed, while the written comparison lowers. The union-of-literals row is R-T80's: its kept check
 // refuses the call over that tag ("membership over an open tag domain") before the walk's model is
-// asked, so the model is unreached there and fails closed; the pin moves to agreement when it lifts.
+// asked, so the model is unreached there and fails closed; the pin moves to agreement when it lifts. The
+// check is kept on the false side only where it's read (#39wtqdj), so both functions read n.kind there.
 func TestKindPredicateMatchesTheWrittenComparison(t *testing.T) {
 	t.Parallel()
 	const unionTag = `enum K { A = 1, B = 2, C = 3 }
@@ -91,7 +92,7 @@ type N = A | B;
 			"function viaComparison(n: N): string { if (n.kind === K.A) { return `a ${n.a}`; } return " + otherwise + "; }\n" + predicate
 	}
 	for _, probe := range []struct{ name, source, stdout, refusal string }{
-		{"union-of-literals tag", unionTag + "function isA(n: N): n is A { return n.kind === K.A; }\nfunction viaCall(n: N): string { return isA(n) ? `a ${n.a}` : 'other'; }\nfunction viaComparison(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'other'; }\n" +
+		{"union-of-literals tag", unionTag + "function isA(n: N): n is A { return n.kind === K.A; }\nfunction viaCall(n: N): string { return isA(n) ? `a ${n.a}` : `other ${n.kind}`; }\nfunction viaComparison(n: N): string { return n.kind === K.A ? `a ${n.a}` : `other ${n.kind}`; }\n" +
 			"const values: N[] = [{ kind: K.A, flag: F.X, a: 1 }, { kind: K.B, b: 'x' }, { kind: K.C, c: 'y' }];\nfor (const n of values) { console.log(viaCall(n) + ' ' + viaComparison(n)); }\n", "", "membership over an open tag domain"},
 		{"const enum tag", constEnum + "function isA(n: N): n is A { return n.kind === K.A; }\n" + both("", "`b ${n.b}`") +
 			"const values: N[] = [{ kind: K.A, flag: F.X, a: 1 }, { kind: K.B, b: 'x' }];\nfor (const n of values) { console.log(viaCall(n) + ' ' + viaComparison(n)); }\n", "a 1 a 1\nb x b x\n", ""},
