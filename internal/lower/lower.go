@@ -329,6 +329,9 @@ type lowering struct {
 	slots slotTargets
 	// voidHolders memoizes holdsVoid: whether a type holds void at a position (#p7t8tmh).
 	voidHolders map[*checker.Type]bool
+	// anyHolders memoizes overloadCallbackHoldsAny: whether any sits anywhere a value of a type can hold
+	// (#68x1t2y).
+	anyHolders map[*checker.Type]bool
 	// constEnumReach is every const enum the program reaches as a value (reachedConstEnums), by its
 	// symbol, found once.
 	constEnumReach map[*ast.Symbol]bool

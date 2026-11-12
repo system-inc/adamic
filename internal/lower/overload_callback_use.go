@@ -205,7 +205,7 @@ func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast
 		// A promised parameter that holds any promises nothing: tsc lets `(dog: Dog, label?: string)` stand
 		// where `(value: T, ...rest: any[])` or `(value: any)` is promised, and every argument relates to any,
 		// so the caller's function would get whatever the implementation passes (Compiler's road on #8n7eet3).
-		if l.overloadCallbackHoldsAny(parameter, 0, map[*checker.Type]bool{}) || !l.censusRelated(argument, parameter) {
+		if l.overloadCallbackHoldsAny(parameter) || !l.censusRelated(argument, parameter) {
 			return false
 		}
 	}
@@ -243,7 +243,7 @@ func (l *lowering) overloadCallbackArgument(implementation, overload, argument *
 		admitted := l.overloadCallbackAdmitted(overload, position)
 		// An overload parameter that holds any admits whatever its caller passes, so it promises nothing
 		// about what the body hands the callback from it.
-		if l.overloadCallbackHoldsAny(admitted, 0, map[*checker.Type]bool{}) {
+		if l.overloadCallbackHoldsAny(admitted) {
 			return flow
 		}
 		own := l.checker.GetTypeAtLocation(parameter.Name())
@@ -326,7 +326,7 @@ func (l *lowering) overloadCallbackElement(implementation, overload *ast.Node, s
 		admitted := l.overloadCallbackAdmitted(overload, position)
 		element := l.checker.GetIndexTypeOfType(l.checker.GetNonNullableType(admitted), l.checker.GetNumberType())
 		// As for p itself, an overload type that holds any promises nothing about its elements.
-		if element == nil || l.overloadCallbackHoldsAny(admitted, 0, map[*checker.Type]bool{}) {
+		if element == nil || l.overloadCallbackHoldsAny(admitted) {
 			return flow
 		}
 		own := l.checker.GetTypeAtLocation(declaration.Name())
@@ -398,38 +398,84 @@ func (l *lowering) overloadCallbackOnlyIterated(implementation, parameter *ast.N
 	return !other
 }
 
+// overloadCallbackAnyCap bounds how many distinct types one overloadCallbackHoldsAny walk reads. A program has
+// finitely many declared types, but a generic that holds a deeper instance of itself, `next?: Grow<Grow<T>>`,
+// makes a new one at every step, and the cap is what ends that walk, failing closed. The walk once stopped
+// at 32 positions deep instead, and tsc's Node graph (parent, symbol, declarations, emitNode) runs deeper
+// than that with no any in it: Correctness's census on #68x1t2y (typescript/overload-proof-census 2378688b,
+// debug-assert-overloads) read 1,896 types from destructuring.ts's array argument, every one any-free, and the
+// bound alone refused assertEachNode's and assertNode's five units.
+const overloadCallbackAnyCap = 1 << 16
+
 // overloadCallbackHoldsAny is whether any appears anywhere in t a value can sit: t itself, a union or
 // intersection member, a type argument, a property, an index signature's value, or a signature's
-// parameters or result. It walks as voidAnywhere does, and past its depth bound it fails closed.
-func (l *lowering) overloadCallbackHoldsAny(t *checker.Type, depth int, seen map[*checker.Type]bool) bool {
-	if t == nil || seen[t] {
+// parameters or result. It walks what t reaches with no depth bound, each type once, and answers yes past
+// overloadCallbackAnyCap distinct types, failing closed. l.anyHolders memoizes it across the program. A
+// walk that found any records yes for t alone, since the other types it read may reach no any at all. A walk
+// that finished without one records no for every type it read, since what each of those reaches it read
+// too. A cap is never recorded: how many types a walk reads depends on what earlier walks recorded.
+func (l *lowering) overloadCallbackHoldsAny(t *checker.Type) bool {
+	if t == nil {
 		return false
 	}
-	if t.Flags()&checker.TypeFlagsAny != 0 || depth >= 32 {
-		return true
+	if held, known := l.anyHolders[t]; known {
+		return held
 	}
-	seen[t] = true
+	if l.anyHolders == nil {
+		l.anyHolders = map[*checker.Type]bool{}
+	}
+	seen := map[*checker.Type]bool{t: true}
+	pending := []*checker.Type{t}
+	reach := func(next *checker.Type) {
+		if next != nil && !seen[next] {
+			seen[next] = true
+			pending = append(pending, next)
+		}
+	}
+	for len(pending) > 0 {
+		if len(seen) > overloadCallbackAnyCap {
+			return true
+		}
+		current := pending[len(pending)-1]
+		pending = pending[:len(pending)-1]
+		held, known := l.anyHolders[current]
+		if known && !held {
+			continue // Everything current reaches was read already, with no any in it.
+		}
+		if (known && held) || current.Flags()&checker.TypeFlagsAny != 0 {
+			l.anyHolders[t] = true
+			return true
+		}
+		l.overloadCallbackAnyReach(current, reach)
+	}
+	for read := range seen {
+		l.anyHolders[read] = false
+	}
+	return false
+}
+
+// overloadCallbackAnyReach calls reach with each type a value of t can hold one step in, as
+// overloadCallbackHoldsAny reads them: a union or intersection's members; a type reference's type
+// arguments; and, unless the library declares t, its signatures' parameters and results, its properties
+// and its index signatures' values.
+func (l *lowering) overloadCallbackAnyReach(t *checker.Type, reach func(*checker.Type)) {
 	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range t.Types() {
-			if l.overloadCallbackHoldsAny(member, depth+1, seen) {
-				return true
-			}
+			reach(member)
 		}
-		return false
+		return
 	}
 	if t.Flags()&checker.TypeFlagsObject == 0 {
-		return false
+		return
 	}
 	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
 		for _, argument := range l.checker.GetTypeArguments(t) {
-			if l.overloadCallbackHoldsAny(argument, depth+1, seen) {
-				return true
-			}
+			reach(argument)
 		}
 	}
 	// A library type's members are the library's, not values the type holds: ReadonlyArray's every and
 	// forEach take `thisArg?: any`, so walking them would find any in every array. Its type arguments,
-	// walked above, are what a value of it holds.
+	// reached above, are what a value of it holds.
 	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
 		library := true
 		for _, declaration := range symbol.Declarations {
@@ -439,30 +485,21 @@ func (l *lowering) overloadCallbackHoldsAny(t *checker.Type, depth int, seen map
 			}
 		}
 		if library {
-			return false
+			return
 		}
 	}
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
 		for _, signature := range l.checker.GetSignaturesOfType(t, kind) {
-			if l.overloadCallbackHoldsAny(l.checker.GetReturnTypeOfSignature(signature), depth+1, seen) {
-				return true
-			}
+			reach(l.checker.GetReturnTypeOfSignature(signature))
 			for _, parameter := range signature.Parameters() {
-				if l.overloadCallbackHoldsAny(l.checker.GetTypeOfSymbol(parameter), depth+1, seen) {
-					return true
-				}
+				reach(l.checker.GetTypeOfSymbol(parameter))
 			}
 		}
 	}
 	for _, property := range l.checker.GetPropertiesOfType(t) {
-		if l.overloadCallbackHoldsAny(l.checker.GetTypeOfSymbol(property), depth+1, seen) {
-			return true
-		}
+		reach(l.checker.GetTypeOfSymbol(property))
 	}
 	for _, index := range l.checker.GetIndexInfosOfType(t) {
-		if l.overloadCallbackHoldsAny(index.ValueType(), depth+1, seen) {
-			return true
-		}
+		reach(index.ValueType())
 	}
-	return false
 }
