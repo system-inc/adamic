@@ -1,0 +1,102 @@
+{
+  "total": 13,
+  "counts": {
+    "TypeAliasDeclaration": 1,
+    "TypeReference": 1,
+    "ImportSpecifier": 1,
+    "Readonly<PathPathComponents>": 10
+  },
+  "uses": [
+    {
+      "file": "src/compiler/path.ts",
+      "line": 457,
+      "column": 13,
+      "kind": "TypeAliasDeclaration",
+      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "line": 492,
+      "column": 48,
+      "kind": "TypeReference",
+      "source": "export function getPathComponents(path: Path): PathPathComponents;"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 57,
+      "column": 10,
+      "kind": "ImportSpecifier",
+      "source": "    type PathPathComponents,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 269,
+      "column": 68,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "function perceivedOsRootLengthForWatching(pathComponents: Readonly<PathPathComponents>, length: number) {"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 310,
+      "column": 66,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "export function canWatchDirectoryOrFile(pathComponents: Readonly<PathPathComponents>, length?: number): boolean {"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 330,
+      "column": 52,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "function isInDirectoryPath(dirComponents: Readonly<PathPathComponents>, fileOrDirComponents: Readonly<PathPathComponents>) {"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 330,
+      "column": 103,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "function isInDirectoryPath(dirComponents: Readonly<PathPathComponents>, fileOrDirComponents: Readonly<PathPathComponents>) {"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 353,
+      "column": 34,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    rootPathComponents: Readonly<PathPathComponents>,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 358,
+      "column": 48,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    const failedLookupPathComponents: Readonly<PathPathComponents> = getPathComponents(failedLookupLocationPath);"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 402,
+      "column": 33,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    dirPathComponents: Readonly<PathPathComponents>,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 406,
+      "column": 34,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    rootPathComponents: Readonly<PathPathComponents>,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 444,
+      "column": 33,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    dirPathComponents: Readonly<PathPathComponents>,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 472,
+      "column": 34,
+      "kind": "Readonly<PathPathComponents>",
+      "source": "    rootPathComponents: Readonly<PathPathComponents>,"
+    }
+  ]
+}

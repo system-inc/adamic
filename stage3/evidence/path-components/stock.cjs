@@ -1,0 +1,25 @@
+'use strict';
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const repo='/workspace/adamic',ts=require(repo+'/stage3/api/node_modules/typescript');
+assert.equal(ts.version,'6.0.3');
+const [tree,out]=process.argv.slice(2);
+const roots=fs.readdirSync(tree+'/src/compiler',{recursive:true}).filter(f=>f.endsWith('.ts')).sort().map(f=>tree+'/src/compiler/'+f);assert.equal(roots.length,79);
+const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,erasableSyntaxOnly:false,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[],typeRoots:[repo+'/internal/load/node_types/node_modules/@types']};
+let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8');
+const sf=ts.createSourceFile('prelude.d.ts',prelude,99,true),consoles=[];
+function find(n){if(ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.text==='console'))consoles.push(n);ts.forEachChild(n,find);}find(sf);assert.equal(consoles.length,1);
+const c=consoles[0];prelude=prelude.slice(0,c.getStart(sf))+'declare var console: Console;'+prelude.slice(c.end);
+const pp='/adamic-prelude/adamic.d.ts',host=ts.createCompilerHost(options),read=host.readFile.bind(host),exists=host.fileExists.bind(host);
+host.fileExists=f=>f===pp||exists(f);
+host.readFile=f=>{
+ let text=f===pp?prelude:read(f);if(text===undefined)return text;
+ if(/\/lib\.(es5|es2021.string|es2015.symbol.wellknown)\.d\.ts$/.test(f))text=text.replaceAll('replacer: (substring: string, ...args: any[]) => string','replacer: (substring: string, ...args: any[]) => unknown');
+ if(f.endsWith('/lib.es5.d.ts'))text=text.replaceAll('interface RegExpExecArray extends Array<string>','interface RegExpExecArray extends Array<string | undefined>').replaceAll('interface RegExpMatchArray extends Array<string>','interface RegExpMatchArray extends Array<string | undefined>').replaceAll('split(separator: string | RegExp, limit?: number): string[];','split(separator: string, limit?: number): string[];\n    split(separator: RegExp, limit?: number): (string | undefined)[];');
+ if(f.endsWith('/lib.es2018.regexp.d.ts'))text=text.replaceAll('[key: string]: string','[key: string]: string | undefined');
+ if(f.endsWith('/lib.es2015.symbol.wellknown.d.ts'))text=text.replaceAll('[Symbol.split](string: string, limit?: number): string[]','[Symbol.split](string: string, limit?: number): (string | undefined)[]').replaceAll('split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): string[];','split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): (string | undefined)[];');
+ return text;
+};
+host.getSourceFile=(f,language)=>{const s=host.readFile(f);return s===undefined?undefined:ts.createSourceFile(f,s,language,true);};
+const program=ts.createProgram([...roots,pp,repo+'/internal/load/node_types/node_modules/@types/node/index.d.ts'],options,host);
+const diagnostics=ts.getPreEmitDiagnostics(program).map(d=>{const p=d.file?.getLineAndCharacterOfPosition(d.start);return {code:d.code,file:d.file?.fileName.replace(tree+'/', '<tree>/').replace(repo+'/', '<repo>/'),line:p?.line+1,column:p?.character+1,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')};});
+fs.writeFileSync(out,JSON.stringify({version:ts.version,roots:roots.length,options,diagnostics},null,2)+'\n');console.log('stock diagnostics='+diagnostics.length);process.exitCode=diagnostics.length?1:0;

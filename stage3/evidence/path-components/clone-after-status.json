@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "file:///workspace/scratch/path-components-upstream",
+    "/workspace/scratch/path-components-after"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 21.040625835000014
+}

@@ -1,0 +1,70 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/scratch/path-components-upstream/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-typings-installer in 32ms
+Finished shim-compile-cache-tsc in 43ms
+Finished shim-compile-cache-tsserver in 41ms
+Finished generate-types-map in 40ms
+Finished bundle-watch-guard in 64ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 688ms
+Finished build-watch-guard in 732ms
+Finished generate-diagnostics in 774ms
+Starting localize
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished localize in 2ms
+Finished copy-built-local-diagnostic-messages in 25ms
+Finished bundle-typings-installer in 173ms
+Finished bundle-tsserver in 642ms
+Finished build-tsc in 1s
+Finished build-services in 1s
+Finished build-tsserver in 1s
+Finished build-typings-installer in 1s
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 20ms
+Finished bundle-tsc in 3.7s
+Finished bundle-services in 4.9s
+Starting lssl
+Finished lssl in 2ms
+Completed local in 5.7s
+
+> typescript@6.0.3 build:tests
+> hereby tests
+
+Using /workspace/scratch/path-components-upstream/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 418ms
+Starting bundle-tests
+Starting build-tests
+Finished lib in 835ms
+Finished build-tests in 873ms
+Finished bundle-tests in 2.8s
+Completed tests in 3.2s
