@@ -2749,6 +2749,8 @@
     "internal/lower TestProduct_InspectorDoomedFallthroughMutant": [],
     "internal/oracle TestProduct_InspectorDoomedAxiomMutant": [],
     "internal/oracle TestProduct_InspectorDoomedReadDropOracleMutant": [],
-    "internal/lower TestProduct_InspectorDoomedValueHookMutant": []
+    "internal/lower TestProduct_InspectorDoomedValueHookMutant": [],
+    "internal/native TestProduct_GCCRuntimeDate": [],
+    "internal/lower TestProduct_DateISOStringMethodMutant": []
   }
 }
