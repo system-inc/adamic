@@ -298,7 +298,7 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	// handle (node_process.c), never freed (#yzpahn3, Runtime's guard on #jawqwv7). Both adoptions
 	// refuse it before they get here; this keeps any later caller from freeing one.
 	if (old->references == 0) {
-		adamic_panic("compiler bug: adoption would move an immortal or static value", sizeof "compiler bug: adoption would move an immortal or static value" - 1);
+		adamic_invariant("adoption would move an immortal or static value");
 	}
 	if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
 		adamic_panic("region allocation too large", sizeof "region allocation too large" - 1);

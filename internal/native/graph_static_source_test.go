@@ -38,7 +38,7 @@ int main(int count, char **arguments) {
 	}
 	for mode, want := range map[string]string{
 		"graph":   "compiler bug: graph adoption needs a new allocation",
-		"storage": "compiler bug: adoption would move an immortal or static value",
+		"storage": "runtime invariant broken: adoption would move an immortal or static value",
 	} {
 		command := exec.Command(binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
