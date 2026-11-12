@@ -491,8 +491,8 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 }
 
 // recordViewSite is the value a node puts into a typed slot and the slot's type, as recordStorageView
-// judges them, or nil: an initializer, an as expression, or a view site, but an object literal, which
-// is made as its slot, and an argument the library's own record operations take.
+// judges them, or nil: an initializer, an as expression, a view site, or a shorthand property, but an
+// object literal, which is made as its slot, and an argument the library's own record operations take.
 func (l *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
 	var source *ast.Node
 	var target *checker.Type
@@ -504,6 +504,13 @@ func (l *lowering) recordViewSite(node *ast.Node) (*ast.Node, *checker.Type) {
 	} else if node.Kind == ast.KindAsExpression {
 		source = node.AsAsExpression().Expression
 		target = l.checker.GetTypeAtLocation(node)
+	} else if node.Kind == ast.KindShorthandPropertyAssignment {
+		// { bag } puts the variable bag into the literal's property bag, the same site as { bag: bag }'s
+		// initializer, which viewSite takes. The shorthand isn't an expression and viewSite never sees it,
+		// so a fixed object went into a record slot here unjudged, and a write through the record ran
+		// adamic_record_define on it (#mez92e7, Language's f02: an ASan segmentation fault in map.c where Node prints 1 3).
+		source = node.Name()
+		target = l.slotType(node.Name())
 	} else if l.isExpression(node) && viewSite(node) {
 		source = node
 		target = l.slotType(node)
