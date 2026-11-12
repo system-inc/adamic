@@ -919,10 +919,11 @@ func (f *scanCycleFinder) graphArguments(proven *checker.Type) []*checker.Type {
 func (f *scanCycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
-	// Legacy tagged-union views record checked fields without a ViewOrigin.
+	// Legacy tagged-union views record checked fields without a ViewOrigin. Slice 3 (#ef727kr) took away
+	// the site lowering kept for this refusal, since the real pipeline no longer makes it, so the frozen
+	// reference names no position here, and the equality test doesn't compare a program refused this way.
 	if len(f.l.result.ViewOrigins) != 0 || len(f.l.result.CheckedFields) != 0 {
-		reason = "a checked-view adapter in a graph program"
-		site = f.l.graphViewSite
+		reason = cycleFrozenViewGuard
 	}
 	inspect := func(node any) bool {
 		switch value := node.(type) {
@@ -947,7 +948,11 @@ func (f *scanCycleFinder) graphAdoptionBoundary() error {
 		walk(function.Body, inspect)
 	}
 	if reason != "" {
-		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+		where := ""
+		if site != nil {
+			where = f.l.program.Where(site)
+		}
+		return &Refused{Where: where, What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
 	}
 	return nil
 }
