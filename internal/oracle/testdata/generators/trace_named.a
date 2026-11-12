@@ -1,0 +1,15 @@
+// trace_in_place.a's twin through a named generator (#7wn0t67): the consumer's return closes it at
+// its yield, and internal/flow's TestFlowGeneratorsTraced follows the consumer across the yield.
+function* single(v: { n: number }) {
+    yield v;
+}
+function consume(items: IterableIterator<{ n: number }>): number {
+    for (const item of items) {
+        return item.n;
+    }
+    return 0;
+}
+function run(v: { n: number }): number {
+    return consume(single(v));
+}
+console.log(String(run({ n: 1 })));

@@ -3,6 +3,7 @@ package flow
 import (
 	"context"
 	"fmt"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -288,6 +289,8 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 		id       int
 		function int
 		last     *point
+		// resumed is whether the call came back from a park and has run no point since.
+		resumed bool
 	}
 	var problems, ends []string
 	stack := []frame{{function: -1}}
@@ -316,8 +319,9 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 			if top.last == nil {
 				problems = append(problems, "park without its active invocation")
 			} else {
+				// An await's operand or a yield's value, the last point before its block's terminal.
 				block, position := locate(graphs[top.function], top.last.instruction)
-				if _, ok := block.Terminal.(*Suspend); !ok || position+1 != len(block.Instructions) {
+				if !Suspends(block.Terminal) || position+1 != len(block.Instructions) {
 					problems = append(problems, "park bypassed a suspension terminal")
 				}
 			}
@@ -330,9 +334,22 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 				problems = append(problems, "resume without a parked invocation")
 			}
 			delete(parked, id)
+			current.resumed = true
 			stack = append(stack, current)
 		case strings.HasPrefix(event, "leave "):
-			end(*top)
+			// A generator its consumer closed at a yield ends there: the return() an iterable view's
+			// exit calls comes back in at the yield and leaves at once, running nothing of the body,
+			// since a yield inside a try isn't built yet (#qk8rztp S5). The graph has no edge for it,
+			// as it has none for a throw in at a yield, so only a call that ran nothing after coming
+			// back is let end at one.
+			closed := false
+			if top.resumed && top.last != nil {
+				block, _ := locate(graphs[top.function], top.last.instruction)
+				_, closed = block.Terminal.(*Yield)
+			}
+			if !closed {
+				end(*top)
+			}
 			stack = stack[:len(stack)-1]
 		case strings.HasPrefix(event, "exit "):
 			exit = strings.TrimPrefix(event, "exit ")
@@ -356,6 +373,7 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 				problems = append(problems, fmt.Sprintf("function %d (%s): %s", top.function, graphs[top.function].Name, problem))
 			}
 			top.last = &next
+			top.resumed = false
 		}
 	}
 	if exit == "" {
@@ -625,7 +643,9 @@ type sequence struct {
 	points   []InstructionId
 }
 
-// frames splits a trace into its calls' sequences.
+// frames splits a trace into its calls' sequences. A call still parked when the program ends (an
+// await that never settled, a generator its consumer dropped part way) is a sequence too: its points
+// ran, and its last is a suspension's, which can't throw, so it reads as it would have resumed.
 func frames(run run) []sequence {
 	var done []sequence
 	stack := []sequence{{function: -1}}
@@ -652,6 +672,9 @@ func frames(run run) []sequence {
 				top.points = append(top.points, run.marked[index].instruction)
 			}
 		}
+	}
+	for _, id := range slices.Sorted(maps.Keys(parked)) {
+		done = append(done, parked[id])
 	}
 	return append(done, stack...)
 }
