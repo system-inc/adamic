@@ -93,6 +93,10 @@ func cycleCompareProgram(t *testing.T, path string) {
 // still stops there, so that mode has nothing to compare against.
 const cycleFrozenGeneratorGuard = "a Program region in a program with generator functions (#qk8rztp)"
 
+// cycleFrozenViewGuard is the frozen scanning reference's refusal of a checked view in a graph program,
+// which the real pipeline lifted in slice 3 (#ef727kr): there, viewPairGuard sees every view instead.
+const cycleFrozenViewGuard = "a checked-view adapter in a graph program"
+
 // cycleRegionlessAllocationGuards are graphAdoptionBoundary's stops for allocations the runtime makes
 // outside every region, and for a record's entries, whose pairs the plan holds only through the array
 // (#bvsjdte 2a, #djwd1t2, Memory's e3 on #y7wexf5), guards the real pipeline added after the scanning
@@ -192,6 +196,11 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 				return ""
 			}
 			return fmt.Sprintf("%T: %v", err, err)
+		}
+		var frozenView *Refused
+		if errors.As(scanErr, &frozenView) && frozenView.What == cycleFrozenViewGuard {
+			t.Logf("%s: ProgramRegion=%t not compared: the frozen scanning reference refuses a checked view in a graph program, which the real pipeline admits since slice 3 (#ef727kr); indexed: %v", path, region, indexErr)
+			continue
 		}
 		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
 			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a regionless allocation guard the frozen scanning reference predates: %v", path, region, indexErr)

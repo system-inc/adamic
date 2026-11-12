@@ -849,8 +849,9 @@ func viewPairScalarField(of ir.Type, known bool) bool {
 // whose provenance the host binding holds. A checked view owns nothing (slice 3 of #ztpcwrr, ruled on
 // #jawqwv7): it's the same pointer checked in place, a read retains it as any read does and a write
 // takes writeProperty's graph hold, so a graph program holds checked views once the finder sees every
-// view (viewPairGuard). A dynamic read (DynamicProperty, DynamicKeyedProperty) is a read and owns
-// nothing either.
+// view (viewPairGuard). A dynamic read (DynamicProperty, DynamicKeyedProperty) stays stopped: it owns
+// nothing, but it's the stop that holds a bound closure's length, which reads 0 where Node gives the
+// target's (#0ty4971, pinned by function_bind_length_test.go), so it lifts with that fix, not here.
 func (f *cycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
@@ -870,6 +871,9 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 				reason = "a dynamic-shape object in a graph program"
 				site = f.l.graphDynamicSite
 			}
+		case ir.DynamicProperty, ir.DynamicKeyedProperty:
+			reason = "a dynamic-shape object in a graph program"
+			site = f.l.graphDynamicSite
 		case ir.ObjectCall:
 			if value.Checked {
 				reason = "a dynamic-shape object in a graph program"
