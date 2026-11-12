@@ -3,11 +3,12 @@
  * runs, after the slot is written: a literal that gives m as undefined, then a function written in, then
  * undefined written back, and a literal that gives a function, then undefined written in. Every literal
  * gives m, since a write to a field some literal omits is not yet, and the form is the field's, since a
- * write to an optional method stays refused.
+ * write to an optional method stays refused. m's type holds undefined, as tsc's own host types write it,
+ * since under exactOptionalPropertyTypes no other optional field takes undefined.
  */
 interface Probed {
 	readonly n: number;
-	m?: () => number;
+	m?: (() => number) | undefined;
 }
 
 function probe(h: Probed): string {
