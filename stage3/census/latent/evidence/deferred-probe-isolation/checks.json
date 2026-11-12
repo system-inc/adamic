@@ -1,0 +1,552 @@
+{
+  "all_records_equal": false,
+  "dependencies-final": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "peak_rss_kib": 151416,
+    "wall_seconds": 3.0956728760011174
+  },
+  "distinct_reads": {
+    "lowered": 0,
+    "moved": 0,
+    "new_findings": 0,
+    "new_sites": 0,
+    "regressions": 0,
+    "totals": {
+      "after": {
+        "NotYet": 508,
+        "Refused": 4187
+      },
+      "before": {
+        "NotYet": 508,
+        "Refused": 4187
+      }
+    },
+    "unit_first_stop_delta": 0
+  },
+  "files": 81,
+  "finding_occurrences": {
+    "fixed": 5661,
+    "shallow": 5661
+  },
+  "guard-boundary-mutant": {
+    "child_exit_code": 1,
+    "deadline_expired": false,
+    "peak_rss_kib": 90056,
+    "wall_seconds": 0.9431013469984464
+  },
+  "guard-fixed-final": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "peak_rss_kib": 1445924,
+    "wall_seconds": 121.76188479499979
+  },
+  "guard-mutant-final": {
+    "child_exit_code": 1,
+    "deadline_expired": false,
+    "peak_rss_kib": 1421548,
+    "wall_seconds": 40.61532320700098
+  },
+  "latent-tests3": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "longest_test_seconds": 9.59,
+    "passed_tests_and_subtests": 60,
+    "peak_rss_kib": 223968,
+    "wall_seconds": 20.600023998000324
+  },
+  "metadata_delta": {
+    "all_unit_status_and_instantiated_flags_equal": true,
+    "finding_occurrences_equal": true,
+    "relation_cache_changes": [
+      {
+        "after": 121326,
+        "before": 121015,
+        "cache": "assignable",
+        "delta": 311,
+        "group": 1
+      },
+      {
+        "after": 21778,
+        "before": 21770,
+        "cache": "strictSubtype",
+        "delta": 8,
+        "group": 1
+      }
+    ],
+    "unit_metadata_changes": [
+      {
+        "base": {
+          "body_end": 5850,
+          "body_start": 5599,
+          "checker_diagnostics": [],
+          "instantiated": true,
+          "instantiated_by": [
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10304:12",
+              "type_arguments": [
+                "Extension"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10303:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7625:12",
+              "type_arguments": [
+                "Extension"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7624:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8045:59",
+              "type_arguments": [
+                "Declaration"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8043:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+              "type_arguments": [
+                "JSDocTag"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1106:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+              "type_arguments": [
+                "JSDocTag"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1111:1"
+            }
+          ],
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "find",
+          "status": "deferred_generic_instantiation",
+          "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+        },
+        "changed_fields": [
+          "instantiated_by"
+        ],
+        "head": {
+          "body_end": 5850,
+          "body_start": 5599,
+          "checker_diagnostics": [],
+          "instantiated": true,
+          "instantiated_by": [
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10304:12",
+              "type_arguments": [
+                "Extension"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10303:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:4768:27",
+              "type_arguments": [
+                "JSDocTag"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:4765:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7625:12",
+              "type_arguments": [
+                "Extension"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7624:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8045:59",
+              "type_arguments": [
+                "Declaration"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8043:1"
+            },
+            {
+              "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+              "type_arguments": [
+                "JSDocTag"
+              ],
+              "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1106:1"
+            }
+          ],
+          "kind": "KindFunctionDeclaration",
+          "measurement": "measured on a checker-clean entry-root program",
+          "name": "find",
+          "status": "deferred_generic_instantiation",
+          "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+        },
+        "name": "find",
+        "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+      }
+    ]
+  },
+  "overlay-latent-tests": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "longest_test_seconds": 4.11,
+    "passed_tests_and_subtests": 65,
+    "peak_rss_kib": 1529744,
+    "wall_seconds": 129.12654539999858
+  },
+  "raw_findings": {
+    "lowered": 0,
+    "moved": 0,
+    "new_findings": 0,
+    "new_sites": 0,
+    "regressions": 0,
+    "totals": {
+      "after": {
+        "NotYet": 515,
+        "Refused": 4382
+      },
+      "before": {
+        "NotYet": 515,
+        "Refused": 4382
+      }
+    },
+    "unit_first_stop_delta": 0
+  },
+  "reassembly_control": {
+    "fixed": {
+      "files": 3,
+      "instantiated_generic_units": 1,
+      "whole_vs_slices_file_records_equal": true
+    },
+    "shallow": {
+      "files": 3,
+      "instantiated_generic_units": 1,
+      "whole_vs_slices_file_records_equal": true
+    }
+  },
+  "relation_reports": {
+    "fixed": {
+      "attribution": "per child; no fabricated whole-run cache budget",
+      "per_unit": false,
+      "segmented_reports": [
+        {
+          "group": 0,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 119140,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 5954,
+              "strictSubtype": 21169,
+              "subtype": 15174,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 1,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 121326,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6898,
+              "strictSubtype": 21778,
+              "subtype": 15189,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 2,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 103308,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6024,
+              "strictSubtype": 16571,
+              "subtype": 15175,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 3,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 133614,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 7458,
+              "strictSubtype": 17086,
+              "subtype": 15189,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 4,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 206759,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 5928,
+              "strictSubtype": 18996,
+              "subtype": 15176,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 5,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 119426,
+              "comparable": 15719,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6626,
+              "strictSubtype": 22298,
+              "subtype": 15174,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        }
+      ]
+    },
+    "shallow": {
+      "attribution": "per child; no fabricated whole-run cache budget",
+      "per_unit": false,
+      "segmented_reports": [
+        {
+          "group": 0,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 119140,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 5954,
+              "strictSubtype": 21169,
+              "subtype": 15174,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 1,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 121015,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6898,
+              "strictSubtype": 21770,
+              "subtype": 15189,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 2,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 103308,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6024,
+              "strictSubtype": 16571,
+              "subtype": 15175,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 3,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 133614,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 7458,
+              "strictSubtype": 17086,
+              "subtype": 15189,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 4,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 206759,
+              "comparable": 15687,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 5928,
+              "strictSubtype": 18996,
+              "subtype": 15176,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        },
+        {
+          "group": 5,
+          "report": {
+            "after_load": "",
+            "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+            "cache_sizes": {
+              "assignable": 119426,
+              "comparable": 15719,
+              "enum": 0,
+              "flaggedPairs": 0,
+              "identity": 6626,
+              "strictSubtype": 22298,
+              "subtype": 15174,
+              "ts2859": 0
+            },
+            "end": "",
+            "per_unit": false
+          }
+        }
+      ]
+    }
+  },
+  "runs": {
+    "fixed": [
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 969068,
+        "wall_seconds": 285.481152331
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1842248,
+        "wall_seconds": 1384.776237725
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1304524,
+        "wall_seconds": 419.0983489480004
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1834640,
+        "wall_seconds": 933.873521421001
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 2434272,
+        "wall_seconds": 883.8601542959987
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1509532,
+        "wall_seconds": 1208.8409272299996
+      }
+    ],
+    "shallow": [
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 934916,
+        "wall_seconds": 283.7563642639998
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1821432,
+        "wall_seconds": 1341.8656669469983
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1307276,
+        "wall_seconds": 407.57930352199946
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1798292,
+        "wall_seconds": 927.6358116869997
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 2261952,
+        "wall_seconds": 871.6629634889996
+      },
+      {
+        "child_exit_code": 0,
+        "deadline_expired": false,
+        "peak_rss_kib": 1474440,
+        "wall_seconds": 1214.6040748619998
+      }
+    ]
+  },
+  "streams_byte_identical": false,
+  "units": {
+    "fixed": {
+      "attempted": 4063,
+      "deferred_generic_instantiation": 503
+    },
+    "shallow": {
+      "attempted": 4063,
+      "deferred_generic_instantiation": 503
+    }
+  }
+}

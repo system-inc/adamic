@@ -65,6 +65,8 @@ for template in sorted(territory.glob('relation_*_test.go.txt')):
     overlay('stage3/census/latent/tool/' + template.name.removesuffix('.txt'), template.read_text())
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+# Execute the deferred-probe guard against main's real preflight and state copier.
+overlay('internal/lower/latent_deferred_probe_test.go', (territory / 'deferred_probe_test.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.
 overlay('internal/lower/latent_timing.go', (territory / 'timing/timing.go').read_text().replace('package timing', 'package lower', 1))
 overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
