@@ -104,11 +104,17 @@ console.log(String(first({ length: 1, first: "a" })));
 		// The narrowing starts from the overload's parameter, not the implementation's declaration, and tsc
 		// judges a discriminant on that flow type when it's a union that isn't a subset of the declared type
 		// (checker.ts getDiscriminantPropertyAccess). So an overload's tuple union is narrowed by length even
-		// over a plain array implementation, and both its tests prune (Lower's must on 1fdc8083). Mutant:
-		// censusLengthLeaf judging the declared type alone, and this is accepted.
+		// over a plain array implementation, and the length test's true branch is never (Lower's must on
+		// 1fdc8083). Mutant: censusLengthLeaf judging the declared type alone, and both are accepted (probed on
+		// Codex 6af54cf6; a body of two length tests in a row stayed refused under it, so it isn't a pin).
 		{"an overload's tuple union over an array implementation", `function pick(p: [number] | [number, number]): 1;
 function pick(p: readonly number[]): number;
-function pick(p: readonly number[]): number { if (p.length === 1) return 1; if (p.length === 2) return 1; return 2; }
+function pick(p: readonly number[]): number { if (p.length === 3) return 2; return 1; }
+console.log(String(pick([7])));
+`, ".a", "overload 1 of pick result 1 cannot be served"},
+		{"an overload's tuple union over an implementation taking undefined too", `function pick(p: [number] | [number, number]): 1;
+function pick(p: readonly number[] | undefined): number;
+function pick(p: readonly number[] | undefined): number { if (p === undefined || p.length === 3) return 2; return 1; }
 console.log(String(pick([7])));
 `, ".a", "overload 1 of pick result 1 cannot be served"},
 		{"a type parameter whose constraint's length is a literal", `function size<T extends { readonly length: 1 }>(x: T): string;
