@@ -20,6 +20,17 @@ const adamic_methods adamic_coded_error_methods = {0, NULL, NULL};
 // a shape's methods finds nothing in them.
 const adamic_methods adamic_host_methods = {0, NULL, NULL};
 
+// All runtime error factories allocate through object_new. Marking their slots there also
+// covers factory decoration after allocation, before any program can write the error.
+void adamic_error_initialize(adamic_object *object) {
+ if (!adamic_error_is(object)) return;
+ for (size_t index = 0; index < object->shape->count; index++) {
+  const char *name = object->shape->names[index];
+  if (strcmp(name, "name") == 0 || strcmp(name, "message") == 0 || strcmp(name, "#message") == 0)
+   adamic_object_field_types(object)[index] = adamic_error_unwritten;
+ }
+}
+
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
@@ -35,8 +46,8 @@ adamic_object *adamic_error_new(adamic_string *message) {
 	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
 	error->slots[0].reference = adamic_retain(&error_name);
 	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
-	adamic_object_field_types(error)[0] = adamic_rep_string;
-	adamic_object_field_types(error)[1] = adamic_rep_string;
+	adamic_object_field_types(error)[0] = adamic_error_unwritten;
+	adamic_object_field_types(error)[1] = adamic_error_unwritten;
 	return error;
 }
 
