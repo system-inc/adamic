@@ -1,9 +1,11 @@
 package lower
 
 import (
+	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
+	"os"
 )
 
 // An overload can promise its caller a narrower callback than its implementation takes, as tsc's debug.ts
@@ -32,6 +34,9 @@ import (
 // 2 and 4 above. given and takes arrive concrete from censusOverloadParameter, under the mapper censusOverload
 // set for this overload, so each overload is judged on its own. Every precondition fails closed.
 func (l *lowering) overloadCallbackUse(implementation, overload, actual *ast.Node, given, takes *checker.Type) bool {
+	if os.Getenv("ADAMIC_PROBE_CALLBACK") != "" {
+		fmt.Fprintf(os.Stderr, "PROBE use given=%s takes=%s concreteGiven=%s mapper=%v\n", l.checker.TypeToString(given), l.checker.TypeToString(takes), l.checker.TypeToString(l.concrete(given)), l.typeMapper != nil)
+	}
 	if !overloadCallbackPlainParameter(actual) || implementation.Body() == nil {
 		return false
 	}
@@ -405,7 +410,7 @@ func (l *lowering) overloadCallbackOnlyIterated(implementation, parameter *ast.N
 // than that with no any in it: Correctness's census on #68x1t2y (typescript/overload-proof-census 2378688b,
 // debug-assert-overloads) read 1,896 types from destructuring.ts's array argument, every one any-free, and the
 // bound alone refused assertEachNode's and assertNode's five units.
-const overloadCallbackAnyCap = 1 << 16
+const overloadCallbackAnyCap = 32
 
 // overloadCallbackHoldsAny is whether any appears anywhere in t a value can sit: t itself, a union or
 // intersection member, a type argument, a property, an index signature's value, or a signature's
