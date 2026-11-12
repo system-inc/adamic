@@ -16,16 +16,37 @@ import (
 
 // overloadCallbackDeepNodes is overloadCallbackNodes with an N that reaches a chain of 40 more interfaces,
 // each through an optional field, so overloadCallbackHoldsAny reads about 80 types going down from N with
-// no any among them, as it reads 1,896 from tsc's own Node (#68x1t2y). No value below sets a link.
+// no any among them, as it reads 1,896 from tsc's own Node (#68x1t2y). No value below sets a link. Sub sits
+// between N and Id, so a call that passes a Sub instantiates the overload's T narrower than the
+// implementation's N, as destructuring.ts passes a BindingOrAssignmentElementTarget: only then does the
+// census refuse the callback as contravariant and ask overloadCallbackUse, which asks the walk.
 func overloadCallbackDeepNodes(source string) string {
 	var chain strings.Builder
 	chain.WriteString("interface N { readonly kind: number; readonly link?: L1 }\n")
 	for level := 1; level < 40; level++ {
 		chain.WriteString("interface L" + strconv.Itoa(level) + " { readonly next?: L" + strconv.Itoa(level+1) + " }\n")
 	}
-	chain.WriteString("interface L40 { readonly end: number }\n")
-	return strings.Replace(source, "interface N { readonly kind: number }\n", chain.String(), 1)
+	chain.WriteString("interface L40 { readonly end: number }\ninterface Sub extends N { readonly kind: 1 | 2 }\n")
+	source = strings.Replace(source, "interface N { readonly kind: number }\n", chain.String(), 1)
+	return strings.Replace(source, "interface Id extends N {", "interface Id extends Sub {", 1)
 }
+
+// overloadCallbackSubCall passes assertNode a Sub, then reads the text only the assertion lets it name.
+const overloadCallbackSubCall = `const id: Id = { kind: 1, text: "a" };
+const s: Sub = id;
+assertNode(s, isId);
+console.log(s.text);
+`
+
+// overloadCallbackSubEachCall passes assertEachNode an array of Subs, then reads each element's text.
+const overloadCallbackSubEachCall = `const a: Id = { kind: 1, text: "a" };
+const b: Id = { kind: 1, text: "b" };
+const subs: readonly Sub[] = [a, b];
+assertEachNode(subs, isId);
+for (const node of subs) {
+    console.log(node.text);
+}
+`
 
 // tsc's assertNode and adapted assertEachNode over a Node whose types run deeper than 32 positions, with no
 // any in them. The walk that asks whether the overload's callback parameter holds any once failed closed
@@ -37,8 +58,8 @@ func TestOverloadCallbackDeepNodeTypes(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"assertNode", overloadCallbackDeepNodes(overloadCallbackAssertNode(overloadCallbackParameters, `    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");
-`) + overloadCallbackCall)},
-		{"assertEachNode", overloadCallbackDeepNodes(overloadCallbackAssertEachNode("readonly ", "", overloadCallbackEachFor("const n of nodes", "")) + overloadCallbackEachCall("readonly "))},
+`) + overloadCallbackSubCall)},
+		{"assertEachNode", overloadCallbackDeepNodes(overloadCallbackAssertEachNode("readonly ", "", overloadCallbackEachFor("const n of nodes", "")) + overloadCallbackSubEachCall)},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -48,13 +69,13 @@ func TestOverloadCallbackDeepNodeTypes(t *testing.T) {
 }
 
 // A generic that holds a deeper instance of itself makes a new type at every step of the walk, so only
-// overloadCallbackAnyCap ends it, and it fails closed: N reaching Grow<number> keeps the census's refusal of
+// overloadCallbackAnyCap ends it, and it fails closed: a Sub reaching Grow<number> keeps the census's refusal of
 // overload 1's test, and the walk finishes. Mutant: a walk past the cap answering no, and it lowers.
 func TestOverloadCallbackGrowingGenericRefuses(t *testing.T) {
 	t.Parallel()
 	const refusal = "overload 1 of assertNode parameter test cannot be served by implementation parameter test"
-	source := strings.Replace(overloadCallbackAssertNode(overloadCallbackParameters, `    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");
-`)+overloadCallbackCall, "interface N { readonly kind: number }\n", "interface Grow<T> { readonly value?: T; readonly next?: Grow<Grow<T>> }\ninterface N { readonly kind: number; readonly grow?: Grow<number> }\n", 1)
+	source := strings.Replace(overloadCallbackDeepNodes(overloadCallbackAssertNode(overloadCallbackParameters, `    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");
+`)+overloadCallbackSubCall), "interface Sub extends N { readonly kind: 1 | 2 }\n", "interface Grow<T> { readonly value?: T; readonly next?: Grow<Grow<T>> }\ninterface Sub extends N { readonly kind: 1 | 2; readonly grow?: Grow<number> }\n", 1)
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
