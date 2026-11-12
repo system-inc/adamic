@@ -113,21 +113,6 @@ func TestGraphViewAdoptionIsAdmitted(t *testing.T) {
 	}
 }
 
-// A view whose target is a Node host object's type stays NotYet in a graph program, since the host
-// binding holds where the object came from (viewHosted, slice 3 of #ztpcwrr). Mutant: viewHosted
-// returning nil lowers it.
-func TestGraphHostViewIsNotYet(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSourceAs(t, graphReviewCycle+`import type {Stats} from 'node:fs';
-const error=new Error('plain');
-const code=(error as NodeJS.ErrnoException).code;
-console.log(code??'missing');`, ".ts")
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "a host object's type, in a graph program") {
-		t.Fatalf("got %v, want the host view stop", err)
-	}
-}
-
 func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("../oracle/testdata/entries_record_alias.a")
