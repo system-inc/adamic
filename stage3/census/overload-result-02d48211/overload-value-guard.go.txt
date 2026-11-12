@@ -1,0 +1,149 @@
+// Evidence from 02d4821168875c03fa66b5764522d0c149e3beac.
+
+// internal/lower/expression.go:1583
+// overloadSetValueStop stops an overload set read as a value. A call through the value resolves to
+// the slot's own signature, never to an overload, so a narrow overload's result check would never
+// run there (#z5d0jye, Compiler's must on 19ab1c58). functionValue asks it of a module-level set and
+// nestedReference of a nested one, so both say the same words.
+func (l *lowering) overloadSetValueStop(node *ast.Node, symbol *ast.Symbol) error {
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+			return l.notYet(node, "an overloaded function as a value")
+		}
+	}
+	return nil
+}
+
+// functionValue makes one stable adapter per named function. It binds optional
+// and rest parameters and forwards the original count, even though its ordinary
+// parameters have been padded or collected before reaching the target.
+func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	symbol := l.symbol(node)
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	if err := l.overloadSetValueStop(node, symbol); err != nil {
+		return nil, err
+	}
+	if l.result.Functions[target].Generator {
+		return nil, l.generatorNotYet(node, "used as a value")
+	}
+	if held, isMade := l.forwarders[target]; isMade {
+		return ir.Read{Local: held, Of: ir.Closure}, nil
+	}
+	for _, parameter := range symbol.Declarations[0].Parameters() {
+
+// internal/lower/expression.go:1694
+func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	l.noteOverloadCall(node)
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
+		// never[] admits a zero-argument call in TypeScript. The erased slot does
+		// not retain a source signature to prove its required arguments or ABI.
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+	}
+	// A hand-driven `x.next()` over an Iterable view parameter: property lets its callee past the
+	// library-member guard, and handNextView records the call for checkIterableViews to prove.
+	hand := l.handDrivenNext(node)
+	if hand && len(node.AsCallExpression().Arguments.Nodes) != 0 {
+		return nil, l.notYet(node, "next(x) through a view, whose value is sent in (#qk8rztp S2c-2)")
+	}
+	if hand {
+		l.handNext = node.AsCallExpression().Expression
+	}
+	// A nested overload set called by name resolves to its overload here and is checked, so its
+	// callee alone passes nestedReference's value stop.
+	enclosingCallee := l.nestedCallee
+	l.nestedCallee = ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses)
+	closure, err := l.expression(node.AsCallExpression().Expression)
+	l.nestedCallee = enclosingCallee
+	l.handNext = nil
+	if err != nil {
+		return nil, err
+	}
+	if hand {
+		if err := l.handNextView(node, closure); err != nil {
+			return nil, err
+		}
+	}
+
+// internal/lower/nested_functions.go:214
+func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
+	local, ok := l.locals[l.symbol(node)]
+	if !ok || l.result.Locals[local].NestedFunction == 0 {
+		return nil, false, nil
+	}
+	if l.result.Locals[local].NestedFunction < 0 {
+		return nil, true, l.notYet(node, "a generic function as a value")
+	}
+	if l.result.Functions[l.result.Locals[local].NestedFunction-1].Generator {
+		// A call through the value would make a frame no consumer keeps to itself, as a module
+		// generator's functionValue stops (#qk8rztp S3a). Its own calls take their carrier from
+		// nestedGeneratorCall, never through here, so the words say what reaches here: anything but
+		// its call by name (Lower's words on #qk8rztp S3c).
+		return nil, true, l.generatorNotYet(node, "declared inside a function, used other than by a call to it by name")
+	}
+	if node != l.nestedCallee {
+		if err := l.overloadSetValueStop(node, l.symbol(node)); err != nil {
+			return nil, true, err
+		}
+	}
+	return l.nestedValue(local), true, nil
+}
+
+// nestedValue is the function value of the nested declaration local binds: the declaring function's
+// own binding where it is read there, and elsewhere one made with every cell of its group's layout
+// carried in (nestedReferenceEnvironment).
+
+// internal/lower/namespace_value.go:72
+// namespaceContainerLiteral is a namespace's object: each exported function's canonical value, in
+// declaration order. namespaceValueAdmission has already stopped every other export that has a value.
+func (l *lowering) namespaceContainerLiteral(declaration *ast.Node) (ir.Expression, error) {
+	fields := []ir.Field{}
+	for _, statement := range namespaceStatements(declaration) {
+		if statement.Kind != ast.KindFunctionDeclaration || statement.Body() == nil || !ast.HasSyntacticModifier(statement, ast.ModifierFlagsExport) {
+			continue
+		}
+		function, found := l.functions[l.symbol(statement.Name())]
+		if !found {
+			return nil, l.notYet(statement, "an exported function in a namespace used as a value, without a lowered function")
+		}
+		value, err := l.functionValue(statement.Name(), function)
+		if err != nil {
+			return nil, err
+		}
+		fields = append(fields, ir.Field{Name: statement.Name().Text(), Value: value})
+	}
+	return ir.ObjectLiteral{Fields: fields}, nil
+}
+
+// internal/lower/object.go:1988
+// shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
+// the checker gives the field; the variable it reads is a separate question.
+func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
+	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
+	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	if symbol != nil {
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	local, isLocal := l.locals[symbol]
+	if !isLocal {
+		if target, isFunction := l.functions[symbol]; isFunction {
+			return l.functionValue(property, target)
+		}
+		return nil, l.notYet(property, "reading "+property.Name().Text())
+	}
+	l.touch(local)
+	of := l.result.Locals[local].Type

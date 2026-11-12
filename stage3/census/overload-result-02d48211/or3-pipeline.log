@@ -10,3 +10,17 @@ start head-prepare pid=1112
 start apply-prepare pid=1113
 apply-prepare child_exit=0
 start checkpoint-apply pid=13497
+checkpoint-apply child_exit=0
+parent-prepare child_exit=0
+head-prepare child_exit=0
+waiting for setup completion
+git child_exit=0
+git child_exit=0
+git child_exit=0
+git child_exit=0
+start box pid=13738
+box child_exit=0
+start parent-measure pid=13740
+start head-measure pid=13741
+parent-measure child_exit=0
+start checkpoint-parent pid=14063
