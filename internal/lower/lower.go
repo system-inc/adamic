@@ -284,6 +284,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkInspectorDoomedContracts(); err != nil {
 		return nil, err
 	}
+	// After the last pass: no function reference is added past here, so every function a flow graph
+	// took to never run must still be named by nothing (view_flow.go's runningFunctions).
+	if err := checkFlowLiveness(lowering.result, lowering.flowDead); err != nil {
+		return nil, err
+	}
 	return lowering, nil
 }
 
@@ -297,6 +302,10 @@ type lowering struct {
 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
 	// builds by hand leaves it ModuleFormatEcmaScript.
 	moduleFormat ModuleFormat
+
+	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
+	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
+	flowDead map[int]bool
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphDynamicSite *ast.Node
