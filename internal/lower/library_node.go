@@ -634,6 +634,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if found, err := l.nodeWatchUseRefusal(node); found {
 		return err
 	}
+	if found, err := l.nodeStatsFieldUseRefusal(node); found {
+		return err
+	}
 	name := l.nodeLibraryMember(node)
 	if root, _ := l.inspectorDoomedUse(node); root != nil {
 		// The scan also visits deferred bodies. Actual lowering records this use.

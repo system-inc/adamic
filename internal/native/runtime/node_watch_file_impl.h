@@ -1,6 +1,6 @@
-/* Darwin is unchecked until #d7jggtt. POSIX stat/time/fcntl/unistd headers
- * are shared; Linux alone uses _DEFAULT_SOURCE, linux/stat.h, sys/syscall.h and
- * sys/sysmacros.h for statx birthtimes (with the same stat fallback).
+/* Darwin is unchecked until #d7jggtt. A snapshot is node_fs_file.c's file_status,
+ * read by its file_status_read, statx with libuv's stat fallback on Linux, so a
+ * listener's Stats are made as statSync's are, birth time and all.
  * Private to node_fs_file.c. Pollers and listeners belong to the loop thread.
  * A normalized path shares its first interval/persistence, as Node does. */
 #include "timers.h"
@@ -22,17 +22,7 @@ double adamic_fs_file_unwatch(const adamic_string *path, adamic_closure *listene
 void adamic_fs_file_watch_shutdown(void) {}
 #else
 #include "sources.h"
-#if defined(__linux__)
-#include <linux/stat.h>
-#include <sys/syscall.h>
-#include <sys/sysmacros.h>
-#endif
 
-typedef struct watch_snapshot {
-    struct stat value;
-    struct timespec birth;
-    uint64_t flags, generation;
-} watch_snapshot;
 typedef struct watch_listener watch_listener;
 struct watch_listener { adamic_closure *callback; watch_listener *next; };
 typedef struct watch_poller watch_poller;
@@ -42,7 +32,7 @@ struct watch_poller {
     unsigned interval;
     bool persistent, active, firing;
     int status;
-    watch_snapshot previous;
+    file_status previous;
     watch_listener *first, *last;
     adamic_timer_handle timer;
     watch_poller *next;
@@ -55,51 +45,20 @@ static double watch_now(void) {
     if (clock_gettime(CLOCK_MONOTONIC, &now) != 0) abort();
     return floor((double)now.tv_sec * 1000 + (double)now.tv_nsec / 1000000);
 }
-static int watch_stat(const char *path, watch_snapshot *snapshot) {
-    memset(snapshot, 0, sizeof *snapshot);
-#if defined(__linux__) && defined(SYS_statx) && defined(STATX_BTIME)
-    struct statx extended;
-    if (syscall(SYS_statx, AT_FDCWD, path, 0, STATX_BASIC_STATS | STATX_BTIME, &extended) == 0) {
-        struct stat *value = &snapshot->value;
-        value->st_dev = makedev(extended.stx_dev_major, extended.stx_dev_minor);
-        value->st_ino = extended.stx_ino; value->st_mode = extended.stx_mode;
-        value->st_uid = extended.stx_uid; value->st_gid = extended.stx_gid;
-        value->st_size = extended.stx_size; value->st_nlink = extended.stx_nlink;
-        value->st_atim = (struct timespec){extended.stx_atime.tv_sec, extended.stx_atime.tv_nsec};
-        value->st_mtim = (struct timespec){extended.stx_mtime.tv_sec, extended.stx_mtime.tv_nsec};
-        value->st_ctim = (struct timespec){extended.stx_ctime.tv_sec, extended.stx_ctime.tv_nsec};
-        snapshot->birth = (struct timespec){extended.stx_btime.tv_sec, extended.stx_btime.tv_nsec};
-        return 0;
-    }
-    /* Match libuv: old seccomp filters and DVS filesystems may reject statx. */
-    if (errno != ENOSYS && errno != EINVAL && errno != EPERM && errno != EOPNOTSUPP) return -errno;
-#endif
-    if (stat(path, &snapshot->value) != 0) return -errno;
-#ifdef __APPLE__
-    snapshot->birth = snapshot->value.st_birthtimespec;
-    snapshot->flags = snapshot->value.st_flags;
-    snapshot->generation = snapshot->value.st_gen;
-#endif
-    return 0;
+static int watch_stat(const char *path, file_status *snapshot) {
+    return -file_status_read(path, snapshot);
 }
 static bool watch_times_differ(struct timespec a, struct timespec b) {
     return a.tv_sec != b.tv_sec || a.tv_nsec != b.tv_nsec;
 }
-static bool watch_changed(const watch_snapshot *old, const watch_snapshot *current) {
-    if (old->value.st_size != current->value.st_size) return true;
-#ifdef __APPLE__
-    struct timespec old_mtime = old->value.st_mtimespec, mtime = current->value.st_mtimespec;
-    struct timespec old_ctime = old->value.st_ctimespec, ctime = current->value.st_ctimespec;
-#else
-    struct timespec old_mtime = old->value.st_mtim, mtime = current->value.st_mtim;
-    struct timespec old_ctime = old->value.st_ctim, ctime = current->value.st_ctim;
-#endif
+static bool watch_changed(const file_status *old, const file_status *current) {
+    if (old->size != current->size) return true;
     // libuv fs-poll compares these fields, not atime or nlink.
-    return watch_times_differ(old_mtime, mtime) || watch_times_differ(old_ctime, ctime) ||
-        watch_times_differ(old->birth, current->birth) ||
-        old->value.st_mode != current->value.st_mode || old->value.st_uid != current->value.st_uid ||
-        old->value.st_gid != current->value.st_gid || old->value.st_ino != current->value.st_ino ||
-        old->value.st_dev != current->value.st_dev || old->flags != current->flags ||
+    return watch_times_differ(old->mtime, current->mtime) || watch_times_differ(old->ctime, current->ctime) ||
+        watch_times_differ(old->birthtime, current->birthtime) ||
+        old->mode != current->mode || old->uid != current->uid ||
+        old->gid != current->gid || old->ino != current->ino ||
+        old->dev != current->dev || old->flags != current->flags ||
         old->generation != current->generation;
 }
 static char *watch_path(const adamic_string *path) {
@@ -136,7 +95,7 @@ static void watch_retire(watch_poller *poller) {
     adamic_source_pending_close();
     if (!poller->firing) watch_drop(poller);
 }
-static void watch_notify(watch_poller *poller, const watch_snapshot *current) {
+static void watch_notify(watch_poller *poller, const file_status *current) {
     size_t count = 0;
     for (watch_listener *listener = poller->first; listener != NULL; listener = listener->next) count++;
     adamic_closure **batch = malloc(count * sizeof *batch);
@@ -144,8 +103,8 @@ static void watch_notify(watch_poller *poller, const watch_snapshot *current) {
     size_t index = 0;
     for (watch_listener *listener = poller->first; listener != NULL; listener = listener->next)
         batch[index++] = adamic_retain(listener->callback);
-    adamic_object *curr = file_stat_value(&current->value);
-    adamic_object *prev = file_stat_value(&poller->previous.value);
+    adamic_object *curr = file_stat_value(current);
+    adamic_object *prev = file_stat_value(&poller->previous);
     adamic_value arguments[2] = {{.reference = curr}, {.reference = prev}};
     for (index = 0; index < count; index++) {
         (void)adamic_closure_call(batch[index], arguments, 2);
@@ -182,13 +141,13 @@ static void watch_poll(adamic_closure *token, size_t argc, const adamic_value *a
     if (poller == NULL) return;
     poller->firing = true;
     double began = watch_now();
-    watch_snapshot current;
+    file_status current;
     int status = watch_stat(poller->path, &current);
     bool notify = status != 0 ? poller->status != status :
         poller->status != 0 && (poller->status < 0 || watch_changed(&poller->previous, &current));
     // StatWatcher's legacy initial -1 status suppresses an initial EPERM
     // whose zero nlink equals the previous zero snapshot.
-    if (poller->status == 0 && status == -1 && poller->previous.value.st_nlink == 0) notify = false;
+    if (poller->status == 0 && status == -1 && poller->previous.nlink == 0) notify = false;
     if (status != 0) memset(&current, 0, sizeof current);
     if (notify) watch_notify(poller, &current);
     if (status == 0) poller->previous = current;
