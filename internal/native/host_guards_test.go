@@ -18,7 +18,7 @@ const hostGuardsHarness = `#include "adamic.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-static const char *const names[] = {"size", "_fsFileMode"};
+static const char *const names[] = {"size", "mode"};
 static const bool references[] = {false, false};
 static const adamic_field_kind kinds[] = {adamic_field_number, adamic_field_number};
 static const adamic_shape stats_shape = {2, names, references, &adamic_host_methods, kinds};
@@ -50,7 +50,7 @@ func TestHostGuardsStopOnAStatsShape(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ reader, key string }{
-		{"read", "_fsFileMode"},
+		{"read", "mode"},
 		{"read", "size"},
 		{"own", "toString"},
 		{"own", "valueOf"},
