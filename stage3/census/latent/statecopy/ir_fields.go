@@ -298,7 +298,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"GeneratedType.Name":                 {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"GeneratorDone.Generator":            {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"GeneratorNext.Generator":            {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
-	"GeneratorNext.Function":             {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"GeneratorNext.Functions":            {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"GeneratorNext.Of":                   {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"HasAccessor.Object":                 {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"HasAccessor.Name":                   {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},

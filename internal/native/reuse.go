@@ -340,8 +340,15 @@ func reachesGlobal(program *ir.Program, expression ir.Expression, global int, se
 		}
 		return found
 	case ir.GeneratorNext:
-		// A step runs the body of the generator its frame was made by.
-		return touches(program, expression.Function, global, seen)
+		// A step runs the body of the generator its frame was made by, which may be any of
+		// Functions, so each body is followed, as a call's every target is (#qk8rztp S3c-2).
+		found := false
+		for _, function := range expression.Functions {
+			if touches(program, function, global, seen) {
+				found = true
+			}
+		}
+		return found
 	case ir.IteratorNext:
 		// A hand-driven next() steps a generator as GeneratorNext does, and a collection's iterator
 		// by the runtime's own next, which runs nothing of the program's.
