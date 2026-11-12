@@ -273,3 +273,43 @@ reason already present at 194:67. No other new finding is allowed anywhere in
 tracing.ts. PROOF.md quotes the exact findings, records whole-file comparison,
 and describes the complete sharded lane count and positive control. Raw logs,
 streams, patches and lane observations live on typescript/meta-spread-evidence.
+
+## Qualified fs import amendment, nqp4p7g
+
+Adamic's #00qn5az ruling makes tsc builtin requires top-level node: imports,
+following adaptation 93. This JavaScript-changing amendment moves tracing's
+fs binding to `import * as fs from "node:fs";`. All 17 remaining uses are
+qualified property receivers. The checker verifies their original binding and
+then their planned import binding, rejecting collisions, shadowing and bare
+namespace values before the sole write. The complete startTracing owner must
+match the original, the preceding explicit-metadata finished form, or the new
+finished form. Other owner drift still refuses.
+
+The only statement in the loader try was `fs = require("fs");`. Removing it
+leaves an empty try, whose catch cannot run. The pinned original rethrow was
+`throw new Error(` followed by `tracing requires having fs` and the original
+error. The complete empty guard is removed explicitly, rather than retaining
+unreachable source text. File operations below that guard remain unchanged.
+65 no longer creates tracing's ambient require and retains readonly process.pid.
+The now-unused errorMessage import owned by 47 is removed as well.
+
+The final base is the requested fs-view retirement re-cut at 2d7a1683,
+including the independent pop/popAll amendment. Raw validation evidence is on
+`typescript/tracing-fs-import-evidence`, outside the adaptation inputs.
+
+The amended closed-removal contract distinguishes catch reads from live export
+reads: three catch references become zero; the six export-reference expressions
+in run.js and typescript.js retain their exact bytes. All 2,256 runtime export
+keys, including errorMessage, must match. Only _tsc.js eliminates errorMessage,
+whose sole reader there was the removed catch. The hostErrors source body must
+contain only imports and function declarations. The emission audit certifies
+all other changes as symbol renames or relocation of those declarations.
+
+Node loads node:fs at module evaluation rather than at the first startTracing
+call. The builtin load cannot fail on any configuration we run: all are Node
+configurations with fs built in. sys.ts already imports node:fs before the CLI
+can invoke tracing. A private control-lane counter measures executions of the
+old catch, and a forced-failure positive control must fire once. The repeated
+trace proof compares two control and two final runs: writeStackEvent's sampled
+X events are removed under its 10 ms sampling rule; types, legend, retained
+events and plain compilation output are compared independently.
