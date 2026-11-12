@@ -857,11 +857,19 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 	var site *ast.Node
 	decodes := false
 	for _, view := range f.l.viewSources {
-		if hosted := f.viewHosted(view.source, map[*checker.Type]bool{}); hosted != nil {
-			return f.l.notYet(view.node, "a view of "+f.l.checker.TypeToString(hosted)+", a host object's type, in a graph program, whose provenance the host binding holds")
-		}
-		if hosted := f.viewHosted(view.target, map[*checker.Type]bool{}); hosted != nil {
-			return f.l.notYet(view.node, "a view as "+f.l.checker.TypeToString(hosted)+", a host object's type, in a graph program, whose provenance the host binding holds")
+		for _, side := range []struct {
+			word   string
+			proven *checker.Type
+		}{{"of", view.source}, {"as", view.target}} {
+			hosted := f.viewHosted(side.proven, map[*checker.Type]bool{})
+			if hosted == nil {
+				continue
+			}
+			what := ", a host object's type,"
+			if hosted.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
+				what = ", a type parameter that could be a host object's type,"
+			}
+			return f.l.notYet(view.node, "a view "+side.word+" "+f.l.checker.TypeToString(side.proven)+" holding "+f.l.checker.TypeToString(hosted)+what+" in a graph program, whose provenance the host binding holds")
 		}
 	}
 	inspect := func(node any) bool {
@@ -956,31 +964,45 @@ func (f *cycleFinder) unplannedPair() *graphPairSite {
 	return nil
 }
 
-// viewHosted is the host object's type a view's side holds, or nil: the type itself, its arms, a type
-// parameter's constraint, or an array's or a tuple's elements, as far as they go. A type a view can't
-// see through still reads as host when any part of it is one.
+// viewHosted is the host object's type a view's side holds, or nil, walked as far as viewPairGuard
+// pairs a view (Language's should on #ef727kr): the type itself, its arms, a type parameter's
+// constraint, an array's, a tuple's, a Map's or a Set's type arguments, its index values and its
+// fields. A type parameter with no constraint could be instantiated as a host type, so it reads as
+// one and fails closed (Runtime's question): it's returned itself, which the stop names as such.
 func (f *cycleFinder) viewHosted(proven *checker.Type, seen map[*checker.Type]bool) *checker.Type {
 	if proven == nil || seen[proven] {
 		return nil
 	}
 	seen[proven] = true
-	proven = f.l.checker.GetNonNullableType(proven)
+	proven = f.l.checker.GetNonNullableType(f.l.concrete(proven))
+	if viewPairScalar(proven) || f.viewPairFunction(proven) {
+		return nil
+	}
 	// A type parameter declared in a Node file carries a library name of its own, so it's judged by its
 	// constraint, which is what it can hold (library_node_callbacks_test.go's walk does the same).
 	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
-		if constraint := f.l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven {
-			return f.viewHosted(constraint, seen)
+		constraint := f.l.checker.GetBaseConstraintOfType(proven)
+		if constraint == nil || constraint == proven || constraint.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny) != 0 {
+			return proven
 		}
-		return nil
+		return f.viewHosted(constraint, seen)
 	}
 	if _, host := f.l.nodeHostObject(proven); host {
 		return proven
 	}
 	members := []*checker.Type{}
-	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+	switch {
+	case proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
 		members = proven.Types()
-	} else if f.l.isArrayType(proven) || checker.IsTupleType(proven) {
+	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		members = f.l.checker.GetTypeArguments(proven)
+	default:
+		for _, info := range f.l.checker.GetIndexInfosOfType(proven) {
+			members = append(members, info.ValueType())
+		}
+		for _, field := range f.fields(proven) {
+			members = append(members, f.l.checker.GetTypeOfSymbol(field))
+		}
 	}
 	for _, member := range members {
 		if hosted := f.viewHosted(member, seen); hosted != nil {
