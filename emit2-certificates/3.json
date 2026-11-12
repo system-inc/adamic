@@ -1,0 +1,202 @@
+{
+  "file": "run.js",
+  "tokenComparison": "all remaining tokens equal except certified symbol renames",
+  "tokens": 1810994,
+  "renamedOccurrences": 134,
+  "renameBindings": 28,
+  "renames": {
+    "fs3 -> fs4": 99,
+    "fs3 -> fs": 17,
+    "fs2 -> fs3": 12,
+    "fs4 -> fs5": 6
+  },
+  "errorMessage": {
+    "beforeReferences": 4,
+    "beforeReferenceLines": [
+      2594,
+      197053,
+      200368,
+      209534
+    ],
+    "afterReferences": 3
+  },
+  "beforeApprovedSpans": [
+    {
+      "start": 79602,
+      "end": 79766,
+      "line": 2553,
+      "kind": "declaration-only relocation",
+      "detail": "errorCode"
+    },
+    {
+      "start": 79767,
+      "end": 79943,
+      "line": 2556,
+      "kind": "declaration-only relocation",
+      "detail": "errorMessage"
+    },
+    {
+      "start": 79944,
+      "end": 80190,
+      "line": 2559,
+      "kind": "declaration-only relocation",
+      "detail": "propertyOf"
+    },
+    {
+      "start": 80496,
+      "end": 80514,
+      "line": 2578,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 261707,
+      "end": 261725,
+      "line": 5583,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 2137795,
+      "end": 2137813,
+      "line": 39967,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 6077897,
+      "end": 6077915,
+      "line": 128638,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 6484606,
+      "end": 6484624,
+      "line": 137725,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 80191,
+      "end": 80281,
+      "line": 2565,
+      "kind": "declaration-only relocation",
+      "detail": "esbuild initializer containing only a strict directive"
+    },
+    {
+      "start": 80837,
+      "end": 81054,
+      "line": 2589,
+      "kind": "closed removal",
+      "detail": "reviewed tracing lazy loader guard"
+    },
+    {
+      "start": 80549,
+      "end": 80557,
+      "line": 2580,
+      "kind": "closed removal",
+      "detail": "reviewed tracing local binding"
+    }
+  ],
+  "afterApprovedSpans": [
+    {
+      "start": 223118,
+      "end": 223282,
+      "line": 4608,
+      "kind": "declaration-only relocation",
+      "detail": "errorCode"
+    },
+    {
+      "start": 223283,
+      "end": 223459,
+      "line": 4611,
+      "kind": "declaration-only relocation",
+      "detail": "errorMessage"
+    },
+    {
+      "start": 223460,
+      "end": 223706,
+      "line": 4614,
+      "kind": "declaration-only relocation",
+      "detail": "propertyOf"
+    },
+    {
+      "start": 261463,
+      "end": 261481,
+      "line": 5574,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 2137551,
+      "end": 2137569,
+      "line": 39958,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 6077653,
+      "end": 6077671,
+      "line": 128629,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 6484362,
+      "end": 6484380,
+      "line": 137716,
+      "kind": "declaration-only relocation",
+      "detail": "call of declaration-only hostErrors initializer"
+    },
+    {
+      "start": 223707,
+      "end": 223797,
+      "line": 4620,
+      "kind": "declaration-only relocation",
+      "detail": "esbuild initializer containing only a strict directive"
+    },
+    {
+      "start": 79789,
+      "end": 79817,
+      "line": 2559,
+      "kind": "declaration-only relocation",
+      "detail": "reviewed tracing eager builtin import; load-effect witness required"
+    },
+    {
+      "start": 79603,
+      "end": 79607,
+      "line": 2553,
+      "kind": "declaration-only relocation",
+      "detail": "reviewed hoisted tracing import binding"
+    }
+  ],
+  "beforeBindingShorthands": [
+    {
+      "line": 66172,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    },
+    {
+      "line": 66261,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    }
+  ],
+  "afterBindingShorthands": [
+    {
+      "line": 66163,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    },
+    {
+      "line": 66252,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    }
+  ]
+}

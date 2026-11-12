@@ -1,0 +1,32 @@
+[
+  {
+    "case": "clean",
+    "argv": [
+      "node",
+      "--max-old-space-size=1024",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "clean"
+    ],
+    "exit": 0
+  },
+  {
+    "case": "0",
+    "argv": [
+      "node",
+      "--max-old-space-size=1024",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "0"
+    ],
+    "exit": 0
+  },
+  {
+    "case": "1",
+    "argv": [
+      "node",
+      "--max-old-space-size=1024",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "1"
+    ],
+    "exit": -9
+  }
+]

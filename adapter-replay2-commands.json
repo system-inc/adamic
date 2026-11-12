@@ -1,0 +1,49 @@
+[
+  {
+    "name": "owner-replay2",
+    "argv": [
+      "node",
+      "/workspace/adamic/stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+      "/workspace/scratch/tracing-after2",
+      "/workspace/scratch/tracing2-contract",
+      "/workspace/scratch/tracing-fs-import-evidence/owner-replay2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "65-replay2",
+    "argv": [
+      "node",
+      "/workspace/adamic/stage3/adapt/65-temporary-node-builtins/check.cjs",
+      "/workspace/scratch/tracing2-contract"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "bindings2-clean",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "clean"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "bindings2-0",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "0"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "bindings2-1",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/binding_mutants2.cjs",
+      "1"
+    ],
+    "exit": -9
+  }
+]

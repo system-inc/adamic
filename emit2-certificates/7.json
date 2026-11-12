@@ -1,0 +1,114 @@
+{
+  "file": "typescript.js",
+  "tokenComparison": "all remaining tokens equal except certified symbol renames",
+  "tokens": 1320141,
+  "renamedOccurrences": 2,
+  "renameBindings": 1,
+  "renames": {
+    "fs -> fs2": 2
+  },
+  "errorMessage": {
+    "beforeReferences": 3,
+    "beforeReferenceLines": [
+      541,
+      4800,
+      184112
+    ],
+    "afterReferences": 2
+  },
+  "beforeApprovedSpans": [
+    {
+      "start": 198926,
+      "end": 199090,
+      "line": 4769,
+      "kind": "declaration-only relocation",
+      "detail": "errorCode"
+    },
+    {
+      "start": 199091,
+      "end": 199267,
+      "line": 4772,
+      "kind": "declaration-only relocation",
+      "detail": "errorMessage"
+    },
+    {
+      "start": 199268,
+      "end": 199514,
+      "line": 4775,
+      "kind": "declaration-only relocation",
+      "detail": "propertyOf"
+    },
+    {
+      "start": 199853,
+      "end": 200044,
+      "line": 4795,
+      "kind": "closed removal",
+      "detail": "reviewed tracing lazy loader guard"
+    },
+    {
+      "start": 199602,
+      "end": 199609,
+      "line": 4786,
+      "kind": "closed removal",
+      "detail": "reviewed tracing local binding"
+    }
+  ],
+  "afterApprovedSpans": [
+    {
+      "start": 333042,
+      "end": 333206,
+      "line": 6812,
+      "kind": "declaration-only relocation",
+      "detail": "errorCode"
+    },
+    {
+      "start": 333207,
+      "end": 333383,
+      "line": 6815,
+      "kind": "declaration-only relocation",
+      "detail": "errorMessage"
+    },
+    {
+      "start": 333384,
+      "end": 333630,
+      "line": 6818,
+      "kind": "declaration-only relocation",
+      "detail": "propertyOf"
+    },
+    {
+      "start": 198925,
+      "end": 198957,
+      "line": 4769,
+      "kind": "declaration-only relocation",
+      "detail": "reviewed tracing eager builtin import; load-effect witness required"
+    }
+  ],
+  "beforeBindingShorthands": [
+    {
+      "line": 68303,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    },
+    {
+      "line": 68392,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    }
+  ],
+  "afterBindingShorthands": [
+    {
+      "line": 68295,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    },
+    {
+      "line": 68384,
+      "key": "errorMessage",
+      "binding": "errorMessage2",
+      "shorthand": false
+    }
+  ]
+}

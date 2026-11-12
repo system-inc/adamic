@@ -1,0 +1,4 @@
+[typescript/tracing-fs-import 0334d4e3c] stage3: amend 47 and 65 for tracing node:fs import (#nqp4p7g)
+ Date: Thu Nov 12 01:02:08 2026 +0000
+ 10 files changed, 170 insertions(+), 15 deletions(-)
+ create mode 100644 stage3/adapt/47-host-errors/tracing-fs-import.cjs

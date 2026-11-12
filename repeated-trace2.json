@@ -1,0 +1,79 @@
+{
+  "controlSelfInventoryDiffers": true,
+  "samplingRule": "writeStackEvent emits ph X complete events only when [time,endTime) crosses a 10 ms sampling point",
+  "removedKinds": [
+    "X"
+  ],
+  "deterministicInventoryEqual": true,
+  "typesAndLegendByteIdentical": true,
+  "runs": [
+    {
+      "tree": "control2",
+      "index": 1,
+      "traceEvents": 30,
+      "sampledEvents": 7,
+      "retainedEvents": 23,
+      "sampledNames": [
+        "emitDeclarationFileOrBundle",
+        "emitJsFileOrBundle",
+        "findSourceFile",
+        "processRootFiles",
+        "transformNodes"
+      ],
+      "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+      "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+    },
+    {
+      "tree": "control2",
+      "index": 2,
+      "traceEvents": 31,
+      "sampledEvents": 8,
+      "retainedEvents": 23,
+      "sampledNames": [
+        "checkExpression",
+        "emitDeclarationFileOrBundle",
+        "emitJsFileOrBundle",
+        "findSourceFile",
+        "processRootFiles",
+        "transformNodes"
+      ],
+      "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+      "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+    },
+    {
+      "tree": "after2",
+      "index": 1,
+      "traceEvents": 31,
+      "sampledEvents": 8,
+      "retainedEvents": 23,
+      "sampledNames": [
+        "checkExpression",
+        "emitDeclarationFileOrBundle",
+        "emitJsFileOrBundle",
+        "findSourceFile",
+        "processRootFiles",
+        "transformNodes"
+      ],
+      "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+      "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+    },
+    {
+      "tree": "after2",
+      "index": 2,
+      "traceEvents": 33,
+      "sampledEvents": 10,
+      "retainedEvents": 23,
+      "sampledNames": [
+        "checkExpression",
+        "checkVariableDeclaration",
+        "emitDeclarationFileOrBundle",
+        "emitJsFileOrBundle",
+        "findSourceFile",
+        "processRootFiles",
+        "transformNodes"
+      ],
+      "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+      "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+    }
+  ]
+}

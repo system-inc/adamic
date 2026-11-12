@@ -1,0 +1,51 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/workspace/scratch/tracing-fs-import-evidence/make_loader_overlay.py",
+      "/workspace/scratch/tracing2-census-loader"
+    ],
+    "exit": 0
+  },
+  {
+    "argv": [
+      "python3",
+      "stage3/census/latent/make_overlay.py",
+      "/workspace/adamic",
+      "/workspace/scratch/tracing2-census-lower"
+    ],
+    "exit": 0
+  },
+  {
+    "argv": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/scratch/tracing2-census-overlay.json",
+      "-o",
+      "/workspace/scratch/tracing2-latent",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 0
+  },
+  {
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/scratch/tracing2-adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0
+  },
+  {
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/scratch/tracing2-first-stop",
+      "./stage3/census/tool"
+    ],
+    "exit": 0
+  }
+]

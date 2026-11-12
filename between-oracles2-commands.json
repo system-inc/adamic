@@ -1,0 +1,146 @@
+[
+  {
+    "name": "guard-fix-commit",
+    "argv": [
+      "git",
+      "add",
+      "stage3/adapt/47-host-errors/tracing-fs-import.cjs"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "guard-fix-amend",
+    "argv": [
+      "git",
+      "commit",
+      "--amend",
+      "--no-edit"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after3-apply",
+    "argv": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/tracing-after3"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after3-build",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after3-harness",
+    "argv": [
+      "npm",
+      "exec",
+      "hereby",
+      "--",
+      "tests"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after3-types",
+    "argv": [
+      "/workspace/scratch/tracing2-adamic",
+      "types",
+      "/workspace/scratch/tracing-after3/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/binder.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/builder.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/builderPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/builderState.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/checker.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/core.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/corePublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/debug.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/emitter.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/hostErrors.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/parser.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/path.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/performance.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/performanceCore.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/program.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/scanner.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/semver.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/sourcemap.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/sys.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/tracing.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformer.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/tsbuild.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/types.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/utilities.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/watch.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/watchPublic.ts",
+      "/workspace/scratch/tracing-after3/src/compiler/watchUtilities.ts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after3-replay",
+    "argv": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/tracing-after3-replay"
+    ],
+    "exit": 0
+  }
+]

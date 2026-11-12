@@ -1,0 +1,20 @@
+{
+  "shards": 398,
+  "allPass": true,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "maximumShardSeconds": 8.549484146000395,
+  "wallSeconds": 840.362840795,
+  "memoryEventsUnchanged": true,
+  "runnerIdenticalInEveryShard": true,
+  "oldCatchExecutions": 0,
+  "bundleLoads": {
+    "run.js": 398,
+    "_tsc.js": 0,
+    "typescript.js": 0
+  },
+  "harnessProcesses": 398
+}

@@ -1,0 +1,2953 @@
+{
+  "hunks": 68,
+  "allRemainingTokensCertified": true,
+  "source": "emit2.diff",
+  "hunksClassified": [
+    {
+      "file": "_tsc.js",
+      "header": "@@ -1111,10 +1111,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 1114,
+          "text": "function or(...fs) {"
+        },
+        {
+          "side": "after",
+          "line": 1114,
+          "text": "function or(...fs2) {"
+        },
+        {
+          "side": "before",
+          "line": 1117,
+          "text": "    for (const f of fs) {"
+        },
+        {
+          "side": "after",
+          "line": 1117,
+          "text": "    for (const f of fs2) {"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -2169,25 +2169,11 @@",
+      "classes": [
+        "declaration-only relocation",
+        "closed removal"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2172,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "before",
+          "line": 2173,
+          "text": "function errorCode(error) {"
+        },
+        {
+          "side": "before",
+          "line": 2174,
+          "text": "  return typeof error === \"object\" && error !== null && \"code\" in error && typeof error.code === \"string\" ? error.code : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 2175,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2176,
+          "text": "function errorMessage(error) {"
+        },
+        {
+          "side": "before",
+          "line": 2177,
+          "text": "  return typeof error === \"object\" && error !== null && \"message\" in error && typeof error.message === \"string\" ? error.message : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 2178,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2179,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "before",
+          "line": 2180,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 2181,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "before",
+          "line": 2182,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 2183,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "before",
+          "line": 2184,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2185,
+          "text": ""
+        },
+        {
+          "side": "after",
+          "line": 2173,
+          "text": "var fs = __toESM(require(\"fs\"));"
+        },
+        {
+          "side": "before",
+          "line": 2190,
+          "text": "  let fs;"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -2196,14 +2182,6 @@",
+      "classes": [
+        "closed removal"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2199,
+          "text": "    if (fs === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 2200,
+          "text": "      try {"
+        },
+        {
+          "side": "before",
+          "line": 2201,
+          "text": "        fs = require(\"fs\");"
+        },
+        {
+          "side": "before",
+          "line": 2202,
+          "text": "      } catch (e) {"
+        },
+        {
+          "side": "before",
+          "line": 2203,
+          "text": "        throw new Error(`tracing requires having fs"
+        },
+        {
+          "side": "before",
+          "line": 2204,
+          "text": "(original error: ${errorMessage(e) || e})`);"
+        },
+        {
+          "side": "before",
+          "line": 2205,
+          "text": "      }"
+        },
+        {
+          "side": "before",
+          "line": 2206,
+          "text": "    }"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -3462,6 +3440,17 @@",
+      "classes": [
+        "declaration-only relocation"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "after",
+          "line": 3443,
+          "text": ""
+        },
+        {
+          "side": "after",
+          "line": 3444,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "after",
+          "line": 3445,
+          "text": "function errorCode(error) {"
+        },
+        {
+          "side": "after",
+          "line": 3446,
+          "text": "  return typeof error === \"object\" && error !== null && \"code\" in error && typeof error.code === \"string\" ? error.code : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 3447,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 3448,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "after",
+          "line": 3449,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "after",
+          "line": 3450,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "after",
+          "line": 3451,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 3452,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "after",
+          "line": 3453,
+          "text": "}"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -49004,10 +48993,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 49007,
+          "text": "  function resolveExternalModuleName(location, moduleReferenceExpression, ignoreErrors, errorMessage2) {"
+        },
+        {
+          "side": "after",
+          "line": 48996,
+          "text": "  function resolveExternalModuleName(location, moduleReferenceExpression, ignoreErrors, errorMessage) {"
+        },
+        {
+          "side": "before",
+          "line": 49009,
+          "text": "    errorMessage2 ?? (errorMessage2 = getCannotResolveModuleNameErrorForSpecificModule(moduleReferenceExpression) ?? (isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.Cannot_find_module_0_or_its_corresponding_type_declarations));"
+        },
+        {
+          "side": "before",
+          "line": 49010,
+          "text": "    return resolveExternalModuleNameWorker(location, moduleReferenceExpression, ignoreErrors ? void 0 : errorMessage2, ignoreErrors);"
+        },
+        {
+          "side": "after",
+          "line": 48998,
+          "text": "    errorMessage ?? (errorMessage = getCannotResolveModuleNameErrorForSpecificModule(moduleReferenceExpression) ?? (isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.Cannot_find_module_0_or_its_corresponding_type_declarations));"
+        },
+        {
+          "side": "after",
+          "line": 48999,
+          "text": "    return resolveExternalModuleNameWorker(location, moduleReferenceExpression, ignoreErrors ? void 0 : errorMessage, ignoreErrors);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -62411,8 +62400,8 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 62414,
+          "text": "          const errorMessage2 = targetMeaning === 111551 /* Value */ ? Diagnostics.Module_0_does_not_refer_to_a_value_but_is_used_as_a_value_here : Diagnostics.Module_0_does_not_refer_to_a_type_but_is_used_as_a_type_here_Did_you_mean_typeof_import_0;"
+        },
+        {
+          "side": "before",
+          "line": 62415,
+          "text": "          error(node, errorMessage2, node.argument.literal.text);"
+        },
+        {
+          "side": "after",
+          "line": 62403,
+          "text": "          const errorMessage = targetMeaning === 111551 /* Value */ ? Diagnostics.Module_0_does_not_refer_to_a_value_but_is_used_as_a_value_here : Diagnostics.Module_0_does_not_refer_to_a_type_but_is_used_as_a_type_here_Did_you_mean_typeof_import_0;"
+        },
+        {
+          "side": "after",
+          "line": 62404,
+          "text": "          error(node, errorMessage, node.argument.literal.text);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -63668,7 +63657,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 63671,
+          "text": "      const { errorNode: prop, innerExpression: next, nameType, errorMessage: errorMessage2 } = value;"
+        },
+        {
+          "side": "after",
+          "line": 63660,
+          "text": "      const { errorNode: prop, innerExpression: next, nameType, errorMessage } = value;"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -63708,9 +63697,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 63711,
+          "text": "            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "after",
+          "line": 63700,
+          "text": "            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "before",
+          "line": 63713,
+          "text": "              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "after",
+          "line": 63702,
+          "text": "              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -63757,7 +63746,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 63760,
+          "text": "      const { errorNode: prop, innerExpression: next, nameType, errorMessage: errorMessage2 } = status.value;"
+        },
+        {
+          "side": "after",
+          "line": 63749,
+          "text": "      const { errorNode: prop, innerExpression: next, nameType, errorMessage } = status.value;"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -63801,9 +63790,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 63804,
+          "text": "            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "after",
+          "line": 63793,
+          "text": "            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "before",
+          "line": 63806,
+          "text": "              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);"
+        },
+        {
+          "side": "after",
+          "line": 63795,
+          "text": "              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -74116,9 +74105,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 74119,
+          "text": "    const errorMessage2 = isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_for_the_appropriate_package_installed;"
+        },
+        {
+          "side": "after",
+          "line": 74108,
+          "text": "    const errorMessage = isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_for_the_appropriate_package_installed;"
+        },
+        {
+          "side": "before",
+          "line": 74121,
+          "text": "    const mod = resolveExternalModule(specifier || location, runtimeImportSpecifier, errorMessage2, location);"
+        },
+        {
+          "side": "after",
+          "line": 74110,
+          "text": "    const mod = resolveExternalModule(specifier || location, runtimeImportSpecifier, errorMessage, location);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -84893,7 +84882,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 84896,
+          "text": "        let errorMessage2;"
+        },
+        {
+          "side": "after",
+          "line": 84885,
+          "text": "        let errorMessage;"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -84903,16 +84892,16 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 84906,
+          "text": "            const errorMessage3 = overriddenInstanceProperty ? Diagnostics._0_is_defined_as_an_accessor_in_class_1_but_is_overridden_here_in_2_as_an_instance_property : Diagnostics._0_is_defined_as_a_property_in_class_1_but_is_overridden_here_in_2_as_an_accessor;"
+        },
+        {
+          "side": "before",
+          "line": 84907,
+          "text": "            error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage3, symbolToString(base), typeToString(baseType), typeToString(type));"
+        },
+        {
+          "side": "after",
+          "line": 84895,
+          "text": "            const errorMessage2 = overriddenInstanceProperty ? Diagnostics._0_is_defined_as_an_accessor_in_class_1_but_is_overridden_here_in_2_as_an_instance_property : Diagnostics._0_is_defined_as_a_property_in_class_1_but_is_overridden_here_in_2_as_an_accessor;"
+        },
+        {
+          "side": "after",
+          "line": 84896,
+          "text": "            error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, symbolToString(base), typeToString(baseType), typeToString(type));"
+        },
+        {
+          "side": "before",
+          "line": 84914,
+          "text": "                const errorMessage3 = Diagnostics.Property_0_will_overwrite_the_base_property_in_1_If_this_is_intentional_add_an_initializer_Otherwise_add_a_declare_modifier_or_remove_the_redundant_declaration;"
+        },
+        {
+          "side": "before",
+          "line": 84915,
+          "text": "                error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage3, symbolToString(base), typeToString(baseType));"
+        },
+        {
+          "side": "after",
+          "line": 84903,
+          "text": "                const errorMessage2 = Diagnostics.Property_0_will_overwrite_the_base_property_in_1_If_this_is_intentional_add_an_initializer_Otherwise_add_a_declare_modifier_or_remove_the_redundant_declaration;"
+        },
+        {
+          "side": "after",
+          "line": 84904,
+          "text": "                error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, symbolToString(base), typeToString(baseType));"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -84922,14 +84911,14 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 84925,
+          "text": "            errorMessage2 = Diagnostics.Class_0_defines_instance_member_function_1_but_extended_class_2_defines_it_as_instance_member_accessor;"
+        },
+        {
+          "side": "after",
+          "line": 84914,
+          "text": "            errorMessage = Diagnostics.Class_0_defines_instance_member_function_1_but_extended_class_2_defines_it_as_instance_member_accessor;"
+        },
+        {
+          "side": "before",
+          "line": 84928,
+          "text": "          errorMessage2 = Diagnostics.Class_0_defines_instance_member_accessor_1_but_extended_class_2_defines_it_as_instance_member_function;"
+        },
+        {
+          "side": "after",
+          "line": 84917,
+          "text": "          errorMessage = Diagnostics.Class_0_defines_instance_member_accessor_1_but_extended_class_2_defines_it_as_instance_member_function;"
+        },
+        {
+          "side": "before",
+          "line": 84930,
+          "text": "          errorMessage2 = Diagnostics.Class_0_defines_instance_member_property_1_but_extended_class_2_defines_it_as_instance_member_function;"
+        },
+        {
+          "side": "before",
+          "line": 84931,
+          "text": "        }"
+        },
+        {
+          "side": "before",
+          "line": 84932,
+          "text": "        error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, typeToString(baseType), symbolToString(base), typeToString(type));"
+        },
+        {
+          "side": "after",
+          "line": 84919,
+          "text": "          errorMessage = Diagnostics.Class_0_defines_instance_member_property_1_but_extended_class_2_defines_it_as_instance_member_function;"
+        },
+        {
+          "side": "after",
+          "line": 84920,
+          "text": "        }"
+        },
+        {
+          "side": "after",
+          "line": 84921,
+          "text": "        error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage, typeToString(baseType), symbolToString(base), typeToString(type));"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -85887,10 +85876,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 85890,
+          "text": "  function checkGrammarModuleElementContext(node, errorMessage2) {"
+        },
+        {
+          "side": "after",
+          "line": 85879,
+          "text": "  function checkGrammarModuleElementContext(node, errorMessage) {"
+        },
+        {
+          "side": "before",
+          "line": 85893,
+          "text": "      grammarErrorOnFirstToken(node, errorMessage2);"
+        },
+        {
+          "side": "after",
+          "line": 85882,
+          "text": "      grammarErrorOnFirstToken(node, errorMessage);"
+        }
+      ]
+    },
+    {
+      "file": "_tsc.js",
+      "header": "@@ -121697,14 +121686,14 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 121700,
+          "text": "  const errorMessage2 = `${diagnosticCategoryName(diagnostic)} TS${diagnostic.code}: ${flattenDiagnosticMessageText(diagnostic.messageText, host.getNewLine())}${host.getNewLine()}`;"
+        },
+        {
+          "side": "after",
+          "line": 121689,
+          "text": "  const errorMessage = `${diagnosticCategoryName(diagnostic)} TS${diagnostic.code}: ${flattenDiagnosticMessageText(diagnostic.messageText, host.getNewLine())}${host.getNewLine()}`;"
+        },
+        {
+          "side": "before",
+          "line": 121705,
+          "text": "    return `${relativeFileName}(${line + 1},${character + 1}): ` + errorMessage2;"
+        },
+        {
+          "side": "before",
+          "line": 121706,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 121707,
+          "text": "  return errorMessage2;"
+        },
+        {
+          "side": "after",
+          "line": 121694,
+          "text": "    return `${relativeFileName}(${line + 1},${character + 1}): ` + errorMessage;"
+        },
+        {
+          "side": "after",
+          "line": 121695,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 121696,
+          "text": "  return errorMessage;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -1400,10 +1400,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 1403,
+          "text": "function or(...fs3) {"
+        },
+        {
+          "side": "after",
+          "line": 1403,
+          "text": "function or(...fs4) {"
+        },
+        {
+          "side": "before",
+          "line": 1406,
+          "text": "    for (const f of fs3) {"
+        },
+        {
+          "side": "after",
+          "line": 1406,
+          "text": "    for (const f of fs4) {"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2549,35 +2549,15 @@",
+      "classes": [
+        "declaration-only relocation",
+        "rename",
+        "closed removal"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2552,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "before",
+          "line": 2553,
+          "text": "function errorCode(error2) {"
+        },
+        {
+          "side": "before",
+          "line": 2554,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"code\" in error2 && typeof error2.code === \"string\" ? error2.code : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 2555,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2556,
+          "text": "function errorMessage(error2) {"
+        },
+        {
+          "side": "before",
+          "line": 2557,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"message\" in error2 && typeof error2.message === \"string\" ? error2.message : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 2558,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2559,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "before",
+          "line": 2560,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 2561,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "before",
+          "line": 2562,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 2563,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "before",
+          "line": 2564,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 2565,
+          "text": "var init_hostErrors = __esm({"
+        },
+        {
+          "side": "before",
+          "line": 2566,
+          "text": "  \"src/compiler/hostErrors.ts\"() {"
+        },
+        {
+          "side": "before",
+          "line": 2567,
+          "text": "    \"use strict\";"
+        },
+        {
+          "side": "before",
+          "line": 2568,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 2569,
+          "text": "});"
+        },
+        {
+          "side": "before",
+          "line": 2570,
+          "text": ""
+        },
+        {
+          "side": "before",
+          "line": 2572,
+          "text": "var tracing, tracingEnabled, startTracing, dumpTracingLegend;"
+        },
+        {
+          "side": "after",
+          "line": 2553,
+          "text": "var fs, tracing, tracingEnabled, startTracing, dumpTracingLegend;"
+        },
+        {
+          "side": "before",
+          "line": 2578,
+          "text": "    init_hostErrors();"
+        },
+        {
+          "side": "after",
+          "line": 2559,
+          "text": "    fs = __toESM(require(\"fs\"));"
+        },
+        {
+          "side": "before",
+          "line": 2580,
+          "text": "      let fs3;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2586,21 +2566,13 @@",
+      "classes": [
+        "closed removal",
+        "rename"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2589,
+          "text": "        if (fs3 === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 2590,
+          "text": "          try {"
+        },
+        {
+          "side": "before",
+          "line": 2591,
+          "text": "            fs3 = require(\"fs\");"
+        },
+        {
+          "side": "before",
+          "line": 2592,
+          "text": "          } catch (e) {"
+        },
+        {
+          "side": "before",
+          "line": 2593,
+          "text": "            throw new Error(`tracing requires having fs"
+        },
+        {
+          "side": "before",
+          "line": 2594,
+          "text": "(original error: ${errorMessage(e) || e})`);"
+        },
+        {
+          "side": "before",
+          "line": 2595,
+          "text": "          }"
+        },
+        {
+          "side": "before",
+          "line": 2596,
+          "text": "        }"
+        },
+        {
+          "side": "before",
+          "line": 2602,
+          "text": "        if (!fs3.existsSync(traceDir)) {"
+        },
+        {
+          "side": "before",
+          "line": 2603,
+          "text": "          fs3.mkdirSync(traceDir, { recursive: true });"
+        },
+        {
+          "side": "after",
+          "line": 2574,
+          "text": "        if (!fs.existsSync(traceDir)) {"
+        },
+        {
+          "side": "after",
+          "line": 2575,
+          "text": "          fs.mkdirSync(traceDir, { recursive: true });"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2610,10 +2582,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2613,
+          "text": "        traceFd = fs3.openSync(tracePath, \"w\");"
+        },
+        {
+          "side": "after",
+          "line": 2585,
+          "text": "        traceFd = fs.openSync(tracePath, \"w\");"
+        },
+        {
+          "side": "before",
+          "line": 2616,
+          "text": "        fs3.writeSync("
+        },
+        {
+          "side": "after",
+          "line": 2588,
+          "text": "        fs.writeSync("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2622,10 +2594,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2625,
+          "text": "        fs3.writeSync(traceFd, `"
+        },
+        {
+          "side": "after",
+          "line": 2597,
+          "text": "        fs.writeSync(traceFd, `"
+        },
+        {
+          "side": "before",
+          "line": 2628,
+          "text": "        fs3.closeSync(traceFd);"
+        },
+        {
+          "side": "after",
+          "line": 2600,
+          "text": "        fs.closeSync(traceFd);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2698,11 +2670,11 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2701,
+          "text": "        fs3.writeSync(traceFd, `,"
+        },
+        {
+          "side": "after",
+          "line": 2673,
+          "text": "        fs.writeSync(traceFd, `,"
+        },
+        {
+          "side": "before",
+          "line": 2703,
+          "text": "        if (extras) fs3.writeSync(traceFd, `,${extras}`);"
+        },
+        {
+          "side": "before",
+          "line": 2704,
+          "text": "        if (args) fs3.writeSync(traceFd, `,\"args\":${JSON.stringify(args)}`);"
+        },
+        {
+          "side": "before",
+          "line": 2705,
+          "text": "        fs3.writeSync(traceFd, `}`);"
+        },
+        {
+          "side": "after",
+          "line": 2675,
+          "text": "        if (extras) fs.writeSync(traceFd, `,${extras}`);"
+        },
+        {
+          "side": "after",
+          "line": 2676,
+          "text": "        if (args) fs.writeSync(traceFd, `,\"args\":${JSON.stringify(args)}`);"
+        },
+        {
+          "side": "after",
+          "line": 2677,
+          "text": "        fs.writeSync(traceFd, `}`);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2724,9 +2696,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2727,
+          "text": "        const typesFd = fs3.openSync(typesPath, \"w\");"
+        },
+        {
+          "side": "after",
+          "line": 2699,
+          "text": "        const typesFd = fs.openSync(typesPath, \"w\");"
+        },
+        {
+          "side": "before",
+          "line": 2729,
+          "text": "        fs3.writeSync(typesFd, \"[\");"
+        },
+        {
+          "side": "after",
+          "line": 2701,
+          "text": "        fs.writeSync(typesFd, \"[\");"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2822,13 +2794,13 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2825,
+          "text": "          fs3.writeSync(typesFd, JSON.stringify(descriptor));"
+        },
+        {
+          "side": "after",
+          "line": 2797,
+          "text": "          fs.writeSync(typesFd, JSON.stringify(descriptor));"
+        },
+        {
+          "side": "before",
+          "line": 2827,
+          "text": "            fs3.writeSync(typesFd, \",\\n\");"
+        },
+        {
+          "side": "after",
+          "line": 2799,
+          "text": "            fs.writeSync(typesFd, \",\\n\");"
+        },
+        {
+          "side": "before",
+          "line": 2830,
+          "text": "        fs3.writeSync(typesFd, \"]\\n\");"
+        },
+        {
+          "side": "before",
+          "line": 2831,
+          "text": "        fs3.closeSync(typesFd);"
+        },
+        {
+          "side": "after",
+          "line": 2802,
+          "text": "        fs.writeSync(typesFd, \"]\\n\");"
+        },
+        {
+          "side": "after",
+          "line": 2803,
+          "text": "        fs.closeSync(typesFd);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -2836,7 +2808,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 2839,
+          "text": "        fs3.writeFileSync(legendPath, JSON.stringify(legend));"
+        },
+        {
+          "side": "after",
+          "line": 2811,
+          "text": "        fs.writeFileSync(legendPath, JSON.stringify(legend));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -4629,6 +4601,25 @@",
+      "classes": [
+        "rename",
+        "declaration-only relocation"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "after",
+          "line": 4604,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 4605,
+          "text": "});"
+        },
+        {
+          "side": "after",
+          "line": 4606,
+          "text": ""
+        },
+        {
+          "side": "after",
+          "line": 4607,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "after",
+          "line": 4608,
+          "text": "function errorCode(error2) {"
+        },
+        {
+          "side": "after",
+          "line": 4609,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"code\" in error2 && typeof error2.code === \"string\" ? error2.code : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 4610,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 4611,
+          "text": "function errorMessage(error2) {"
+        },
+        {
+          "side": "after",
+          "line": 4612,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"message\" in error2 && typeof error2.message === \"string\" ? error2.message : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 4613,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 4614,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "after",
+          "line": 4615,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "after",
+          "line": 4616,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "after",
+          "line": 4617,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 4618,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "after",
+          "line": 4619,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 4620,
+          "text": "var init_hostErrors = __esm({"
+        },
+        {
+          "side": "after",
+          "line": 4621,
+          "text": "  \"src/compiler/hostErrors.ts\"() {"
+        },
+        {
+          "side": "after",
+          "line": 4622,
+          "text": "    \"use strict\";"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -202625,37 +202616,37 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 202628,
+          "text": "  const fs3 = getBuiltLocal(host, ignoreCase).shadow();"
+        },
+        {
+          "side": "after",
+          "line": 202619,
+          "text": "  const fs4 = getBuiltLocal(host, ignoreCase).shadow();"
+        },
+        {
+          "side": "before",
+          "line": 202631,
+          "text": "      fs3.meta.set(key, meta[key]);"
+        },
+        {
+          "side": "after",
+          "line": 202622,
+          "text": "      fs4.meta.set(key, meta[key]);"
+        },
+        {
+          "side": "before",
+          "line": 202635,
+          "text": "    fs3.time(time);"
+        },
+        {
+          "side": "after",
+          "line": 202626,
+          "text": "    fs4.time(time);"
+        },
+        {
+          "side": "before",
+          "line": 202638,
+          "text": "    fs3.mkdirpSync(cwd);"
+        },
+        {
+          "side": "before",
+          "line": 202639,
+          "text": "    fs3.chdir(cwd);"
+        },
+        {
+          "side": "after",
+          "line": 202629,
+          "text": "    fs4.mkdirpSync(cwd);"
+        },
+        {
+          "side": "after",
+          "line": 202630,
+          "text": "    fs4.chdir(cwd);"
+        },
+        {
+          "side": "before",
+          "line": 202643,
+          "text": "      fs3.mkdirpSync(dirname2(document.file));"
+        },
+        {
+          "side": "before",
+          "line": 202644,
+          "text": "      fs3.writeFileSync(document.file, document.text, \"utf8\");"
+        },
+        {
+          "side": "before",
+          "line": 202645,
+          "text": "      fs3.filemeta(document.file).set(\"document\", document);"
+        },
+        {
+          "side": "after",
+          "line": 202634,
+          "text": "      fs4.mkdirpSync(dirname2(document.file));"
+        },
+        {
+          "side": "after",
+          "line": 202635,
+          "text": "      fs4.writeFileSync(document.file, document.text, \"utf8\");"
+        },
+        {
+          "side": "after",
+          "line": 202636,
+          "text": "      fs4.filemeta(document.file).set(\"document\", document);"
+        },
+        {
+          "side": "before",
+          "line": 202649,
+          "text": "          fs3.mkdirpSync(dirname2(link));"
+        },
+        {
+          "side": "before",
+          "line": 202650,
+          "text": "          fs3.symlinkSync(resolve2(fs3.cwd(), document.file), link);"
+        },
+        {
+          "side": "after",
+          "line": 202640,
+          "text": "          fs4.mkdirpSync(dirname2(link));"
+        },
+        {
+          "side": "after",
+          "line": 202641,
+          "text": "          fs4.symlinkSync(resolve2(fs4.cwd(), document.file), link);"
+        },
+        {
+          "side": "before",
+          "line": 202656,
+          "text": "    fs3.apply(files);"
+        },
+        {
+          "side": "before",
+          "line": 202657,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 202658,
+          "text": "  return fs3;"
+        },
+        {
+          "side": "after",
+          "line": 202647,
+          "text": "    fs4.apply(files);"
+        },
+        {
+          "side": "after",
+          "line": 202648,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 202649,
+          "text": "  return fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -202750,37 +202741,37 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 202753,
+          "text": "  const fs3 = getFourslashLibsOnly(host, ignoreCase).shadow();"
+        },
+        {
+          "side": "after",
+          "line": 202744,
+          "text": "  const fs4 = getFourslashLibsOnly(host, ignoreCase).shadow();"
+        },
+        {
+          "side": "before",
+          "line": 202756,
+          "text": "      fs3.meta.set(key, meta[key]);"
+        },
+        {
+          "side": "after",
+          "line": 202747,
+          "text": "      fs4.meta.set(key, meta[key]);"
+        },
+        {
+          "side": "before",
+          "line": 202760,
+          "text": "    fs3.time(time);"
+        },
+        {
+          "side": "after",
+          "line": 202751,
+          "text": "    fs4.time(time);"
+        },
+        {
+          "side": "before",
+          "line": 202763,
+          "text": "    fs3.mkdirpSync(cwd);"
+        },
+        {
+          "side": "before",
+          "line": 202764,
+          "text": "    fs3.chdir(cwd);"
+        },
+        {
+          "side": "after",
+          "line": 202754,
+          "text": "    fs4.mkdirpSync(cwd);"
+        },
+        {
+          "side": "after",
+          "line": 202755,
+          "text": "    fs4.chdir(cwd);"
+        },
+        {
+          "side": "before",
+          "line": 202768,
+          "text": "      fs3.mkdirpSync(dirname2(document.file));"
+        },
+        {
+          "side": "before",
+          "line": 202769,
+          "text": "      fs3.writeFileSync(document.file, document.text, \"utf8\");"
+        },
+        {
+          "side": "before",
+          "line": 202770,
+          "text": "      fs3.filemeta(document.file).set(\"document\", document);"
+        },
+        {
+          "side": "after",
+          "line": 202759,
+          "text": "      fs4.mkdirpSync(dirname2(document.file));"
+        },
+        {
+          "side": "after",
+          "line": 202760,
+          "text": "      fs4.writeFileSync(document.file, document.text, \"utf8\");"
+        },
+        {
+          "side": "after",
+          "line": 202761,
+          "text": "      fs4.filemeta(document.file).set(\"document\", document);"
+        },
+        {
+          "side": "before",
+          "line": 202774,
+          "text": "          fs3.mkdirpSync(dirname2(link));"
+        },
+        {
+          "side": "before",
+          "line": 202775,
+          "text": "          fs3.symlinkSync(resolve2(fs3.cwd(), document.file), link);"
+        },
+        {
+          "side": "after",
+          "line": 202765,
+          "text": "          fs4.mkdirpSync(dirname2(link));"
+        },
+        {
+          "side": "after",
+          "line": 202766,
+          "text": "          fs4.symlinkSync(resolve2(fs4.cwd(), document.file), link);"
+        },
+        {
+          "side": "before",
+          "line": 202781,
+          "text": "    fs3.apply(files);"
+        },
+        {
+          "side": "before",
+          "line": 202782,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 202783,
+          "text": "  return fs3;"
+        },
+        {
+          "side": "after",
+          "line": 202772,
+          "text": "    fs4.apply(files);"
+        },
+        {
+          "side": "after",
+          "line": 202773,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 202774,
+          "text": "  return fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -202937,15 +202928,15 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 202940,
+          "text": "        const fs3 = new _FileSystem(this.ignoreCase, { time: this._time });"
+        },
+        {
+          "side": "before",
+          "line": 202941,
+          "text": "        fs3._lazy = this._lazy;"
+        },
+        {
+          "side": "before",
+          "line": 202942,
+          "text": "        fs3._cwd = this._cwd;"
+        },
+        {
+          "side": "before",
+          "line": 202943,
+          "text": "        fs3._time = this._time;"
+        },
+        {
+          "side": "before",
+          "line": 202944,
+          "text": "        fs3._shadowRoot = this._shadowRoot;"
+        },
+        {
+          "side": "before",
+          "line": 202945,
+          "text": "        fs3._dirStack = this._dirStack;"
+        },
+        {
+          "side": "before",
+          "line": 202946,
+          "text": "        fs3.makeReadonly();"
+        },
+        {
+          "side": "after",
+          "line": 202931,
+          "text": "        const fs4 = new _FileSystem(this.ignoreCase, { time: this._time });"
+        },
+        {
+          "side": "after",
+          "line": 202932,
+          "text": "        fs4._lazy = this._lazy;"
+        },
+        {
+          "side": "after",
+          "line": 202933,
+          "text": "        fs4._cwd = this._cwd;"
+        },
+        {
+          "side": "after",
+          "line": 202934,
+          "text": "        fs4._time = this._time;"
+        },
+        {
+          "side": "after",
+          "line": 202935,
+          "text": "        fs4._shadowRoot = this._shadowRoot;"
+        },
+        {
+          "side": "after",
+          "line": 202936,
+          "text": "        fs4._dirStack = this._dirStack;"
+        },
+        {
+          "side": "after",
+          "line": 202937,
+          "text": "        fs4.makeReadonly();"
+        },
+        {
+          "side": "before",
+          "line": 202948,
+          "text": "        this._shadowRoot = fs3;"
+        },
+        {
+          "side": "after",
+          "line": 202939,
+          "text": "        this._shadowRoot = fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -202955,10 +202946,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 202958,
+          "text": "        const fs3 = new _FileSystem(ignoreCase, { time: this._time });"
+        },
+        {
+          "side": "before",
+          "line": 202959,
+          "text": "        fs3._shadowRoot = this;"
+        },
+        {
+          "side": "before",
+          "line": 202960,
+          "text": "        fs3._cwd = this._cwd;"
+        },
+        {
+          "side": "before",
+          "line": 202961,
+          "text": "        return fs3;"
+        },
+        {
+          "side": "after",
+          "line": 202949,
+          "text": "        const fs4 = new _FileSystem(ignoreCase, { time: this._time });"
+        },
+        {
+          "side": "after",
+          "line": 202950,
+          "text": "        fs4._shadowRoot = this;"
+        },
+        {
+          "side": "after",
+          "line": 202951,
+          "text": "        fs4._cwd = this._cwd;"
+        },
+        {
+          "side": "after",
+          "line": 202952,
+          "text": "        return fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -205094,20 +205085,20 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 205097,
+          "text": "          let fs3 = this.vfs;"
+        },
+        {
+          "side": "before",
+          "line": 205098,
+          "text": "          while (fs3.shadowRoot) {"
+        },
+        {
+          "side": "after",
+          "line": 205088,
+          "text": "          let fs4 = this.vfs;"
+        },
+        {
+          "side": "after",
+          "line": 205089,
+          "text": "          while (fs4.shadowRoot) {"
+        },
+        {
+          "side": "before",
+          "line": 205100,
+          "text": "              const shadowRootStats = fs3.shadowRoot.existsSync(canonicalFileName) ? fs3.shadowRoot.statSync(canonicalFileName) : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 205091,
+          "text": "              const shadowRootStats = fs4.shadowRoot.existsSync(canonicalFileName) ? fs4.shadowRoot.statSync(canonicalFileName) : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 205104,
+          "text": "              fs3 = fs3.shadowRoot;"
+        },
+        {
+          "side": "after",
+          "line": 205095,
+          "text": "              fs4 = fs4.shadowRoot;"
+        },
+        {
+          "side": "before",
+          "line": 205109,
+          "text": "          if (fs3 !== this.vfs) {"
+        },
+        {
+          "side": "before",
+          "line": 205110,
+          "text": "            fs3.filemeta(canonicalFileName).set(cacheKey, parsed);"
+        },
+        {
+          "side": "after",
+          "line": 205100,
+          "text": "          if (fs4 !== this.vfs) {"
+        },
+        {
+          "side": "after",
+          "line": 205101,
+          "text": "            fs4.filemeta(canonicalFileName).set(cacheKey, parsed);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -205504,12 +205495,12 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 205507,
+          "text": "        const fs3 = createFromFileSystem(IO, !useCaseSensitiveFileNames2, { documents: docs, cwd: currentDirectory });"
+        },
+        {
+          "side": "after",
+          "line": 205498,
+          "text": "        const fs4 = createFromFileSystem(IO, !useCaseSensitiveFileNames2, { documents: docs, cwd: currentDirectory });"
+        },
+        {
+          "side": "before",
+          "line": 205509,
+          "text": "          fs3.apply(symlinks);"
+        },
+        {
+          "side": "after",
+          "line": 205500,
+          "text": "          fs4.apply(symlinks);"
+        },
+        {
+          "side": "before",
+          "line": 205512,
+          "text": "        const host = new CompilerHost5(fs3, options);"
+        },
+        {
+          "side": "after",
+          "line": 205503,
+          "text": "        const host = new CompilerHost5(fs4, options);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -214442,12 +214433,12 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 214445,
+          "text": "          const fs3 = new FileSystem("
+        },
+        {
+          "side": "after",
+          "line": 214436,
+          "text": "          const fs4 = new FileSystem("
+        },
+        {
+          "side": "before",
+          "line": 214450,
+          "text": "          const host = new ParseConfigHost(fs3);"
+        },
+        {
+          "side": "after",
+          "line": 214441,
+          "text": "          const host = new ParseConfigHost(fs4);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -221487,7 +221478,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 221490,
+          "text": "        const fs3 = new FileSystem("
+        },
+        {
+          "side": "after",
+          "line": 221481,
+          "text": "        const fs4 = new FileSystem("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -221497,11 +221488,11 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 221500,
+          "text": "        fs3.mkdirpSync(\"c:/dev/a/b/c\");"
+        },
+        {
+          "side": "before",
+          "line": 221501,
+          "text": "        fs3.symlinkSync(\"c:/dev/A\", \"c:/dev/a/self\");"
+        },
+        {
+          "side": "before",
+          "line": 221502,
+          "text": "        fs3.symlinkSync(\"c:/dev/a\", \"c:/dev/a/b/parent\");"
+        },
+        {
+          "side": "before",
+          "line": 221503,
+          "text": "        fs3.symlinkSync(\"c:/dev/a\", \"c:/dev/a/b/c/grandparent\");"
+        },
+        {
+          "side": "before",
+          "line": 221504,
+          "text": "        const host = new ParseConfigHost(fs3);"
+        },
+        {
+          "side": "after",
+          "line": 221491,
+          "text": "        fs4.mkdirpSync(\"c:/dev/a/b/c\");"
+        },
+        {
+          "side": "after",
+          "line": 221492,
+          "text": "        fs4.symlinkSync(\"c:/dev/A\", \"c:/dev/a/self\");"
+        },
+        {
+          "side": "after",
+          "line": 221493,
+          "text": "        fs4.symlinkSync(\"c:/dev/a\", \"c:/dev/a/b/parent\");"
+        },
+        {
+          "side": "after",
+          "line": 221494,
+          "text": "        fs4.symlinkSync(\"c:/dev/a\", \"c:/dev/a/b/c/grandparent\");"
+        },
+        {
+          "side": "after",
+          "line": 221495,
+          "text": "        const host = new ParseConfigHost(fs4);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -222792,7 +222783,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 222795,
+          "text": "  const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 222786,
+          "text": "  const fs4 = createFromFileSystem("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -222806,7 +222797,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 222809,
+          "text": "  const host = new CompilerHost5(fs3, compilerOptions);"
+        },
+        {
+          "side": "after",
+          "line": 222800,
+          "text": "  const host = new CompilerHost5(fs4, compilerOptions);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -222822,28 +222813,28 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 222825,
+          "text": "  const loader = getLoader(compilerOptions, fs3, globals);"
+        },
+        {
+          "side": "after",
+          "line": 222816,
+          "text": "  const loader = getLoader(compilerOptions, fs4, globals);"
+        },
+        {
+          "side": "before",
+          "line": 222830,
+          "text": "  const fs3 = new FileSystem("
+        },
+        {
+          "side": "after",
+          "line": 222821,
+          "text": "  const fs4 = new FileSystem("
+        },
+        {
+          "side": "before",
+          "line": 222835,
+          "text": "  return new CommonJsLoader(fs3, globals).import(sourceFile2);"
+        },
+        {
+          "side": "before",
+          "line": 222836,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 222837,
+          "text": "function getLoader(compilerOptions, fs3, globals) {"
+        },
+        {
+          "side": "after",
+          "line": 222826,
+          "text": "  return new CommonJsLoader(fs4, globals).import(sourceFile2);"
+        },
+        {
+          "side": "after",
+          "line": 222827,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 222828,
+          "text": "function getLoader(compilerOptions, fs4, globals) {"
+        },
+        {
+          "side": "before",
+          "line": 222842,
+          "text": "      return new CommonJsLoader(fs3, globals);"
+        },
+        {
+          "side": "after",
+          "line": 222833,
+          "text": "      return new CommonJsLoader(fs4, globals);"
+        },
+        {
+          "side": "before",
+          "line": 222844,
+          "text": "      return new SystemLoader(fs3, globals);"
+        },
+        {
+          "side": "after",
+          "line": 222835,
+          "text": "      return new SystemLoader(fs4, globals);"
+        },
+        {
+          "side": "before",
+          "line": 222846,
+          "text": "      return new AmdLoader(fs3, globals);"
+        },
+        {
+          "side": "after",
+          "line": 222837,
+          "text": "      return new AmdLoader(fs4, globals);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -222893,9 +222884,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 222896,
+          "text": "      constructor(fs3, globals) {"
+        },
+        {
+          "side": "after",
+          "line": 222887,
+          "text": "      constructor(fs4, globals) {"
+        },
+        {
+          "side": "before",
+          "line": 222898,
+          "text": "        this.fs = fs3;"
+        },
+        {
+          "side": "after",
+          "line": 222889,
+          "text": "        this.fs = fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235823,25 +235814,25 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235826,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235817,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 235832,
+          "text": "        const program = createProgram([\"/a.ts\"], emptyOptions, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235823,
+          "text": "        const program = createProgram([\"/a.ts\"], emptyOptions, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "before",
+          "line": 235838,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235829,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 235844,
+          "text": "        const program = createProgram([\"/a.ts\"], emptyOptions, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235835,
+          "text": "        const program = createProgram([\"/a.ts\"], emptyOptions, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235856,13 +235847,13 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235859,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235850,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 235865,
+          "text": "        const program = createProgram([\"/main.ts\"], { resolveJsonModule: true }, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235856,
+          "text": "        const program = createProgram([\"/main.ts\"], { resolveJsonModule: true }, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235874,13 +235865,13 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235877,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235868,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 235883,
+          "text": "        const program = createProgram([\"/main.ts\"], {}, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235874,
+          "text": "        const program = createProgram([\"/main.ts\"], {}, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235890,13 +235881,13 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235893,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235884,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 235899,
+          "text": "        const program = createProgram([\"/main.ts\"], {}, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235890,
+          "text": "        const program = createProgram([\"/main.ts\"], {}, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235907,7 +235898,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235910,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 235901,
+          "text": "        const fs4 = createFromFileSystem("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -235915,7 +235906,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 235918,
+          "text": "        }, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));"
+        },
+        {
+          "side": "after",
+          "line": 235909,
+          "text": "        }, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -236164,7 +236155,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 236167,
+          "text": "function cloneFsMap(fs3) {"
+        },
+        {
+          "side": "after",
+          "line": 236158,
+          "text": "function cloneFsMap(fs4) {"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -236177,7 +236168,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 236180,
+          "text": "  fs3.forEach((value, key) => {"
+        },
+        {
+          "side": "after",
+          "line": 236171,
+          "text": "  fs4.forEach((value, key) => {"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249200,11 +249191,11 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249203,
+          "text": "var fs2;"
+        },
+        {
+          "side": "after",
+          "line": 249194,
+          "text": "var fs3;"
+        },
+        {
+          "side": "before",
+          "line": 249207,
+          "text": "    fs2 = __toESM(require(\"fs\"));"
+        },
+        {
+          "side": "after",
+          "line": 249198,
+          "text": "    fs3 = __toESM(require(\"fs\"));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249718,7 +249709,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249721,
+          "text": "          withSwallowException(() => fs2.rmSync(root, { recursive: true, force: true }));"
+        },
+        {
+          "side": "after",
+          "line": 249712,
+          "text": "          withSwallowException(() => fs3.rmSync(root, { recursive: true, force: true }));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249729,7 +249720,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249732,
+          "text": "            withSwallowException(() => fs2.symlinkSync(`${root}/polling`, `${root}/linkedpolling`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249723,
+          "text": "            withSwallowException(() => fs3.symlinkSync(`${root}/polling`, `${root}/linkedpolling`, \"junction\"));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249742,7 +249733,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249745,
+          "text": "            withSwallowException(() => fs2.symlinkSync(`${root}/fsevents`, `${root}/linkedfsevents`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249736,
+          "text": "            withSwallowException(() => fs3.symlinkSync(`${root}/fsevents`, `${root}/linkedfsevents`, \"junction\"));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249755,7 +249746,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249758,
+          "text": "            withSwallowException(() => fs2.symlinkSync(`${root}/dirpolling`, `${root}/linkeddirpolling`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249749,
+          "text": "            withSwallowException(() => fs3.symlinkSync(`${root}/dirpolling`, `${root}/linkeddirpolling`, \"junction\"));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249769,11 +249760,11 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249772,
+          "text": "            withSwallowException(() => fs2.symlinkSync(`${root}/dirfsevents`, `${root}/linkeddirfsevents`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249763,
+          "text": "            withSwallowException(() => fs3.symlinkSync(`${root}/dirfsevents`, `${root}/linkeddirfsevents`, \"junction\"));"
+        },
+        {
+          "side": "before",
+          "line": 249776,
+          "text": "            (dir, _recursive, cb) => fs2.watch(dir, { persistent: true }, cb),"
+        },
+        {
+          "side": "after",
+          "line": 249767,
+          "text": "            (dir, _recursive, cb) => fs3.watch(dir, { persistent: true }, cb),"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249788,7 +249779,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249791,
+          "text": "              (dir, recursive, cb) => fs2.watch(dir, { persistent: true, recursive }, cb),"
+        },
+        {
+          "side": "after",
+          "line": 249782,
+          "text": "              (dir, recursive, cb) => fs3.watch(dir, { persistent: true, recursive }, cb),"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -249798,9 +249789,9 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 249801,
+          "text": "          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}`, `${root}/linked${recursiveName}`, \"junction\"));"
+        },
+        {
+          "side": "before",
+          "line": 249802,
+          "text": "          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}/sub`, `${root}/${recursiveName}/linkedsub`, \"junction\"));"
+        },
+        {
+          "side": "before",
+          "line": 249803,
+          "text": "          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}2`, `${root}/${recursiveName}/linkedsub2`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249792,
+          "text": "          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}`, `${root}/linked${recursiveName}`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249793,
+          "text": "          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}/sub`, `${root}/${recursiveName}/linkedsub`, \"junction\"));"
+        },
+        {
+          "side": "after",
+          "line": 249794,
+          "text": "          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}2`, `${root}/${recursiveName}/linkedsub2`, \"junction\"));"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -250324,13 +250315,13 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 250327,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 250318,
+          "text": "        const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 250333,
+          "text": "        const host = new CompilerHost5(fs3, opts.compilerOptions);"
+        },
+        {
+          "side": "after",
+          "line": 250324,
+          "text": "        const host = new CompilerHost5(fs4, opts.compilerOptions);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -250341,7 +250332,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 250344,
+          "text": "        return fs3.readFileSync(\"/.src/index.d.ts\").toString();"
+        },
+        {
+          "side": "after",
+          "line": 250335,
+          "text": "        return fs4.readFileSync(\"/.src/index.d.ts\").toString();"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -250498,7 +250489,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 250501,
+          "text": "        const fs3 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 250492,
+          "text": "        const fs4 = createFromFileSystem("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -250506,7 +250497,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 250509,
+          "text": "        const host = new CompilerHost5(fs3);"
+        },
+        {
+          "side": "after",
+          "line": 250500,
+          "text": "        const host = new CompilerHost5(fs4);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -251093,11 +251084,11 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 251096,
+          "text": "    modifySystem: (fs3) => {"
+        },
+        {
+          "side": "after",
+          "line": 251087,
+          "text": "    modifySystem: (fs4) => {"
+        },
+        {
+          "side": "before",
+          "line": 251098,
+          "text": "      (_a2 = input.modifySystem) == null ? void 0 : _a2.call(input, fs3);"
+        },
+        {
+          "side": "after",
+          "line": 251089,
+          "text": "      (_a2 = input.modifySystem) == null ? void 0 : _a2.call(input, fs4);"
+        },
+        {
+          "side": "before",
+          "line": 251100,
+          "text": "        input.edits[i].edit(fs3);"
+        },
+        {
+          "side": "after",
+          "line": 251091,
+          "text": "        input.edits[i].edit(fs4);"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -264023,7 +264014,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 264026,
+          "text": "            edit: (fs3) => fs3.writeFile("
+        },
+        {
+          "side": "after",
+          "line": 264017,
+          "text": "            edit: (fs4) => fs4.writeFile("
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -295510,18 +295501,18 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 295513,
+          "text": "          const fs4 = createFromFileSystem("
+        },
+        {
+          "side": "after",
+          "line": 295504,
+          "text": "          const fs5 = createFromFileSystem("
+        },
+        {
+          "side": "before",
+          "line": 295518,
+          "text": "          fs4.mountSync(resolve2(IO.getWorkspaceRoot(), \"tests\"), combine2(srcFolder, \"tests\"), createResolver(IO));"
+        },
+        {
+          "side": "before",
+          "line": 295519,
+          "text": "          fs4.mkdirpSync(combine2(srcFolder, testCase.projectRoot));"
+        },
+        {
+          "side": "before",
+          "line": 295520,
+          "text": "          fs4.chdir(combine2(srcFolder, testCase.projectRoot));"
+        },
+        {
+          "side": "before",
+          "line": 295521,
+          "text": "          fs4.makeReadonly();"
+        },
+        {
+          "side": "before",
+          "line": 295522,
+          "text": "          return fs4;"
+        },
+        {
+          "side": "before",
+          "line": 295523,
+          "text": "        }"
+        },
+        {
+          "side": "before",
+          "line": 295524,
+          "text": "        let fs3;"
+        },
+        {
+          "side": "after",
+          "line": 295509,
+          "text": "          fs5.mountSync(resolve2(IO.getWorkspaceRoot(), \"tests\"), combine2(srcFolder, \"tests\"), createResolver(IO));"
+        },
+        {
+          "side": "after",
+          "line": 295510,
+          "text": "          fs5.mkdirpSync(combine2(srcFolder, testCase.projectRoot));"
+        },
+        {
+          "side": "after",
+          "line": 295511,
+          "text": "          fs5.chdir(combine2(srcFolder, testCase.projectRoot));"
+        },
+        {
+          "side": "after",
+          "line": 295512,
+          "text": "          fs5.makeReadonly();"
+        },
+        {
+          "side": "after",
+          "line": 295513,
+          "text": "          return fs5;"
+        },
+        {
+          "side": "after",
+          "line": 295514,
+          "text": "        }"
+        },
+        {
+          "side": "after",
+          "line": 295515,
+          "text": "        let fs4;"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -295529,7 +295520,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 295532,
+          "text": "                return fs3 ?? (fs3 = makeFileSystem());"
+        },
+        {
+          "side": "after",
+          "line": 295523,
+          "text": "                return fs4 ?? (fs4 = makeFileSystem());"
+        }
+      ]
+    },
+    {
+      "file": "run.js",
+      "header": "@@ -295539,7 +295530,7 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 295542,
+          "text": "                return fs3 ?? (fs3 = makeFileSystem());"
+        },
+        {
+          "side": "after",
+          "line": 295533,
+          "text": "                return fs4 ?? (fs4 = makeFileSystem());"
+        }
+      ]
+    },
+    {
+      "file": "typescript.js",
+      "header": "@@ -3680,10 +3680,10 @@",
+      "classes": [
+        "rename"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "before",
+          "line": 3683,
+          "text": "function or(...fs) {"
+        },
+        {
+          "side": "after",
+          "line": 3683,
+          "text": "function or(...fs2) {"
+        },
+        {
+          "side": "before",
+          "line": 3686,
+          "text": "    for (const f of fs) {"
+        },
+        {
+          "side": "after",
+          "line": 3686,
+          "text": "    for (const f of fs2) {"
+        }
+      ]
+    },
+    {
+      "file": "typescript.js",
+      "header": "@@ -4765,25 +4765,11 @@",
+      "classes": [
+        "declaration-only relocation",
+        "closed removal"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 4768,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "before",
+          "line": 4769,
+          "text": "function errorCode(error2) {"
+        },
+        {
+          "side": "before",
+          "line": 4770,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"code\" in error2 && typeof error2.code === \"string\" ? error2.code : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 4771,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 4772,
+          "text": "function errorMessage(error2) {"
+        },
+        {
+          "side": "before",
+          "line": 4773,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"message\" in error2 && typeof error2.message === \"string\" ? error2.message : void 0;"
+        },
+        {
+          "side": "before",
+          "line": 4774,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 4775,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "before",
+          "line": 4776,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 4777,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "before",
+          "line": 4778,
+          "text": "  }"
+        },
+        {
+          "side": "before",
+          "line": 4779,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "before",
+          "line": 4780,
+          "text": "}"
+        },
+        {
+          "side": "before",
+          "line": 4781,
+          "text": ""
+        },
+        {
+          "side": "after",
+          "line": 4769,
+          "text": "var fs = __toESM(require(\"fs\"));"
+        },
+        {
+          "side": "before",
+          "line": 4786,
+          "text": "  let fs;"
+        }
+      ]
+    },
+    {
+      "file": "typescript.js",
+      "header": "@@ -4792,14 +4778,6 @@",
+      "classes": [
+        "closed removal"
+      ],
+      "reviewedTracingEdit": true,
+      "changes": [
+        {
+          "side": "before",
+          "line": 4795,
+          "text": "    if (fs === void 0) {"
+        },
+        {
+          "side": "before",
+          "line": 4796,
+          "text": "      try {"
+        },
+        {
+          "side": "before",
+          "line": 4797,
+          "text": "        fs = require(\"fs\");"
+        },
+        {
+          "side": "before",
+          "line": 4798,
+          "text": "      } catch (e) {"
+        },
+        {
+          "side": "before",
+          "line": 4799,
+          "text": "        throw new Error(`tracing requires having fs"
+        },
+        {
+          "side": "before",
+          "line": 4800,
+          "text": "(original error: ${errorMessage(e) || e})`);"
+        },
+        {
+          "side": "before",
+          "line": 4801,
+          "text": "      }"
+        },
+        {
+          "side": "before",
+          "line": 4802,
+          "text": "    }"
+        }
+      ]
+    },
+    {
+      "file": "typescript.js",
+      "header": "@@ -6829,6 +6807,20 @@",
+      "classes": [
+        "declaration-only relocation"
+      ],
+      "reviewedTracingEdit": false,
+      "changes": [
+        {
+          "side": "after",
+          "line": 6810,
+          "text": ""
+        },
+        {
+          "side": "after",
+          "line": 6811,
+          "text": "// src/compiler/hostErrors.ts"
+        },
+        {
+          "side": "after",
+          "line": 6812,
+          "text": "function errorCode(error2) {"
+        },
+        {
+          "side": "after",
+          "line": 6813,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"code\" in error2 && typeof error2.code === \"string\" ? error2.code : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 6814,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 6815,
+          "text": "function errorMessage(error2) {"
+        },
+        {
+          "side": "after",
+          "line": 6816,
+          "text": "  return typeof error2 === \"object\" && error2 !== null && \"message\" in error2 && typeof error2.message === \"string\" ? error2.message : void 0;"
+        },
+        {
+          "side": "after",
+          "line": 6817,
+          "text": "}"
+        },
+        {
+          "side": "after",
+          "line": 6818,
+          "text": "function propertyOf(value, key) {"
+        },
+        {
+          "side": "after",
+          "line": 6819,
+          "text": "  if (value === null || value === void 0) {"
+        },
+        {
+          "side": "after",
+          "line": 6820,
+          "text": "    throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);"
+        },
+        {
+          "side": "after",
+          "line": 6821,
+          "text": "  }"
+        },
+        {
+          "side": "after",
+          "line": 6822,
+          "text": "  return Reflect.get(Object(value), key, value);"
+        },
+        {
+          "side": "after",
+          "line": 6823,
+          "text": "}"
+        }
+      ]
+    }
+  ]
+}

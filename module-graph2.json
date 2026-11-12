@@ -1,0 +1,69 @@
+{
+  "edges": [
+    {
+      "file": "src/tsc/tsc.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "source": "import * as ts from \"./_namespaces/ts.js\";"
+    },
+    {
+      "file": "src/tsc/_namespaces/ts.ts",
+      "line": 3,
+      "module": "../../compiler/_namespaces/ts.js",
+      "source": "export * from \"../../compiler/_namespaces/ts.js\";"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 8,
+      "module": "../tracing.js",
+      "source": "export * from \"../tracing.js\";"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 10,
+      "module": "../sys.js",
+      "source": "export * from \"../sys.js\";"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 75,
+      "module": "../executeCommandLine.js",
+      "source": "export * from \"../executeCommandLine.js\";"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "module": "./_namespaces/ts.js",
+      "source": "} from \"./_namespaces/ts.js\";"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "module": "node:fs",
+      "source": "import * as _fs from \"node:fs\";"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 89,
+      "module": "./_namespaces/ts.js",
+      "source": "} from \"./_namespaces/ts.js\";"
+    }
+  ],
+  "entrypoint": {
+    "file": "src/tsc/tsc.ts",
+    "line": 24
+  },
+  "tracingCall": {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 1152,
+    "source": "        startTracing(isBuildMode ? \"build\" : \"project\", compilerOptions.generateTrace!, compilerOptions.configFilePath);"
+  },
+  "order": "The CLI dependency graph evaluates sys.ts and tracing.ts before the CLI body invokes executeCommandLine; sys.ts loads node:fs at module scope before any CLI tracing call. The Node load stacks independently show a bare fs builtin load before the positive control invokes startTracing.",
+  "normalConfiguration": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "builtinFsPresent": true
+  },
+  "syntheticCounterControlIsFaultInjection": true
+}

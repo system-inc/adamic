@@ -1,0 +1,14 @@
+{
+  "exactIncomingAccepted": true,
+  "exactCompletedAccepted": true,
+  "incomingMetadataEdits": 3,
+  "catalogResetEdits": 1,
+  "completedReplayEdits": 0,
+  "replayWithoutWrites": true,
+  "driftRefusedBeforeWriting": [
+    "mixed metadata literals",
+    "meta value drift",
+    "catalog reset drift",
+    "restored length-write intermediate"
+  ]
+}

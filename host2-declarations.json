@@ -1,0 +1,23 @@
+{
+  "source": "/workspace/scratch/tracing-control2/src/compiler/hostErrors.ts",
+  "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c",
+  "beforeAfterByteIdentical": true,
+  "onlyImportsAndFunctionDeclarations": true,
+  "statements": [
+    {
+      "kind": "FunctionDeclaration",
+      "name": "errorCode",
+      "text": "export function errorCode(error: unknown): string | undefined {\n    return typeof error === \"object\" && error !== null && \"code\" in error && typeof error.code === \"string\" ? error.code : undefined;\n}"
+    },
+    {
+      "kind": "FunctionDeclaration",
+      "name": "errorMessage",
+      "text": "export function errorMessage(error: unknown): string | undefined {\n    return typeof error === \"object\" && error !== null && \"message\" in error && typeof error.message === \"string\" ? error.message : undefined;\n}"
+    },
+    {
+      "kind": "FunctionDeclaration",
+      "name": "propertyOf",
+      "text": "export function propertyOf(value: unknown, key: string): unknown {\n    if (value === null || value === undefined) {\n        throw new TypeError(`Cannot read properties of ${value === null ? \"null\" : \"undefined\"} (reading '${key}')`);\n    }\n    return Reflect.get(Object(value), key, value);\n}"
+    }
+  ]
+}

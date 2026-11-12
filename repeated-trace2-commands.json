@@ -1,0 +1,62 @@
+[
+  {
+    "name": "control2-repeat1",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/trace_cli_with_legend.cjs",
+      "/workspace/scratch/tracing-control2/built/local/_tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project2/trace"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "control2-repeat2",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/trace_cli_with_legend.cjs",
+      "/workspace/scratch/tracing-control2/built/local/_tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project2/trace"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after2-repeat1",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/trace_cli_with_legend.cjs",
+      "/workspace/scratch/tracing-after2/built/local/_tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project2/trace"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "after2-repeat2",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-fs-import-evidence/trace_cli_with_legend.cjs",
+      "/workspace/scratch/tracing-after2/built/local/_tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project2/trace"
+    ],
+    "exit": 0
+  }
+]

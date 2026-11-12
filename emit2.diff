@@ -1,0 +1,1102 @@
+--- control/_tsc.js
++++ after-final/_tsc.js
+@@ -1111,10 +1111,10 @@
+ function orPredicate3(f1, f2, f3) {
+   return (p) => f1(p) || f2(p) || f3(p);
+ }
+-function or(...fs) {
++function or(...fs2) {
+   return (...args) => {
+     let lastResult;
+-    for (const f of fs) {
++    for (const f of fs2) {
+       lastResult = f(...args);
+       if (lastResult) {
+         return lastResult;
+@@ -2169,25 +2169,11 @@
+   }
+ }
+ 
+-// src/compiler/hostErrors.ts
+-function errorCode(error) {
+-  return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : void 0;
+-}
+-function errorMessage(error) {
+-  return typeof error === "object" && error !== null && "message" in error && typeof error.message === "string" ? error.message : void 0;
+-}
+-function propertyOf(value, key) {
+-  if (value === null || value === void 0) {
+-    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
+-  }
+-  return Reflect.get(Object(value), key, value);
+-}
+-
+ // src/compiler/tracing.ts
++var fs = __toESM(require("fs"));
+ var tracing;
+ var tracingEnabled;
+ ((tracingEnabled2) => {
+-  let fs;
+   let traceCount = 0;
+   let traceFd = 0;
+   let mode;
+@@ -2196,14 +2182,6 @@
+   const legend = [];
+   function startTracing2(tracingMode, traceDir, configFilePath) {
+     Debug.assert(!tracing, "Tracing already started");
+-    if (fs === void 0) {
+-      try {
+-        fs = require("fs");
+-      } catch (e) {
+-        throw new Error(`tracing requires having fs
+-(original error: ${errorMessage(e) || e})`);
+-      }
+-    }
+     mode = tracingMode;
+     typeCatalog.splice(0);
+     if (legendPath === void 0) {
+@@ -3462,6 +3440,17 @@
+     kind: 4 /* MultiLine */
+   }
+ };
++
++// src/compiler/hostErrors.ts
++function errorCode(error) {
++  return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : void 0;
++}
++function propertyOf(value, key) {
++  if (value === null || value === void 0) {
++    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
++  }
++  return Reflect.get(Object(value), key, value);
++}
+ 
+ // src/compiler/sys.ts
+ var _fs = __toESM(require("fs"));
+@@ -49004,10 +48993,10 @@
+       }
+     }
+   }
+-  function resolveExternalModuleName(location, moduleReferenceExpression, ignoreErrors, errorMessage2) {
++  function resolveExternalModuleName(location, moduleReferenceExpression, ignoreErrors, errorMessage) {
+     const isClassic = getEmitModuleResolutionKind(compilerOptions) === 1 /* Classic */;
+-    errorMessage2 ?? (errorMessage2 = getCannotResolveModuleNameErrorForSpecificModule(moduleReferenceExpression) ?? (isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.Cannot_find_module_0_or_its_corresponding_type_declarations));
+-    return resolveExternalModuleNameWorker(location, moduleReferenceExpression, ignoreErrors ? void 0 : errorMessage2, ignoreErrors);
++    errorMessage ?? (errorMessage = getCannotResolveModuleNameErrorForSpecificModule(moduleReferenceExpression) ?? (isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.Cannot_find_module_0_or_its_corresponding_type_declarations));
++    return resolveExternalModuleNameWorker(location, moduleReferenceExpression, ignoreErrors ? void 0 : errorMessage, ignoreErrors);
+   }
+   function resolveExternalModuleNameWorker(location, moduleReferenceExpression, moduleNotFoundError, ignoreErrors = false, isForAugmentation = false) {
+     return isStringLiteralLike(moduleReferenceExpression) ? resolveExternalModule(location, moduleReferenceExpression.text, moduleNotFoundError, !ignoreErrors ? moduleReferenceExpression : void 0, isForAugmentation) : void 0;
+@@ -62411,8 +62400,8 @@
+         if (moduleSymbol.flags & targetMeaning) {
+           links.resolvedType = resolveImportSymbolType(node, links, moduleSymbol, targetMeaning);
+         } else {
+-          const errorMessage2 = targetMeaning === 111551 /* Value */ ? Diagnostics.Module_0_does_not_refer_to_a_value_but_is_used_as_a_value_here : Diagnostics.Module_0_does_not_refer_to_a_type_but_is_used_as_a_type_here_Did_you_mean_typeof_import_0;
+-          error(node, errorMessage2, node.argument.literal.text);
++          const errorMessage = targetMeaning === 111551 /* Value */ ? Diagnostics.Module_0_does_not_refer_to_a_value_but_is_used_as_a_value_here : Diagnostics.Module_0_does_not_refer_to_a_type_but_is_used_as_a_type_here_Did_you_mean_typeof_import_0;
++          error(node, errorMessage, node.argument.literal.text);
+           links.resolvedSymbol = unknownSymbol;
+           links.resolvedType = errorType;
+         }
+@@ -63668,7 +63657,7 @@
+   function elaborateElementwise(iterator, source, target, relation, containingMessageChain, errorOutputContainer) {
+     let reportedError = false;
+     for (const value of iterator) {
+-      const { errorNode: prop, innerExpression: next, nameType, errorMessage: errorMessage2 } = value;
++      const { errorNode: prop, innerExpression: next, nameType, errorMessage } = value;
+       let targetPropType = getBestMatchIndexedAccessTypeOrUndefined(source, target, nameType);
+       if (!targetPropType || targetPropType.flags & 33554432 /* IndexedAccess */) continue;
+       let sourcePropType = getIndexedAccessTypeOrUndefined(source, nameType);
+@@ -63708,9 +63697,9 @@
+             const sourceIsOptional = !!(propName && (getPropertyOfType(source, propName) || unknownSymbol).flags & 16777216 /* Optional */);
+             targetPropType = removeMissingType(targetPropType, targetIsOptional);
+             sourcePropType = removeMissingType(sourcePropType, targetIsOptional && sourceIsOptional);
+-            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);
++            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);
+             if (result && specificSource !== sourcePropType) {
+-              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);
++              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);
+             }
+           }
+           if (resultObj.errors) {
+@@ -63757,7 +63746,7 @@
+     ) : void 0;
+     let reportedError = false;
+     for (let status = iterator.next(); !status.done; status = iterator.next()) {
+-      const { errorNode: prop, innerExpression: next, nameType, errorMessage: errorMessage2 } = status.value;
++      const { errorNode: prop, innerExpression: next, nameType, errorMessage } = status.value;
+       let targetPropType = iterationType;
+       const targetIndexedPropType = tupleOrArrayLikeTargetParts !== neverType ? getBestMatchIndexedAccessTypeOrUndefined(source, tupleOrArrayLikeTargetParts, nameType) : void 0;
+       if (targetIndexedPropType && !(targetIndexedPropType.flags & 33554432 /* IndexedAccess */)) {
+@@ -63801,9 +63790,9 @@
+             const sourceIsOptional = !!(propName && (getPropertyOfType(source, propName) || unknownSymbol).flags & 16777216 /* Optional */);
+             targetPropType = removeMissingType(targetPropType, targetIsOptional);
+             sourcePropType = removeMissingType(sourcePropType, targetIsOptional && sourceIsOptional);
+-            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);
++            const result = checkTypeRelatedTo(specificSource, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);
+             if (result && specificSource !== sourcePropType) {
+-              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage2, containingMessageChain, resultObj);
++              checkTypeRelatedTo(sourcePropType, targetPropType, relation, prop, errorMessage, containingMessageChain, resultObj);
+             }
+           }
+         }
+@@ -74116,9 +74105,9 @@
+       return void 0;
+     }
+     const isClassic = getEmitModuleResolutionKind(compilerOptions) === 1 /* Classic */;
+-    const errorMessage2 = isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_for_the_appropriate_package_installed;
++    const errorMessage = isClassic ? Diagnostics.Cannot_find_module_0_Did_you_mean_to_set_the_moduleResolution_option_to_nodenext_or_to_add_aliases_to_the_paths_option : Diagnostics.This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_for_the_appropriate_package_installed;
+     const specifier = getJSXRuntimeImportSpecifier(file, runtimeImportSpecifier);
+-    const mod = resolveExternalModule(specifier || location, runtimeImportSpecifier, errorMessage2, location);
++    const mod = resolveExternalModule(specifier || location, runtimeImportSpecifier, errorMessage, location);
+     const result = mod && mod !== unknownSymbol ? getMergedSymbol(resolveSymbol(mod)) : void 0;
+     if (links) {
+       links.jsxImplicitImportContainer = result || false;
+@@ -84893,7 +84882,7 @@
+         if (baseDeclarationFlags & 2 /* Private */ || derivedDeclarationFlags & 2 /* Private */) {
+           continue;
+         }
+-        let errorMessage2;
++        let errorMessage;
+         const basePropertyFlags = base.flags & 98308 /* PropertyOrAccessor */;
+         const derivedPropertyFlags = derived.flags & 98308 /* PropertyOrAccessor */;
+         if (basePropertyFlags && derivedPropertyFlags) {
+@@ -84903,16 +84892,16 @@
+           const overriddenInstanceProperty = basePropertyFlags !== 4 /* Property */ && derivedPropertyFlags === 4 /* Property */;
+           const overriddenInstanceAccessor = basePropertyFlags === 4 /* Property */ && derivedPropertyFlags !== 4 /* Property */;
+           if (overriddenInstanceProperty || overriddenInstanceAccessor) {
+-            const errorMessage3 = overriddenInstanceProperty ? Diagnostics._0_is_defined_as_an_accessor_in_class_1_but_is_overridden_here_in_2_as_an_instance_property : Diagnostics._0_is_defined_as_a_property_in_class_1_but_is_overridden_here_in_2_as_an_accessor;
+-            error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage3, symbolToString(base), typeToString(baseType), typeToString(type));
++            const errorMessage2 = overriddenInstanceProperty ? Diagnostics._0_is_defined_as_an_accessor_in_class_1_but_is_overridden_here_in_2_as_an_instance_property : Diagnostics._0_is_defined_as_a_property_in_class_1_but_is_overridden_here_in_2_as_an_accessor;
++            error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, symbolToString(base), typeToString(baseType), typeToString(type));
+           } else if (useDefineForClassFields) {
+             const uninitialized = (_d = derived.declarations) == null ? void 0 : _d.find((d) => d.kind === 173 /* PropertyDeclaration */ && !d.initializer);
+             if (uninitialized && !(derived.flags & 33554432 /* Transient */) && !(baseDeclarationFlags & 64 /* Abstract */) && !(derivedDeclarationFlags & 64 /* Abstract */) && !((_e = derived.declarations) == null ? void 0 : _e.some((d) => !!(d.flags & 33554432 /* Ambient */)))) {
+               const constructor = findConstructorDeclaration(getClassLikeDeclarationOfSymbol(type.symbol));
+               const propName = uninitialized.name;
+               if (uninitialized.exclamationToken || !constructor || !isIdentifier2(propName) || !strictNullChecks || !isPropertyInitializedInConstructor(propName, type, constructor)) {
+-                const errorMessage3 = Diagnostics.Property_0_will_overwrite_the_base_property_in_1_If_this_is_intentional_add_an_initializer_Otherwise_add_a_declare_modifier_or_remove_the_redundant_declaration;
+-                error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage3, symbolToString(base), typeToString(baseType));
++                const errorMessage2 = Diagnostics.Property_0_will_overwrite_the_base_property_in_1_If_this_is_intentional_add_an_initializer_Otherwise_add_a_declare_modifier_or_remove_the_redundant_declaration;
++                error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, symbolToString(base), typeToString(baseType));
+               }
+             }
+           }
+@@ -84922,14 +84911,14 @@
+             continue;
+           } else {
+             Debug.assert(!!(derived.flags & 98304 /* Accessor */));
+-            errorMessage2 = Diagnostics.Class_0_defines_instance_member_function_1_but_extended_class_2_defines_it_as_instance_member_accessor;
++            errorMessage = Diagnostics.Class_0_defines_instance_member_function_1_but_extended_class_2_defines_it_as_instance_member_accessor;
+           }
+         } else if (base.flags & 98304 /* Accessor */) {
+-          errorMessage2 = Diagnostics.Class_0_defines_instance_member_accessor_1_but_extended_class_2_defines_it_as_instance_member_function;
++          errorMessage = Diagnostics.Class_0_defines_instance_member_accessor_1_but_extended_class_2_defines_it_as_instance_member_function;
+         } else {
+-          errorMessage2 = Diagnostics.Class_0_defines_instance_member_property_1_but_extended_class_2_defines_it_as_instance_member_function;
+-        }
+-        error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage2, typeToString(baseType), symbolToString(base), typeToString(type));
++          errorMessage = Diagnostics.Class_0_defines_instance_member_property_1_but_extended_class_2_defines_it_as_instance_member_function;
++        }
++        error(getNameOfDeclaration(derived.valueDeclaration) || derived.valueDeclaration, errorMessage, typeToString(baseType), symbolToString(base), typeToString(type));
+       }
+     }
+     for (const [errorNode, memberInfo] of notImplementedInfo) {
+@@ -85887,10 +85876,10 @@
+     }
+     return false;
+   }
+-  function checkGrammarModuleElementContext(node, errorMessage2) {
++  function checkGrammarModuleElementContext(node, errorMessage) {
+     const isInAppropriateContext = node.parent.kind === 308 /* SourceFile */ || node.parent.kind === 269 /* ModuleBlock */ || node.parent.kind === 268 /* ModuleDeclaration */;
+     if (!isInAppropriateContext) {
+-      grammarErrorOnFirstToken(node, errorMessage2);
++      grammarErrorOnFirstToken(node, errorMessage);
+     }
+     return !isInAppropriateContext;
+   }
+@@ -121697,14 +121686,14 @@
+   };
+ }
+ function formatDiagnostic(diagnostic, host) {
+-  const errorMessage2 = `${diagnosticCategoryName(diagnostic)} TS${diagnostic.code}: ${flattenDiagnosticMessageText(diagnostic.messageText, host.getNewLine())}${host.getNewLine()}`;
++  const errorMessage = `${diagnosticCategoryName(diagnostic)} TS${diagnostic.code}: ${flattenDiagnosticMessageText(diagnostic.messageText, host.getNewLine())}${host.getNewLine()}`;
+   if (diagnostic.file) {
+     const { line, character } = getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+     const fileName = diagnostic.file.fileName;
+     const relativeFileName = convertToRelativePath(fileName, host.getCurrentDirectory(), (fileName2) => host.getCanonicalFileName(fileName2));
+-    return `${relativeFileName}(${line + 1},${character + 1}): ` + errorMessage2;
+-  }
+-  return errorMessage2;
++    return `${relativeFileName}(${line + 1},${character + 1}): ` + errorMessage;
++  }
++  return errorMessage;
+ }
+ var gutterStyleSequence = "\x1B[7m";
+ var gutterSeparator = " ";
+--- control/run.js
++++ after-final/run.js
+@@ -1400,10 +1400,10 @@
+ function orPredicate3(f1, f2, f3) {
+   return (p) => f1(p) || f2(p) || f3(p);
+ }
+-function or(...fs3) {
++function or(...fs4) {
+   return (...args) => {
+     let lastResult;
+-    for (const f of fs3) {
++    for (const f of fs4) {
+       lastResult = f(...args);
+       if (lastResult) {
+         return lastResult;
+@@ -2549,35 +2549,15 @@
+   }
+ });
+ 
+-// src/compiler/hostErrors.ts
+-function errorCode(error2) {
+-  return typeof error2 === "object" && error2 !== null && "code" in error2 && typeof error2.code === "string" ? error2.code : void 0;
+-}
+-function errorMessage(error2) {
+-  return typeof error2 === "object" && error2 !== null && "message" in error2 && typeof error2.message === "string" ? error2.message : void 0;
+-}
+-function propertyOf(value, key) {
+-  if (value === null || value === void 0) {
+-    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
+-  }
+-  return Reflect.get(Object(value), key, value);
+-}
+-var init_hostErrors = __esm({
+-  "src/compiler/hostErrors.ts"() {
+-    "use strict";
+-  }
+-});
+-
+ // src/compiler/tracing.ts
+-var tracing, tracingEnabled, startTracing, dumpTracingLegend;
++var fs, tracing, tracingEnabled, startTracing, dumpTracingLegend;
+ var init_tracing = __esm({
+   "src/compiler/tracing.ts"() {
+     "use strict";
+     init_ts2();
+     init_ts_performance();
+-    init_hostErrors();
++    fs = __toESM(require("fs"));
+     ((tracingEnabled2) => {
+-      let fs3;
+       let traceCount = 0;
+       let traceFd = 0;
+       let mode;
+@@ -2586,21 +2566,13 @@
+       const legend = [];
+       function startTracing2(tracingMode, traceDir, configFilePath) {
+         Debug.assert(!tracing, "Tracing already started");
+-        if (fs3 === void 0) {
+-          try {
+-            fs3 = require("fs");
+-          } catch (e) {
+-            throw new Error(`tracing requires having fs
+-(original error: ${errorMessage(e) || e})`);
+-          }
+-        }
+         mode = tracingMode;
+         typeCatalog.splice(0);
+         if (legendPath === void 0) {
+           legendPath = combinePaths(traceDir, "legend.json");
+         }
+-        if (!fs3.existsSync(traceDir)) {
+-          fs3.mkdirSync(traceDir, { recursive: true });
++        if (!fs.existsSync(traceDir)) {
++          fs.mkdirSync(traceDir, { recursive: true });
+         }
+         const countPart = mode === "build" ? `.${process.pid}-${++traceCount}` : mode === "server" ? `.${process.pid}` : ``;
+         const tracePath = combinePaths(traceDir, `trace${countPart}.json`);
+@@ -2610,10 +2582,10 @@
+           tracePath,
+           typesPath
+         });
+-        traceFd = fs3.openSync(tracePath, "w");
++        traceFd = fs.openSync(tracePath, "w");
+         tracing = tracingEnabled2;
+         const meta = { cat: "__metadata", ph: "M", ts: 1e3 * timestamp(), pid: 1, tid: 1 };
+-        fs3.writeSync(
++        fs.writeSync(
+           traceFd,
+           "[\n" + [{ name: "process_name", args: { name: "tsc" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "thread_name", args: { name: "Main" }, cat: meta.cat, ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }, { name: "TracingStartedInBrowser", cat: "disabled-by-default-devtools.timeline", ph: meta.ph, ts: meta.ts, pid: meta.pid, tid: meta.tid }].map((v) => JSON.stringify(v)).join(",\n")
+         );
+@@ -2622,10 +2594,10 @@
+       function stopTracing() {
+         Debug.assert(!!tracing, "Tracing is not in progress");
+         Debug.assert(!!typeCatalog.length === (mode !== "server"));
+-        fs3.writeSync(traceFd, `
++        fs.writeSync(traceFd, `
+ ]
+ `);
+-        fs3.closeSync(traceFd);
++        fs.closeSync(traceFd);
+         tracing = void 0;
+         if (typeCatalog.length) {
+           dumpTypes(typeCatalog);
+@@ -2698,11 +2670,11 @@
+       function writeEvent(eventType, phase, name, args, extras, time = 1e3 * timestamp()) {
+         if (mode === "server" && phase === "checkTypes" /* CheckTypes */) return;
+         mark("beginTracing");
+-        fs3.writeSync(traceFd, `,
++        fs.writeSync(traceFd, `,
+ {"pid":1,"tid":1,"ph":"${eventType}","cat":"${phase}","ts":${time},"name":"${name}"`);
+-        if (extras) fs3.writeSync(traceFd, `,${extras}`);
+-        if (args) fs3.writeSync(traceFd, `,"args":${JSON.stringify(args)}`);
+-        fs3.writeSync(traceFd, `}`);
++        if (extras) fs.writeSync(traceFd, `,${extras}`);
++        if (args) fs.writeSync(traceFd, `,"args":${JSON.stringify(args)}`);
++        fs.writeSync(traceFd, `}`);
+         mark("endTracing");
+         measure("Tracing", "beginTracing", "endTracing");
+       }
+@@ -2724,9 +2696,9 @@
+         var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+         mark("beginDumpTypes");
+         const typesPath = legend[legend.length - 1].typesPath;
+-        const typesFd = fs3.openSync(typesPath, "w");
++        const typesFd = fs.openSync(typesPath, "w");
+         const recursionIdentityMap = /* @__PURE__ */ new Map();
+-        fs3.writeSync(typesFd, "[");
++        fs.writeSync(typesFd, "[");
+         const numTypes = types.length;
+         for (let i = 0; i < numTypes; i++) {
+           const type = types[i];
+@@ -2822,13 +2794,13 @@
+             flags: Debug.formatTypeFlags(type.flags).split("|"),
+             display
+           };
+-          fs3.writeSync(typesFd, JSON.stringify(descriptor));
++          fs.writeSync(typesFd, JSON.stringify(descriptor));
+           if (i < numTypes - 1) {
+-            fs3.writeSync(typesFd, ",\n");
++            fs.writeSync(typesFd, ",\n");
+           }
+         }
+-        fs3.writeSync(typesFd, "]\n");
+-        fs3.closeSync(typesFd);
++        fs.writeSync(typesFd, "]\n");
++        fs.closeSync(typesFd);
+         mark("endDumpTypes");
+         measure("Dump types", "beginDumpTypes", "endDumpTypes");
+       }
+@@ -2836,7 +2808,7 @@
+         if (!legendPath) {
+           return;
+         }
+-        fs3.writeFileSync(legendPath, JSON.stringify(legend));
++        fs.writeFileSync(legendPath, JSON.stringify(legend));
+       }
+       tracingEnabled2.dumpLegend = dumpLegend;
+     })(tracingEnabled || (tracingEnabled = {}));
+@@ -4629,6 +4601,25 @@
+       JSDocParsingMode7[JSDocParsingMode7["ParseForTypeInfo"] = 3] = "ParseForTypeInfo";
+       return JSDocParsingMode7;
+     })(JSDocParsingMode || {});
++  }
++});
++
++// src/compiler/hostErrors.ts
++function errorCode(error2) {
++  return typeof error2 === "object" && error2 !== null && "code" in error2 && typeof error2.code === "string" ? error2.code : void 0;
++}
++function errorMessage(error2) {
++  return typeof error2 === "object" && error2 !== null && "message" in error2 && typeof error2.message === "string" ? error2.message : void 0;
++}
++function propertyOf(value, key) {
++  if (value === null || value === void 0) {
++    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
++  }
++  return Reflect.get(Object(value), key, value);
++}
++var init_hostErrors = __esm({
++  "src/compiler/hostErrors.ts"() {
++    "use strict";
+   }
+ });
+ 
+@@ -202625,37 +202616,37 @@
+   };
+ }
+ function createFromFileSystem(host, ignoreCase, { documents, files, cwd, time, meta } = {}) {
+-  const fs3 = getBuiltLocal(host, ignoreCase).shadow();
++  const fs4 = getBuiltLocal(host, ignoreCase).shadow();
+   if (meta) {
+     for (const key of Object.keys(meta)) {
+-      fs3.meta.set(key, meta[key]);
++      fs4.meta.set(key, meta[key]);
+     }
+   }
+   if (time) {
+-    fs3.time(time);
++    fs4.time(time);
+   }
+   if (cwd) {
+-    fs3.mkdirpSync(cwd);
+-    fs3.chdir(cwd);
++    fs4.mkdirpSync(cwd);
++    fs4.chdir(cwd);
+   }
+   if (documents) {
+     for (const document of documents) {
+-      fs3.mkdirpSync(dirname2(document.file));
+-      fs3.writeFileSync(document.file, document.text, "utf8");
+-      fs3.filemeta(document.file).set("document", document);
++      fs4.mkdirpSync(dirname2(document.file));
++      fs4.writeFileSync(document.file, document.text, "utf8");
++      fs4.filemeta(document.file).set("document", document);
+       const symlink = document.meta.get("symlink");
+       if (symlink) {
+         for (const link of symlink.split(",").map((link2) => link2.trim())) {
+-          fs3.mkdirpSync(dirname2(link));
+-          fs3.symlinkSync(resolve2(fs3.cwd(), document.file), link);
++          fs4.mkdirpSync(dirname2(link));
++          fs4.symlinkSync(resolve2(fs4.cwd(), document.file), link);
+         }
+       }
+     }
+   }
+   if (files) {
+-    fs3.apply(files);
+-  }
+-  return fs3;
++    fs4.apply(files);
++  }
++  return fs4;
+ }
+ function createIOError(code, details = "") {
+   const err = new Error(`${code}: ${IOErrorMessages[code]} ${details}`);
+@@ -202750,37 +202741,37 @@
+   return fourslashLibsOnlyCS;
+ }
+ function createFourslashVfs(host, ignoreCase, { documents, files, cwd, time, meta } = {}) {
+-  const fs3 = getFourslashLibsOnly(host, ignoreCase).shadow();
++  const fs4 = getFourslashLibsOnly(host, ignoreCase).shadow();
+   if (meta) {
+     for (const key of Object.keys(meta)) {
+-      fs3.meta.set(key, meta[key]);
++      fs4.meta.set(key, meta[key]);
+     }
+   }
+   if (time) {
+-    fs3.time(time);
++    fs4.time(time);
+   }
+   if (cwd) {
+-    fs3.mkdirpSync(cwd);
+-    fs3.chdir(cwd);
++    fs4.mkdirpSync(cwd);
++    fs4.chdir(cwd);
+   }
+   if (documents) {
+     for (const document of documents) {
+-      fs3.mkdirpSync(dirname2(document.file));
+-      fs3.writeFileSync(document.file, document.text, "utf8");
+-      fs3.filemeta(document.file).set("document", document);
++      fs4.mkdirpSync(dirname2(document.file));
++      fs4.writeFileSync(document.file, document.text, "utf8");
++      fs4.filemeta(document.file).set("document", document);
+       const symlink = document.meta.get("symlink");
+       if (symlink) {
+         for (const link of symlink.split(",").map((link2) => link2.trim())) {
+-          fs3.mkdirpSync(dirname2(link));
+-          fs3.symlinkSync(resolve2(fs3.cwd(), document.file), link);
++          fs4.mkdirpSync(dirname2(link));
++          fs4.symlinkSync(resolve2(fs4.cwd(), document.file), link);
+         }
+       }
+     }
+   }
+   if (files) {
+-    fs3.apply(files);
+-  }
+-  return fs3;
++    fs4.apply(files);
++  }
++  return fs4;
+ }
+ function normalizeFileSetEntry(value) {
+   if (value === void 0 || value === null || value instanceof Directory || value instanceof File || value instanceof Link || value instanceof Symlink || value instanceof Mount || value instanceof Rmdir || value instanceof Unlink) {
+@@ -202937,15 +202928,15 @@
+        */
+       snapshot() {
+         if (this.isReadonly) return;
+-        const fs3 = new _FileSystem(this.ignoreCase, { time: this._time });
+-        fs3._lazy = this._lazy;
+-        fs3._cwd = this._cwd;
+-        fs3._time = this._time;
+-        fs3._shadowRoot = this._shadowRoot;
+-        fs3._dirStack = this._dirStack;
+-        fs3.makeReadonly();
++        const fs4 = new _FileSystem(this.ignoreCase, { time: this._time });
++        fs4._lazy = this._lazy;
++        fs4._cwd = this._cwd;
++        fs4._time = this._time;
++        fs4._shadowRoot = this._shadowRoot;
++        fs4._dirStack = this._dirStack;
++        fs4.makeReadonly();
+         this._lazy = {};
+-        this._shadowRoot = fs3;
++        this._shadowRoot = fs4;
+       }
+       /**
+        * Gets a shadow copy of this file system. Changes to the shadow copy do not affect the
+@@ -202955,10 +202946,10 @@
+       shadow(ignoreCase = this.ignoreCase) {
+         if (!this.isReadonly) throw new Error("Cannot shadow a mutable file system.");
+         if (ignoreCase && !this.ignoreCase) throw new Error("Cannot create a case-insensitive file system from a case-sensitive one.");
+-        const fs3 = new _FileSystem(ignoreCase, { time: this._time });
+-        fs3._shadowRoot = this;
+-        fs3._cwd = this._cwd;
+-        return fs3;
++        const fs4 = new _FileSystem(ignoreCase, { time: this._time });
++        fs4._shadowRoot = this;
++        fs4._cwd = this._cwd;
++        return fs4;
+       }
+       /**
+        * Gets or sets the timestamp (in milliseconds) used for file status, returning the previous timestamp.
+@@ -205094,20 +205085,20 @@
+         this._sourceFiles.set(canonicalFileName, parsed);
+         if (cacheKey) {
+           const stats = this.vfs.statSync(canonicalFileName);
+-          let fs3 = this.vfs;
+-          while (fs3.shadowRoot) {
++          let fs4 = this.vfs;
++          while (fs4.shadowRoot) {
+             try {
+-              const shadowRootStats = fs3.shadowRoot.existsSync(canonicalFileName) ? fs3.shadowRoot.statSync(canonicalFileName) : void 0;
++              const shadowRootStats = fs4.shadowRoot.existsSync(canonicalFileName) ? fs4.shadowRoot.statSync(canonicalFileName) : void 0;
+               if (shadowRootStats.dev !== stats.dev || shadowRootStats.ino !== stats.ino || shadowRootStats.mtimeMs !== stats.mtimeMs) {
+                 break;
+               }
+-              fs3 = fs3.shadowRoot;
++              fs4 = fs4.shadowRoot;
+             } catch {
+               break;
+             }
+           }
+-          if (fs3 !== this.vfs) {
+-            fs3.filemeta(canonicalFileName).set(cacheKey, parsed);
++          if (fs4 !== this.vfs) {
++            fs4.filemeta(canonicalFileName).set(cacheKey, parsed);
+           }
+         }
+         return parsed;
+@@ -205504,12 +205495,12 @@
+         const useCaseSensitiveFileNames2 = options.useCaseSensitiveFileNames !== void 0 ? options.useCaseSensitiveFileNames : true;
+         const programFileNames = inputFiles.map((file) => options.configFile ? getNormalizedAbsolutePath(file.unitName, currentDirectory) : file.unitName).filter((fileName) => !fileExtensionIs(fileName, ".json" /* Json */));
+         const docs = inputFiles.concat(otherFiles).map(TextDocument.fromTestFile);
+-        const fs3 = createFromFileSystem(IO, !useCaseSensitiveFileNames2, { documents: docs, cwd: currentDirectory });
++        const fs4 = createFromFileSystem(IO, !useCaseSensitiveFileNames2, { documents: docs, cwd: currentDirectory });
+         if (symlinks) {
+-          fs3.apply(symlinks);
++          fs4.apply(symlinks);
+         }
+         assign(options, convertToOptionsWithAbsolutePaths(options, (path3) => getNormalizedAbsolutePath(path3, currentDirectory)));
+-        const host = new CompilerHost5(fs3, options);
++        const host = new CompilerHost5(fs4, options);
+         const result = compileFiles(host, programFileNames, options, typeScriptVersion3, (harnessSettings == null ? void 0 : harnessSettings.captureSuggestions) === "true");
+         result.symlinks = symlinks;
+         result.repeat = (newOptions) => compileFiles2(inputFiles, otherFiles, { ...harnessSettings, ...newOptions }, compilerOptions, originalCurrentDirectory, symlinks);
+@@ -214442,12 +214433,12 @@
+             );
+             files[path3] = new File(data, { meta: { scriptInfo } });
+           });
+-          const fs3 = new FileSystem(
++          const fs4 = new FileSystem(
+             /*ignoreCase*/
+             true,
+             { cwd: baseDir, files }
+           );
+-          const host = new ParseConfigHost(fs3);
++          const host = new ParseConfigHost(fs4);
+           const jsonSourceFile = parseJsonText(configFileName, this.inputFiles.get(configFileName));
+           configParseResult = parseJsonSourceFileConfigFileContent(jsonSourceFile, host, baseDir, compilationOptions, configFileName);
+           compilationOptions = configParseResult.options;
+@@ -221487,7 +221478,7 @@
+       baselineMatches("can include files in the same order on multiple platforms case sensitive", {}, caseSensitiveOrderingDiffersWithCaseHost, caseSensitiveBasePath2);
+       baselineMatches("can include files in the same order on multiple platforms case insensitive", {}, caseInsensitiveOrderingDiffersWithCaseHost, caseInsensitiveBasePath2);
+       describe("when recursive symlinked directories are present", () => {
+-        const fs3 = new FileSystem(
++        const fs4 = new FileSystem(
+           /*ignoreCase*/
+           true,
+           {
+@@ -221497,11 +221488,11 @@
+             }
+           }
+         );
+-        fs3.mkdirpSync("c:/dev/a/b/c");
+-        fs3.symlinkSync("c:/dev/A", "c:/dev/a/self");
+-        fs3.symlinkSync("c:/dev/a", "c:/dev/a/b/parent");
+-        fs3.symlinkSync("c:/dev/a", "c:/dev/a/b/c/grandparent");
+-        const host = new ParseConfigHost(fs3);
++        fs4.mkdirpSync("c:/dev/a/b/c");
++        fs4.symlinkSync("c:/dev/A", "c:/dev/a/self");
++        fs4.symlinkSync("c:/dev/a", "c:/dev/a/b/parent");
++        fs4.symlinkSync("c:/dev/a", "c:/dev/a/b/c/grandparent");
++        const host = new ParseConfigHost(fs4);
+         const json = {};
+         baselineMatches("when recursive symlinked directories are present", json, host, caseInsensitiveBasePath2);
+       });
+@@ -222792,7 +222783,7 @@
+ // src/harness/evaluatorImpl.ts
+ function evaluateTypeScript(source, options, globals) {
+   if (typeof source === "string") source = { files: { [sourceFile]: source }, rootFiles: [sourceFile], main: sourceFile };
+-  const fs3 = createFromFileSystem(
++  const fs4 = createFromFileSystem(
+     IO,
+     /*ignoreCase*/
+     false,
+@@ -222806,7 +222797,7 @@
+     ignoreDeprecations: "6.0",
+     ...options
+   };
+-  const host = new CompilerHost5(fs3, compilerOptions);
++  const host = new CompilerHost5(fs4, compilerOptions);
+   const result = compileFiles(host, source.rootFiles, compilerOptions);
+   if (some(result.diagnostics)) {
+     assert.ok(
+@@ -222822,28 +222813,28 @@
+   const output = result.getOutput(source.main, "js");
+   assert.isDefined(output);
+   globals = { Symbol: FakeSymbol, ...globals };
+-  const loader = getLoader(compilerOptions, fs3, globals);
++  const loader = getLoader(compilerOptions, fs4, globals);
+   return loader.import(output.file);
+ }
+ function evaluateJavaScript(sourceText, globals, sourceFile2 = sourceFileJs) {
+   globals = { Symbol: FakeSymbol, ...globals };
+-  const fs3 = new FileSystem(
++  const fs4 = new FileSystem(
+     /*ignoreCase*/
+     false,
+     { files: { [sourceFile2]: sourceText } }
+   );
+-  return new CommonJsLoader(fs3, globals).import(sourceFile2);
+-}
+-function getLoader(compilerOptions, fs3, globals) {
++  return new CommonJsLoader(fs4, globals).import(sourceFile2);
++}
++function getLoader(compilerOptions, fs4, globals) {
+   const moduleKind = getEmitModuleKind(compilerOptions);
+   switch (moduleKind) {
+     case 3 /* UMD */:
+     case 1 /* CommonJS */:
+-      return new CommonJsLoader(fs3, globals);
++      return new CommonJsLoader(fs4, globals);
+     case 4 /* System */:
+-      return new SystemLoader(fs3, globals);
++      return new SystemLoader(fs4, globals);
+     case 2 /* AMD */:
+-      return new AmdLoader(fs3, globals);
++      return new AmdLoader(fs4, globals);
+     case 0 /* None */:
+     default:
+       throw new Error(`ModuleKind '${ModuleKind[moduleKind]}' not supported by evaluator.`);
+@@ -222893,9 +222884,9 @@
+       }
+     }
+     Loader = class {
+-      constructor(fs3, globals) {
++      constructor(fs4, globals) {
+         this.moduleCache = /* @__PURE__ */ new Map();
+-        this.fs = fs3;
++        this.fs = fs4;
+         this.globals = globals;
+       }
+       isFile(file) {
+@@ -235823,25 +235814,25 @@
+         const barFooIndex = new TextDocument("/node_modules/bar/node_modules/foo/index.d.ts", fooIndexText);
+         const fooPackage = new TextDocument("/node_modules/foo/package.json", fooPackageJsonText);
+         const fooIndex = new TextDocument("/node_modules/foo/index.d.ts", fooIndexText);
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+           { documents: [a, bar, barFooPackage, barFooIndex, fooPackage, fooIndex], cwd: "/" }
+         );
+-        const program = createProgram(["/a.ts"], emptyOptions, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        const program = createProgram(["/a.ts"], emptyOptions, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         assertIsExternal(program, [a, bar, barFooIndex, fooIndex], (f) => f !== a);
+       });
+       it('works on `/// <reference types="" />`', () => {
+         const a = new TextDocument("/a.ts", '/// <reference types="foo" />');
+         const fooIndex = new TextDocument("/node_modules/foo/index.d.ts", "declare const foo: number;");
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+           { documents: [a, fooIndex], cwd: "/" }
+         );
+-        const program = createProgram(["/a.ts"], emptyOptions, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        const program = createProgram(["/a.ts"], emptyOptions, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         assertIsExternal(program, [a, fooIndex], (f) => f !== a);
+       });
+       function assertIsExternal(program, files, isExternalExpected) {
+@@ -235856,13 +235847,13 @@
+       it("works on projects that have .json files", () => {
+         const main = new TextDocument("/main.ts", 'export { version } from "./package.json";');
+         const pkg = new TextDocument("/package.json", jsonToReadableText({ version: "1.0.0" }));
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+           { documents: [main, pkg], cwd: "/" }
+         );
+-        const program = createProgram(["/main.ts"], { resolveJsonModule: true }, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        const program = createProgram(["/main.ts"], { resolveJsonModule: true }, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         const json = program.getSourceFile("/package.json");
+         assert.equal(json.scriptKind, 6 /* JSON */);
+         assert.isNumber(json.nodeCount);
+@@ -235874,13 +235865,13 @@
+     describe("unittests:: programApi:: Program.getTypeChecker / Program.getSemanticDiagnostics", () => {
+       it("does not produce errors on `as const` it would not normally produce on the command line", () => {
+         const main = new TextDocument("/main.ts", "0 as const");
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+           { documents: [main], cwd: "/" }
+         );
+-        const program = createProgram(["/main.ts"], {}, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        const program = createProgram(["/main.ts"], {}, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         const typeChecker = program.getTypeChecker();
+         const sourceFile2 = program.getSourceFile("main.ts");
+         typeChecker.getTypeAtLocation(sourceFile2.statements[0].expression.type);
+@@ -235890,13 +235881,13 @@
+       it("getSymbolAtLocation does not cause additional error to be added on module resolution failure", () => {
+         const main = new TextDocument("/main.ts", 'import "./module";');
+         const mod = new TextDocument("/module.d.ts", "declare const foo: any;");
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+           { documents: [main, mod], cwd: "/" }
+         );
+-        const program = createProgram(["/main.ts"], {}, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        const program = createProgram(["/main.ts"], {}, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         const sourceFile2 = program.getSourceFile("main.ts");
+         const typeChecker = program.getTypeChecker();
+         typeChecker.getSymbolAtLocation(sourceFile2.statements[0].moduleSpecifier);
+@@ -235907,7 +235898,7 @@
+       it("resolves relative paths by getCurrentDirectory", () => {
+         const main = new TextDocument("/main.ts", 'import "module";');
+         const mod = new TextDocument("/lib/module.ts", "declare const foo: any;");
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           false,
+@@ -235915,7 +235906,7 @@
+         );
+         const program = createProgram(["./main.ts"], {
+           paths: { "*": ["./lib/*"] }
+-        }, new CompilerHost5(fs3, { newLine: 1 /* LineFeed */ }));
++        }, new CompilerHost5(fs4, { newLine: 1 /* LineFeed */ }));
+         assert.isEmpty(program.getConfigFileParsingDiagnostics());
+         assert.isEmpty(program.getGlobalDiagnostics());
+         assert.isEmpty(program.getSemanticDiagnostics());
+@@ -236164,7 +236155,7 @@
+ function isFsSymLink(s) {
+   return !!s && isString(s.symLink);
+ }
+-function cloneFsMap(fs3) {
++function cloneFsMap(fs4) {
+   const snap = /* @__PURE__ */ new Map();
+   const clonedMap = /* @__PURE__ */ new Map();
+   const getCloned = (entry) => {
+@@ -236177,7 +236168,7 @@
+     }
+     return cloned;
+   };
+-  fs3.forEach((value, key) => {
++  fs4.forEach((value, key) => {
+     snap.set(key, getCloned(value));
+   });
+   return snap;
+@@ -249200,11 +249191,11 @@
+ });
+ 
+ // src/testRunner/unittests/sys/symlinkWatching.ts
+-var fs2;
++var fs3;
+ var init_symlinkWatching = __esm({
+   "src/testRunner/unittests/sys/symlinkWatching.ts"() {
+     "use strict";
+-    fs2 = __toESM(require("fs"));
++    fs3 = __toESM(require("fs"));
+     init_Harness2();
+     init_ts9();
+     init_Utils2();
+@@ -249718,7 +249709,7 @@
+           cleanup();
+         });
+         function cleanup() {
+-          withSwallowException(() => fs2.rmSync(root, { recursive: true, force: true }));
++          withSwallowException(() => fs3.rmSync(root, { recursive: true, force: true }));
+         }
+         function withSwallowException(op) {
+           try {
+@@ -249729,7 +249720,7 @@
+         describe("watchFile using polling", () => {
+           before(() => {
+             sys.writeFile(`${root}/polling/file.ts`, "export const x = 10;");
+-            withSwallowException(() => fs2.symlinkSync(`${root}/polling`, `${root}/linkedpolling`, "junction"));
++            withSwallowException(() => fs3.symlinkSync(`${root}/polling`, `${root}/linkedpolling`, "junction"));
+           });
+           verifyWatchFile(
+             "watchFile using polling",
+@@ -249742,7 +249733,7 @@
+         describe("watchFile using fsEvents", () => {
+           before(() => {
+             sys.writeFile(`${root}/fsevents/file.ts`, "export const x = 10;");
+-            withSwallowException(() => fs2.symlinkSync(`${root}/fsevents`, `${root}/linkedfsevents`, "junction"));
++            withSwallowException(() => fs3.symlinkSync(`${root}/fsevents`, `${root}/linkedfsevents`, "junction"));
+           });
+           verifyWatchFile(
+             "watchFile using fsEvents",
+@@ -249755,7 +249746,7 @@
+         describe("watchDirectory using polling", () => {
+           before(() => {
+             sys.writeFile(`${root}/dirpolling/file.ts`, "export const x = 10;");
+-            withSwallowException(() => fs2.symlinkSync(`${root}/dirpolling`, `${root}/linkeddirpolling`, "junction"));
++            withSwallowException(() => fs3.symlinkSync(`${root}/dirpolling`, `${root}/linkeddirpolling`, "junction"));
+           });
+           verifyWatchFile(
+             "watchDirectory using polling",
+@@ -249769,11 +249760,11 @@
+         describe("watchDirectory using fsEvents", () => {
+           before(() => {
+             sys.writeFile(`${root}/dirfsevents/file.ts`, "export const x = 10;");
+-            withSwallowException(() => fs2.symlinkSync(`${root}/dirfsevents`, `${root}/linkeddirfsevents`, "junction"));
++            withSwallowException(() => fs3.symlinkSync(`${root}/dirfsevents`, `${root}/linkeddirfsevents`, "junction"));
+           });
+           verifyWatchDirectoryUsingFsEvents(
+             () => sys,
+-            (dir, _recursive, cb) => fs2.watch(dir, { persistent: true }, cb),
++            (dir, _recursive, cb) => fs3.watch(dir, { persistent: true }, cb),
+             `${root}/dirfsevents`,
+             `${root}/linkeddirfsevents`,
+             osFlavor
+@@ -249788,7 +249779,7 @@
+             });
+             verifyRecursiveWatchDirectoryUsingFsEvents(
+               () => sys,
+-              (dir, recursive, cb) => fs2.watch(dir, { persistent: true, recursive }, cb),
++              (dir, recursive, cb) => fs3.watch(dir, { persistent: true, recursive }, cb),
+               `${root}/recursivefsevents`,
+               `${root}/linkedrecursivefsevents`,
+               osFlavor
+@@ -249798,9 +249789,9 @@
+         function setupRecursiveFsEvents(recursiveName) {
+           sys.writeFile(`${root}/${recursiveName}/sub/folder/file.ts`, "export const x = 10;");
+           sys.writeFile(`${root}/${recursiveName}2/sub/folder/file.ts`, "export const x = 10;");
+-          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}`, `${root}/linked${recursiveName}`, "junction"));
+-          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}/sub`, `${root}/${recursiveName}/linkedsub`, "junction"));
+-          withSwallowException(() => fs2.symlinkSync(`${root}/${recursiveName}2`, `${root}/${recursiveName}/linkedsub2`, "junction"));
++          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}`, `${root}/linked${recursiveName}`, "junction"));
++          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}/sub`, `${root}/${recursiveName}/linkedsub`, "junction"));
++          withSwallowException(() => fs3.symlinkSync(`${root}/${recursiveName}2`, `${root}/${recursiveName}/linkedsub2`, "junction"));
+         }
+       });
+       describe("with virtualFileSystem::", () => {
+@@ -250324,13 +250315,13 @@
+         }
+       });
+       function baselineDeclarationTransform(text, opts) {
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           true,
+           { documents: [new TextDocument("/.src/index.ts", text)] }
+         );
+-        const host = new CompilerHost5(fs3, opts.compilerOptions);
++        const host = new CompilerHost5(fs4, opts.compilerOptions);
+         const program = createProgram(["/.src/index.ts"], opts.compilerOptions, host);
+         program.emit(
+           program.getSourceFile("/.src/index.ts"),
+@@ -250341,7 +250332,7 @@
+           true,
+           opts.transformers
+         );
+-        return fs3.readFileSync("/.src/index.d.ts").toString();
++        return fs4.readFileSync("/.src/index.d.ts").toString();
+       }
+       function addSyntheticComment(nodeFilter) {
+         return (context) => {
+@@ -250498,7 +250489,7 @@
+         }
+       });
+       testBaseline("issue24709", () => {
+-        const fs3 = createFromFileSystem(
++        const fs4 = createFromFileSystem(
+           IO,
+           /*ignoreCase*/
+           true
+@@ -250506,7 +250497,7 @@
+         const transformed = transform(createSourceFile("source.ts", "class X { echo(x: string) { return x; } }", 1 /* ES5 */), [transformSourceFile2]);
+         const transformedSourceFile = transformed.transformed[0];
+         transformed.dispose();
+-        const host = new CompilerHost5(fs3);
++        const host = new CompilerHost5(fs4);
+         host.getSourceFile = () => transformedSourceFile;
+         const program = createProgram(["source.ts"], {
+           target: 1 /* ES5 */,
+@@ -251093,11 +251084,11 @@
+   var _a, _b, _c, _d, _e, _f;
+   const result = initialTestTscCompile({
+     ...input,
+-    modifySystem: (fs3) => {
++    modifySystem: (fs4) => {
+       var _a2;
+-      (_a2 = input.modifySystem) == null ? void 0 : _a2.call(input, fs3);
++      (_a2 = input.modifySystem) == null ? void 0 : _a2.call(input, fs4);
+       for (let i = 0; i <= index; i++) {
+-        input.edits[i].edit(fs3);
++        input.edits[i].edit(fs4);
+       }
+     },
+     commandLineArgs: input.edits[index].commandLineArgs ?? input.commandLineArgs,
+@@ -264023,7 +264014,7 @@
+         edits: [
+           {
+             caption: "change index.ts",
+-            edit: (fs3) => fs3.writeFile(
++            edit: (fs4) => fs4.writeFile(
+               "/home/src/workspace/packageC/index.ts",
+               dedent`
+                             import * as pkg from "package-b";
+@@ -295510,18 +295501,18 @@
+           throw assert(false, "Testcase: " + testCaseFileName + " does not contain valid json format: " + e.message);
+         }
+         function makeFileSystem() {
+-          const fs4 = createFromFileSystem(
++          const fs5 = createFromFileSystem(
+             IO,
+             /*ignoreCase*/
+             false
+           );
+-          fs4.mountSync(resolve2(IO.getWorkspaceRoot(), "tests"), combine2(srcFolder, "tests"), createResolver(IO));
+-          fs4.mkdirpSync(combine2(srcFolder, testCase.projectRoot));
+-          fs4.chdir(combine2(srcFolder, testCase.projectRoot));
+-          fs4.makeReadonly();
+-          return fs4;
+-        }
+-        let fs3;
++          fs5.mountSync(resolve2(IO.getWorkspaceRoot(), "tests"), combine2(srcFolder, "tests"), createResolver(IO));
++          fs5.mkdirpSync(combine2(srcFolder, testCase.projectRoot));
++          fs5.chdir(combine2(srcFolder, testCase.projectRoot));
++          fs5.makeReadonly();
++          return fs5;
++        }
++        let fs4;
+         return [
+           {
+             name: `@module: commonjs`,
+@@ -295529,7 +295520,7 @@
+               testCase,
+               moduleKind: 1 /* CommonJS */,
+               get vfs() {
+-                return fs3 ?? (fs3 = makeFileSystem());
++                return fs4 ?? (fs4 = makeFileSystem());
+               }
+             }
+           },
+@@ -295539,7 +295530,7 @@
+               testCase,
+               moduleKind: 2 /* AMD */,
+               get vfs() {
+-                return fs3 ?? (fs3 = makeFileSystem());
++                return fs4 ?? (fs4 = makeFileSystem());
+               }
+             }
+           }
+--- control/typescript.js
++++ after-final/typescript.js
+@@ -3680,10 +3680,10 @@
+ function orPredicate3(f1, f2, f3) {
+   return (p) => f1(p) || f2(p) || f3(p);
+ }
+-function or(...fs) {
++function or(...fs2) {
+   return (...args) => {
+     let lastResult;
+-    for (const f of fs) {
++    for (const f of fs2) {
+       lastResult = f(...args);
+       if (lastResult) {
+         return lastResult;
+@@ -4765,25 +4765,11 @@
+   }
+ }
+ 
+-// src/compiler/hostErrors.ts
+-function errorCode(error2) {
+-  return typeof error2 === "object" && error2 !== null && "code" in error2 && typeof error2.code === "string" ? error2.code : void 0;
+-}
+-function errorMessage(error2) {
+-  return typeof error2 === "object" && error2 !== null && "message" in error2 && typeof error2.message === "string" ? error2.message : void 0;
+-}
+-function propertyOf(value, key) {
+-  if (value === null || value === void 0) {
+-    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
+-  }
+-  return Reflect.get(Object(value), key, value);
+-}
+-
+ // src/compiler/tracing.ts
++var fs = __toESM(require("fs"));
+ var tracing;
+ var tracingEnabled;
+ ((tracingEnabled2) => {
+-  let fs;
+   let traceCount = 0;
+   let traceFd = 0;
+   let mode;
+@@ -4792,14 +4778,6 @@
+   const legend = [];
+   function startTracing2(tracingMode, traceDir, configFilePath) {
+     Debug.assert(!tracing, "Tracing already started");
+-    if (fs === void 0) {
+-      try {
+-        fs = require("fs");
+-      } catch (e) {
+-        throw new Error(`tracing requires having fs
+-(original error: ${errorMessage(e) || e})`);
+-      }
+-    }
+     mode = tracingMode;
+     typeCatalog.splice(0);
+     if (legendPath === void 0) {
+@@ -6829,6 +6807,20 @@
+   JSDocParsingMode6[JSDocParsingMode6["ParseForTypeInfo"] = 3] = "ParseForTypeInfo";
+   return JSDocParsingMode6;
+ })(JSDocParsingMode || {});
++
++// src/compiler/hostErrors.ts
++function errorCode(error2) {
++  return typeof error2 === "object" && error2 !== null && "code" in error2 && typeof error2.code === "string" ? error2.code : void 0;
++}
++function errorMessage(error2) {
++  return typeof error2 === "object" && error2 !== null && "message" in error2 && typeof error2.message === "string" ? error2.message : void 0;
++}
++function propertyOf(value, key) {
++  if (value === null || value === void 0) {
++    throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
++  }
++  return Reflect.get(Object(value), key, value);
++}
+ 
+ // src/compiler/sys.ts
+ var _fs = __toESM(require("fs"));

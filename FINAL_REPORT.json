@@ -1,0 +1,208 @@
+{
+  "commit": "0334d4e3cacb729b20f5b3790cecee7f41c185be",
+  "parent": "2d7a1683c60339c33d3fd33ae4ff91d242f01094",
+  "oneCommit": true,
+  "changedFiles": [
+    "stage3/adapt/47-host-errors/README.md",
+    "stage3/adapt/47-host-errors/adapt.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+    "stage3/adapt/47-host-errors/meta-spread-pins.json",
+    "stage3/adapt/47-host-errors/tracing-fs-import.cjs",
+    "stage3/adapt/47-host-errors/verify.cjs",
+    "stage3/adapt/65-temporary-node-builtins/README.md",
+    "stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+    "stage3/adapt/65-temporary-node-builtins/check.cjs",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "adaptedSourceFiles": 747,
+  "adaptedSourceChanges": [
+    "src/compiler/tracing.ts"
+  ],
+  "catchReferencesBefore": 3,
+  "catchReferencesAfter": 0,
+  "exportReferencesBefore": 6,
+  "exportReferencesAfter": 6,
+  "exportReferenceBytesIdentical": true,
+  "runtimeExportKeys": 2256,
+  "control": {
+    "shards": 398,
+    "allPass": true,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "maximumShardSeconds": 8.549484146000395,
+    "wallSeconds": 840.362840795,
+    "memoryEventsUnchanged": true,
+    "runnerIdenticalInEveryShard": true,
+    "oldCatchExecutions": 0,
+    "bundleLoads": {
+      "run.js": 398,
+      "_tsc.js": 0,
+      "typescript.js": 0
+    },
+    "harnessProcesses": 398
+  },
+  "after": {
+    "shards": 398,
+    "allPass": true,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "maximumShardSeconds": 8.017745120001564,
+    "wallSeconds": 829.1761657589996,
+    "memoryEventsUnchanged": true,
+    "runnerIdenticalInEveryShard": true
+  },
+  "trace": {
+    "controlSelfInventoryDiffers": true,
+    "samplingRule": "writeStackEvent emits ph X complete events only when [time,endTime) crosses a 10 ms sampling point",
+    "removedKinds": [
+      "X"
+    ],
+    "deterministicInventoryEqual": true,
+    "typesAndLegendByteIdentical": true,
+    "runs": [
+      {
+        "tree": "control2",
+        "index": 1,
+        "traceEvents": 30,
+        "sampledEvents": 7,
+        "retainedEvents": 23,
+        "sampledNames": [
+          "emitDeclarationFileOrBundle",
+          "emitJsFileOrBundle",
+          "findSourceFile",
+          "processRootFiles",
+          "transformNodes"
+        ],
+        "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+        "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+      },
+      {
+        "tree": "control2",
+        "index": 2,
+        "traceEvents": 31,
+        "sampledEvents": 8,
+        "retainedEvents": 23,
+        "sampledNames": [
+          "checkExpression",
+          "emitDeclarationFileOrBundle",
+          "emitJsFileOrBundle",
+          "findSourceFile",
+          "processRootFiles",
+          "transformNodes"
+        ],
+        "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+        "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+      },
+      {
+        "tree": "after2",
+        "index": 1,
+        "traceEvents": 31,
+        "sampledEvents": 8,
+        "retainedEvents": 23,
+        "sampledNames": [
+          "checkExpression",
+          "emitDeclarationFileOrBundle",
+          "emitJsFileOrBundle",
+          "findSourceFile",
+          "processRootFiles",
+          "transformNodes"
+        ],
+        "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+        "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+      },
+      {
+        "tree": "after2",
+        "index": 2,
+        "traceEvents": 33,
+        "sampledEvents": 10,
+        "retainedEvents": 23,
+        "sampledNames": [
+          "checkExpression",
+          "checkVariableDeclaration",
+          "emitDeclarationFileOrBundle",
+          "emitJsFileOrBundle",
+          "findSourceFile",
+          "processRootFiles",
+          "transformNodes"
+        ],
+        "typesSha256": "5ab3c74261481457d3f6e7644d631a8f1a82f499b229d42148b170fa20e03416",
+        "legendSha256": "9ff9a8f1cb09a676c306b4b9202ebf862a00ac61e9e35dfd2671c9876c217c39"
+      }
+    ]
+  },
+  "public": {
+    "runtimeExportKeysIdentical": true,
+    "runtimeExportCount": 2256,
+    "errorMessageIsRuntimeExport": true,
+    "publicDeclarations": [
+      {
+        "file": "typescript.d.ts",
+        "bytes": 593506,
+        "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd"
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "bytes": 866,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+      }
+    ],
+    "plainStdoutStderrAndEmittedFilesIdentical": true
+  },
+  "identity": {
+    "sourceFiles": 747,
+    "sourceIdenticalToAfter2": true,
+    "emittedFiles": 10,
+    "emittedByteIdenticalToAfter2": true,
+    "officialReplayByteIdentical": true,
+    "guardChange": "boolean identity assertion avoids formatting cyclic symbol objects on rejection; generated TypeScript unchanged"
+  },
+  "censuses": [
+    {
+      "tree": "control2",
+      "checkerDiagnostics": 0,
+      "completeTrailer": true
+    },
+    {
+      "tree": "after2",
+      "checkerDiagnostics": 0,
+      "completeTrailer": true
+    }
+  ],
+  "newCoreFirstStop": "sys.ts:1654:13, node:inspector.Session.post",
+  "restoringMutant": "tracing.ts:381:1 on 2d7a1683; this maps to tracing.ts:380:1 on the previous base",
+  "ledgerAppendedAfterBothExistingEntries": true,
+  "archives": [
+    {
+      "file": "control2-lane.tgz",
+      "bytes": 3975385,
+      "sha256": "f97cf72e73016ae27483170d23b64fadc359bc457dbac145be8514172fb6ba22"
+    },
+    {
+      "file": "after2-lane.tgz",
+      "bytes": 3974244,
+      "sha256": "53893e6ff6383409812d0f97547bd4ec8dd88d92a8063b548dc1325f475b3cbe"
+    }
+  ],
+  "final47Replay": {
+    "exactIncomingAccepted": true,
+    "exactCompletedAccepted": true,
+    "incomingMetadataEdits": 3,
+    "catalogResetEdits": 1,
+    "completedReplayEdits": 0,
+    "replayWithoutWrites": true,
+    "driftRefusedBeforeWriting": [
+      "mixed metadata literals",
+      "meta value drift",
+      "catalog reset drift",
+      "restored length-write intermediate"
+    ]
+  },
+  "final65Replay": "exit 0; idempotent with runtime-change negative caught",
+  "moduleGraphEvidence": "module-graph2.json"
+}

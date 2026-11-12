@@ -1,0 +1,132 @@
+[
+  {
+    "file": "_tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "_tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/0.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "_tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "_tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "_typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "_typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "run.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "run.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/3.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/4.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/5.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "tsserverlibrary.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "tsserverlibrary.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/6.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "typescript.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "typescript.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/7.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/8.json"
+    ],
+    "exit": 0
+  },
+  {
+    "file": "watchGuard.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control2",
+      "/workspace/scratch/tracing-after2",
+      "watchGuard.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit2-certificates/9.json"
+    ],
+    "exit": 0
+  }
+]

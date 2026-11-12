@@ -1,0 +1,34 @@
+{
+  "root": "/workspace/scratch/tracing-after2",
+  "file": "run.js",
+  "bindingPresent": true,
+  "references": 3,
+  "catchReferences": 0,
+  "otherReferences": 3,
+  "sites": [
+    {
+      "line": 197044,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "  errorMessage: () => errorMessage,",
+      "referenceExpression": "errorMessage: () => errorMessage"
+    },
+    {
+      "line": 200359,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "  errorMessage: () => errorMessage,",
+      "referenceExpression": "errorMessage: () => errorMessage"
+    },
+    {
+      "line": 209525,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "  errorMessage: () => errorMessage,",
+      "referenceExpression": "errorMessage: () => errorMessage"
+    }
+  ]
+}

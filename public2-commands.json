@@ -1,0 +1,50 @@
+[
+  {
+    "phase": "exports",
+    "label": "control2",
+    "argv": [
+      "node",
+      "-e",
+      "process.stdout.write(JSON.stringify(Object.keys(require(process.argv[1])).sort()))",
+      "/workspace/scratch/tracing-control2/built/local/typescript.js"
+    ],
+    "exit": 0
+  },
+  {
+    "phase": "plain",
+    "label": "control2",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-control2/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "exit": 0
+  },
+  {
+    "phase": "exports",
+    "label": "after3",
+    "argv": [
+      "node",
+      "-e",
+      "process.stdout.write(JSON.stringify(Object.keys(require(process.argv[1])).sort()))",
+      "/workspace/scratch/tracing-after3/built/local/typescript.js"
+    ],
+    "exit": 0
+  },
+  {
+    "phase": "plain",
+    "label": "after3",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-after3/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project2/tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "exit": 0
+  }
+]
