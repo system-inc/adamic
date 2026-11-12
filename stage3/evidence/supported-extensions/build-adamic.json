@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "while [ ! -f cohere/TypeScript/tsc/go.mod ]; do sleep 2; done; exec go build -o /workspace/scratch/supported-extensions/adamic ./cmd/adamic"
+  ],
+  "child_exit_code": 0,
+  "seconds": 560.1362407629999
+}

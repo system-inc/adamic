@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "push",
+    "--dry-run",
+    "origin",
+    "HEAD:refs/heads/typescript/supported-extensions-cast"
+  ],
+  "child_exit_code": 0,
+  "seconds": 1.2471967390001737
+}

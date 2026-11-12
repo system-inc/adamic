@@ -1,0 +1,11 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/supported-extensions/adamic-main",
+    "./cmd/adamic"
+  ],
+  "child_exit_code": 0,
+  "seconds": 72.78143577100013
+}

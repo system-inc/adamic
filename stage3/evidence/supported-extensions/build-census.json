@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/supported-extensions/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/supported-extensions/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit_code": 0,
+  "seconds": 370.17365908600004
+}

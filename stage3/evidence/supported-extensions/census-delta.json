@@ -1,0 +1,46 @@
+{
+  "removed": [
+    [
+      "src/compiler/utilities.ts:10005:158",
+      "Refused",
+      "a cast the runtime can't check"
+    ]
+  ],
+  "added": [],
+  "restoringMutantMatchesBaseline": true,
+  "phaseRemoved": [
+    [
+      "src/compiler/utilities.ts:10005:158",
+      "Refused",
+      "a cast the runtime can't check",
+      "refusal_scan"
+    ]
+  ],
+  "phaseAdded": [],
+  "measurements": {
+    "before": {
+      "units": 933,
+      "events": 1385,
+      "statuses": {
+        "attempted": 867,
+        "deferred_generic_instantiation": 66
+      }
+    },
+    "after": {
+      "units": 933,
+      "events": 1384,
+      "statuses": {
+        "attempted": 867,
+        "deferred_generic_instantiation": 66
+      }
+    },
+    "mutant": {
+      "units": 933,
+      "events": 1385,
+      "statuses": {
+        "attempted": 867,
+        "deferred_generic_instantiation": 66
+      }
+    }
+  }
+}

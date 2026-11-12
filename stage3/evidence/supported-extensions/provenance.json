@@ -1,0 +1,38 @@
+{
+  "mainBase": "87028b0889b4431a08c31ca70bc294fa0fd746f5",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "baselineApply": {
+    "command": [
+      "stage3/apply.sh",
+      "/workspace/scratch/supported-extensions-before"
+    ],
+    "child_exit_code": 0,
+    "exitSource": "completed exec session 17828: apply child_exit=0"
+  },
+  "binaries": {
+    "adamic": "af42755d7bacf01f25081796696962e23db6f3bfae6a53ff41220569fd80615a",
+    "latent": "8128e4fcf90b9df93549b95ab94091365bf05a34c942607157ce85a876a3c37b",
+    "adamic-main": "5e779906171ae22299619c596308b2ae3f480a45e6f8e8ca08e7f52fc317c1fa",
+    "latent-main": "bf48327a9435e2cca45abf096cbda3af4dcf610bf4b5c3929acc72ead331145f"
+  },
+  "goEvidenceExtension": ".go.txt",
+  "censusEnvironment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "each tree/src/compiler/utilities.ts"
+  },
+  "realFlatBuiltinsType": "Extension[]",
+  "shards": 398,
+  "priorMainBase": "02ebf2b154495843ba2b1c51de63ed8bd9a8e3b9",
+  "baselineAdvance": "Only compiler/oracle code and census statecopy changed; stage3 adaptation inputs identical. Previous census runs stopped and not certified.",
+  "unchangedInputObjects": {
+    "stage3/adapt": "afd39acea895ecf8bf0b7d5ca28cd099c8e07e87",
+    "stage3/apply.py": "d20bc3775794adc52fbdd577f00c4ca096db22ef",
+    "stage3/api": "2639f98e7e5016fd509fecefec2dca1ded65fd49",
+    "stage3/typescript": "a042a2ebcb77fa0c7fe2ca11cda9854e50ddfa91",
+    "stage3/source.json": "6dc01b287b8dd2a2b63d35ac87e800dcb1d62244",
+    "stage3/lane/adaptedtree": "6e73d6889ace3a59912de2bc0bba3172a1127332",
+    "internal/buildcache": "4ce8067cd88d40e6317d0389a2d16433985bf68e",
+    "internal/toolchain": "9023bc7f5ec0222bd74c41a1ad83f28472069200"
+  }
+}

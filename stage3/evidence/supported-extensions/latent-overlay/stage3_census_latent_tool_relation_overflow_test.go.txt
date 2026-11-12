@@ -1,0 +1,189 @@
+package main
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"reflect"
+	"strings"
+	"testing"
+)
+
+// Run with the census overlay. This calls the compiler in process, never via go
+// or an executable child. The mark is the production guard test's dropped-TS2859
+// shape. Only this test owns the sequential census globals in this invocation.
+func TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt(t *testing.T) {
+	t.Parallel()
+	for _, perUnit := range []bool{false, true} {
+		path := filepath.Join(t.TempDir(), "main.a")
+		if err := os.WriteFile(path, []byte("const total: number = 1 + 2;\nconsole.log(String(total));\nfunction generic<T>(value: T): T { return value; }\n"), 0600); err != nil {
+			t.Fatal(err)
+		}
+		ctx := context.Background()
+		program, err := load.LatentLoad([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+		run := func() (lower.LatentRelationReport, []lower.LatentFile) {
+			records := []lower.LatentFile{}
+			report := lower.LatentWithRelationChecks(ctx, program, perUnit, func(record lower.LatentFile) { records = append(records, record) })
+			return report, records
+		}
+		control, records := run()
+		if control.AfterLoad != "" || control.End != "" || len(control.Findings) != 0 {
+			t.Fatalf("clean control: %+v", control)
+		}
+		// The meter's relation budget reads these counts (#ferqs8v): none before the mark is planted.
+		if control.CacheSizes["flaggedPairs"] != 0 || control.CacheSizes["ts2859"] != 0 || control.CacheSizes["assignable"] < 0 {
+			t.Fatalf("clean control's relation counts: %v", control.CacheSizes)
+		}
+		for _, record := range records {
+			for _, unit := range record.Units {
+				if unit.Status == "attempted" && perUnit && (unit.RelationOverflow == nil || *unit.RelationOverflow != "") {
+					t.Fatalf("missing empty unit answer: %+v", unit)
+				}
+			}
+		}
+		typeChecker, release := program.Checker(ctx, program.Files()[0])
+		defer release()
+		relation := reflect.ValueOf(typeChecker).Elem().FieldByName("assignableRelation")
+		if !relation.IsValid() || relation.IsNil() {
+			t.Fatal("assignable relation missing")
+		}
+		field := relation.Elem().FieldByName("results")
+		results := reflect.NewAt(field.Type(), field.Addr().UnsafePointer()).Elem()
+		if results.IsNil() {
+			results.Set(reflect.MakeMap(field.Type()))
+		}
+		mark := reflect.New(field.Type().Elem()).Elem()
+		mark.SetUint(1<<1 | 1<<5)
+		results.SetMapIndex(reflect.New(field.Type().Key()).Elem(), mark)
+		report, records := run()
+		if !strings.Contains(report.AfterLoad, "marked as overflowed") || report.End == "" || len(report.Findings) != 1 {
+			t.Fatalf("planted mark disappeared: %+v", report)
+		}
+		// The one planted pair is the one flagged pair; its diagnostic was dropped, so no TS2859 is held.
+		if report.CacheSizes["flaggedPairs"] != 1 || report.CacheSizes["ts2859"] != 0 {
+			t.Fatalf("planted mark's relation counts: %v", report.CacheSizes)
+		}
+		attempted := 0
+		for _, record := range records {
+			for _, unit := range record.Units {
+				if unit.Status == "deferred_generic_instantiation" {
+					if unit.RelationOverflow != nil {
+						t.Fatal("deferred unit was queried")
+					}
+					continue
+				}
+				attempted++
+				if perUnit && (unit.RelationOverflow == nil || *unit.RelationOverflow == "") {
+					t.Fatalf("unit missing overflow: %+v", unit)
+				}
+				found := false
+				for _, finding := range record.Findings {
+					if finding.Unit == unit.Where && finding.Phase == "relation_overflow" && finding.Kind == "NotYet" && strings.Contains(finding.Reason, "gave up on as too complex") {
+						found = true
+					}
+				}
+				if !found {
+					t.Fatalf("unit has no overflow finding: %+v", unit)
+				}
+			}
+		}
+		if attempted != 2 || report.FirstAffectedUnit == "" {
+			t.Fatalf("attempted=%d, report=%+v", attempted, report)
+		}
+		// Use the driver's real header/file/trailer writer.
+		var output bytes.Buffer
+		writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement"}, func() error { return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+			for _, record := range records {
+				emit(record)
+			}
+			return report
+		})
+		if strings.Count(output.String(), `"kind":"NotYet"`) < 3 {
+			t.Fatalf("overflow findings lost from output: %s", output.String())
+		}
+		t.Logf("per_unit=%v planted mark census JSONL:\n%s", perUnit, output.String())
+	}
+}
+
+func TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset(t *testing.T) {
+	t.Parallel()
+	records := []lower.LatentFile{{Units: []lower.LatentUnit{
+		{Where: "earlier", Status: "attempted"},
+		{Where: "later", Status: "panic"},
+		{Where: "skipped", Status: "skipped_checker_body"},
+		{Where: "deferred", Status: "deferred_generic_instantiation"},
+	}}}
+	report := lower.LatentRelationReport{End: "planted endpoint overflow"}
+	report.Complete(records)
+	if report.FirstAffectedUnit != "" || !strings.Contains(report.Attribution, "every attempted unit conservatively marked") || len(report.Findings) != 1 || len(records[0].Findings) != 2 {
+		t.Fatalf("end-only overflow was silently narrowed: %+v %+v", report, records)
+	}
+	for _, finding := range records[0].Findings {
+		if finding.Phase != "relation_overflow_conservative_all_units" || finding.Kind != "NotYet" || !strings.Contains(finding.Reason, "gave up on as too complex") {
+			t.Fatalf("bad conservative finding: %+v", finding)
+		}
+	}
+}
+
+func TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	flushed := false
+	func() {
+		defer func() {
+			if recover() != "cutoff" {
+				t.Fatal("cutoff was not propagated")
+			}
+		}()
+		writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement", "diagnostics": []string{"retained diagnostic"}}, func() error { flushed = true; return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+			if !flushed || !strings.Contains(output.String(), "retained diagnostic") {
+				t.Fatal("header was not flushed before lowering")
+			}
+			panic("cutoff")
+		})
+	}()
+	var header map[string]any
+	if err := json.Unmarshal(bytes.TrimSpace(output.Bytes()), &header); err != nil {
+		t.Fatal(err)
+	}
+	if header["status"] != "measurement" || header["relation_overflow"] != nil || strings.Contains(output.String(), `"end"`) {
+		t.Fatalf("cutoff forged a relation answer: %s", output.String())
+	}
+}
+
+func TestLatentStreamCompletesWithRelationTrailerAfterFiles(t *testing.T) {
+	t.Parallel()
+	var output bytes.Buffer
+	syncs := 0
+	writeLatentStream(json.NewEncoder(&output), map[string]any{"status": "measurement"}, func() error { syncs++; return nil }, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+		if syncs != 1 {
+			t.Fatal("run started before header sync")
+		}
+		emit(lower.LatentFile{File: "only.a", Units: []lower.LatentUnit{}, Findings: []lower.LatentFinding{}})
+		return lower.LatentRelationReport{AfterLoad: "", End: "", Findings: []lower.LatentFinding{}}
+	})
+	lines := bytes.Split(bytes.TrimSpace(output.Bytes()), []byte{'\n'})
+	if len(lines) != 3 || syncs != 3 {
+		t.Fatalf("wrong stream shape: syncs=%d %s", syncs, output.String())
+	}
+	rows := make([]map[string]any, len(lines))
+	for i, line := range lines {
+		if err := json.Unmarshal(line, &rows[i]); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if rows[0]["status"] != "measurement" || rows[0]["relation_overflow"] != nil || rows[1]["file"] != "only.a" || rows[2]["status"] != "relation_report" {
+		t.Fatalf("header/file/trailer order lost: %s", output.String())
+	}
+	relation := rows[2]["relation_overflow"].(map[string]any)
+	if relation["after_load"] != "" || relation["end"] != "" {
+		t.Fatalf("empty observations lost: %+v", relation)
+	}
+}

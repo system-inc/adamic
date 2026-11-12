@@ -1,0 +1,184 @@
+{
+  "status": "STOPPED: main advanced a second time with lowering changes explicitly targeting getSupportedExtensions",
+  "allRequestedProofsComplete": false,
+  "implementationCommit": null,
+  "implementationPushed": false,
+  "draftPatch": "draft.patch",
+  "measuredBase": "87028b0889b4431a08c31ca70bc294fa0fd746f5",
+  "currentMainAtStop": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+  "passedOnMeasuredBase": [
+    "apply-after",
+    "adapter-contract",
+    "replay-full-apply",
+    "stock-before",
+    "stock-candidate",
+    "stock-tsc-cli-before",
+    "stock-tsc-cli-after",
+    "types-main-before",
+    "types-main-after",
+    "generate-shards-final",
+    "prepare-lane-product",
+    "build-before",
+    "build-before-tests",
+    "build-after",
+    "build-after-tests",
+    "build-comparison",
+    "census-before",
+    "census-after",
+    "census-mutant",
+    "verify-census-delta",
+    "probe-main-upcast"
+  ],
+  "expectedRefusedControl": {
+    "command": [
+      "/workspace/scratch/supported-extensions/adamic-main",
+      "js",
+      "/workspace/scratch/supported-extensions/probe-mutant.ts"
+    ],
+    "child_exit_code": 1,
+    "seconds": 0.17433043500000167
+  },
+  "outputComparison": {
+    "changedSources": [
+      "compiler/utilities.ts"
+    ],
+    "fullApplyMatchesCandidate": true,
+    "outputs": [
+      {
+        "file": "_tsc.js",
+        "bytes": 6227135,
+        "sha256": "cbeb71fde0a41040237b6246f44b6ca8eb41ab5da40e03e6ea33618cbb95e4e8"
+      },
+      {
+        "file": "_tsserver.js",
+        "bytes": 27889,
+        "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+      },
+      {
+        "file": "_typingsInstaller.js",
+        "bytes": 10364,
+        "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+      },
+      {
+        "file": "run.js",
+        "bytes": 13170484,
+        "sha256": "287162d1e70dc447d3b20e7b25d3221a396b6e08f583bd20fcee2edc136ee43d"
+      },
+      {
+        "file": "tsc.js",
+        "bytes": 267,
+        "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+      },
+      {
+        "file": "tsserver.js",
+        "bytes": 272,
+        "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      },
+      {
+        "file": "tsserverlibrary.js",
+        "bytes": 1013,
+        "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+      },
+      {
+        "file": "typescript.js",
+        "bytes": 9136687,
+        "sha256": "1cd4c38977a16cfacb23c9bfb81b5f46a83f7217dccae9a705a848362ac86c78"
+      },
+      {
+        "file": "typingsInstaller.js",
+        "bytes": 280,
+        "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+      },
+      {
+        "file": "watchGuard.js",
+        "bytes": 2314,
+        "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+      }
+    ],
+    "publicDeclarations": [
+      {
+        "file": "typescript.d.ts",
+        "bytes": 593506,
+        "sha256": "e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd"
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "bytes": 866,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+      }
+    ]
+  },
+  "censusComparison": {
+    "removed": [
+      [
+        "src/compiler/utilities.ts:10005:158",
+        "Refused",
+        "a cast the runtime can't check"
+      ]
+    ],
+    "added": [],
+    "restoringMutantMatchesBaseline": true,
+    "phaseRemoved": [
+      [
+        "src/compiler/utilities.ts:10005:158",
+        "Refused",
+        "a cast the runtime can't check",
+        "refusal_scan"
+      ]
+    ],
+    "phaseAdded": [],
+    "measurements": {
+      "before": {
+        "units": 933,
+        "events": 1385,
+        "statuses": {
+          "attempted": 867,
+          "deferred_generic_instantiation": 66
+        }
+      },
+      "after": {
+        "units": 933,
+        "events": 1384,
+        "statuses": {
+          "attempted": 867,
+          "deferred_generic_instantiation": 66
+        }
+      },
+      "mutant": {
+        "units": 933,
+        "events": 1385,
+        "statuses": {
+          "attempted": 867,
+          "deferred_generic_instantiation": 66
+        }
+      }
+    }
+  },
+  "sourceComparison": {
+    "files": 747,
+    "changed": [
+      "compiler/utilities.ts"
+    ],
+    "fullApplyMatchesMeasuredCandidate": true
+  },
+  "lane": {
+    "status": "incomplete; deliberately stopped for baseline invalidation",
+    "child_exit_code": -15,
+    "seconds": 285.4128788789999,
+    "shardActions": {
+      "run": 398,
+      "output": 1056,
+      "pause": 398,
+      "cont": 88,
+      "pass": 84
+    },
+    "failuresReportedBeforeStop": []
+  },
+  "completedCensusSeconds": {
+    "before": 1234.538538719,
+    "after": 1260.9113143650002,
+    "mutant": 1275.1080817769998
+  },
+  "processLimitSeconds": 1700,
+  "goEvidenceSuffix": ".go.txt"
+}

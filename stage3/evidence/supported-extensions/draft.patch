@@ -1,0 +1,110 @@
+diff --git a/stage3/upstream/LEDGER.md b/stage3/upstream/LEDGER.md
+index b4b7e1d09..60b0a508f 100644
+--- a/stage3/upstream/LEDGER.md
++++ b/stage3/upstream/LEDGER.md
+@@ -771,3 +771,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+   and validates all qualified bindings; 65 stops adding ambient require
+   and keeps the readonly process.pid declaration. Evidence belongs on
+   typescript/tracing-fs-import-evidence.
++
++- getSupportedExtensions (`src/compiler/utilities.ts`): replace `flatBuiltins.includes(x.extension as Extension)` with `(flatBuiltins as readonly string[]).includes(x.extension)`. Widening the readonly receiver removes an unchecked enum downcast without changing the SameValueZero comparison or emitted JavaScript. Whole-owner pins: `99-correctness-supported-extensions`; proof records: branch `typescript/supported-extensions-evidence`.
+diff --git a/stage3/adapt/99-correctness-supported-extensions/README.md b/stage3/adapt/99-correctness-supported-extensions/README.md
+new file mode 100644
+index 000000000..f66e78b90
+--- /dev/null
++++ b/stage3/adapt/99-correctness-supported-extensions/README.md
+@@ -0,0 +1,7 @@
++# getSupportedExtensions: widen the includes receiver
++
++The includes test previously cast a string extension down to Extension solely to satisfy the receiver's element type. This adaptation instead views flatBuiltins as readonly string[] and passes x.extension unchanged. The readonly array upcast is accepted by Adamic. Both expressions compare the same receiver and argument with SameValueZero; the cast erases completely.
++
++The complete top-level overload group and implementation are pinned before and after in owner.json, with SHA-256 digests. Stock TypeScript 6.0.3 locates the owner. Changed, missing, duplicate, nested and altered overload owners are refused before writes. The adapter preserves line endings, verifies full-file transpile equality with and without comments, and replays its own output with zero writes.
++
++Run NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-supported-extensions/contract.cjs /absolute/path/to/adapt.cjs BASELINE_TREE for the drift and replay contract. Measurements and validation results belong on typescript/supported-extensions-evidence, outside stage3/adapt.
+diff --git a/stage3/adapt/99-correctness-supported-extensions/adapt.cjs b/stage3/adapt/99-correctness-supported-extensions/adapt.cjs
+new file mode 100644
+index 000000000..fbd054e74
+--- /dev/null
++++ b/stage3/adapt/99-correctness-supported-extensions/adapt.cjs
+@@ -0,0 +1,39 @@
++'use strict';
++const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require('typescript');
++const pin=require('./owner.json');
++const normalize=s=>s.replace(/\r\n/g,'\n');
++const hash=s=>crypto.createHash('sha256').update(normalize(s)).digest('hex');
++const transpile=(text,removeComments=false)=>ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;
++function owner(text){
++ const source=ts.createSourceFile('utilities.ts',text,ts.ScriptTarget.Latest,true);
++ assert.equal(source.parseDiagnostics.length,0,'parse error');
++ const found=[];
++ function visit(node){if(ts.isFunctionDeclaration(node)&&node.name?.text==='getSupportedExtensions')found.push(node);ts.forEachChild(node,visit);}
++ visit(source);
++ assert.equal(found.length,3,'missing, duplicate or nested owner');
++ assert(found.every(n=>n.parent===source),'nested owner');
++ assert(!found[0].body&&!found[1].body&&found[2].body,'changed overload group');
++ const indexes=found.map(n=>source.statements.indexOf(n));
++ assert.equal(indexes[1],indexes[0]+1);assert.equal(indexes[2],indexes[1]+1);
++ return {start:found[0].getStart(source),end:found[2].end,text:text.slice(found[0].getStart(source),found[2].end)};
++}
++function plan(text){
++ assert.equal(ts.version,'6.0.3');
++ const o=owner(text),actual=normalize(o.text);
++ assert(hash(pin.before)===pin.beforeSha256&&hash(pin.after)===pin.afterSha256,'invalid pin');
++ assert(actual===pin.before||actual===pin.after,'changed whole owner');
++ if(actual===pin.after)return {text,edits:0};
++ const eol=o.text.includes('\r\n')?'\r\n':'\n';
++ const after=text.slice(0,o.start)+pin.after.replace(/\n/g,eol)+text.slice(o.end);
++ assert.equal(normalize(owner(after).text),pin.after);
++ for(const removeComments of [false,true])assert.equal(transpile(text,removeComments),transpile(after,removeComments),'JavaScript changed');
++ return {text:after,edits:1};
++}
++function adapt(tree){
++ const file=path.join(tree,'src/compiler/utilities.ts'),before=fs.readFileSync(file,'utf8'),result=plan(before);
++ assert.equal(fs.readFileSync(file,'utf8'),before,'concurrent source change');
++ if(result.edits)fs.writeFileSync(file,result.text);
++ return {files:result.edits,edits:result.edits,javascriptIdentical:true};
++}
++module.exports={adapt,plan,owner,hash,transpile,pin};
++if(require.main===module){assert.equal(process.argv.length,3);console.log(JSON.stringify(adapt(process.argv[2])));}
+diff --git a/stage3/adapt/99-correctness-supported-extensions/contract.cjs b/stage3/adapt/99-correctness-supported-extensions/contract.cjs
+new file mode 100644
+index 000000000..ef4ec5fdc
+--- /dev/null
++++ b/stage3/adapt/99-correctness-supported-extensions/contract.cjs
+@@ -0,0 +1,22 @@
++const fs=require('fs'),path=require('path'),os=require('os'),assert=require('assert/strict');
++const adapter=require(process.argv[2]),tree=process.argv[3];
++const raw=fs.readFileSync(path.join(tree,'src/compiler/utilities.ts'),'utf8');
++const root=fs.mkdtempSync(path.join(os.tmpdir(),'supported-extensions-contract-'));fs.mkdirSync(root+'/src/compiler',{recursive:true});
++const file=root+'/src/compiler/utilities.ts';
++try{
++ fs.writeFileSync(file,raw);assert.equal(adapter.adapt(root).edits,1);
++ const after=fs.readFileSync(file,'utf8'),stat=fs.statSync(file,{bigint:true});
++ assert.equal(adapter.adapt(root).edits,0);assert.equal(fs.readFileSync(file,'utf8'),after);assert.equal(fs.statSync(file,{bigint:true}).mtimeNs,stat.mtimeNs);
++ const before=adapter.owner(raw).text;
++ const mutants={
++ 'changed-before':raw.replace('const flatBuiltins = flatten(builtins);','const flatBuiltins = flatten(builtins); /* drift */'),
++ 'changed-after':after.replace('const flatBuiltins = flatten(builtins);','const flatBuiltins = flatten(builtins); /* drift */'),
++ 'missing-owner':raw.replaceAll('getSupportedExtensions(', 'renamedSupportedExtensions('),
++ 'duplicate-owner':raw+'\n'+before,
++ 'nested-owner':raw.replace(before,'function wrapper() { '+before+' }'),
++ 'changed-overload':raw.replace('options?: CompilerOptions): readonly Extension[][];', 'options: CompilerOptions): readonly Extension[][];')
++ };
++ for(const [name,text] of Object.entries(mutants)){fs.writeFileSync(file,text);const s=fs.statSync(file,{bigint:true});assert.throws(()=>adapter.adapt(root),undefined,name);assert.equal(fs.readFileSync(file,'utf8'),text);assert.equal(fs.statSync(file,{bigint:true}).mtimeNs,s.mtimeNs);}
++ for(const eol of ['\n','\r\n']){fs.writeFileSync(file,raw.replace(/\r\n/g,'\n').replace(/\n/g,eol));assert.equal(adapter.adapt(root).edits,1);assert.equal(adapter.adapt(root).edits,0);}
++ console.log(JSON.stringify({edits:1,replayEdits:0,replayBytesAndMtimeUnchanged:true,driftRefusedWithoutWrites:Object.keys(mutants),lineEndings:['LF','CRLF'],transpileEqualityWithAndWithoutComments:true}));
++}finally{fs.rmSync(root,{recursive:true,force:true});}
+diff --git a/stage3/adapt/99-correctness-supported-extensions/owner.json b/stage3/adapt/99-correctness-supported-extensions/owner.json
+new file mode 100644
+index 000000000..5565e75d5
+--- /dev/null
++++ b/stage3/adapt/99-correctness-supported-extensions/owner.json
+@@ -0,0 +1,8 @@
++{
++  "file": "utilities.ts",
++  "owner": "getSupportedExtensions",
++  "before": "export function getSupportedExtensions(options?: CompilerOptions): readonly Extension[][];\n/** @internal */\nexport function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][];\n/** @internal */\nexport function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][] {\n    const needJsExtensions = options && getAllowJSCompilerOption(options);\n\n    if (!extraFileExtensions || extraFileExtensions.length === 0) {\n        return needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\n    }\n\n    const builtins = needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\n    const flatBuiltins = flatten(builtins);\n    const extensions = [\n        ...builtins,\n        ...mapDefined(extraFileExtensions, x => x.scriptKind === ScriptKind.Deferred || needJsExtensions && isJSLike(x.scriptKind) && !flatBuiltins.includes(x.extension as Extension) ? [x.extension] : undefined),\n    ];\n\n    return extensions;\n}",
++  "after": "export function getSupportedExtensions(options?: CompilerOptions): readonly Extension[][];\n/** @internal */\nexport function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][];\n/** @internal */\nexport function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][] {\n    const needJsExtensions = options && getAllowJSCompilerOption(options);\n\n    if (!extraFileExtensions || extraFileExtensions.length === 0) {\n        return needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\n    }\n\n    const builtins = needJsExtensions ? allSupportedExtensions : supportedTSExtensions;\n    const flatBuiltins = flatten(builtins);\n    const extensions = [\n        ...builtins,\n        ...mapDefined(extraFileExtensions, x => x.scriptKind === ScriptKind.Deferred || needJsExtensions && isJSLike(x.scriptKind) && !(flatBuiltins as readonly string[]).includes(x.extension) ? [x.extension] : undefined),\n    ];\n\n    return extensions;\n}",
++  "beforeSha256": "77a37b167ac9732aafb9c5ef3c838f93c8412035552aea5e309b74f93956b349",
++  "afterSha256": "2eca28ad29fdbba3cddbafc5da273d5c2825311a7dc25190b86d0503ff4ff43a"
++}

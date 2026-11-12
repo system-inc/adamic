@@ -1,0 +1,18 @@
+{
+  "measuredBase": "87028b0889b4431a08c31ca70bc294fa0fd746f5",
+  "currentMain": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+  "commits": [
+    "abebb00bf6312fb92798095515fbee86b8ed78e3 lower: an overload's body proof trusts !, && and || over a parameter compared with a literal, a parameter by truthiness and a plain-number length read, and is consulted at the declaration; an exactly void promise over a result that owns nothing is served, so tsc's getSupportedExtensions, concatenate's honest overloads and writeTokenText stop refusing (#z5d0jye step 2, rulings.md:127 and :128 with H2's :321)",
+    "63061a83b2d6813097e97daaf2ffa9eff1b0ac0a lower: ReachingAllocations follows both operands of || and && (#p2n17c4, B's road 5 cut small)"
+  ],
+  "changedFiles": [
+    "internal/lower/census_overload_proof.go",
+    "internal/lower/census_overload_proof_widened_test.go",
+    "internal/lower/census_small.go",
+    "internal/lower/predicates.go",
+    "internal/lower/reach_roads.mutants.md",
+    "internal/lower/reach_roads_test.go",
+    "internal/lower/view_flow.go"
+  ],
+  "currentTipCensusNotRun": true
+}

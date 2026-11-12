@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "stage3/lane/generate_shards.py",
+    "--check"
+  ],
+  "child_exit_code": 1,
+  "seconds": 0.11491017100001955
+}
