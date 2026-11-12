@@ -1790,6 +1790,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkBoundArguments(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: it numbers a copy of the program, never the program, and stops a
+	// presence test of an optional member alike in both modes (#p2n17c4 shape 1).
+	if err := lowering.checkOptionalMemberPresence(); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does: without it, TestCycleFinderEquality goes red on the
 	// reland_refused view_spread fixtures, which the reference lowers where lowering stops.
 	if err := lowering.checkViewCopies(); err != nil {

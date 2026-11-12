@@ -4,8 +4,8 @@ Each is one edit, applied alone, confirmed with `git diff`, run against the test
 `git checkout -- <file>`. Lower's tests are internal/lower/optional_member_presence_test.go (with the two rows moved
 out of method_presence_test.go and optional_method_call_test.go), the oracle's internal/oracle/optional_member_presence_test.go.
 M1 to M8 are the design's (shape1-design.md, section 5), M9 and M10 Lower's Object.prototype must, M11 and M12 the
-prototype stops the check rests on. Written on a machine that doesn't build Go, so "red" below is what the code says
-until the Codex run quotes it.
+prototype stops the check rests on, M13 the host's read it leaves to its own rule. M1 to M12 ran red as written
+here at 42f21e23 (M8 green, as written); M13 is what the code says until a run quotes it.
 
 ## M1. The class instance admitted
 
@@ -63,7 +63,8 @@ Old: `	if node.Kind != ast.KindPropertyAccessExpression || !presenceConsumer(nod
 New: `	if node.Kind != ast.KindPropertyAccessExpression {`
 Run: `go test ./internal/lower -run '^(TestOptionalMemberPresenceStops|TestMethodReadsThatKeepTheValueAreRefused|TestOptionalMethodCallGapsStop)$' -count=1 -v`
 Red: `an_alias_method.a` (not refused), `a_field's_literal_method_read_as_a_value_field.a` (the scan is bypassed for an
-alias too), TestMethodReadsThatKeepTheValueAreRefused/an_optional_method's_alias and TestOptionalMethodCallGapsStop/an_alias.
+alias too), `a_write_to_an_optional_method_method.a` (the write's read is admitted too),
+TestMethodReadsThatKeepTheValueAreRefused/an_optional_method's_alias and TestOptionalMethodCallGapsStop/an_alias.
 
 ## M6. The scan bypassed for every read
 
@@ -86,7 +87,9 @@ File: internal/lower/control.go, condition. Insert as its first statement:
 
 Run: `go test ./internal/lower -run '^TestOptionalMemberPresenceLowers$' -count=1 -v`, then
 `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestOptionalMemberPresenceAgreesWithNode$' -count=1 -v`
-Red: lower's `a_condition_*` and `the_test_of_?:_*` rows find no read of m off its slot. The oracle's six programs
+Red: every lower row whose test is a condition or the test of ?: finds no read of its member off its slot
+(`a_condition_*`, `the_test_of_?:_*`, `a_literal's_method_shorthand_*`, `through_?._*`,
+`a_slot_written_after_the_literal_is_built_*`, `a_presence_test_of_an_optional_method_on_{}_*`). The oracle's six programs
 print has where Node prints none: a literal without m, and written's slot after undefined is written in.
 
 ## M8. Record storage admitted (unpinned)
@@ -130,3 +133,12 @@ Old: `	case "getPrototypeOf", "setPrototypeOf", "create":`
 New: `	case "getPrototypeOf":`
 Run: as M1.
 Red: `Object.setPrototypeOf_*.a` and `Object.create_*.a` aren't refused as those calls.
+
+## M13. stdout's handle's setBlocking taken from the host's rule
+
+File: internal/lower/optional_member_presence.go, optionalMemberPresenceTest.
+Old: `	if node.Name().Text() == "setBlocking" && l.stdoutHandleOrigin(node.AsPropertyAccessExpression().Expression, 0) {`
+New: `	if false && node.Name().Text() == "setBlocking" && l.stdoutHandleOrigin(node.AsPropertyAccessExpression().Expression, 0) {`
+Run: `go test ./internal/lower -run '^TestNodeProcessHandleSetBlockingCallAndTestLower$' -count=1 -v`
+Red: its `if` and `not` rows stop as a presence test whose receiver may hold a value the program didn't build
+(untracked source ir.ProcessCall), where the host's rule lowers them.
