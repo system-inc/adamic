@@ -1,0 +1,79 @@
+func (f *cycleFinder) graphAdoptionBoundary() error {
+	reason := ""
+	var site *ast.Node
+	decodes := false
+	for _, view := range f.l.viewSources {
+		for _, side := range []struct {
+			word   string
+			proven *checker.Type
+		}{{"of", view.source}, {"as", view.target}} {
+			hosted := f.viewHosted(side.proven, map[*checker.Type]bool{})
+			if hosted == nil {
+				continue
+			}
+			what := ", a host object's type,"
+			if hosted.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0 {
+				what = ", a type parameter that could be a host object's type,"
+			}
+			return f.l.notYet(view.node, "a view "+side.word+" "+f.l.checker.TypeToString(side.proven)+" holding "+f.l.checker.TypeToString(hosted)+what+" in a graph program, whose provenance the host binding holds")
+		}
+	}
+	inspect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.ObjectLiteral:
+			if value.Record {
+				reason = "a dynamic-shape object in a graph program"
+				site = f.l.graphDynamicSite
+			}
+		case ir.DynamicProperty, ir.DynamicKeyedProperty:
+			reason = "a dynamic-shape object in a graph program"
+			site = f.l.graphDynamicSite
+		case ir.ObjectCall:
+			if value.Checked {
+				reason = "a dynamic-shape object in a graph program"
+				site = f.l.graphDynamicSite
+			}
+		case ir.JSONDecode:
+			decodes = decodes || jsonSchemaNests(value.Schema)
+		}
+		return true
+	}
+	walk(f.l.result.Main, inspect)
+	for _, function := range f.l.result.Functions {
+		walk(function.Body, inspect)
+	}
+	if reason != "" {
+		return &Refused{Where: f.l.program.Where(site), What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+	}
+	// The decoder makes its objects and arrays in the runtime with no graph plan, so in a graph program
+	// a decoded value that holds a container can be closed into a cycle outside every region and leak
+	// (#bvsjdte, 2a; 2b gives the decoder the plan and lifts this). It's our analysis that can't hold
+	// it yet, not the program that's wrong.
+	// A record's entries over elements a cycle could run through stops too: the plan adopts each pair
+	// only through the entries array, so a pair stored alone stays counted, measured freeing 7 of 16
+	// (Memory's e3 on #y7wexf5). What else lowering makes, toSorted, toReversed, Map.groupBy and a
+	// record's values among it, graphFlows plans where it's made.
+	if len(f.l.graphUnplanned) != 0 {
+		first := f.l.graphUnplanned[0]
+		return f.l.notYet(first.node, first.what+" in a graph program, whose result lowering makes outside the program's graph regions")
+	}
+	if site := f.unplannedPair(); site != nil {
+		what := "a Map's or a Set's [key, value] pair in a graph program, whose type the checker didn't name"
+		if site.pair != nil {
+			what = "a Map's or a Set's [key, value] pair held as another graph type in a graph program, so no plan names the pair"
+		}
+		return f.l.notYet(site.node, what)
+	}
+	if site := f.unplannedNodeArray(); site != nil {
+		return f.l.notYet(site.node, "a NodeArray on a cycle in a graph program, whose literal native construction makes outside the program's graph regions")
+	}
+	if decodes {
+		what := "decodeJson<" + f.l.graphDecodeType + "> in a graph program, whose decoded values the runtime makes outside the program's graph regions"
+		if f.l.graphDecodeSite == nil {
+			// The IR holds a decode whose site lowering didn't keep: still stopped, at the program.
+			return &NotYet{Where: f.l.result.Source, What: what}
+		}
+		return f.l.notYet(f.l.graphDecodeSite, what)
+	}
+	return nil
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/workspace/slice3-adapted"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 900.0,
+  "elapsed_seconds": 597.836437906,
+  "peak_rss_kib": 2445860,
+  "user_seconds": 757.809421,
+  "system_seconds": 147.591618,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

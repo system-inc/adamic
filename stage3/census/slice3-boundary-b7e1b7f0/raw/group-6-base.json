@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/slice3-base-census",
+    "/workspace/slice3-adapted/src/tsc/tsc.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-6-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 1490.0,
+  "elapsed_seconds": 633.6866987809999,
+  "peak_rss_kib": 2018696,
+  "user_seconds": 596.542809,
+  "system_seconds": 19.140534,
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/slice3-adapted/src/compiler/types.ts\n/workspace/slice3-adapted/src/compiler/checker.ts\n/workspace/slice3-adapted/src/compiler/visitorPublic.ts\n/workspace/slice3-adapted/src/compiler/transformers/namedEvaluation.ts\n/workspace/slice3-adapted/src/compiler/watchUtilities.ts\n/workspace/slice3-adapted/src/compiler/transformers/es2017.ts\n/workspace/slice3-adapted/src/compiler/factory/parenthesizerRules.ts\n/workspace/slice3-adapted/src/compiler/diagnosticInformationMap.generated.ts\n/workspace/slice3-adapted/src/compiler/factory/nodeConverters.ts\n/workspace/slice3-adapted/src/compiler/transformers/es2020.ts\n/workspace/slice3-adapted/src/tsc/_namespaces/ts.ts",
+    "BOUNDARY_UNIT_RANGES": "{}",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-6-base-records.jsonl",
+    "LATENT_TIMES": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-6-base-times.jsonl",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "2800MiB",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

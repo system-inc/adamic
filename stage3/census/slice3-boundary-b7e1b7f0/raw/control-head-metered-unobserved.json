@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/slice3-head-census",
+    "/workspace/roads-guard-control/identity.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/control-head-metered-unobserved-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 120.0,
+  "elapsed_seconds": 0.40695070899982966,
+  "peak_rss_kib": 31388,
+  "user_seconds": 0.112699,
+  "system_seconds": 0.10833,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "1",
+    "LATENT_FULL": "0"
+  }
+}

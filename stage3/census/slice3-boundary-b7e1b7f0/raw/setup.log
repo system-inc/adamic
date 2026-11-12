@@ -1,0 +1,31 @@
+submodule cache: off
+Cloning into '/workspace/slice3-base/cohere'...
+go version go1.27.1 linux/amd64
+setup: go ready (0.405s)
+v24.19.0
+setup: node ready (0.519s)
+setup: tsc ready (TypeScript 6.0.3) (1.123s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.019s
+setup: markdown dependencies ready (1.194s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.200s)
+From https://github.com/system-inc/cohere
+ * [new tag]           v0.1.0     -> v0.1.0
+ * [new tag]           v0.1.1     -> v0.1.1
+From https://github.com/system-inc/cohere
+ * branch              5360753e19e4417675a90e92a1823bea66b13918 -> FETCH_HEAD
+Submodule path 'cohere': checked out '5360753e19e4417675a90e92a1823bea66b13918'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/slice3-base/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (215.354s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (215.360s)
+setup: go build ready (382.020s)
+setup: test binaries deferred (use --warm-tests) (382.267s)
+setup: build cache warm (382.270s)
+setup: build-flags commit=d4693fc61d2d01fb4e1e993667ae5028da109cc3 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=0.12 0.08 0.03 1/143 789 load-after=10.01 5.90 2.42 3/166 2742
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (382.463s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.zWlz6F

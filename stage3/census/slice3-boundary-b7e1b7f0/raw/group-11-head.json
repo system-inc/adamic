@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/slice3-head-census",
+    "/workspace/slice3-adapted/src/tsc/tsc.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-11-head-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 1490.0,
+  "elapsed_seconds": 477.44067148700015,
+  "peak_rss_kib": 2475288,
+  "user_seconds": 452.339979,
+  "system_seconds": 26.132112,
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/slice3-adapted/src/compiler/transformers/utilities.ts\n/workspace/slice3-adapted/src/compiler/program.ts\n/workspace/slice3-adapted/src/compiler/moduleSpecifiers.ts\n/workspace/slice3-adapted/src/compiler/scanner.ts\n/workspace/slice3-adapted/src/compiler/binder.ts\n/workspace/slice3-adapted/src/compiler/resolutionCache.ts\n/workspace/slice3-adapted/src/compiler/performance.ts\n/workspace/slice3-adapted/src/compiler/watchPublic.ts\n/workspace/slice3-adapted/src/compiler/transformers/es2015.ts\n/workspace/slice3-adapted/src/compiler/builderState.ts\n/workspace/slice3-adapted/src/compiler/symbolWalker.ts\n/workspace/slice3-adapted/src/compiler/transformers/legacyDecorators.ts\n/workspace/slice3-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "BOUNDARY_UNIT_RANGES": "{}",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-11-head-records.jsonl",
+    "LATENT_TIMES": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-11-head-times.jsonl",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "2800MiB",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

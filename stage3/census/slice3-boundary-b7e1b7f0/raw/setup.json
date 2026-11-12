@@ -1,0 +1,17 @@
+{
+  "command": [
+    "bash",
+    "cloud/setup.sh"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 900.0,
+  "elapsed_seconds": 382.59889970899997,
+  "peak_rss_kib": 1523632,
+  "user_seconds": 677.455458,
+  "system_seconds": 99.80738,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

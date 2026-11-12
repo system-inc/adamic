@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/slice3-head-census",
+    "/workspace/roads-guard-control/identity.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/control-head-final-mutant-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 120.0,
+  "elapsed_seconds": 0.2014088079999965,
+  "peak_rss_kib": 31836,
+  "user_seconds": 0.046006,
+  "system_seconds": 0.055054,
+  "environment": {
+    "BOUNDARY_FORCE_REFUSE": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "1",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/control-head-final-mutant-records.jsonl",
+    "LATENT_FULL": "0"
+  }
+}

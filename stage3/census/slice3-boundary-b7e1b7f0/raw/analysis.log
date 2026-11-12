@@ -1,0 +1,111 @@
+{
+  "base": {
+    "observed_units": 4061,
+    "views_recorded": 735,
+    "boundary_stopped_units": 391,
+    "view_stopped_units": 385,
+    "other_boundary_stopped_units": 6,
+    "native_host_walk_calls": 0,
+    "ordinary_unit_status": {
+      "attempted": 4061,
+      "deferred_generic_instantiation": 504
+    },
+    "ordinary_finding_observations": 5711,
+    "ordinary_panics": 0,
+    "raw_view_findings": 207,
+    "distinct_view_reads": 202
+  },
+  "head": {
+    "observed_units": 4061,
+    "views_recorded": 735,
+    "boundary_stopped_units": 6,
+    "view_stopped_units": 0,
+    "other_boundary_stopped_units": 6,
+    "native_host_walk_calls": 6874539,
+    "ordinary_unit_status": {
+      "attempted": 4061,
+      "deferred_generic_instantiation": 504
+    },
+    "ordinary_finding_observations": 5711,
+    "ordinary_panics": 0,
+    "raw_view_findings": 0,
+    "distinct_view_reads": 0
+  },
+  "per_unit_view_counts_equal": true,
+  "new_stops": {
+    "unit_observations": 0,
+    "raw_findings": 0,
+    "distinct_reads": 0
+  },
+  "base_finding_free_regressions": {
+    "unit_observations": 0,
+    "raw_findings": 0,
+    "distinct_reads": 0
+  },
+  "causes": {
+    "a deeper host walk": {
+      "unit_observations": 0,
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "b unconstrained parameter": {
+      "unit_observations": 0,
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "a and b both necessary": {
+      "unit_observations": 0,
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "a and b independently sufficient": {
+      "unit_observations": 0,
+      "raw_findings": 0,
+      "distinct_reads": 0
+    },
+    "neither widening removes the unit view stop": {
+      "unit_observations": 0,
+      "raw_findings": 0,
+      "distinct_reads": 0
+    }
+  },
+  "cleared_view_stopped_units": 385,
+  "moved_view_first_stop_units": 0,
+  "ordinary_pair": {
+    "raw_findings": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "unit_first_stop_delta": 0
+    },
+    "distinct_reads": {
+      "lowered": 0,
+      "moved": 0,
+      "new_findings": 0,
+      "unit_first_stop_delta": 0
+    }
+  },
+  "new_panics": [],
+  "all_boundary_unit_changes": {
+    "cleared": 385,
+    "moved": 0,
+    "new": 0
+  },
+  "view_pair_counts": {
+    "raw_findings": {
+      "lowered": 207,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 385
+    },
+    "distinct_reads": {
+      "lowered": 202,
+      "moved": 0,
+      "new_findings": 0,
+      "new_sites": 0,
+      "unit_first_stop_delta": 385
+    }
+  },
+  "all_ordinary_file_unit_findings_equal": true
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "git",
+    "-C",
+    "/workspace/slice3-merge",
+    "merge",
+    "--no-commit",
+    "--no-ff",
+    "b7e1b7f0"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 0.6734342989999931,
+  "peak_rss_kib": 81992,
+  "user_seconds": 0.510535,
+  "system_seconds": 0.197757,
+  "environment": {}
+}

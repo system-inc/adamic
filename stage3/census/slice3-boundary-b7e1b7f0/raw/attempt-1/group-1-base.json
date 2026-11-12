@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/slice3-base-census",
+    "/workspace/slice3-adapted/src/tsc/tsc.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": -15,
+  "timed_out": false,
+  "limit_seconds": 1490.0,
+  "elapsed_seconds": 203.8268800589999,
+  "peak_rss_kib": 1481356,
+  "user_seconds": 194.085285,
+  "system_seconds": 7.823158,
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/slice3-adapted/src/compiler/utilitiesPublic.ts\n/workspace/slice3-adapted/src/compiler/transformers/declarations.ts\n/workspace/slice3-adapted/src/compiler/transformers/typeSerializer.ts\n/workspace/slice3-adapted/src/compiler/debug.ts\n/workspace/slice3-adapted/src/compiler/expressionToTypeNode.ts\n/workspace/slice3-adapted/src/compiler/factory/utilitiesPublic.ts\n/workspace/slice3-adapted/src/compiler/transformers/module/system.ts\n/workspace/slice3-adapted/src/compiler/_namespaces/ts.performance.ts",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-records.jsonl",
+    "LATENT_TIMES": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-times.jsonl",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "2800MiB",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

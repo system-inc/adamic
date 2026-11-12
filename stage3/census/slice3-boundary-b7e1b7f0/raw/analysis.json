@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/slice3-boundary-b7e1b7f0/analyze.py"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 600.0,
+  "elapsed_seconds": 27.107087241000045,
+  "peak_rss_kib": 318520,
+  "user_seconds": 27.880123,
+  "system_seconds": 5.115982,
+  "environment": {}
+}

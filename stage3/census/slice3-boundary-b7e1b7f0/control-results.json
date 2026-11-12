@@ -1,0 +1,26 @@
+{
+  "base_real": {
+    "views": 1,
+    "stops": 1,
+    "real_host_walk_calls": 0,
+    "ordinary_output_equal_unobserved": true
+  },
+  "base_mutant": {
+    "views": 1,
+    "stops": 1,
+    "real_host_walk_calls": 0,
+    "ordinary_output_equal_unobserved": true
+  },
+  "head_real": {
+    "views": 1,
+    "stops": 0,
+    "real_host_walk_calls": 14,
+    "ordinary_output_equal_unobserved": true
+  },
+  "head_mutant": {
+    "views": 1,
+    "stops": 1,
+    "real_host_walk_calls": 0,
+    "ordinary_output_equal_unobserved": true
+  }
+}

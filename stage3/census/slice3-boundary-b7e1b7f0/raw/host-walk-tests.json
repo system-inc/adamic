@@ -1,0 +1,25 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "^TestGraphHostViewIsNotYet$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "/workspace/slice3-merge",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 600.0,
+  "elapsed_seconds": 35.874453340999935,
+  "peak_rss_kib": 1533208,
+  "user_seconds": 60.850718,
+  "system_seconds": 13.511303999999999,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "2",
+    "LATENT_FULL": "0"
+  }
+}

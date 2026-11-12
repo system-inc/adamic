@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/slice3-merge",
+    "/workspace/slice3-head-overlay"
+  ],
+  "cwd": "/workspace/slice3-merge",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 900.0,
+  "elapsed_seconds": 2.486602480999977,
+  "peak_rss_kib": 62072,
+  "user_seconds": 1.267581,
+  "system_seconds": 1.50013,
+  "environment": {
+    "GOMAXPROCS": "2"
+  }
+}

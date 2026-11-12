@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/slice3-head-overlay/overlay.json",
+    "-o",
+    "/workspace/slice3-head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/slice3-merge",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 900.0,
+  "elapsed_seconds": 118.24748817199998,
+  "peak_rss_kib": 1470944,
+  "user_seconds": 64.658019,
+  "system_seconds": 7.489307,
+  "environment": {
+    "GOMAXPROCS": "2"
+  }
+}

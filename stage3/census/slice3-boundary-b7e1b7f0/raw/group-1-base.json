@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/slice3-base-census",
+    "/workspace/slice3-adapted/src/tsc/tsc.ts",
+    "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 1490.0,
+  "elapsed_seconds": 275.08385435900027,
+  "peak_rss_kib": 1357272,
+  "user_seconds": 264.772862,
+  "system_seconds": 8.063691,
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/slice3-adapted/src/compiler/utilities.ts",
+    "BOUNDARY_UNIT_RANGES": "{\"/workspace/slice3-adapted/src/compiler/utilities.ts\": [174729, 325311]}",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-records.jsonl",
+    "LATENT_TIMES": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/group-1-base-times.jsonl",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "2800MiB",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript"
+  }
+}

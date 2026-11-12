@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/slice3-base-overlay/overlay.json",
+    "-o",
+    "/workspace/slice3-debug-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 300.0,
+  "elapsed_seconds": 44.83803088100012,
+  "peak_rss_kib": 1455496,
+  "user_seconds": 55.116348,
+  "system_seconds": 12.463508,
+  "environment": {
+    "GOMAXPROCS": "2"
+  }
+}

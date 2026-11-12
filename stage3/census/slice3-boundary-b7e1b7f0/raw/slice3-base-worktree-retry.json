@@ -1,0 +1,18 @@
+{
+  "command": [
+    "git",
+    "worktree",
+    "add",
+    "-b",
+    "typescript/slice3-boundary-census",
+    "/workspace/slice3-base",
+    "d4693fc6"
+  ],
+  "cwd": "/workspace/roads-head",
+  "child_exit": 0,
+  "elapsed_seconds": 6.818021579999993,
+  "peak_rss_kib": 1033052,
+  "user_seconds": 4.762648,
+  "system_seconds": 2.037929,
+  "environment": {}
+}

@@ -1,0 +1,6 @@
+interface A { kind: "a" }
+interface B { kind: "b" }
+type Choice = A | B;
+interface Narrow { value: Choice }
+interface Wide { value: Choice; child: Narrow }
+function see(value: Narrow): Wide { return value as Wide; }

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/workspace/slice3-debug-census",
+    "/workspace/slice3-adapted/src/tsc/tsc.ts",
+    "stage3/census/slice3-boundary-b7e1b7f0/raw/debug-normal.jsonl"
+  ],
+  "cwd": "/workspace/slice3-base",
+  "child_exit": 0,
+  "timed_out": false,
+  "limit_seconds": 240.0,
+  "elapsed_seconds": 48.316339970999934,
+  "peak_rss_kib": 865816,
+  "user_seconds": 50.770702,
+  "system_seconds": 3.11105,
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/roads-typescript",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/slice3-adapted/src/compiler/utilities.ts",
+    "GOMAXPROCS": "2",
+    "BOUNDARY_DEBUG_UNIT": "/workspace/slice3-adapted/src/compiler/utilities.ts:2438:1",
+    "BOUNDARY_STREAM": "/workspace/slice3-base/stage3/census/slice3-boundary-b7e1b7f0/raw/debug-records.jsonl",
+    "LATENT_FULL": "0"
+  }
+}
