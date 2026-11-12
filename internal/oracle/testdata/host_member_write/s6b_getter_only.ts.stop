@@ -1,0 +1,1 @@
+internal/oracle/testdata/host_member_write/s6b_getter_only.ts:13:2: Adamic 0.1 refuses a method read as a value (read would lose its object, and this with it); call it in an arrow that keeps the object: () => host.read() (unbound-method)
