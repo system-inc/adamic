@@ -214,8 +214,10 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 					return
 				}
 				if node.Kind != ast.KindFunctionDeclaration {
-					_, err := l.statement(node)
+					body, err := l.statement(node)
+					l.result.Main = body
 					latentRecord(err)
+					l.latentFinishUnit(&unit, node)
 					return
 				}
 				if node.Name() == nil {
@@ -231,6 +233,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 				err := l.lowerFunction(index, node, -1)
 				latentRecord(err)
 				latentRecord(l.unlowerable)
+				l.latentFinishUnit(&unit, node)
 				if err != nil {
 					start, end := unit.BodyStart, unit.BodyEnd
 					if end <= start {

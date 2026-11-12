@@ -1,0 +1,105 @@
+{
+  "latent Go tree": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 22.607036691002577,
+    "peak_rss_kib": 255556,
+    "expected_exit_code": 0
+  },
+  "latent overlay tree": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 49.7964876570004,
+    "peak_rss_kib": 1457424,
+    "expected_exit_code": 0
+  },
+  "overlay build": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 22.372870880000846,
+    "peak_rss_kib": 1477684,
+    "expected_exit_code": 0
+  },
+  "entry overlay build": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 32.038851122997585,
+    "peak_rss_kib": 1473528,
+    "expected_exit_code": 0
+  },
+  "TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 34.463794343999325,
+    "peak_rss_kib": 1420148,
+    "expected_exit_code": 0
+  },
+  "meter suite": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 48.43491907299904,
+    "peak_rss_kib": 92732,
+    "expected_exit_code": 0
+  },
+  "pairing suite": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 36.142310119001195,
+    "peak_rss_kib": 84264,
+    "expected_exit_code": 0
+  },
+  "compiler dependency map": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 12.869141988998308,
+    "peak_rss_kib": 152208,
+    "expected_exit_code": 0
+  },
+  "latent stream readers": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 0.47073076700326055,
+    "peak_rss_kib": 12732,
+    "expected_exit_code": 0
+  },
+  "copy-back mutant": {
+    "child_exit_code": 1,
+    "deadline_expired": false,
+    "wall_seconds": 115.70691628900022,
+    "peak_rss_kib": 1448076,
+    "expected_exit_code": 1
+  },
+  "enabled-tail bypass mutant": {
+    "child_exit_code": 1,
+    "deadline_expired": false,
+    "wall_seconds": 111.75871495200045,
+    "peak_rss_kib": 1428964,
+    "expected_exit_code": 1
+  },
+  "first-error positive fixture": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 0.26972462800040375,
+    "peak_rss_kib": 33076,
+    "expected_exit_code": 0
+  },
+  "full-mode positive fixture": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 0.4381335719990602,
+    "peak_rss_kib": 32756,
+    "expected_exit_code": 0
+  },
+  "actual segmented measurement pairing": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 24.45916577999742,
+    "peak_rss_kib": 317640
+  },
+  "portable guard reproducer": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 26.72540103099891,
+    "peak_rss_kib": 1439988
+  }
+}

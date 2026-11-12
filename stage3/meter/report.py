@@ -17,7 +17,7 @@ REJECTED_ENTRY_MEASUREMENT = 'measured on a checker-rejected entry-root program'
 
 # Shared readers take required steps from the overlay's one Go table, not a second list.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'census/latent'))
-from pass_ledger import coverage as pass_coverage, coverage_line, whole_passes_measured
+from pass_ledger import coverage as pass_coverage, coverage_line, whole_passes_measured, tail_line
 
 # The tsc entry pass's ceiling on the checker's assignable cache: 3.3 times the 299,624 pairs measured at Lower's
 # record-sources head on Nov 9 (#ny0c3gb), and well under the checker's 16M cap. A relation call's step budget is
@@ -132,6 +132,8 @@ def lowering_summary(records, expected, measurement):
         for finding in record.get('findings') or []:
             if finding.get('measurement') != measurement or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic', 'Boundary'):
                 raise ValueError('invalid latent finding')
+            if finding.get('phase') == 'tail':
+                continue # Separate partial-tail observations never change body-lowering totals.
             sites.add(tuple(finding[key] for key in ('kind', 'where', 'reason', 'text')))
             events += 1
     if seen != expected:
@@ -259,7 +261,7 @@ def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
         return ['', relation_budget_line(entry), f'tsc entry body lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', relation_budget_line(entry), f"tsc entry body lowering, {label}: {summary['measurement']}.", *relation_lines(summary), coverage_line(summary),
+    lines = ['', relation_budget_line(entry), f"tsc entry body lowering, {label}: {summary['measurement']}.", *relation_lines(summary), coverage_line(summary), tail_line(summary),
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -277,7 +279,7 @@ def entry_table(label, entry):
 
 def latent_table(label, summary):
     totals = summary['totals']
-    lines = ['', f'Latent body lowering, {label}: {MEASUREMENT}.', *relation_lines(summary), coverage_line(summary),
+    lines = ['', f'Latent body lowering, {label}: {MEASUREMENT}.', *relation_lines(summary), coverage_line(summary), tail_line(summary),
              f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
              f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.",
              f"Errors: {totals['error']}; panics: {totals['panic']}.", *site_lines(summary), '',
@@ -348,7 +350,8 @@ def root_order_checks(tree, run, records):
                  if any(unit['status'] in ('attempted', 'panic', 'speculative')
                         for unit in row.get('units', []))}
     readiness = {stop_file(finding['where']) for row in latent[1:]
-                 for finding in row.get('findings') or [] if finding['reason'] in READINESS_REASONS}
+                 for finding in row.get('findings') or []
+                 if finding.get('phase') != 'tail' and finding['reason'] in READINESS_REASONS}
     candidates = [row for row in records if len(row['roots']) == 1
                   and row['kind'] in ('NotYet', 'Refused') and row.get('reason') in READINESS_REASONS
                   and stop_file(row['where']) in attempted - readiness]
@@ -363,6 +366,8 @@ def root_order_checks(tree, run, records):
         # fallback explicitly: source path, numeric line/column, then stream order.
         findings = [finding for record in latent[1:] for finding in record.get('findings') or []
                     if record.get('status') == 'relation_report' or stop_file(finding['where']) in program]
+        tail_findings = [finding for finding in findings if finding.get('phase') == 'tail']
+        findings = [finding for finding in findings if finding.get('phase') != 'tail']
         findings.sort(key=lambda finding: ('', 0, 0) if finding['where'] == 'program' else
                       (site_where(stop_file(finding['where'])),
                        *map(int, finding['where'].rsplit(':', 2)[1:])))
@@ -380,6 +385,10 @@ def root_order_checks(tree, run, records):
                            'kind': first['kind'], 'where': site_where(first['where']),
                            'reason': first['reason'], 'source': 'entry census',
                            'order': 'program relation report' if first['where'] == 'program' else 'source order'}})
+        if tail_findings:
+            checks[-1]['entry_tail_stops'] = [dict(kind=finding['kind'], pass_name=finding.get('pass', 'unknown'),
+                                                   where=site_where(finding['where']), reason=finding['reason'])
+                                               for finding in tail_findings]
     return checks
 
 
@@ -388,7 +397,8 @@ def artifact_lowers_body(artifact):
 
 
 def artifact_lowers_whole(artifact):
-    return artifact_lowers_body(artifact) and artifact.get('entry_whole_program_passes_measured', False)
+    return (artifact_lowers_body(artifact) and not artifact.get('entry_tail_stops')
+            and artifact.get('entry_whole_program_passes_measured', False))
 
 
 def root_order_table(label, result):
@@ -408,6 +418,10 @@ def root_order_table(label, result):
             stop = row['entry_next_stop']
             if stop is not None:
                 entry_result = f"{stop['kind']} {stop['where']}: {stop['reason']} (read from the entry census; {stop['order']})"
+            elif row['entry_program_attempted'] and row.get('entry_tail_stops'):
+                tail = row['entry_tail_stops'][0]
+                entry_result = (f"body lowering only; scoped tail stop {tail['pass_name']}: {tail['reason']}; "
+                                'whole-program passes unmeasured')
             elif row['entry_program_attempted']:
                 entry_result = ('all program files attempted; no findings; lowers whole' if artifact_lowers_whole(row)
                                 else 'all program files attempted; no findings; body lowering only; whole-program passes unmeasured')

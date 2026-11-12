@@ -1,0 +1,5 @@
+const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface A { readonly kind: 1; readonly label: string | number }
+interface B { readonly kind: 2; readonly other: string }
+function probe(n: A | B): void { const s = n as A; console.log(String(s.label)); }

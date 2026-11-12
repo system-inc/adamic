@@ -572,6 +572,27 @@ class RootOrderTests(unittest.TestCase):
         self.assertTrue(self.root_row(result)['lowering'])
         self.assertEqual(result['root_order_artifacts'][0]['reason'], sorted(READINESS_REASONS)[1])
 
+    def test_artifact_tail_stop_preserves_body_count_loom03dg(self):
+        from report import ENTRY_MEASUREMENT
+        self.readiness()
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[1]['findings'] = [dict(kind='NotYet', where=f'{self.root}:167:31',
+                                    unit=f'{self.root}:1:1', phase='tail',
+                                    **{'pass': 'checkRecordGuardedReads'},
+                                    reason='guarded record', text='guarded record',
+                                    measurement=ENTRY_MEASUREMENT)]
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertTrue(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 2)
+        artifact = result['root_order_artifacts'][0]
+        self.assertIsNone(artifact['entry_next_stop'])
+        self.assertEqual(artifact['entry_tail_stops'][0]['pass_name'], 'checkRecordGuardedReads')
+        self.assertFalse(artifact['entry_whole_program_passes_measured'])
+        self.assertIn('scoped tail stop checkRecordGuardedReads: guarded record',
+                      (self.run / 'report.md').read_text())
+
     def test_artifact_with_entry_refusal_does_not_lower_whole(self):
         from report import ENTRY_MEASUREMENT
         self.readiness()
@@ -804,3 +825,27 @@ class PassLedgerReportTestsPb47(unittest.TestCase):
             self.assertFalse(whole_passes_measured(dict(status='attempted', pass_ledger=ledger)))
         self.assertFalse(whole_passes_measured(dict(status='deferred_generic_instantiation',
                                                   pass_ledger=self.ledger('executed'))))
+
+
+class ScopedTailReportTestsLoom03dg(unittest.TestCase):
+    def test_tail_stop_does_not_change_body_totals_loom03dg(self):
+        from report import MEASUREMENT, lowering_summary, latent_table, entry_table
+        rows = [dict(status='measurement', measurement=MEASUREMENT, checker_rejected=False),
+                dict(file='tail.ts', measurement=MEASUREMENT,
+                     units=[dict(where='tail.ts:1:1', status='attempted')],
+                     findings=[dict(measurement=MEASUREMENT, unit='tail.ts:1:1',
+                                    phase='tail', **{'pass':'checkRecordGuardedReads'},
+                                    kind='NotYet', where='tail.ts:1:8', text='guarded record', reason='guarded record')])]
+        summary = lowering_summary(rows, {str(Path('tail.ts').resolve())}, MEASUREMENT)
+        self.assertEqual(summary['totals']['NotYet'], 0)
+        self.assertEqual(summary['body_lowered_units'], 1)
+        self.assertEqual(summary['whole_program_passes_measured_units'], 0)
+        line = 'Scoped tail: 1 units stopped (checkRecordGuardedReads: 1).'
+        self.assertIn(line, latent_table('main', summary))
+        self.assertIn(line, entry_table('main', {'lowering_census':summary}))
+
+    def test_unrun_tail_is_not_reported_as_measured_zero_loom03dg(self):
+        from pass_ledger import tail_line
+        self.assertEqual(tail_line({'scoped_tail_stops': {}}), 'Scoped tail: not run.')
+        self.assertEqual(tail_line({'scoped_tail_stops': {}, 'scoped_tail_pass_executions': 13}),
+                         'Scoped tail: 0 units stopped.')

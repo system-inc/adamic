@@ -69,12 +69,16 @@ func passLedgerTable(source []byte) ([]PassStep, error) {
 						} else {
 							step.Production = word
 						}
-					case "WholeProgram":
+					case "WholeProgram", "Scoped":
 						boolean, ok := pair.Value.(*ast.Ident)
 						if !ok || (boolean.Name != "true" && boolean.Name != "false") {
 							return nil, fmt.Errorf("invalid whole-program flag")
 						}
-						step.WholeProgram = boolean.Name == "true"
+						if key.Name == "Scoped" {
+							step.Scoped = boolean.Name == "true"
+						} else {
+							step.WholeProgram = boolean.Name == "true"
+						}
 					default:
 						return nil, fmt.Errorf("unknown step field %s", key.Name)
 					}

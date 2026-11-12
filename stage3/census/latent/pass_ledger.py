@@ -41,9 +41,30 @@ def coverage(records):
     units = [(unit, record.get('findings', [])) for record in records for unit in record.get('units', [])]
     good = [unit for unit, findings in units if body_lowers(unit, findings)]
     return {'body_lowered_units': len(good),
-            'whole_program_passes_measured_units': sum(whole_passes_measured(unit) for unit in good)}
+            'whole_program_passes_measured_units': sum(whole_passes_measured(unit) for unit in good),
+            'scoped_tail_stops': tail_stops(records),
+            'scoped_tail_pass_executions': sum(step.get('status') in ('executed_scoped', 'stopped_scoped', 'panic')
+                                               for unit, _ in units for step in (unit.get('pass_ledger') or []))}
 
 
 def coverage_line(summary):
     return (f"{summary['body_lowered_units']} units lower without a body stop; "
             f"{summary['whole_program_passes_measured_units']} have their whole-program passes measured")
+
+
+def tail_stops(records):
+    by_pass = {}
+    for record in records:
+        for finding in record.get('findings', []):
+            if finding.get('phase') == 'tail':
+                by_pass.setdefault(finding.get('pass', 'unknown'), set()).add((record.get('file'), finding.get('unit')))
+    return {name: len(units) for name, units in sorted(by_pass.items())}
+
+
+def tail_line(summary):
+    stops = summary.get('scoped_tail_stops', {})
+    if not stops and not summary.get('scoped_tail_pass_executions', 0):
+        return 'Scoped tail: not run.'
+    total = sum(stops.values())
+    by_pass = ', '.join(f'{name}: {count}' for name, count in stops.items())
+    return f'Scoped tail: {total} units stopped' + (f' ({by_pass})' if by_pass else '') + '.'

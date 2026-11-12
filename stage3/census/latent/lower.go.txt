@@ -24,6 +24,7 @@ func (e *LatentDependencySkipped) Error() string {
 }
 
 type LatentFinding struct {
+	Pass string `json:"pass,omitempty"`
 	PieceAtom string `json:"piece_atom,omitempty"`
 	SiteWhere     string `json:"site_where,omitempty"`
 	SiteKind      string `json:"site_kind,omitempty"`
@@ -425,10 +426,12 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					// Nongeneric declarations lower directly; generic bodies are reached at calls.
 					latentRecord(l.lowerFunction(index, node, -1))
 				} else {
-					_, err := l.statement(node)
+					body, err := l.statement(node)
+					l.result.Main = body
 					latentRecord(err)
 				}
 				latentRecord(l.unlowerable)
+				l.latentFinishUnit(&unit, node)
 			}()
 			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)
