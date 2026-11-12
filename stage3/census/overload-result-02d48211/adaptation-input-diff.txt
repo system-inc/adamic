@@ -1,0 +1,130 @@
+diff --git a/stage3/adapt/71-writable-views/README.md b/stage3/adapt/71-writable-views/README.md
+index 74dcb9fc2..a7c7251e5 100644
+--- a/stage3/adapt/71-writable-views/README.md
++++ b/stage3/adapt/71-writable-views/README.md
+@@ -75,3 +75,25 @@ Batch 5b repeats the full apply and all nine composition mutants on the
+ 45487a80 base, without either hidden-source branch. All mutants are rejected
+ before source writes. [evidence/batch5b-composition.json](evidence/batch5b-composition.json)
+ records this fresh run.
++
++## LineMapSource amendment, baobab (Nov 11)
++
++Adamic ruled variant (e), accepted by Compiler on Nov 11 at 11:28Z. This
++amends 71 because its cache-owner guard already pins SourceFileLike.lineMap.
++The measured precedent is getPositionOfLineAndCharacter's existing internal
++overload. The full fourth measurement at typescript/sourcefile-like-sites
++commit ddbfff50 supplies the exact edit.
++
++An internal LineMapSource immediately precedes the whole documented
++SourceFileLike declaration, which is preserved byte for byte. The internal
++getLineAndCharacterOfPosition overload comes first, followed by the original
++public SourceFileLike overload with its local unified-signatures suppression.
++Its implementation and the internal getLineStarts accept LineMapSource. Both
++bodies are unchanged. The scanner import is type-only.
++
++line-map-source.json pins the whole documented SourceFileLike, the new view,
++and both helpers before and after. line-map-source.cjs audits the complete
++proposed 71 state before any writes, rejects drift and half-adapted states,
++and is idempotent. Stock JavaScript bytes must be identical, including comments.
++The public API sanction remains unchanged. Raw proof artifacts are on
++typescript/line-map-source-evidence under stage3/census/line-map-source.
+diff --git a/stage3/adapt/71-writable-views/adapt.cjs b/stage3/adapt/71-writable-views/adapt.cjs
+index 116efc057..767c05641 100644
+--- a/stage3/adapt/71-writable-views/adapt.cjs
++++ b/stage3/adapt/71-writable-views/adapt.cjs
+@@ -104,6 +104,11 @@ for (const [file, positions] of edits) {
+         throw new Error(`adaptation adds any or unknown: ${file.fileName}`);
+     prepared.set(file, text);
+ }
+-for (const [file, text] of prepared) fs.writeFileSync(file.fileName, text);
++// Audit the baobab amendment against the complete proposed 71 state before
++// writing any file, so a partial overload or interface cannot leave 71 half applied.
++const pending = new Map([...prepared].map(([file, text]) => [file.fileName, text]));
++const lineMap = require('./line-map-source.cjs').plan(tree, ts, pending);
++for (const [name, text] of lineMap) pending.set(name, text);
++for (const [name, text] of pending) fs.writeFileSync(name, text);
+ console.log(JSON.stringify({ typescript: ts.version, files: edits.size,
+-    families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));
++    lineMapSourceFiles: lineMap.size, families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));
+diff --git a/stage3/adapt/71-writable-views/line-map-source.cjs b/stage3/adapt/71-writable-views/line-map-source.cjs
+new file mode 100644
+index 000000000..4d69d9a28
+--- /dev/null
++++ b/stage3/adapt/71-writable-views/line-map-source.cjs
+@@ -0,0 +1,58 @@
++'use strict';
++// Adamic's baobab ruling, Nov 11: the internal overload follows the existing
++// getPositionOfLineAndCharacter precedent. The public signature stays intact.
++const assert = require('node:assert/strict');
++const fs = require('node:fs');
++const path = require('node:path');
++const pins = require('./line-map-source.json');
++
++function plan(tree, ts, pending = new Map()) {
++    assert.equal(ts.version, '6.0.3');
++    const read = name => pending.get(path.join(tree, name)) ?? fs.readFileSync(path.join(tree, name), 'utf8');
++    const typesName = 'src/compiler/types.ts', scannerName = 'src/compiler/scanner.ts';
++    const texts = new Map([[typesName, read(typesName)], [scannerName, read(scannerName)]]);
++    const parsed = new Map([...texts].map(([name, text]) => [name, ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true)]));
++    for (const file of parsed.values()) assert.equal(file.parseDiagnostics.length, 0, `cannot parse ${file.fileName}`);
++    const types = parsed.get(typesName), scanner = parsed.get(scannerName);
++    const one = (items, label) => { assert.equal(items.length, 1, `${label} count`); return items[0]; };
++    const documented = node => {
++        const start = node.jsDoc?.[0]?.pos ?? node.getStart(node.getSourceFile());
++        return node.getSourceFile().text.slice(start, node.end);
++    };
++    const source = one(types.statements.filter(n => ts.isInterfaceDeclaration(n) && n.name.text === 'SourceFileLike'), 'SourceFileLike');
++    assert.equal(documented(source), pins.sourceFileLike, 'documented SourceFileLike drift');
++    const views = types.statements.filter(n => ts.isInterfaceDeclaration(n) && n.name.text === 'LineMapSource');
++    const calls = scanner.statements.filter(n => ts.isFunctionDeclaration(n) && n.name?.text === 'getLineAndCharacterOfPosition');
++    const starts = one(scanner.statements.filter(n => ts.isFunctionDeclaration(n) && n.name?.text === 'getLineStarts'), 'getLineStarts');
++    const imports = scanner.statements.filter(ts.isImportDeclaration).flatMap(n => n.importClause?.namedBindings && ts.isNamedImports(n.importClause.namedBindings) ? [...n.importClause.namedBindings.elements] : []);
++    const imported = imports.filter(n => n.name.text === 'LineMapSource');
++    const states = [];
++    states.push(views.length === 0 ? 'before' : views.length === 1 && documented(views[0]) === pins.lineMapSource ? 'after' : 'drift');
++    states.push(calls.length === 1 && documented(calls[0]) === pins.position.before ? 'before' : calls.length === 3 &&
++        scanner.text.slice(calls[0].jsDoc[0].pos, calls[2].end) === pins.position.after ? 'after' : 'drift');
++    states.push(documented(starts) === pins.starts.before ? 'before' : documented(starts) === pins.starts.after ? 'after' : 'drift');
++    const importBefore = '    type LineAndCharacter,', importAfter = importBefore + ' type LineMapSource,';
++    states.push(imported.length === 0 && scanner.text.split(importBefore).length === 2 ? 'before' : imported.length === 1 && imported[0].isTypeOnly && scanner.text.split(importAfter).length === 2 ? 'after' : 'drift');
++    assert(states.every(s => s === states[0]) && states[0] !== 'drift', `line map drift or half-adapted files: ${states.join(', ')}`);
++    if (states[0] === 'after') {
++        assert.equal(types.statements.indexOf(views[0]) + 1, types.statements.indexOf(source), 'LineMapSource must immediately precede SourceFileLike');
++        assert(types.text.includes(pins.lineMapSource + '\r\n\r\n' + pins.sourceFileLike), 'LineMapSource documentation placement drift');
++        return new Map();
++    }
++    const replace = (text, before, after) => { assert.equal(text.split(before).length, 2, 'pin must occur exactly once'); return text.replace(before, after); };
++    const output = new Map();
++    output.set(path.join(tree, typesName), replace(types.text, pins.sourceFileLike, pins.lineMapSource + '\r\n\r\n' + pins.sourceFileLike));
++    let changed = replace(scanner.text, pins.position.before, pins.position.after);
++    changed = replace(changed, pins.starts.before, pins.starts.after);
++    changed = replace(changed, importBefore, importAfter);
++    output.set(path.join(tree, scannerName), changed);
++    // Actual stock JavaScript bytes, including comments, must stay unchanged.
++    for (const [name, after] of output) {
++        const before = read(path.relative(tree, name));
++        const emit = text => ts.transpileModule(text, { fileName: name, compilerOptions: { target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, verbatimModuleSyntax: true } }).outputText;
++        assert.equal(emit(after), emit(before), `JavaScript changed: ${name}`);
++    }
++    plan(tree, ts, new Map([...pending, ...output]));
++    return output;
++}
++module.exports = { plan };
+diff --git a/stage3/adapt/71-writable-views/line-map-source.json b/stage3/adapt/71-writable-views/line-map-source.json
+new file mode 100644
+index 000000000..a8af090e8
+--- /dev/null
++++ b/stage3/adapt/71-writable-views/line-map-source.json
+@@ -0,0 +1,12 @@
++{
++  "sourceFileLike": "/**\r\n * Subset of properties from SourceFile that are used in multiple utility functions\r\n */\r\nexport interface SourceFileLike {\r\n    readonly text: string;\r\n    /** @internal */\r\n    lineMap?: readonly number[] | undefined;\r\n    /** @internal */\r\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\r\n}",
++  "lineMapSource": "/** @internal */\r\nexport interface LineMapSource {\r\n    readonly text: string;\r\n    lineMap?: readonly number[] | undefined;\r\n}",
++  "starts": {
++    "before": "/** @internal */\r\nexport function getLineStarts(sourceFile: SourceFileLike): readonly number[] {\r\n    return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));\r\n}",
++    "after": "/** @internal */\r\nexport function getLineStarts(sourceFile: LineMapSource): readonly number[] {\r\n    return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));\r\n}"
++  },
++  "position": {
++    "before": "export function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter {\r\n    return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);\r\n}",
++    "after": "/** @internal */\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter;\r\nexport function getLineAndCharacterOfPosition(sourceFile: SourceFileLike, position: number): LineAndCharacter; // eslint-disable-line @typescript-eslint/unified-signatures\r\nexport function getLineAndCharacterOfPosition(sourceFile: LineMapSource, position: number): LineAndCharacter {\r\n    return computeLineAndCharacterOfPosition(getLineStarts(sourceFile), position);\r\n}"
++  }
++}

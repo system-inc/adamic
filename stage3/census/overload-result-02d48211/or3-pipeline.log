@@ -1,0 +1,12 @@
+git child_exit=0
+git child_exit=0
+git child_exit=0
+git child_exit=0
+git child_exit=0
+git child_exit=0
+git child_exit=0
+start parent-prepare pid=1111
+start head-prepare pid=1112
+start apply-prepare pid=1113
+apply-prepare child_exit=0
+start checkpoint-apply pid=13497

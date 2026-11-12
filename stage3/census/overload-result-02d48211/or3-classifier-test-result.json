@@ -1,0 +1,342 @@
+{
+  "options": {
+    "target": 99,
+    "module": 199,
+    "moduleResolution": 99,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "results": [
+    {
+      "unit": {
+        "name": "f(1);",
+        "where": "/tmp/or3-classifier-fixture.ts:5:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:5:1",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "callee of a call; fix wrong",
+      "is_callee": true,
+      "expression": "f",
+      "node_kind": "Identifier",
+      "effective_kind": "Identifier",
+      "parent_role": "CallExpression.expression",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 143,
+        "end_utf16": 144,
+        "start_line": 5,
+        "start_column": 1,
+        "end_line": 5,
+        "end_column": 2
+      },
+      "context": "f(1);",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:1:1",
+            "body": false,
+            "text": "function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:2:1",
+            "body": false,
+            "text": "function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:3:1",
+            "body": true,
+            "text": "function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "consume(f);",
+        "where": "/tmp/or3-classifier-fixture.ts:6:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:6:9",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "used as a value; fail-closed and correct",
+      "is_callee": false,
+      "expression": "f",
+      "node_kind": "Identifier",
+      "effective_kind": "Identifier",
+      "parent_role": "CallExpression.arguments[0]",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 157,
+        "end_utf16": 158,
+        "start_line": 6,
+        "start_column": 9,
+        "end_line": 6,
+        "end_column": 10
+      },
+      "context": "consume(f);",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:1:1",
+            "body": false,
+            "text": "function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:2:1",
+            "body": false,
+            "text": "function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:3:1",
+            "body": true,
+            "text": "function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "(f)(1);",
+        "where": "/tmp/or3-classifier-fixture.ts:7:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:7:2",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "callee of a call; fix wrong",
+      "is_callee": true,
+      "expression": "f",
+      "node_kind": "Identifier",
+      "effective_kind": "ParenthesizedExpression",
+      "parent_role": "CallExpression.expression",
+      "parentheses": [
+        "ParenthesizedExpression"
+      ],
+      "range": {
+        "start_utf16": 162,
+        "end_utf16": 163,
+        "start_line": 7,
+        "start_column": 2,
+        "end_line": 7,
+        "end_column": 3
+      },
+      "context": "(f)(1);",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:1:1",
+            "body": false,
+            "text": "function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:2:1",
+            "body": false,
+            "text": "function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:3:1",
+            "body": true,
+            "text": "function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "escaped = f;",
+        "where": "/tmp/or3-classifier-fixture.ts:8:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:8:17",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "used as a value; fail-closed and correct",
+      "is_callee": false,
+      "expression": "f",
+      "node_kind": "Identifier",
+      "effective_kind": "Identifier",
+      "parent_role": "VariableDeclaration.initializer",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 185,
+        "end_utf16": 186,
+        "start_line": 8,
+        "start_column": 17,
+        "end_line": 8,
+        "end_column": 18
+      },
+      "context": "escaped = f",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:1:1",
+            "body": false,
+            "text": "function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:2:1",
+            "body": false,
+            "text": "function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:3:1",
+            "body": true,
+            "text": "function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "N.f(1);",
+        "where": "/tmp/or3-classifier-fixture.ts:14:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:14:1",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "callee of a call; fix wrong",
+      "is_callee": true,
+      "expression": "N.f",
+      "node_kind": "PropertyAccessExpression",
+      "effective_kind": "PropertyAccessExpression",
+      "parent_role": "CallExpression.expression",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 332,
+        "end_utf16": 335,
+        "start_line": 14,
+        "start_column": 1,
+        "end_line": 14,
+        "end_column": 4
+      },
+      "context": "N.f(1);",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:10:2",
+            "body": false,
+            "text": "export function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:11:2",
+            "body": false,
+            "text": "export function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:12:2",
+            "body": true,
+            "text": "export function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "member = N.f;",
+        "where": "/tmp/or3-classifier-fixture.ts:15:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:15:16",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "used as a value; fail-closed and correct",
+      "is_callee": false,
+      "expression": "N.f",
+      "node_kind": "PropertyAccessExpression",
+      "effective_kind": "PropertyAccessExpression",
+      "parent_role": "VariableDeclaration.initializer",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 355,
+        "end_utf16": 358,
+        "start_line": 15,
+        "start_column": 16,
+        "end_line": 15,
+        "end_column": 19
+      },
+      "context": "member = N.f",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:10:2",
+            "body": false,
+            "text": "export function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:11:2",
+            "body": false,
+            "text": "export function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:12:2",
+            "body": true,
+            "text": "export function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    },
+    {
+      "unit": {
+        "name": "shorthand = { f };",
+        "where": "/tmp/or3-classifier-fixture.ts:16:1"
+      },
+      "finding": {
+        "where": "/tmp/or3-classifier-fixture.ts:16:21",
+        "reason": "an overloaded function as a value"
+      },
+      "base": null,
+      "classification": "used as a value; fail-closed and correct",
+      "is_callee": false,
+      "expression": "f",
+      "node_kind": "ShorthandPropertyAssignment",
+      "effective_kind": "ShorthandPropertyAssignment",
+      "parent_role": "ObjectLiteralExpression",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 380,
+        "end_utf16": 381,
+        "start_line": 16,
+        "start_column": 21,
+        "end_line": 16,
+        "end_column": 22
+      },
+      "context": "shorthand = { f }",
+      "overloaded_set": {
+        "symbol": "f",
+        "declarations": [
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:1:1",
+            "body": false,
+            "text": "function f(x: number): 1;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:2:1",
+            "body": false,
+            "text": "function f(x: string): 2;"
+          },
+          {
+            "where": "/tmp/or3-classifier-fixture.ts:3:1",
+            "body": true,
+            "text": "function f(x: number | string): 1 | 2 { return 1; }"
+          }
+        ]
+      }
+    }
+  ]
+}

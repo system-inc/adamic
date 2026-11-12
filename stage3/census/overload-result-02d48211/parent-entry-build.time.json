@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/or3-build-parent/entry-overlay/overlay.json",
+    "-o",
+    "/workspace/or3-build-parent/entry-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 708.2864891780009,
+  "user_seconds": 673.232664,
+  "system_seconds": 100.570324,
+  "peak_rss_kib": 2381436
+}
