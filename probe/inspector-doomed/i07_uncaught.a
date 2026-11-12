@@ -1,0 +1,11 @@
+import 'node:process';
+let stash: (() => string) | undefined;
+try {
+ stash = (): string => { session.connect(); return "ran"; };
+ const inspector: typeof import('inspector') = require('inspector');
+ const session = new inspector.Session();
+ session.connect();
+} catch (error) {
+ console.log('require caught');
+}
+console.log(stash === undefined ? "none" : stash());

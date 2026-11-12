@@ -1,0 +1,15 @@
+import 'node:process';
+let stash: (() => string) | undefined;
+try {
+ stash = (): string => { const made = new inspector.Session(); return made === undefined ? "u" : "d"; };
+ const inspector: typeof import('inspector') = require('inspector');
+ const session = new inspector.Session();
+ session.connect();
+} catch (error) {
+ console.log('require caught');
+}
+try {
+ console.log(stash === undefined ? "none" : stash());
+} catch (error) {
+ console.log(error instanceof ReferenceError ? "dead zone" : "other");
+}
