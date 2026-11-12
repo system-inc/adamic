@@ -260,6 +260,8 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
 
 // check recognizes only independently trusted narrowing expressions, with no calls, aliases,
 // casts or computed property accesses. The checker still decides what each branch proves.
+// censusTrustedTest (census_overload_proof.go) walks the same tree for an overload's body proof over
+// its own leaves.
 func (p *predicateFlowProof) check(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {

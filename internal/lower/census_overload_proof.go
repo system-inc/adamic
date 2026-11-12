@@ -156,18 +156,7 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 			return flows, true
 		case ast.KindIfStatement:
 			branch := node.AsIfStatement()
-			check := ast.SkipParentheses(branch.Expression)
-			trusted := false
-			if check.Kind == ast.KindBinaryExpression {
-				binary := check.AsBinaryExpression()
-				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
-					for _, parameter := range parameters {
-						proof := predicateFlowProof{l: l, parameter: parameter}
-						trusted = trusted || proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) || proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)
-					}
-				}
-			}
-			if !trusted {
+			if !l.censusTrustedTest(branch.Expression, parameters, initial) {
 				return nil, false
 			}
 			then, otherwise := []*ast.FlowNode{}, []*ast.FlowNode{}
@@ -218,6 +207,119 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 		}
 	}
 	return true
+}
+
+// censusTrustedTest says whether censusReturnProof may take an if's test as flow evidence. The branch
+// types stay the checker's own narrowing of the whole test (predicateBranch), so a test is trusted only
+// when every leaf narrows soundly or narrows nothing: a tree of !, &&, || and parentheses over a bare
+// parameter compared with a literal by === or !==, a bare parameter by truthiness, or a parameter's
+// length compared with a number literal where every member of every type the proof starts the parameter
+// from has a length that is exactly number (censusLengthPlain). A call, in, instanceof or a user predicate stops the proof,
+// and a write inside the test is the body's, which the proof's scan already refuses (#z5d0jye step 2,
+// tsc's getSupportedExtensions and concatenate). predicateFlowProof.check (predicates.go) walks the same
+// tree for a predicate's body proof over its own leaves.
+func (l *lowering) censusTrustedTest(test *ast.Node, parameters []*ast.Node, initial []*checker.Type) bool {
+	test = ast.SkipParentheses(test)
+	parameterOf := func(node *ast.Node) int {
+		node = ast.SkipParentheses(node)
+		for index, parameter := range parameters {
+			proof := predicateFlowProof{l: l, parameter: parameter}
+			if proof.reference(node) {
+				return index
+			}
+		}
+		return -1
+	}
+	switch test.Kind {
+	case ast.KindIdentifier:
+		return parameterOf(test) >= 0
+	case ast.KindPrefixUnaryExpression:
+		unary := test.AsPrefixUnaryExpression()
+		return unary.Operator == ast.KindExclamationToken && l.censusTrustedTest(unary.Operand, parameters, initial)
+	case ast.KindBinaryExpression:
+		binary := test.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken:
+			return l.censusTrustedTest(binary.Left, parameters, initial) && l.censusTrustedTest(binary.Right, parameters, initial)
+		case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
+			for _, parameter := range parameters {
+				proof := predicateFlowProof{l: l, parameter: parameter}
+				if proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) || proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left) {
+					return true
+				}
+			}
+			starts := func(index int) []*checker.Type {
+				return []*checker.Type{l.checker.GetTypeAtLocation(parameters[index].Name()), initial[index]}
+			}
+			return l.censusLengthLeaf(binary.Left, binary.Right, parameterOf, starts) || l.censusLengthLeaf(binary.Right, binary.Left, parameterOf, starts)
+		}
+	}
+	return false
+}
+
+// censusLengthLeaf says whether side reads a parameter's length and other is a number literal, where
+// every member of the parameter's declared type has a length that is plain number. The checker narrows
+// by length only where length is a discriminant, a member's length with a literal part (a tuple, or an
+// object like { length: 1 }), so this leaf narrows nothing the proof reads (Lower's read on #z5d0jye).
+// Both the declared type and the type the proof starts from are judged, since the narrowing runs from
+// the overload's parameter or the call's argument (initial), not the implementation's declaration
+// (Lower's must on 1fdc8083).
+// p?.length narrows p and isn't this leaf.
+func (l *lowering) censusLengthLeaf(side, other *ast.Node, parameterOf func(*ast.Node) int, starts func(int) []*checker.Type) bool {
+	side, other = ast.SkipParentheses(side), ast.SkipParentheses(other)
+	if side.Kind != ast.KindPropertyAccessExpression || other.Kind != ast.KindNumericLiteral {
+		return false
+	}
+	access := side.AsPropertyAccessExpression()
+	if access.QuestionDotToken != nil || !ast.IsIdentifier(access.Name()) || access.Name().Text() != "length" {
+		return false
+	}
+	index := parameterOf(access.Expression)
+	if index < 0 {
+		return false
+	}
+	for _, start := range starts(index) {
+		if !l.censusLengthPlain(start, 0) {
+			return false
+		}
+	}
+	return true
+}
+
+// censusLengthPlain says whether every member of of, through unions, intersections and a type
+// parameter's constraint, has a length whose type is exactly number. A nullish member has no length to
+// narrow by. Anything it can't read fails closed.
+func (l *lowering) censusLengthPlain(of *checker.Type, depth int) bool {
+	if of == nil || depth > 16 {
+		return false
+	}
+	switch {
+	case of.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0:
+		return true
+	case of.Flags()&checker.TypeFlagsTypeParameter != 0:
+		return l.censusLengthPlain(l.checker.GetBaseConstraintOfType(of), depth+1)
+	case of.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range of.Types() {
+			if !l.censusLengthPlain(member, depth+1) {
+				return false
+			}
+		}
+		return len(of.Types()) > 0
+	case of.Flags()&checker.TypeFlagsIntersection != 0:
+		found := false
+		for _, part := range of.Types() {
+			if l.checker.GetPropertyOfType(part, "length") == nil {
+				continue
+			}
+			if !l.censusLengthPlain(part, depth+1) {
+				return false
+			}
+			found = true
+		}
+		return found
+	}
+	property := l.checker.GetPropertyOfType(of, "length")
+	return property != nil && l.checker.GetTypeOfSymbol(property).Flags() == checker.TypeFlagsNumber
 }
 
 // The checker retains the overload's declared result even when every admitted
