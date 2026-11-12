@@ -350,7 +350,7 @@ func (l *lowering) checkViewArrays() error {
 			program.ViewContracts[i].Unsupported = ""
 		}
 	}
-	graph, viewed, unknown := viewedAllocations(program, true)
+	graph, viewed, unknown := l.viewedAllocations(program, true)
 	hasArrayView := false
 	for _, contract := range program.ViewContracts {
 		hasArrayView = hasArrayView || contract.Kind == ir.ViewArray && contract.ArrayReadonly

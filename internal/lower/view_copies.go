@@ -65,7 +65,7 @@ func (l *lowering) checkViewCopies() error {
 		}
 		if graph == nil {
 			var reachUnknown bool
-			graph, viewed, reachUnknown = viewedAllocations(l.result, false)
+			graph, viewed, reachUnknown = l.viewedAllocations(l.result, false)
 			unknown = unknown || reachUnknown
 		}
 		reaches := graph.ReachingAllocations(copied.source)
