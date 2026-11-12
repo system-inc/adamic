@@ -128,19 +128,13 @@ static const char *const adamic_dynamic_keyed_stats_names[] = {
 };
 
 static const char *const adamic_dynamic_keyed_stats_field_names[] = {
-	"dev",
 	"mode",
-	"nlink",
 	"uid",
 	"gid",
 	"rdev",
 	"blksize",
-	"ino",
 	"blocks",
-	"atimeMs",
-	"ctimeMs",
 	"birthtimeMs",
-	"ctime",
 	"birthtime",
 };
 

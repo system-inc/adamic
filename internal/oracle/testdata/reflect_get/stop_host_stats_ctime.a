@@ -1,6 +1,7 @@
-// A Stats' ctime is Stats.prototype's date accessor on Node, and native's shape holds no ctime, so a
-// run-time key read of it stops on both backends rather than make up a Date (#zhrjf2t; #6xfkdwj fills
-// it). Node prints object.
+// A Stats' ctime is Stats.prototype's date accessor on Node, and native's shape held no ctime, so a
+// run-time key read of it stopped on both backends rather than make up a Date (#zhrjf2t). Native's
+// shape holds it now, a Date made with the Stats, and it answers on both as Node's does (#6xfkdwj).
+// Node prints object.
 import * as fs from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 

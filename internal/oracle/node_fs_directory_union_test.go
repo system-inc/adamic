@@ -123,7 +123,7 @@ static bool mutant_lossy_kind(const adamic_object *value, const char *method) {
     }
     static adamic_slot_cache mode_cache, type_cache;
     if (adamic_fs_file_is_stats(value)) {
-        mode_t mode = (mode_t)adamic_object_field(value, "_fsFileMode", &mode_cache)->number;
+        mode_t mode = (mode_t)adamic_object_field(value, "mode", &mode_cache)->number;
         return strcmp(method, "isFIFO") == 0 ? S_ISFIFO(mode) : S_ISSOCK(mode);
     }
     return adamic_object_field(value, "type", &type_cache)->number == (strcmp(method, "isFIFO") == 0 ? 7 : 8);
