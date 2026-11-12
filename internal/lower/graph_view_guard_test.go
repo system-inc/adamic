@@ -174,14 +174,12 @@ func TestGraphViewGuardDeclaredGenericPairIsNotYet(t *testing.T) {
 	})
 }
 
-// Views the cycle finder relates pass the guard and still reach graphAdoptionBoundary's refusal,
-// unchanged: a source program's Node as Identifier, and the same pair set directly.
+// Views the cycle finder relates pass the guard, and a graph program holds them since slice 3
+// (#ef727kr): a source program's Node as Identifier lowers, and the same pair set directly passes.
 func TestGraphViewGuardRelatedPairsPassThrough(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSourceAs(t, interfaceCastSource+graphReviewCycle+`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`, ".ts")
-	var refused *Refused
-	if !errors.As(err, &refused) || refused.What != "a checked-view adapter in a graph program" {
-		t.Fatalf("got %v, want graphAdoptionBoundary's refusal", err)
+	if _, err := lowerSourceAs(t, interfaceCastSource+graphReviewCycle+`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`, ".ts"); err != nil {
+		t.Fatalf("a related view in a graph program: %v", err)
 	}
 	lowered, types, nodes := graphViewGuardLowering(t)
 	judgeGraphViewGuardRows(t, lowered, types, nodes, []graphViewGuardRow{

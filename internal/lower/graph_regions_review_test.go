@@ -99,19 +99,35 @@ func TestGraphFlowReturnAndConditional(t *testing.T) {
 const graphReviewCycle = `interface Link {next:Link|undefined} const link:Link={next:undefined};link.next=link;`
 
 // In .a the view's cast is a downcast whose checks no proof erases, refused (#m8dvvmf) before graph
-// adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
-func TestGraphViewAdoptionIsRefused(t *testing.T) {
+// adoption is reached; the .ts twin keeps the checked view, which a graph program holds since slice 3
+// (#ef727kr). Mutant: graphAdoptionBoundary's refusal of ViewOrigins put back reds the .ts half.
+func TestGraphViewAdoptionIsAdmitted(t *testing.T) {
 	t.Parallel()
 	source := interfaceCastSource + graphReviewCycle + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`
 	_, err := lowerSource(t, source)
 	if err == nil || !strings.Contains(err.Error(), "a downcast from Node to Identifier in .a whose checks no proof erases") {
 		t.Fatalf("view graph adoption in .a: %v", err)
 	}
-	_, err = lowerSourceAs(t, source, ".ts")
-	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
+	if _, err = lowerSourceAs(t, source, ".ts"); err != nil {
 		t.Fatalf("view graph adoption: %v", err)
 	}
 }
+
+// A view whose target is a Node host object's type stays NotYet in a graph program, since the host
+// binding holds where the object came from (viewHosted, slice 3 of #ztpcwrr). Mutant: viewHosted
+// returning nil lowers it.
+func TestGraphHostViewIsNotYet(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, graphReviewCycle+`import type {Stats} from 'node:fs';
+const error=new Error('plain');
+const code=(error as NodeJS.ErrnoException).code;
+console.log(code??'missing');`, ".ts")
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "a host object's type, in a graph program") {
+		t.Fatalf("got %v, want the host view stop", err)
+	}
+}
+
 func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 	t.Parallel()
 	data, err := os.ReadFile("../oracle/testdata/entries_record_alias.a")
@@ -274,8 +290,9 @@ run();
 }
 
 // In .a the cast to a sub-union is a downcast whose checks no proof erases, refused (#m8dvvmf) before
-// graph adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
-func TestGraphLegacyViewAdoptionIsRefused(t *testing.T) {
+// graph adoption is reached; the .ts twin keeps the legacy checked view, which a graph program holds
+// since slice 3 (#ef727kr). Mutant: the CheckedFields refusal put back reds the .ts half.
+func TestGraphLegacyViewAdoptionIsAdmitted(t *testing.T) {
 	t.Parallel()
 	source := graphReviewCycle + `
  type First={readonly kind:'a';readonly name:string};
@@ -287,8 +304,7 @@ func TestGraphLegacyViewAdoptionIsRefused(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "a downcast from First | Second | Third to First | Second in .a whose checks no proof erases") {
 		t.Fatalf("legacy view graph adoption in .a: %v", err)
 	}
-	_, err = lowerSourceAs(t, source, ".ts")
-	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
+	if _, err = lowerSourceAs(t, source, ".ts"); err != nil {
 		t.Fatalf("legacy view graph adoption: %v", err)
 	}
 }
