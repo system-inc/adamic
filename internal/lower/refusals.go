@@ -256,8 +256,22 @@ func init() {
 	refusalRules.register(2800, "shorthandLibraryMethodGap", (*lowering).shorthandLibraryMethodGap)
 }
 
-// methodValueRefusal refuses a method read as a value, which loses its object.
+// methodValueRefusal refuses a method read as a value, which loses its object. A write to a method a
+// program's interface declares (hostMemberWritable) is the left side of an assignment, never a read, and its
+// refusal waits for checkHostMemberWrites, which gives it back, unchanged, where it can't admit the write.
 func (l *lowering) methodValueRefusal(node *ast.Node) error {
+	refusal := l.methodValueStop(node)
+	if refusal != nil && l.hostMemberWritable(node) {
+		l.deferHostMemberWrite(node, refusal)
+		return nil
+	}
+	return refusal
+}
+
+func init() { refusalRules.register(2900, "methodValueRefusal", (*lowering).methodValueRefusal) }
+
+// methodValueStop is methodValueRefusal's stop for node, the refusal of a method read as a value or nil.
+func (l *lowering) methodValueStop(node *ast.Node) error {
 	if l.directBindMethodRead(node) {
 		return nil
 	}
@@ -287,8 +301,6 @@ func (l *lowering) methodValueRefusal(node *ast.Node) error {
 	}
 	return nil
 }
-
-func init() { refusalRules.register(2900, "methodValueRefusal", (*lowering).methodValueRefusal) }
 
 // called reports whether a property access is what a call calls, through any parentheses around it:
 // a method called on its object, which keeps it.
