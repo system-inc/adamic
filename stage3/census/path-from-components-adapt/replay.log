@@ -1,0 +1,5 @@
+00-setup child_exit=0 changed=0
+10-type-imports child_exit=0 changed=0
+20-optional-declarations child_exit=0 changed=0
+30-indexed-reads child_exit=1 changed=0
+{"command": ["python3", "/workspace/scratch/path-adapt-proof/replay.py"], "child_exit_code": 1, "seconds": 77.14701704900017, "stopping_reason": null}

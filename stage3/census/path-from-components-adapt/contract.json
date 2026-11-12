@@ -1,0 +1,28 @@
+{
+  "initial": {
+    "files": 1,
+    "edits": 1,
+    "javascriptChanging": false
+  },
+  "replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  },
+  "replayWrites": 0,
+  "replayBytesAndMtimeUnchanged": true,
+  "refusals": [
+    "changed-owner",
+    "half-empty-cast",
+    "half-final-cast",
+    "missing-owner",
+    "moved-owner",
+    "duplicate-owner",
+    "parse-error",
+    "changed-after-owner",
+    "missing-after-overload",
+    "moved-section-comment"
+  ],
+  "unrelatedPreserved": true,
+  "lineEndingsPreserved": true
+}

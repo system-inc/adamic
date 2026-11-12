@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/path-adapt-proof/adamic",
+    "./cmd/adamic"
+  ],
+  "child_exit_code": 0,
+  "seconds": 206.43451442599985,
+  "stopping_reason": null
+}

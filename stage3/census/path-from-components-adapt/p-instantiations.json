@@ -1,0 +1,70 @@
+{
+  "typescript": "6.0.3",
+  "roots": 604,
+  "calls": [
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 503,
+      "column": 5,
+      "argumentType": "string",
+      "resolvedDirectoryType": "string",
+      "signature": "(directory: string, callback: (directory: string) => undefined): undefined",
+      "declarationTypeParameters": [
+        "T"
+      ],
+      "expression": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 3057,
+      "column": 12,
+      "argumentType": "P",
+      "resolvedDirectoryType": "string",
+      "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined",
+      "declarationTypeParameters": [
+        "T"
+      ],
+      "expression": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 296,
+      "column": 9,
+      "argumentType": "Path",
+      "resolvedDirectoryType": "Path",
+      "signature": "(directory: Path, callback: (directory: Path) => true | undefined): true | undefined",
+      "declarationTypeParameters": [
+        "T"
+      ],
+      "expression": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 330,
+      "column": 12,
+      "argumentType": "string",
+      "resolvedDirectoryType": "string",
+      "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined",
+      "declarationTypeParameters": [
+        "T"
+      ],
+      "expression": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })"
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "line": 258,
+      "column": 21,
+      "argumentType": "Path",
+      "resolvedDirectoryType": "Path",
+      "signature": "(directory: Path, callback: (directory: Path) => Path | undefined): Path | undefined",
+      "declarationTypeParameters": [
+        "T"
+      ],
+      "expression": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })"
+    }
+  ],
+  "counts": {
+    "string": 3,
+    "Path": 2
+  }
+}

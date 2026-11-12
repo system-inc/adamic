@@ -1,0 +1,34 @@
+[
+  {
+    "adapter": "00-setup",
+    "child_exit_code": 0,
+    "seconds": 6.7468107939998845,
+    "stdout": "Reading diagnostics from src/compiler/diagnosticMessages.json\n",
+    "stderr": "",
+    "changedFiles": []
+  },
+  {
+    "adapter": "10-type-imports",
+    "child_exit_code": 0,
+    "seconds": 23.574186455000017,
+    "stdout": "{\n  \"files\": 0,\n  \"imports\": 0,\n  \"exports\": 0,\n  \"generatorImports\": 0,\n  \"regenerated\": false,\n  \"declined\": []\n}\n",
+    "stderr": "",
+    "changedFiles": []
+  },
+  {
+    "adapter": "20-optional-declarations",
+    "child_exit_code": 0,
+    "seconds": 23.384899345999656,
+    "stdout": "{\n  \"typescript\": \"6.0.3\",\n  \"declarations_changed\": 0,\n  \"declarations\": [],\n  \"resolved_findings\": [],\n  \"initially_declined\": [],\n  \"before\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2591\": 45,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"after\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2591\": 45,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"newly_exposed_consumers\": [],\n  \"declined\": [],\n  \"declined_owners\": [],\n  \"internal_deferred_owners\": []\n}\n",
+    "stderr": "recheck: 60 diagnostics, 0 declarations edited\n",
+    "changedFiles": []
+  },
+  {
+    "adapter": "30-indexed-reads",
+    "child_exit_code": 1,
+    "seconds": 8.937754537999808,
+    "stdout": "",
+    "stderr": "declined site changed: core.ts:992:21\n",
+    "changedFiles": []
+  }
+]

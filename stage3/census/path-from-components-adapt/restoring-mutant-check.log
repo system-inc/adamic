@@ -1,0 +1,17 @@
+{
+  "expectedRed": true,
+  "restoredRefusal": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-adapt-mutant/src/compiler/path.ts:512:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-adapt-mutant/src/compiler/path.ts:513:45",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-adapt-mutant/src/compiler/path.ts:513:45: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ]
+}
+{"command": ["python3", "/workspace/scratch/path-adapt-proof/restoring-mutant-check.py"], "child_exit_code": 1, "seconds": 0.06403152899974884, "stopping_reason": null}
