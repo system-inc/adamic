@@ -1,0 +1,146 @@
+// Compiled only in the no-output census overlay.
+package lower
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"time"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/stage3/census/latent"
+)
+
+// The unit owns its body IR. Finalization observes a second, disposable snapshot;
+// neither its rewrites nor its registrations ever return to the unit or base.
+func (l *lowering) latentFinishUnit(unit *LatentUnit, node *ast.Node) {
+	if os.Getenv("LATENT_TAIL") != "1" {
+		return
+	}
+	if l.unlowerable != nil {
+		return
+	}
+	for _, finding := range latentFindings {
+		if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration") {
+			return
+		}
+	}
+	ledger, finding := l.latentScopedTail(node)
+	unit.PassLedger = ledger
+	if finding != nil {
+		finding.Unit = unit.Where
+		latentFindings = append(latentFindings, *finding)
+	}
+}
+
+func (l *lowering) latentScopedTail(node *ast.Node) (ledger []latent.PassEntry, finding *LatentFinding) {
+	ledger = latent.OmittedPassLedger(latentPostLoweringSteps, false)
+	if os.Getenv("LATENT_TAIL") != "1" {
+		return
+	}
+	active := -1
+	stopped := false
+	defer func() {
+		if crash := recover(); crash != nil {
+			name := "snapshot"
+			if active >= 0 {
+				name = ledger[active].Name
+				ledger[active].Status = "panic"
+				ledger[active].Reason = fmt.Sprint(crash)
+			}
+			finding = &LatentFinding{Measurement: LatentMeasurementLabel, Phase: "tail", Pass: name, Kind: "panic", Where: l.program.Where(node), Reason: fmt.Sprint(crash), Text: fmt.Sprint(crash)}
+			stopped = true
+		}
+		if stopped {
+			for i, step := range latentPostLoweringSteps {
+				if step.Scoped && i > active {
+					ledger[i].Status = "not_reached_earlier_pass_stop"
+				}
+			}
+		}
+	}()
+	probe := l.latentSnapshot()
+	probe.entry = probe.program.Files()[0]
+	probe.result.Source = probe.program.Where(node)
+	for i, step := range latentPostLoweringSteps {
+		if !step.Scoped {
+			continue
+		}
+		active = i
+		start := time.Now()
+		err := probe.latentScopedStep(step.Name, node)
+		ledger[i].WallSeconds = time.Since(start).Seconds()
+		ledger[i].Status = "executed_scoped"
+		if err != nil {
+			ledger[i].Status = "stopped_scoped"
+			ledger[i].Reason = err.Error()
+			value := LatentFinding{Measurement: LatentMeasurementLabel, Phase: "tail", Pass: step.Name, Kind: "error", Where: probe.program.Where(node), Reason: err.Error(), Text: err.Error()}
+			var refused *Refused
+			var notYet *NotYet
+			if errors.As(err, &refused) {
+				value.Kind = "Refused"
+				value.Where = refused.Where
+				value.Reason = refused.What
+			}
+			if errors.As(err, &notYet) {
+				value.Kind = "NotYet"
+				value.Where = notYet.Where
+				value.Reason = notYet.What
+			}
+			stopped = true
+			return ledger, &value
+		}
+	}
+	return
+}
+
+// Calls follow the sole ordered ledger table; omitted production operations never
+// dispatch here. Missing implementations fail loudly rather than claim execution.
+func (l *lowering) latentScopedStep(name string, node *ast.Node) error {
+	switch name {
+	case "forwarderValues":
+		l.result.Main = append(l.forwarderValues, l.result.Main...)
+	case "finishClassCalls":
+		l.finishClassCalls()
+	case "finishAccessors":
+		return l.finishAccessors()
+	case "finishToPrimitive":
+		l.finishToPrimitive()
+	case "checkRecordGuardedReads":
+		return l.checkRecordGuardedReads()
+	case "flow.NormalizeAsync":
+		if err := flow.NormalizeAsync(l.result); err != nil {
+			where := node
+			var located *flow.AsyncError
+			if errors.As(err, &located) && located.Site > 0 && located.Site <= len(l.asyncSites) {
+				where = l.asyncSites[located.Site-1]
+			}
+			return &NotYet{Where: l.program.Where(where), What: err.Error()}
+		}
+	case "asyncEntrySource":
+		if l.result.AsyncEntry > 0 {
+			source := ir.SourceIdentity{Module: l.modulePath(l.entry), Declaration: []string{"module"}, Role: "async_module"}
+			l.result.Functions[l.result.AsyncEntry-1].Source = source
+			l.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(l.result.Main)}}
+		}
+	case "checkViewOptionalWrites":
+		return l.checkViewOptionalWrites()
+	case "checkHostMemberWrites":
+		return l.checkHostMemberWrites()
+	case "asyncPayloadFailures":
+		if len(l.asyncPayloadFailures) > 0 {
+			return l.asyncPayloadFailures[0]
+		}
+	case "checkViewLogicalWrites":
+		return l.checkViewLogicalWrites()
+	case "borrow":
+		borrow(l.result)
+	case "counters":
+		counters(l.result)
+	default:
+		panic("latent scoped tail: unnamed implementation " + name)
+	}
+	return nil
+}

@@ -2,16 +2,20 @@ package latent
 
 // PassStep is one production tail operation. Production is an optional AST
 // statement key for a block or rewrite rather than a call. The overlay owns the
-// single ordered table; the source guard checks it against main.
+// single ordered table; the source guard checks it against main. Scoped selects
+// the opt-in disposable observation, without changing whole-program coverage.
 type PassStep struct {
 	Name         string
 	WholeProgram bool
+	Scoped       bool
 	Production   string
 }
 
 type PassEntry struct {
-	Name   string `json:"name"`
-	Status string `json:"status"`
+	Name        string  `json:"name"`
+	Status      string  `json:"status"`
+	Reason      string  `json:"reason,omitempty"`
+	WallSeconds float64 `json:"wall_seconds,omitempty"`
 }
 
 // OmittedPassLedger records absence of measurement. It never calls a pass or

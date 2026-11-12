@@ -276,7 +276,10 @@ func (l *lowering) latentSpecWalk(node *ast.Node) {
 			}()
 			l.function, l.functionIndex = &l.result.Functions[index], index
 		} else if ast.IsStatement(node) {
-			_, _ = l.statement(node)
+			body, _ := l.statement(node)
+			if l.program.Where(node) == latentFindingOwner {
+				l.result.Main = body
+			}
 		} else if latentSpecValue(node) {
 			_, _ = l.expression(node)
 		}
@@ -355,6 +358,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 				copy.latentPiecePrepare(node)
 				copy.latentDeferredUnit(node)
 				copy.latentSpecWalk(node)
+				copy.latentFinishUnit(&unit, node)
 			}
 			latentCheckUnitRelation(program, checker, &unit)
 			record.Units = append(record.Units, unit)

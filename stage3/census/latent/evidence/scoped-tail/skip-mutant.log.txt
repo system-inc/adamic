@@ -1,0 +1,8 @@
+--- FAIL: TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg (0.17s)
+    latent_scoped_tail_test.go:34: guard child exit: exit status 1
+        --- FAIL: TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg (0.15s)
+            latent_scoped_tail_test.go:93: missing tail finding: []
+        FAIL
+FAIL
+FAIL	command-line-arguments	0.293s
+FAIL

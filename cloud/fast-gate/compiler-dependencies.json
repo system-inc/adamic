@@ -14,7 +14,7 @@
     "internal/ccjobserver": ["internal/native"],
     "cmd/adamic-admission-delta": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/compilercensus": ["cmd/adamic"],
-    "stage3/census/latent": ["internal/load", "internal/lower", "internal/ir"],
+    "stage3/census/latent": ["internal/load", "internal/lower", "internal/ir", "internal/flow"],
     "internal/acheck": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/compilerinputs": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/lower/cycleledger": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],

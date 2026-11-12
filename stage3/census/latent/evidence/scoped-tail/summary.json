@@ -1,0 +1,244 @@
+{
+  "parent": "8685b6f42c854030fe71656b7b4ce87d349ed5da",
+  "main_base": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "files": 81,
+  "units": 4566,
+  "checker_rejected": false,
+  "chunks": [
+    {
+      "group": 0,
+      "baseline_wall_seconds": 446.4044654569989,
+      "tail_wall_seconds": 456.12199470199994,
+      "added_wall_seconds": 9.71752924500106,
+      "baseline_peak_rss_kib": 891224,
+      "tail_peak_rss_kib": 985048,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 30.767780081,
+      "tail_unit_wall_seconds": 25.890405916,
+      "baseline_unit_cpu_seconds": 27.997761999999767,
+      "tail_unit_cpu_seconds": 24.706659000000116
+    },
+    {
+      "group": 1,
+      "baseline_wall_seconds": 1469.1629119769968,
+      "tail_wall_seconds": 1537.4704842549982,
+      "added_wall_seconds": 68.30757227800132,
+      "baseline_peak_rss_kib": 1795132,
+      "tail_peak_rss_kib": 1853604,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 868.225684745,
+      "tail_unit_wall_seconds": 1019.0722676620001,
+      "baseline_unit_cpu_seconds": 709.3199749999999,
+      "tail_unit_cpu_seconds": 830.2572439999992
+    },
+    {
+      "group": 2,
+      "baseline_wall_seconds": 756.3827510539995,
+      "tail_wall_seconds": 771.4858421620011,
+      "added_wall_seconds": 15.103091108001536,
+      "baseline_peak_rss_kib": 1309568,
+      "tail_peak_rss_kib": 1342600,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 469.40968736,
+      "tail_unit_wall_seconds": 494.402095944,
+      "baseline_unit_cpu_seconds": 290.999907999999,
+      "tail_unit_cpu_seconds": 320.05829900000026
+    },
+    {
+      "group": 3,
+      "baseline_wall_seconds": 666.5182455520007,
+      "tail_wall_seconds": 682.9405481739996,
+      "added_wall_seconds": 16.422302621998824,
+      "baseline_peak_rss_kib": 1819068,
+      "tail_peak_rss_kib": 1713228,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 284.512385547,
+      "tail_unit_wall_seconds": 285.976389107,
+      "baseline_unit_cpu_seconds": 306.8368220000013,
+      "tail_unit_cpu_seconds": 305.0512680000009
+    },
+    {
+      "group": 4,
+      "baseline_wall_seconds": 496.42307973399875,
+      "tail_wall_seconds": 507.3293507220005,
+      "added_wall_seconds": 10.90627098800178,
+      "baseline_peak_rss_kib": 2316552,
+      "tail_peak_rss_kib": 2460272,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 163.962192124,
+      "tail_unit_wall_seconds": 176.561290795,
+      "baseline_unit_cpu_seconds": 173.45405400000047,
+      "tail_unit_cpu_seconds": 195.51630200000108
+    },
+    {
+      "group": 5,
+      "baseline_wall_seconds": 1416.1376800360013,
+      "tail_wall_seconds": 1408.0507458870015,
+      "added_wall_seconds": -8.086934148999717,
+      "baseline_peak_rss_kib": 1510472,
+      "tail_peak_rss_kib": 1543140,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "baseline_unit_wall_seconds": 433.600248782,
+      "tail_unit_wall_seconds": 460.737283289,
+      "baseline_unit_cpu_seconds": 391.302026999999,
+      "tail_unit_cpu_seconds": 416.47427299999947
+    }
+  ],
+  "passes": {
+    "forwarderValues": {
+      "calls": 3186,
+      "clean": 3186,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.007453407999999995
+    },
+    "finishClassCalls": {
+      "calls": 3186,
+      "clean": 3186,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.010584861999999978
+    },
+    "finishAccessors": {
+      "calls": 3186,
+      "clean": 3186,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.0024705500000000084
+    },
+    "finishToPrimitive": {
+      "calls": 3186,
+      "clean": 3186,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.010242707999999979
+    },
+    "checkRecordGuardedReads": {
+      "calls": 3186,
+      "clean": 3184,
+      "stops": 2,
+      "panics": 0,
+      "wall_seconds": 0.0023031860000000005
+    },
+    "flow.NormalizeAsync": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.36970042100000017
+    },
+    "asyncEntrySource": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.0009954240000000023
+    },
+    "checkViewOptionalWrites": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.00524693800000001
+    },
+    "checkHostMemberWrites": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.0020800310000000017
+    },
+    "asyncPayloadFailures": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.0005318109999999972
+    },
+    "checkViewLogicalWrites": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.27880507199999965
+    },
+    "borrow": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.7432058720000001
+    },
+    "counters": {
+      "calls": 3184,
+      "clean": 3184,
+      "stops": 0,
+      "panics": 0,
+      "wall_seconds": 0.62574374
+    }
+  },
+  "tail_findings": [
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "pass": "checkRecordGuardedReads",
+      "phase": "tail",
+      "reason": "a union or optional field read in a program with record storage",
+      "root_kind": "",
+      "text": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20: stage 0 can't lower a union or optional field read in a program with record storage yet",
+      "unit": "/workspace/lst/adapted/src/compiler/utilities.ts:11026:1",
+      "where": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20",
+      "name": "isTypeDeclaration"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "pass": "checkRecordGuardedReads",
+      "phase": "tail",
+      "reason": "a union or optional field read in a program with record storage",
+      "root_kind": "",
+      "text": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet",
+      "unit": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1536:1",
+      "where": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60",
+      "name": "isTypeOnlyImportDeclaration"
+    }
+  ],
+  "body_differences": [],
+  "baseline_wall_seconds": 5251.029133809996,
+  "tail_wall_seconds": 5363.398965902001,
+  "baseline_peak_rss_kib": 2316552,
+  "tail_peak_rss_kib": 2460272,
+  "coverage": {
+    "body_lowered_units": 3186,
+    "whole_program_passes_measured_units": 0,
+    "scoped_tail_stops": {
+      "checkRecordGuardedReads": 2
+    },
+    "scoped_tail_pass_executions": 41402
+  },
+  "baseline_unit_wall_seconds": 2250.477978639,
+  "tail_unit_wall_seconds": 2462.639732713,
+  "added_unit_wall_seconds": 212.16175407399987,
+  "added_wall_seconds": 112.3698320920048,
+  "added_peak_rss_kib": 143720
+}

@@ -1,0 +1,194 @@
+{
+  "child_exit_code": 0,
+  "scope": "paired segmented first-error observations; body first stops remain separate from tail findings",
+  "raw_findings": {
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          444073
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilities.ts:11026:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          61936
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1536:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          444073
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilities.ts:11026:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          61936
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1536:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [],
+    "lowered": [],
+    "moved": [],
+    "totals": {
+      "before": {
+        "NotYet": 504,
+        "Refused": 4382
+      },
+      "after": {
+        "NotYet": 506,
+        "Refused": 4382
+      }
+    }
+  },
+  "distinct_reads": {
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          444073
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilities.ts:11026:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          61936
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1536:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+          444073
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilities.ts:11026:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilities.ts:11038:20"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          61936
+        ],
+        "finding": {
+          "depth": 0,
+          "kind": "NotYet",
+          "measurement": "measured on a checker-clean entry-root program",
+          "pass": "checkRecordGuardedReads",
+          "phase": "tail",
+          "reason": "a union or optional field read in a program with record storage",
+          "root_kind": "",
+          "text": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60: stage 0 can't lower a union or optional field read in a program with record storage yet",
+          "unit": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1536:1",
+          "where": "/workspace/lst/adapted/src/compiler/utilitiesPublic.ts:1539:60"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [],
+    "lowered": [],
+    "moved": [],
+    "totals": {
+      "before": {
+        "NotYet": 502,
+        "Refused": 4187
+      },
+      "after": {
+        "NotYet": 504,
+        "Refused": 4187
+      }
+    }
+  }
+}

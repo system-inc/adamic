@@ -1,0 +1,8 @@
+--- FAIL: TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg (0.28s)
+    latent_scoped_tail_test.go:34: guard child exit: exit status 1
+        --- FAIL: TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg (0.23s)
+            latent_scoped_tail_test.go:107: tail copied mutations into unit/base state
+        FAIL
+FAIL
+FAIL	command-line-arguments	0.357s
+FAIL
