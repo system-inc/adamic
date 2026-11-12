@@ -4,6 +4,14 @@ from stream_records import census_records
 
 
 class LatentRelationStreamRecordsTests(unittest.TestCase):
+    def test_pass_ledger_survives_stream_and_eligibility_pb47(self):
+        from unit_status import eligibility_units
+        old = {'where': 'only.a:1:1', 'status': 'attempted'}
+        new = dict(old, pass_ledger=[{'name': 'some-step', 'status': 'not_run_scoped'}])
+        file = {'file': 'only.a', 'units': [new], 'findings': []}
+        self.assertEqual(census_records([{'status': 'measurement'}, file])[1]['units'][0], new)
+        self.assertEqual(eligibility_units([old]), eligibility_units([new]))
+
     def test_partial_header_has_no_invented_end_answer(self):
         header = {'status': 'measurement', 'diagnostics': ['retained']}
         self.assertEqual(census_records([header]), [header])

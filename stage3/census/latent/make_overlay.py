@@ -63,6 +63,7 @@ overlay('internal/lower/latent_relation_overflow.go', (territory / 'relation_ove
 # Relation stream test templates belong to the tool package in the overlay.
 for template in sorted(territory.glob('relation_*_test.go.txt')):
     overlay('stage3/census/latent/tool/' + template.name.removesuffix('.txt'), template.read_text())
+overlay('internal/lower/latent_pass_ledger.go', (territory / 'pass_ledger.go.txt').read_text())
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
 # Execute the deferred-probe guard against main's real preflight and state copier.

@@ -121,6 +121,8 @@ class CompilerSelectionTests(unittest.TestCase):
         source = Path(__file__).resolve().parent
         for name in ('report.py', 'owners.json', 'box.py', 'node_readiness.py'):
             self.write('stage3/meter/' + name, (source / name).read_text())
+        for name in ('pass_ledger.py', 'pass_ledger.go.txt'):
+            self.write('stage3/census/latent/' + name, (source.parent / 'census/latent' / name).read_text())
         script = Path(os.environ.get('METER_SCRIPT_UNDER_TEST', source / 'twice-daily.sh'))
         self.write('stage3/meter/twice-daily.sh', script.read_text())
         self.write('go.mod', 'module meterprobe\n\ngo 1.21\n')
