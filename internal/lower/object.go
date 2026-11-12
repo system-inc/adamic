@@ -2005,6 +2005,12 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
+	if l.result.Locals[local].NestedFunction != 0 {
+		// A nested overload set held as `{ f }` is a value as `f` written alone is (#z5d0jye).
+		if err := l.overloadSetValueStop(property, symbol); err != nil {
+			return nil, err
+		}
+	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
 	if censusFieldSlotless(of) {
