@@ -852,6 +852,12 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.functionBind(node); handled {
 			return value, err
 		}
+		if call, handled, err := l.hostMemberCall(node); handled {
+			if err == nil && call.Type() == 0 {
+				return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: call}}, Result: ir.Undefined{}}, nil
+			}
+			return call, err
+		}
 		if value, handled, err := l.promiseValue(node); handled {
 			return value, err
 		}

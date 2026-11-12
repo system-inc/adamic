@@ -8,8 +8,12 @@ import (
 
 // Bind arguments enter a normal factory call before any closure is allocated.
 // Its captured parameter cells own the snapshots and participate in the cycle proof.
-// thisArg is captured but never handed to a this body. This is sound only while
-// expression.go stops this outside methods; lifting that stop owes a receiver pass here.
+// bind's thisArg is captured but never handed to a this body: a function expression's
+// this stays stopped, bindReceiverRule stops a method bind with a different receiver,
+// and a saved literal method's bind stops at checkHostMemberValues' closed list. The
+// bound call does hand thisArg to a target that takes a this (adamic_bound_closure_call,
+// adamicBoundCall), and hostMemberCall's f.call(t, ...) rides it to hand t to a
+// literal's method, under the layout rule (#fj0vqtf wave 2).
 func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)

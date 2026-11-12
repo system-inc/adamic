@@ -35,10 +35,18 @@ type hostMemberWrite struct {
 // A class's own method, a library's or a host's, a logical or compound assignment, and a write used as a
 // value are untouched by this and stay refused where they were.
 func (l *lowering) hostMemberWritable(target *ast.Node) bool {
-	if hostMemberAssignment(target) == nil {
+	return hostMemberAssignment(target) != nil && l.hostMemberDeclared(target)
+}
+
+// hostMemberDeclared says whether node, a property access by a name, never ?., names a method member every
+// declaration of which is a method signature of an interface or a type literal the program wrote, never
+// TypeScript's library, Node's types or the prelude, and never optional: the member a write
+// (hostMemberWritable) or a read as a value (hostMemberReadable) defers its stop for.
+func (l *lowering) hostMemberDeclared(node *ast.Node) bool {
+	if node.Kind != ast.KindPropertyAccessExpression || node.AsPropertyAccessExpression().QuestionDotToken != nil || !ast.IsIdentifier(node.Name()) {
 		return false
 	}
-	member := l.checker.GetSymbolAtLocation(target)
+	member := l.checker.GetSymbolAtLocation(node)
 	if member == nil || member.Flags&ast.SymbolFlagsMethod == 0 || member.Flags&ast.SymbolFlagsOptional != 0 {
 		return false
 	}
@@ -93,6 +101,9 @@ func (l *lowering) deferHostMemberWrite(target *ast.Node, stop error) {
 		}
 	}
 	l.hostMemberWrites = append(l.hostMemberWrites, hostMemberWrite{target: target, value: hostMemberAssignment(target).AsBinaryExpression().Right, stop: stop})
+	if l.hostMemberFirst == nil {
+		l.hostMemberFirst = stop
+	}
 }
 
 // hostMemberStored marks the write at target as lowered to the store at site. A write lowered again, as a
@@ -106,14 +117,15 @@ func (l *lowering) hostMemberStored(target *ast.Node, site int) {
 }
 
 // hostMemberPending is the error a lowering that stops before checkHostMemberWrites has judged its writes
-// returns: the first deferred write's stop where one was deferred, since main stops there, before
-// whatever stopped this lowering later (a refusal later in refuse's walk, a stop in a later pass), and
-// err otherwise. Once checkHostMemberWrites has judged them, a later stop is the program's own.
+// and its values returns: the first deferred stop, a write's or a value read's (hostMemberFirst), where
+// one was deferred, since main stops there, before whatever stopped this lowering later (a refusal later
+// in refuse's walk, a stop in a later pass), and err otherwise. Once checkHostMemberWrites has judged
+// them, a later stop is the program's own.
 func (l *lowering) hostMemberPending(err error) error {
-	if err == nil || l.hostMemberJudged || len(l.hostMemberWrites) == 0 {
+	if err == nil || l.hostMemberJudged || l.hostMemberFirst == nil {
 		return err
 	}
-	return l.hostMemberWrites[0].stop
+	return l.hostMemberFirst
 }
 
 // checkHostMemberWrites judges each write hostMemberWritable let through, on the shared allocation graph
@@ -141,7 +153,7 @@ func (l *lowering) hostMemberPending(err error) error {
 // NotYet at the write in its own words, since that's the one stop main never reaches.
 func (l *lowering) checkHostMemberWrites() error {
 	l.hostMemberJudged = true
-	if len(l.hostMemberWrites) == 0 {
+	if len(l.hostMemberWrites) == 0 && len(l.hostMemberValues) == 0 {
 		return nil
 	}
 	assignAllocationSites(l.result)
@@ -165,14 +177,16 @@ func (l *lowering) checkHostMemberWrites() error {
 			return write.stop
 		}
 		reaches := graph.ReachingAllocations(store.Object)
-		if err := l.hostMemberReach(write, reaches, graph.projectionIndex()); err != nil {
+		if err := l.hostMemberReach(write.stop, reaches, graph.projectionIndex()); err != nil {
 			return err
 		}
 		if err := l.hostMemberLiterals(write, store, reaches, graph.projectionIndex()); err != nil {
 			return err
 		}
 	}
-	return nil
+	// The values read off the same literals are judged on the same graph, once every write is
+	// (host_member_value.go, wave 2).
+	return l.checkHostMemberValues(graph, stores)
 }
 
 // hostMemberWriting is how hostMemberHolder's stop begins: the member and the receiver it's written
@@ -181,28 +195,29 @@ func (l *lowering) hostMemberWriting(write hostMemberWrite, store ir.SetProperty
 	return "a write to method " + store.Name + " of " + sourceExpression(write.target.AsPropertyAccessExpression().Expression)
 }
 
-// hostMemberReach is checkHostMemberWrites' first rule: every allocation reaching the receiver is a plain
-// program object literal, and an unknown reach fails closed. Each road it stops ends in main's stop.
-func (l *lowering) hostMemberReach(write hostMemberWrite, reaches ir.AllocationSet, index *allocationProjection) error {
+// hostMemberReach is checkHostMemberWrites' first rule, and checkHostMemberValues' too: every allocation
+// reaching the receiver is a plain program object literal, and an unknown reach fails closed. Each road it
+// stops ends in stop, main's stop at the write or the value read.
+func (l *lowering) hostMemberReach(stop error, reaches ir.AllocationSet, index *allocationProjection) error {
 	if reaches.Unknown {
 		// An object not known to be one of the program's literals: a closure's parameter, an opaque
 		// call's result, a host value.
-		return write.stop
+		return stop
 	}
 	for _, site := range reaches.Sites {
 		literal, isLiteral := index.records[site]
 		switch {
 		case !isLiteral:
 			// Something other than an object literal.
-			return write.stop
+			return stop
 		case literal.Class > 0 && literal.Class <= len(l.result.Classes) && l.result.Classes[literal.Class-1].Literal:
 			// An object literal with an accessor, whose setter a write may run.
-			return write.stop
+			return stop
 		case literal.Class != 0:
 			// An instance of a class, whose methods aren't fields of its own.
-			return write.stop
+			return stop
 		case literal.Record:
-			return write.stop
+			return stop
 		}
 	}
 	return nil
@@ -222,12 +237,7 @@ func (l *lowering) hostMemberLiterals(write hostMemberWrite, store ir.SetPropert
 			// Its member may be the spread source's, copied.
 			return write.stop
 		}
-		var held ir.Expression
-		for _, field := range literal.Fields {
-			if field.Name == store.Name && !field.Absent && !field.Uninitialized {
-				held = field.Value
-			}
-		}
+		held := hostMemberField(literal, store.Name)
 		if held == nil {
 			// The literal doesn't hold the member as a field of its own.
 			return write.stop
@@ -248,6 +258,18 @@ func (l *lowering) hostMemberLiterals(write hostMemberWrite, store ir.SetPropert
 		}
 	}
 	return nil
+}
+
+// hostMemberField is the value literal holds as its own field name, set and present, or nil where it holds
+// none.
+func hostMemberField(literal ir.ObjectLiteral, name string) ir.Expression {
+	var held ir.Expression
+	for _, field := range literal.Fields {
+		if field.Name == name && !field.Absent && !field.Uninitialized {
+			held = field.Value
+		}
+	}
+	return held
 }
 
 // hostMemberLiteralNode is the object literal a literal's field value was written in, found through the

@@ -506,8 +506,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if l.inheritedLibraryMember(node) && node != l.handNext && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), errorClasses...) && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
 	}
-	if err := l.erasedLiteralMethod(node); err != nil {
-		return nil, err
+	// A host member read as a value, deferred to checkHostMemberValues, which holds every use of the value
+	// to a closed list that never calls a literal's method without its this (host_member_value.go).
+	hostValue := l.hostMemberValueDeferred(node)
+	if !hostValue {
+		if err := l.erasedLiteralMethod(node); err != nil {
+			return nil, err
+		}
 	}
 	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
@@ -534,6 +539,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if hostValue {
+		l.hostMemberValueRead(node, object)
 	}
 	if object.Type() == ir.Closure && name == "length" && l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
 		return ir.FunctionLength{Function: object, Optional: access.QuestionDotToken != nil}, nil
