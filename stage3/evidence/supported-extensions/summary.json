@@ -1,42 +1,617 @@
 {
-  "status": "STOPPED: main advanced a second time with lowering changes explicitly targeting getSupportedExtensions",
-  "allRequestedProofsComplete": false,
-  "implementationCommit": null,
-  "implementationPushed": false,
-  "draftPatch": "draft.patch",
-  "measuredBase": "87028b0889b4431a08c31ca70bc294fa0fd746f5",
-  "currentMainAtStop": "abebb00bf6312fb92798095515fbee86b8ed78e3",
-  "passedOnMeasuredBase": [
-    "apply-after",
-    "adapter-contract",
-    "replay-full-apply",
-    "stock-before",
-    "stock-candidate",
-    "stock-tsc-cli-before",
-    "stock-tsc-cli-after",
-    "types-main-before",
-    "types-main-after",
-    "generate-shards-final",
-    "prepare-lane-product",
-    "build-before",
-    "build-before-tests",
-    "build-after",
-    "build-after-tests",
-    "build-comparison",
-    "census-before",
-    "census-after",
-    "census-mutant",
-    "verify-census-delta",
-    "probe-main-upcast"
-  ],
-  "expectedRefusedControl": {
-    "command": [
-      "/workspace/scratch/supported-extensions/adamic-main",
-      "js",
-      "/workspace/scratch/supported-extensions/probe-mutant.ts"
+  "status": "PASS",
+  "implementationCommit": "90daeca3ba669cd4e1da154b984a201a83ad95e2",
+  "implementationBranch": "typescript/supported-extensions-cast",
+  "compilerBase": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+  "allRequestedProofsPassed": true,
+  "passedCommands": {
+    "build-adamic": {
+      "command": [
+        "go",
+        "build",
+        "-o",
+        "/workspace/scratch/supported-extensions-rerun/adamic",
+        "./cmd/adamic"
+      ],
+      "child_exit_code": 0,
+      "seconds": 38.03744712699972
+    },
+    "generate-overlay": {
+      "command": [
+        "python3",
+        "/workspace/scratch/supported-extensions-rerun/build-overlay.py"
+      ],
+      "child_exit_code": 0,
+      "seconds": 3.1828444379998473
+    },
+    "build-census": {
+      "command": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "-overlay=/workspace/scratch/supported-extensions-rerun/latent-overlay/overlay.json",
+        "-o",
+        "/workspace/scratch/supported-extensions-rerun/latent",
+        "./stage3/census/latent/tool"
+      ],
+      "child_exit_code": 0,
+      "seconds": 45.76881993000006
+    },
+    "apply-before": {
+      "command": [
+        "stage3/apply.sh",
+        "/workspace/scratch/supported-extensions-rerun-full-before"
+      ],
+      "child_exit_code": 0,
+      "seconds": 37.16685260600025
+    },
+    "apply-after": {
+      "command": [
+        "stage3/apply.sh",
+        "--build-product",
+        "/workspace/scratch/supported-extensions-rerun-after"
+      ],
+      "child_exit_code": 0,
+      "seconds": 948.6554254050006
+    },
+    "types-before": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/adamic",
+        "types",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/binder.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builder.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderState.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/checker.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/core.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/corePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/debug.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/emitter.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/hostErrors.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/parser.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/path.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/performanceCore.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/program.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/scanner.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/semver.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/sourcemap.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/sys.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tracing.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformer.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tsbuild.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/types.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watch.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watchPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watchUtilities.ts"
+      ],
+      "child_exit_code": 0,
+      "seconds": 14.258751459999985
+    },
+    "types-after": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/adamic",
+        "types",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/binder.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builder.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderState.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/checker.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/core.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/corePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/debug.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/emitter.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/hostErrors.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/parser.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/path.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/performanceCore.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/program.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/scanner.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/semver.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/sourcemap.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/sys.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tracing.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformer.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tsbuild.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/types.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watch.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watchPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watchUtilities.ts"
+      ],
+      "child_exit_code": 0,
+      "seconds": 11.967498197000168
+    },
+    "stock-tsc-before": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+        "--ignoreConfig",
+        "--strict",
+        "--noUncheckedIndexedAccess",
+        "--exactOptionalPropertyTypes",
+        "--verbatimModuleSyntax",
+        "--allowImportingTsExtensions",
+        "--noEmit",
+        "--module",
+        "esnext",
+        "--moduleDetection",
+        "force",
+        "--moduleResolution",
+        "bundler",
+        "--target",
+        "es2024",
+        "--lib",
+        "es2024",
+        "--types",
+        "node",
+        "--typeRoots",
+        "/workspace/adamic/stage3/api/node_modules/@types",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/binder.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builder.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderState.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/checker.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/core.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/corePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/debug.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/emitter.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/hostErrors.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/parser.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/path.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/performanceCore.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/program.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/scanner.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/semver.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/sourcemap.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/sys.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tracing.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformer.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tsbuild.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/types.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watch.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watchPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler/watchUtilities.ts"
+      ],
+      "child_exit_code": 0,
+      "seconds": 32.719270681000125
+    },
+    "stock-tsc-after": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/api/node_modules/typescript/bin/tsc",
+        "--ignoreConfig",
+        "--strict",
+        "--noUncheckedIndexedAccess",
+        "--exactOptionalPropertyTypes",
+        "--verbatimModuleSyntax",
+        "--allowImportingTsExtensions",
+        "--noEmit",
+        "--module",
+        "esnext",
+        "--moduleDetection",
+        "force",
+        "--moduleResolution",
+        "bundler",
+        "--target",
+        "es2024",
+        "--lib",
+        "es2024",
+        "--types",
+        "node",
+        "--typeRoots",
+        "/workspace/adamic/stage3/api/node_modules/@types",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/binder.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builder.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderState.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/checker.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/core.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/corePublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/debug.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/emitter.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/hostErrors.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/parser.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/path.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/performance.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/performanceCore.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/program.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/scanner.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/semver.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/sourcemap.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/sys.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tracing.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformer.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tsbuild.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/types.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/utilities.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watch.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watchPublic.ts",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler/watchUtilities.ts"
+      ],
+      "child_exit_code": 0,
+      "seconds": 24.406669711000177
+    },
+    "adapter-contract": {
+      "command": [
+        "node",
+        "stage3/adapt/99-correctness-supported-extensions/contract.cjs",
+        "/workspace/adamic/stage3/adapt/99-correctness-supported-extensions/adapt.cjs",
+        "/workspace/scratch/supported-extensions-rerun-before"
+      ],
+      "child_exit_code": 0,
+      "seconds": 14.755545277999772
+    },
+    "generate-shards": {
+      "command": [
+        "python3",
+        "stage3/lane/generate_shards.py",
+        "--check"
+      ],
+      "child_exit_code": 0,
+      "seconds": 0.7620969670006161
+    },
+    "probe-upcast": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/adamic",
+        "js",
+        "/workspace/scratch/supported-extensions-rerun/probe.ts"
+      ],
+      "child_exit_code": 0,
+      "seconds": 0.5330843279998589
+    },
+    "build-before": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/typescript/node_modules/hereby/bin/hereby.js",
+        "local"
+      ],
+      "child_exit_code": 0,
+      "seconds": 67.55989262799994
+    },
+    "build-before-tests": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/typescript/node_modules/hereby/bin/hereby.js",
+        "tests"
+      ],
+      "child_exit_code": 0,
+      "seconds": 25.602025383000182
+    },
+    "build-after": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/typescript/node_modules/hereby/bin/hereby.js",
+        "local"
+      ],
+      "child_exit_code": 0,
+      "seconds": 57.6879630100002
+    },
+    "build-after-tests": {
+      "command": [
+        "node",
+        "/workspace/adamic/stage3/typescript/node_modules/hereby/bin/hereby.js",
+        "tests"
+      ],
+      "child_exit_code": 0,
+      "seconds": 19.976227682999706
+    },
+    "replay-full-apply": {
+      "command": [
+        "node",
+        "stage3/adapt/99-correctness-supported-extensions/adapt.cjs",
+        "/workspace/scratch/supported-extensions-rerun-after"
+      ],
+      "child_exit_code": 0,
+      "seconds": 5.150463213999501
+    },
+    "prepare-lane-product": {
+      "command": [
+        "go",
+        "test",
+        "-v",
+        "-count=1",
+        "-timeout",
+        "27m",
+        "./stage3/lane/adaptedtree",
+        "-run",
+        "^TestProduct_Stage3AdaptedTree$"
+      ],
+      "child_exit_code": 0,
+      "seconds": 7.802236575000279
+    },
+    "build-comparison": {
+      "command": [
+        "node",
+        "/workspace/scratch/supported-extensions-rerun/compare-build.cjs",
+        "/workspace/scratch/supported-extensions-rerun-full-before",
+        "/workspace/scratch/supported-extensions-rerun-after",
+        "/workspace/scratch/supported-extensions-rerun-candidate"
+      ],
+      "child_exit_code": 0,
+      "seconds": 1.1828207360003944
+    },
+    "census-before": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/latent",
+        "/workspace/scratch/supported-extensions-rerun-before/src/compiler",
+        "/workspace/scratch/supported-extensions-rerun/census-before.jsonl"
+      ],
+      "child_exit_code": 0,
+      "seconds": 1106.1678158450004
+    },
+    "census-after": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/latent",
+        "/workspace/scratch/supported-extensions-rerun-candidate/src/compiler",
+        "/workspace/scratch/supported-extensions-rerun/census-after.jsonl"
+      ],
+      "child_exit_code": 0,
+      "seconds": 1117.0190623010003
+    },
+    "census-mutant": {
+      "command": [
+        "/workspace/scratch/supported-extensions-rerun/latent",
+        "/workspace/scratch/supported-extensions-rerun-mutant/src/compiler",
+        "/workspace/scratch/supported-extensions-rerun/census-mutant.jsonl"
+      ],
+      "child_exit_code": 0,
+      "seconds": 1110.2508100610003
+    },
+    "verify-census": {
+      "command": [
+        "python3",
+        "/workspace/scratch/supported-extensions-rerun/compare-census.py"
+      ],
+      "child_exit_code": 0,
+      "seconds": 0.26632400900052744
+    },
+    "file000-isolated": {
+      "command": [
+        "python3",
+        "-E",
+        "-S",
+        "-B",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-000",
+        "/workspace/scratch/supported-extensions-rerun/file000-isolated"
+      ],
+      "child_exit_code": 0,
+      "seconds": 14.73689385599937
+    },
+    "lane-whole": {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-parallel=2",
+        "-timeout",
+        "27m",
+        "./stage3/lane"
+      ],
+      "child_exit_code": 0,
+      "seconds": 1554.7287874330004
+    }
+  },
+  "sourceComparison": {
+    "files": 747,
+    "changed": [
+      "compiler/utilities.ts"
     ],
-    "child_exit_code": 1,
-    "seconds": 0.17433043500000167
+    "freshFullApplyMatchesMeasuredCandidate": true
   },
   "outputComparison": {
     "changedSources": [
@@ -130,7 +705,7 @@
     "measurements": {
       "before": {
         "units": 933,
-        "events": 1385,
+        "events": 1383,
         "statuses": {
           "attempted": 867,
           "deferred_generic_instantiation": 66
@@ -138,7 +713,7 @@
       },
       "after": {
         "units": 933,
-        "events": 1384,
+        "events": 1382,
         "statuses": {
           "attempted": 867,
           "deferred_generic_instantiation": 66
@@ -146,7 +721,7 @@
       },
       "mutant": {
         "units": 933,
-        "events": 1385,
+        "events": 1383,
         "statuses": {
           "attempted": 867,
           "deferred_generic_instantiation": 66
@@ -154,30 +729,75 @@
       }
     }
   },
-  "sourceComparison": {
-    "files": 747,
-    "changed": [
-      "compiler/utilities.ts"
-    ],
-    "fullApplyMatchesMeasuredCandidate": true
-  },
   "lane": {
-    "status": "incomplete; deliberately stopped for baseline invalidation",
-    "child_exit_code": -15,
-    "seconds": 285.4128788789999,
-    "shardActions": {
+    "shards": {
       "run": 398,
-      "output": 1056,
+      "output": 1990,
       "pause": 398,
-      "cont": 88,
-      "pass": 84
+      "cont": 398,
+      "pass": 398
     },
-    "failuresReportedBeforeStop": []
+    "failures": [],
+    "packageVerdict": "pass",
+    "child_exit_code": 0,
+    "seconds": 1554.7287874330004,
+    "parallelism": 2
   },
-  "completedCensusSeconds": {
-    "before": 1234.538538719,
-    "after": 1260.9113143650002,
-    "mutant": 1275.1080817769998
+  "initialLaneAttempt": {
+    "parallelism": 4,
+    "child_exit_code": 1,
+    "shardsPassed": 397,
+    "shardsFailed": 1,
+    "failedShard": "TestShard_Stage3LaneFile000",
+    "failure": "relationComplexityError.ts before-all hook",
+    "rawLog": "lane-whole-parallel4.log.gz"
+  },
+  "isolatedShard": {
+    "passed": 6,
+    "failed": 0,
+    "seconds": 14.590719200999956,
+    "limitsUnchanged": true
+  },
+  "expectedRefusedControl": {
+    "command": [
+      "/workspace/scratch/supported-extensions-rerun/adamic",
+      "js",
+      "/workspace/scratch/supported-extensions-rerun/probe-mutant.ts"
+    ],
+    "child_exit_code": 1,
+    "seconds": 0.32413710899982107
+  },
+  "laterMain": {
+    "frozenBase": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+    "observedMain": "e42d56d2bf61ea8bc5a253597e89687494c97e8d",
+    "changedRestartPaths": [
+      "stage3/adapt/99-correctness-path-from-components/README.md",
+      "stage3/adapt/99-correctness-path-from-components/adapt.cjs",
+      "stage3/adapt/99-correctness-path-from-components/contract.cjs",
+      "stage3/adapt/99-correctness-path-from-components/owners.json"
+    ],
+    "laneFinishedOnStartedTip": true,
+    "laterAdapterOwner": "getPathFromPathComponents",
+    "laterAdapterFile": "src/compiler/path.ts",
+    "supportedExtensionsOwnerUnchanged": true,
+    "proofClaimLimitedToFrozenBase": true
+  },
+  "laterAdapterComposition": {
+    "ordersByteIdentical": true,
+    "bothReplayWithZeroEdits": true,
+    "files": [
+      {
+        "name": "path.ts",
+        "bytes": 44406,
+        "sha256": "268ea3667c8039e3971becb083f9b8575c0269b9253ef0d25be313d159a5f5bb"
+      },
+      {
+        "name": "utilities.ts",
+        "bytes": 515385,
+        "sha256": "e5bd0c0a49b3118b8e8fd2c0373c80e32b9607b85379eca38c196b6b71fc38bf"
+      }
+    ],
+    "doesNotClaimNewTipCensus": true
   },
   "processLimitSeconds": 1700,
   "goEvidenceSuffix": ".go.txt"

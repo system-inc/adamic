@@ -1,0 +1,28 @@
+{
+  "compilerBase": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+  "mainAdvancePolicy": "Keep this baseline through lane completion unless utilities.ts or stage3/adapt changes.",
+  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "checkerSource": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "goVersion": "go version go1.27.1 linux/amd64",
+  "nodeVersion": "v24.19.0",
+  "compilerProductionSourceUnchanged": true,
+  "flatBuiltinsInferredType": "Extension[]",
+  "binaries": {
+    "adamic": "9a20af59a72868c08614247e4f8d828754ff2e5aa6ebf3e0739ec99aca26c5a3",
+    "latent": "b5085ea89c2375a96e1dd0fcae8df7b951801e7cc976df5196e7b603ec424efb"
+  },
+  "adapterFiles": {
+    "README.md": "1022b5af3e611ec9fff40482f6690351909741eb4c6e79988eb972006776417d",
+    "adapt.cjs": "591ee4e68e8c06d7b7d0a1839e1ba7955974da0dafdc67a36355b8aeea260105",
+    "contract.cjs": "bb72ebe22ae2b9a076feca008d43a0b64a1e5764b488c1d68c4e502aee8bab51",
+    "owner.json": "7c12cc881e1a5b6c9ed9cc6a978bc51bdaa4ff19ea1885ee38e25cf34ee67361"
+  },
+  "processLimitSeconds": 1700,
+  "censusEnvironment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "each tree/src/compiler/utilities.ts"
+  },
+  "goEvidenceSuffix": ".go.txt"
+}

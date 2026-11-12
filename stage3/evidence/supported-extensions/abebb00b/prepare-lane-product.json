@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-v",
+    "-count=1",
+    "-timeout",
+    "27m",
+    "./stage3/lane/adaptedtree",
+    "-run",
+    "^TestProduct_Stage3AdaptedTree$"
+  ],
+  "child_exit_code": 0,
+  "seconds": 7.802236575000279
+}

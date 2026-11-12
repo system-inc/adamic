@@ -1,0 +1,15 @@
+{
+  "frozenBase": "abebb00bf6312fb92798095515fbee86b8ed78e3",
+  "observedMain": "e42d56d2bf61ea8bc5a253597e89687494c97e8d",
+  "changedRestartPaths": [
+    "stage3/adapt/99-correctness-path-from-components/README.md",
+    "stage3/adapt/99-correctness-path-from-components/adapt.cjs",
+    "stage3/adapt/99-correctness-path-from-components/contract.cjs",
+    "stage3/adapt/99-correctness-path-from-components/owners.json"
+  ],
+  "laneFinishedOnStartedTip": true,
+  "laterAdapterOwner": "getPathFromPathComponents",
+  "laterAdapterFile": "src/compiler/path.ts",
+  "supportedExtensionsOwnerUnchanged": true,
+  "proofClaimLimitedToFrozenBase": true
+}

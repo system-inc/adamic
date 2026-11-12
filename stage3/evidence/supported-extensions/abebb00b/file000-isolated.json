@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-E",
+    "-S",
+    "-B",
+    "stage3/lane/shard.py",
+    "stage3-lane-file-000",
+    "/workspace/scratch/supported-extensions-rerun/file000-isolated"
+  ],
+  "child_exit_code": 0,
+  "seconds": 14.73689385599937
+}

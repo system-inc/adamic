@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-parallel=2",
+    "-timeout",
+    "27m",
+    "./stage3/lane"
+  ],
+  "child_exit_code": 0,
+  "seconds": 1554.7287874330004
+}
