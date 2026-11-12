@@ -1,0 +1,8 @@
+// A library-raised TypeError has no enumerable own keys (#z4a9p9e).
+const target = { x: 1 };
+Object.freeze(target);
+try {
+	target.x = 2;
+} catch (error) {
+	if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>');
+}
