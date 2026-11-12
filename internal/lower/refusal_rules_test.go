@@ -35,9 +35,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",
 		"400 phantomRefusal",
-		// phantomArrayPresenceRefusal judges an observation on the brand before lowering reads the value
-		// as its base array, so b09's union `in` hears it, not inProperty's union refusal.
-		"450 phantomArrayPresenceRefusal",
+		// phantomPresenceRefusal judges an observation on the brand before lowering reads the value
+		// as its base, so phantom object and array `in` tests stop before narrowing can trust absence.
+		"450 phantomPresenceRefusal",
 		"500 typePredicateRefusal",
 		"600 enumerationIndexedWriteRefusal",
 		"700 enumerationDescriptorRefusal",
