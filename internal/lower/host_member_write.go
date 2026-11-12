@@ -156,7 +156,7 @@ func (l *lowering) checkHostMemberWrites() error {
 	for _, function := range l.result.Functions {
 		walk(function.Body, inspect)
 	}
-	graph := newAllocationFlowGraph(l.result)
+	graph := l.flowGraph(l.result)
 	for _, write := range l.hostMemberWrites {
 		// A write lowering never stored, as setProperty wrote it (another road lowered it, or a retried
 		// lowering left it out), or a store a later pass reshaped, can't be judged, so it fails closed.
