@@ -17,26 +17,34 @@ import (
 // phantomBase. What's left on both sides must be the same type, at the top or as the elements of arrays
 // of the same mutability, and nothing else may differ.
 //
-// An element brand that differs needs the returned array fresh (overloadReturnsFreshArray): otherwise one
-// array is held both as string[] and as Path[], and a plain string pushed through the first reads back
-// through the second as a Path no mint made, the pairing invariance refuses everywhere else (Compiler's
-// condition). A readonly promise doesn't lift that, since the alias that writes is another one.
+// Any array brand that differs, on the array or on its elements, needs the returned array fresh
+// (overloadReturnsFreshArray): otherwise one array is held both as string[] and as Path[], and a plain
+// string pushed through the first reads back through the second as a Path no mint made, or an alias's
+// push breaks the sortedness a Sorted brand claims; that's the pairing invariance refuses everywhere else
+// (Compiler's condition, read by Adamic as any array brand). A readonly promise doesn't lift it, since
+// the alias that writes is another one.
 func (l *lowering) overloadPhantomResult(implementation *ast.Node, produced, promised *checker.Type) bool {
 	from, to := l.phantomStripped(produced), l.phantomStripped(promised)
 	if from == nil || to == nil {
 		return false
 	}
 	if from.Id() == to.Id() {
-		// Only a brand on the value itself differs, if anything does.
+		if l.isArrayType(from) {
+			// Only the array's own brand differs. A brand like Sorted is a claim about the array itself,
+			// which an alias that pushes breaks as it breaks an element brand, so it needs the array fresh
+			// too (Adamic's and Compiler's reading on efa2009c, Language's Sorted program).
+			return l.overloadReturnsFreshArray(implementation, map[*ast.Node]bool{})
+		}
+		// Only a primitive brand on the value itself differs, if anything does.
 		return true
 	}
-	if !l.checker.IsArrayType(from) || !l.checker.IsArrayType(to) || l.isLibraryType(from, "ReadonlyArray") != l.isLibraryType(to, "ReadonlyArray") {
+	if !l.isArrayType(from) || !l.isArrayType(to) || l.isLibraryType(from, "ReadonlyArray") != l.isLibraryType(to, "ReadonlyArray") {
 		return false
 	}
-	fromElement, toElement := l.checker.GetElementTypeOfArrayType(from), l.checker.GetElementTypeOfArrayType(to)
+	fromElement, toElement := l.elementTypeOfArray(from), l.elementTypeOfArray(to)
 	if fromElement.Id() == toElement.Id() {
-		// Only the array's own brand differs.
-		return true
+		// Two array types with one element and one mutability are one type, so this is the case above.
+		return l.overloadReturnsFreshArray(implementation, map[*ast.Node]bool{})
 	}
 	strippedFrom, strippedTo := l.phantomStripped(fromElement), l.phantomStripped(toElement)
 	if strippedFrom == nil || strippedTo == nil || strippedFrom.Id() != strippedTo.Id() || strippedFrom.Flags()&brandablePrimitiveFlags == 0 {
@@ -45,8 +53,10 @@ func (l *lowering) overloadPhantomResult(implementation *ast.Node, produced, pro
 	return l.overloadReturnsFreshArray(implementation, map[*ast.Node]bool{})
 }
 
-// phantomStripped is t with its phantom brands taken off: every phantomExtension to its base, then a
-// primitive brand to its primitive. nil when t can't be read.
+// phantomStripped is t with its phantom brands taken off: every phantomExtension of an array to its base,
+// then a primitive brand to its primitive. nil when t can't be read. An extension of any other base stays,
+// since :32's presence refusals answer only for an array base (arrayBrandIn), so `in` on an object brand
+// would lower where Node answers false (Language's must on efa2009c).
 func (l *lowering) phantomStripped(t *checker.Type) *checker.Type {
 	if t == nil {
 		return nil
@@ -57,7 +67,7 @@ func (l *lowering) phantomStripped(t *checker.Type) *checker.Type {
 			return nil
 		}
 		base, _ := l.phantomExtension(t)
-		if base == nil {
+		if base == nil || !l.isArrayType(base) {
 			break
 		}
 		t = l.concrete(base)

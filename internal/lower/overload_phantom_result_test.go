@@ -8,9 +8,11 @@ import (
 
 // overloadPhantomPrelude is tsc's Path and PathPathComponents as adaptation 40 shapes them: a phantom
 // string brand, and an Array<Path> extension whose one member is a phantom brand (path.ts:457 as an
-// interface, #z5d0jye step 3 (a)).
+// interface, #z5d0jye step 3 (a)). The extension takes its element as a defaulted type argument, so a
+// reference to it has its base's arguments and is held as its base (unbranded.go): a non-generic
+// `extends Array<Path>` has none of its own, which lowering reads elements from.
 const overloadPhantomPrelude = `type Path = string & { __pathBrand: undefined };
-interface PathPathComponents extends Array<Path> { __pathComponensBrand: undefined }
+interface PathPathComponents<T extends Path = Path> extends Array<T> { __pathComponensBrand: undefined }
 `
 
 // tsc's getPathComponents (path.ts:493) over pathComponents (path.ts:449): the first overload promises
@@ -56,6 +58,26 @@ function comps(path: string): string[];
 function comps(path: string): string[] { return [path]; }
 console.log(String(comps("a" as Path).length));
 `, "overload 1 of comps result"},
+		// An extension of an object, not an array: :32's presence refusals don't see its brand, so `in` on
+		// the result would lower (Language's must on efa2009c). Mutant: phantomStripped stripping any
+		// extension, and this is accepted.
+		{"a phantom extension of an object", `interface Node { readonly kind: number }
+interface TaggedNode extends Node { __tagged: undefined }
+function tag(node: Node, sure: true): TaggedNode;
+function tag(node: Node, sure: boolean): Node;
+function tag(node: Node, sure: boolean): Node { return node; }
+console.log(String(tag({ kind: 1 }, true).kind));
+`, "overload 1 of tag result"},
+		// Only the array's own brand differs, over an array the body also stores in a number[] field, so an
+		// alias's push breaks what the brand claims (Language's Sorted program on efa2009c). Mutant: the
+		// array-brand-only branch answering yes without freshness, and this is accepted.
+		{"an array-only brand over an array stored elsewhere", `interface Sorted<T> extends Array<T> { __sorted: undefined }
+const store: { last: number[] } = { last: [] };
+function sorted(xs: number[], sure: true): Sorted<number>;
+function sorted(xs: number[], sure: boolean): number[];
+function sorted(xs: number[], sure: boolean): number[] { const ys = [...xs]; ys.sort((a, b) => a - b); store.last = ys; return ys; }
+console.log(String(sorted([2, 1], true).length));
+`, "overload 1 of sorted result"},
 		// An element that differs by more than a brand. Mutant: the stripped elements' identity test dropped.
 		{"an element narrowed by a literal", overloadPhantomPrelude + `function comps(path: Path): ("a" | "b")[];
 function comps(path: string): string[];
