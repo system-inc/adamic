@@ -475,6 +475,7 @@ type lowering struct {
 	staticGlobals    map[*ast.Symbol]int
 	instances        map[string]*instance
 	derivedAncestors map[*ast.Symbol]bool
+	optionalClasses  *optionalClassHierarchy
 
 	// privateOwners numbers each class that declares a private name, in the order first met, to
 	// qualify its private members' names (privateName).
