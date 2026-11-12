@@ -1,5 +1,14 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
+// A measurement, never to land (#w7cg3be): past ADAMIC_HEAP_SPARE_CAP bytes of spares on a thread, a
+// chunk joining them gives its pages back to the kernel, all but the page its header is on (SPARE_RETURN
+// below). Unset, every spare is kept and heap.c compiles as main's does. measure/heap-spares/run.sh
+// rewrites the line below for each build.
+// #define ADAMIC_HEAP_SPARE_CAP ((size_t)0)
+// madvise and sysconf under -std=c11 on glibc.
+#if defined(ADAMIC_HEAP_SPARE_CAP) && defined(__linux__)
+#define _DEFAULT_SOURCE
+#endif
 #ifdef ADAMIC_TARGET_WASI
 // Keep the inline path and also supply the request host's ownership export.
 #define adamic_release adamic_release_inline
@@ -67,6 +76,14 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #define CLASSES 16
 #define CHUNK 65536
 
+// The spare cap is Linux's alone, and never under the sanitizers or WASI.
+#if defined(ADAMIC_HEAP_SPARE_CAP) && defined(__linux__) && SLABS && !SANITIZED && !defined(ADAMIC_TARGET_WASI)
+#define SPARE_RETURN 1
+#include <sys/mman.h>
+#include <unistd.h>
+#else
+#define SPARE_RETURN 0
+#endif
 
 // A free slot holds the next free slot of its chunk.
 typedef struct free_slot {
@@ -99,6 +116,30 @@ static _Thread_local chunk *giving[CLASSES];
 static _Thread_local chunk *spares;
 static _Thread_local chunk *owned_chunks;
 
+#if SPARE_RETURN
+// The chunks on this thread's spares, and the kernel's page, read once before main.
+static _Thread_local size_t spare_count;
+static uintptr_t spare_page;
+
+__attribute__((constructor)) static void read_spare_page(void) {
+	long page = sysconf(_SC_PAGESIZE);
+	spare_page = page > 0 ? (uintptr_t)page : 4096;
+}
+
+// return_spare gives back a spare chunk's whole pages from its first slot to its end. malloc's 64 KB
+// isn't page-aligned, so the header's page and any part page at the end stay, and the header, which
+// find_chunk and the spares list read, is never touched. new_chunk sets free and fresh again before a
+// slot is carved, so the zeroed pages are never read as slots.
+static void return_spare(chunk *each) {
+	uintptr_t start = ((uintptr_t)each + FIRST_SLOT + spare_page - 1) & ~(spare_page - 1);
+	uintptr_t end = ((uintptr_t)each + CHUNK) & ~(spare_page - 1);
+	if (end > start) {
+		// Advice, so a refusal keeps the pages resident and changes nothing else.
+		(void)madvise((void *)start, (size_t)(end - start), MADV_DONTNEED);
+	}
+}
+#endif
+
 #include "heap_parallel.h"
 
 static void list_chunk(chunk *each) {
@@ -128,6 +169,9 @@ static chunk *new_chunk(size_t class) {
 	chunk *each = spares;
 	if (each != NULL) {
 		spares = each->next;
+#if SPARE_RETURN
+		spare_count--;
+#endif
 	} else {
 		each = malloc(CHUNK);
 		if (each == NULL) {
@@ -211,6 +255,12 @@ static void give_local(void *slot, chunk *each) {
 		unlist_chunk(each);
 		each->next = spares;
 		spares = each;
+#if SPARE_RETURN
+		spare_count++;
+		if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) {
+			return_spare(each);
+		}
+#endif
 	}
 }
 

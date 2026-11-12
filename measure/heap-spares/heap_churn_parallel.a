@@ -1,0 +1,70 @@
+// heap_churn_parallel: heap_churn's rounds split four ways through parallelMap (#w7cg3be), so with
+// ADAMIC_THREADS=4 each worker builds, sums and drops its own quarter of a million objects and keeps
+// its own spares. Each task's objects are pushed into an array it holds, so they live on the heap,
+// never in a region. After the last round the program spins for 400 ms so its idle memory can be read.
+import { parallelMap } from 'adamic';
+
+interface Item {
+	readonly value: number;
+	readonly label: string;
+}
+
+interface Medium extends Item {
+	readonly weight: number;
+	readonly rank: number;
+}
+
+interface Wide extends Medium {
+	readonly left: number;
+	readonly right: number;
+	readonly depth: number;
+}
+
+const quarter = 250000;
+const rounds = 10;
+const prefixes = ['k', 'item', 'a-longer-label-'];
+
+function made(round: number, index: number): Item {
+	const label = `${prefixes[round % prefixes.length] ?? 'k'}${index % 997}`;
+	const shape = round % 3;
+	if (shape === 0) {
+		const item: Item = { value: index, label };
+		return item;
+	}
+	if (shape === 1) {
+		const item: Medium = { value: index, label, weight: round, rank: index % 7 };
+		return item;
+	}
+	const item: Wide = { value: index, label, weight: round, rank: index % 7, left: index - 1, right: index + 1, depth: round + 1 };
+	return item;
+}
+
+// churn builds one task's quarter for a round, sums it and lets it go when it returns.
+function churn(task: number, index: number): number {
+	const round = Math.floor(task / 4);
+	const items: Item[] = [];
+	for (let each = 0; each < quarter; each += 1) {
+		items.push(made(round, index * quarter + each));
+	}
+	let total = 0;
+	for (const item of items) {
+		total = (total + item.value + item.label.length) % 1000000007;
+	}
+	return total;
+}
+
+let checksum = 0;
+for (let round = 0; round < rounds; round += 1) {
+	const tasks: number[] = [round * 4, round * 4 + 1, round * 4 + 2, round * 4 + 3];
+	const totals = parallelMap(tasks, churn);
+	for (const total of totals) {
+		checksum = (checksum * 31 + total) % 1000000007;
+	}
+}
+
+const start = performance.now();
+let spins = 0;
+while (performance.now() - start < 400) {
+	spins += 1;
+}
+console.log(`${rounds} rounds of 4 x ${quarter}, checksum ${checksum}, spun ${spins > 0}`);
