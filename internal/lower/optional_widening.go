@@ -198,7 +198,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		}
 		declared := l.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
-			if property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 && !l.classOptionalAbsent(source, property.Name) {
 				return &optionalWidening{property: property.Name, source: source, target: target}
 			}
 			continue
