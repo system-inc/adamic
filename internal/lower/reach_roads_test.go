@@ -4,7 +4,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"go/types"
 	"path/filepath"
 	"regexp"
 	"slices"
@@ -531,27 +530,101 @@ func TestReachSystemSetOnceIsBothLiterals(t *testing.T) {
 }
 
 // functionReferenceFields must name every IR field that can hold a function, or a function some node
-// names would be taken for one that never runs and its writes dropped. Every field whose name says it
-// may hold one, of an integer type, a slice of one or a map keyed by one, is in that table or in the
-// list here of fields that don't, each with why.
+// names would be taken for one that never runs and its writes dropped. A field can hold one only if
+// it holds an integer: of any width, signed or not, the ir package's own named integer types (Type,
+// ViewContractID, ViewKind) among them, or a slice, array, pointer or map of one, as key or value.
+// The structs statements and expressions hold are local_uses.go's localFields' to classify, and
+// TestFunctionFieldTablesAgree holds this table to it, so here such a field is asked about when its
+// name says it may hold a function. Every other struct a program holds, read from Program by its
+// exported fields (Class, Accessor, Local, Function, Export, ViewContract and what they hold), no
+// table but this one covers, so each of its integer fields is asked about whatever it's named: it's
+// counted in functionReferenceFields or listed here with why it names no function. Mutant 10.
 func TestFunctionReferenceFieldsAreEveryFunctionField(t *testing.T) {
 	t.Parallel()
+	const (
+		irType     = "an IR type"
+		contractID = "a view contract's ID"
+		typeID     = "a checker type ID"
+		counted    = "a count"
+	)
 	notFunctions := map[string]string{
-		"Local.Function":              "the function that declares the local, which says nothing about whether it runs",
-		"CallClosure.FunctionType":    "a checker type ID",
-		"Program.FunctionTypeTargets": "every function a checker function type could be by assignability alone; a function is a value only by a counted node",
-		"Class.StaticParent":          "a one-based hidden parent slot of a class's static side",
-		"FunctionTargets.Functions":   "ClosureTargets' answer, which no program holds",
+		// Fields statements and expressions hold whose names say they may hold a function.
+		"CallClosure.FunctionType":  typeID,
+		"FunctionTargets.Functions": "ClosureTargets' answer, which no program holds",
+		// Every integer field of the structs a program holds outside its statements and expressions.
+		"Class.Definition":                  "the class's erased identity, its definition's first layout plus one",
+		"Class.Base":                        "the base class's index plus one",
+		"Class.OwnStart":                    "the first of the class's own field slots",
+		"Class.StaticParent":                "a one-based hidden parent slot of a class's static side",
+		"Class.StaticFlags":                 "one-based presence slots of the static side's data slots",
+		"CounterGuard.Dependencies":         "the counter locals the guard's integer path needs",
+		"Export.Local":                      "the global an export held in one reads",
+		"Function.SourceLength":             "ECMAScript length, a count of parameters",
+		"Function.Parameters":               "the parameters' locals",
+		"Function.ArgumentsCount":           "the hidden argument count's local plus one",
+		"Function.OptionalParameters":       "keyed by the locals of optional parameters",
+		"Function.RestElement":              irType,
+		"Function.Returns":                  irType,
+		"Function.AsyncSite":                "a diagnostic source site",
+		"Function.AsyncReturns":             irType,
+		"Function.Yields":                   irType,
+		"Function.Environment":              "the captured locals' cells",
+		"Function.FrameEnvironment":         "the locals the frame's one allocation holds",
+		"Function.FrameIdentity":            "a synthetic cell's local plus one",
+		"Local.Type":                        irType,
+		"Local.Function":                    "the function that declares the local, which says nothing about whether it runs",
+		"Local.Ready":                       "the readiness local's index plus one",
+		"MainModule.Statements":             counted,
+		"NonNullCheckCounts.Proven":         counted,
+		"NonNullCheckCounts.Checked":        counted,
+		"PredicateCallCheck.Overload":       "an overload's ordinal",
+		"PredicateCheckCounts.Proven":       counted,
+		"PredicateCheckCounts.Checked":      counted,
+		"PredicateCheckCounts.Unobservable": counted,
+		"Program.ProgramTypes":              "keyed by checker type IDs",
+		"Program.GraphTypes":                "keyed by checker type IDs",
+		"Program.ViewContractTypes":         "checker type IDs, each to a view contract's ID",
+		"Program.PlainReceivers":            "keyed by checker type IDs",
+		"Program.FunctionTypeTargets":       "every function a checker function type could be by assignability alone; a function is a value only by a counted node",
+		"Program.FixedArgumentSlots":        counted,
+		"Program.RestArgumentSlots":         "rest layouts, each to a count of slots",
+		"Program.RestGraphTypes":            "rest layouts, each to its packs' graph types",
+		"RestArguments.Start":               "the position of a rest's first argument",
+		"RestArguments.Element":             irType,
+		"SourcePosition.Line":               "a source line",
+		"SourcePosition.Column":             "a source column",
+		"ViewArrayCast.OriginStart":         "the start of a range of Program.ViewOrigins",
+		"ViewArrayCast.OriginEnd":           "the end of a range of Program.ViewOrigins",
+		"ViewContract.ObjectPresent":        contractID,
+		"ViewContract.RepresentationMask":   "a mask of a callable union's members",
+		"ViewContract.Payload":              contractID,
+		"ViewContract.PayloadTypeID":        typeID,
+		"ViewContract.NominalClass":         "a class's erased identity, as Class.Definition",
+		"ViewContract.Kind":                 "a view's kind",
+		"ViewContract.Of":                   irType,
+		"ViewContract.Members":              contractID,
+		"ViewContract.Key":                  contractID,
+		"ViewContract.Element":              contractID,
+		"ViewContract.TupleMinimum":         "a tuple's least arity",
+		"ViewContract.TupleRest":            contractID,
+		"ViewContract.Tuple":                contractID,
+		"ViewContract.Parameters":           contractID,
+		"ViewContract.Result":               contractID,
+		"ViewFieldContract.Contract":        contractID,
+		"ViewLiteral.Of":                    irType,
 	}
 	named := regexp.MustCompile(`Function|Direct|Comparator|Factory|Constructor|Method|Getter|Setter|Entry|Parent|Closure|Thunk|Target|Forward`)
-	integer := regexp.MustCompile(`\bint\b`)
 	// Reads: internal/ir/*.go
-	files, err := filepath.Glob("../ir/*.go")
+	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
 		t.Fatal(err)
 	}
-	found := map[string]bool{}
-	for _, path := range files {
+	structs := map[string]*ast.StructType{}
+	// defined is each of the ir package's named types that isn't a struct, an interface or a function
+	// type, by the type it's defined as.
+	defined := map[string]ast.Expr{}
+	roots := []string{}
+	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
@@ -559,29 +632,130 @@ func TestFunctionReferenceFieldsAreEveryFunctionField(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		ast.Inspect(file, func(node ast.Node) bool {
-			declaration, isType := node.(*ast.TypeSpec)
-			if !isType {
-				return true
-			}
-			structure, isStruct := declaration.Type.(*ast.StructType)
-			if !isStruct {
-				return true
-			}
-			for _, field := range structure.Fields.List {
-				for _, name := range field.Names {
-					key := declaration.Name.Name + "." + name.Name
-					found[key] = true
-					if !name.IsExported() || !named.MatchString(name.Name) || !integer.MatchString(types.ExprString(field.Type)) {
-						continue
+		for _, declaration := range file.Decls {
+			switch declaration := declaration.(type) {
+			case *ast.GenDecl:
+				for _, spec := range declaration.Specs {
+					if typeSpec, isType := spec.(*ast.TypeSpec); isType {
+						switch as := typeSpec.Type.(type) {
+						case *ast.StructType:
+							structs[typeSpec.Name.Name] = as
+						case *ast.InterfaceType, *ast.FuncType:
+							// A Statement or an Expression, or a function: none is followed, as a
+							// struct an interface holds is reached from the roots below instead.
+						default:
+							defined[typeSpec.Name.Name] = as
+						}
 					}
-					if _, counted := functionReferenceFields[key]; !counted && notFunctions[key] == "" {
-						t.Errorf("IR field %s may hold a function: count it in functionReferenceFields, or say here why it doesn't", key)
+				}
+			case *ast.FuncDecl:
+				// A statement has the unexported statement(), an expression Type() Type.
+				if declaration.Recv != nil && len(declaration.Recv.List) == 1 && (declaration.Name.Name == "statement" || declaration.Name.Name == "Type") {
+					receiver := declaration.Recv.List[0].Type
+					if star, isStar := receiver.(*ast.StarExpr); isStar {
+						receiver = star.X
+					}
+					if identifier, isIdentifier := receiver.(*ast.Ident); isIdentifier {
+						roots = append(roots, identifier.Name)
 					}
 				}
 			}
-			return true
-		})
+		}
+	}
+	// integers are the names of the types that hold an integer: Go's own, and each named type of the
+	// ir package defined as one or as a slice, array, pointer or map holding one.
+	integers := map[string]bool{"int": true, "int8": true, "int16": true, "int32": true, "int64": true, "uint": true, "uint8": true, "uint16": true, "uint32": true, "uint64": true, "uintptr": true, "byte": true, "rune": true}
+	var holdsInteger func(ast.Expr) bool
+	holdsInteger = func(of ast.Expr) bool {
+		switch of := of.(type) {
+		case *ast.Ident:
+			return integers[of.Name]
+		case *ast.ArrayType:
+			return holdsInteger(of.Elt)
+		case *ast.StarExpr:
+			return holdsInteger(of.X)
+		case *ast.MapType:
+			return holdsInteger(of.Key) || holdsInteger(of.Value)
+		case *ast.IndexExpr:
+			// A generic type's instance, as SortedMap[K, V] is: it holds what its arguments do.
+			return holdsInteger(of.Index)
+		case *ast.IndexListExpr:
+			return slices.ContainsFunc(of.Indices, holdsInteger)
+		}
+		return false
+	}
+	for grown := true; grown; {
+		grown = false
+		for name, as := range defined {
+			if !integers[name] && holdsInteger(as) {
+				integers[name] = true
+				grown = true
+			}
+		}
+	}
+	// reach is every struct the types named reach through their fields, through named types too, and
+	// through only exported fields when exportedOnly is set.
+	reach := func(from []string, exportedOnly bool) map[string]bool {
+		reached := map[string]bool{}
+		queue := slices.Clone(from)
+		follow := func(of ast.Expr) {
+			ast.Inspect(of, func(node ast.Node) bool {
+				if identifier, isIdentifier := node.(*ast.Ident); isIdentifier && !reached[identifier.Name] {
+					queue = append(queue, identifier.Name)
+				}
+				return true
+			})
+		}
+		for len(queue) != 0 {
+			name := queue[0]
+			queue = queue[1:]
+			if reached[name] {
+				continue
+			}
+			if as, isDefined := defined[name]; isDefined {
+				reached[name] = true
+				follow(as)
+				continue
+			}
+			structure, isStruct := structs[name]
+			if !isStruct {
+				continue
+			}
+			reached[name] = true
+			for _, field := range structure.Fields.List {
+				if exportedOnly && len(field.Names) != 0 && !slices.ContainsFunc(field.Names, (*ast.Ident).IsExported) {
+					continue
+				}
+				follow(field.Type)
+			}
+		}
+		return reached
+	}
+	inExpressions := reach(roots, false)
+	inProgram := reach([]string{"Program"}, true)
+	found := map[string]bool{}
+	for structName, structure := range structs {
+		whole := inProgram[structName] && !inExpressions[structName]
+		for _, field := range structure.Fields.List {
+			for _, name := range field.Names {
+				key := structName + "." + name.Name
+				found[key] = true
+				if !name.IsExported() || !holdsInteger(field.Type) || !whole && !named.MatchString(name.Name) {
+					continue
+				}
+				_, isCounted := functionReferenceFields[key]
+				switch {
+				case isCounted && notFunctions[key] != "":
+					t.Errorf("IR field %s is counted in functionReferenceFields and listed here as naming no function", key)
+				case isCounted:
+				case notFunctions[key] != "":
+				case whole:
+					t.Errorf("IR field %s holds an integer, in %s, which only this table covers: count it in functionReferenceFields if it may name a function, or say here why it doesn't", key, structName)
+				default:
+					t.Errorf("IR field %s may hold a function: count it in functionReferenceFields, or say here why it doesn't", key)
+				}
+			}
+		}
 	}
 	for key := range functionReferenceFields {
 		if !found[key] {
