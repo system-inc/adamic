@@ -61,6 +61,10 @@ interface AlsoChoice { value: Choice }
 type HostCollator = Intl.Collator
 type HostCollators = readonly Intl.Collator[]
 type HostOrBase = Intl.Collator | Base
+interface HoldsHost { readonly c: Intl.Collator }
+type HostMap = ReadonlyMap<string, Intl.Collator>
+type HostBag = Record<string, Intl.Collator>
+type Unbound<U> = { readonly value: U }
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -287,7 +291,11 @@ console.log(String(read({ a: 1 })));
 // lowering knows without an import. A source program meets earlier host-view stops first (a collator
 // seen through a view stops at the relation, #zjndrx5, and a view as NodeJS.ErrnoException at
 // no-optional-widening), so this is a backstop judged on a kept lowering, as viewPairGuard's rows are.
-// Mutant: viewHosted returning nil passes every refused row.
+// It walks as deep as the pair guard (Language's should): a field, an index value and a Map's value
+// each hold the collator one level down. A type parameter with no constraint could be instantiated as
+// a host type, so it fails closed (Runtime's question). Mutants: viewHosted returning nil passes every
+// refused row; its fields, index values or container arguments dropped pass that row; a bare type
+// parameter returned nil passes "an unconstrained type parameter".
 func TestGraphHostViewIsNotYet(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
@@ -295,6 +303,10 @@ func TestGraphHostViewIsNotYet(t *testing.T) {
 		{"a host source", "HostCollator", "Base", "a view of "},
 		{"a host element", "Base", "HostCollators", "a view as "},
 		{"a host arm", "HostOrBase", "Base", "a view of "},
+		{"a host field", "HoldsHost", "Base", "a view of "},
+		{"a host Map value", "Base", "HostMap", "a view as "},
+		{"a host index value", "HostBag", "Base", "a view of "},
+		{"an unconstrained type parameter", "U", "Base", "a view of "},
 		{"no host", "Derived", "Base", ""},
 	} {
 		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target]}}
@@ -309,7 +321,11 @@ func TestGraphHostViewIsNotYet(t *testing.T) {
 			continue
 		}
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.HasPrefix(notYet.What, row.want) || !strings.Contains(notYet.What, "Collator, a host object's type, in a graph program") {
+		held := "Collator, a host object's type, in a graph program"
+		if row.source == "U" {
+			held = "U, a type parameter that could be a host object's type, in a graph program"
+		}
+		if !errors.As(err, &notYet) || !strings.HasPrefix(notYet.What, row.want) || !strings.Contains(notYet.What, held) {
 			t.Errorf("%s: got %v, want the host view stop, starting %q", row.name, err, row.want)
 		}
 	}
