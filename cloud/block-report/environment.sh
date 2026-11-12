@@ -172,21 +172,18 @@ step "$(printf '%s' "$modules" | tr '\n' ' ')downloaded into $gomodcache, and th
 
 # cohere's own workspace, which its Go-oracle tests load from inside cohere (go list and go test -c in cohere/), is a
 # second module graph adamic's go.work never reads: on azure-block-1 they failed on golang.org/x/sys@v0.33.0 (J-z5p8ce2).
-# The same download, then the same load online and with the network refused.
+# Its download, then the same load online and with the network refused.
 begin cohere-gomodules
-cohereModules=$(cd "$checkout/cohere" && go work edit -json | python3 -I -c 'import json, sys; print("\n".join(use["DiskPath"] for use in json.load(sys.stdin).get("Use") or []))')
-[ -n "$cohereModules" ] || { echo "block-env: $checkout/cohere/go.work uses no modules" >&2; exit 1; }
-while IFS= read -r module; do
-	echo "== go mod download all in cohere/$module" >> "$log"
-	(cd "$checkout/cohere/$module" && GOWORK=off go mod download all) >> "$log" 2>&1 ||
-		{ echo "block-env: go mod download all failed in cohere/$module" >&2; exit 1; }
-done <<< "$cohereModules"
+# In cohere's workspace, never module by module with it off: cohere requires github.com/microsoft/TypeScript/tsc@v0.0.0,
+# which only its go.work resolves (GOWORK=off fails it as an unknown revision, Pupa, Nov 12).
+echo "== go mod download in cohere's workspace" >> "$log"
+(cd "$checkout/cohere" && go mod download) >> "$log" 2>&1 || { echo "block-env: go mod download failed in cohere's workspace" >&2; exit 1; }
 echo "== go list -deps -test ./... in cohere" >> "$log"
 (cd "$checkout/cohere" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" go list -deps -test ./... > /dev/null) >> "$log" 2>&1
 echo "== go list -deps -test ./... in cohere with GOPROXY=off" >> "$log"
 (cd "$checkout/cohere" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" GOPROXY=off GOSUMDB=off go list -deps -test ./... > /dev/null) >> "$log" 2>&1 ||
 	{ echo "block-env: cohere's workspace doesn't load from $gomodcache alone" >&2; exit 1; }
-step "cohere's $(printf '%s' "$cohereModules" | wc -l | tr -d ' ') modules downloaded, and its workspace's tests load offline"
+step "cohere's workspace downloaded, and its tests load offline"
 
 # npm. setup.sh lays node alone, so npm comes from its pin, checked against its integrity before it unpacks, as
 # cloud/meter-daily/run.sh does it. npm's own logs go beside ours, so the cache holds tarballs and nothing else.
