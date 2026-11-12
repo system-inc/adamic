@@ -56,12 +56,15 @@ type loweringFieldPolicy uint8
 const (
 	programFact loweringFieldPolicy = iota + 1
 	scopedASTIdentity
+	scopedUnitState
 )
 
 var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
-	"optionalReceiverCall":       scopedASTIdentity,
+	"optionalReceiverCall": scopedASTIdentity,
+	// Scoped binding: AST identities stay shared; the Read and use counter copy by value.
+	"optionalReceiverBinding":    scopedUnitState,
 	"omittedOptionals":           programFact, // Contextual omission facts are program-only; installations and snapshots own their map.
 	"entriesRecords":             programFact,
 	"entriesProgramRecords":      programFact,

@@ -1,0 +1,42 @@
+interface Declaration {
+    readonly kind: 'class';
+    readonly symbol?: Holder;
+}
+interface Holder { declarations?: readonly Declaration[]; }
+function first(symbol: Holder): Declaration | undefined {
+    return symbol.declarations?.find(() => true);
+}
+function identity(value: Holder): Holder { return value as Holder; }
+
+interface NamedDeclaration {
+    readonly category: 'class' | 'other';
+    readonly owner?: NamedHolder;
+}
+interface NamedHolder { declarations?: readonly NamedDeclaration[]; }
+function isClassLike(node: NamedDeclaration): boolean {
+    return node.category === 'class';
+}
+function named(symbol: NamedHolder): NamedDeclaration | undefined {
+    return symbol.declarations?.find(isClassLike);
+}
+function namedIdentity(value: NamedHolder): NamedHolder { return value as NamedHolder; }
+
+let receiverCalls = 0;
+function receiver(symbol: Holder): Holder {
+    receiverCalls++;
+    console.log('receiver');
+    return symbol;
+}
+function withEffect(symbol: Holder): Declaration | undefined {
+    return receiver(symbol).declarations?.find(() => true);
+}
+console.log(`${first({ declarations: [{ kind: 'class' }] })?.kind}`);
+console.log(`${first({ declarations: [] })?.kind}`);
+console.log(`${first({})?.kind}`);
+console.log(`${named({ declarations: [{ category: 'other' }, { category: 'class' }] })?.category}`);
+console.log(`${named({ declarations: [{ category: 'other' }] })?.category}`);
+console.log(`${named({})?.category}`);
+console.log(`${withEffect({ declarations: [{ kind: 'class' }] })?.kind}`);
+console.log(`${withEffect({ declarations: [] })?.kind}`);
+console.log(`${withEffect({})?.kind}`);
+console.log(`${receiverCalls}`);

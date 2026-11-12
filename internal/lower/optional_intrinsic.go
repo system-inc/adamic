@@ -1,8 +1,6 @@
 package lower
 
 import (
-	"reflect"
-
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -31,32 +29,9 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if access.QuestionDotToken == nil {
 		return nil, false, nil
 	}
-	value, known, err := func() (ir.Expression, bool, error) {
-		previous := l.optionalReceiverCall
-		l.optionalReceiverCall = node
-		defer func() { l.optionalReceiverCall = previous }()
-		return l.builtin(node)
-	}()
-	if !known || err != nil {
-		return nil, known, err
-	}
 	receiver, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, true, err
-	}
-	if !receiver.Type().IsReference() {
-		return nil, true, l.notYet(node, "an optional intrinsic without a reference receiver")
-	}
-	occurrences := 0
-	walk(value, func(node any) bool {
-		if expression, ok := node.(ir.Expression); ok && reflect.DeepEqual(expression, receiver) {
-			occurrences++
-			return false
-		}
-		return true
-	})
-	if occurrences != 1 {
-		return nil, true, l.notYet(node, "an optional intrinsic without exactly one explicit receiver operand")
 	}
 	function := -1
 	if l.function != nil {
@@ -64,54 +39,29 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	}
 	local := len(l.result.Locals)
 	read := ir.Read{Local: local, Of: receiver.Type()}
-	replaced := false
-	var replace func(reflect.Value) reflect.Value
-	replace = func(v reflect.Value) reflect.Value {
-		if !v.IsValid() {
-			return v
-		}
-		if !replaced && v.CanInterface() {
-			if expression, ok := v.Interface().(ir.Expression); ok && reflect.DeepEqual(expression, receiver) {
-				replaced = true
-				if v.Kind() == reflect.Interface {
-					r := reflect.New(v.Type()).Elem()
-					r.Set(reflect.ValueOf(read))
-					return r
-				}
-				return reflect.ValueOf(read)
-			}
-		}
-		switch v.Kind() {
-		case reflect.Interface:
-			if v.IsNil() {
-				return v
-			}
-			r := reflect.New(v.Type()).Elem()
-			r.Set(replace(v.Elem()))
-			return r
-		case reflect.Struct:
-			r := reflect.New(v.Type()).Elem()
-			for i := 0; i < v.NumField(); i++ {
-				r.Field(i).Set(replace(v.Field(i)))
-			}
-			return r
-		case reflect.Slice:
-			if v.IsNil() {
-				return v
-			}
-			r := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
-			for i := 0; i < v.Len(); i++ {
-				r.Index(i).Set(replace(v.Index(i)))
-			}
-			return r
-		}
-		return v
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_intrinsic_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
+	lowered, known, uses, err := func() (ir.Expression, bool, int, error) {
+		previousCall, previousBinding := l.optionalReceiverCall, l.optionalReceiverBinding
+		l.optionalReceiverCall = node
+		l.optionalReceiverBinding = optionalReceiverBinding{call: node, receiver: access.Expression, read: read}
+		defer func() {
+			l.optionalReceiverCall, l.optionalReceiverBinding = previousCall, previousBinding
+		}()
+		value, known, err := l.builtin(node)
+		return value, known, l.optionalReceiverBinding.uses, err
+	}()
+	if !known || err != nil {
+		return nil, known, err
 	}
-	lowered := replace(reflect.ValueOf(value)).Interface().(ir.Expression)
-	if !replaced {
+	if !receiver.Type().IsReference() {
+		return nil, true, l.notYet(node, "an optional intrinsic without a reference receiver")
+	}
+	if uses == 0 {
 		return nil, true, l.notYet(node, "an optional intrinsic whose receiver is not an explicit operand")
 	}
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_intrinsic_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
+	if uses > 1 {
+		return nil, true, l.notYet(node, "an optional intrinsic that reads its receiver more than once")
+	}
 	body := []ir.Statement{ir.Declare{Local: local, Value: receiver}}
 	present := ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}}
 	if lowered.Type() == 0 {
@@ -126,6 +76,14 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		Condition: present,
 		WhenTrue:  fit(lowered, of), WhenNot: fit(ir.Undefined{}, of), Of: of,
 	}}, true, nil
+}
+
+// This binding belongs to one call. Snapshots copy its counter by value, and a
+// nested optional call restores the enclosing binding when its builtin returns.
+type optionalReceiverBinding struct {
+	call, receiver *ast.Node
+	read           ir.Read
+	uses           int
 }
 
 // A non-null assertion stays in the chain, while parentheses end it. A new
