@@ -1,0 +1,15 @@
+{
+  "command": [
+    "env",
+    "PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-o",
+    "/workspace/scratch/ancestor-production/adamic",
+    "./cmd/adamic"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 289.53266804400005
+}

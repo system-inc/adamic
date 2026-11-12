@@ -1,0 +1,12 @@
+{
+  "command": [
+    "env",
+    "NODE_PATH=/workspace/ancestor-adapt/stage3/api/node_modules",
+    "node",
+    "stage3/adapt/99-correctness-for-each-ancestor/contract.cjs",
+    "/workspace/scratch/ancestor/baseline"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 0.9691111630002069
+}

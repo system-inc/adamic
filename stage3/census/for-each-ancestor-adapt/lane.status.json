@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/ancestor/upstream",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=28m",
+    "-parallel=4",
+    "./stage3/lane"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 1397.9162611890001
+}

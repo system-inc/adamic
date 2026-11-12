@@ -1,0 +1,42 @@
+{
+  "roots": 79,
+  "extendedRoots": 80,
+  "stockDiagnosticsBefore": 0,
+  "stockDiagnosticsAfter": 0,
+  "extendedStockDiagnosticsBefore": 0,
+  "extendedStockDiagnosticsAfter": 0,
+  "javascriptFiles": 89,
+  "allByteIdentical": true,
+  "afterCalls": [
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 503,
+      "signature": "(directory: string, callback: (directory: string) => undefined): undefined",
+      "text": "forEachAncestorDirectory(normalizePath(currentDirectory), directory => {\r\n        const atTypes = combinePaths(directory, nodeModulesAtTypes);\r\n        (typeRoots ??= []).push(atTypes);\r\n    })"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 3057,
+      "signature": "(directory: string, callback: (directory: string) => false | (T & null) | (T & {}) | undefined): false | (T & null) | (T & {}) | undefined",
+      "text": "forEachAncestorDirectory(directory, ancestorDirectory => {\r\n        const result = callback(ancestorDirectory as P);\r\n        if (result !== undefined) return result;\r\n        if (ancestorDirectory === globalCache) return false;\r\n    })"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 296,
+      "signature": "(directory: string, callback: (directory: string) => true | undefined): true | undefined",
+      "text": "forEachAncestorDirectory(\r\n            getDirectoryPath(fileOrDirectoryPath),\r\n            ancestor => cachedReadDirectoryResult.delete(ensureTrailingDirectorySeparator(ancestor)) ? true : undefined,\r\n        )"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 330,
+      "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined",
+      "text": "forEachAncestorDirectory(searchPath, ancestor => {\r\n        const fileName = combinePaths(ancestor, configName);\r\n        return fileExists(fileName) ? fileName : undefined;\r\n    })"
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "line": 258,
+      "signature": "(directory: string, callback: (directory: string) => string | undefined): string | undefined",
+      "text": "forEachAncestorDirectory(getDirectoryPath(fileName), directory => {\r\n            if (this.installTypingHost.fileExists(combinePaths(directory, \"package.json\"))) {\r\n                return directory;\r\n            }\r\n        })"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "env",
+    "ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/ancestor/upstream",
+    "stage3/apply.sh",
+    "/workspace/scratch/ancestor-production/after"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 572.7768476370002
+}

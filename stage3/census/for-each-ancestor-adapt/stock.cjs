@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const ts=require('/workspace/ancestor-adapt/stage3/api/node_modules/typescript');
+const [root,out,emitRoot]=process.argv.slice(2);
+const configFile=root+'/src/compiler/tsconfig.json';const r=ts.readConfigFile(configFile,ts.sys.readFile);const config=ts.parseJsonConfigFileContent(r.config,ts.sys,path.dirname(configFile),undefined,configFile);
+const options={...config.options,typeRoots:['/workspace/ancestor-adapt/stage3/api/node_modules/@types'],noEmit:false,noEmitOnError:false,declaration:true,emitDeclarationOnly:false,sourceMap:false,outDir:emitRoot};
+const p=ts.createProgram(config.fileNames,options);const diagnostic=d=>({code:d.code,file:d.file?.fileName,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')});
+const diagnostics=[...config.errors,...ts.getPreEmitDiagnostics(p)].map(diagnostic);
+const extra=root+'/src/typingsInstallerCore/typingsInstaller.ts';const extended=ts.createProgram([...config.fileNames,extra],{...options,composite:false});const extendedDiagnostics=ts.getPreEmitDiagnostics(extended).map(diagnostic);
+const outputs={};const write=(file,data)=>{if(!file.endsWith('.js'))return;const relative=path.relative(emitRoot,file);outputs[relative]={bytes:Buffer.byteLength(data),sha256:crypto.createHash('sha256').update(data).digest('hex')};fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,data)};
+const emitted=p.emit(undefined,write),extendedEmitted=extended.emit(undefined,write);
+const source=p.getSourceFile(root+'/src/compiler/path.ts');const calls=[];for(const program of [p,extended])for(const f of program.getSourceFiles()){if(f.isDeclarationFile || program===extended&&f.fileName!==extra)continue;function visit(n){if(ts.isCallExpression(n)&&n.expression.getText(f)==='forEachAncestorDirectory'){const checker=program.getTypeChecker();calls.push({file:path.relative(root,f.fileName),line:f.getLineAndCharacterOfPosition(n.getStart()).line+1,signature:checker.signatureToString(checker.getResolvedSignature(n)),text:n.getText(f)})}ts.forEachChild(n,visit)}visit(f)}
+const result={typescript:ts.version,roots:config.fileNames,diagnostics,extendedRoots:[...config.fileNames,extra],extendedDiagnostics,emitSkipped:emitted.emitSkipped||extendedEmitted.emitSkipped,outputs,calls};fs.writeFileSync(out,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({roots:config.fileNames.length,diagnostics:diagnostics.length,extendedRoots:config.fileNames.length+1,extendedDiagnostics:extendedDiagnostics.length,jsFiles:Object.keys(outputs).length}));process.exitCode=config.fileNames.length!==79||diagnostics.length||extendedDiagnostics.length||result.emitSkipped?1:0;

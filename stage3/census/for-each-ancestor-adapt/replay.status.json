@@ -1,0 +1,13 @@
+{
+  "command": [
+    "env",
+    "NODE_PATH=/workspace/ancestor-adapt/stage3/api/node_modules",
+    "node",
+    "/workspace/ancestor-evidence/stage3/census/for-each-ancestor-adapt/replay.cjs",
+    "/workspace/scratch/ancestor-production/after",
+    "/workspace/ancestor-evidence/stage3/census/for-each-ancestor-adapt/replay.json"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 0.2700307640000119
+}

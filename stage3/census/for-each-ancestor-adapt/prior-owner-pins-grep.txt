@@ -1,0 +1,3 @@
+stage3/adapt/99-correctness-path-from-components/README.md:11:`forEachAncestorDirectory` is unchanged. Its existing overloads resolve five calls to string (3) or Path (2); one string-overload call passes a generic P argument. Its implementation-only P is not a caller-visible type parameter. Replacing  [... omitted end of long line]
+
+rg child exit: 0

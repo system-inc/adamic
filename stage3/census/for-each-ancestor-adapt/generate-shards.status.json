@@ -1,0 +1,12 @@
+{
+  "command": [
+    "env",
+    "PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "python3",
+    "stage3/lane/generate_shards.py",
+    "--check"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 0.11590531399997417
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "env",
+    "NODE_PATH=/workspace/ancestor-adapt/stage3/api/node_modules",
+    "node",
+    "/workspace/ancestor-evidence/stage3/census/for-each-ancestor-adapt/check-adapter-pins.cjs",
+    "/workspace/scratch/ancestor/baseline",
+    "/workspace/scratch/ancestor-production/after",
+    "/workspace/ancestor-evidence/stage3/census/for-each-ancestor-adapt/existing-pins.json"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 0.4789889050000511
+}

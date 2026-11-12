@@ -1,0 +1,11 @@
+{
+  "command": [
+    "env",
+    "PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:/usr/local/bin:/usr/bin:/bin",
+    "python3",
+    "/workspace/ancestor-evidence/stage3/census/for-each-ancestor-adapt/build-overlay.py"
+  ],
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 7.004582644000038
+}

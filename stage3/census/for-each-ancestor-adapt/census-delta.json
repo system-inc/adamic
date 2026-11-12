@@ -1,0 +1,114 @@
+{
+  "rawFindingEventsRemoved": 1,
+  "rawFindingEventsAdded": 0,
+  "rawMutantMultisetEqualsBefore": true,
+  "removed": [
+    [
+      "Refused",
+      "path.ts:1105:28",
+      "a cast the runtime can't check"
+    ]
+  ],
+  "added": [],
+  "mutantRestoresCompleteBeforeFindingSet": true,
+  "restoredRefusal": [
+    "Refused",
+    "path.ts:1105:28",
+    "a cast the runtime can't check"
+  ],
+  "normalization": "after lines >=1094 map to before line +1",
+  "units": {
+    "before": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1094:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1094:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1096:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1096:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1098:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 43932,
+        "body_end": 44267,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor/baseline/src/compiler/path.ts:1098:1"
+      }
+    ],
+    "after": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor-production/after/src/compiler/path.ts:1095:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor-production/after/src/compiler/path.ts:1095:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor-production/after/src/compiler/path.ts:1097:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 43800,
+        "body_end": 44130,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor-production/after/src/compiler/path.ts:1097:1"
+      }
+    ],
+    "mutant": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1094:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1094:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1096:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1096:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1098:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 43932,
+        "body_end": 44267,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "forEachAncestorDirectory",
+        "top": "/workspace/scratch/ancestor-production/mutant/src/compiler/path.ts:1098:1"
+      }
+    ]
+  }
+}

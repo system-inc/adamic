@@ -1,0 +1,32 @@
+{
+  "initial": {
+    "files": 1,
+    "edits": 1,
+    "javascriptChanging": false
+  },
+  "replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  },
+  "replayWrites": 0,
+  "replayBytesAndMtimeUnchanged": true,
+  "refusals": [
+    "changed-body",
+    "half-cast",
+    "half-overload",
+    "half-implementation",
+    "missing-owner",
+    "moved-owner",
+    "duplicate-before-owner",
+    "parse-error",
+    "changed-after-body",
+    "duplicate-after-owner",
+    "restored-path-overload",
+    "missing-string-overload",
+    "changed-comment",
+    "missing-section-comment"
+  ],
+  "unrelatedPreserved": true,
+  "lineEndingsPreserved": true
+}

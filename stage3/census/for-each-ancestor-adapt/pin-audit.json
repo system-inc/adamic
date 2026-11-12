@@ -1,0 +1,152 @@
+{
+  "decision": "new adapter; no prior whole-owner pin",
+  "adaptation30_path_sites": [
+    {
+      "file": "path.ts",
+      "line": 515,
+      "column": 18,
+      "function": "getPathFromPathComponents",
+      "expression": "pathComponents[0]",
+      "occurrence": 1,
+      "total": 4,
+      "action": "decline",
+      "class": "U-endpoint",
+      "invariant": "The original truthiness test handles an empty or absent root, and the repeated guarded read already narrows; keep both reads."
+    },
+    {
+      "file": "path.ts",
+      "line": 540,
+      "column": 22,
+      "function": "reducePathComponents",
+      "expression": "components[0]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-endpoint",
+      "invariant": "some excludes an empty list; parsed path components always begin with a populated root string, possibly empty."
+    },
+    {
+      "file": "path.ts",
+      "line": 542,
+      "column": 27,
+      "function": "reducePathComponents",
+      "expression": "components[i]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "decline",
+      "class": "U-loop",
+      "invariant": "The next !component guard explicitly skips empty or absent components."
+    },
+    {
+      "file": "path.ts",
+      "line": 547,
+      "column": 21,
+      "function": "reducePathComponents",
+      "expression": "reduced[reduced.length - 1]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "decline",
+      "class": "U-endpoint",
+      "invariant": "The original equality comparison tolerates absence without requiring a value."
+    },
+    {
+      "file": "path.ts",
+      "line": 552,
+      "column": 22,
+      "function": "reducePathComponents",
+      "expression": "reduced[0]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "decline",
+      "class": "U-endpoint",
+      "invariant": "The root truthiness test intentionally distinguishes empty relative roots; no dereference requires presence."
+    },
+    {
+      "file": "path.ts",
+      "line": 912,
+      "column": 42,
+      "function": "comparePathsWorker",
+      "expression": "aComponents[i]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Both normalized path component lists are populated and i is below their shared minimum length."
+    },
+    {
+      "file": "path.ts",
+      "line": 912,
+      "column": 58,
+      "function": "comparePathsWorker",
+      "expression": "bComponents[i]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Both normalized path component lists are populated and i is below their shared minimum length."
+    },
+    {
+      "file": "path.ts",
+      "line": 986,
+      "column": 31,
+      "function": "containsPath",
+      "expression": "parentComponents[i]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Parsed component lists are populated and the child-length guard covers every bounded parent index."
+    },
+    {
+      "file": "path.ts",
+      "line": 986,
+      "column": 52,
+      "function": "containsPath",
+      "expression": "childComponents[i]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Parsed component lists are populated and the child-length guard covers every bounded parent index."
+    },
+    {
+      "file": "path.ts",
+      "line": 1016,
+      "column": 52,
+      "function": "getPathComponentsRelativeTo",
+      "expression": "fromComponents[start]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Both populated parsed component lists bound start before canonicalizing the shared position."
+    },
+    {
+      "file": "path.ts",
+      "line": 1017,
+      "column": 50,
+      "function": "getPathComponentsRelativeTo",
+      "expression": "toComponents[start]",
+      "occurrence": 1,
+      "total": 1,
+      "action": "assert",
+      "class": "U-parallel",
+      "invariant": "Both populated parsed component lists bound start before canonicalizing the shared position."
+    },
+    {
+      "file": "path.ts",
+      "line": 1076,
+      "column": 28,
+      "function": "getRelativePathToDirectoryOrUrl",
+      "expression": "pathComponents[0]",
+      "occurrence": 3,
+      "total": 4,
+      "action": "assert",
+      "class": "U-endpoint",
+      "invariant": "getPathComponentsRelativeTo returns a populated root-first list in either branch, including an empty root for relative paths."
+    }
+  ],
+  "adaptation30_target_sites": [],
+  "adaptation30_whole_path_sites": [],
+  "sibling_owner": "getPathFromPathComponents"
+}
