@@ -583,7 +583,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 			Standard, DepOnly                                                          bool
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			IgnoredGoFiles                                                             []string
+			IgnoredGoFiles, IgnoredOtherFiles                                          []string
 			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
 		}
 		if err := decoder.Decode(&listed); err == io.EOF {
@@ -605,7 +605,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		if request.verb == "build" || listed.DepOnly {
 			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
 		}
-		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles, ignored} {
+		// So is a C, C++, assembly or header file a constraint leaves out (IgnoredOtherFiles), which an edit compiles into a
+		// cgo or assembly package (#ntrv3zb). It has no test variant to wait for: no build compiles a dependency's test
+		// files, and these aren't test files.
+		for _, names := range [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles, listed.EmbedFiles, ignored, listed.IgnoredOtherFiles} {
 			if err := add(listed.Dir, names); err != nil {
 				return Inputs{}, err
 			}
