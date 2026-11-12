@@ -2749,6 +2749,12 @@
     "internal/lower TestProduct_InspectorDoomedFallthroughMutant": [],
     "internal/oracle TestProduct_InspectorDoomedAxiomMutant": [],
     "internal/oracle TestProduct_InspectorDoomedReadDropOracleMutant": [],
-    "internal/lower TestProduct_InspectorDoomedValueHookMutant": []
+    "internal/lower TestProduct_InspectorDoomedValueHookMutant": [],
+    "internal/lower TestProduct_InspectorLetAnyLetMutant": [],
+    "internal/lower TestProduct_InspectorLetWriteScanMutant": [],
+    "internal/lower TestProduct_InspectorLetFlowGateMutant": [],
+    "internal/lower TestProduct_InspectorLetDeclaredTypeMutant": [],
+    "internal/lower TestProduct_InspectorLetFifthWriteMutant": [],
+    "internal/lower TestProduct_InspectorLetDerivedWriteMutant": []
   }
 }
