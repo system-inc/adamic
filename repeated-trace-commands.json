@@ -1,0 +1,16 @@
+[
+  {
+    "name": "control-repeat1",
+    "argv": [
+      "node",
+      "/workspace/scratch/tracing-control/built/local/tsc.js",
+      "--project",
+      "/workspace/scratch/tracing-witness-project/tsconfig.json",
+      "--pretty",
+      "false",
+      "--generateTrace",
+      "/workspace/scratch/tracing-witness-project/trace"
+    ],
+    "exit": 0
+  }
+]

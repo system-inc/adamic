@@ -1,0 +1,38 @@
+{
+  "root": "/workspace/scratch/tracing-control",
+  "file": "typescript.js",
+  "bindingPresent": true,
+  "references": 4,
+  "catchReferences": 1,
+  "otherReferences": 3,
+  "sites": [
+    {
+      "line": 541,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 4800,
+      "column": 20,
+      "inStartTracingCatch": true,
+      "parentKind": "CallExpression",
+      "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+    },
+    {
+      "line": 184111,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 198946,
+      "column": 3,
+      "inStartTracingCatch": false,
+      "parentKind": "ShorthandPropertyAssignment",
+      "sourceLine": "errorMessage,"
+    }
+  ]
+}

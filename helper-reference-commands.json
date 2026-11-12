@@ -1,0 +1,262 @@
+[
+  {
+    "label": "before",
+    "file": "_tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "_tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-0.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "_tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "_tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "_typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "_typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "run.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "run.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-3.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-4.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-5.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "tsserverlibrary.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "tsserverlibrary.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-6.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "typescript.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "typescript.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-7.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-8.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "before",
+    "file": "watchGuard.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-control",
+      "watchGuard.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/before-9.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "_tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "_tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-0.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "_tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "_tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "_typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "_typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "run.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "run.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-3.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-4.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "tsserver.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "tsserver.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-5.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "tsserverlibrary.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "tsserverlibrary.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-6.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "typescript.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "typescript.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-7.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "typingsInstaller.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "typingsInstaller.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-8.json"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "file": "watchGuard.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/helper_reference_census.cjs",
+      "/workspace/scratch/tracing-after-final",
+      "watchGuard.js",
+      "/workspace/scratch/tracing-fs-import-evidence/helper-references/after-9.json"
+    ],
+    "exit": 0
+  }
+]

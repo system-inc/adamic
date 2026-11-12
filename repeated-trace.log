@@ -1,0 +1,6 @@
+control-repeat1 child exit=0
+Traceback (most recent call last):
+  File "/workspace/scratch/tracing-fs-import-evidence/repeated_trace.py", line 21, in <module>
+    assert set(traces)=={'types.json','legend.json','trace.json'},set(traces)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'types.json', 'trace.json'}

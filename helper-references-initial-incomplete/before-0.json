@@ -1,0 +1,17 @@
+{
+  "root": "/workspace/scratch/tracing-control",
+  "file": "_tsc.js",
+  "bindingPresent": true,
+  "references": 1,
+  "catchReferences": 1,
+  "otherReferences": 0,
+  "sites": [
+    {
+      "line": 2204,
+      "column": 20,
+      "inStartTracingCatch": true,
+      "parentKind": "CallExpression",
+      "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+    }
+  ]
+}

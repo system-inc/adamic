@@ -1,0 +1,31 @@
+{
+  "root": "/workspace/scratch/tracing-after-final",
+  "file": "run.js",
+  "bindingPresent": true,
+  "references": 3,
+  "catchReferences": 0,
+  "otherReferences": 3,
+  "sites": [
+    {
+      "line": 197043,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 200358,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 209524,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    }
+  ]
+}

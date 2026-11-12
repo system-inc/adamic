@@ -1,0 +1,15 @@
+[
+  {
+    "file": "_tsc.js",
+    "argv": [
+      "node",
+      "--max-old-space-size=3072",
+      "/workspace/scratch/tracing-fs-import-evidence/certify_emit.cjs",
+      "/workspace/scratch/tracing-control",
+      "/workspace/scratch/tracing-after-final",
+      "_tsc.js",
+      "/workspace/scratch/tracing-fs-import-evidence/emit-certificates/0.json"
+    ],
+    "exit": 1
+  }
+]

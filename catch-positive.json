@@ -1,0 +1,22 @@
+{
+  "catchExecutions": 1,
+  "forcedFailure": true,
+  "builtinLoadsBeforeStart": [
+    {
+      "specifier": "node:fs",
+      "stack": "Error\n    at Module._load (/workspace/scratch/tracing-fs-import-evidence/catch_control.cjs:5:104)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.require (node:internal/modules/cjs/loader:1617:12)\n    at require (node:internal/modules/helpers:153:16)\n    at Object.<anonymous> (/workspace/scratch/tracing-control-counted/built/local/typescript.js:17:39)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)\n    at Module._load (/workspace/scratch/tracing-fs-import-evidence/catch_control.cjs:5:140)"
+    },
+    {
+      "specifier": "fs",
+      "stack": "Error\n    at Module._load (/workspace/scratch/tracing-fs-import-evidence/catch_control.cjs:5:104)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.require (node:internal/modules/cjs/loader:1617:12)\n    at require (node:internal/modules/helpers:153:16)\n    at /workspace/scratch/tracing-control-counted/built/local/typescript.js:6837:19\n    at Object.<anonymous> (/workspace/scratch/tracing-control-counted/built/local/typescript.js:200715:3)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)"
+    }
+  ],
+  "graph": [
+    "src/tsc/tsc.ts imports its namespace",
+    "src/tsc/_namespaces/ts.ts reexports compiler namespace and executeCommandLine",
+    "compiler namespace reexports sys.ts and tracing.ts",
+    "sys.ts imports node:fs at module scope",
+    "tsc.ts invokes executeCommandLine after dependencies finish evaluating",
+    "executeCommandLine may then invoke startTracing"
+  ]
+}

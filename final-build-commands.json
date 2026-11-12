@@ -1,0 +1,38 @@
+[
+  {
+    "tree": "after-final",
+    "phase": "install",
+    "argv": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "exit": 0,
+    "seconds": 3.8000986110000667
+  },
+  {
+    "tree": "after-final",
+    "phase": "build",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 25.284479165999983
+  },
+  {
+    "tree": "after-final",
+    "phase": "harness",
+    "argv": [
+      "npm",
+      "exec",
+      "hereby",
+      "--",
+      "tests"
+    ],
+    "exit": 0,
+    "seconds": 0.8602257789998475
+  }
+]

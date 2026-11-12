@@ -1,0 +1,11 @@
+'use strict';
+const ts=require('/workspace/adamic/stage3/api/node_modules/typescript'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const [root,name,output]=process.argv.slice(2),file=path.join(root,'built/local',name),text=fs.readFileSync(file,'utf8');
+const program=ts.createProgram([file],{allowJs:true,noLib:true,noResolve:true,target:ts.ScriptTarget.Latest}),source=program.getSourceFile(file),checker=program.getTypeChecker();assert(source&&!source.parseDiagnostics.length);
+const start=text.indexOf('// src/compiler/hostErrors.ts'),end=start<0?-1:text.indexOf('\n// src/',start+5);
+const definitions=[];function find(n){if(start>=0&&n.getStart(source)>start&&n.getStart(source)<(end<0?text.length:end)&&ts.isFunctionDeclaration(n)&&n.name?.text==='errorMessage')definitions.push(n);ts.forEachChild(n,find);}find(source);assert(definitions.length<=1);if(start>=0&&text.slice(start,end<0?text.length:end).includes('function errorMessage('))assert.equal(definitions.length,1,'host helper definition not found');
+const refs=[];if(definitions.length){const binding=definitions[0].name,symbol=checker.getSymbolAtLocation(binding);assert(symbol);function visit(n){if(ts.isIdentifier(n)&&n!==binding&&n.text==='errorMessage'){
+ const actual=ts.isShorthandPropertyAssignment(n.parent)?checker.getShorthandAssignmentValueSymbol(n.parent):checker.getSymbolAtLocation(n);
+ if(actual===symbol){let clause=n;while(clause&&!ts.isCatchClause(clause))clause=clause.parent;let owner=clause;while(owner&&!ts.isFunctionDeclaration(owner))owner=owner.parent;const inCatch=!!clause&&!!owner?.name?.text.startsWith('startTracing');const location=source.getLineAndCharacterOfPosition(n.getStart(source));refs.push({line:location.line+1,column:location.character+1,inStartTracingCatch:inCatch,parentKind:ts.SyntaxKind[n.parent.kind],sourceLine:text.split('\n')[location.line].trim()});}
+ }ts.forEachChild(n,visit);}visit(source);}
+fs.writeFileSync(output,JSON.stringify({root,file:name,bindingPresent:definitions.length===1,references:refs.length,catchReferences:refs.filter(r=>r.inStartTracingCatch).length,otherReferences:refs.filter(r=>!r.inStartTracingCatch).length,sites:refs},null,2)+'\n');

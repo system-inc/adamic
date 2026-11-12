@@ -1,0 +1,339 @@
+{
+  "summary": {
+    "before": {
+      "references": 9,
+      "catchReferences": 3,
+      "otherReferences": 6
+    },
+    "after": {
+      "references": 6,
+      "catchReferences": 0,
+      "otherReferences": 6
+    }
+  },
+  "allTenFiles": [
+    "_tsc.js",
+    "_tsserver.js",
+    "_typingsInstaller.js",
+    "run.js",
+    "tsc.js",
+    "tsserver.js",
+    "tsserverlibrary.js",
+    "typescript.js",
+    "typingsInstaller.js",
+    "watchGuard.js"
+  ],
+  "results": [
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "_tsc.js",
+      "bindingPresent": true,
+      "references": 1,
+      "catchReferences": 1,
+      "otherReferences": 0,
+      "sites": [
+        {
+          "line": 2204,
+          "column": 20,
+          "inStartTracingCatch": true,
+          "parentKind": "CallExpression",
+          "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+        }
+      ]
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "_tsserver.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "_typingsInstaller.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "run.js",
+      "bindingPresent": true,
+      "references": 4,
+      "catchReferences": 1,
+      "otherReferences": 3,
+      "sites": [
+        {
+          "line": 2594,
+          "column": 20,
+          "inStartTracingCatch": true,
+          "parentKind": "CallExpression",
+          "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+        },
+        {
+          "line": 197052,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 200367,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 209533,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        }
+      ]
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "tsc.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "tsserver.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "tsserverlibrary.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "typescript.js",
+      "bindingPresent": true,
+      "references": 4,
+      "catchReferences": 1,
+      "otherReferences": 3,
+      "sites": [
+        {
+          "line": 541,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 4800,
+          "column": 20,
+          "inStartTracingCatch": true,
+          "parentKind": "CallExpression",
+          "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+        },
+        {
+          "line": 184111,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 198946,
+          "column": 3,
+          "inStartTracingCatch": false,
+          "parentKind": "ShorthandPropertyAssignment",
+          "sourceLine": "errorMessage,"
+        }
+      ]
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "typingsInstaller.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "before",
+      "root": "/workspace/scratch/tracing-control",
+      "file": "watchGuard.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "_tsc.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "_tsserver.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "_typingsInstaller.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "run.js",
+      "bindingPresent": true,
+      "references": 3,
+      "catchReferences": 0,
+      "otherReferences": 3,
+      "sites": [
+        {
+          "line": 197043,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 200358,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 209524,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "tsc.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "tsserver.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "tsserverlibrary.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "typescript.js",
+      "bindingPresent": true,
+      "references": 3,
+      "catchReferences": 0,
+      "otherReferences": 3,
+      "sites": [
+        {
+          "line": 541,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 184103,
+          "column": 23,
+          "inStartTracingCatch": false,
+          "parentKind": "ArrowFunction",
+          "sourceLine": "errorMessage: () => errorMessage,"
+        },
+        {
+          "line": 198938,
+          "column": 3,
+          "inStartTracingCatch": false,
+          "parentKind": "ShorthandPropertyAssignment",
+          "sourceLine": "errorMessage,"
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "typingsInstaller.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    },
+    {
+      "label": "after",
+      "root": "/workspace/scratch/tracing-after-final",
+      "file": "watchGuard.js",
+      "bindingPresent": false,
+      "references": 0,
+      "catchReferences": 0,
+      "otherReferences": 0,
+      "sites": []
+    }
+  ],
+  "requiredClosureConditionHolds": false
+}

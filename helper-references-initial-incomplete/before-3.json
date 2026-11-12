@@ -1,0 +1,38 @@
+{
+  "root": "/workspace/scratch/tracing-control",
+  "file": "run.js",
+  "bindingPresent": true,
+  "references": 4,
+  "catchReferences": 1,
+  "otherReferences": 3,
+  "sites": [
+    {
+      "line": 2594,
+      "column": 20,
+      "inStartTracingCatch": true,
+      "parentKind": "CallExpression",
+      "sourceLine": "(original error: ${errorMessage(e) || e})`);"
+    },
+    {
+      "line": 197052,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 200367,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    },
+    {
+      "line": 209533,
+      "column": 23,
+      "inStartTracingCatch": false,
+      "parentKind": "ArrowFunction",
+      "sourceLine": "errorMessage: () => errorMessage,"
+    }
+  ]
+}

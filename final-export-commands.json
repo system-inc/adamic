@@ -1,0 +1,22 @@
+[
+  {
+    "label": "before",
+    "argv": [
+      "node",
+      "-e",
+      "process.stdout.write(JSON.stringify(Object.keys(require(process.argv[1])).sort()))",
+      "/workspace/scratch/tracing-control/built/local/typescript.js"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "after",
+    "argv": [
+      "node",
+      "-e",
+      "process.stdout.write(JSON.stringify(Object.keys(require(process.argv[1])).sort()))",
+      "/workspace/scratch/tracing-after-final/built/local/typescript.js"
+    ],
+    "exit": 0
+  }
+]
