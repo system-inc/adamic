@@ -47,7 +47,7 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
     adamic_slot_cache cache = {0};
     adamic_value *slot = adamic_object_optional_field(object, field, &cache);
     if (slot == NULL || !adamic_object_initialized(object)[adamic_slot_index(object, slot)]) { return false; }
-    unsigned char actual = adamic_object_field_types(object)[adamic_slot_index(object, slot)];
+    unsigned char actual = adamic_object_field_type(object, adamic_slot_index(object, slot));
     *result = (adamic_view_union_value){adamic_view_union_unknown, *slot};
     if (actual == adamic_rep_number) { result->kind = adamic_view_union_number; return true; }
     if (actual == adamic_rep_boolean) { result->kind = adamic_view_union_boolean; return true; }
