@@ -21,6 +21,7 @@ func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
 // discardedValue accepts the effects already lowered as statements too: writes, increments,
 // console calls and void calls. The discarded value never needs storage.
 func (l *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	value, err := l.expression(node)
 	if err == nil {
 		return value, nil

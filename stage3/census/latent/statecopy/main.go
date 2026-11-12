@@ -57,9 +57,11 @@ const (
 	programFact loweringFieldPolicy = iota + 1
 	scopedASTIdentity
 	scopedUnitState
+	speculativeState // Snapshot-owned state; not carried between different program IRs.
 )
 
 var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	"inspectorSkippedContracts": speculativeState, // Map and paired IR indices roll back together.
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,

@@ -680,3 +680,24 @@ func TestLatentScopedOptionalReceiverCallCopyPolicy(t *testing.T) {
 		t.Fatal("snapshot must retain scoped AST identity from its initial struct copy")
 	}
 }
+
+// Inspector contract markers refer to the paired IR's string slots. Snapshot
+// ownership is required; carrying them into another program would attest a
+// different Panic with a coincidentally equal slot number.
+func TestInspectorDoomedMarkersStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loweringFieldPolicies["inspectorSkippedContracts"] != speculativeState {
+		t.Fatal("inspector marker policy must stay snapshot-only")
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(text, "result.inspectorSkippedContracts = func(value map[*ast.Node]int)") {
+		t.Fatal("inspector markers lost their owned map snapshot")
+	}
+	if strings.Contains(text, "inspectorSkippedContracts: value.inspectorSkippedContracts") {
+		t.Fatal("inspector markers must not be carried as program facts")
+	}
+}

@@ -439,6 +439,7 @@ func (l *lowering) readElementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	if l.methodPresenceTest(node) {
 		// Admitted as an observation (method_presence.go), so its consumer lowers it; one that doesn't
 		// isn't built, and reading the method here would detach it.
@@ -863,6 +864,7 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	l.inspectorRecordBuiltUse(node)
 	if value, known, err := l.processValue(node); known {
 		return value, true, err
 	}
@@ -1826,6 +1828,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
 	}
@@ -2141,6 +2144,7 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 // elementAccess lowers array[index], string[index], and tuple[index] with a constant index: the
 // tuple's field of that name.
 func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
 	if value, found, err := l.nodeEnvironmentRead(node); found {
 		return value, err
 	}
