@@ -265,6 +265,10 @@ func (l *lowering) mayHoldNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if binding := &l.optionalReceiverBinding; binding.receiver == node && binding.call == l.optionalReceiverCall {
+		binding.uses++
+		return binding.read, nil
+	}
 	if err := l.nodeHostCallbackArgument(node); err != nil {
 		return nil, err
 	}
