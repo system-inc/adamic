@@ -120,6 +120,16 @@ func (l *lowering) checkViewWidenedReads() error {
 			if entryLocals[value.Local] {
 				return viewedValueSite
 			}
+		case ir.Call:
+			// An overload result check's call admits its value into whatever view its membership reads
+			// through, and the caller's local holds the result as the call's declared type, never a
+			// narrowing, so narrowedEntries finds no read of it. Every such call is an entry, not only
+			// one whose check registered a view: a second call site of the same overload finds its view
+			// cached and registers none (Language's q06 and v10 on #z5d0jye). A call whose result no view
+			// checks adds nothing, since only names some view checks are weighed.
+			if l.overloadCheckCalls[value.Function] {
+				return viewedValueSite
+			}
 		case ir.Property:
 			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] && viewAggregate(value) {
 				return viewedFieldSite

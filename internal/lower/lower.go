@@ -359,6 +359,9 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
+	// where its value enters a view (checkViewWidenedReads).
+	overloadCheckCalls map[int]bool
 	// narrowOverloads memoizes narrowOverload; overloadCalls holds each call to a narrow overload the
 	// lowering lowered, true once overloadResultCheck settled it, which checkOverloadResults reads after
 	// lowering (overload_result_check.go, #z5d0jye).
