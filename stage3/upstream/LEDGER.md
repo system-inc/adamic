@@ -771,3 +771,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   and validates all qualified bindings; 65 stops adding ambient require
   and keeps the readonly process.pid declaration. Evidence belongs on
   typescript/tracing-fs-import-evidence.
+
+- `99-correctness-path-from-components`, type-only: replace internal getPathFromPathComponents's generic result casts with Path/string overloads and a string implementation, pinning the complete owner before and after and preserving emitted comments. Measured source instantiations are string 13, Path 2. Leave forEachAncestorDirectory unchanged: its string implementation candidate fails TS2394 for the Path callback overload. Proof and seam results are on typescript/path-from-components-evidence, outside stage3/adapt; see the adaptation README.

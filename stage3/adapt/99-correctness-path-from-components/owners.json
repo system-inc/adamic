@@ -1,0 +1,12 @@
+[
+  {
+    "file": "path.ts",
+    "owner": "getPathFromPathComponents",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 3,
+    "before": "//// Path Formatting\n\n/**\n * Formats a parsed path consisting of a root component (at index 0) and zero or more path\n * segments (at indices > 0).\n *\n * ```ts\n * getPathFromPathComponents([\"/\", \"path\", \"to\", \"file.ext\"]) === \"/path/to/file.ext\"\n * ```\n *\n * @internal\n */\nexport function getPathFromPathComponents<T extends string>(pathComponents: readonly T[], length?: number): T {\n    if (pathComponents.length === 0) return \"\" as T;\n\n    const root = pathComponents[0] && ensureTrailingDirectorySeparator(pathComponents[0]);\n    return root + pathComponents.slice(1, length).join(directorySeparator) as T;\n}",
+    "after": "/** @internal */ export function getPathFromPathComponents(pathComponents: readonly Path[], length?: number): Path;\n/** @internal */ export function getPathFromPathComponents(pathComponents: readonly string[], length?: number): string;\n//// Path Formatting\n\n/**\n * Formats a parsed path consisting of a root component (at index 0) and zero or more path\n * segments (at indices > 0).\n *\n * ```ts\n * getPathFromPathComponents([\"/\", \"path\", \"to\", \"file.ext\"]) === \"/path/to/file.ext\"\n * ```\n *\n * @internal\n */\nexport function getPathFromPathComponents(pathComponents: readonly string[], length?: number): string {\n    if (pathComponents.length === 0) return \"\";\n\n    const root = pathComponents[0] && ensureTrailingDirectorySeparator(pathComponents[0]);\n    return root + pathComponents.slice(1, length).join(directorySeparator);\n}",
+    "ownerBeforeSha256": "04a763af6cd0af2fd782db3e9c622168a196cf450a8969bd721624429ad0f0c8",
+    "ownerAfterSha256": "a820a527c83d4bc51ee5f4e6db5761eea262ed0abef61e1773a36731ea7136ab"
+  }
+]
