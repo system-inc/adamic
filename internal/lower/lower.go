@@ -214,6 +214,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}
+	// After findCycles, whose lazy view rule keeps a checked view's read of an optional callable its own
+	// stop, and after finishAccessors, whose dispatcher a presence test mustn't have become.
+	if err := lowering.checkOptionalMemberPresence(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
@@ -383,6 +388,9 @@ type lowering struct {
 	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
 	// view is in (view_optional_writes.go).
 	viewOptionalWrites []viewOptionalWrite
+	// optionalPresenceReads are the presence tests of an optional member lowering read off its slot,
+	// judged by what their receivers may hold once the program is lowered (optional_member_presence.go).
+	optionalPresenceReads []optionalPresenceRead
 	// hostMemberWrites are the writes to a method a program's interface or type literal declares, each
 	// with main's stop for it, which lowering stores as fields and checkHostMemberWrites judges once
 	// lowering is done (host_member_write.go).
