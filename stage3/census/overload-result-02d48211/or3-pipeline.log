@@ -27,3 +27,7 @@ start checkpoint-parent pid=14063
 checkpoint-parent child_exit=0
 head-measure child_exit=0
 start checkpoint-head pid=14097
+checkpoint-head child_exit=0
+start pair pid=14131
+pair child_exit=0
+paired streams complete; ready for unit analysis
