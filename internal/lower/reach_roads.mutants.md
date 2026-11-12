@@ -313,3 +313,22 @@ green, and no statement or expression holds a Class, so localFields doesn't ask 
 Expected: TestFunctionReferenceFieldsAreEveryFunctionField goes red, "IR field Class.StaticInit holds an integer, in
 Class, which only this table covers". No other test in reach_roads_test.go reads it: runningFunctions reads only
 the fields functionReferenceFields names.
+
+## 11. A lowering pass builds its flow graph around the wrappers
+
+File: internal/lower/host_member_write.go, in checkHostMemberWrites.
+
+Old:
+
+```go
+	graph := l.flowGraph(l.result)
+```
+
+New:
+
+```go
+	graph := newAllocationFlowGraph(l.result)
+```
+
+Expected: TestEveryLoweringGraphNotesItsDead names host_member_write.go's call. The graph's dead functions go
+unnoted, so a later pass naming one of them would leave checkFlowLiveness silent.
