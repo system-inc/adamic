@@ -1,0 +1,26 @@
+{
+  "-": {
+    "phase": "accepted",
+    "evidence": "Complete resolved root program accepted by lower.Lower."
+  },
+  "sys.ts:1654:13": {
+    "phase": "refusal_scan",
+    "evidence": "lower.go:137-141 calls refuse before declareModule. refusals.go:63 calls mergedFieldRulings; merged_fields.go:84-103 walks merged reads, and :134 calls nodeLibraryRefusal. library_node.go:638-640 emits the Node member NotYet. This stop occurs in the refusal scan despite its NotYet kind."
+  },
+  "commandLineParser.ts:293:35": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:128 invokes enumInitialization before the module refusal scan. namespaces.go emits the enum-initialization NotYet."
+  },
+  "diagnosticInformationMap.generated.ts:13:45": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:128 invokes enumInitialization before the module refusal scan. namespaces.go emits the enum-initialization NotYet."
+  },
+  "semver.ts:71:9": {
+    "phase": "lowering (initialization preflight)",
+    "evidence": "lower.go:133 invokes namespaceInitialization before the module refusal scan. namespaces.go emits the namespace-initialization NotYet."
+  },
+  "path.ts:513:45": {
+    "phase": "refusal_scan",
+    "evidence": "lower.go:137-141 calls refuse before declareModule and moduleStatements. refusals.go:103-110 runs the registered per-node refusal rules. cast_proof.go:155-174 registers castRefusal as rule 1900; :161 calls castProof, whose :195 constructs this Refused reason for the empty-string cast to T. This stop occurs in the refusal scan."
+  }
+}

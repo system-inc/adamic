@@ -1,0 +1,183 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 23.591323198
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/path.ts:513:45",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 21.826043298
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 18.292306447
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.589337861
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 18.715546955
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 41.231238276
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.768528425
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.633095987
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 19.995559834
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.878997663
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.534450886
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 21.679845753
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.26734121
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 19.508462217
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.856817722
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 19.595000383
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 18.97240434
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 29.24546182
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.787073045
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 25.601008441
+  }
+]

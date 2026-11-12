@@ -1,0 +1,180 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 21.830225426
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 25.564289302
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 22.701836008
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 27.436639383
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.684334414
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.574338267999998
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.152637591
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.370966766
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.011119195
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.602553302
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.630460721
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.097940536
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 5.017327052
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 3.922878455
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 18.785828152
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.599330616
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.672806457
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.579045639
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 17.982667898
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts:1654:13",
+    "reason": "node:inspector.Session.post",
+    "seconds": 16.876129588
+  }
+]
