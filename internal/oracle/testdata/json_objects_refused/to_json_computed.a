@@ -1,0 +1,7 @@
+// An own toJSON spelled as a computed key is still an own toJSON, and Node calls it.
+const key = 'toJSON';
+const hooked = { value: 1, [key]: (): string => 'computed' };
+function show(value: { readonly value: number }): string {
+	return JSON.stringify(value) ?? '<undefined>';
+}
+console.log(show(hooked));

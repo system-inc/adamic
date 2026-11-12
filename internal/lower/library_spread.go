@@ -125,12 +125,8 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 		if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
 			return
 		}
-		for _, declaration := range symbol.Declarations {
-			source := ast.GetSourceFileOfNode(declaration)
-			if load.IsLibrary(source) || load.IsPrelude(source) || (source != nil && strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/")) {
-				candidates[proven] = symbol.Name
-				return
-			}
+		if libraryDeclared(symbol) {
+			candidates[proven] = symbol.Name
 		}
 	}
 	var visit ast.Visitor
@@ -144,6 +140,18 @@ func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*check
 		module.AsNode().ForEachChild(visit)
 	}
 	return candidates
+}
+
+// libraryDeclared reports whether a symbol is declared by the library, the prelude or Node's types,
+// whose values' storage isn't a list of own enumerable properties.
+func libraryDeclared(symbol *ast.Symbol) bool {
+	for _, declaration := range symbol.Declarations {
+		source := ast.GetSourceFileOfNode(declaration)
+		if load.IsLibrary(source) || load.IsPrelude(source) || (source != nil && strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/")) {
+			return true
+		}
+	}
+	return false
 }
 
 func (l *lowering) librarySpreadRefusal(spread librarySpread, candidates map[*checker.Type]string) error {

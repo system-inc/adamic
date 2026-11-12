@@ -1,0 +1,16 @@
+// Absent optional fields aren't own keys, so Node leaves them out; updates to present optional fields
+// keep their allocation's creation order (#d9ep7de).
+interface Options {
+	readonly name: string;
+	readonly size?: number;
+	readonly label?: string;
+	readonly inner?: { readonly x: number };
+}
+const bare: Options = { name: 'bare' };
+const full: Options = { name: 'full', size: 2, label: 'l', inner: { x: 1 } };
+console.log(JSON.stringify(bare) ?? '<undefined>');
+console.log(JSON.stringify(full) ?? '<undefined>');
+const later: { name: string; size?: number; label?: string } = { name: 'later', label: 'first', size: 0 };
+later.label = 'second';
+later.size = 5;
+console.log(JSON.stringify(later) ?? '<undefined>');

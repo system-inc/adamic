@@ -69,7 +69,8 @@ func jsonScalar(s *ir.JSONSchema) bool {
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
-// through an object type is refused: that type can hide additional fields or a toJSON method.
+// through an object type is printed from its allocation at run time (jsonReference): that type can
+// hide additional fields, and a cast can make it lie about the ones it shows.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
 	if l.uninitializedInitializer(n) && l.placeholderDeclaration(n) {
@@ -173,12 +174,16 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		value, err := l.expression(node)
 		return value, schema, err
 	}
-	schema, err := l.jsonType(node, l.checker.GetTypeAtLocation(node), 0)
+	proven := l.checker.GetTypeAtLocation(node)
+	schema, err := l.jsonType(node, proven, 0)
 	if err != nil {
 		return nil, nil, err
 	}
 	value, err := l.expression(node)
-	return value, schema, err
+	if err != nil {
+		return nil, nil, err
+	}
+	return l.jsonReferenceValue(value, proven, schema), schema, nil
 }
 func jsonIndex(name string) (uint64, bool) {
 	n, err := strconv.ParseUint(name, 10, 32)
@@ -196,6 +201,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	}
 	if t.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
+	}
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return &ir.JSONSchema{Kind: "null"}, nil
 	}
 	of, known := l.representation(t)
 	if !known {
@@ -224,8 +232,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return &ir.JSONSchema{Kind: "array", Element: child}, err
 	}
 	if of == ir.Object || of == ir.Weak {
-		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
+		return l.jsonReference(node, t, of)
 	}
+	reference := false
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, m := range t.Types() {
 			child, err := l.jsonType(node, m, depth+1)
@@ -235,7 +244,13 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 			if of == ir.Union && (child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple" || child.Kind == "record") {
 				return nil, l.notYet(node, "JSON.stringify a union containing containers without runtime element metadata")
 			}
+			reference = reference || child.Kind == "reference"
 		}
+	}
+	if of == ir.Union && reference {
+		// A union holding an object reference is read by its heap header like any union, and the
+		// object it holds is described from its allocation.
+		return &ir.JSONSchema{Kind: "reference"}, nil
 	}
 	kind, ok := kinds[of]
 	if !ok {
@@ -262,6 +277,190 @@ func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSche
 	if symbol == nil {
 		return nil, nil, l.notYet(node, "JSON.stringify shorthand without a value binding")
 	}
-	schema, err := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
-	return value, schema, err
+	proven := l.checker.GetTypeOfSymbol(symbol)
+	schema, err := l.jsonType(node.Name(), proven, 0)
+	if err != nil {
+		return nil, nil, err
+	}
+	return l.jsonReferenceValue(value, proven, schema), schema, nil
+}
+
+// jsonReferenceRead is an object reference JSON.stringify prints, and the type it was proven at,
+// judged by jsonReferenceReach once every shape the program makes is known.
+type jsonReferenceRead struct {
+	node   *ast.Node
+	proven *checker.Type
+}
+
+// jsonReference admits an object reference, which json_objects.c prints from its allocation at run
+// time: its actual names in Node's order, each slot by the representation byte its last write left,
+// never by this type, which a cast can make lie. What the type can reach is judged after lowering
+// (jsonReferenceReach), when the shapes it may really be are all known.
+func (l *lowering) jsonReference(node *ast.Node, t *checker.Type, of ir.Type) (*ir.JSONSchema, error) {
+	if of == ir.Weak {
+		return nil, l.notYet(node, "JSON.stringify a Weak reference (Node follows it, so what it reaches could close a cycle)")
+	}
+	present := l.checker.GetNonNullableType(t)
+	members := []*checker.Type{present}
+	if present.Flags()&checker.TypeFlagsUnion != 0 {
+		members = present.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 || checker.IsTupleType(member) {
+			return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t)+" held as an object reference")
+		}
+	}
+	l.jsonReferenceReads = append(l.jsonReferenceReads, jsonReferenceRead{node: node, proven: t})
+	return &ir.JSONSchema{Kind: "reference"}, nil
+}
+
+// jsonReferenceValue holds an object reference where the encoder reads a union. An object held as
+// T | null keeps null as a null pointer (representation), which a union reads as undefined, so that
+// one becomes the union's null; T and T | undefined are the union as they are.
+func (l *lowering) jsonReferenceValue(value ir.Expression, proven *checker.Type, schema *ir.JSONSchema) ir.Expression {
+	if schema.Kind != "reference" || value.Type() != ir.Object {
+		return value
+	}
+	if l.includesNull(proven) {
+		return ir.Logical{Left: value, Right: ir.Box{Value: ir.Null{Of: ir.Object}}, Of: ir.Union, KeepTruthy: true}
+	}
+	return fit(value, ir.Union)
+}
+
+// jsonReferenceReach refuses what an object reference JSON.stringify prints can reach and the
+// runtime can't print as Node does, judged as the cycle finder judges reach: through every field,
+// element and value, and every object type the program makes that can be seen as a type reached,
+// with fields that type doesn't show. A function is left, as Node omits it. It runs after
+// graphTypes, so a graph type is known; json_objects.c stops at run time on what a type can't show.
+func (f *cycleFinder) jsonReferenceReach() error {
+	for _, read := range f.l.jsonReferenceReads {
+		seen := map[*checker.Type]bool{}
+		queue := []*checker.Type{read.proven}
+		for len(queue) != 0 {
+			proven := queue[len(queue)-1]
+			queue = queue[:len(queue)-1]
+			if proven == nil || seen[proven] {
+				continue
+			}
+			seen[proven] = true
+			reason, next := f.jsonReach(proven)
+			if reason != "" {
+				return f.l.notYet(read.node, "JSON.stringify "+reason)
+			}
+			queue = append(queue, next...)
+		}
+	}
+	return nil
+}
+
+// jsonReach is why JSON.stringify can't print what holds a value of this type, or else the types
+// it holds.
+func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) {
+	l := f.l
+	name := l.checker.TypeToString(proven)
+	if f.weak(proven) {
+		return "a value that can reach a Weak reference, " + name + " (Node follows it, so what it reaches could close a cycle)", nil
+	}
+	if l.result.GraphTypes[int(proven.Id())] {
+		return "a value that can reach " + name + ", a graph type whose values may form a cycle", nil
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		return "", proven.Types()
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return "", nil
+	}
+	if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
+		return "a value that can reach " + name + ", a class itself", nil
+	}
+	if f.isFunction(proven) {
+		return "", nil
+	}
+	if element := l.recordElement(proven); element != nil {
+		return "", []*checker.Type{element}
+	}
+	if l.isArrayType(proven) || checker.IsTupleType(proven) {
+		return "", l.checker.GetTypeArguments(proven)
+	}
+	if l.jsonLibrary(proven, map[*checker.Type]bool{}) {
+		return "a value that can reach " + name + ", a library value whose own fields aren't what Node prints", nil
+	}
+	// The checker's properties of a class include what its bases declare: a toJSON a base declares is
+	// on the prototype chain, and Node calls it as it calls the leaf's own.
+	if l.checker.GetPropertyOfType(proven, "toJSON") != nil {
+		return "a value that can reach " + name + ", which has a toJSON member", nil
+	}
+	next := []*checker.Type{}
+	for _, property := range l.checker.GetPropertiesOfType(proven) {
+		if accessorSymbol(property) && literalAccessor(property) {
+			return "a value that can reach " + name + ", whose own getter Node calls", nil
+		}
+	}
+	for _, field := range f.fields(proven) {
+		if declared := l.checker.GetNonMissingTypeOfSymbol(field); jsonNullablePointer(l, declared) {
+			return "a value that can reach " + name + "." + field.Name + ", a field of type " + l.checker.TypeToString(declared) + " held as a pointer, whose null and undefined are both a null pointer when a variable wrote it (lifted by #ckxcnr6)", nil
+		}
+		next = append(next, l.checker.GetTypeOfSymbol(field))
+	}
+	for _, shape := range f.shapeCandidates(proven) {
+		if shape != proven && l.checker.IsTypeAssignableTo(shape, proven) {
+			next = append(next, shape)
+		}
+	}
+	return "", next
+}
+
+// jsonNullablePointer reports whether a field's type is held as a bare pointer (an object, an array, a
+// map, a function, a promise, a typed array) and admits null or undefined. Both are then a null pointer,
+// and the slot's byte tells them apart only when a literal null or undefined wrote it
+// (emit_objects.go's fieldRepresentation), so json_objects.c couldn't say which Node prints. A string, a
+// union, a weak link and a record are boxed where null is possible, so their null pointer is undefined
+// alone, and an optional field's absence is its presence, never a pointer: GetNonMissingTypeOfSymbol
+// leaves the missing type out.
+func jsonNullablePointer(l *lowering, declared *checker.Type) bool {
+	if !l.includesNull(declared) && !l.includesUndefined(declared) {
+		return false
+	}
+	of, known := l.representation(declared)
+	if !known {
+		return false
+	}
+	switch of {
+	case ir.Object, ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator:
+		return true
+	}
+	return false
+}
+
+// jsonLibrary reports whether a type is the library's, the prelude's or Node's, or a class extending one:
+// such a value's storage is its own (a Date's, an Error's, a Map's), never the own fields Node prints. An
+// interface extending one declares no storage; the allocation behind it is judged as its own shape.
+func (l *lowering) jsonLibrary(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if symbol := l.unbranded(proven).Symbol(); symbol != nil && libraryDeclared(symbol) {
+		return true
+	}
+	if !isClassInstance(proven) {
+		return false
+	}
+	for _, base := range l.classBases(proven) {
+		if l.jsonLibrary(base, seen) {
+			return true
+		}
+	}
+	return false
+}
+
+// literalAccessor reports whether an accessor is an object literal's own, which Node calls when it
+// prints the object; a class's is on its prototype, which Node leaves.
+func literalAccessor(property *ast.Symbol) bool {
+	for _, declaration := range property.Declarations {
+		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindObjectLiteralExpression {
+			return true
+		}
+	}
+	return false
 }

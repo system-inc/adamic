@@ -1,0 +1,1 @@
+internal/oracle/testdata/json_objects_refused/weak_field.a:12:28: stage 0 can't lower JSON.stringify a value that can reach a Weak reference, Weak<Parent> (Node follows it, so what it reaches could close a cycle) yet

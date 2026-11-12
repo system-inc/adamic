@@ -1,0 +1,11 @@
+// A graph type's values may form a cycle, which Node prints as a TypeError naming the path.
+class Ring {
+	next: Ring | undefined = undefined;
+	constructor(readonly name: string) {}
+}
+const first = new Ring('first');
+const second = new Ring('second');
+first.next = second;
+second.next = first;
+console.log(JSON.stringify(second.name) ?? '<undefined>');
+console.log(JSON.stringify(first) ?? '<undefined>');

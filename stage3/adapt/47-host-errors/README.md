@@ -293,21 +293,23 @@ unreachable source text. File operations below that guard remain unchanged.
 65 no longer creates tracing's ambient require and retains readonly process.pid.
 The now-unused errorMessage import owned by 47 is removed as well.
 
-The base is the requested fs-view retirement branch at 9ad919ace, because it
-was absent from fetched main d35fe5e7f. Raw validation evidence belongs on
+The final base is the requested fs-view retirement re-cut at 2d7a1683,
+including the independent pop/popAll amendment. Raw validation evidence is on
 `typescript/tracing-fs-import-evidence`, outside the adaptation inputs.
 
-The resumed #nqp4p7g instruction permits closed errorMessage elimination and
-relocation of a hostErrors module consisting only of imports and function
-declarations. Every other emitted hunk must be a proven esbuild rename.
-The complete binding-reference census is retained on the evidence branch.
-Its required closure condition fails: six export reads remain in run.js and
-typescript.js, so full hunk certification is not claimed.
+The amended closed-removal contract distinguishes catch reads from live export
+reads: three catch references become zero; the six export-reference expressions
+in run.js and typescript.js retain their exact bytes. All 2,256 runtime export
+keys, including errorMessage, must match. Only _tsc.js eliminates errorMessage,
+whose sole reader there was the removed catch. The hostErrors source body must
+contain only imports and function declarations. The emission audit certifies
+all other changes as symbol renames or relocation of those declarations.
 
 Node loads node:fs at module evaluation rather than at the first startTracing
-call. This builtin load cannot fail on any configuration we run: all are Node
+call. The builtin load cannot fail on any configuration we run: all are Node
 configurations with fs built in. sys.ts already imports node:fs before the CLI
-can invoke tracing. A deliberately failing loader counter control exercises the catch once.
-The whole-lane zero count and repeated-trace comparison remain incomplete
-because the resumed instruction's closed-removal condition fails. Evidence is
-on `typescript/tracing-fs-import-evidence`, outside the adapter directories.
+can invoke tracing. A private control-lane counter measures executions of the
+old catch, and a forced-failure positive control must fire once. The repeated
+trace proof compares two control and two final runs: writeStackEvent's sampled
+X events are removed under its 10 ms sampling rule; types, legend, retained
+events and plain compilation output are compared independently.

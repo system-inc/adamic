@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// These programs use only the schemas main can prove, without runtime providers.
+// These programs use only the schemas lowering proves statically, without runtime providers.
 var jsonEncoderFixtures = []string{"scalars", "values", "options", "escapes", "numbers", "undefined", "indent", "keys", "replacer", "census_append_overload"}
 
 // One fixture and one runtime configuration per unit, including cold archives.
@@ -21,6 +21,14 @@ func jsonEncoderMainFixture(t *testing.T, index, backend int) {
 	if name == "census_append_overload" {
 		fixture = "internal/oracle/testdata/" + name + ".a"
 	}
+	fixtureAgreesOnBackend(t, fixture, backend)
+}
+
+// fixtureAgreesOnBackend holds one fixture to Node on one backend: 0 native sanitized, 1 native released, 2 the
+// JavaScript backend, 3 wasm32 (with ADAMIC_ORACLE_WASI=1), and 4 the counted build, whose counts must be the
+// fixture's record.
+func fixtureAgreesOnBackend(t *testing.T, fixture string, backend int) {
+	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
 		t.Fatal(err)
@@ -80,7 +88,8 @@ func jsonEncoderMainFixture(t *testing.T, index, backend int) {
 	}
 }
 
-// Production callers supply no providers; missing metadata must never be approximated.
+// A call that prints no object reference supplies no provider (json_objects.c's is only for one that may);
+// missing metadata must never be approximated.
 func jsonEncoderMissingProviders(t *testing.T, backend int) {
 	code := jsonEncoderSource(t)
 	for _, target := range []string{"native", "wasm32-wasi"}[backend : backend+1] {
