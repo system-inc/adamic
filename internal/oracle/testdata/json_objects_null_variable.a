@@ -1,0 +1,21 @@
+// A nullable reference written from a variable keeps its null tag in the slot byte.
+class Link {
+	readonly target: { readonly v: number } | null;
+	constructor(target: { readonly v: number } | null) {
+		this.target = target;
+	}
+}
+console.log(JSON.stringify(new Link({ v: 1 })) ?? '<undefined>');
+console.log(JSON.stringify(new Link(null)) ?? '<undefined>');
+
+// An undefined spread gives its leftover nullable reference an undefined value.
+// The literal's own nullable field still records null from a variable.
+interface B {
+	readonly v: number;
+}
+function showNullableSpread(source: { readonly saved: B | null; readonly target: B | null } | undefined, target: B | null): void {
+	const spread = { ...source, target };
+	console.log(JSON.stringify(spread) ?? '<undefined>');
+}
+showNullableSpread(undefined, null);
+showNullableSpread({ saved: null, target: { v: 1 } }, { v: 3 });

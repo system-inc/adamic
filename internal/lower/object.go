@@ -127,7 +127,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: l.fieldNullish(property, value)})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -2382,7 +2382,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 				return nil, l.notYet(item, "a tuple element of another type than its tuple's")
 			}
 		}
-		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
+		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value, Nullish: l.fieldNullish(item, value)})
 	}
 	literal.Fields = append(literal.Fields, missing...)
 	return literal, nil

@@ -148,8 +148,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
+			if field.Nullish == 0 && e.fieldTypesNeeded() {
+				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, ""))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
 				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
@@ -159,6 +159,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
+			}
+			if field.Nullish != 0 && e.fieldTypesNeeded() {
+				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, slot+"->reference"))
 			}
 		}
 		return object
@@ -222,8 +225,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 	}
 	for index, field := range literal.Fields {
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
+		if (field.Nullish == 0 || field.Absent) && e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %s;", object, index, fieldInitialRepresentation(field, ""))
 		}
 		if field.Absent {
 			continue
@@ -238,16 +241,19 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
 			e.line("%s->slots[%d].reference = %s;", object, index, value)
-			continue
-		}
-		if field.Value.Type().IsReference() {
-			if region && !constantUndefined.MatchString(value) {
-				// Report both retained and moved heap references. Constants pass over at runtime.
-				e.line("adamic_region_hold(region, %s);", value)
+		} else {
+			if field.Value.Type().IsReference() {
+				if region && !constantUndefined.MatchString(value) {
+					// Report both retained and moved heap references. Constants pass over at runtime.
+					e.line("adamic_region_hold(region, %s);", value)
+				}
+				value = e.keptIn(object, value)
 			}
-			value = e.keptIn(object, value)
+			e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 		}
-		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
+		if field.Nullish != 0 && e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %s;", object, index, fieldInitialRepresentation(field, fmt.Sprintf("%s->slots[%d].reference", object, index)))
+		}
 	}
 	return object
 }
@@ -558,11 +564,25 @@ func fieldRepresentation(value ir.Expression) int {
 	}
 	return int(value.Type())
 }
-func fieldInitialRepresentation(field ir.Field) int {
-	if field.Uninitialized && field.Value.Type() == ir.Union {
-		return int(ir.Union)
+
+// slotRepresentation reads an already evaluated pointer. Only nullable bare
+// references need a branch; literal tags and all other writes keep their text.
+func slotRepresentation(representation int, nullish ir.Type, value string) string {
+	if nullish != 0 && representation != int(ir.NullRepresentation) && representation != int(ir.UndefinedRepresentation) {
+		return fmt.Sprintf("(%s == NULL ? %d : %d)", value, nullish, representation)
 	}
-	return fieldRepresentation(field.Value)
+	return strconv.Itoa(representation)
+}
+
+func fieldInitialRepresentation(field ir.Field, value string) string {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return strconv.Itoa(int(ir.Union))
+	}
+	if field.Absent {
+		// Reserved storage has no evaluated value to test for a null pointer.
+		return strconv.Itoa(fieldRepresentation(field.Value))
+	}
+	return slotRepresentation(fieldRepresentation(field.Value), field.Nullish, value)
 }
 
 // Optional scalars and implementation words use the numeric slot representation.

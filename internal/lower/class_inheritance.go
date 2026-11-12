@@ -451,7 +451,7 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		} else if of.IsReference() {
 			value = ir.Undefined{Of: of}
 		}
-		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())})
+		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Nullish: l.fieldNullish(member.AsPropertyDeclaration().Initializer, value), Site: l.writeSite(declaration.Name())})
 		available[l.fieldName(member.Name())] = true
 	}
 	return statements, nil

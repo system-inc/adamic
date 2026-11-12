@@ -89,7 +89,7 @@ func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expr
 				index := len(l.result.Functions)
 				self := len(l.result.Locals)
 				l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index}, ir.Local{Name: "value", Type: of, Function: index})
-				l.result.Functions = append(l.result.Functions, ir.Function{Name: "super_static_set", Parameters: []int{self, self + 1}, Body: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: of}, Site: l.staticWriteSite(target)}}})
+				l.result.Functions = append(l.result.Functions, ir.Function{Name: "super_static_set", Parameters: []int{self, self + 1}, Body: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.fieldName(target.Name()), Value: ir.Read{Local: self + 1, Of: of}, Nullish: l.fieldNullish(valueNode, fit(value, of)), Site: l.staticWriteSite(target)}}})
 				return ir.Call{Function: index, Arguments: []ir.Expression{ir.Read{Local: l.this, Of: ir.Object}, fit(value, of)}}, true, nil
 			}
 		}
@@ -196,7 +196,7 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 		if slotless(value.Type()) {
 			return nil, true, l.notYet(property, "an accessor literal's field without a native slot")
 		}
-		field := ir.Field{Name: name.Text(), Value: value}
+		field := ir.Field{Name: name.Text(), Value: value, Nullish: l.fieldNullish(property, value)}
 		literal.Fields = append(literal.Fields, field)
 		if !keys[name.Text()] {
 			l.result.Classes[class-1].PublicFields = append(l.result.Classes[class-1].PublicFields, field)
@@ -319,12 +319,12 @@ func (l *lowering) finishAccessors() error {
 	}
 	dispatchers := map[string]int{}
 	var failure error
-	dispatch := func(name string, of ir.Type, setter bool, site int) int {
+	dispatch := func(name string, of ir.Type, setter bool, site int, nullish ir.Type) int {
 		kind := "get:"
 		if setter {
 			kind = "set:"
 		}
-		key := fmt.Sprintf("%s%s:%d:%d", kind, name, of, site)
+		key := fmt.Sprintf("%s%s:%d:%d:%d", kind, name, of, site, nullish)
 		if index, exists := dispatchers[key]; exists {
 			return index
 		}
@@ -370,7 +370,7 @@ func (l *lowering) finishAccessors() error {
 			function.Parameters = append(function.Parameters, incoming)
 			value := ir.Read{Local: incoming, Of: of}
 			call.Arguments = append(call.Arguments, value)
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Site: site}}}}
+			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Nullish: nullish, Site: site}}}}
 		} else {
 			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: ir.Property{Object: object, Name: name, Of: of}}}
 		}
@@ -410,7 +410,7 @@ func (l *lowering) finishAccessors() error {
 						failure = &NotYet{Where: expression.ViewWhere, What: "a checked view read whose receiver may own an accessor of the same name"}
 						return value
 					}
-					index := dispatch(expression.Name, expression.Of, false, 0)
+					index := dispatch(expression.Name, expression.Of, false, 0, 0)
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
@@ -421,7 +421,7 @@ func (l *lowering) finishAccessors() error {
 						failure = &NotYet{Where: l.writeSiteWhere(expression.Site), What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
 						return value
 					}
-					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
+					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site, expression.Nullish)
 					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
 				}
 			}
