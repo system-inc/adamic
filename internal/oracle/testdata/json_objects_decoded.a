@@ -1,0 +1,15 @@
+// A decoded allocation prints its fields, directly and held by a class field (#pmjwn79).
+import { decodeJson } from 'adamic';
+interface Point {
+	readonly x: number;
+	readonly label: string;
+	readonly nested: { readonly ok: boolean };
+}
+class Box {
+	constructor(public readonly point: Point) {}
+}
+const result = decodeJson<Point>('{"x":1,"label":"a","nested":{"ok":true}}');
+if (result.kind === 'Ok') {
+	console.log(JSON.stringify(result.value) ?? '<undefined>');
+	console.log(JSON.stringify(new Box(result.value)) ?? '<undefined>');
+}

@@ -90,13 +90,14 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 }
 
 // onNodeWith runs a program on Node through the oracle's runner, with the fixture's arguments.
+// Ask the source at path for its descriptor product, as onNode does, so the runner never builds it.
 func onNodeWith(t *testing.T, how inputRun, path string) run {
 	t.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return executeInput(t, how, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, how.arguments...)...)
+	return executeInput(t, how, jsonTypesEnvironment(t, path), "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, how.arguments...)...)
 }
 
 // sharedDirectory is a directory for what the runs need, which a run dropped to nobody can still

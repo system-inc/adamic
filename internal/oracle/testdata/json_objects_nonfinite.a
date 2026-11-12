@@ -1,0 +1,8 @@
+// Node prints null for each nonfinite number field (#pmjwn79).
+interface Numbers {
+	readonly nan: number;
+	readonly positive: number;
+	readonly negative: number;
+}
+const numbers: Numbers = { nan: NaN, positive: Infinity, negative: -Infinity };
+console.log(JSON.stringify(numbers) ?? '<undefined>');

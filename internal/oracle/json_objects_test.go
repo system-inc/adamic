@@ -18,7 +18,10 @@ import (
 // adamic_object_ordered reds view_order (its index key comes first on Node); reading every null pointer as null
 // reds nullish (its undefined fields print null); and reading a null pointer in a String slot as null reds
 // nullish too (a string | undefined a variable wrote, as in { name: maybeName }, prints "name":null).
-var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish"}
+// Function fields are omitted and function array entries print null; nonfinite fields print null; decoded
+// allocations print their fields even through a class field (#pmjwn79). Treating a closure as an empty
+// object in json_stringify.c instead of a function reds functions.
+var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish", "functions", "nonfinite", "decoded"}
 
 func TestJSONObjectsAgreeWithNode(t *testing.T) {
 	t.Parallel()
