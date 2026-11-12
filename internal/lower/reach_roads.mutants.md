@@ -132,16 +132,17 @@ File: internal/lower/view_flow.go, collectAllocationFlowGraph.
 Old:
 
 ```go
-		if !running[i] {
+		if !graph.running[i] {
 ```
 
 New:
 
 ```go
-		if false && !running[i] {
+		if false && !graph.running[i] {
 ```
 
-The plain `if false {` doesn't compile: `running` would be declared and never used.
+The set is the graph's field, which checkFlowLiveness reads at the end of lowering, so the plain `if false {` compiles
+too; this spelling keeps the line's shape.
 
 Expected: TestReachUncalledWriterMakesNoWrite, TestReachSystemIsItsLiteral and
 TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "local or result has no tracked producer": the uncalled
@@ -225,6 +226,26 @@ New:
 
 Expected: TestReachLogicalOrIsEitherOperand reaches only the first literal, a known answer missing the fallback the
 right side gives where the left is undefined: the exact set catches it.
+
+## 7. Road 3's late-reference check removed
+
+File: internal/lower/view_flow.go, checkFlowLiveness.
+
+Old:
+
+```go
+		if dead[function] && running[function] {
+```
+
+New:
+
+```go
+		if false && dead[function] && running[function] {
+```
+
+Expected: TestReachLateReferenceIsACompilerBug gets no error after Main calls the function the graph took to never
+run. Deleting the call to checkFlowLiveness at the end of lower.go's lowerWithElementKey instead has no witness: no
+program reaches a late reference today, which is what the check holds, so only a run that hit one would show it.
 
 ## 8. A one-based field read as an index
 
