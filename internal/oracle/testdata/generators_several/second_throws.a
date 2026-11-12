@@ -1,28 +1,31 @@
 // A view fed by generators of two functions, only one of which can throw (#qk8rztp S3c-2): loud
 // throws after its first yield, quiet and calm never do. The step's caller must test for a pending
 // throw whenever any function feeding the view may leave one, so the throw out of loud's body is
-// caught by the try around the for-of, which prints it beside what the loop saw. Loud is listed
-// after quiet and before calm, so a step that asked only the first function its view lists would miss
-// the throw in walk's or in walkAgain's, whether the three are numbered in that order or its reverse.
-function* quiet(limit: number): Generator<string, void, undefined> {
+// caught by the try around the for-of, which prints it beside what the loop saw. quiet and calm
+// yield numbers they compute without a call, so neither body can leave a throw (no string is built
+// in either, whose building lowering may count as one), and a step that asked only one of the
+// functions its view lists would miss loud's throw in walk's or in walkAgain's: loud is listed after
+// quiet and before calm, whether the three are numbered in that order or its reverse.
+function* quiet(limit: number): Generator<number, void, undefined> {
     for (let index = 0; index < limit; index++) {
-        yield `quiet ${String(index)}`;
+        yield index;
     }
 }
-function* loud(limit: number): Generator<string, void, undefined> {
-    yield `loud ${String(limit)}`;
+function* loud(limit: number): Generator<number, void, undefined> {
+    yield limit;
     throw new Error(`loud stopped after ${String(limit)}`);
 }
-function* calm(word: string): Generator<string, void, undefined> {
-    yield `${word} once`;
-    yield `${word} twice`;
+function* calm(limit: number): Generator<number, void, undefined> {
+    yield limit * 2;
+    yield limit * 3;
 }
-function walk(steps: Iterable<string>): string {
+function walk(steps: Iterable<number>): string {
     let seen = '';
     try {
         for (const step of steps) {
-            seen += `${step}, `;
+            seen += `${String(step)}, `;
         }
+        seen += 'finished';
     }
     catch(error) {
         if(error instanceof Error) {
@@ -31,12 +34,13 @@ function walk(steps: Iterable<string>): string {
     }
     return seen;
 }
-function walkAgain(steps: Iterable<string>): string {
+function walkAgain(steps: Iterable<number>): string {
     let seen = '';
     try {
         for (const step of steps) {
-            seen += `${step}; `;
+            seen += `${String(step)}; `;
         }
+        seen += 'finished again';
     }
     catch(error) {
         if(error instanceof Error) {
@@ -48,6 +52,6 @@ function walkAgain(steps: Iterable<string>): string {
 console.log(walk(quiet(2)));
 console.log(walk(loud(3)));
 console.log(walk(quiet(0)));
-console.log(walkAgain(calm(`c${String(1)}`)));
+console.log(walkAgain(calm(1)));
 console.log(walkAgain(loud(4)));
-console.log(walkAgain(calm(`c${String(2)}`)));
+console.log(walkAgain(calm(2)));
