@@ -126,6 +126,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Block.Closes":                       {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"BooleanConstant.Value":              {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"BooleanToString.Value":              {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"BoundClosure.Fixed":                 {"int", copiedIR, "fixed argument count; immutable scalar"},
 	"BoundClosure.Function":              {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"BoundClosure.GraphTypes":            {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"BoundClosure.ProgramRegion":         {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},

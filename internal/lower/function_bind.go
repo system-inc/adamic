@@ -141,7 +141,7 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	l.result.Functions[wrapper] = function
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: boundType, function: wrapper, node: node})
-	made, err := l.programAllocation(node, l.graphAllocation(ir.BoundClosure{Function: wrapper}, node))
+	made, err := l.programAllocation(node, l.graphAllocation(ir.BoundClosure{Function: wrapper, Fixed: len(values) - 2}, node))
 	if err != nil {
 		return nil, true, err
 	}
@@ -200,7 +200,7 @@ func (l *lowering) boundSource(node *ast.Node, seen map[*ast.Symbol]bool) bool {
 
 func (l *lowering) boundObservation(node *ast.Node) error {
 	if node.Kind == ast.KindCallExpression {
-		if l.boundKeyedLength(node) {
+		if l.boundKeyedLength(node) && l.boundLengthMethodEntry(node.AsCallExpression().Arguments.Nodes[0], map[*ast.Symbol]bool{}) {
 			return l.notYet(node, "a bound function's length (bound length metadata)")
 		}
 		if err := l.bindReceiverRule(node); err != nil {
@@ -212,7 +212,9 @@ func (l *lowering) boundObservation(node *ast.Node) error {
 		if l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
 			switch node.Name().Text() {
 			case "length":
-				return l.notYet(node, "a bound function's length (bound length metadata)")
+				if l.boundLengthMethodEntry(access.Expression, map[*ast.Symbol]bool{}) {
+					return l.notYet(node, "a bound function's length (bound length metadata)")
+				}
 			case "name":
 				return l.notYet(node, "a bound function's name (bound name metadata)")
 			case "bind":
@@ -226,8 +228,76 @@ func (l *lowering) boundObservation(node *ast.Node) error {
 	return nil
 }
 
-// A literal length key passed to the admitted Reflect.get helper must stop for
-// a bound value before the unknown-view guard loses the adapter's provenance.
+// Class method entries carry code, not a runtime source length. Their bound
+// wrappers can be hidden in ordinary callable slots too; unproven origins stop.
+func (l *lowering) boundLengthMethodEntry(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindAsExpression {
+		return l.boundLengthMethodEntry(node.AsAsExpression().Expression, seen)
+	}
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind != ast.KindPropertyAccessExpression {
+			return true
+		}
+		target := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+		if target.Kind != ast.KindPropertyAccessExpression || len(call.Arguments.Nodes) == 0 {
+			return !l.boundLengthOriginal(target, seen)
+		}
+		return true // Own slots can also be overwritten with entry-backed bound wrappers.
+	}
+	if !ast.IsIdentifier(node) {
+		return true
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || seen[symbol] || l.assignedSymbol(symbol) {
+		return true
+	}
+	seen[symbol] = true
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindVariableDeclaration && declaration.AsVariableDeclaration().Initializer != nil {
+			return l.boundLengthMethodEntry(declaration.AsVariableDeclaration().Initializer, seen)
+		}
+	}
+	return true
+}
+
+// A closure's source length is available for original source functions. An
+// erased bound method can itself occupy a closure slot while lacking that
+// metadata, so unproven and reassigned sources keep the observation stop.
+func (l *lowering) boundLengthOriginal(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+	if node == nil {
+		return false
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindAsExpression {
+		return l.boundLengthOriginal(node.AsAsExpression().Expression, seen)
+	}
+	switch node.Kind {
+	case ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindArrowFunction:
+		return true
+	case ast.KindIdentifier:
+		symbol := l.symbol(node)
+		if symbol == nil || seen[symbol] || l.assignedSymbol(symbol) {
+			return false
+		}
+		seen[symbol] = true
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration {
+				return true
+			}
+			if declaration.Kind == ast.KindVariableDeclaration {
+				return l.boundLengthOriginal(declaration.AsVariableDeclaration().Initializer, seen)
+			}
+		}
+
+	}
+	return false
+}
+
+// Recognize literal length reads through the Reflect.get helper before the
+// unknown-view guard loses the adapter's provenance.
 // Match the helper's parameter symbols and read shape, never its written name.
 func (l *lowering) boundKeyedLength(node *ast.Node) bool {
 	call := node.AsCallExpression()

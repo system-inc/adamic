@@ -534,6 +534,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Closure && name == "length" && l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
+		return ir.Length{Array: object, Optional: access.QuestionDotToken != nil}, nil
+	}
 	if object.Type() == ir.Object || object.Type() == ir.Array {
 		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
 			return value, err
@@ -863,6 +866,7 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+
 	if value, known, err := l.processValue(node); known {
 		return value, true, err
 	}

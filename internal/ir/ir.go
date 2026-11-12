@@ -613,7 +613,8 @@ type (
 		Metadata []Field
 	}
 
-	// Length is array.length.
+	// Length is array.length or a locally observed closure's runtime arity.
+	// Array names the operand in both cases; its type selects the runtime metadata.
 	Length struct {
 		Array Expression
 
@@ -895,6 +896,7 @@ type (
 	// BoundClosure snapshots a target, receiver and fixed arguments in the ordinary
 	// captured cells of Function. It has fresh identity and no canonical cache.
 	BoundClosure struct {
+		Fixed         int // Number of arguments captured after thisArg, including excess arguments.
 		Function      int
 		GraphTypes    []int
 		ProgramRegion bool

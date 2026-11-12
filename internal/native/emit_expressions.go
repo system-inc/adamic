@@ -358,7 +358,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.BoundMethod:
 		return e.boundMethod(expression)
 	case ir.BoundClosure:
-		return e.makeClosure(ir.MakeClosure{Function: expression.Function, ProgramRegion: expression.ProgramRegion}, true, expression.GraphTypes)
+		closure := e.makeClosure(ir.MakeClosure{Function: expression.Function, ProgramRegion: expression.ProgramRegion}, true, expression.GraphTypes)
+		target := e.temporary()
+		e.line("const adamic_closure *%s = %s->cells[0]->value.reference;", target, closure)
+		// Class-method entry bindings have no target closure; their length stays refused.
+		e.line("if (%s != NULL) %s->source_length = %s->source_length > %d ? %s->source_length - %d : 0;", target, closure, target, expression.Fixed, target, expression.Fixed)
+		return closure
 	case ir.MakeClosure:
 		return e.makeClosure(expression, false, nil)
 	case ir.CallClosure:
@@ -779,6 +784,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Array.Type() == ir.Closure {
+			value := e.value(expression.Array)
+			if expression.Optional {
+				return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->source_length})", value, zero(ir.MaybeNumber), value))
+			}
+			return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->source_length", value))
+		}
 		if expression.Array.Type().IsTypedArray() {
 			array := e.value(expression.Array)
 			length := fmt.Sprintf("adamic_typed_array_length(%s)", array)
@@ -992,6 +1004,7 @@ func (e *emitter) boundMethod(expression ir.BoundMethod) string {
 			arguments = append(arguments, e.value(fixed))
 		}
 		result := e.own(ir.Closure, fmt.Sprintf("%s(%s)", e.functionName(expression.Factory), strings.Join(arguments, ", ")))
+		e.line("if (%s != NULL) %s->source_length = %s->source_length > %d ? %s->source_length - %d : 0;", target, result, target, len(expression.Fixed), target, len(expression.Fixed))
 		if e.program.ClosureConventionNeeded() {
 			e.line("%s->bound_method_storage.counted = %s.counted;", result, method)
 			e.line("if (%s.counted) {", method)
