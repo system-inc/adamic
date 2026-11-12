@@ -35,3 +35,7 @@ Mutant run and restored: the classifier accepts array bases only, dropping both 
 Mutant run and restored through Go overlays: making `phantomObjectRead` return nil loses every read pin. The destructuring probe lowers again; Node prints `undefined` and exits 0, while native ASan/UBSan and JavaScript both exit 70 with `adamic: panic: field read failed: __tagged: mark (field __tagged) is not initialized; expected undefined, found missing`.
 
 Changing the object prototype method back to the whole-value rule turns `TestPhantomObjectPrototypeKeys` red on the real `kind` key. Removing the optional-member and literal-storage exemptions turns `TestPhantomObjectAgreeingReads` red on both controls. All three mutants were run and restored; array presence pins remain unchanged.
+
+## Nested object assignment reads (#3hsrk2t follow-up)
+
+Mutant run and restored through a Go overlay: omit the recursive call in `phantomObjectAssignmentRead`. All six rows of `TestPhantomObjectNestedAssignmentRead` lose the rule 450 read refusal. The exact mutable-holder probe is held by invariance at main.ts:9:27 on this parent. A complete pattern with a mutable base field instead returns to main.ts:9:7, `stage 0 can't lower assigning to an ObjectLiteralExpression in a destructuring assignment yet`. Node prints undefined and exits 0. Native and JavaScript cannot reach the requested runtime mutant because these earlier compile stops already hold it; neither backend was built past that stop.
