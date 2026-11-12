@@ -1,4 +1,4 @@
-// JSON.stringify of a caught Error through a structural view, a road that already stops.
+// JSON.stringify of a caught Error through a structural view, with no enumerable own keys.
 try {
 	throw new Error('m');
 } catch (e) {
