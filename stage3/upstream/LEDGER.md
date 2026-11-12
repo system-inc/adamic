@@ -790,3 +790,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   applies and zero-edit replay pass, generate_shards --check passes, the
   unfiltered stage3/lane Go test passes all 398 shards, and the restoring mutant
   returns false. See 99-correctness-axolotl-q/require-drop-PROOF.md.
+
+- getSupportedExtensions (`src/compiler/utilities.ts`): replace `flatBuiltins.includes(x.extension as Extension)` with `(flatBuiltins as readonly string[]).includes(x.extension)`. Widening the readonly receiver removes an unchecked enum downcast without changing the SameValueZero comparison or emitted JavaScript. Whole-owner pins: `99-correctness-supported-extensions`; proof records: branch `typescript/supported-extensions-evidence`.
