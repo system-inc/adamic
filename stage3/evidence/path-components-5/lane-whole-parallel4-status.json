@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-parallel=4",
+    "-timeout=28m",
+    "./stage3/lane"
+  ],
+  "exit_code": 1,
+  "stopping_reason": null,
+  "seconds": 1676.3970562169998
+}

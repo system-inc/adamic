@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/generate_shards.py",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 0.16489413900126237
+}

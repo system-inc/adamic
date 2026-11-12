@@ -1,0 +1,66 @@
+[
+  {
+    "test": "TestShard_Stage3LaneFile173",
+    "output": "=== RUN   TestShard_Stage3LaneFile173\n=== PAUSE TestShard_Stage3LaneFile173\n=== CONT  TestShard_Stage3LaneFile173\n    shards_generated_test.go:924: build stage3-adapted-tree ed4f3d77103a hit 0.12\n    shards_generated_test.go:924: stage3-lane-file-173: the test's deadline leaves no time for the shard\n--- FAIL: TestShard_Stage3LaneFile173 (0.12s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile282",
+    "output": "=== RUN   TestShard_Stage3LaneFile282\n=== PAUSE TestShard_Stage3LaneFile282\n=== CONT  TestShard_Stage3LaneFile282\n    shards_generated_test.go:1469: build stage3-adapted-tree ed4f3d77103a hit 0.12\n    shards_generated_test.go:1469: stage3-lane-file-282: the test's deadline leaves no time for the shard\n--- FAIL: TestShard_Stage3LaneFile282 (0.12s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile283",
+    "output": "=== RUN   TestShard_Stage3LaneFile283\n=== PAUSE TestShard_Stage3LaneFile283\n=== CONT  TestShard_Stage3LaneFile283\n    shards_generated_test.go:1474: build stage3-adapted-tree ed4f3d77103a hit 0.39\n    shards_generated_test.go:1474: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-283 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-283\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 1.9035139580009854, \"errors\": [\"stage3-lane-file-283 timed out after 1.9 seconds, past its 2.4 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile283 (2.56s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile284",
+    "output": "=== RUN   TestShard_Stage3LaneFile284\n=== PAUSE TestShard_Stage3LaneFile284\n=== CONT  TestShard_Stage3LaneFile284\n    shards_generated_test.go:1479: build stage3-adapted-tree ed4f3d77103a hit 0.15\n    shards_generated_test.go:1479: stage3-lane-file-284: the test's deadline leaves no time for the shard\n--- FAIL: TestShard_Stage3LaneFile284 (0.15s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile286",
+    "output": "=== RUN   TestShard_Stage3LaneFile286\n=== PAUSE TestShard_Stage3LaneFile286\n=== CONT  TestShard_Stage3LaneFile286\n    shards_generated_test.go:1489: build stage3-adapted-tree ed4f3d77103a hit 0.30\n    shards_generated_test.go:1489: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-286 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-286\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 7.321919911002624, \"errors\": [\"stage3-lane-file-286 timed out after 7.3 seconds, past its 7.8 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile286 (7.98s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile296",
+    "output": "=== RUN   TestShard_Stage3LaneFile296\n=== PAUSE TestShard_Stage3LaneFile296\n=== CONT  TestShard_Stage3LaneFile296\n    shards_generated_test.go:1539: build stage3-adapted-tree ed4f3d77103a hit 0.30\n    shards_generated_test.go:1539: stage3-lane-file-296: the test's deadline leaves no time for the shard\n--- FAIL: TestShard_Stage3LaneFile296 (0.30s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile297",
+    "output": "=== RUN   TestShard_Stage3LaneFile297\n=== PAUSE TestShard_Stage3LaneFile297\n=== CONT  TestShard_Stage3LaneFile297\n    shards_generated_test.go:1544: build stage3-adapted-tree ed4f3d77103a hit 0.27\n    shards_generated_test.go:1544: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-297 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-297\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 5.754599002000759, \"errors\": [\"stage3-lane-file-297 timed out after 5.8 seconds, past its 6.2 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile297 (6.42s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile298",
+    "output": "=== RUN   TestShard_Stage3LaneFile298\n=== PAUSE TestShard_Stage3LaneFile298\n=== CONT  TestShard_Stage3LaneFile298\n    shards_generated_test.go:1549: build stage3-adapted-tree ed4f3d77103a hit 0.48\n    shards_generated_test.go:1549: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-298 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-298\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 8.481205440999474, \"errors\": [\"stage3-lane-file-298 timed out after 8.5 seconds, past its 8.9 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile298 (9.34s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile342",
+    "output": "=== RUN   TestShard_Stage3LaneFile342\n=== PAUSE TestShard_Stage3LaneFile342\n=== CONT  TestShard_Stage3LaneFile342\n    shards_generated_test.go:1769: build stage3-adapted-tree ed4f3d77103a hit 2.83\n    shards_generated_test.go:1769: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-342 $STAGE3_RESULTS: signal: killed\n--- FAIL: TestShard_Stage3LaneFile342 (58.29s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile343",
+    "output": "=== RUN   TestShard_Stage3LaneFile343\n=== PAUSE TestShard_Stage3LaneFile343\n=== CONT  TestShard_Stage3LaneFile343\n    shards_generated_test.go:1774: build stage3-adapted-tree ed4f3d77103a hit 10.95\n    shards_generated_test.go:1774: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-343 $STAGE3_RESULTS: signal: killed\n--- FAIL: TestShard_Stage3LaneFile343 (67.75s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile344",
+    "output": "=== RUN   TestShard_Stage3LaneFile344\n=== PAUSE TestShard_Stage3LaneFile344\n=== CONT  TestShard_Stage3LaneFile344\n    shards_generated_test.go:1779: build stage3-adapted-tree ed4f3d77103a hit 11.02\n    shards_generated_test.go:1779: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-344 $STAGE3_RESULTS: signal: killed\n--- FAIL: TestShard_Stage3LaneFile344 (67.86s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile345",
+    "output": "=== RUN   TestShard_Stage3LaneFile345\n=== PAUSE TestShard_Stage3LaneFile345\n=== CONT  TestShard_Stage3LaneFile345\n    shards_generated_test.go:1784: build stage3-adapted-tree ed4f3d77103a hit 7.22\n    shards_generated_test.go:1784: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-345 $STAGE3_RESULTS: signal: killed\n--- FAIL: TestShard_Stage3LaneFile345 (64.62s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile346",
+    "output": "=== RUN   TestShard_Stage3LaneFile346\n=== PAUSE TestShard_Stage3LaneFile346\n=== CONT  TestShard_Stage3LaneFile346\n    shards_generated_test.go:1789: build stage3-adapted-tree ed4f3d77103a hit 1.51\n    shards_generated_test.go:1789: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-346 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-346\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 50.79264214999421, \"errors\": [\"stage3-lane-file-346 timed out after 50.4 seconds, past its 50 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile346 (56.56s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneFile347",
+    "output": "=== RUN   TestShard_Stage3LaneFile347\n=== PAUSE TestShard_Stage3LaneFile347\n=== CONT  TestShard_Stage3LaneFile347\n    shards_generated_test.go:1794: build stage3-adapted-tree ed4f3d77103a hit 0.31\n    shards_generated_test.go:1794: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-347 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-file-347\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 51.64378140500048, \"errors\": [\"stage3-lane-file-347 timed out after 51.6 seconds, past its 50 second limit\"]}\n--- FAIL: TestShard_Stage3LaneFile347 (52.69s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneProjectReferenceCases00",
+    "output": "=== RUN   TestShard_Stage3LaneProjectReferenceCases00\n=== PAUSE TestShard_Stage3LaneProjectReferenceCases00\n=== CONT  TestShard_Stage3LaneProjectReferenceCases00\n    shards_generated_test.go:1799: build stage3-adapted-tree ed4f3d77103a hit 0.29\n    shards_generated_test.go:1799: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-project-reference-cases-00 $STAGE3_RESULTS: exit status 1\n        {\"name\": \"stage3-lane-project-reference-cases-00\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 51.17905568800052, \"errors\": [\"stage3-lane-project-reference-cases-00 timed out after 51.2 seconds, past its 50 second limit\"]}\n--- FAIL: TestShard_Stage3LaneProjectReferenceCases00 (53.69s)\n"
+  },
+  {
+    "test": "TestShard_Stage3LaneProjectReferenceCases01",
+    "output": "=== RUN   TestShard_Stage3LaneProjectReferenceCases01\n=== PAUSE TestShard_Stage3LaneProjectReferenceCases01\n=== CONT  TestShard_Stage3LaneProjectReferenceCases01\n    shards_generated_test.go:1804: build stage3-adapted-tree ed4f3d77103a hit 0.20\n    shards_generated_test.go:1804: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-project-reference-cases-01 $STAGE3_RESULTS: signal: killed\n        {\"name\": \"stage3-lane-project-reference-cases-01\", \"status\": \"fail\", \"counts\": {}, \"seconds\": 50.45758395699522, \"errors\": [\"stage3-lane-project-reference-cases-01 timed out after 50.5 seconds, past its 50 second limit\"]}\n--- FAIL: TestShard_Stage3LaneProjectReferenceCases01 (58.25s)\n"
+  }
+]

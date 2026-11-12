@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-parallel=3",
+    "-timeout=29m",
+    "./stage3/lane"
+  ],
+  "exit_code": 0,
+  "raw_wait_status": 0,
+  "stopping_reason": null,
+  "seconds": 1709.6699999999983,
+  "recovery": "Original wrapper was lost during workspace restart; actual Go exit status recovered from zombie /proc/PID/stat field 52.",
+  "pid": 110579,
+  "starttime_ticks": "4465972"
+}

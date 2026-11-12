@@ -1,0 +1,56 @@
+{
+  "reason": "Cold prerequisite build consumed approximately 13 minutes of the 28 minute package budget. Restart the same entire package against the settled prerequisite.",
+  "root": 59105,
+  "processes": [
+    {
+      "pid": 59105,
+      "command": "go test -count=1 -parallel=4 -timeout=28m ./stage3/lane"
+    },
+    {
+      "pid": 60704,
+      "command": "/tmp/adamic-gate/go-build2619480899/b001/lane.test -test.paniconexit0 -test.count=1 -test.parallel=4 -test.timeout=28m0s"
+    },
+    {
+      "pid": 73592,
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-226 $STAGE3_RESULTS"
+    },
+    {
+      "pid": 73593,
+      "command": "node /workspace/adamic/stage3/oracle/run-tasks.cjs /tmp/adamic-gate/TestShard_Stage3LaneFile2263392988795/001/stage3-lane-file-226/adapted-tree /tmp/adamic-gate/TestShard_Stage3LaneFile2263392988795/001/stage3-lane-file-226/tasks.json /tmp/adamic-gate/TestShard_Stage3LaneFile2263392988795/001/stage3-lane-file-226/oracle/worker 1"
+    },
+    {
+      "pid": 73600,
+      "command": "/workspace/adamic-tools/bin/node /tmp/adamic-gate/TestShard_Stage3LaneFile2263392988795/001/stage3-lane-file-226/adapted-tree/built/local/run.js --config=/tmp/adamic-gate/TestShard_Stage3LaneFile2263392988795/001/stage3-lane-file-226/oracle/worker/worker.json"
+    },
+    {
+      "pid": 73607,
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-225 $STAGE3_RESULTS"
+    },
+    {
+      "pid": 73608,
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-224 $STAGE3_RESULTS"
+    },
+    {
+      "pid": 73609,
+      "command": "node /workspace/adamic/stage3/oracle/run-tasks.cjs /tmp/adamic-gate/TestShard_Stage3LaneFile225870364601/001/stage3-lane-file-225/adapted-tree /tmp/adamic-gate/TestShard_Stage3LaneFile225870364601/001/stage3-lane-file-225/tasks.json /tmp/adamic-gate/TestShard_Stage3LaneFile225870364601/001/stage3-lane-file-225/oracle/worker 1"
+    },
+    {
+      "pid": 73616,
+      "command": "/workspace/adamic-tools/bin/node /tmp/adamic-gate/TestShard_Stage3LaneFile225870364601/001/stage3-lane-file-225/adapted-tree/built/local/run.js --config=/tmp/adamic-gate/TestShard_Stage3LaneFile225870364601/001/stage3-lane-file-225/oracle/worker/worker.json"
+    },
+    {
+      "pid": 73623,
+      "command": "node /workspace/adamic/stage3/oracle/run-tasks.cjs /tmp/adamic-gate/TestShard_Stage3LaneFile2241459658351/001/stage3-lane-file-224/adapted-tree /tmp/adamic-gate/TestShard_Stage3LaneFile2241459658351/001/stage3-lane-file-224/tasks.json /tmp/adamic-gate/TestShard_Stage3LaneFile2241459658351/001/stage3-lane-file-224/oracle/worker 1"
+    },
+    {
+      "pid": 73630,
+      "command": "/workspace/adamic-tools/bin/node /tmp/adamic-gate/TestShard_Stage3LaneFile2241459658351/001/stage3-lane-file-224/adapted-tree/built/local/run.js --config=/tmp/adamic-gate/TestShard_Stage3LaneFile2241459658351/001/stage3-lane-file-224/oracle/worker/worker.json"
+    },
+    {
+      "pid": 73638,
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -E -S -B stage3/lane/shard.py stage3-lane-file-223 $STAGE3_RESULTS"
+    }
+  ],
+  "signal": "SIGTERM",
+  "time": 1794500936.623261
+}

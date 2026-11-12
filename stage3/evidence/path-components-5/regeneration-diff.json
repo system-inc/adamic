@@ -1,0 +1,19 @@
+{
+  "sanctioned-api.json": [
+    [
+      "$.proofs[1].sha256",
+      "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576",
+      "900d2ce6b545347af03d2ae04afea1c05f719e0668afb06a1b31cade25b6e6af"
+    ]
+  ],
+  "shard-plan.json": [
+    [
+      "$.runtime",
+      "1821369bad4f0c63c7a0a3c1e5bd8d7d68d9d22582764a402c642295c8dfaac4",
+      "0dd6bb2f76a4f7fb73e22b509e9c5ec5ba2a2e6afb8e2a0087456ce5da078a19"
+    ]
+  ],
+  "normalizedChanges": 267,
+  "testCheckUnchanged": true,
+  "shardsGeneratedUnchanged": true
+}

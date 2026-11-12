@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-count=1",
+    "-parallel=4",
+    "-timeout=28m",
+    "./stage3/lane"
+  ],
+  "exit_code": -15,
+  "stopping_reason": null,
+  "seconds": 1153.0016242190031
+}
