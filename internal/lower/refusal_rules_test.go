@@ -90,6 +90,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"3290 primitiveObjectViewGap",
 		"3300 refuseOptionalWidening",
 		"3330 narrowedNullishReadGap",
+		"3340 narrowedNeverReadGap",
 		// constraintRelationRefusal judges the type arguments a site binds once every rule has judged
 		// the site itself, and before the walk reaches its arguments.
 		"3350 constraintRelationRefusal",

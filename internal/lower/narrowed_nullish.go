@@ -52,6 +52,34 @@ func (l *lowering) narrowedNullishReadGap(node *ast.Node) error {
 
 func init() {
 	refusalRules.register(3330, "narrowedNullishReadGap", (*lowering).narrowedNullishReadGap)
+	refusalRules.register(3340, "narrowedNeverReadGap", (*lowering).narrowedNeverReadGap)
+}
+
+// narrowedNeverReadGap is narrowedNullishReadGap's twin for never (rulings.md:74 and :151, #v59xyph). A
+// binding narrowed to never by two checks with a call between them that writes it still holds a value at
+// run time: the checker's flow doesn't see the call's write, so it takes the second check as exhausting
+// what the first left. Lowered at the binding's declared slot and handed on raw, that value reached a
+// consumer typed for something else (Language's nv9 on #p6vawef read a number as a string pointer, and
+// crashed where Node throws). Until #p6vawef's earliest-narrowing build stops such a read where the
+// narrowing went wrong, a read narrowed to never of a binding a function other than its declaring one
+// writes is not yet, judged at the read whatever the value flows into. A binding only its own function
+// writes can't change behind a call, so its never is the checker's proof and lowers as it does today.
+func (l *lowering) narrowedNeverReadGap(node *ast.Node) error {
+	shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
+	if node.Kind != ast.KindIdentifier || !l.isExpression(node) || (ast.IsDeclarationName(node) && !shorthand) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
+		return nil
+	}
+	symbol := l.bindingNamed(node)
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || !l.writtenAcrossFunctions(symbol) {
+		return nil
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 {
+		return nil
+	}
+	if l.checker.GetTypeOfSymbol(symbol).Flags()&checker.TypeFlagsNever != 0 {
+		return nil // Declared never, it holds no value a read could hand on.
+	}
+	return l.notYet(node, "a read the checker narrowed to never of a binding a call may write")
 }
 
 // passedAtDeclaredType reports whether read is the whole argument of a direct call to a function the
