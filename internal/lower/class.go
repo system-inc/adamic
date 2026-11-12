@@ -603,7 +603,13 @@ func accessPath(node *ast.Node) string {
 
 // literalGivesField is a write through a const whose initializer is an object literal naming the field.
 func (l *lowering) literalGivesField(target *ast.Node) bool {
-	receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+	access := target.AsPropertyAccessExpression()
+	return l.literalReceiverGivesField(access.Expression, access.Name().Text())
+}
+
+// The same literal-field proof serves reads whose field is otherwise phantom.
+func (l *lowering) literalReceiverGivesField(receiver *ast.Node, name string) bool {
+	receiver = ast.SkipParentheses(receiver)
 	if receiver.Kind != ast.KindIdentifier {
 		return false
 	}
@@ -619,7 +625,6 @@ func (l *lowering) literalGivesField(target *ast.Node) bool {
 	if initializer == nil || ast.SkipParentheses(initializer).Kind != ast.KindObjectLiteralExpression {
 		return false
 	}
-	name := target.AsPropertyAccessExpression().Name().Text()
 	for _, property := range ast.SkipParentheses(initializer).AsObjectLiteralExpression().Properties.Nodes {
 		if property.Kind != ast.KindSpreadAssignment && plainPropertyName(property) == name {
 			return true

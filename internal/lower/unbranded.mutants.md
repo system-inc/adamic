@@ -29,3 +29,9 @@ both backends and the leak check.
 ## Object presence (#3hsrk2t, Nov 12)
 
 Mutant run and restored: the classifier accepts array bases only, dropping both object extensions and branded supertypes. The q06.ts pin loses rule 450 and a separate mutant probe confirms that the whole program lowers. q06.a keeps its older overload-result refusal. The other object observation pins also lose the phantom-presence refusal. The production file was restored through an uncommitted Go overlay.
+
+## Object reads and keyed prototype methods (#3hsrk2t follow-up)
+
+Mutant run and restored through Go overlays: making `phantomObjectRead` return nil loses every read pin. The destructuring probe lowers again; Node prints `undefined` and exits 0, while native ASan/UBSan and JavaScript both exit 70 with `adamic: panic: field read failed: __tagged: mark (field __tagged) is not initialized; expected undefined, found missing`.
+
+Changing the object prototype method back to the whole-value rule turns `TestPhantomObjectPrototypeKeys` red on the real `kind` key. Removing the optional-member and literal-storage exemptions turns `TestPhantomObjectAgreeingReads` red on both controls. All three mutants were run and restored; array presence pins remain unchanged.
