@@ -15,6 +15,7 @@ import (
 var scanningPipelineExempt = map[string]string{
 	"lowering.checkRecordGuardedReads": "judges guarded record reads; reads the IR, rewrites nothing",
 	"lowering.checkViewOptionalWrites": "judges writes to optional fields; reads the IR, rewrites nothing",
+	"checkFlowLiveness":                "judges that no function a flow graph took to never run is named after it was built; reads the IR, rewrites nothing",
 }
 
 // The frozen scanning reference (scanLowerWithElementKey) and the real pipeline
