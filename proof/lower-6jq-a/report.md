@@ -289,3 +289,18 @@ created by testing.(*T).Run in goroutine 13
 FAIL	github.com/system-inc/adamic/internal/oracle	4.850s
 FAIL
 ```
+
+## Step 4 — internal/lower
+
+Command: `go test ./internal/lower -count=1 -timeout 90m` redirected to `/tmp/lower.log`.
+
+Exit: 0; wall time: 938 seconds.
+
+
+No failing test names reported.
+
+Complete verbatim output:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	902.818s
+```
