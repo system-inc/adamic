@@ -1,0 +1,24 @@
+{
+  "all_distinct_sites_reviewed": 1,
+  "all_first_stop_units_reviewed": 1,
+  "judgments": [
+    {
+      "unit": "createScanner",
+      "unit_location": "src/compiler/scanner.ts:1026:1",
+      "stop_location": "src/compiler/scanner.ts:2190:68",
+      "expression": "error",
+      "overloaded_set_declarations": [
+        "src/compiler/scanner.ts:1164:5",
+        "src/compiler/scanner.ts:1165:5",
+        "src/compiler/scanner.ts:1166:5"
+      ],
+      "callee": "scanConflictMarkerTrivia",
+      "role": "third argument, a callback value",
+      "source": "pos = scanConflictMarkerTrivia(text!, pos, error);",
+      "judgment": "fail-closed and correct; not a call-callee rejection",
+      "parent_stop": "NotYet: a PostfixUnaryExpression at src/compiler/scanner.ts:2365:62",
+      "regression": false,
+      "explanation": "The identifier error denotes the nested overloaded function set and is passed as a callback argument. The callee expression is scanConflictMarkerTrivia. createScanner was already blocked at the postfix increment, so the earlier guard changes its first stop without converting a previously lowered unit to a stopped unit."
+    }
+  ]
+}

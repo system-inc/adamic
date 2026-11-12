@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "/workspace/or3-classify.cjs",
+    "/workspace/or3-report/stage3/census/overload-result-02d48211/classification-request.json",
+    "/workspace/or3-report/stage3/census/overload-result-02d48211/overloaded-value-classification.json"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 3.7740586579984665,
+  "user_seconds": 5.975809,
+  "system_seconds": 1.195612,
+  "peak_rss_kib": 436364
+}

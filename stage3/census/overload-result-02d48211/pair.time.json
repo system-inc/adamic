@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "/workspace/or3-parent/stage3/census/pair/pair.py",
+    "/workspace/or3-build-parent/latent.jsonl",
+    "/workspace/or3-build-head/latent.jsonl",
+    "/workspace/or3-adapted",
+    "--typescript",
+    "/workspace/or3-parent/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/or3-report/stage3/census/overload-result-02d48211/delta.json",
+    "--report",
+    "/workspace/or3-report/stage3/census/overload-result-02d48211/pair-report.md"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 11.865407721999873,
+  "user_seconds": 11.952971,
+  "system_seconds": 1.431016,
+  "peak_rss_kib": 311864
+}

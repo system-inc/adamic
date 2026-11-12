@@ -1,0 +1,107 @@
+{
+  "config": "/workspace/or3-adapted/src/tsc/tsconfig.json",
+  "options": {
+    "rootDir": "/workspace/or3-adapted/src",
+    "outDir": "/workspace/or3-adapted/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [],
+    "noEmit": true
+  },
+  "results": [
+    {
+      "unit": {
+        "body_end": 211508,
+        "body_start": 71323,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "createScanner",
+        "status": "attempted",
+        "where": "/workspace/or3-adapted/src/compiler/scanner.ts:1026:1"
+      },
+      "finding": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an overloaded function as a value",
+        "root_kind": "",
+        "text": "/workspace/or3-adapted/src/compiler/scanner.ts:2190:68: stage 0 can't lower an overloaded function as a value yet",
+        "unit": "/workspace/or3-adapted/src/compiler/scanner.ts:1026:1",
+        "where": "/workspace/or3-adapted/src/compiler/scanner.ts:2190:68"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a PostfixUnaryExpression",
+        "root_kind": "",
+        "text": "/workspace/or3-adapted/src/compiler/scanner.ts:2365:62: stage 0 can't lower a PostfixUnaryExpression yet",
+        "unit": "/workspace/or3-adapted/src/compiler/scanner.ts:1026:1",
+        "where": "/workspace/or3-adapted/src/compiler/scanner.ts:2365:62"
+      },
+      "unchanged": false,
+      "classification": "used as a value; fail-closed and correct",
+      "is_callee": false,
+      "expression": "error",
+      "node_kind": "Identifier",
+      "effective_kind": "Identifier",
+      "parent_role": "CallExpression.arguments[2]",
+      "parentheses": [],
+      "range": {
+        "start_utf16": 122533,
+        "end_utf16": 122538,
+        "start_line": 2190,
+        "start_column": 68,
+        "end_line": 2190,
+        "end_column": 73
+      },
+      "context": "pos = scanConflictMarkerTrivia(text!, pos, error);",
+      "context_kind": "ExpressionStatement",
+      "context_start_utf16": 122490,
+      "context_truncated": false,
+      "overloaded_set": {
+        "symbol": "error",
+        "declarations": [
+          {
+            "where": "/workspace/or3-adapted/src/compiler/scanner.ts:1164:5",
+            "body": false,
+            "text": "function error(message: DiagnosticMessage): void;"
+          },
+          {
+            "where": "/workspace/or3-adapted/src/compiler/scanner.ts:1165:5",
+            "body": false,
+            "text": "function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: string | number): void;"
+          },
+          {
+            "where": "/workspace/or3-adapted/src/compiler/scanner.ts:1166:5",
+            "body": true,
+            "text": "function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: string | number): void {\r\n        if (onError) {\r\n            const oldPos = pos;\r\n            pos = errPos;\r\n            onError(message, length || 0, arg0);\r\n            pos = oldPos;\r\n        }\r\n    }"
+          }
+        ]
+      }
+    }
+  ]
+}

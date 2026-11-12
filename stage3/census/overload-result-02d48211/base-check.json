@@ -1,0 +1,17 @@
+{
+  "parent": "19ab1c58c0f1672074e57fee57e5bb04cc21c0fc",
+  "head": "02d4821168875c03fa66b5764522d0c149e3beac",
+  "old_parent": "efe887763f26e96653546fae904d57539139f7ae",
+  "base_descends_from_old": true,
+  "adaptation_inputs_identical": false,
+  "changed_adaptation_inputs": [
+    "stage3/adapt/71-writable-views/README.md",
+    "stage3/adapt/71-writable-views/adapt.cjs",
+    "stage3/adapt/71-writable-views/line-map-source.cjs",
+    "stage3/adapt/71-writable-views/line-map-source.json"
+  ],
+  "reuse_parent_streams": false,
+  "reason": "Changed adaptation inputs require a fresh parent compiler and census at 19ab1c58.",
+  "branch_tips": "285296623bb0e15b3dfaf8d2b2fd9ea80c1492f2\trefs/heads/optimizer/overload-result-check-3\n84bb114f029c9d142f64a76fc31157b1c49298a4\trefs/heads/typescript/overload-result-census\nc5c0f4af1b1d4506027bbaca2ccdc89aeac56238\trefs/heads/typescript/overload-result-census-checkpoint\n",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}
