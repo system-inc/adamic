@@ -2,7 +2,8 @@
 // mtimeMs are the static read's numbers, mtime and atime its Dates, the same object on every read,
 // and each function it inherits, Stats.prototype's and StatsBase.prototype's, is one function from
 // every Stats and every read with Node's length, constructor Stats. Object.prototype's names are an
-// object's, and native's private _fsFileMode reads undefined, as any other key does.
+// object's, and a name Node's Stats lacks, _fsFileMode among them, reads undefined, as any other key
+// does.
 import * as fs from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 

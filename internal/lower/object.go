@@ -457,6 +457,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if value, found, err := l.nodePlatformRead(node); found {
 		return value, err
 	}
+	if value, found, err := l.nodeStatsFieldRead(node); found {
+		return value, err
+	}
 	if err := l.eepPropertyPresence(node); err != nil {
 		return nil, err
 	}

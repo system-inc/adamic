@@ -63,6 +63,9 @@ var wasiRefusedFixtures = map[string]string{
 	"internal/oracle/testdata/timers_source/fresh_start.a":          "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
 
 	programHost14Path: "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	// A Stats' mode, which preview 1's filestat has no permission bits for (#6xfkdwj).
+	"internal/oracle/testdata/stats_fields/fields.a":       "wasm32-wasi refuses fs.Stats.mode: wasi preview1's filestat has no permission bits; use a native Node host target",
+	"internal/oracle/testdata/stats_fields/mode.a":         "wasm32-wasi refuses fs.Stats.mode: wasi preview1's filestat has no permission bits; use a native Node host target",
 	"internal/oracle/testdata/closure_convention_host24.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/node_fs_rm_options.a":        "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 }

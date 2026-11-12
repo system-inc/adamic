@@ -70,6 +70,22 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "(" + args[0] + ").isDirectory()"
 	case "is_symbolic_link":
 		return "(" + args[0] + ").isSymbolicLink()"
+	case "stats_mode":
+		return "(" + args[0] + ").mode"
+	case "stats_uid":
+		return "(" + args[0] + ").uid"
+	case "stats_gid":
+		return "(" + args[0] + ").gid"
+	case "stats_rdev":
+		return "(" + args[0] + ").rdev"
+	case "stats_blksize":
+		return "(" + args[0] + ").blksize"
+	case "stats_blocks":
+		return "(" + args[0] + ").blocks"
+	case "stats_birthtime_ms":
+		return "(" + args[0] + ").birthtimeMs"
+	case "stats_birthtime":
+		return "(" + args[0] + ").birthtime"
 	case "read_buffer", "read_buffer_fd":
 		return "adamicNodeFSFile.readFileSync(" + args[0] + ", {flag:" + args[1] + "})"
 	case "read_file", "read_fd":
