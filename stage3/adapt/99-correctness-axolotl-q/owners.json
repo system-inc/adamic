@@ -38,9 +38,9 @@
     "beforeDeclarations": 1,
     "afterDeclarations": 1,
     "before": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !(process as any).browser\n        && typeof require !== \"undefined\";\n}",
-    "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !process.browser\n        && typeof require !== \"undefined\";\n}",
+    "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !process.browser;\n}",
     "ownerBeforeSha256": "f459dd087504c3cb88278d4dfb98b800485fff4d23f6b6707b24bee5f0001d11",
-    "ownerAfterSha256": "204354b270f8515598cdddf741deaa724189f11e0a76f7f9c28a99217bb4e5f8",
+    "ownerAfterSha256": "876351683806aed43e71d4dcc9039c80399490ac01fc1c9f2c8b3c65486e2748",
     "siteEdits": 1
   }
 ]

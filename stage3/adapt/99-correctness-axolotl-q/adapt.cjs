@@ -44,9 +44,9 @@ const owners = [
         "beforeDeclarations": 1,
         "afterDeclarations": 1,
         "before": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !(process as any).browser\n        && typeof require !== \"undefined\";\n}",
-        "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !process.browser\n        && typeof require !== \"undefined\";\n}",
+        "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cycle from its\n    // use in performanceCore.ts.\n    return typeof process !== \"undefined\"\n        && !!process.nextTick\n        && !process.browser;\n}",
         "ownerBeforeSha256": "f459dd087504c3cb88278d4dfb98b800485fff4d23f6b6707b24bee5f0001d11",
-        "ownerAfterSha256": "204354b270f8515598cdddf741deaa724189f11e0a76f7f9c28a99217bb4e5f8",
+        "ownerAfterSha256": "876351683806aed43e71d4dcc9039c80399490ac01fc1c9f2c8b3c65486e2748",
         "siteEdits": 1
     }
 ];
@@ -85,14 +85,18 @@ function adapt(tree) {
         let after = text;
         for (const edit of state.edits.sort((a, b) => b.start - a.start)) after = after.slice(0, edit.start) + edit.after + after.slice(edit.end);
         assert(locate(file, after).adapted, `${file}: invalid planned result`);
-        if (file === 'core.ts') for (const removeComments of [false, true]) assert.equal(transpile(after, removeComments), transpile(text, removeComments), 'core.ts JavaScript changed');
+        // H05 alone changes JavaScript. Restore its require test only for the
+        // equality check, retaining the type-only guarantee for every other edit.
+        const h05 = owners.find(owner => owner.owner === 'isNodeLikeSystem');
+        const restoreH05 = source => source.replace(h05.after, h05.before);
+        if (file === 'core.ts') for (const removeComments of [false, true]) assert.equal(transpile(restoreH05(after), removeComments), transpile(restoreH05(text), removeComments), 'core.ts JavaScript changed outside H05');
         if (raw.includes('\r\n')) after = after.replace(/\n/g, '\r\n');
         return {name, raw, after, ...state};
     });
     assert(plans.every(plan => plan.adapted === plans[0].adapted), 'half-adapted tree');
     for (const plan of plans) assert.equal(fs.readFileSync(plan.name, 'utf8'), plan.raw, 'source changed while planning');
     if (!plans[0].adapted) for (const plan of plans) fs.writeFileSync(plan.name, plan.after);
-    return {files: plans[0].adapted ? 0 : plans.length, edits: plans.reduce((sum, plan) => sum + plan.edits.length, 0), javascriptChanging: false};
+    return {files: plans[0].adapted ? 0 : plans.length, edits: plans.reduce((sum, plan) => sum + plan.edits.length, 0), javascriptChanging: true};
 }
 module.exports = {adapt, owners, parse, transpile, digest};
 if (require.main === module) {
