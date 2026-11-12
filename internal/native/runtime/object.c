@@ -18,6 +18,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
+	adamic_error_initialize(object);
 	return object;
 }
 
@@ -58,7 +59,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 			adamic_value *found = expression == NULL ? adamic_object_field_owned(source, shape->names[index], &cache, &owner) : adamic_object_read_mode(source, shape->names[index], &cache, expression, NULL, &owner);
 			object->slots[index] = *found;
 			adamic_object_initialized(object)[index] = adamic_object_initialized(owner)[adamic_slot_index(owner, found)];
-			adamic_object_field_types(object)[index] = adamic_object_field_types(owner)[adamic_slot_index(owner, found)];
+			adamic_object_field_types(object)[index] = adamic_object_field_type(owner, adamic_slot_index(owner, found));
 		} else {
 			object->slots[index] = adamic_accessor_get((adamic_object *)source, shape->names[index]);
 			if (adamic_thrown != NULL) {
@@ -262,7 +263,7 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
     const adamic_object *owner = NULL;
     slot = adamic_object_read_mode(object, name, cache, expression, declared, &owner);
     size_t index = adamic_slot_index(owner, slot);
-    unsigned char storage = adamic_object_field_types(owner)[index];
+    unsigned char storage = adamic_object_field_type(owner, index);
     adamic_view_union_value value = {adamic_view_union_unknown, *slot};
     if (storage == adamic_rep_number) { value.kind = adamic_view_union_number; }
     else if (storage == adamic_rep_boolean) { value.kind = adamic_view_union_boolean; }
@@ -303,7 +304,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 	if (object != NULL && adamic_record_is(object)) return adamic_record_view(object, name, wanted, type, expression);
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
-	unsigned char actual = adamic_object_field_types(owner)[adamic_slot_index(owner, slot)];
+	unsigned char actual = adamic_object_field_type(owner, adamic_slot_index(owner, slot));
 	// Boxed unions and packed maybe-numbers have a real runtime tag. Convert only
 	// after that tag proves which payload is live; never interpret a pointer as a number.
 	if (actual == 10 && slot->reference != NULL) {
@@ -369,7 +370,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 	}
 	if (slot != NULL) {
 		size_t index = adamic_slot_index(object, slot);
-		unsigned char actual = adamic_object_field_types(object)[index];
+		unsigned char actual = adamic_object_field_type(object, index);
 		bool reference_write = (wanted >= 3 && wanted <= 6) || wanted == 8 || wanted == 10;
 		if (actual == wanted || (actual == 13 && reference_write && object->shape->references[index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}

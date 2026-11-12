@@ -54,7 +54,7 @@ static const adamic_json_schema *describe_array(const adamic_array *array) {
 // write left (emit_objects.go's fieldRepresentation, written in every program that stringifies an
 // object reference).
 static const adamic_json_schema *field_schema(const adamic_object *object, size_t index) {
-	unsigned char type = adamic_object_field_types(object)[index];
+	unsigned char type = adamic_object_field_type(object, index);
 	if (object->shape->references[index]) {
 		if (object->slots[index].reference != NULL) return &json_reference;
 		switch (type) {
