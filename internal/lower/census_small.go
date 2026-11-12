@@ -252,6 +252,14 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			// predicateArguments demands a named function or arrow whose body proves both branches.
 			return nil
 		}
+		if overloadVoidPromise(promised, l.concrete(produced)) {
+			return nil // No read of a void value lowers (rulings.md:321), so any result serves it (#z5d0jye step 2).
+		}
+		if l.censusProveOverloadResult(implementation, overload) {
+			// The body proves every reachable return under this overload's parameters (rulings.md:127's
+			// erasure, under :128's proof contract), so no call needs a check (#z5d0jye step 2).
+			return nil
+		}
 		if l.narrowOverload(overload) {
 			return nil // In .ts each call resolving to it checks its result (overloadResultCheck, rulings.md:127).
 		}
@@ -287,6 +295,27 @@ func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*
 	return proven, parameter, rest, nil
 }
 
+// overloadVoidPromise says whether an overload promises exactly void, not a union holding it, over an
+// implementation whose result owns nothing: number, boolean, their literals or undefined. Such a result
+// needs no release however the call drops it (Lower's condition on #z5d0jye step 2).
+func overloadVoidPromise(promised, produced *checker.Type) bool {
+	if promised.Flags()&checker.TypeFlagsVoid == 0 || promised.Flags()&checker.TypeFlagsUnion != 0 {
+		return false
+	}
+	owns := func(member *checker.Type) bool {
+		return member.Flags()&^(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0
+	}
+	if produced.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range produced.Types() {
+			if owns(member) {
+				return false
+			}
+		}
+		return true
+	}
+	return !owns(produced)
+}
+
 // Calls use the resolved overload's result representation, even when the
 // implementation proves a narrower result. A plain false must become a present
 // boolean | undefined, and a scalar result must be boxed when the caller sees a union.
@@ -311,6 +340,11 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 		if implementation != nil && overload.Body() == nil {
 			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
 				return l.checkedPredicateResult(call, value, implementation, overload)
+			}
+			if overloadVoidPromise(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)))) {
+				// A void promise's value is never read (rulings.md:321), so it keeps the implementation's
+				// representation, the one its release reads it as, as a discarded result does (:146).
+				return value, nil
 			}
 			if l.narrowOverload(overload) {
 				checked, err := l.overloadResultCheck(call.AsNode(), value)
