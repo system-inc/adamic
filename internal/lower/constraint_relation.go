@@ -2,6 +2,7 @@ package lower
 
 import (
 	"slices"
+	"strings"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -27,10 +28,11 @@ import (
 //     result's slot): the type argument is judged against the constraint, at the type argument written,
 //     or at the site.
 //   - A binding that can't be read is not yet, failing closed.
-// A binding makes no slot and no view, since the body is lowered per instantiation, so the registry's
-// representation stops (recordStorageView's storage gap) don't run at one. Declared keys at a binding are
-// the declared-key rule's, which judges every binding typeArgumentBindings finds in .a first (1975); .ts
-// keeps the checked read.
+// A binding makes no slot and no view, so the registry's representation stops don't run at one, but for
+// storage: the body's own sites judge a T by its constraint, so a type argument stored otherwise than its
+// constraint, a fixed object bound to a record constraint, stops at the binding (boundRecordStorage,
+// #mez92e7). Declared keys at a binding are the declared-key rule's, which judges every binding
+// typeArgumentBindings finds in .a first (1975); .ts keeps the checked read.
 //
 // The library exemption: a type parameter the library or the prelude declares isn't judged here. Its
 // generic's body is the runtime's own, not a generic body Adamic proves once under the constraint, so the
@@ -68,14 +70,44 @@ func (l *lowering) constraintRelation(binding typeArgumentBinding) error {
 	if binding.argument == binding.constraint {
 		return nil
 	}
+	// The relation rules first, so a binding they refuse keeps their words, then storage.
 	if binding.written != nil {
-		return l.judgeBinding(binding.written, nil, binding.argument, binding.constraint)
+		if err := l.judgeBinding(binding.written, nil, binding.argument, binding.constraint); err != nil {
+			return err
+		}
+		return l.boundRecordStorage(binding)
 	}
 	judged, err := l.boundArgumentsRefusal(binding)
-	if err != nil || judged {
+	if err == nil && !judged {
+		err = l.judgeBinding(binding.site, nil, binding.argument, binding.constraint)
+	}
+	if err != nil {
 		return err
 	}
-	return l.judgeBinding(binding.site, nil, binding.argument, binding.constraint)
+	return l.boundRecordStorage(binding)
+}
+
+// boundRecordStorage stops a binding whose type argument is stored otherwise than its constraint: a fixed
+// object bound to T extends Record<string, number> (#mez92e7, Language's f07). A T the body hands to a
+// record slot passes recordStorageView there, which judges T by its constraint, and a write through that
+// record ran adamic_record_define on the fixed object (an ASan segmentation fault in map.c, where Node prints 1 3). It's
+// recordStorageView's own rule, "fixed objects and records have different storage", judged where the type
+// argument is bound, whichever road bound it: written, inferred or defaulted. A fresh literal argument is
+// judged too, failing closed, since nothing here proves it's made as a record.
+func (l *lowering) boundRecordStorage(binding typeArgumentBinding) error {
+	// As recordStorageView judges a .ts view: a record there may drop a named contract its reads hold,
+	// since each such read is checked (droppedContractRead), so Options bound to T extends Dict is one
+	// storage in .ts as `const wide: Dict = options` is (record_declared_keys_stops' n05 to g05).
+	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(binding.site)), ".ts")
+	defer func() { l.droppedContractsRead = false }()
+	if l.sameRecordStorage(binding.argument, binding.constraint, map[[2]*checker.Type]bool{}) {
+		return nil
+	}
+	where := binding.site
+	if binding.written != nil {
+		where = binding.written
+	}
+	return l.notYet(where, "a "+l.checker.TypeToString(binding.argument)+" bound to "+l.checker.TypeToString(binding.parameter)+", whose constraint "+l.checker.TypeToString(binding.constraint)+" is stored otherwise (fixed objects and records have different storage; copy explicitly)")
 }
 
 // boundArgumentsRefusal judges each argument a call's or a new's binding can be inferred from: one

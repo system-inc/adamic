@@ -525,8 +525,9 @@ func isClassInstance(proven *checker.Type) bool {
 }
 
 // viewSite reports whether an expression is a value going into a typed slot: an initializer (a
-// variable's, a parameter's default, a class field's), the right of an assignment, an argument, a
-// returned value, a literal's property (shorthand too) or element, or an arrow's expression body.
+// variable's, a parameter's default, a class field's), the right of an assignment (=, ??=, ||= or &&=),
+// an argument, a returned value, a literal's property (shorthand too) or element, or an arrow's
+// expression body.
 // Parentheses around it are the same site.
 func viewSite(node *ast.Node) bool {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
@@ -546,8 +547,11 @@ func viewSite(node *ast.Node) bool {
 		}
 		return declaration.Initializer == node
 	case ast.KindBinaryExpression:
+		// ??=, ||= and &&= store their right into the left's slot as = does, so the right of each is a
+		// view site too. Taking only = let a Dog[] into an Animal[] by ??= and a readonly field become
+		// writable by ??=, both lowered wrong (#6jq01hc).
 		binary := parent.AsBinaryExpression()
-		return binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node
+		return (binary.OperatorToken.Kind == ast.KindEqualsToken || logicalAssignment(binary.OperatorToken.Kind)) && binary.Right == node
 	case ast.KindCallExpression:
 		return parent.AsCallExpression().Expression != node
 	case ast.KindNewExpression:

@@ -16,8 +16,8 @@ import (
 
 // typeArgumentBinding is one type argument a site binds to a constrained type parameter.
 type typeArgumentBinding struct {
-	// site is the call, new or tagged template, the class's extends clause, or the generic function or
-	// class written as a value its slot instantiates.
+	// site is the call, new or tagged template, the instantiation expression, the class's extends clause,
+	// or the generic function or class written as a value its slot instantiates.
 	site      *ast.Node
 	parameter *checker.Type
 
@@ -38,9 +38,9 @@ type typeArgumentBinding struct {
 
 // typeArgumentBindings visits each type argument node binds to a constrained type parameter. The
 // bindings are a call's, a new's or a tagged template's, inferred or written, read from its resolved
-// signature, which reaches generic arrows and methods too; a class's extends clause's; and a generic
-// function's or class's, instantiated as the value its slot takes (valueTypeArgumentBindings), a call's
-// result included. A binding whose type argument can't be read is visited with no argument, so each rule
+// signature, which reaches generic arrows and methods too; an instantiation expression's; a class's
+// extends clause's; and a generic function's or class's, instantiated as the value its slot takes
+// (valueTypeArgumentBindings), a call's result included. A binding whose type argument can't be read is visited with no argument, so each rule
 // fails closed on it as its own rule needs.
 func (l *lowering) typeArgumentBindings(node *ast.Node, visit func(typeArgumentBinding) error) error {
 	switch node.Kind {
@@ -52,7 +52,13 @@ func (l *lowering) typeArgumentBindings(node *ast.Node, visit func(typeArgumentB
 		}
 	case ast.KindExpressionWithTypeArguments:
 		clause := node.Parent
-		if clause == nil || clause.Kind != ast.KindHeritageClause || clause.AsHeritageClause().Token != ast.KindExtendsKeyword || clause.Parent == nil || !ast.IsClassLike(clause.Parent) {
+		if clause == nil || clause.Kind != ast.KindHeritageClause {
+			// An instantiation expression, grow<Point> written as a value, binds its written type
+			// arguments as a call's grow<Point>(x) does, with no call to judge them at (#mez92e7,
+			// Compiler's f07c: const g = grow<Point>; g(fixed) bound T to Point unjudged).
+			return l.instantiationTypeArgumentBindings(node, visit)
+		}
+		if clause.AsHeritageClause().Token != ast.KindExtendsKeyword || clause.Parent == nil || !ast.IsClassLike(clause.Parent) {
 			return nil
 		}
 		return l.baseTypeArgumentBindings(node, clause.Parent, visit)
@@ -147,7 +153,7 @@ func (l *lowering) signatureTypeArgumentBindings(node *ast.Node, signature *chec
 	mapper := (*typeMapper)(field.UnsafePointer())
 	var written []*ast.Node
 	switch node.Kind {
-	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression:
+	case ast.KindCallExpression, ast.KindNewExpression, ast.KindTaggedTemplateExpression, ast.KindExpressionWithTypeArguments:
 		written = node.TypeArguments()
 	}
 	for index, parameter := range target.TypeParameters() {
@@ -164,6 +170,28 @@ func (l *lowering) signatureTypeArgumentBindings(node *ast.Node, signature *chec
 		}
 	}
 	return nil
+}
+
+// instantiationTypeArgumentBindings visits the bindings an instantiation expression (node) makes: its one
+// instantiated signature's, as a call's are read from its resolved one. With overloads, or no signature,
+// which binding each makes can't be read off one instantiation, so its expression's type parameters are
+// visited unread, failing closed.
+func (l *lowering) instantiationTypeArgumentBindings(node *ast.Node, visit func(typeArgumentBinding) error) error {
+	kinds := []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct}
+	var signatures []*checker.Signature
+	for _, kind := range kinds {
+		signatures = append(signatures, l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), kind)...)
+	}
+	if len(signatures) == 1 {
+		return l.signatureTypeArgumentBindings(node, signatures[0], visit)
+	}
+	var parameters []*checker.Type
+	for _, kind := range kinds {
+		for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.Expression()), kind) {
+			parameters = append(parameters, signature.TypeParameters()...)
+		}
+	}
+	return l.unreadTypeArgumentBindings(node, parameters, visit)
 }
 
 // baseTypeArgumentBindings visits the type arguments a class's extends clause (node) binds to its base
