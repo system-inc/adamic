@@ -27,6 +27,7 @@ func TestLatentWrittenAnyDeferredCensusStopsZb0q0zd(t *testing.T) {
 				source = strings.Replace(source, "function writtenAny(", "function writtenAny<T>(", 1) + "function callWrittenAny(values: any[]): string[] { return writtenAny<number>(values); }\n"
 				unitName = "callWrittenAny"
 			}
+			source += "function ledgerBodySuccessPb47(): number { return 1; }\n"
 			if ordinary {
 				source = strings.Replace(source, "return values as string[];", "const result = values as string[]; const box: { tag?: number } = { tag: 1 }; delete box.tag; return result;", 1)
 			}
@@ -46,6 +47,33 @@ func TestLatentWrittenAnyDeferredCensusStopsZb0q0zd(t *testing.T) {
 				t.Fatalf("records: %+v", records)
 			}
 			record := records[0]
+			for _, observed := range record.Units {
+				if observed.Status == "deferred_generic_instantiation" {
+					if len(observed.PassLedger) != 0 {
+						t.Fatal("unattempted generic has a pass ledger")
+					}
+					continue
+				}
+				if len(observed.PassLedger) == 0 {
+					t.Fatalf("attempted unit has no pass ledger: %+v", observed)
+				}
+				whole := 0
+				for _, step := range observed.PassLedger {
+					if observed.Name == "ledgerBodySuccessPb47" {
+						if step.Status == "not_run_whole_program" {
+							whole++
+						} else if step.Status != "not_run_scoped" {
+							t.Fatalf("successful body: %+v", step)
+						}
+					} else if step.Status != "not_reached_lowering_stop" {
+						t.Fatalf("stopped body: %+v", step)
+					}
+				}
+				if observed.Name == "ledgerBodySuccessPb47" && whole != 4 {
+					t.Fatalf("whole-program omissions: %d", whole)
+				}
+			}
+
 			var unit *lower.LatentUnit
 			for index := range record.Units {
 				if record.Units[index].Name == unitName {

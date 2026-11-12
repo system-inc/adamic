@@ -1,0 +1,71 @@
+{
+  "base_main": "219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205",
+  "dependency map": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 10.756788616999984
+  },
+  "dropped table entry mutant": {
+    "child_exit_code": 1,
+    "expected": "unchanged positive assertion turns red"
+  },
+  "latent Go": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 12.410940467001637
+  },
+  "latent overlay Go": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 66.8254488800012
+  },
+  "latent stream readers": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 0.5527187549996597
+  },
+  "meter": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 72.29737992800074
+  },
+  "omissions treated as execution mutant": {
+    "child_exit_code": 1,
+    "expected": "unchanged positive assertion turns red"
+  },
+  "pairing": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 9.323100768000586
+  },
+  "prerequisite": "e3dcb944c",
+  "real emission": {
+    "child_exit_code": 0,
+    "deadline_expired": false,
+    "wall_seconds": 0.16472801300187712
+  },
+  "retained_main_pin": "4bba06cb2dc4a0046c11fc97e9953ec85ed0e638",
+  "retained_main_report_line": "3186 units lower without a body stop; 0 have their whole-program passes measured",
+  "sample": {
+    "ledgerBodyPassPb47": {
+      "entries": 31,
+      "pass_statuses": {
+        "not_run_scoped": 27,
+        "not_run_whole_program": 4
+      },
+      "status": "attempted"
+    },
+    "ledgerBodyStopPb47": {
+      "entries": 31,
+      "pass_statuses": {
+        "not_reached_lowering_stop": 31
+      },
+      "status": "attempted"
+    },
+    "ledgerGenericPb47": {
+      "entries": 0,
+      "pass_statuses": {},
+      "status": "deferred_generic_instantiation"
+    }
+  }
+}

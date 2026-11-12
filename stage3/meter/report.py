@@ -14,6 +14,11 @@ from node_readiness import run_roots
 MEASUREMENT = 'measured on a checker-rejected program'
 ENTRY_MEASUREMENT = 'measured on a checker-clean entry-root program'
 REJECTED_ENTRY_MEASUREMENT = 'measured on a checker-rejected entry-root program'
+
+# Shared readers take required steps from the overlay's one Go table, not a second list.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'census/latent'))
+from pass_ledger import coverage as pass_coverage, coverage_line, whole_passes_measured
+
 # The tsc entry pass's ceiling on the checker's assignable cache: 3.3 times the 299,624 pairs measured at Lower's
 # record-sources head on Nov 9 (#ny0c3gb), and well under the checker's 16M cap. A relation call's step budget is
 # (16M - size) / 8, so a cache that grows toward the cap starves every later relation until they overflow.
@@ -144,6 +149,7 @@ def lowering_summary(records, expected, measurement):
     reason_rows = sorted(groups.values(), key=lambda row: (-row['count'], row['reason']))
     return {
         'measurement': measurement,
+        **pass_coverage(records[1:]),
         'relation_report_complete': trailer is not None,
         'relation_overflow': trailer['relation_overflow'] if trailer else None,
         'checker_rejected': records[0]['checker_rejected'],
@@ -252,8 +258,8 @@ def relation_lines(summary):
 def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
-        return ['', relation_budget_line(entry), f'tsc entry lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', relation_budget_line(entry), f"tsc entry lowering, {label}: {summary['measurement']}.", *relation_lines(summary),
+        return ['', relation_budget_line(entry), f'tsc entry body lowering, {label}: blocked by checker diagnostics.']
+    lines = ['', relation_budget_line(entry), f"tsc entry body lowering, {label}: {summary['measurement']}.", *relation_lines(summary), coverage_line(summary),
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -271,7 +277,7 @@ def entry_table(label, entry):
 
 def latent_table(label, summary):
     totals = summary['totals']
-    lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.', *relation_lines(summary),
+    lines = ['', f'Latent body lowering, {label}: {MEASUREMENT}.', *relation_lines(summary), coverage_line(summary),
              f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
              f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.",
              f"Errors: {totals['error']}; panics: {totals['panic']}.", *site_lines(summary), '',
@@ -361,10 +367,15 @@ def root_order_checks(tree, run, records):
                       (site_where(stop_file(finding['where'])),
                        *map(int, finding['where'].rsplit(':', 2)[1:])))
         first = findings[0] if findings else None
+        program_units = [unit for record in latent[1:] if record.get('file') in program
+                         for unit in record.get('units', [])
+                         if unit.get('status') in ('attempted', 'panic', 'speculative')]
         checks.append({'root': site_where(root), 'where': site_where(row['where']),
                        'reason': row['reason'], 'node': probe,
                        'entry_program_attempted': complete and program <= attempted,
                        'entry_unattempted_sources': sorted(site_where(name) for name in program - attempted),
+                       'entry_whole_program_passes_measured': complete and program <= attempted
+                           and bool(program_units) and all(whole_passes_measured(unit) for unit in program_units),
                        'entry_next_stop': None if first is None else {
                            'kind': first['kind'], 'where': site_where(first['where']),
                            'reason': first['reason'], 'source': 'entry census',
@@ -372,13 +383,17 @@ def root_order_checks(tree, run, records):
     return checks
 
 
-def artifact_lowers_whole(artifact):
+def artifact_lowers_body(artifact):
     return artifact['entry_program_attempted'] and artifact['entry_next_stop'] is None
+
+
+def artifact_lowers_whole(artifact):
+    return artifact_lowers_body(artifact) and artifact.get('entry_whole_program_passes_measured', False)
 
 
 def root_order_table(label, result):
     totals = result['totals']
-    lines = ['', f"Lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
+    lines = ['', f"Body lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
              f"root-order artifacts: {len(result.get('root_order_artifacts', []))}.",
              '', '| Root | Stop | Reason | Node result | Classification | Program result from entry census |',
              '| --- | --- | --- | --- | --- | --- |']
@@ -394,7 +409,8 @@ def root_order_table(label, result):
             if stop is not None:
                 entry_result = f"{stop['kind']} {stop['where']}: {stop['reason']} (read from the entry census; {stop['order']})"
             elif row['entry_program_attempted']:
-                entry_result = 'all program files attempted; no findings; lowers whole'
+                entry_result = ('all program files attempted; no findings; lowers whole' if artifact_lowers_whole(row)
+                                else 'all program files attempted; no findings; body lowering only; whole-program passes unmeasured')
             else:
                 entry_result = 'program reach unavailable or units not attempted; lowering unproven'
         cells = [row['root'], row['where'], row['reason'], outcome, classification, entry_result]
@@ -466,7 +482,7 @@ def report(tree, run, stamp, compiler_commit=None):
     for row in rows.values():
         if row['file'] in artifact_roots:
             artifact = artifact_roots[row['file']]
-            row['lowering'] = artifact_lowers_whole(artifact)
+            row['lowering'] = artifact_lowers_body(artifact)
             row['lowering_stop'] = artifact['entry_next_stop']
             row['lowering_evidence'] = 'entry census'
     files = [rows[name] for name in sorted(rows)]
@@ -495,13 +511,13 @@ def report(tree, run, stamp, compiler_commit=None):
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = [f"Whole program: {totals['checker_whole_program']}/{totals['source_files']}",
              f"Own file: {totals['checker_own_file']}/{totals['source_files']}", '',
-             f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Lowering |',
+             f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Body lowering |',
              '| --- | --- | --- | --- |']
     for row in files:
         lowering = 'pass' if row['lowering'] else 'fail' if row['lowering_attempted'] else 'blocked'
         lines.append(f"| {row['file']} | {'pass' if row['checker'] else 'fail'} | {'pass' if row['checker_own_file'] else 'fail'} | {lowering} |")
     lines += ['', f"Checker: {totals['checker']}/{totals['source_files']} source files. "
-              f"Lowering: {totals['lowering']}/{totals['source_files']} source files.",
+              f"Body lowering: {totals['lowering']}/{totals['source_files']} source files.",
               f"All files: {totals['files']}; JSON inputs fail the source-extension gate.",
               'Blocked means lowering was not attempted because the checker/input gate failed.', '']
     lines += root_order_table('file roots', result)
@@ -524,7 +540,7 @@ def write_readme(run, result, committed_runs):
     previous = max(candidates, default=None, key=lambda item: item[0])
     lines = ['# Stage 3 meter ' + result['timestamp_utc'], '',
              'The area label repeats the pinned main tree for reporter compatibility.', '',
-             '| Run | Main SHA | Whole program | Own file | Lowering | tsc entry diagnostics |',
+             '| Run | Main SHA | Whole program | Own file | Body lowering | tsc entry diagnostics |',
              '| --- | --- | ---: | ---: | ---: | ---: |']
     observations = [('Current', result)]
     if previous:
@@ -539,7 +555,7 @@ def write_readme(run, result, committed_runs):
     if not previous:
         lines += ['', 'No previous committed paired run was found.']
     lines += root_order_table('main', result['trees']['main'])
-    lines += ['', 'For artifact roots, lowering requires attempted units in every program source and no entry-census finding in the program. No native output is claimed.', '']
+    lines += ['', 'For artifact roots, body lowering requires attempted units in every program source and no entry-census finding in the program. No native output is claimed.', '']
     (run / 'README.md').write_text('\n'.join(lines))
 
 
@@ -636,7 +652,7 @@ if __name__ == '__main__':
                  and Path(row['roots'][0]).suffix in ('.ts', '.a')]
         result = {'readiness_node_checks': checks, 'root_order_artifacts': artifacts,
                   'totals': {'lowering': sum(row['kind'] == 'accepted' for row in roots)
-                                         + sum(artifact_lowers_whole(row) for row in artifacts),
+                                         + sum(artifact_lowers_body(row) for row in artifacts),
                              'source_files': len(roots)}}
         (run / 'root-order.json').write_text(json.dumps(result, indent=2) + '\n')
         lines = ['Recorded roots only; census coverage is not asserted.'] + root_order_table('recorded roots', result)
