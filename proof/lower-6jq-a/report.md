@@ -4,6 +4,29 @@ Target: `adf8bee664447eb990aaab04fa787fbb5bddf7a5`.
 
 Only this report is committed. Commands run serially; compiler source restored after mutation.
 
+## Result
+
+The unmodified compiler passes all 23 pinned subtests. Dropping the logical assignments from the view-site predicate makes the pin command fail: it exposes a record-storage ASan crash and an array-view behavior mismatch, then aborts on a native-emitter panic. The mutant is detected, but its panic prevents a complete per-subtest mutant verdict. The original source was restored byte for byte and its diff checked clean before the full suites.
+
+| Check | Exit | Result | Wall time |
+| --- | --- | --- | --- |
+| Step 1: formatting and vet | 0 | PASS; both outputs empty | Not separately measured |
+| Step 2: unmodified pins | 0 | PASS; 12 logical-assignment and 11 storage-road subtests | 175 s |
+| Step 3: single documented mutant | 1 | Detected; failure diagnostics and panic below; unfinished subtests unclassified | 25 s |
+| Step 4: full lower suite | 0 | PASS; no failures, including no environment failures | 938 s |
+| Step 4b: full IR suite | 0 | PASS; no failures | 82 s |
+
+Wall times include Go command startup/build work; package-reported test durations are retained verbatim below. No compiler fixes were made. All required work completed within the two-hour clock.
+
+## Report checkpoints
+
+All checkpoints descend from the requested HEAD on `proof/lower-6jq-a-report`. Each was a new commit and a normal push to that branch only:
+
+- After step 2: `6897322d9`.
+- After step 3: `8842796ff`.
+- After step 4: `771f46514`.
+- Final: this report commit, including step 4b and the final audit.
+
 ## Environment
 
 Loaded `/workspace/adamic-tools/env.sh` first. Created its missing `TMPDIR=/tmp/adamic-gate` outside the repository. Provisioned upstream `https://github.com/microsoft/TypeScript.git` at `050880ce59e30b356b686bd3144efe24f875ebc8` in `/tmp/lower-6jq-proof/TypeScript`; exported `ADAMIC_TYPESCRIPT_SOURCE` to it.
@@ -304,3 +327,24 @@ Complete verbatim output:
 ```text
 ok  	github.com/system-inc/adamic/internal/lower	902.818s
 ```
+
+## Step 4b — internal/ir
+
+Command: `go test ./internal/ir -count=1 -timeout 30m`.
+
+Exit: 0; wall time: 82 seconds.
+
+
+No failing test names reported.
+
+Complete verbatim output:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	62.398s
+```
+
+## Final repository audit
+
+`git diff --exit-code adf8bee664447eb990aaab04fa787fbb5bddf7a5 -- . ':!proof/lower-6jq-a/report.md'` exited 0. `git status --short` was empty before this final report write. The only committed path throughout is `proof/lower-6jq-a/report.md`; no compiler or dependency files are committed. No force push, compiler-branch push, or other branch push was performed.
+
+Submodules remain at `cohere=5360753e19e4417675a90e92a1823bea66b13918` and `cohere/TypeScript=d92d9bfee114c80be2c375d72edae966176e3a4f`. The separate upstream proof input remains `050880ce59e30b356b686bd3144efe24f875ebc8`.
