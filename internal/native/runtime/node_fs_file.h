@@ -24,6 +24,15 @@ double adamic_fs_file_utimes_dates(const adamic_string *, const adamic_object *,
 double adamic_fs_file_utimes_atime_date(const adamic_string *, const adamic_object *, double);
 double adamic_fs_file_utimes_mtime_date(const adamic_string *, double, const adamic_object *);
 bool adamic_fs_file_is_stats(const adamic_object *);
+// The Stats fields a static read reaches through a function each, so wasm32-wasi refuses each by name.
+double adamic_fs_file_stats_mode(const adamic_object *);
+double adamic_fs_file_stats_uid(const adamic_object *);
+double adamic_fs_file_stats_gid(const adamic_object *);
+double adamic_fs_file_stats_rdev(const adamic_object *);
+double adamic_fs_file_stats_blksize(const adamic_object *);
+double adamic_fs_file_stats_blocks(const adamic_object *);
+double adamic_fs_file_stats_birthtime_ms(const adamic_object *);
+adamic_object *adamic_fs_file_stats_birthtime(const adamic_object *);
 bool adamic_fs_file_stat_is(const adamic_object *, const char *);
 bool adamic_fs_file_is_file(const adamic_object *);
 bool adamic_fs_file_is_directory(const adamic_object *);

@@ -34,5 +34,11 @@ func (call NodeFSFile) MayThrow() bool {
 	case "host_stdout_columns", "host_stdout_is_tty", "host_stdout_write", "host_env", "host_platform", "host_env_set", "host_env_delete", "exists", "is_file", "is_directory", "is_symbolic_link", "date_new", "date_now", "date_time", "time_now", "set_timeout", "clear_timeout":
 		return false
 	}
+	// A Stats field's read (StatsFieldOperations) reads a slot.
+	for _, operation := range StatsFieldOperations {
+		if call.Operation == operation {
+			return false
+		}
+	}
 	return true
 }

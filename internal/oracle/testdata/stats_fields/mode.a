@@ -1,0 +1,10 @@
+// A Stats' mode, read statically, is Node's natively (#6xfkdwj). wasm32-wasi refuses the read by name
+// before the build (host_target.go's wasiHostRefusals): preview 1's filestat has no permission bits,
+// and wasi-libc's stat keeps only the file type in st_mode, which would print 32768 where Node prints
+// the file's permissions too. The file is the directory Node's tmpdir names.
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+
+const stats = fs.statSync(tmpdir());
+console.log(`directory ${String(stats.isDirectory())}`);
+console.log(`mode ${String(stats.mode)}`);

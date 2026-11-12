@@ -31,6 +31,7 @@ var shimFileFixtures = map[string]bool{
 	"internal/oracle/testdata/node_fs_rm_options.a":            true,
 	"internal/oracle/testdata/node_options_const_capture.a":    true,
 	"internal/oracle/testdata/node_options_widening.a":         true,
+	"internal/oracle/testdata/stats_fields/wasi_held.a":        true,
 }
 
 // The cwd adapter reads the supplied initial directory even without opening a file.
