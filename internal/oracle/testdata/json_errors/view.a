@@ -1,0 +1,5 @@
+// A structural view cannot hide a write from the error walker (#z4a9p9e).
+const e = new Error('x');
+const v: { name: string } = e;
+v.name = 'Changed';
+console.log(JSON.stringify(e) ?? '<undefined>');

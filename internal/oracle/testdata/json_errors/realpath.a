@@ -1,0 +1,12 @@
+// The native and walking realpath raises share a complete key table (#z4a9p9e).
+import * as fs from 'node:fs';
+try {
+	fs.realpathSync('/__adamic_error_json_missing__/entry');
+} catch (error) {
+	if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>');
+}
+try {
+	fs.realpathSync.native('/__adamic_error_json_missing__/entry');
+} catch (error) {
+	if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>');
+}
