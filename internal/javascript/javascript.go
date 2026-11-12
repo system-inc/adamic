@@ -1311,6 +1311,13 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if name, ok := expression.Name.(ir.StringConstant); ok {
+			// Lowering names the built-in constructor; its inherited name is not an own key.
+			switch constructor := e.program.Strings[name.Index]; constructor {
+			case "TypeError", "RangeError", "ReferenceError", "SyntaxError":
+				return "new " + constructor + "(" + e.value(expression.Message) + ")"
+			}
+		}
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
 		}

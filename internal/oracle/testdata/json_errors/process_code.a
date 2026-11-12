@@ -1,0 +1,4 @@
+// A coded process validation error enumerates code alone (#z4a9p9e).
+import * as process from 'node:process';
+try { process.exit(NaN); }
+catch (error) { if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>'); }

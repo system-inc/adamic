@@ -1,0 +1,6 @@
+// Watch errors use the measured key order, including the empty filename case (#z4a9p9e).
+import * as fs from 'node:fs';
+for (const path of ['/__adamic_error_json_missing__/entry', '']) {
+ try { fs.watch(path, { persistent: false }, (event, filename) => { console.log(`${event} ${filename ?? 'none'}`); }); }
+ catch (error) { if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>'); }
+}
