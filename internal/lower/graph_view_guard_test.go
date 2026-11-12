@@ -292,9 +292,9 @@ func TestGraphHostViewIsNotYet(t *testing.T) {
 	t.Parallel()
 	lowered, types, nodes := graphViewGuardLowering(t)
 	for _, row := range []struct{ name, source, target, want string }{
-		{"a host source", "HostCollator", "Base", "a view of Collator, a host object's type, in a graph program"},
-		{"a host element", "Base", "HostCollators", "a view as Collator, a host object's type, in a graph program"},
-		{"a host arm", "HostOrBase", "Base", "a view of Collator, a host object's type, in a graph program"},
+		{"a host source", "HostCollator", "Base", "a view of "},
+		{"a host element", "Base", "HostCollators", "a view as "},
+		{"a host arm", "HostOrBase", "Base", "a view of "},
 		{"no host", "Derived", "Base", ""},
 	} {
 		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target]}}
@@ -309,8 +309,8 @@ func TestGraphHostViewIsNotYet(t *testing.T) {
 			continue
 		}
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
-			t.Errorf("%s: got %v, want NotYet holding %q", row.name, err, row.want)
+		if !errors.As(err, &notYet) || !strings.HasPrefix(notYet.What, row.want) || !strings.Contains(notYet.What, "Collator, a host object's type, in a graph program") {
+			t.Errorf("%s: got %v, want the host view stop, starting %q", row.name, err, row.want)
 		}
 	}
 }
