@@ -38,9 +38,11 @@ const nestedCalleeTotal = "function total(items: Iterable<number>): number { let
 // The inline rows are the shapes the fixtures don't carry: a module generator and one written in
 // place into a nested callee (S3b's row that S3c-1 flips), a plain function*, whose void TReturn the
 // parameter's one for-of never reads, so the void rules let it by one call deeper through the nested
-// callee too (rulings.md's exemption, extended), an IterableIterator<T> parameter, and an
-// `Iterable<T> | undefined` one. Mutant: iterableCallee's nested arm taken out, and every row stops,
-// the plain function* rows refused by the void rules (adamic/no-void).
+// callee too (rulings.md's exemption, extended), an IterableIterator<T> parameter, an
+// `Iterable<T> | undefined` one, and since S3c-2 generators of two functions into one parameter, the
+// shape of tsc's elaborateElementwise (internal/oracle/testdata/generators_several holds it to Node).
+// Mutant: iterableCallee's nested arm taken out, and every row stops, the plain function* rows
+// refused by the void rules (adamic/no-void).
 func TestNestedIterableCalleeLowers(t *testing.T) {
 	t.Parallel()
 	for _, name := range nestedCalleeFixtures {
@@ -70,6 +72,7 @@ func TestNestedIterableCalleeLowers(t *testing.T) {
 		{"an IterableIterator parameter", nestedCalleeHost("function total(items: IterableIterator<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(numbers())));")},
 		{"an Iterable<T> | undefined parameter", nestedCalleeHost("function first(items: Iterable<number> | undefined): number { if (items !== undefined) { for (const value of items) { return value; } } return -1; }\nconsole.log(String(first(numbers())));")},
 		{"a sibling calling the callee", nestedCalleeHost(nestedCalleeTotal + "function run(): number { return total(numbers()); }\nconsole.log(String(run()));")},
+		{"two generator functions into one parameter (S3c-2)", nestedCalleeHost(nestedCalleeTotal + "function* halves(): Generator<number, undefined, undefined> { yield 0.5; }\nconsole.log(String(total(numbers()) + total(halves())));")},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -116,8 +119,7 @@ func nestedCalleeHandings(program *ir.Program) int {
 // a callback, so something the graph doesn't see may call it, and the view proof can't bound its
 // parameter. Road 2: the callee recursing with its own parameter, a second read. Road 3: a local of
 // the callee's name shadowing it, so the call names no function declaration. And a callee held in a
-// local, one whose parameter a closure captures, and two generator functions into one parameter,
-// which is S3c-2's. Each row's words are a part of its stop, so a row that stops for another reason
+// local, and one whose parameter a closure captures. Each row's words are a part of its stop, so a row that stops for another reason
 // goes red too. Mutants (internal/oracle/testdata/generators/mutants.md, S3c-1): onlyCalledDirectly
 // answering yes for a closure also passed as a callback, and road 1's first row lowers;
 // checkGeneratorArguments' CallClosure arm taken out, and road 2's row lowers, its second read
@@ -132,7 +134,6 @@ func TestNestedIterableCalleeRoadsAreNotYet(t *testing.T) {
 		{"road 3: a local of the callee's name", nestedCalleeHost(nestedCalleeTotal + "{\nconst total = (items: Iterable<number>): number => { let sum = 0; for (const value of items) { sum += value; } return sum; };\nconsole.log(String(total(numbers())));\n}"), other},
 		{"a call through a local holding the callee", nestedCalleeHost(nestedCalleeTotal + "const held = total;\nconsole.log(String(held(numbers())));"), other},
 		{"a closure capturing the parameter", nestedCalleeHost("function total(items: Iterable<number>): number { let sum = 0; const keep = (): Iterable<number> => items; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(numbers())));"), "which a closure captures"},
-		{"two generator functions into one parameter (S3c-2)", nestedCalleeHost(nestedCalleeTotal + "function* halves(): Generator<number, undefined, undefined> { yield 0.5; }\nconsole.log(String(total(numbers()) + total(halves())));"), "generators of more than one function"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

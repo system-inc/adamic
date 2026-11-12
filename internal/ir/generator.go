@@ -13,12 +13,15 @@ func (Yield) Type() Type { return 0 }
 // GeneratorNext runs the generator Generator holds to its next yield and is the value yielded,
 // owned. Once the body has finished, or a throw has left it, it is the zero value of Of and
 // GeneratorDone says so; a throw leaves the pending exception set, which the caller tests first when
-// Function's ResumeMayThrow says one can. Function is the generator function the frame was made by.
+// any of Functions' ResumeMayThrow says one can. Functions are the generator functions the frame may
+// have been made by: one, for a consumer of a direct call, or, in an iterable view's dispatch, every
+// function whose generators the view's proof found feeding it, each yielding Of (#qk8rztp S3c-2). The
+// step resumes through the frame's own code, so it never needs to know which of them made it.
 // Generator is a Generator, or, in an iterable view's dispatch only, the Object-typed local the view
 // holds, after IsGenerator said it is one (checkGeneratorRoads).
 type GeneratorNext struct {
 	Generator Expression
-	Function  int
+	Functions []int
 	Of        Type
 }
 
@@ -89,9 +92,15 @@ func (p *Program) HasGenerators() bool {
 	return false
 }
 
-// GeneratorNextMayThrow is a step that can leave a throw pending: one whose body a throw can leave.
+// GeneratorNextMayThrow is a step that can leave a throw pending: one where a throw can leave the body
+// of any function its frame may have been made by, since which one it was is known only at run time.
 func (p *Program) GeneratorNextMayThrow(next GeneratorNext) bool {
-	return p.Functions[next.Function].ResumeMayThrow
+	for _, function := range next.Functions {
+		if p.Functions[function].ResumeMayThrow {
+			return true
+		}
+	}
+	return false
 }
 
 // IteratorNextMayThrow is a hand-driven next() that can leave a throw pending: one whose generator's

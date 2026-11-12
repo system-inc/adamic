@@ -328,6 +328,16 @@ func (l *lowering) checkIterableViews() error {
 		if reaches.Unknown || len(unproven) != 0 {
 			return l.notYet(view.where, "a view over an iterable of unproven origin ("+strings.Join(unproven, "; ")+")")
 		}
+		// The generator functions a dispatch steps, whose yields must be held alike, asked before how
+		// the view reads them so that two origins yielding differently are named as two (#qk8rztp
+		// S3c-2). A hand view keeps its one function (handView).
+		var functions []int
+		if !view.hand && len(generators) != 0 {
+			var err error
+			if functions, err = l.generatorFunctions(view, generators); err != nil {
+				return err
+			}
+		}
 		if len(differently) != 0 {
 			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+strings.Join(differently, "; ")+", read as "+iterableHeldName(view.held)+")")
 		}
@@ -345,7 +355,7 @@ func (l *lowering) checkIterableViews() error {
 			continue
 		}
 		if len(generators) != 0 {
-			if err := l.generatorView(index, generators); err != nil {
+			if err := l.generatorView(index, functions); err != nil {
 				return err
 			}
 		}
@@ -598,30 +608,48 @@ func (l *lowering) handView(view iterableView, parameter int, generators []itera
 	return nil
 }
 
-// generatorView admits a view a generator feeds, a collection's iterator feeding it too or not, held
-// as an object or as a union (Iterable<string>), and rewrites its loop into the dispatch, or stops at
-// what S2c-1 doesn't build: a view fed by more than one generator function. The step itself resumes
-// through the frame's own code (adamic_generator_next
-// calls generator->code->resume, and JavaScript's next() is the generator's own), so several
-// functions could share it; what can't is GeneratorNext's one Function, whose ResumeMayThrow says
-// whether the step's caller tests for a throw (Lower's seam).
-func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
+// generatorView admits a view generators feed, a collection's iterator feeding it too or not, held as
+// an object or as a union (Iterable<string>), and rewrites its loop into the dispatch, whose one step
+// serves every generator function that feeds it (functions, from generatorFunctions). The step
+// resumes through the frame's own code (native adamic_generator_next calls generator->code->resume,
+// and JavaScript's next() is the generator's own), so it never asks which function made the frame;
+// what it names them for is whether its caller tests for a throw, which it does when any of them may
+// leave one (ir.GeneratorNextMayThrow, #qk8rztp S3c-2).
+func (l *lowering) generatorView(index int, functions []int) error {
 	view := l.iterableViews[index]
 	switch {
 	case view.holder < 0 || view.function < 0:
 		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
+	case len(functions) == 0:
+		return fmt.Errorf("lower: compiler bug: the iterable view at %s has generators feeding it and no function of theirs", l.program.Where(view.where))
 	}
-	function, err := l.oneGeneratorFunction(view, generators)
-	if err != nil {
-		return err
-	}
-	return l.dispatchView(view, function)
+	return l.dispatchView(view, functions)
 }
 
-// oneGeneratorFunction is the one generator function whose frames reach a view, or the stop for a
-// view generators of more than one function feed: a step names the one function whose throws it may
-// leave (Lower's seam on #qk8rztp S2c-1), a dispatch's GeneratorNext and a hand-driven IteratorNext
-// alike.
+// generatorFunctions is every generator function whose frames reach a dispatched view, each once, in
+// the order of their indexes, or the stop for two of them whose yields are held differently: the
+// dispatch's one step hands its value over as one representation, so each origin's Yields, which is
+// that representation and not only the TypeScript type, must be the same (#qk8rztp S3c-2).
+func (l *lowering) generatorFunctions(view iterableView, generators []iterableOrigin) ([]int, error) {
+	var functions []int
+	for _, origin := range generators {
+		functions = append(functions, origin.generator-1)
+	}
+	slices.Sort(functions)
+	functions = slices.Compact(functions)
+	yields := l.result.Functions[functions[0]].Yields
+	for _, function := range functions[1:] {
+		if other := l.result.Functions[function].Yields; other != yields {
+			return nil, l.notYet(view.where, "a view that generators of more than one function feed, yielding "+iterableTypeName(yields)+" and "+iterableTypeName(other)+" (#qk8rztp S3c-2)")
+		}
+	}
+	return functions, nil
+}
+
+// oneGeneratorFunction is the one generator function whose frames reach a hand view, or the stop for
+// one generators of more than one function feed: a hand-driven IteratorNext names the one function
+// whose throws it may leave (Lower's seam on #qk8rztp S2c-1). A dispatched view takes every function
+// instead (generatorFunctions, #qk8rztp S3c-2).
 func (l *lowering) oneGeneratorFunction(view iterableView, generators []iterableOrigin) (int, error) {
 	for _, other := range generators[1:] {
 		if other.generator != generators[0].generator {
@@ -648,8 +676,9 @@ func (l *lowering) oneGeneratorFunction(view iterableView, generators []iterable
 // leaves it as it is. The holder's declaration keeps the value forOf gave it, for a nullable
 // parameter an ir.Defined over its read, so the narrowing's `NULL` check still runs before any arm
 // (#qk8rztp S2c-3).
-func (l *lowering) dispatchView(view iterableView, function int) error {
-	yields := l.result.Functions[function].Yields
+func (l *lowering) dispatchView(view iterableView, functions []int) error {
+	// generatorFunctions has held every function's yields to the first's.
+	yields := l.result.Functions[functions[0]].Yields
 	held := ir.Read{Local: view.holder, Of: ir.Object}
 	step := l.libraryLocal(view.function, "generator_step", yields)
 	message := "compiler bug: the iterable view at " + l.program.Where(view.where) + " holds a value no arm of its dispatch steps"
@@ -673,7 +702,7 @@ func (l *lowering) dispatchView(view iterableView, function int) error {
 		collectionArm = append(collectionArm, ir.Assign{Local: item.Local, Value: value})
 		generatorArm := []ir.Statement{
 			// The step is tested for a throw before done is read, as forOfGenerator's is.
-			ir.Declare{Local: step.Local, Value: ir.GeneratorNext{Generator: held, Function: function, Of: yields}},
+			ir.Declare{Local: step.Local, Value: ir.GeneratorNext{Generator: held, Functions: functions, Of: yields}},
 			ir.If{Condition: ir.GeneratorDone{Generator: held}, Then: []ir.Statement{ir.Break{}}},
 			ir.Assign{Local: item.Local, Value: step},
 		}
