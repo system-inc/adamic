@@ -208,11 +208,15 @@ static bool valid(const adamic_string *path, bool target) {
 		shown = adamic_string_concat(2, (adamic_string *const[]){cut, &dots});
 		adamic_release(cut);
 	}
+	static const char *const coded_error_shape_json_keys[] = {"code"};
+	static adamic_error_json coded_error_shape_json = {&coded_error_shape, coded_error_shape_json_keys, 1, NULL, false};
+	adamic_register_error_json(&coded_error_shape_json);
 	adamic_object *thrown = adamic_object_new(&coded_error_shape);
 	thrown->slots[0].reference = &type_error_name;
 	thrown->slots[1].reference =
 		adamic_string_concat(2, (adamic_string *const[]){target ? &target_before : &before, shown});
 	thrown->slots[2].reference = &code;
+	adamic_object_field_types(thrown)[2] = adamic_ir_String;
 	adamic_release(shown);
 	adamic_thrown = thrown;
 	return false;
