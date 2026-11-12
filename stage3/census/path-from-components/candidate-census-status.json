@@ -1,0 +1,14 @@
+{
+  "command": [
+    "env",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/scratch/path-components-candidate/src/compiler/path.ts",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/workspace/scratch/path-components-latent",
+    "/workspace/scratch/path-components-candidate/src/compiler",
+    "/workspace/path-from-components/stage3/census/path-from-components/candidate-census.jsonl"
+  ],
+  "child_exit_code": 0,
+  "seconds": 34.53705876899994,
+  "stopping_reason": null
+}

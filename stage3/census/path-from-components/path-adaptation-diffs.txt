@@ -1,0 +1,88 @@
+refs/stage3/10-type-imports-after
+diff --git a/src/compiler/path.ts b/src/compiler/path.ts
+index a06359d51..1e20c65a3 100644
+--- a/src/compiler/path.ts
++++ b/src/compiler/path.ts
+@@ -8,12 +8,12 @@ import {
+     endsWith,
+     equateStringsCaseInsensitive,
+     equateStringsCaseSensitive,
+-    GetCanonicalFileName,
++    type GetCanonicalFileName,
+     getDeclarationFileExtension,
+     getStringComparer,
+     identity,
+     lastOrUndefined,
+-    Path,
++    type Path,
+     some,
+     startsWith,
+ } from "./_namespaces/ts.js";
+
+refs/stage3/30-indexed-reads-after
+diff --git a/src/compiler/path.ts b/src/compiler/path.ts
+index 1e20c65a3..79875a5b0 100644
+--- a/src/compiler/path.ts
++++ b/src/compiler/path.ts
+@@ -537,7 +537,7 @@ export function normalizeSlashes(path: string): string {
+  */
+ export function reducePathComponents(components: readonly string[]): string[] {
+     if (!some(components)) return [];
+-    const reduced = [components[0]];
++    const reduced = [components[0]!];
+     for (let i = 1; i < components.length; i++) {
+         const component = components[i];
+         if (!component) continue;
+@@ -909,7 +909,7 @@ function comparePathsWorker(a: string, b: string, componentComparer: (a: string,
+     const bComponents = reducePathComponents(getPathComponents(b));
+     const sharedLength = Math.min(aComponents.length, bComponents.length);
+     for (let i = 1; i < sharedLength; i++) {
+-        const result = componentComparer(aComponents[i], bComponents[i]);
++        const result = componentComparer(aComponents[i]!, bComponents[i]!);
+         if (result !== Comparison.EqualTo) {
+             return result;
+         }
+@@ -983,7 +983,7 @@ export function containsPath(parent: string, child: string, currentDirectory?: s
+     const componentEqualityComparer = ignoreCase ? equateStringsCaseInsensitive : equateStringsCaseSensitive;
+     for (let i = 0; i < parentComponents.length; i++) {
+         const equalityComparer = i === 0 ? equateStringsCaseInsensitive : componentEqualityComparer;
+-        if (!equalityComparer(parentComponents[i], childComponents[i])) {
++        if (!equalityComparer(parentComponents[i]!, childComponents[i]!)) {
+             return false;
+         }
+     }
+@@ -1013,8 +1013,8 @@ function getPathComponentsRelativeTo(from: string, to: string, stringEqualityCom
+ 
+     let start: number;
+     for (start = 0; start < fromComponents.length && start < toComponents.length; start++) {
+-        const fromComponent = getCanonicalFileName(fromComponents[start]);
+-        const toComponent = getCanonicalFileName(toComponents[start]);
++        const fromComponent = getCanonicalFileName(fromComponents[start]!);
++        const toComponent = getCanonicalFileName(toComponents[start]!);
+         const comparer = start === 0 ? equateStringsCaseInsensitive : stringEqualityComparer;
+         if (!comparer(fromComponent, toComponent)) break;
+     }
+@@ -1073,7 +1073,7 @@ export function getRelativePathToDirectoryOrUrl(directoryPathOrUrl: string, rela
+         getCanonicalFileName,
+     );
+ 
+-    const firstComponent = pathComponents[0];
++    const firstComponent = pathComponents[0]!;
+     if (isAbsolutePathAnUrl && isRootedDiskPath(firstComponent)) {
+         const prefix = firstComponent.charAt(0) === directorySeparator ? "file://" : "file:///";
+         pathComponents[0] = prefix + firstComponent;
+
+refs/stage3/40-explicit-any-after
+diff --git a/src/compiler/path.ts b/src/compiler/path.ts
+index 79875a5b0..310841571 100644
+--- a/src/compiler/path.ts
++++ b/src/compiler/path.ts
+@@ -454,7 +454,7 @@ function pathComponents(path: string, rootLength: number) {
+ }
+ 
+ /** @internal */
+-export type PathPathComponents = Path[] & { __pathComponensBrand: any; };
++export type PathPathComponents = Path[] & { __pathComponensBrand: undefined; };
+ 
+ /**
+  * Parse a path into an array containing a root component (at index 0) and zero or more path

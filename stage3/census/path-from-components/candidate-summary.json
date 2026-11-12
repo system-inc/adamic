@@ -1,0 +1,59 @@
+{
+  "header": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "full",
+    "measurement": "measured on a checker-rejected program",
+    "status": "measurement"
+  },
+  "family": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:1098:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:1105:28",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:1105:28: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "expression": "getDirectoryPath(directory) as P"
+    }
+  ],
+  "atFunction": [],
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:500:18",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getPathFromPathComponents",
+      "top": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:500:18"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:501:18",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getPathFromPathComponents",
+      "top": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:501:18"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:514:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 20603,
+      "body_end": 20828,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getPathFromPathComponents",
+      "top": "/workspace/scratch/path-components-candidate/src/compiler/path.ts:514:1"
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "header": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "full",
+    "measurement": "measured on a checker-rejected program",
+    "status": "measurement"
+  },
+  "family": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "expression": "\"\" as T"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "expression": "root + pathComponents.slice(1, length).join(directorySeparator) as T"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1096:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1103:28",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1103:28: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "expression": "getDirectoryPath(directory) as P"
+    }
+  ],
+  "atFunction": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1039:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1039:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:38",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20413,
+      "end": 20429
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1039:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "an unproven relation from string to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1039:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20523,
+      "end": 20605
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1045:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1045:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:38",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20413,
+      "end": 20429
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1045:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "an unproven relation from string to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1045:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20523,
+      "end": 20605
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1047:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1047:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:38",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20413,
+      "end": 20429
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1047:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "an unproven relation from string to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1047:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20523,
+      "end": 20605
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1068:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45",
+      "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1068:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:38",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20413,
+      "end": 20429
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1068:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12",
+      "reason": "an unproven relation from string to T: the source is not assignable to the target",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1068:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:516:12: Adamic 0.1 refuses an unproven relation from string to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 20523,
+      "end": 20605
+    }
+  ],
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 20373,
+      "body_end": 20608,
+      "instantiated": true,
+      "instantiated_by": [
+        {
+          "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1039:1",
+          "call_site": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1052:12",
+          "type_arguments": [
+            "string"
+          ]
+        },
+        {
+          "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1045:1",
+          "call_site": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1052:12",
+          "type_arguments": [
+            "string"
+          ]
+        },
+        {
+          "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1047:1",
+          "call_site": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1052:12",
+          "type_arguments": [
+            "string"
+          ]
+        },
+        {
+          "unit": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1068:1",
+          "call_site": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:1082:12",
+          "type_arguments": [
+            "string"
+          ]
+        }
+      ],
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "getPathFromPathComponents",
+      "top": "/workspace/scratch/path-components-adapted/src/compiler/path.ts:512:1"
+    }
+  ]
+}

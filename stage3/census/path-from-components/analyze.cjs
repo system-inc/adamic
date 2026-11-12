@@ -1,0 +1,9 @@
+const ts=require('/workspace/path-from-components/stage3/api/node_modules/typescript'),fs=require('fs');
+const out=__dirname;
+for(const label of ['baseline','candidate']){
+ const root='/workspace/scratch/path-components-'+(label==='baseline'?'adapted':'candidate');const file=root+'/src/compiler/path.ts',source=ts.createSourceFile(file,fs.readFileSync(file,'utf8'),ts.ScriptTarget.Latest,true);
+ const records=fs.readFileSync(out+'/'+label+'-census.jsonl','utf8').trim().split('\n').map(JSON.parse);const findings=records.flatMap(r=>r.findings||[]),same=findings.filter(f=>f.kind==='Refused'&&f.reason==="a cast the runtime can't check");
+ const seen=new Set(),family=[];
+ for(const f of same){if(seen.has(f.where))continue;seen.add(f.where);const [line,column]=f.where.split(':').slice(-2).map(Number);const pos=source.getPositionOfLineAndCharacter(line-1,column-1);let expr;function walk(n){if(ts.isAsExpression(n)&&n.getStart(source)===pos)expr=n.getText(source);ts.forEachChild(n,walk)}walk(source);family.push({...f,expression:expr});}
+ const declarations=source.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='getPathFromPathComponents');const starts=declarations.map(n=>{const loc=source.getLineAndCharacterOfPosition(n.getStart(source));return file+':'+(loc.line+1)+':'+(loc.character+1)});const atFunction=findings.filter(f=>{const [l,c]=f.where.split(':').slice(-2).map(Number);const pos=source.getPositionOfLineAndCharacter(l-1,c-1);return starts.includes(f.unit)||declarations.some(n=>pos>=n.getStart(source)&&pos<n.end)});fs.writeFileSync(out+'/'+label+'-summary.json',JSON.stringify({header:records[0],family,atFunction,units:records.flatMap(r=>r.units||[]).filter(u=>starts.includes(u.where))},null,2)+'\n');console.log(label,'family='+family.length,'functionFindings='+atFunction.length);
+}

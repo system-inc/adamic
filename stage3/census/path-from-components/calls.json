@@ -1,0 +1,130 @@
+{
+  "typescript": "6.0.3",
+  "roots": 604,
+  "calls": [
+    {
+      "file": "src/compiler/path.ts",
+      "line": 1052,
+      "column": 12,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(pathComponents)"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "line": 1082,
+      "column": 12,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(pathComponents)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9573,
+      "column": 27,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(aParts)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9573,
+      "column": 62,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(bParts)"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2931,
+      "column": 43,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(parts)"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 385,
+      "column": 12,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "getPathFromPathComponents(commonPathComponents)"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 459,
+      "column": 14,
+      "T": "string",
+      "argumentType": "readonly string[]",
+      "expression": "getPathFromPathComponents(dirComponents, length)"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 460,
+      "column": 18,
+      "T": "Path",
+      "argumentType": "Readonly<PathPathComponents>",
+      "expression": "getPathFromPathComponents(dirPathComponents, length)"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 462,
+      "column": 54,
+      "T": "string",
+      "argumentType": "readonly string[]",
+      "expression": "getPathFromPathComponents(dirComponents, packageDirLength)"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 463,
+      "column": 58,
+      "T": "Path",
+      "argumentType": "Readonly<PathPathComponents>",
+      "expression": "getPathFromPathComponents(dirPathComponents, packageDirLength)"
+    },
+    {
+      "file": "src/harness/vpathUtil.ts",
+      "line": 109,
+      "column": 48,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "format(reduce(components))"
+    },
+    {
+      "file": "src/harness/vpathUtil.ts",
+      "line": 109,
+      "column": 83,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "format(reduce(components))"
+    },
+    {
+      "file": "src/harness/vfsUtil.ts",
+      "line": 1065,
+      "column": 36,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "vpath.format(components)"
+    },
+    {
+      "file": "src/harness/vfsUtil.ts",
+      "line": 1072,
+      "column": 33,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "vpath.format(components.slice(0, step))"
+    },
+    {
+      "file": "src/harness/vfsUtil.ts",
+      "line": 1094,
+      "column": 30,
+      "T": "string",
+      "argumentType": "string[]",
+      "expression": "vpath.format(components.slice(0, step + 1))"
+    }
+  ],
+  "counts": {
+    "string": 13,
+    "Path": 2
+  }
+}

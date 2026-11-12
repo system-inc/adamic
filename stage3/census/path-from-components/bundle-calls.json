@@ -1,0 +1,185 @@
+{
+  "note": "Prebuilt upstream JavaScript copies, not generic instantiations of the adapted TypeScript declaration.",
+  "calls": [
+    {
+      "file": "lib/_tsc.js",
+      "line": 5719,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(pathComponents2)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 5746,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(pathComponents2)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 18392,
+      "column": 25,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(aParts)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 18392,
+      "column": 60,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(bParts)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 41824,
+      "column": 32,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(parts)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 121938,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "never",
+      "expression": "getPathFromPathComponents(commonPathComponents)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 128061,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirComponents, length2)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 128062,
+      "column": 14,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirPathComponents, length2)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 128064,
+      "column": 47,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirComponents, packageDirLength)"
+    },
+    {
+      "file": "lib/_tsc.js",
+      "line": 128065,
+      "column": 51,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirPathComponents, packageDirLength)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 9125,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(pathComponents2)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 9152,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(pathComponents2)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 22367,
+      "column": 25,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(aParts)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 22367,
+      "column": 60,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(bParts)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 46340,
+      "column": 32,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any[]",
+      "expression": "getPathFromPathComponents(parts)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 126778,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "never",
+      "expression": "getPathFromPathComponents(commonPathComponents)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 132996,
+      "column": 10,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirComponents, length2)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 132997,
+      "column": 14,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirPathComponents, length2)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 132999,
+      "column": 47,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirComponents, packageDirLength)"
+    },
+    {
+      "file": "lib/typescript.js",
+      "line": 133000,
+      "column": 51,
+      "T": null,
+      "returnType": "any",
+      "argumentType": "any",
+      "expression": "getPathFromPathComponents(dirPathComponents, packageDirLength)"
+    }
+  ]
+}

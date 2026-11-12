@@ -1,0 +1,59 @@
+{
+  "api-baseline": {
+    "command": [
+      "rg",
+      "-n",
+      "getPathFromPathComponents",
+      "/workspace/scratch/typescript-6.0.3/tests/baselines/reference/api/typescript.d.ts"
+    ],
+    "cwd": "/workspace/path-from-components",
+    "child_exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sanctioned-api": {
+    "command": [
+      "rg",
+      "-n",
+      "getPathFromPathComponents",
+      "stage3/lane/sanctioned-api.json"
+    ],
+    "cwd": "/workspace/path-from-components",
+    "child_exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "checkout-references": {
+    "command": [
+      "rg",
+      "--no-ignore",
+      "-n",
+      "getPathFromPathComponents|vpath\\.format",
+      "--glob",
+      "!node_modules/**",
+      "--glob",
+      "!.git/**",
+      "."
+    ],
+    "cwd": "/workspace/scratch/path-components-adapted",
+    "child_exit_code": 0,
+    "stdout": "./lib/_tsc.js:5447:function getPathFromPathComponents(pathComponents2, length2) {\n./lib/_tsc.js:5719:  return getPathFromPathComponents(pathComponents2);\n./lib/_tsc.js:5746:  return getPathFromPathComponents(pathComponents2);\n./lib/_tsc.js:18392:  return isDirectory ? [getPathFromPathComponents(aParts), getPathFromPathComponents(bParts)] : void 0;\n./lib/_tsc.js:41824:            const commonDir2 = getPathFromPathComponents(parts);\n./lib/_tsc.js:121938:  return getPathFromPathComponents(commonPathComponents);\n./lib/_tsc.js:128061:    dir: getPathFromPathComponents(dirComponents, length2),\n./lib/_tsc.js:128062:    dirPath: getPathFromPathComponents(dirPathComponents, length2),\n./lib/_tsc.js:128064:    packageDir: packageDirLength !== void 0 ? getPathFromPathComponents(dirComponents, packageDirLength) : void 0,\n./lib/_tsc.js:128065:    packageDirPath: packageDirLength !== void 0 ? getPathFromPathComponents(dirPathComponents, packageDirLength) : void 0\n./src/harness/vfsUtil.ts:1065:                return { realpath: vpath.format(components), basename, parent, links, node };\n./src/harness/vfsUtil.ts:1072:                const dirname = vpath.format(components.slice(0, step));\n./src/harness/vfsUtil.ts:1094:            const realpath = vpath.format(components.slice(0, step + 1));\n./src/harness/vpathUtil.ts:15:export import format = ts.getPathFromPathComponents;\n./src/compiler/moduleNameResolver.ts:54:    getPathFromPathComponents,\n./src/compiler/moduleNameResolver.ts:2931:                        const commonDir = getPathFromPathComponents(parts);\n./src/compiler/utilities.ts:206:    getPathFromPathComponents,\n./src/compiler/utilities.ts:9573:    return isDirectory ? [getPathFromPathComponents(aParts), getPathFromPathComponents(bParts)] : undefined;\n./lib/typescript.js:951:  getPathFromPathComponents: () => getPathFromPathComponents,\n./lib/typescript.js:8847:function getPathFromPathComponents(pathComponents2, length2) {\n./lib/typescript.js:9125:  return getPathFromPathComponents(pathComponents2);\n./lib/typescript.js:9152:  return getPathFromPathComponents(pathComponents2);\n./lib/typescript.js:22367:  return isDirectory ? [getPathFromPathComponents(aParts), getPathFromPathComponents(bParts)] : void 0;\n./lib/typescript.js:46340:            const commonDir2 = getPathFromPathComponents(parts);\n./lib/typescript.js:126778:  return getPathFromPathComponents(commonPathComponents);\n./lib/typescript.js:132996:    dir: getPathFromPathComponents(dirComponents, length2),\n./lib/typescript.js:132997:    dirPath: getPathFromPathComponents(dirPathComponents, length2),\n./lib/typescript.js:132999:    packageDir: packageDirLength !== void 0 ? getPathFromPathComponents(dirComponents, packageDirLength) : void 0,\n./lib/typescript.js:133000:    packageDirPath: packageDirLength !== void 0 ? getPathFromPathComponents(dirPathComponents, packageDirLength) : void 0\n./lib/typescript.js:184903:  getPathFromPathComponents: () => getPathFromPathComponents,\n./lib/typescript.js:199701:  getPathFromPathComponents,\n./src/compiler/path.ts:507: * getPathFromPathComponents([\"/\", \"path\", \"to\", \"file.ext\"]) === \"/path/to/file.ext\"\n./src/compiler/path.ts:512:export function getPathFromPathComponents<T extends string>(pathComponents: readonly T[], length?: number): T {\n./src/compiler/path.ts:1052:    return getPathFromPathComponents(pathComponents);\n./src/compiler/path.ts:1082:    return getPathFromPathComponents(pathComponents);\n./src/compiler/resolutionCache.ts:31:    getPathFromPathComponents,\n./src/compiler/resolutionCache.ts:459:        dir: getPathFromPathComponents(dirComponents, length),\n./src/compiler/resolutionCache.ts:460:        dirPath: getPathFromPathComponents(dirPathComponents, length),\n./src/compiler/resolutionCache.ts:462:        packageDir: packageDirLength !== undefined ? getPathFromPathComponents(dirComponents, packageDirLength) : undefined,\n./src/compiler/resolutionCache.ts:463:        packageDirPath: packageDirLength !== undefined ? getPathFromPathComponents(dirPathComponents, packageDirLength) : undefined,\n./src/compiler/program.ts:135:    getPathFromPathComponents,\n./src/compiler/program.ts:385:    return getPathFromPathComponents(commonPathComponents);\n",
+    "stderr": ""
+  },
+  "tests-services-server": {
+    "command": [
+      "rg",
+      "--no-ignore",
+      "-n",
+      "getPathFromPathComponents|vpath\\.format",
+      "tests",
+      "src/testRunner",
+      "src/services",
+      "src/server"
+    ],
+    "cwd": "/workspace/scratch/path-components-adapted",
+    "child_exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+}
