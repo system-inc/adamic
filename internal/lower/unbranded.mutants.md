@@ -24,4 +24,8 @@ the fixture families on a box; the JavaScript backend holds the shapes to Node (
 internal/oracle/testdata/notyet_element_access/sorted.a, now lowering, holds a SortedReadonlyArray parameter to Node on
 both backends and the leak check.
 | No own-member rule (Language's must) | phantom_array_presence.go: the `l.holdsArrayBrand(access.Expression) && !l.arrayOwnMember(callee)` case made `false &&` | TestUnbrandedPresenceIsRefused, the hasOwnProperty, propertyIsEnumerable and hasOwnProperty-of-length rows |
-| Type parameters unjudged | phantom_array_presence.go, `arrayBrandIn`: the type parameter case appends the parameter instead of its constraint | TestUnbrandedPresenceIsRefused, the l13 and l14 rows, each heard by a later stop instead of rule 450 |
+| Type parameters unjudged | phantom_array_presence.go, `phantomBrandMatching`: the type parameter case appends the parameter instead of its constraint | TestUnbrandedPresenceIsRefused, the l13 and l14 rows, each heard by a later stop instead of rule 450 |
+
+## Object presence (#3hsrk2t, Nov 12)
+
+Mutant run and restored: the classifier accepts array bases only, dropping both object extensions and branded supertypes. The q06.ts pin loses rule 450 and a separate mutant probe confirms that the whole program lowers. q06.a keeps its older overload-result refusal. The other object observation pins also lose the phantom-presence refusal. The production file was restored through an uncommitted Go overlay.
