@@ -64,6 +64,8 @@ func reflectGetFixture(t *testing.T, name string) string {
 // wrong length natively; _fsFileMode answered from its slot, so stats_reads.a's reads a number
 // natively; size read through dynamic_slot rather than the shape's kind, so stats_reads.a panics
 // natively; the helper's Stats test dropped, so stats_reads.a stops at size on the JavaScript backend.
+// #6xfkdwj's, a Stats' every field: dev or ctime dropped from union.c's stats_held_names, so
+// stop_host_stats_field.a's dev or stop_host_stats_ctime.a's ctime reads undefined natively.
 // #xdcec18's, a function's length: union.c's closure arm stopping for length again, so
 // function_length.a stops at map natively; the helper answering length on neither a program's
 // AdamicClosure nor Node's own function, so function_length.a stops on the JavaScript backend; the
@@ -111,6 +113,8 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"stop_host_object.a", "directory\nfunction\n"},
 		{"stop_host_stats_method.a", "directory\nfunction\n"},
 		{"stop_host_stats_size.a", "directory\nnumber\n"},
+		{"stop_host_stats_field.a", "directory\nnumber\n"},
+		{"stop_host_stats_ctime.a", "directory\nobject\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -507,8 +511,6 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_prototype_class.a", "thing\n", "ClassConstructor", "constructor", "thing\nfunction\n"},
 	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
 	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
-	{"stop_host_stats_field.a", "directory\n", "StatsField", "dev", "directory\nnumber\n"},
-	{"stop_host_stats_ctime.a", "directory\n", "StatsField", "ctime", "directory\nobject\n"},
 	{"stop_host_stats_date.a", "mtime object\n", "RuntimeValue", "getTime", "mtime object\nfunction\n"},
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
@@ -560,9 +562,6 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // without a getter, so that backend stops in the setter-only stop's words.
 // stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
 // (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
-// The stop_host_stats_ rows are a Stats' fields native doesn't hold (#zhrjf2t), which stop on both
-// backends in the StatsField form while its other reads answer (stats_reads.a); their mutant is union.c's keyed_stats
-// answering such a field undefined, so stop_host_stats_field.a's dev reads undefined natively.
 // stop_host_stats_date.a reads a Stats' mtime, a host Date, by a key in turn. The other stop_host_
 // rows are #ey7aysy's: a host object stops for every key. Their mutants are union.c's guard put back
 // on Object.prototype's names only, so stop_host_dirent.a's isFile reads undefined natively, and

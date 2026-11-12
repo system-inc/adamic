@@ -156,7 +156,7 @@ int main(void) {
  adamic_start(0,NULL); adamic_string path=ADAMIC_STRING(%q);
  (void)adamic_fs_file_utimes(&path,1000.5,1000.5);
  adamic_object *stat=adamic_fs_file_stat(&path,true);
- puts(stat->slots[1].number==1000500 ? "true" : "false");
+ puts(stat->slots[11].number==1000500 ? "true" : "false");
  adamic_release(stat); return 0;
 }
 `, file)

@@ -1,0 +1,57 @@
+// The fields of a Stats wasm32-wasi's filestat holds, read statically and by a run-time key, agree with
+// Node there as natively (#6xfkdwj): the device, the inode, the link count, the size and the three
+// times, numbers and Dates. preview 1's filestat keeps the change time, so ctimeMs is real on wasm32,
+// read after utimesSync moved the access and modification times to fixed past ones: a change time of
+// 0, or written from either moved time, reads at or before the access time. The file is this run's
+// own, so its inode and change time are printed as relations.
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+// An exclusive create takes the first name no other run holds.
+function freshFile(): string {
+	const started = String(Date.now());
+	for (let index = 0; index < 100; index++) {
+		const path = join(tmpdir(), `adamic-stats-held-${started}-${String(index)}`);
+		try {
+			fs.writeFileSync(path, 'held', { flag: 'wx' });
+			return path;
+		} catch (error) {
+			if (errorCode(error) !== 'EEXIST') throw error;
+		}
+	}
+	throw new Error('no fresh name');
+}
+
+const file = freshFile();
+fs.utimesSync(file, 1700000000, 1600000000);
+const stats = fs.statSync(file);
+const again = fs.statSync(file);
+const place = fs.statSync(tmpdir());
+console.log(`dev ${String(stats.dev === place.dev)} ${String(stats.dev)}`);
+console.log(`ino ${String(stats.ino === again.ino)} ${String(stats.ino > 0)} place ${String(place.ino)}`);
+console.log(`nlink ${String(stats.nlink)} size ${String(stats.size)}`);
+console.log(`atimeMs ${String(stats.atimeMs)} mtimeMs ${String(stats.mtimeMs)}`);
+console.log(`ctimeMs after the access time ${String(stats.ctimeMs > stats.atimeMs)} again ${String(stats.ctimeMs === again.ctimeMs)}`);
+console.log(`atime ${String(stats.atime.getTime())} mtime ${String(stats.mtime.getTime())}`);
+console.log(`ctime rounded ${String(stats.ctime.getTime() === Math.round(stats.ctimeMs))} same ${String(stats.ctime === stats.ctime)}`);
+const numbers = [stats.dev, stats.nlink, stats.ino, stats.size, stats.atimeMs, stats.mtimeMs, stats.ctimeMs];
+const names = ['dev', 'nlink', 'ino', 'size', 'atimeMs', 'mtimeMs', 'ctimeMs'];
+for (let index = 0; index < names.length; index++) {
+	const value = propertyOf(stats, names[index] ?? '');
+	console.log(`${names[index] ?? ''} by key ${typeof value} ${String(value === numbers[index])}`);
+}
+const ctime = propertyOf(stats, 'ctime');
+console.log(`ctime by key ${typeof ctime} ${String(ctime === stats.ctime)} twice ${String(ctime === propertyOf(stats, 'ctime'))}`);
+fs.unlinkSync(file);

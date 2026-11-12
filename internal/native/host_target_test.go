@@ -77,3 +77,41 @@ func TestWASIRefusesCommonJSModuleValuesByName(t *testing.T) {
 		})
 	}
 }
+
+// A Stats' fields wasm32-wasi's filestat has no answer for are refused by name (#6xfkdwj): a static read
+// of each lowers to its own operation (ir.StatsFieldOperations), whose C names its runtime function, and
+// that function's row refuses it as the field the program read. TestWASIHostTargetRefusals holds every
+// row to the build boundary. Mutants: a row taken out of wasiHostRefusals, or two fields' operations
+// sharing one function, and the field reads wasi-libc's zero or type-only mode.
+func TestWASIRefusesStatsFieldsByName(t *testing.T) {
+	t.Parallel()
+	functions := map[string]bool{}
+	for _, field := range ir.DynamicKeyedStatsFieldNames {
+		t.Run(field, func(t *testing.T) {
+			t.Parallel()
+			operation, found := ir.StatsFieldOperations[field]
+			if !found {
+				t.Fatalf("no operation reads %s", field)
+			}
+			of := ir.Number
+			if field == "birthtime" {
+				of = ir.Object
+			}
+			stat := ir.NodeFSFile{Operation: "stat", Arguments: []ir.Expression{ir.StringConstant{Index: 0}, ir.BooleanConstant{Value: true}}, Of: ir.Object}
+			read := ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{stat}, Of: of}
+			program := &ir.Program{Source: "stats.ts", Strings: []string{"."}, Main: []ir.Statement{ir.Evaluate{Value: read}}}
+			function := "adamic_fs_file_" + operation
+			if code := C(program); !strings.Contains(code, function+"(") {
+				t.Fatalf("a read of %s doesn't call %s", field, function)
+			}
+			want := TargetRefused{"fs.Stats." + field, ""}
+			if refusal, found := wasiHostRefusals[function]; !found || refusal.Member != want.Member || !strings.Contains(refusal.Reason, "filestat") {
+				t.Fatalf("want a refusal of %s, got %v (found %t)", want.Member, refusal, found)
+			}
+		})
+		functions["adamic_fs_file_"+ir.StatsFieldOperations[field]] = true
+	}
+	if len(functions) != len(ir.DynamicKeyedStatsFieldNames) {
+		t.Fatalf("%d fields read through %d functions", len(ir.DynamicKeyedStatsFieldNames), len(functions))
+	}
+}

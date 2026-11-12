@@ -203,7 +203,7 @@ _Noreturn static void keyed_stop(enum adamic_dynamic_keyed_stop stop, const adam
 // run-time key read (adamic_dynamic_property_keyed, which tests host_object itself, after its own
 // earlier stops). On a host object each stops in the runtime value form before a slot or a slot's
 // name is consulted, since the object's own names aren't Node's (Adamic's ruling on #ey7aysy at
-// 23:03Z): a Stats holds _fsFileMode and lacks isFile. An Error isn't a host object, so it answers
+// 23:03Z): a Stats holds its fields as own slots and lacks isFile. An Error isn't a host object, so it answers
 // its own names on all three as Node does. The runtime's other readers of a value's names by a key
 // call adamic_host_stop, and host_shapes_test.go holds every function that reads a shape's names to
 // one or the other, or to an allowlist that says why it needn't.
@@ -829,22 +829,26 @@ void adamic_keyed_stats_shape_publish(const adamic_shape *shape) {
 	atomic_store_explicit(&keyed_stats_shape, shape, memory_order_release);
 }
 
-// The fields node_fs_file.c's stat shape holds that Node's Stats has too, which a run-time key read
-// answers from the shape's slots: its stat_fields, less the private _fsFileMode.
-static const char *const stats_held_names[] = {"size", "mtimeMs", "mtime", "atime"};
+// The fields node_fs_file.c's stat shape holds, every one Node's Stats has (#6xfkdwj), which a
+// run-time key read answers from the shape's slots: its stat_fields, Node's fourteen own numbers and
+// Stats.prototype's four Dates.
+static const char *const stats_held_names[] = {"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "size", "blocks", "atimeMs", "mtimeMs", "ctimeMs", "birthtimeMs", "atime", "mtime", "ctime", "birthtime"};
 
-// keyed_stats is a run-time key read of an fs.Stats as Node's answers it, where native holds the
-// answer (#zhrjf2t, the second host shape lifted). Size and mtimeMs are the slot's number and mtime
-// and atime its Date, retained, the same object on every read, as Node's getter caches its own. Each
-// is read by the shape's kinds, as keyed_array reads a match's fields: the shape registers no types
-// for dynamic_slot. A name the Stats inherits answers its immortal closure, Stats.prototype's or
-// StatsBase.prototype's first and then Object.prototype's (prototype_value), so its constructor is
-// Stats and its toString an object's. One of Node's fields native doesn't hold
-// (adamic_dynamic_keyed_stats_field_names) stops in its own form, since native would have to make up
-// its value, and
-// any other key reads undefined (NULL), the private _fsFileMode among them: no slot is read for any
-// key but the four held.
+// keyed_stats is a run-time key read of an fs.Stats as Node's answers it (#zhrjf2t, the second host
+// shape lifted; #6xfkdwj, every field). A number is the slot's and a Date the slot's, retained, the
+// same object on every read, as Node's getter caches its own. Each is read by the shape's kinds, as
+// keyed_array reads a match's fields: the shape registers no types for dynamic_slot. On wasm32-wasi
+// a field its filestat holds no answer for (adamic_dynamic_keyed_stats_field_names) stops in its own
+// form first, by its name, before any slot is read, since wasi-libc's stat zeroes it. A name the
+// Stats inherits answers its immortal closure, Stats.prototype's or StatsBase.prototype's first and
+// then Object.prototype's (prototype_value), so its constructor is Stats and its toString an
+// object's, and any other key reads undefined (NULL): no slot is read for any key but the held.
 static adamic_heap *keyed_stats(const adamic_object *stats, const adamic_string *key) {
+#ifdef ADAMIC_TARGET_WASI
+	if (key_named(key, adamic_dynamic_keyed_stats_field_names, sizeof adamic_dynamic_keyed_stats_field_names / sizeof adamic_dynamic_keyed_stats_field_names[0])) {
+		keyed_stop(adamic_dynamic_keyed_stop_stats_field, key);
+	}
+#endif
 	if (key_named(key, stats_held_names, sizeof stats_held_names / sizeof stats_held_names[0])) {
 		size_t slot = keyed_slot(stats, key, NULL);
 		if (slot < stats->shape->count) {
@@ -858,9 +862,6 @@ static adamic_heap *keyed_stats(const adamic_object *stats, const adamic_string 
 	}
 	for (size_t index = 0; index < sizeof stats_functions / sizeof stats_functions[0]; index++) {
 		if (key_is(key, adamic_dynamic_keyed_stats_names[index])) return &stats_functions[index]->heap;
-	}
-	if (key_named(key, adamic_dynamic_keyed_stats_field_names, sizeof adamic_dynamic_keyed_stats_field_names / sizeof adamic_dynamic_keyed_stats_field_names[0])) {
-		keyed_stop(adamic_dynamic_keyed_stop_stats_field, key);
 	}
 	return prototype_value(key);
 }
