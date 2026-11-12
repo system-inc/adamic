@@ -37,13 +37,15 @@ console.log(String(supported(undefined, [{ extension: ".vue" }]).length));
 }
 
 // A cast in a statement a path does reach still stops the proof, wherever it could type a value the
-// proof reads: here a local a return spreads. The promise is an array, which no call-site check serves.
-// Mutant: the reached-statement cast test dropped, and the declaration is accepted.
+// proof reads. This one is an upcast, which the unchecked-cast rule admits, so only the proof's rule can
+// refuse it; the return doesn't need it, so with that rule dropped the body proves. The promise is an
+// array, which no call-site check serves. Mutant: the reached-statement cast test dropped, and the
+// declaration is accepted.
 func TestOverloadProofRefusesACastAPathReaches(t *testing.T) {
 	t.Parallel()
 	source := `function numbers(xs: readonly (string | number)[]): readonly number[];
 function numbers(xs: readonly (string | number)[]): readonly (string | number)[];
-function numbers(xs: readonly (string | number)[]): readonly (string | number)[] { const ys = xs as readonly number[]; return [...ys]; }
+function numbers(xs: readonly (string | number)[]): readonly (string | number)[] { const ys = xs as readonly (string | number)[]; return [ys.length]; }
 console.log(String(numbers([1]).length));
 `
 	_, err := lowerSourceAs(t, source, ".ts")
