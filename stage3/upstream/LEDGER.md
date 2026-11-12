@@ -751,3 +751,13 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   meta own keys cat,ph,ts,pid,tid in that order.
 
 - ff5eddz, `99-correctness-tracing-length`, JavaScript-changing under docs/rulings.md:306 and :307: replace only pop's eventStack.length-- and popAll's eventStack.length = 0 with splice truncations, pinning both complete owners and refusing drift. Keep an explicit RangeError("Invalid array length") guard before pop's splice: although an empty entry throws earlier, JSON.stringify(args) can reenter popAll through a getter and empty the stack before the decrement. startTracing and its typeCatalog length write are left to the concurrent adaptation 47 amendment. See the adaptation README and the proof on typescript/tracing-length-evidence.
+
+- #baobab, Nov 11 2026 23:29Z, Adamic: retire 62 and 63's widened fs views
+  using `fs.writeSync(typesFd, JSON.stringify(descriptor)!)` and
+  `fs.writeFileSync(legendPath, JSON.stringify(legend)!)`. This applies the
+  established postfix non-null check ruling (docs/rulings.md:50): evaluate once,
+  reject only null and undefined, exit 70, counted. Whole-owner pins and literal
+  guards require the const descriptor object and namespace-level const legend
+  array, with no declared toJSON and no binding reassignment. Amend 99's
+  dumpTypes pins to the new spelling; its subtype read changes are preserved.
+  Evidence is on typescript/tracing-fs-views-evidence, outside stage3/adapt.
