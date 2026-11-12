@@ -248,3 +248,29 @@ console.log(forced.tag);
 	}
 	wantUnknown(t, reach, "no reaching allocation established")
 }
+
+// Road 5: x || y is x where x is truthy and y otherwise, so it reaches what either does. Mutant 5.
+func TestReachLogicalOrIsEitherOperand(t *testing.T) {
+	t.Parallel()
+	program := reachProgram(t, reachBox+`function first(flag: boolean): Box | undefined {
+	return flag ? { tag: 'first' } : undefined;
+}
+const picked = first(true) || { tag: 'fallback' };
+console.log(picked.tag);
+`)
+	wantSites(t, reachOfGlobal(t, program, "picked"), literalSite(t, program, "first"), literalSite(t, program, "fallback"))
+}
+
+// An upcast keeps its value: lowering makes no node for it (cast.go's castValue hands back the
+// operand), so the variable reached the literal before these roads too. This pins that `as` needs
+// no road of its own; it has no mutant here.
+func TestReachUpcastKeepsItsValue(t *testing.T) {
+	t.Parallel()
+	program := reachProgram(t, `interface Named { tag: string }
+interface Labeled extends Named { label: string }
+const made: Labeled = { tag: 'labeled', label: 'one' };
+const named = made as Named;
+console.log(named.tag);
+`)
+	wantSites(t, reachOfGlobal(t, program, "named"), literalSite(t, program, "labeled"))
+}
