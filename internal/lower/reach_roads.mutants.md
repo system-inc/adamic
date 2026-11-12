@@ -144,3 +144,22 @@ New:
 Expected: TestReachNonNullAssertionHandsOnItsValue, TestReachSystemIsItsLiteral and
 TestReachSystemThroughANamespaceBarrelIsItsLiteral go Unknown, "missing expression": the assertion's Fallback is nil.
 
+## 5. Either operand of || or && not followed
+
+File: internal/lower/view_flow.go, follow's Logical arm.
+
+Old:
+
+```go
+		follow(value.Right)
+```
+
+New:
+
+```go
+		_ = value.Right
+```
+
+Expected: TestReachLogicalOrIsEitherOperand reaches only the first literal, a known answer missing the fallback the
+right side gives where the left is undefined: the exact set catches it.
+
