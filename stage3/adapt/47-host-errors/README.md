@@ -273,3 +273,32 @@ reason already present at 194:67. No other new finding is allowed anywhere in
 tracing.ts. PROOF.md quotes the exact findings, records whole-file comparison,
 and describes the complete sharded lane count and positive control. Raw logs,
 streams, patches and lane observations live on typescript/meta-spread-evidence.
+
+## Qualified fs import amendment, nqp4p7g
+
+Adamic's #00qn5az ruling makes tsc builtin requires top-level node: imports,
+following adaptation 93. This JavaScript-changing amendment moves tracing's
+fs binding to `import * as fs from "node:fs";`. All 17 remaining uses are
+qualified property receivers. The checker verifies their original binding and
+then their planned import binding, rejecting collisions, shadowing and bare
+namespace values before the sole write. The complete startTracing owner must
+match the original, the preceding explicit-metadata finished form, or the new
+finished form. Other owner drift still refuses.
+
+The only statement in the loader try was `fs = require("fs");`. Removing it
+leaves an empty try, whose catch cannot run. The pinned original rethrow was
+`throw new Error(` followed by `tracing requires having fs` and the original
+error. The complete empty guard is removed explicitly, rather than retaining
+unreachable source text. File operations below that guard remain unchanged.
+65 no longer creates tracing's ambient require and retains readonly process.pid.
+The unused existing errorMessage import is retained as an import anchor.
+
+The base is the requested fs-view retirement branch at 9ad919ace, because it
+was absent from fetched main d35fe5e7f. Raw validation evidence belongs on
+`typescript/tracing-fs-import-evidence`, outside the adaptation inputs.
+
+This draft stopped at the user's emission boundary: removing the now-unused
+catch causes esbuild to eliminate errorMessage and relocate the remaining
+hostErrors section outside tracing. Those changes are not pure renames.
+The requested lane, restoring mutant and final replay are therefore incomplete.
+See the evidence branch for complete diffs and completed observations.
