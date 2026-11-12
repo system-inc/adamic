@@ -2697,6 +2697,22 @@ class PhaseInputs(unittest.TestCase):
                      "verify/catalog/" + entry["patch"], entry["fixture"], package[2:] + "/testdata/input.a"):
             self.assertTrue(self.covered(inputs, path), (path, inputs))
 
+    def test_only_catalog_apply_declares_it_reads_the_base(self):
+        # catalog-apply's patch application reads the base tree beside the candidate's, and its inputs say so in a typed
+        # field the planner carries onto the planned unit (#witnessmain, Node's rule 1); no other phase's does, the note's
+        # words included. Mutant: readsBase in treeInputs, on every whole-tree phase, red.
+        declared = {}
+        for phase, provider in run.phaseInputProviders.items():
+            try:
+                declared[phase] = provider(self.tree, "", False, None)
+            except Exception:
+                # A provider that needs a unit or a change of its own can't be asked bare; the whole-tree ones can.
+                continue
+        self.assertIs(declared["catalog-apply"].get("readsBase"), True)
+        self.assertNotIn("readsBase", run.treeInputs("any note"))
+        self.assertEqual(sorted(phase for phase, inputs in declared.items() if "readsBase" in inputs), ["catalog-apply"])
+        self.assertIs(run.phaseInputs(self.tree, "catalog-apply", False)["inputs"].get("readsBase"), True)
+
     def test_tools_reads_the_go_sources_it_greps_and_no_more(self):
         # The tools phase declares exactly the pathspec its git grep searches (#gw93f6b): one list, so the two can't drift,
         # and never the whole tree. Mutant: the grep searching a wider pathspec than the declaration, red.

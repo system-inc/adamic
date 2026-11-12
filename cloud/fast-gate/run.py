@@ -17,6 +17,7 @@ and --tools (as for --select) to include this change's conditional executors.
 Add --with-inputs for JSON lines with the exact unit line and its package/path inputs.
 Package roots include test imports for commands that compile tests; paths are content inputs.
 Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
+A phase whose work reads the base tree beside the candidate's (catalog-apply) says so in inputs.readsBase, true.
 coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
@@ -1464,7 +1465,10 @@ class Gate:
         """The bug catalog's entries whose undo patch edits a file this change touches."""
         return [name for name, files in catalogPatchTargets(self.arguments.tree).items() if files & set(changed)]
 
-    @declaresInputs("catalog-apply", lambda tree, unit, full, change: treeInputs("patch application reads candidate and base trees"))
+    # readsBase is the typed word that this phase's key reads the base tree beside the candidate's, so a witness of one sha,
+    # whose diff is empty and never lists it, can't vouch for it (#witnessmain, Node's rule 1): the planner carries it onto
+    # the planned unit, and the witness compare counts it apart, never from the note's words.
+    @declaresInputs("catalog-apply", lambda tree, unit, full, change: dict(treeInputs("patch application reads candidate and base trees"), readsBase=True))
     def catalogApply(self, patches):
         """Staling moves to where it's cheap to fix (@system_adamic, Oct 7 21:28): an entry's undo patch
         that applied to main and no longer applies with this change makes the change red, naming the
