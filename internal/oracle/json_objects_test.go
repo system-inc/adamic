@@ -23,6 +23,8 @@ import (
 // object in json_stringify.c instead of a function reds functions.
 // Dropping the nullable write branch reds null_variable/0; writing the null tag for both cases reds
 // undefined_variable/0. Dropping the logical assignment byte update reds logical_and_null/0.
+// Leaving the decoder's first slot without its representation byte in json_decode.c reds decoded/0,
+// decoded/1 and decoded/4 (an implementation word).
 var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish", "functions", "nonfinite", "decoded", "null_variable", "undefined_variable", "logical_and_null", "logical_coalesce_undefined"}
 
 func TestJSONObjectsAgreeWithNode(t *testing.T) {
