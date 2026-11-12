@@ -521,6 +521,13 @@
 # and the id counter, which only grows.
 `timers_impl.h:timer_lists:1`
 `timers_impl.h:timer_list_next_id:1`
+# Node's knownTimersById and timeoutInfo[0] (#ezae5s0): the identity table of live timers, its count
+# and capacity, owned and freed by the loop thread alone, and the count of referenced live timers it
+# keeps beside them. Entries are borrowed from timers. No value graph.
+`timers_impl.h:timer_known:1`
+`timers_impl.h:timer_known_count:1`
+`timers_impl.h:timer_known_capacity:1`
+`timers_impl.h:timer_ref_count:1`
 # Node's delay warnings (#zhgmbwz): the queued text and its length and capacity, written by setTimeout
 # and flushed by the loop thread alone, freed at teardown; the once flags and the hint flag are
 # process-wide, as Node's are, set only on the loop thread. No value graph.

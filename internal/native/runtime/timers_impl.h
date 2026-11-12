@@ -10,7 +10,9 @@ static const adamic_timer_provider timer_provider = {1};
 typedef struct timer_entry timer_entry;
 typedef struct timer_list timer_list;
 /* A timer is in timers while it's live, and, while it waits, in the list of its duration: start is
- * Node's _idleStart, the clock read its wait counts from. */
+ * Node's _idleStart, the clock read its wait counts from. timers is doubly linked so a timer retires
+ * in constant time: a burst of due timers retires the oldest first, which a walk from the newest made
+ * quadratic (#ezae5s0). */
 struct timer_entry {
     uintptr_t identity;
     double start;
@@ -21,7 +23,7 @@ struct timer_entry {
     size_t argc;
     adamic_value *arguments;
     bool *references;
-    timer_entry *next;
+    timer_entry *previous, *next;
     timer_list *list;
     timer_entry *list_previous, *list_next;
 };
@@ -41,6 +43,18 @@ static timer_entry *timers;
 static uintptr_t timer_next_identity = 1;
 static timer_list *timer_lists;
 static uint64_t timer_list_next_id;
+/* Node's knownTimersById (lib/timers.js), which clearTimeout reads a primitive id from: here every
+ * live timer, found by identity in constant time, where a walk of timers made each clearTimeout and
+ * unref linear (#ezae5s0). Open addressing with linear probing, at most half full, and backward-shift
+ * deletion, so no tombstones. A timer is in it exactly while it's in timers, so a fired or cleared
+ * timer's identity misses, and identities are never reused. */
+static timer_entry **timer_known;
+static size_t timer_known_count, timer_known_capacity;
+/* Node's timeoutInfo[0] (lib/internal/timers.js), the count incRefCount and decRefCount keep: the
+ * timers in timers whose referenced is true, so timer_live reads it instead of scanning every timer
+ * once a turn. Every write of a live timer's referenced sits between timer_ref_leave and
+ * timer_ref_join, so the count can't drift from the field. */
+static size_t timer_ref_count;
 
 static double timer_now(void) {
 #ifdef ADAMIC_TARGET_WASI
@@ -95,16 +109,74 @@ static void timer_list_remove(timer_entry *entry) {
     entry->list = NULL;
     entry->list_previous = entry->list_next = NULL;
 }
+/* Identities count up, so a Fibonacci multiply spreads neighbours over the table, and the fold brings
+ * the high bits, where the multiply mixes best, down to the mask. */
+static size_t timer_known_home(uintptr_t identity, size_t capacity) {
+    uint64_t hash = (uint64_t)identity * UINT64_C(0x9E3779B97F4A7C15);
+    return (size_t)((hash ^ (hash >> 32)) & (capacity - 1));
+}
+static void timer_known_place(timer_entry **slots, size_t capacity, timer_entry *entry) {
+    size_t index = timer_known_home(entry->identity, capacity);
+    while (slots[index] != NULL) index = (index + 1) & (capacity - 1);
+    slots[index] = entry;
+}
+static void timer_known_insert(timer_entry *entry) {
+    if (timer_known_count + 1 > timer_known_capacity / 2) {
+        if (timer_known_capacity > SIZE_MAX / 2) abort();
+        size_t capacity = timer_known_capacity == 0 ? 16 : timer_known_capacity * 2;
+        timer_entry **slots = calloc(capacity, sizeof *slots);
+        if (slots == NULL) abort();
+        for (size_t index = 0; index < timer_known_capacity; index++)
+            if (timer_known[index] != NULL) timer_known_place(slots, capacity, timer_known[index]);
+        free(timer_known);
+        timer_known = slots;
+        timer_known_capacity = capacity;
+    }
+    timer_known_place(timer_known, timer_known_capacity, entry);
+    timer_known_count++;
+}
+static void timer_known_remove(timer_entry *entry) {
+    if (timer_known_capacity == 0) adamic_invariant("timers: a live timer missing from its identity table");
+    size_t mask = timer_known_capacity - 1;
+    size_t hole = timer_known_home(entry->identity, timer_known_capacity);
+    while (timer_known[hole] != entry) {
+        if (timer_known[hole] == NULL) adamic_invariant("timers: a live timer missing from its identity table");
+        hole = (hole + 1) & mask;
+    }
+    /* Backward shift: each later entry of the run moves into the hole when the hole lies between its
+     * home and where it sits, so every entry stays reachable from its home without a tombstone. */
+    for (size_t index = (hole + 1) & mask; timer_known[index] != NULL; index = (index + 1) & mask) {
+        size_t home = timer_known_home(timer_known[index]->identity, timer_known_capacity);
+        if (((index - home) & mask) >= ((index - hole) & mask)) {
+            timer_known[hole] = timer_known[index];
+            hole = index;
+        }
+    }
+    timer_known[hole] = NULL;
+    timer_known_count--;
+}
 static timer_entry *timer_find(adamic_timer_handle handle) {
     if (handle.provider != &timer_provider) return NULL;
-    for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
-        if (entry->identity == handle.identity) return entry;
+    if (timer_known_capacity == 0) return NULL;
+    for (size_t index = timer_known_home(handle.identity, timer_known_capacity); timer_known[index] != NULL;
+        index = (index + 1) & (timer_known_capacity - 1))
+        if (timer_known[index]->identity == handle.identity) return timer_known[index];
     return NULL;
 }
+/* Node's decRefCount for a timer that held a ref, and incRefCount for one that holds one. */
+static void timer_ref_leave(const timer_entry *entry) {
+    if (entry->referenced) timer_ref_count--;
+}
+static void timer_ref_join(const timer_entry *entry) {
+    if (entry->referenced) timer_ref_count++;
+}
 static void timer_unlink(timer_entry *entry) {
-    timer_entry **at = &timers;
-    while (*at != entry) at = &(*at)->next;
-    *at = entry->next;
+    if (entry->previous != NULL) entry->previous->next = entry->next;
+    else timers = entry->next;
+    if (entry->next != NULL) entry->next->previous = entry->previous;
+    timer_known_remove(entry);
+    timer_ref_leave(entry);
+    entry->previous = NULL;
     entry->next = NULL;
     entry->active = false;
 }
@@ -207,7 +279,10 @@ adamic_timer_handle adamic_timer_start(const adamic_timer_provider *provider,
         for (size_t index = 0; index < argc; index++)
             if (references[index]) adamic_retain(arguments[index].reference);
     }
+    if (timers != NULL) timers->previous = entry;
     timers = entry;
+    timer_known_insert(entry);
+    timer_ref_join(entry);
     timer_insert(entry, timer_now());
     host_started = true; /* Freeze loop hooks; timer operations bind the loop owner. */
     return (adamic_timer_handle){provider, entry->identity};
@@ -233,7 +308,9 @@ bool adamic_timer_unref(adamic_timer_handle handle) {
     host_loop_thread();
     timer_entry *entry = timer_find(handle);
     if (entry == NULL) return false;
+    timer_ref_leave(entry);
     entry->referenced = false;
+    timer_ref_join(entry);
     return true;
 }
 /* A Timeout's shape: only adamic_node_set_timeout makes an object of it, so its address alone tells
@@ -296,11 +373,7 @@ double adamic_node_clear_timeout(const adamic_heap *value) {
     (void)adamic_timer_cancel((adamic_timer_handle){&timer_provider, (uintptr_t)object->slots[0].number});
     return 0;
 }
-static bool timer_live(void) {
-    for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
-        if (entry->referenced) return true;
-    return false;
-}
+static bool timer_live(void) { return timer_ref_count != 0; }
 /* Only the native poll wait reads a deadline; WASI's wait has none, so the
  * strict WASI build would reject an unused definition. */
 #ifndef ADAMIC_TARGET_WASI
@@ -362,6 +435,9 @@ static void timer_shutdown(void) {
         timer_drop(entry);
     }
     while (timer_lists != NULL) timer_list_delete(timer_lists);
+    free(timer_known);
+    timer_known = NULL;
+    timer_known_capacity = 0;
     free(timer_warnings);
     timer_warnings = NULL;
     timer_warnings_length = timer_warnings_capacity = 0;

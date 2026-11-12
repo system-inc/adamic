@@ -23,6 +23,8 @@ harness. All must compile. A compiler failure never counts as a caught mutant.
 | Leak a cancelled registration | cancel | Shared leakcheck's allocation/leak proof |
 | Free a callback while it cancels itself | cancel-self | ASan heap-use-after-free |
 | Omit the post-timer promise checkpoint | order | Node stdout comparison |
+| Drop a timer's identity table insert | cancel | The cancel assertion |
+| Keep a retired timer's ref in the count | deadlines | Its own 3 s deadline: the loop outlives its timers |
 
 The last mutation targets the new loop's actual post-timer drain, preserving
 its original purpose after integration with B2b. Each mutated probe is built
