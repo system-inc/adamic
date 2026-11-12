@@ -578,6 +578,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.inspectorDoomedValue(node); handled {
+		return value, err
+	}
 	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
 		value, err := l.enumNeverValue(node)
 		if err != nil {

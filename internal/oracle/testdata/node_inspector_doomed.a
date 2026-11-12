@@ -1,0 +1,14 @@
+import 'node:process';
+function errorCode(error: unknown): string {
+ return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : 'none';
+}
+try {
+ const inspector: typeof import('inspector') = require('inspector');
+ const session = new inspector.Session();
+ session.connect();
+ session.post('Profiler.enable', () => {
+  session.post('Profiler.start', () => {});
+ });
+} catch (error) {
+ console.log(errorCode(error));
+}

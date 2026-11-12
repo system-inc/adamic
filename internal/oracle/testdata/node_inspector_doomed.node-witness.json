@@ -1,0 +1,10 @@
+{
+  "fixture": "internal/oracle/testdata/node_inspector_doomed.a",
+  "ruling": "@system_adamic, task #cn4yapb (2b), Nov 12",
+  "node_version": "v24.19.0",
+  "runner": "node --disable-warning=ExperimentalWarning oracle/node.mjs internal/oracle/testdata/node_inspector_doomed.a",
+  "stdout": "none\n",
+  "stderr": "",
+  "exit_code": 0,
+  "reason": "The source is an ES module: require is not defined, and the caught ReferenceError has no code. Native and generated JavaScript retain the existing node-without-inspector host ruling."
+}

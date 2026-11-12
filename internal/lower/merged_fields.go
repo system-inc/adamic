@@ -134,6 +134,15 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	if err := l.nodeLibraryRefusal(node); err != nil {
 		return err
 	}
+	if root, _ := l.inspectorDoomedUse(node); root != nil {
+		if l.inspectorSkippedContracts == nil {
+			l.inspectorSkippedContracts = map[*ast.Node]int{}
+		}
+		if _, known := l.inspectorSkippedContracts[node]; !known {
+			l.inspectorSkippedContracts[node] = 0
+		}
+		return nil // The final IR check requires this exact read under its Panic.
+	}
 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
 		return err
 	}

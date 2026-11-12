@@ -249,6 +249,27 @@
         "stderr": "",
         "exit_code": 0
       }
+    },
+    {
+      "fixture": "internal/oracle/testdata/node_inspector_doomed.a",
+      "name": "node-without-inspector",
+      "ruling": "@system_adamic, task #cn4yapb (2b), Nov 12",
+      "reason": "The doomed use's require throws the no-inspector error natively and in JavaScript, while the source's ES module has no require.",
+      "node": {
+        "stdout": "none\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "ERR_INSPECTOR_NOT_AVAILABLE\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "ERR_INSPECTOR_NOT_AVAILABLE\n",
+        "stderr": "",
+        "exit_code": 0
+      }
     }
   ]
 }

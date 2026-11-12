@@ -71,9 +71,9 @@ func terminalStackProgram(t *testing.T) *ir.Program {
 	t.Helper()
 	// The weak-after-free stop is pinned at its weak_miscompiles path by weak_differential_test.go.
 	// The rest are installed-layout's and no-javascript-plugins' three fixtures each, which pin the
-	// source on Node too. node-without-inspector adds caught and uncaught fixtures, and the three path
+	// source on Node too. node-without-inspector adds caught, uncaught and doomed-use fixtures, and the three path
 	// divergences of one bundled image one each (TestInstalledLayoutPathDivergences).
-	if len(ruledBackendDivergences) != 12 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
+	if len(ruledBackendDivergences) != 13 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
 		t.Fatal("only the named-stack fixture is ruled to diverge between backends, and it's the first row")
 	}
 	path := filepath.Join(repository, "internal/oracle/testdata/d96d304_try_stack.a")
