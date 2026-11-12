@@ -113,12 +113,16 @@ done
 step "clang ready ($clang)"
 }
 
-# Node 24, outside /root.
+# Node 24.19.0, outside /root. Pinned, never the newest v24: internal/hostconfiguration's tests take stock Node to print
+# v24.19.0, and a fresh box that took the newest (a rented machine laid v24.22.3 on Nov 12, #ab5t7y9) reds them where
+# the house's boxes, laid when 24.19.0 was newest, stay green. The tarball is checked against its pinned digest, from
+# nodejs.org's SHASUMS256.txt for the release, before anything unpacks.
+nodeVersion=v24.19.0
 prepareNode() {
-if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
+if ! "$tools/bin/node" --version 2> /dev/null | grep -qx "$nodeVersion"; then
 	existing=""
-	for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node; do
-		if [ -x "$candidate" ] && "$candidate" --version | grep -q '^v24\.'; then
+	for candidate in $(command -v node || true) "/root/.nvm/versions/node/$nodeVersion/bin/node"; do
+		if [ -x "$candidate" ] && "$candidate" --version | grep -qx "$nodeVersion"; then
 			existing=$candidate
 			break
 		fi
@@ -126,9 +130,17 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 	if [ -n "$existing" ]; then
 		install -m 755 "$existing" "$tools/bin/node"
 	else
-		nodeVersion=$(curl -fsSL https://nodejs.org/dist/index.json | python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
-		mv "$tools/node" "$tools/bin/node"
+		case $nodeArchitecture in
+			x64) nodeDigest=14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647 ;;
+			arm64) nodeDigest=01443c1e1a29e531ccad5a46fefa6df490d2189c49f7955904aecdbb0fe86fdc ;;
+		esac
+		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" -o "$run/node.tar.xz"
+		echo "$nodeDigest  $run/node.tar.xz" | sha256sum -c --quiet - ||
+			{ echo "setup: node-$nodeVersion-linux-$nodeArchitecture.tar.xz doesn't match its pinned sha256" >&2; return 1; }
+		tar --no-same-owner -xJ -C "$run" --strip-components 2 --wildcards '*/bin/node' -f "$run/node.tar.xz"
+		rm -f "$run/node.tar.xz"
+		install -m 755 "$run/node" "$tools/bin/node.partial"
+		mv -f "$tools/bin/node.partial" "$tools/bin/node"
 	fi
 fi
 "$tools/bin/node" --version
