@@ -1,0 +1,5 @@
+    tracingPath?: Path;
+}
+
+declare const require: (specifier: "fs") => any;
+declare const process: { readonly pid: number };

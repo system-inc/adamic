@@ -1,0 +1,40 @@
+{
+  "single_file_full_mode": {
+    "tracing": {
+      "records": 38,
+      "complete": true,
+      "selected_file": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts",
+      "child_exit": 0
+    },
+    "sys": {
+      "records": 396,
+      "complete": true,
+      "selected_file": "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts",
+      "child_exit": 0
+    }
+  },
+  "roots": 79,
+  "groups": [
+    20,
+    20,
+    20,
+    19
+  ],
+  "raw_observations": 158,
+  "duplicate_non_timing_agreement": true,
+  "adapted_source_hashes_unchanged": true,
+  "binary_hashes_verified": true,
+  "ordinary_overlay": false,
+  "typescript_pin_verified": true,
+  "ordinary_child_exits": 0,
+  "entry_child_exit": -15,
+  "all_census_process_groups_cleaned": true,
+  "surviving_census_processes": [],
+  "compiler_adapter_source_diff_exit": 0,
+  "base_sha": "b8d5f493df0227efcb33c6040ba40c906eec73c9",
+  "checkpoint_commits": {},
+  "report_uses_no_em_or_en_dashes": true,
+  "all_recorded_children_under_1800_seconds": true,
+  "go_evidence_names_verified": true,
+  "readiness_root_set_verified": true
+}

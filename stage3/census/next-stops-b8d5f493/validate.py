@@ -1,0 +1,71 @@
+import json,subprocess
+from pathlib import Path
+out=Path(__file__).resolve().parent
+rows=[]
+for n,size in enumerate([20,20,20,19],start=1):
+ group=json.loads((out/f'group-{n}-rows.json').read_text());assert len(group)==size
+ raw=[json.loads(line) for line in (out/f'group-{n}.jsonl').read_text().splitlines()];assert len(raw)==2*size
+ for i,row in enumerate(group):
+  first,second=raw[2*i:2*i+2]
+  assert first==row
+  assert {k:v for k,v in first.items() if k!='seconds'}=={k:v for k,v in second.items() if k!='seconds'}
+ rows.extend(group)
+roots=json.loads((out/'roots.json').read_text());assert len(roots)==79 and roots==sorted(roots,key=Path)
+assert [r['roots'][0] for r in rows]==roots and len(set(roots))==79
+assert rows==[json.loads(line) for line in (out/'census.jsonl').read_text().splitlines()]
+import sys
+sys.path.insert(0,'/workspace/adamic/stage3/meter')
+from report import READINESS_REASONS
+assert set(json.loads((out/'node-readiness/results.json').read_text()))=={r['roots'][0] for r in rows if r.get('reason') in READINESS_REASONS}
+for status_file in out.glob('*-status.json'):
+ status=json.loads(status_file.read_text())
+ if 'seconds' in status: assert status['seconds'] < 1800, (status_file,status['seconds'])
+import tarfile
+with tarfile.open(out/'guarded-entry-overlay.tar.gz') as archive:
+ assert not any(member.name.endswith('.go') for member in archive.getmembers())
+assert not list(out.rglob('*.go'))
+for i in range(1,80):
+ s=json.loads((out/f'root-{i:02}-status.json').read_text());assert s['exit_code']==0 and s['process_group_cleaned']
+entry=json.loads((out/'entry-census-status.json').read_text());assert entry['process_group_cleaned']
+import hashlib
+manifest=json.loads((out/'apply-source-manifest.json').read_text())
+adapted=Path('/workspace/scratch/next-stops-adapted')
+assert manifest==json.loads((out/'adapted-source-manifest-at-apply.json').read_text())
+assert manifest=={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((adapted/'src/compiler').rglob('*')) if p.is_file()}
+for binary in json.loads((out/'binaries.json').read_text()).values():
+ assert hashlib.sha256(Path(binary['path']).read_bytes()).hexdigest()==binary['sha256']
+assert not any(arg.startswith('-overlay') for arg in json.loads((out/'build-status.json').read_text())['command'])
+assert any(arg.startswith('-overlay') for arg in json.loads((out/'entry-build-status.json').read_text())['command'])
+assert subprocess.check_output(['git','-C','/workspace/scratch/typescript-source','rev-parse','HEAD'],text=True).strip()=='050880ce59e30b356b686bd3144efe24f875ebc8'
+single={}
+for name in ['tracing','sys']:
+ records=[json.loads(line) for line in (out/(name+'-full.jsonl')).read_text().splitlines()]
+ assert records[0]['latent_mode']=='full'
+ assert records[-1]['status']=='relation_report'
+ files=[r for r in records if 'file' in r]
+ assert len(files)==1 and files[0]['file']==str(adapted/'src/compiler'/ (name+'.ts'))
+ findings=[f for r in records for f in r.get('findings') or []]
+ ordered=json.loads((out/(name+'-full-findings.json')).read_text())
+ def order(f):
+  loc=f.get('where','').rsplit(':',2)
+  return (loc[0],int(loc[1]),int(loc[2])) if len(loc)==3 else (f.get('where',''),0,0)
+ assert sorted(findings,key=order)==ordered
+ status=json.loads((out/(name+'-full-status.json')).read_text())
+ assert status['exit_code']==0 and status['process_group_cleaned']
+ single[name]=dict(records=len(findings),complete=True,selected_file=files[0]['file'],child_exit=0)
+pending=[]
+for line in subprocess.check_output(['ps','-eo','pid=,comm='],text=True).splitlines():
+ pid,comm=line.split(maxsplit=1)
+ if comm.startswith(('next-stops-cens','next-stops-entr','next-stops-late')):pending.append({'pid':int(pid),'comm':comm})
+assert not pending,pending
+source=subprocess.run(['git','diff','--quiet','HEAD','--','.',':(exclude)stage3/census/next-stops-b8d5f493'])
+assert source.returncode==0
+sha=json.loads((out/'provenance.json').read_text())['sha'];assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==sha
+for f in out.glob('*.py'):
+ import ast
+ ast.parse(f.read_text(),filename=str(f))
+text=(out/'REPORT.md').read_text();assert '\u2014' not in text and '\u2013' not in text
+statuses={}
+result=dict(single_file_full_mode=single,roots=79,groups=[20,20,20,19],raw_observations=158,duplicate_non_timing_agreement=True,adapted_source_hashes_unchanged=True,binary_hashes_verified=True,ordinary_overlay=False,typescript_pin_verified=True,ordinary_child_exits=0,entry_child_exit=entry['exit_code'],all_census_process_groups_cleaned=True,surviving_census_processes=pending,compiler_adapter_source_diff_exit=source.returncode,base_sha=sha,checkpoint_commits=statuses,report_uses_no_em_or_en_dashes=True)
+result.update(all_recorded_children_under_1800_seconds=True,go_evidence_names_verified=True,readiness_root_set_verified=True)
+(out/'validation.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

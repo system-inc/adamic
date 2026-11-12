@@ -1,0 +1,13 @@
+/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:63
+        Debug.assert(major >= 0, "Invalid argument: major");
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'assert')
+    at new Version (/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:63:15)
+    at Version.<static_initializer> (/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:47:37)
+    at <anonymous> (/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:39:33)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

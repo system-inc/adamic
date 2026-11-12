@@ -1,0 +1,197 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 22.724278312
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 20.410111115
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 28.746915512
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 22.380298198
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 21.510099079
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 19.571396172
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 17.222356751
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 16.517972399
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 15.916482314
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 15.744681153
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 15.21358529
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.062077906
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 4.673609078
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 4.494441046
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 17.105896518
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 20.580963628
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 15.482531901
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 16.494829818
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 17.311187655
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts:381:1",
+    "reason": "an ambient value declaration",
+    "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "seconds": 17.264976829
+  }
+]
