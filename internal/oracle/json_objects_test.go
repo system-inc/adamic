@@ -18,7 +18,9 @@ import (
 // adamic_object_ordered reds view_order (its index key comes first on Node); reading every null pointer as null
 // reds nullish (its undefined fields print null); and reading a null pointer in a String slot as null reds
 // nullish too (a string | undefined a variable wrote, as in { name: maybeName }, prints "name":null).
-var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish"}
+// Dropping the nullable write branch reds null_variable/0; writing the null tag for both cases reds
+// undefined_variable/0.
+var jsonObjectsFixtures = []string{"literal", "class", "nested", "optional", "view_order", "hidden", "nullish", "null_variable", "undefined_variable"}
 
 func TestJSONObjectsAgreeWithNode(t *testing.T) {
 	t.Parallel()
@@ -32,14 +34,10 @@ func TestJSONObjectsAgreeWithNode(t *testing.T) {
 	}
 }
 
-// What JSON.stringify of an object reference can reach and can't print as Node does stops before it lowers,
-// each road in its own words, pinned whole in its .refused file: a toJSON method, one a base class declares, an
-// own toJSON spelled as a computed key or written through a view the allocation can be seen as, a Date and a
-// Map, a class itself, a Weak link, a graph type, and a field held as a bare pointer that admits null, whose
-// null a variable writes as a null pointer the slot's byte doesn't tell from undefined (null_variable.a, until
-// #ckxcnr6). Mutants: jsonReach asking only the leaf class's own members for toJSON (its declaration's symbol
-// table) instead of GetPropertyOfType lowers to_json_inherited.a; jsonNullablePointer answering false lowers
-// null_variable.a.
+// What JSON.stringify of an object reference can reach and cannot print as Node does
+// stops before lowering: toJSON members, library values, a class itself, a weak
+// link and a graph type. Nullable reference writes carry their own semantic tags.
+// Asking only the leaf class's own members for toJSON lowers to_json_inherited.a.
 func TestJSONObjectsRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/json_objects_refused"
@@ -76,7 +74,7 @@ func TestJSONObjectsRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 10 {
-		t.Fatalf("%d programs in %s, want 10: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 9 {
+		t.Fatalf("%d programs in %s, want 9: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

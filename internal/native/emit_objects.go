@@ -149,7 +149,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
+				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, values[index]))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
 				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
@@ -223,7 +223,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	for index, field := range literal.Fields {
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
+			e.line("adamic_object_field_types(%s)[%d] = %s;", object, index, fieldInitialRepresentation(field, values[index]))
 		}
 		if field.Absent {
 			continue
@@ -558,11 +558,25 @@ func fieldRepresentation(value ir.Expression) int {
 	}
 	return int(value.Type())
 }
-func fieldInitialRepresentation(field ir.Field) int {
-	if field.Uninitialized && field.Value.Type() == ir.Union {
-		return int(ir.Union)
+
+// slotRepresentation reads an already evaluated pointer. Only nullable bare
+// references need a branch; literal tags and all other writes keep their text.
+func slotRepresentation(representation int, nullish ir.Type, value string) string {
+	if nullish != 0 && representation != int(ir.NullRepresentation) && representation != int(ir.UndefinedRepresentation) {
+		return fmt.Sprintf("(%s == NULL ? %d : %d)", value, nullish, representation)
 	}
-	return fieldRepresentation(field.Value)
+	return strconv.Itoa(representation)
+}
+
+func fieldInitialRepresentation(field ir.Field, value string) string {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return strconv.Itoa(int(ir.Union))
+	}
+	if field.Absent {
+		// Reserved storage has no evaluated value to test for a null pointer.
+		return strconv.Itoa(fieldRepresentation(field.Value))
+	}
+	return slotRepresentation(fieldRepresentation(field.Value), field.Nullish, value)
 }
 
 // Optional scalars and implementation words use the numeric slot representation.
