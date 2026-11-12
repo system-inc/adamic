@@ -903,7 +903,7 @@ func (f *cycleFinder) graphAdoptionBoundary() error {
 		if site != nil {
 			where = f.l.program.Where(site)
 		}
-		return &Refused{Where: where, What: reason, Fix: "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
+		return &Refused{Where: where, What: reason, Fix: "keep records, checked ObjectCalls and dynamic shapes outside graph adoption (adamic/cycle-capable)"}
 	}
 	// The decoder makes its objects and arrays in the runtime with no graph plan, so in a graph program
 	// a decoded value that holds a container can be closed into a cycle outside every region and leak
