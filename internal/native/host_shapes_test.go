@@ -330,7 +330,7 @@ var hostShapeReaders = []struct {
 	{"json_decode.c", "canonical_shape", "copies the decoder's own plain shape", "", ""},
 	{"json_decode.c", "validate", "fills the decoder's own plain object", "", ""},
 	{"json_encode.c", "encode_field", "reads only the fields an encoder schema names from the value's static type", "", ""},
-	{"json_objects.c", "describe_object", "stops on a host object, by its shape's methods table, host_object's own test, before it reads a name", "", ""},
+	{"json_objects.c", "describe_object", "admits only plain objects and recorded error shapes before reading their names", "", ""},
 	{"library_language.c", "adamic_plain_object_keys", "nothing the emitter writes calls it, and a write-ordered object goes through adamic_object_keys", "", ""},
 	{"library_object.c", "adamic_object_has_own", "Object.hasOwn takes only a literal naming a declared public field", "door_has_own.a", "Object.hasOwn"},
 	{"library_object.c", "adamic_object_ordered", "orders the slots of an object its callers have already admitted", "", ""},

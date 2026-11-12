@@ -382,7 +382,7 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 	if l.isArrayType(proven) || checker.IsTupleType(proven) {
 		return "", l.checker.GetTypeArguments(proven)
 	}
-	if l.jsonLibrary(proven, map[*checker.Type]bool{}) {
+	if l.jsonLibrary(proven, map[*checker.Type]bool{}) && !l.isLibraryType(proven, errorClasses...) {
 		return "a value that can reach " + name + ", a library value whose own fields aren't what Node prints", nil
 	}
 	// The checker's properties of a class include what its bases declare: a toJSON a base declares is

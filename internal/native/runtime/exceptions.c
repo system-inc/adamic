@@ -5,6 +5,7 @@
 #include "view_representations.h"
 
 #include <stdio.h>
+#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -37,12 +38,37 @@ static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_f
 static const adamic_shape error_shape = {2, error_names, error_references, &adamic_error_methods, error_kinds};
 static const char *const absent_message_names[] = {"name", "#message"};
 static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, &adamic_error_methods, error_kinds};
+static adamic_error_json error_shape_json = {&error_shape, NULL, 0, NULL, false};
+static adamic_error_json absent_message_shape_json = {&absent_message_shape, NULL, 0, NULL, false};
+
+// Entries live with their static shapes. Publication orders every immutable field before a lookup.
+static adamic_error_json *error_json_entries;
+static pthread_mutex_t error_json_lock = PTHREAD_MUTEX_INITIALIZER;
+void adamic_register_error_json(adamic_error_json *entry) {
+ if (__atomic_load_n(&entry->registered, __ATOMIC_ACQUIRE)) return;
+ pthread_mutex_lock(&error_json_lock);
+ if (!entry->registered) {
+  entry->next = error_json_entries;
+  __atomic_store_n(&error_json_entries, entry, __ATOMIC_RELEASE);
+  __atomic_store_n(&entry->registered, true, __ATOMIC_RELEASE);
+ }
+ pthread_mutex_unlock(&error_json_lock);
+}
+const adamic_error_json *adamic_error_json_lookup(const adamic_shape *shape) {
+ for (const adamic_error_json *entry = __atomic_load_n(&error_json_entries, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
+  if (entry->shape == shape) return entry;
+ }
+ return NULL;
+}
+
 static adamic_string empty_message = ADAMIC_STRING("");
 static adamic_string error_name = ADAMIC_STRING("Error");
 
 adamic_object *adamic_error_new(adamic_string *message) {
 	// Undefined creates no own message property. Keep the inherited empty fallback
 	// in private storage so ordinary and checked field reads share the same slot.
+	if (message == NULL) adamic_register_error_json(&absent_message_shape_json);
+	else adamic_register_error_json(&error_shape_json);
 	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
 	error->slots[0].reference = adamic_retain(&error_name);
 	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
