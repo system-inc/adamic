@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/oph-build-base/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/oph-build-base/audit-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 3.384290546000557,
+  "user_seconds": 2.604646,
+  "system_seconds": 1.300443,
+  "peak_rss_kib": 1465796
+}

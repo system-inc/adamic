@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/audit.py",
+    "/workspace/oph-build-base/audit-census"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.16431615500005137,
+  "user_seconds": 0.124554,
+  "system_seconds": 0.06319999999999999,
+  "peak_rss_kib": 31644
+}

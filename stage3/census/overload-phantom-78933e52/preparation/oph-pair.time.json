@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/workspace/oph-base/stage3/census/pair/pair.py",
+    "/workspace/oph-build-base/latent.jsonl",
+    "/workspace/oph-build-head/latent.jsonl",
+    "/workspace/oph-adapted",
+    "--typescript",
+    "/workspace/oph-base/stage3/api/node_modules/typescript",
+    "--json",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/delta.json",
+    "--report",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/pair-report.md"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 7.602976355999999,
+  "user_seconds": 8.261741,
+  "system_seconds": 0.263544,
+  "peak_rss_kib": 314588
+}

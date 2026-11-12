@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/scan_overlay.py",
+    "/workspace/oph-build-head/entry-overlay",
+    "/workspace/oph-build-head/scan-overlay"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.03199485499862931,
+  "user_seconds": 0.024481,
+  "system_seconds": 0.0055379999999999995,
+  "peak_rss_kib": 8832
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "/workspace/oph-head/stage3/census/latent/make_overlay.py",
+    "/workspace/oph-head",
+    "/workspace/oph-build-head/latent-overlay"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.516919448000408,
+  "user_seconds": 0.46138399999999996,
+  "system_seconds": 0.26322799999999996,
+  "peak_rss_kib": 17872
+}

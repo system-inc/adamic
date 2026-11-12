@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-E",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/census/pair",
+    "-p",
+    "test_*.py"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 10.80645077600093,
+  "user_seconds": 5.757505,
+  "system_seconds": 1.410229,
+  "peak_rss_kib": 81724
+}

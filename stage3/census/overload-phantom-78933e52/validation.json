@@ -1,0 +1,40 @@
+{
+  "base": {
+    "sources": 81,
+    "units": 4564,
+    "attempted": 4060,
+    "status_counts": {
+      "attempted": 4060,
+      "deferred_generic_instantiation": 504
+    },
+    "unit_shards_disjoint_and_complete": true,
+    "per_unit_timings_complete": true,
+    "independent_stock_catalog_complete": true,
+    "raw_archived_stream_equals_remerge": true,
+    "all_child_exits_zero_and_below_30_minutes": true
+  },
+  "head": {
+    "sources": 81,
+    "units": 4564,
+    "attempted": 4060,
+    "status_counts": {
+      "attempted": 4060,
+      "deferred_generic_instantiation": 504
+    },
+    "unit_shards_disjoint_and_complete": true,
+    "per_unit_timings_complete": true,
+    "independent_stock_catalog_complete": true,
+    "raw_archived_stream_equals_remerge": true,
+    "all_child_exits_zero_and_below_30_minutes": true
+  },
+  "headers_equal": true,
+  "requested_unit_group_sizes": [
+    11,
+    5
+  ],
+  "compositions_and_pins_verified": true,
+  "path_interface_present": true,
+  "fixture_composition_both_sides_pass": true,
+  "archive_hashes_verified": true,
+  "no_dot_go_evidence": true
+}

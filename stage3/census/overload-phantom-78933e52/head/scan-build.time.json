@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/oph-build-head/scan-overlay/overlay.json",
+    "-o",
+    "/workspace/oph-build-head/entry-census-scan",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 15.857883198999843,
+  "user_seconds": 30.611441,
+  "system_seconds": 5.392507,
+  "peak_rss_kib": 1461344
+}

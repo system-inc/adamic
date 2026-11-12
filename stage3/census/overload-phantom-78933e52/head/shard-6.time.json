@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/oph-build-head/entry-census-scan",
+    "/workspace/oph-adapted/src/tsc/tsc.ts",
+    "/workspace/oph-build-head/shard-6.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 132.76526920400102,
+  "user_seconds": 127.405005,
+  "system_seconds": 3.413166,
+  "peak_rss_kib": 1022844
+}

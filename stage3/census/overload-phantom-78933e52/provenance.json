@@ -1,0 +1,202 @@
+{
+  "base": "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+  "head": "65af0b47a56f444ae54cfc2a8761e63b20f73f8e",
+  "composition": {
+    "main": "0c7052759671347775615af5b4a8028dd8688af8",
+    "path": "a3f67b011b1a810c282da390f80a3180df1be34b",
+    "step2": "3a7ea290fca9e3f3325ffa8206a861b22f441583",
+    "step2b": "694834e95c3dd79bc4d350f4560d5a16b175f0ad",
+    "step3": "78933e52b0abd0da2fce91e73b4b71c1b36dc4e4",
+    "base": "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+    "head": "65af0b47a56f444ae54cfc2a8761e63b20f73f8e",
+    "report_parent": "353218cbd01286116bd97fc1475b51bc54cdce75",
+    "merges": {
+      "base_path": {
+        "commit": "24758f1e5f334337dd421c813f7bbf38e09de3e3",
+        "parents": [
+          "0c7052759671347775615af5b4a8028dd8688af8",
+          "a3f67b011b1a810c282da390f80a3180df1be34b"
+        ],
+        "tree": "1695631da4396436a9a0b2fdd747f9a01be26d6c",
+        "conflicts": false
+      },
+      "base_step2": {
+        "commit": "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+        "parents": [
+          "24758f1e5f334337dd421c813f7bbf38e09de3e3",
+          "3a7ea290fca9e3f3325ffa8206a861b22f441583"
+        ],
+        "tree": "387d97ed14a18e3ff9489f988b1637d3b4a43657",
+        "conflicts": false
+      },
+      "head_step2b": {
+        "commit": "98bff3bcbb9a73363ca6ceada9f610eeb099876b",
+        "parents": [
+          "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+          "694834e95c3dd79bc4d350f4560d5a16b175f0ad"
+        ],
+        "tree": "add1389a72424f72ff98497367db7394b66ffacc",
+        "conflicts": false
+      },
+      "head_step3": {
+        "commit": "65af0b47a56f444ae54cfc2a8761e63b20f73f8e",
+        "parents": [
+          "98bff3bcbb9a73363ca6ceada9f610eeb099876b",
+          "78933e52b0abd0da2fce91e73b4b71c1b36dc4e4"
+        ],
+        "tree": "62ee0714658b8533b2f293e4aee22839097bae5b",
+        "conflicts": false
+      }
+    }
+  },
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_changed_at_head": false,
+  "adaptation_paths_checked": [
+    "stage3/source.json",
+    "stage3/apply.py",
+    "stage3/apply.sh",
+    "stage3/api",
+    "stage3/adapt"
+  ],
+  "shared_adapted_tree": "/workspace/oph-adapted",
+  "mode": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_SHARDS": "8",
+    "GOMEMLIMIT": "3GiB",
+    "CENSUS_SKIP_SCAN": "1 for shards 2-7; unset for 0-1"
+  },
+  "head_changed_paths": [
+    "internal/lower/census_overload_proof.go",
+    "internal/lower/census_overload_proof_reachable_test.go",
+    "internal/lower/census_small.go",
+    "internal/lower/overload_phantom_result.go",
+    "internal/lower/overload_phantom_result_test.go"
+  ],
+  "builds": {
+    "base": {
+      "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+      "binary_sha256": "dc097a77ac8f8e190ff562c25f19e441cff006f28e2897ec6d89f0961b3c4391",
+      "scan_binary_sha256": "dc496f9ce71edb52148290e24d3588cdaf6f9a616fc4459b3bfd61560c04428c",
+      "overlay_inputs_from_own_tree": true,
+      "entry_overlay": {
+        "Replace": {
+          "/workspace/oph-base/internal/lower/lower.go": "/workspace/oph-build-base/latent-overlay/internal_lower_lower.go",
+          "/workspace/oph-base/internal/lower/entries_records.go": "/workspace/oph-build-base/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/oph-base/internal/lower/latent_state.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/oph-base/internal/lower/statements.go": "/workspace/oph-build-base/latent-overlay/internal_lower_statements.go",
+          "/workspace/oph-base/internal/lower/latent_relation_overflow.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/oph-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/oph-build-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/oph-base/internal/lower/latent_full.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/oph-base/internal/lower/latent_units.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/oph-base/internal/lower/latent_timing.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/oph-base/internal/lower/latent_replay.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/oph-base/internal/lower/refusals.go": "/workspace/oph-build-base/latent-overlay/internal_lower_refusals.go",
+          "/workspace/oph-base/internal/load/load.go": "/workspace/oph-build-base/latent-overlay/internal_load_load.go",
+          "/workspace/oph-base/internal/load/latent_hook.go": "/workspace/oph-build-base/entry-overlay/entry_load_hook.go",
+          "/workspace/oph-base/internal/lower/expression.go": "/workspace/oph-build-base/latent-overlay/internal_lower_expression.go",
+          "/workspace/oph-base/internal/lower/functions.go": "/workspace/oph-build-base/latent-overlay/internal_lower_functions.go",
+          "/workspace/oph-base/internal/lower/generic.go": "/workspace/oph-build-base/latent-overlay/internal_lower_generic.go",
+          "/workspace/oph-base/internal/lower/locals.go": "/workspace/oph-build-base/latent-overlay/internal_lower_locals.go",
+          "/workspace/oph-base/internal/lower/latent_hook.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_hook.go",
+          "/workspace/oph-base/stage3/census/latent/tool/main.go": "/workspace/oph-build-base/entry-overlay/entry_main.go",
+          "/workspace/oph-base/stage3/census/latent/replay/worker/main.go": "/workspace/oph-build-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/oph-base/internal/lower/latent_piece.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/oph-base/internal/lower/latent_progress.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/oph-base/internal/lower/latent_speculative.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      },
+      "scan_overlay": {
+        "Replace": {
+          "/workspace/oph-base/internal/lower/lower.go": "/workspace/oph-build-base/latent-overlay/internal_lower_lower.go",
+          "/workspace/oph-base/internal/lower/entries_records.go": "/workspace/oph-build-base/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/oph-base/internal/lower/latent_state.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/oph-base/internal/lower/statements.go": "/workspace/oph-build-base/latent-overlay/internal_lower_statements.go",
+          "/workspace/oph-base/internal/lower/latent_relation_overflow.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/oph-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/oph-build-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/oph-base/internal/lower/latent_full.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/oph-base/internal/lower/latent_units.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/oph-base/internal/lower/latent_timing.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/oph-base/internal/lower/latent_replay.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/oph-base/internal/lower/refusals.go": "/workspace/oph-build-base/latent-overlay/internal_lower_refusals.go",
+          "/workspace/oph-base/internal/load/load.go": "/workspace/oph-build-base/latent-overlay/internal_load_load.go",
+          "/workspace/oph-base/internal/load/latent_hook.go": "/workspace/oph-build-base/entry-overlay/entry_load_hook.go",
+          "/workspace/oph-base/internal/lower/expression.go": "/workspace/oph-build-base/latent-overlay/internal_lower_expression.go",
+          "/workspace/oph-base/internal/lower/functions.go": "/workspace/oph-build-base/latent-overlay/internal_lower_functions.go",
+          "/workspace/oph-base/internal/lower/generic.go": "/workspace/oph-build-base/latent-overlay/internal_lower_generic.go",
+          "/workspace/oph-base/internal/lower/locals.go": "/workspace/oph-build-base/latent-overlay/internal_lower_locals.go",
+          "/workspace/oph-base/internal/lower/latent_hook.go": "/workspace/oph-build-base/scan-overlay/units.go",
+          "/workspace/oph-base/stage3/census/latent/tool/main.go": "/workspace/oph-build-base/entry-overlay/entry_main.go",
+          "/workspace/oph-base/stage3/census/latent/replay/worker/main.go": "/workspace/oph-build-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/oph-base/internal/lower/latent_piece.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/oph-base/internal/lower/latent_progress.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/oph-base/internal/lower/latent_speculative.go": "/workspace/oph-build-base/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      }
+    },
+    "head": {
+      "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+      "binary_sha256": "fb688351786fe649259c4da7284424f7136e06f678e3bf13392cf934ca5fd1a3",
+      "scan_binary_sha256": "cfce0a1a34943f55f0057fd60e0922ff753fb310aa7ce4d76b920341704b7d65",
+      "overlay_inputs_from_own_tree": true,
+      "entry_overlay": {
+        "Replace": {
+          "/workspace/oph-head/internal/lower/lower.go": "/workspace/oph-build-head/latent-overlay/internal_lower_lower.go",
+          "/workspace/oph-head/internal/lower/entries_records.go": "/workspace/oph-build-head/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/oph-head/internal/lower/latent_state.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/oph-head/internal/lower/statements.go": "/workspace/oph-build-head/latent-overlay/internal_lower_statements.go",
+          "/workspace/oph-head/internal/lower/latent_relation_overflow.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/oph-head/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/oph-build-head/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/oph-head/internal/lower/latent_full.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/oph-head/internal/lower/latent_units.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/oph-head/internal/lower/latent_timing.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/oph-head/internal/lower/latent_replay.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/oph-head/internal/lower/refusals.go": "/workspace/oph-build-head/latent-overlay/internal_lower_refusals.go",
+          "/workspace/oph-head/internal/load/load.go": "/workspace/oph-build-head/latent-overlay/internal_load_load.go",
+          "/workspace/oph-head/internal/load/latent_hook.go": "/workspace/oph-build-head/entry-overlay/entry_load_hook.go",
+          "/workspace/oph-head/internal/lower/expression.go": "/workspace/oph-build-head/latent-overlay/internal_lower_expression.go",
+          "/workspace/oph-head/internal/lower/functions.go": "/workspace/oph-build-head/latent-overlay/internal_lower_functions.go",
+          "/workspace/oph-head/internal/lower/generic.go": "/workspace/oph-build-head/latent-overlay/internal_lower_generic.go",
+          "/workspace/oph-head/internal/lower/locals.go": "/workspace/oph-build-head/latent-overlay/internal_lower_locals.go",
+          "/workspace/oph-head/internal/lower/latent_hook.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_hook.go",
+          "/workspace/oph-head/stage3/census/latent/tool/main.go": "/workspace/oph-build-head/entry-overlay/entry_main.go",
+          "/workspace/oph-head/stage3/census/latent/replay/worker/main.go": "/workspace/oph-build-head/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/oph-head/internal/lower/latent_piece.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/oph-head/internal/lower/latent_progress.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/oph-head/internal/lower/latent_speculative.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      },
+      "scan_overlay": {
+        "Replace": {
+          "/workspace/oph-head/internal/lower/lower.go": "/workspace/oph-build-head/latent-overlay/internal_lower_lower.go",
+          "/workspace/oph-head/internal/lower/entries_records.go": "/workspace/oph-build-head/latent-overlay/internal_lower_entries_records.go",
+          "/workspace/oph-head/internal/lower/latent_state.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_state.go",
+          "/workspace/oph-head/internal/lower/statements.go": "/workspace/oph-build-head/latent-overlay/internal_lower_statements.go",
+          "/workspace/oph-head/internal/lower/latent_relation_overflow.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_relation_overflow.go",
+          "/workspace/oph-head/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/oph-build-head/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+          "/workspace/oph-head/internal/lower/latent_full.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_full.go",
+          "/workspace/oph-head/internal/lower/latent_units.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_units.go",
+          "/workspace/oph-head/internal/lower/latent_timing.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_timing.go",
+          "/workspace/oph-head/internal/lower/latent_replay.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_replay.go",
+          "/workspace/oph-head/internal/lower/refusals.go": "/workspace/oph-build-head/latent-overlay/internal_lower_refusals.go",
+          "/workspace/oph-head/internal/load/load.go": "/workspace/oph-build-head/latent-overlay/internal_load_load.go",
+          "/workspace/oph-head/internal/load/latent_hook.go": "/workspace/oph-build-head/entry-overlay/entry_load_hook.go",
+          "/workspace/oph-head/internal/lower/expression.go": "/workspace/oph-build-head/latent-overlay/internal_lower_expression.go",
+          "/workspace/oph-head/internal/lower/functions.go": "/workspace/oph-build-head/latent-overlay/internal_lower_functions.go",
+          "/workspace/oph-head/internal/lower/generic.go": "/workspace/oph-build-head/latent-overlay/internal_lower_generic.go",
+          "/workspace/oph-head/internal/lower/locals.go": "/workspace/oph-build-head/latent-overlay/internal_lower_locals.go",
+          "/workspace/oph-head/internal/lower/latent_hook.go": "/workspace/oph-build-head/scan-overlay/units.go",
+          "/workspace/oph-head/stage3/census/latent/tool/main.go": "/workspace/oph-build-head/entry-overlay/entry_main.go",
+          "/workspace/oph-head/stage3/census/latent/replay/worker/main.go": "/workspace/oph-build-head/latent-overlay/stage3_census_latent_replay_worker_main.go",
+          "/workspace/oph-head/internal/lower/latent_piece.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_piece.go",
+          "/workspace/oph-head/internal/lower/latent_progress.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_progress.go",
+          "/workspace/oph-head/internal/lower/latent_speculative.go": "/workspace/oph-build-head/latent-overlay/internal_lower_latent_speculative.go"
+        }
+      }
+    }
+  },
+  "go_evidence_sha256": {
+    "overload_phantom_result-head.go.txt": "86e43c610f77019ea8808ab9e46096d21e3bb7c41945fd932d1e407dd820ae6e",
+    "census_overload_proof-head.go.txt": "a48eccd54e8a8d9e5fe9c5a770c219c2a321f16e5c869778e4ad0a101a0310a0"
+  }
+}

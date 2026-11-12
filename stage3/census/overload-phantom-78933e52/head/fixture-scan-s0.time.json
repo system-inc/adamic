@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/oph-build-head/entry-census-scan",
+    "/workspace/oph-fixture/main.ts",
+    "/workspace/oph-build-head/fixture-scan-s0.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 0.06478119299936225,
+  "user_seconds": 0.043498999999999996,
+  "system_seconds": 0.017957,
+  "peak_rss_kib": 31336
+}

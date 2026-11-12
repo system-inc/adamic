@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/merge.py",
+    "/workspace/oph-build-base/latent.jsonl",
+    "/workspace/oph-build-base/shard-0.jsonl",
+    "/workspace/oph-build-base/shard-1.jsonl",
+    "/workspace/oph-build-base/shard-2.jsonl",
+    "/workspace/oph-build-base/shard-3.jsonl",
+    "/workspace/oph-build-base/shard-4.jsonl",
+    "/workspace/oph-build-base/shard-5.jsonl",
+    "/workspace/oph-build-base/shard-6.jsonl",
+    "/workspace/oph-build-base/shard-7.jsonl"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 2.1699060410010134,
+  "user_seconds": 1.077714,
+  "system_seconds": 1.041271,
+  "peak_rss_kib": 376976
+}

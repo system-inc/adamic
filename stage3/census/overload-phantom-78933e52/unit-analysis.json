@@ -1,0 +1,1069 @@
+{
+  "header": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "first-error",
+    "measurement": "measured on a checker-clean entry-root program",
+    "roots": [
+      "/workspace/oph-adapted/src/tsc/tsc.ts"
+    ],
+    "sources": [
+      "/workspace/oph-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/oph-adapted/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/oph-adapted/src/compiler/_namespaces/ts.ts",
+      "/workspace/oph-adapted/src/compiler/binder.ts",
+      "/workspace/oph-adapted/src/compiler/builder.ts",
+      "/workspace/oph-adapted/src/compiler/builderPublic.ts",
+      "/workspace/oph-adapted/src/compiler/builderState.ts",
+      "/workspace/oph-adapted/src/compiler/builderStatePublic.ts",
+      "/workspace/oph-adapted/src/compiler/checker.ts",
+      "/workspace/oph-adapted/src/compiler/commandLineParser.ts",
+      "/workspace/oph-adapted/src/compiler/core.ts",
+      "/workspace/oph-adapted/src/compiler/corePublic.ts",
+      "/workspace/oph-adapted/src/compiler/debug.ts",
+      "/workspace/oph-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/oph-adapted/src/compiler/emitter.ts",
+      "/workspace/oph-adapted/src/compiler/executeCommandLine.ts",
+      "/workspace/oph-adapted/src/compiler/expressionToTypeNode.ts",
+      "/workspace/oph-adapted/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/oph-adapted/src/compiler/factory/emitHelpers.ts",
+      "/workspace/oph-adapted/src/compiler/factory/emitNode.ts",
+      "/workspace/oph-adapted/src/compiler/factory/nodeChildren.ts",
+      "/workspace/oph-adapted/src/compiler/factory/nodeConverters.ts",
+      "/workspace/oph-adapted/src/compiler/factory/nodeFactory.ts",
+      "/workspace/oph-adapted/src/compiler/factory/nodeTests.ts",
+      "/workspace/oph-adapted/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/oph-adapted/src/compiler/factory/utilities.ts",
+      "/workspace/oph-adapted/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/oph-adapted/src/compiler/hostErrors.ts",
+      "/workspace/oph-adapted/src/compiler/moduleNameResolver.ts",
+      "/workspace/oph-adapted/src/compiler/moduleSpecifiers.ts",
+      "/workspace/oph-adapted/src/compiler/parser.ts",
+      "/workspace/oph-adapted/src/compiler/path.ts",
+      "/workspace/oph-adapted/src/compiler/performance.ts",
+      "/workspace/oph-adapted/src/compiler/performanceCore.ts",
+      "/workspace/oph-adapted/src/compiler/program.ts",
+      "/workspace/oph-adapted/src/compiler/programDiagnostics.ts",
+      "/workspace/oph-adapted/src/compiler/resolutionCache.ts",
+      "/workspace/oph-adapted/src/compiler/scanner.ts",
+      "/workspace/oph-adapted/src/compiler/semver.ts",
+      "/workspace/oph-adapted/src/compiler/sourcemap.ts",
+      "/workspace/oph-adapted/src/compiler/symbolWalker.ts",
+      "/workspace/oph-adapted/src/compiler/sys.ts",
+      "/workspace/oph-adapted/src/compiler/tracing.ts",
+      "/workspace/oph-adapted/src/compiler/transformer.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/classFields.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/classThis.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/declarations.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/destructuring.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2015.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2016.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2017.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2018.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2019.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2020.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/es2021.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/esDecorators.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/esnext.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/generators.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/jsx.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/module/module.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/module/system.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/ts.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/oph-adapted/src/compiler/transformers/utilities.ts",
+      "/workspace/oph-adapted/src/compiler/tsbuild.ts",
+      "/workspace/oph-adapted/src/compiler/tsbuildPublic.ts",
+      "/workspace/oph-adapted/src/compiler/types.ts",
+      "/workspace/oph-adapted/src/compiler/utilities.ts",
+      "/workspace/oph-adapted/src/compiler/utilitiesPublic.ts",
+      "/workspace/oph-adapted/src/compiler/visitorPublic.ts",
+      "/workspace/oph-adapted/src/compiler/watch.ts",
+      "/workspace/oph-adapted/src/compiler/watchPublic.ts",
+      "/workspace/oph-adapted/src/compiler/watchUtilities.ts",
+      "/workspace/oph-adapted/src/tsc/_namespaces/ts.ts",
+      "/workspace/oph-adapted/src/tsc/tsc.ts"
+    ],
+    "status": "measurement"
+  },
+  "units": 4564,
+  "attempted_base": 4060,
+  "attempted_head": 4060,
+  "no_stop_base": 3177,
+  "no_stop_head": 3187,
+  "overload_result_base": 61,
+  "overload_result_head": 45,
+  "getPathComponents": [
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:492:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:494:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:494:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 20009,
+        "body_start": 19899,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:495:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:495:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 24346,
+        "body_start": 24264,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getNormalizedPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:622:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:622:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 35756,
+        "body_start": 34189,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "comparePathsWorker",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:884:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:884:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:963:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:963:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:965:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:965:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 38588,
+        "body_start": 37542,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:967:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:967:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 40358,
+        "body_start": 39487,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponentsRelativeTo",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:1010:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:1010:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 381330,
+        "body_start": 380569,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "guessDirectorySymlink",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:513:45"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 95964,
+        "body_start": 95624,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "normalizePathForCJSResolution",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/moduleNameResolver.ts:1966:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/moduleNameResolver.ts:1966:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    }
+  ],
+  "getSupportedExtensions": [
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 401534,
+        "body_start": 400860,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 408620,
+        "body_start": 408239,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isSupportedSourceFileName",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105: Adamic 0.1 refuses overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 171953,
+        "body_start": 167406,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getFileNamesFromConfigSpecs",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105: Adamic 0.1 refuses overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    }
+  ],
+  "first_stop_changes": [
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:492:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:494:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:494:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 20009,
+        "body_start": 19899,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:495:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:495:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 24346,
+        "body_start": 24264,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getNormalizedPathComponents",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:622:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:622:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 35756,
+        "body_start": 34189,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "comparePathsWorker",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:884:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:884:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:963:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:963:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:965:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:965:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 38588,
+        "body_start": 37542,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "containsPath",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:967:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:967:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 40358,
+        "body_start": 39487,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getPathComponentsRelativeTo",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:1010:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/path.ts:1010:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 381330,
+        "body_start": 380569,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "guessDirectorySymlink",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from \"\" to T: the source is not assignable to the target",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:513:45: Adamic 0.1 refuses an unproven relation from \"\" to T: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9559:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:513:45"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9992:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 401534,
+        "body_start": 400860,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getSupportedExtensions",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:9994:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10005:158"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 408620,
+        "body_start": 408239,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "isSupportedSourceFileName",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105: Adamic 0.1 refuses overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/oph-adapted/src/compiler/utilities.ts:10146:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 171953,
+        "body_start": 167406,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "getFileNamesFromConfigSpecs",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1: Adamic 0.1 refuses overload 1 of getSupportedExtensions result readonly Extension[][] cannot be served by implementation result readonly string[][]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:9990:1"
+      },
+      "head": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105: Adamic 0.1 refuses overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "unit": "/workspace/oph-adapted/src/compiler/commandLineParser.ts:3950:1",
+        "where": "/workspace/oph-adapted/src/compiler/utilities.ts:10012:105"
+      },
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    },
+    {
+      "unit": {
+        "body_end": 95964,
+        "body_start": 95624,
+        "checker_diagnostics": [],
+        "instantiated": false,
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "normalizePathForCJSResolution",
+        "status": "attempted",
+        "where": "/workspace/oph-adapted/src/compiler/moduleNameResolver.ts:1966:1"
+      },
+      "base": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]",
+        "root_kind": "",
+        "text": "/workspace/oph-adapted/src/compiler/path.ts:492:1: Adamic 0.1 refuses overload 1 of getPathComponents result PathPathComponents<Path> cannot be served by implementation result string[]; make the implementation result covariant with every overload result",
+        "unit": "/workspace/oph-adapted/src/compiler/moduleNameResolver.ts:1966:1",
+        "where": "/workspace/oph-adapted/src/compiler/path.ts:492:1"
+      },
+      "head": null,
+      "newly_admitted": true,
+      "head_invariant_mutable": false
+    }
+  ]
+}

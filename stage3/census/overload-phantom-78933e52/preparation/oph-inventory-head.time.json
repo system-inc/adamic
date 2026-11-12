@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/inventory.cjs",
+    "/workspace/oph-build-head/latent.jsonl",
+    "/workspace/op2-report/stage3/census/overload-phantom-78933e52/head-inventory.json"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1.678148440001678,
+  "user_seconds": 2.039885,
+  "system_seconds": 0.7244889999999999,
+  "peak_rss_kib": 368420
+}

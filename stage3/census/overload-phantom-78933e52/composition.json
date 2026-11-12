@@ -1,0 +1,48 @@
+{
+  "main": "0c7052759671347775615af5b4a8028dd8688af8",
+  "path": "a3f67b011b1a810c282da390f80a3180df1be34b",
+  "step2": "3a7ea290fca9e3f3325ffa8206a861b22f441583",
+  "step2b": "694834e95c3dd79bc4d350f4560d5a16b175f0ad",
+  "step3": "78933e52b0abd0da2fce91e73b4b71c1b36dc4e4",
+  "base": "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+  "head": "65af0b47a56f444ae54cfc2a8761e63b20f73f8e",
+  "report_parent": "353218cbd01286116bd97fc1475b51bc54cdce75",
+  "merges": {
+    "base_path": {
+      "commit": "24758f1e5f334337dd421c813f7bbf38e09de3e3",
+      "parents": [
+        "0c7052759671347775615af5b4a8028dd8688af8",
+        "a3f67b011b1a810c282da390f80a3180df1be34b"
+      ],
+      "tree": "1695631da4396436a9a0b2fdd747f9a01be26d6c",
+      "conflicts": false
+    },
+    "base_step2": {
+      "commit": "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+      "parents": [
+        "24758f1e5f334337dd421c813f7bbf38e09de3e3",
+        "3a7ea290fca9e3f3325ffa8206a861b22f441583"
+      ],
+      "tree": "387d97ed14a18e3ff9489f988b1637d3b4a43657",
+      "conflicts": false
+    },
+    "head_step2b": {
+      "commit": "98bff3bcbb9a73363ca6ceada9f610eeb099876b",
+      "parents": [
+        "be9e9cc6f77121cdb6970a18915c7c61cdb65b78",
+        "694834e95c3dd79bc4d350f4560d5a16b175f0ad"
+      ],
+      "tree": "add1389a72424f72ff98497367db7394b66ffacc",
+      "conflicts": false
+    },
+    "head_step3": {
+      "commit": "65af0b47a56f444ae54cfc2a8761e63b20f73f8e",
+      "parents": [
+        "98bff3bcbb9a73363ca6ceada9f610eeb099876b",
+        "78933e52b0abd0da2fce91e73b4b71c1b36dc4e4"
+      ],
+      "tree": "62ee0714658b8533b2f293e4aee22839097bae5b",
+      "conflicts": false
+    }
+  }
+}
