@@ -287,7 +287,7 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	// in a program that reads by a run-time key (fieldTypesNeeded), and the runtime writes those of
 	// the plain objects it hands a program (json_decode.c, map_set.c, directory.c, regexp.c). Zero is
 	// no evidence, so the shape's registered tags decide then.
-	switch (adamic_object_field_types(object)[index]) {
+	switch (adamic_object_field_type(object, index)) {
 	case 1: return adamic_box_number(slot.number);
 	case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 	case 7: {
@@ -766,7 +766,7 @@ static bool boxable_type(int type) {
 // pair's value is a plain number, string or boolean (lowering refuses an optional one), and an indices
 // pair holds two numbers. A slot neither path can box is a compiler bug said out loud.
 static adamic_heap *keyed_tuple_slot(const adamic_object *tuple, size_t slot) {
-	unsigned char type = adamic_object_field_types(tuple)[slot];
+	unsigned char type = adamic_object_field_type(tuple, slot);
 	bool registered = false;
 	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
 		if (entry->shape == tuple->shape && boxable_type(entry->types[slot])) registered = true;
