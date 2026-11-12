@@ -32,7 +32,7 @@ func (e *emitter) placeholderViewField(property ir.Property, object string) stri
 	}
 	e.line("const adamic_object *%s = NULL;", owner)
 	e.line("%s = adamic_object_field_owned(%s, %s, &%s, &%s);", slot, object, cString(property.Name), cache, owner)
-	e.line("unsigned char %s = adamic_object_field_types(%s)[adamic_slot_index(%s, %s)];", kind, owner, owner, slot)
+	e.line("unsigned char %s = adamic_object_field_type(%s, adamic_slot_index(%s, %s));", kind, owner, owner, slot)
 	// Copy a tagged nullish payload even when its readiness bit is unset.
 	e.line("if (%s == %d || %s == %d || (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null))) {", kind, ir.UndefinedRepresentation, kind, ir.NullRepresentation, kind, ir.Union, slot, slot)
 	e.line("%s = adamic_retain(%s->reference);", result, slot)
