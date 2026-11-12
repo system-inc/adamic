@@ -14,9 +14,9 @@ import (
 // Each row puts the viewed objects on a cycle 1,000 times in a function, so every turn's cycle is a
 // graph region that must free whole, and holds the answer to Node and the counted build. The views are
 // .ts, where a downcast stays a checked view (in .a it's refused, #m8dvvmf). Writing a field of a
-// checked type (Identifier here) is NotYet without a source-slot certificate, and a legacy view's field
-// can't hold a reference yet, so each cycle closes through a plain Node or the holder of the value. The
-// write is a view stored into a graph slot, which the graph hold takes as any store.
+// type a view checks (Node and Identifier here) is NotYet without a source-slot certificate, and a
+// legacy view's field can't hold a reference yet, so each cycle closes through a holder no view checks.
+// The write is a view stored into the holder's graph slot, which the graph hold takes as any store.
 //
 // Mutant: graphAdoptionBoundary's refusal of ViewOrigins and CheckedFields put back stops every row
 // before it lowers.
@@ -27,24 +27,26 @@ interface Identifier extends Node { readonly kind: 'identifier'; readonly name: 
 function identifier(node: Node): Identifier { return node as Identifier; }
 `
 	for _, c := range []struct{ name, source string }{
-		{"a checked read", nodes + `function turn(index: number): string {
-	const b: Node = { kind: 'number', pos: index, next: undefined };
-	const a: Identifier = { kind: 'identifier', pos: index, next: b, name: 'a' + String(index) };
-	b.next = a;
-	const seen: Node = a;
-	return identifier(seen).name;
+		{"a checked read", nodes + `interface Holder { node: Node; self: Holder | undefined }
+function turn(index: number): string {
+	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
+	const holder: Holder = { node: a, self: undefined };
+	holder.self = holder;
+	return identifier(holder.node).name;
 }
 let last = '';
 for (let index = 0; index < 1000; index++) last = turn(index);
 console.log(last);
 `},
-		{"a view stored into a graph slot", nodes + `function turn(index: number): string {
-	const b: Node = { kind: 'number', pos: index, next: undefined };
-	const a: Identifier = { kind: 'identifier', pos: index, next: b, name: 'a' + String(index) };
+		{"a view stored into a graph slot", nodes + `interface Holder { node: Node | undefined; self: Holder | undefined }
+function turn(index: number): string {
+	const a: Identifier = { kind: 'identifier', pos: index, next: undefined, name: 'a' + String(index) };
 	const seen: Node = a;
+	const holder: Holder = { node: undefined, self: undefined };
+	holder.self = holder;
 	const view = identifier(seen);
-	b.next = view;
-	return view.name + ' ' + String(b.next === a);
+	holder.node = view;
+	return view.name + ' ' + String(holder.node === a);
 }
 let last = '';
 for (let index = 0; index < 1000; index++) last = turn(index);
