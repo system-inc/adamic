@@ -109,7 +109,7 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 			line := strings.Count(before, "\n") + 1
 			column := offset - strings.LastIndex(before, "\n")
 			where := fmt.Sprintf("%s:%d:%d", cause, line, column)
-			if refusal.Where != where || refusal.What != probe.what || refusal.Fix != "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)" {
+			if refusal.Where != where || refusal.What != probe.what || refusal.Fix != "keep records, checked ObjectCalls and dynamic shapes outside graph adoption (adamic/cycle-capable)" {
 				t.Fatalf("got %#v, want %s with unchanged graph diagnostic", refusal, where)
 			}
 		})
