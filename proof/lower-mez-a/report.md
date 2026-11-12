@@ -335,3 +335,9 @@ FAIL
 
 ```
 
+## Step 4: first attempt interrupted by environment/session interruption
+
+Command: go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1
+
+The session wait was aborted and the environment was subsequently marked starting. On readiness, lower.test was defunct after about 24 minutes, the parent go test and shell were absent, /tmp/lower.log was empty, and the post-command status file had not been written. No exit code or completed test verdict was captured. This attempt is INTERRUPTED (environment/session), not PASS or FAIL. A fresh serial attempt follows.
+
