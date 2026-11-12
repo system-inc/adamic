@@ -115,7 +115,7 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		} else {
 			e.line("%s->%s = %s;", slot, member(storage), slotted(storage, value))
 		}
-		if write.Nullish != 0 && e.fieldTypesNeeded() {
+		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", receiver, receiver, slot, slotRepresentation(fieldRepresentation(write.Value), write.Nullish, slot+"->reference"))
 		}
 	case ir.SetIndex:

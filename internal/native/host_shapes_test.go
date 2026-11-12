@@ -325,6 +325,7 @@ var hostShapeReaders = []struct {
 }{
 	{"adamic.h", "adamic_shape_check", "checks a shape's own kinds and names no key", "", ""},
 	{"class_features.c", "adamic_public_index", "a class instance's public shape, never a host's", "", ""},
+	{"exceptions.c", "adamic_error_initialize", "marks construction tags on an error shape, never a program key lookup", "", ""},
 	{"json_decode.c", "make_object", "lays out the decoder's own plain shape", "", ""},
 	{"json_decode.c", "canonical_shape", "copies the decoder's own plain shape", "", ""},
 	{"json_decode.c", "validate", "fills the decoder's own plain object", "", ""},
