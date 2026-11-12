@@ -162,8 +162,7 @@ show(v);`, "HasName", "5\n"},
 
 // What S's view can't hold stays NotYet under its own reason: a false side, since an object test can't
 // be negated (mutant: the guard dropped, and the honest Identifier panics on the false branch); a whole
-// copy of S's value, which #yq6fkp5's rule holds at the copy now that it's on main, so B's own copy scan
-// is gone; a class assignable to S, kept failing closed: an honest instance read through S's view agreed
+// copy of S's value, now held first by phantom presence rule 450 (#3hsrk2t); a class assignable to S, kept failing closed: an honest instance read through S's view agreed
 // with Node with this rule off (probed on Golem, Nov 1), but no lying instance is pinned yet (mutant: the
 // rule off, and the class lowers). A subtype of S in the argument's type keeps its own type when
 // narrowed, with fields S's view doesn't check (mutant: a subtype member passed, and it lowers). A
@@ -179,11 +178,11 @@ func TestBrandedSupertypeStaysNotYet(t *testing.T) {
 function show(x: Restated | Node): void { if (isTypeElement(x)) { console.log("element"); } else { console.log(String(x.pos)); } }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" }; show(i);`, "checked predicate membership of a branded supertype on its false branch"},
 		{"spread", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = { ...n }; console.log(String(c.name)); } }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a whole-object copy of a value of checked view type TypeElement"},
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "main.ts:10:71: Adamic 0.1 refuses an observation of TypeElement's phantom member _typeElementBrand, _declarationBrand (an object spread); " + phantomObjectPresenceFix},
 		{"rest", `function show(n: Node): void { if (isTypeElementLie(n)) { const { kind, ...rest } = n; console.log(String(rest.name)); } }
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "a rest element in destructuring"},
 		{"assign", `function show(n: Node): void { if (isTypeElementLie(n)) { const c = Object.assign({}, n); console.log(String(c.name)); } }
-const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "refuses Object.assign"},
+const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "main.ts:10:69: Adamic 0.1 refuses an observation of TypeElement's phantom member _typeElementBrand, _declarationBrand (Object.assign); " + phantomObjectPresenceFix},
 		{"class", `class Signature implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 show(new Signature());`, "a checked predicate target TypeElement that class Signature is assignable to"},
@@ -272,6 +271,10 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
+			if probe.name == "spread" || probe.name == "assign" {
+				phantomObjectPresenceWant(t, err, probe.want)
+				return
+			}
 			var pending *NotYet
 			var refused *Refused
 			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
