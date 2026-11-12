@@ -92,7 +92,7 @@ function adapt(tree, ts) {
     const metadata = require("./meta-spread-pins.json");
     const normal = text => text.replace(/\r\n/g, "\n");
     const startText = normal(start.getText(tracing));
-    if (startText !== metadata.before && startText !== metadata.after) throw new Error("unreviewed loader producer: startTracing drift");
+    if (startText !== metadata.before && startText !== metadata.lazyAfter && startText !== metadata.after) throw new Error("unreviewed loader producer: startTracing drift");
     if (startText === metadata.before) {
         const reset = one(start, node => ts.isExpressionStatement(node) && node.getText(tracing) === "typeCatalog.length = 0;", "tracing catalog reset");
         edit(tracing, reset, "typeCatalog.splice(0);");
@@ -101,10 +101,8 @@ function adapt(tree, ts) {
             edit(tracing, object, literal.after);
         }
     }
-    const loadTry = one(start, ts.isTryStatement, "builtin load try");
-    const load = one(loadTry.tryBlock, ts.isCallExpression, "builtin require");
-    if (load.expression.getText(tracing) !== "require" || load.arguments.length !== 1 || !ts.isStringLiteral(load.arguments[0]) || load.arguments[0].text !== "fs") throw new Error("unreviewed loader producer");
-    catchRead(tracing, loadTry, "message", "errorMessage");
+    const builtin = require("./tracing-fs-import.cjs");
+    builtin.plan({ts, program, tracing, start, startText, metadata, nodes, edit, planned, compiler, tree});
     const readFile = one(sys, node => ts.isFunctionDeclaration(node) && node.name?.text === "readFile", "Node readFile");
     const bufferDeclaration = one(readFile, node => ts.isVariableDeclaration(node) && node.name.getText(sys) === "buffer", "buffer declaration");
     const readTry = one(readFile, ts.isTryStatement, "buffer producer try");
@@ -140,13 +138,14 @@ function adapt(tree, ts) {
             boundary = change.start;
         }
         if (ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length) throw new Error("adapted syntax error");
+        if (file === tracing) builtin.validatePlanned(ts, program, tracing, text, metadata, nodes);
         if (fs.readFileSync(file.fileName, "utf8") !== file.text) throw new Error("source changed while planning");
         results.push([file.fileName, text]);
     }
     for (const [file, text] of results) fs.writeFileSync(file, text);
     const added = !fs.existsSync(helperFile);
     if (added) fs.writeFileSync(helperFile, helper);
-    return { files: results.length + Number(added), propertyReads: evidence.filter(e => e.after.startsWith("error")).length, byteReads: evidence.filter(e => e.after.endsWith("!")).length, helperAdded: added, evidence };
+    return { javascriptChanging: true, files: results.length + Number(added), propertyReads: evidence.filter(e => e.after.startsWith("error")).length, byteReads: evidence.filter(e => e.after.endsWith("!")).length, helperAdded: added, evidence };
 }
 module.exports = { adapt, compiler, nodes };
 if (require.main === module) {
