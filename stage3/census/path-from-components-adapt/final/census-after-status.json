@@ -1,0 +1,14 @@
+{
+  "command": [
+    "env",
+    "LATENT_FULL=1",
+    "LATENT_ONLY_FILE=/workspace/scratch/path-adapt-final-tree/src/compiler/path.ts",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "/workspace/scratch/path-adapt-final/latent",
+    "/workspace/scratch/path-adapt-final-tree/src/compiler",
+    "/workspace/scratch/path-adapt-final/census-after.jsonl"
+  ],
+  "child_exit_code": 0,
+  "seconds": 67.1134041690002,
+  "stopping_reason": null
+}

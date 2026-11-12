@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/path-adapt-final-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/path-adapt-final/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit_code": 0,
+  "seconds": 51.81767255800014,
+  "stopping_reason": null
+}

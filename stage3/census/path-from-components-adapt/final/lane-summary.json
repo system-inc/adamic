@@ -1,0 +1,15 @@
+{
+  "shardPasses": 398,
+  "failures": [],
+  "packagePassed": true,
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=28m",
+    "-parallel=4",
+    "./stage3/lane"
+  ],
+  "seconds": 1048.1090694149998
+}

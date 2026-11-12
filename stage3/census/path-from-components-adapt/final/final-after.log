@@ -1,0 +1,9 @@
+replay supervisor_child_exit=0
+types-after-driver supervisor_child_exit=0
+stock-after supervisor_child_exit=0
+build supervisor_child_exit=0
+build-comparison supervisor_child_exit=0
+census-after supervisor_child_exit=0
+census-mutant supervisor_child_exit=0
+final after proofs passed
+{"command": ["python3", "/workspace/scratch/path-adapt-final/final-after.py"], "child_exit_code": 0, "seconds": 654.3623788170003, "stopping_reason": null}

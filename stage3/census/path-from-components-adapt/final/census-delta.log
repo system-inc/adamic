@@ -1,0 +1,52 @@
+{
+  "beforeHeader": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "full",
+    "measurement": "measured on a checker-rejected program",
+    "status": "measurement"
+  },
+  "afterHeader": {
+    "checker_rejected": false,
+    "diagnostic_sites": [],
+    "diagnostics": [],
+    "latent_mode": "full",
+    "measurement": "measured on a checker-rejected program",
+    "status": "measurement"
+  },
+  "removedUniqueFindings": [
+    [
+      "Boundary",
+      "src/compiler/path.ts:513:38",
+      "failed statement; state rolled back; continued at next statement or declaration"
+    ],
+    [
+      "Boundary",
+      "src/compiler/path.ts:516:5",
+      "failed statement; state rolled back; continued at next statement or declaration"
+    ],
+    [
+      "Refused",
+      "src/compiler/path.ts:513:45",
+      "a cast the runtime can't check"
+    ],
+    [
+      "Refused",
+      "src/compiler/path.ts:513:45",
+      "an unproven relation from \"\" to T: the source is not assignable to the target"
+    ],
+    [
+      "Refused",
+      "src/compiler/path.ts:516:12",
+      "a cast the runtime can't check"
+    ],
+    [
+      "Refused",
+      "src/compiler/path.ts:516:12",
+      "an unproven relation from string to T: the source is not assignable to the target"
+    ]
+  ],
+  "addedUniqueFindings": [],
+  "afterCoordinatesNormalizedByTwoLines": true
+}

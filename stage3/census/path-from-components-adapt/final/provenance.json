@@ -1,0 +1,24 @@
+{
+  "main": "02ebf2b154495843ba2b1c51de63ed8bd9a8e3b9",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptationInputs": {
+    "stage3/adapt/99-correctness-path-from-components/README.md": "0caf9d58dd55e63e7e350f5491fa56710ccd4b17c022f6cebb364c55365bff92",
+    "stage3/adapt/99-correctness-path-from-components/adapt.cjs": "58e6b62095ed372b2c2f3580fb92cba06982b61276eae01bae5da28247741508",
+    "stage3/adapt/99-correctness-path-from-components/contract.cjs": "c8913da83bdf70a3970bfb142ebebd136e886f183bee0d3d676876402fa40209",
+    "stage3/adapt/99-correctness-path-from-components/owners.json": "d81809a0d8161748de97dbfa8f5ef9466d3cf38e1fcc4ea3a3795462f22cff9f",
+    "stage3/upstream/LEDGER.md": "51e82c453697adbe76b73365df9eda3300a6e35850a871347b465fe978e363ae"
+  },
+  "applyProductKey": "a7f606e2d976c1e4d576b99366b332e75cb70d353e0ed6fdb9a9a089003197a9",
+  "tools": {
+    "node": "v24.19.0",
+    "git": "git version 2.52.0",
+    "python3": "Python 3.12.14"
+  },
+  "binaries": {
+    "adamic": "baf02438d9cffe1a69cf5935145d6d0309de9a0fe76e61040b6cfb9ba7ed3fd9",
+    "latent": "a820eb1d86533601710a69cd2d336a42c5348234a5d948792a34268f120d33e6"
+  },
+  "adaptationCommit": "3675359ce05b7938b2d56d8a6150970b3301e127",
+  "adaptationParent": "02ebf2b154495843ba2b1c51de63ed8bd9a8e3b9",
+  "validationInputsMatchCommit": true
+}

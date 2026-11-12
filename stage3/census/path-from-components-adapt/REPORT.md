@@ -1,85 +1,59 @@
-# Path-from-components adaptation: stopped at adapter 30 replay
+# getPathFromPathComponents adaptation: final proof
 
-**Stopped under the user's explicit gate: “If 30 refuses, stop and report.”** No adaptation commit was made or pushed. The proposed four-file adapter and ledger line are retained as text snapshots here, and remain uncommitted in `/workspace/path-components-adapt` on `typescript/path-from-components-adapt`. No existing adapter was amended.
+**All required gates pass.** Adaptation commit **`3675359ce05b7938b2d56d8a6150970b3301e127`** is the single commit on main **`02ebf2b154495843ba2b1c51de63ed8bd9a8e3b9`**, branch `typescript/path-from-components-adapt`. It contains only the new `stage3/adapt/99-correctness-path-from-components` directory and the upstream ledger entry. Measurement output is on `typescript/path-from-components-evidence`, outside stage3/adapt.
 
-Base: Adamic main **`5243a7e8fc1fa6c0696a3b875881dc02ec6301ef`**, fetched for this task on 2026-11-12. Upstream TypeScript 6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. The whole `99-correctness-axolotl-k/adapt.cjs`, `owners.json` and README were read before implementing this draft. Measurement output is exclusively on `typescript/path-from-components-evidence`, in this directory.
+## Corrected replay gate and pre-existing refusal
 
-## The blocker and its scope
+The earlier stop was superseded by the user's correction. Adapter 30's `declined site changed: core.ts:992:21` refusal reproduces on unmodified main when 30 is replayed over the **fully adapted** tree. **That is not apply's path: apply runs each adapter on its predecessor's output, before later adaptations add `from[i]!` in addRange.** This historical refusal is not attributed to the new path owner and does not require an amendment to 30 for this change.
 
-The draft's **full apply passed**, but the required adapter-by-adapter replay stopped at **30-indexed-reads**, child exit **1**, with:
+The isolated `30.plan(ts, "path.ts", text, true)` accepts both baseline and new owner text unchanged: zero edits and four declined reads. The valid replay proofs are the successful **complete stage-by-stage apply.sh run**, and this adaptation's **zero-edit, zero-write replay over its own output**, with bytes and mtime unchanged. No existing adapter or declined-site guard was changed. Historical observations are retained in [30-baseline.log](30-baseline.log), [30-path-only.json](30-path-only.json), and the superseded [HISTORICAL-STOP.md](HISTORICAL-STOP.md). The interrupted old Go run is historical; the final run below completed.
 
-```text
-declined site changed: core.ts:992:21
-```
+## Final verification on main's tip
 
-The exact same full adapter command against the **unmodified main baseline adapted tree** also exits **1** with that message. Its ledger entry (`stage3/adapt/30-indexed-reads/sites.json:614–625`) is the declined `addRange` read `from[i]`, occurrence 2 of 2. The fully adapted baseline has `to.push(from[i]!)` at `core.ts:1002`. Adapter 30's declined-site guard rejects the non-null assertion. This is a pre-existing whole-replay incompatibility, not evidence that the new path owner caused the refusal.
-
-The isolated exported `30.plan(ts, "path.ts", text, true)` check **accepts both baseline and candidate path.ts**: zero assertions/zeros/closures to add, four declined reads, and byte-unchanged planned text in each case. Thus the new `getPathFromPathComponents` owner itself still satisfies the requested read pin. See [30-path-only.json](30-path-only.json), [30-baseline.log](30-baseline.log), [30-baseline-status.json](30-baseline-status.json), and [replay.json](replay.json).
-
-Nevertheless, the requested **whole replay is red**, so the implementation path stopped. Resolving the failed existing pin requires review/amendment within 30 before this full-replay gate can pass; the draft does not bypass or weaken it. The path-only result alone does not justify claiming that all adapter replays pass. No later adapters were replayed after 30 refused.
-
-## Draft implementation and owner contract
-
-[proposed-adaptation/adapt.cjs.txt](proposed-adaptation/adapt.cjs.txt), [owners.json.txt](proposed-adaptation/owners.json.txt), [contract.cjs.txt](proposed-adaptation/contract.cjs.txt), and [README.md.txt](proposed-adaptation/README.md.txt) preserve the proposed directory `stage3/adapt/99-correctness-path-from-components`. [proposed-ledger.diff](proposed-ledger.diff) preserves the proposed ledger addition. These are **reviewable drafts, not landed changes**.
-
-The draft writes exactly the previously measured candidate: two `@internal` Path/string overloads **before the existing `//// Path Formatting` comment and JSDoc**, followed by the string implementation with both `as T` assertions removed. `owners.json` pins the entire before/after region, including the full owner, complete overload set and comments, by exact normalized text and SHA-256. It parses the complete file, verifies the planned after owner and byte-identical transpile, and rereads the original before its sole write. It preserves CRLF.
-
-The contract child exited **0**. It verified a zero-edit, zero-write replay with identical bytes and mtime, unrelated-owner preservation and LF/CRLF handling. Ten drift/partial-owner cases were refused with zero writes: changed before owner, each half-removed cast, missing/moved/duplicate owner, parse error, changed after owner, missing after overload and moved section comment. See [contract.json](contract.json).
-
-The original source-call measurement remains **T = string: 13; T = Path: 2** (including five harness alias calls), on the earlier [report branch](https://github.com/system-inc/adamic/tree/typescript/path-from-components/stage3/census/path-from-components). Both requested public API inventories omit the target function.
-
-## Other pins on the two owners
-
-[owner-pins-grep.txt](owner-pins-grep.txt) is the pre-draft `rg -n 'getPathFromPathComponents|forEachAncestorDirectory' stage3/adapt` output. The only direct named path-function/read pin is 30's declined `pathComponents[0]` ledger entry at `sites.json:3689–3699`. The other name hits are copied import-owner blocks in `99-correctness-core-or-predicate/owners.json` and `99-correctness-core-multimap/owners.json`; they do not pin either path function's body. No other complete `forEachAncestorDirectory` owner pin was found. The draft adds no ancestor-function pin because its candidate fails the stock gate below.
-
-## forEachAncestorDirectory measurement and rejection
-
-[measure-p.cjs](measure-p.cjs) uses the stock TypeScript 6.0.3 checker on the baseline's **604 adapted src roots**, including compiler, services, server, harness and tests. It matches resolved call declarations to the actual path.ts owner. [p-instantiations.json](p-instantiations.json) retains complete call expressions, argument types and resolved signatures.
-
-A distinction matters here: this function already exposes Path and string overloads parameterized only by **T**. **P exists only on the hidden implementation**, so the checker does not infer a caller-visible P type argument. The analogous measurable directory instantiation is the resolved signature's first parameter: **string 3, Path 2**. Actual argument types are string 2, Path 2, and a generic P 1; that P argument resolves to the string overload.
-
-| Adapted file:line:column | Argument type | Resolved directory type | Call prefix |
-|---|---|---|---|
-| `src/compiler/moduleNameResolver.ts:503:5` | `string` | `string` | `forEachAncestorDirectory(normalizePath(currentDirectory), directory => {` |
-| `src/compiler/moduleNameResolver.ts:3057:12` | `P` | `string` | `forEachAncestorDirectory(directory, ancestorDirectory => {` |
-| `src/compiler/watchUtilities.ts:296:9` | `Path` | `Path` | `forEachAncestorDirectory(` |
-| `src/compiler/program.ts:330:12` | `string` | `string` | `forEachAncestorDirectory(searchPath, ancestor => {` |
-| `src/typingsInstallerCore/typingsInstaller.ts:258:21` | `Path` | `Path` | `forEachAncestorDirectory(getDirectoryPath(fileName), directory => {` |
-
-The scratch candidate retained both existing overloads and changed only the implementation to:
-
-```ts
-export function forEachAncestorDirectory<T>(directory: string,
-    callback: (directory: string) => T | undefined): T | undefined {
-    // original body, with getDirectoryPath(directory) and no `as P`
-}
-```
-
-Stock TypeScript reports **one TS2394**: “This overload signature is not compatible with its implementation signature.” The Path callback overload is incompatible with the string callback implementation. The baseline has zero diagnostics, and the candidate's 79 per-root JavaScript hashes still match, but **the zero-stock-diagnostics condition fails**. The conditional inclusion gate therefore rejects this candidate; the ancestor owner remains unchanged. No broader callback-union rewrite or cast workaround was attempted. Its census was not needed after that failed gate.
-
-See [p-candidate.cjs](p-candidate.cjs), [p-candidate-path.ts.txt](p-candidate-path.ts.txt), [p-candidate-stock.json](p-candidate-stock.json) and [p-candidate.log](p-candidate.log). That experiment's driver exits 0 because it records diagnostic evidence; it does **not** claim that the candidate type-check passes.
-
-## Completed proof results
-
-| Check | Measured result |
+| Gate | Result |
 |---|---|
-| Full main baseline apply | child 0 |
-| Full apply including new adapter | child 0, 404.61 seconds |
-| New adapter contract / isolated replay | child 0; replay zero edits/writes, bytes and mtime unchanged |
-| Every adapter replay | **STOPPED:** 00, 10 and 20 child 0 / zero changed files; 30 child 1 / zero changed files; remaining adapters not run |
-| 30 baseline full replay | child 1, same existing core.ts refusal |
-| 30 path-only check | child 0, baseline and candidate accepted without edits |
-| Actual upstream baseline and candidate builds | both child 0 |
-| Ten emitted build JS outputs | all byte-identical |
-| Both public declaration files | byte-identical |
-| Adamic types, sorted 79 roots | child 0 before and after |
-| Stock TypeScript, 79 compiler-project roots | zero diagnostics before and after |
-| Full-mode single-file census before/after | both child 0, no checker diagnostics, output guards enabled |
-| Restoring mutant census | child 0, records original 513:45 refusal; expected-red detector child 1 |
-| generate_shards.py --check | child 0 |
-| Whole stage3/lane Go package, all 398 shard declarations | **INTERRUPTED at required stop gate**, child -15 / shell 143, 531.88 seconds; not a passing lane |
+| Complete apply.sh, stage by stage | child 0, 777.33 seconds |
+| New adaptation's owner/drift contract | child 0; ten no-write refusals, unrelated-owner and LF/CRLF checks |
+| New adaptation replayed on its output | child 0; files 0, edits 0, writes 0; bytes and mtime unchanged |
+| Whole `go test` stage3/lane package | **child 0; all 398 shards pass; zero failures; package PASS** |
+| `generate_shards.py --check` | child 0 |
+| Adamic types over sorted 79 roots | child 0 before and after |
+| Stock TypeScript 6.0.3 compiler project | 79 roots, zero diagnostics |
+| Actual upstream build | child 0 |
+| Ten emitted JavaScript outputs | all byte-identical to baseline |
+| Both public declaration files | byte-identical to baseline |
+| Full-mode, single-file path.ts census | child 0 before and after; no checker diagnostics; output guards enabled |
+| Restoring mutant | census child 0; original cast refusal restored at path.ts:513:45 |
 
-[build-comparison.json](build-comparison.json) records exact byte counts and matching before/after SHA-256 values for each of these outputs:
+The completed whole Go command is unfiltered:
+
+```sh
+go test -json -count=1 -timeout=28m -parallel=4 ./stage3/lane
+```
+
+It completed in **1048.11 seconds**, including all fixture tests and all **398 unique TestShard_ passes**. [final/lane-summary.json](final/lane-summary.json), [final/lane-go-status.json](final/lane-go-status.json) and [final/lane-go.jsonl](final/lane-go.jsonl) retain the count, exact exit and full stream. This was run to completion; it is not the historical interrupted 28-shard observation.
+
+[final/provenance.json](final/provenance.json) pins main, upstream TypeScript (`050880ce59e30b356b686bd3144efe24f875ebc8`), tools, binary hashes, apply product key and every adaptation/ledger input hash. Those hashes were checked against the final commit's Git objects, so the tested working-tree bytes equal the committed files. The lane's shared product contains the new overloads. The earlier baseline adapted tree is reusable because the intervening main changes only affect Adamic lowering, not stage3's source/adaptation inputs; the final main binaries reran its types and census checks.
+
+## Adapter contents
+
+The new adapter changes only getPathFromPathComponents: two `@internal` overloads for `readonly Path[] -> Path` and `readonly string[] -> string`, and a string implementation with no casts. The overloads precede the existing `//// Path Formatting` comment and JSDoc, preserving emitted comment bytes. `owners.json` pins the complete before/after owner region, including its comments and overload set, with exact text and SHA-256.
+
+Planning parses the whole file and verifies all preconditions and the complete after owner before the sole write. Owner drift, partial edits, missing/moved/duplicate owners and parse errors are refused without writing. Replay makes zero edits and writes, preserving bytes and mtime. Unrelated owners and CRLF are preserved. Full path.ts transpile equality is also checked before writing. See the committed adaptation README and [final/contract.json.log](final/contract.json.log), [final/replay.json](final/replay.json).
+
+The upstream ledger entry records this type-only change and the evidence branch. No compiler, oracle, shard, public API sanction, other adapter or forEachAncestorDirectory owner was changed. [owner-pins-grep.txt](owner-pins-grep.txt) retains the complete earlier pin search: 30's declined root read is the direct target-owner pin; other name hits are copied import blocks.
+
+## forEachAncestorDirectory remains unchanged
+
+Its existing overloads resolve five source calls as **string 3, Path 2**. Implementation-only P is not a caller-visible type parameter: one actual generic P argument resolves to the string overload. The stock checker evidence, complete call positions and signatures remain in [p-instantiations.json](p-instantiations.json).
+
+The same-shape candidate retaining the Path/string overloads but using a string directory/string callback implementation and removing `as P` produces **TS2394**, “This overload signature is not compatible with its implementation signature.” Its JavaScript is identical, but the stock zero-diagnostic gate fails. The README records the count and this reason for exclusion. No callback-union workaround was introduced. See [p-candidate-stock.json](p-candidate-stock.json) and [p-candidate-path.ts.txt](p-candidate-path.ts.txt).
+
+## Exact source and output evidence
+
+The established getPathFromPathComponents source instantiations are **string 13, Path 2**, including five harness alias calls. The target is absent from the upstream public API baseline and sanctioned-api inventory; those complete measurements remain on [typescript/path-from-components](https://github.com/system-inc/adamic/tree/typescript/path-from-components/stage3/census/path-from-components).
+
+The final actual build compared every one of these ten emitted JavaScript files and both public declarations byte for byte, retaining sizes and matching hashes in [final/build-comparison.json](final/build-comparison.json):
 
 - `_tsc.js`: 6227135 bytes, SHA-256 `cbeb71fde0a41040237b6246f44b6ca8eb41ab5da40e03e6ea33618cbb95e4e8`.
 - `_tsserver.js`: 27889 bytes, SHA-256 `1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b`.
@@ -94,21 +68,13 @@ See [p-candidate.cjs](p-candidate.cjs), [p-candidate-path.ts.txt](p-candidate-pa
 - `typescript.d.ts`: 593506 bytes, SHA-256 `e14a3c25a0ec4f42f05974fe029a3de87c13cdb9b92e823385a5e9ac321c31bd`.
 - `tsserverlibrary.d.ts`: 866 bytes, SHA-256 `cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd`.
 
-The ten JS files come from actual `npm run build` output, not a comment-stripped or token-normalized comparison. Source maps and internal declarations are outside that byte-identity claim. The builds include the upstream stock checks; [stock-after.json](stock-after.json) separately records the project-config stock checker over exactly 79 roots with zero diagnostics. The baseline's zero diagnostics are also retained in the baseline half of [p-candidate-stock.json](p-candidate-stock.json). Adamic types commands and all 79 explicit root paths are in [types-before-status.json](types-before-status.json) and [types-after-status.json](types-after-status.json).
+Source maps and internal declarations are outside that byte-identity claim. The comparison uses raw bytes, not normalized tokens or removed comments. [final/stock-after.json](final/stock-after.json) records the exact 79 project roots and empty diagnostic list; the earlier baseline stock project has zero diagnostics in [p-candidate-stock.json](p-candidate-stock.json). Adamic's explicit sorted root lists, own exits and timings are in [final/types-before-status.json](final/types-before-status.json) and [final/types-after-status.json](final/types-after-status.json).
 
-The Go command was unfiltered:
+## Exact census delta and restoring mutant
 
-```sh
-go test -json -count=1 -timeout=28m -parallel=4 ./stage3/lane
-```
+Both final main-tip censuses used `LATENT_FULL=1`, exact `LATENT_ONLY_FILE` selectors, and `LATENT_ASSERT_NO_OUTPUT=1`, loading the complete compiler directory. Both header diagnostic lists are empty (`checker_rejected: false`); the recorder's fixed historical measurement label does not override those headers.
 
-The process group was explicitly terminated under the user's stop rule. The final JSON stream records 28 completed shard passes and no failure entries before interruption; the remaining 370 shards and the package result are unproved. [lane-go.jsonl](lane-go.jsonl), [lane-go.stderr](lane-go.stderr), [lane-go-status.json](lane-go-status.json) and [STOP.json](STOP.json) retain this incomplete run; 28 completed shard passes do not establish the whole lane. It must be rerun after resolving the replay blocker. No shard, expectation, timeout policy, compiler or existing adaptation was changed to get a green result.
-
-## Exact census changes
-
-Both censuses used `LATENT_FULL=1`, an exact absolute `LATENT_ONLY_FILE` for path.ts and `LATENT_ASSERT_NO_OUTPUT=1`, loading the complete compiler directory. The before header and after header have `checker_rejected: false` and empty diagnostic lists. The recorder's fixed label still says “measured on a checker-rejected program”; the actual headers establish that these inputs checked clean.
-
-Before: **81 units, 102 raw findings**. After: **83 units, 84 raw findings**. The new overload units and implementation are attempted and have no findings. The two inserted lines shift later original coordinates by +2; [census-delta.py](census-delta.py) normalizes that shift before comparing unique `(kind, location, exact reason)` tuples. It finds **six removed unique findings and no additions**:
+After normalizing the two inserted lines, the unique `(kind, source location, exact reason)` comparison removes these six findings and adds **none**:
 
 | Baseline path.ts site | Kind | Exact reason removed |
 |---|---|---|
@@ -119,18 +85,12 @@ Before: **81 units, 102 raw findings**. After: **83 units, 84 raw findings**. Th
 | `516:12` | Refused | `a cast the runtime can't check` |
 | `516:12` | Refused | `an unproven relation from string to T: the source is not assignable to the target` |
 
-These account for four distinct source positions: the two casts and their two rolled-back statement boundaries. Repeated dependency attempts explain why 18 raw events disappear rather than only six. No other substantive or boundary site changes after line-shift normalization. In particular, the `forEachAncestorDirectory` cast refusal at original **1103:28** remains at after **1105:28**, with reason `a cast the runtime can't check` and expression `getDirectoryPath(directory) as P`.
+These are four distinct source positions: the two cast expressions and their two statement boundaries. No other diagnostic site changes after line-shift normalization. `forEachAncestorDirectory`'s `getDirectoryPath(directory) as P` refusal remains, shifting from original 1103:28 to after 1105:28. The overloads and new implementation have zero findings. See [final/census-before.jsonl](final/census-before.jsonl), [final/census-after.jsonl](final/census-after.jsonl), [final/census-delta.json](final/census-delta.json).
 
-The restoring mutant replaces only the new owner's pinned after spelling with its original generic before spelling, restoring `"" as T` (and the original final cast) and removing the two overload lines. Its path.ts is byte-equivalent to baseline. The mutant census again records **path.ts:513:45**, reason `a cast the runtime can't check`; [restoring-mutant-check.log](restoring-mutant-check.log) retains the exact matching diagnostic and expected-red exit 1. No adaptation source is mutated for this proof.
+The restoring scratch mutant replaces the after owner with its original generic before owner, including `"" as T`; it restores the exact original line numbering and the refusal **path.ts:513:45**, reason `a cast the runtime can't check`. The final main binary remeasured this in [final/census-mutant.jsonl](final/census-mutant.jsonl) and [final/mutant-result.json](final/mutant-result.json). The historical expected-red detector also exits 1 in [restoring-mutant-check-status.json](restoring-mutant-check-status.json). No real adaptation source was mutated.
 
-Raw streams: [census-before.jsonl](census-before.jsonl), [census-after.jsonl](census-after.jsonl), [census-mutant.jsonl](census-mutant.jsonl). The exact changes are in [census-delta.json](census-delta.json).
+## Bounds and reproduction
 
-## Process bounds, reproduction and remaining work
+Every final process is supervised by [final/run.py](final/run.py): it reports its child's own exit, bounds it at 29 minutes, and reaps its process group. The whole Go test also has a 28-minute internal bound. No process ran for 30 minutes and no final bound was reached. Generated physical Go evidence files use `.go.txt`; [final/build-overlay.py](final/build-overlay.py) applies that naming before generation. Binaries are excluded from evidence; their SHA-256 values are retained in provenance.
 
-[run.py](run.py) bounds each child at 29 minutes, reports that child's own exit code and elapsed time, reaps its process group, and returns the child's status (signal-derived shell status for signals). Every wrapper shell prints its returned status too. Adapter replay children additionally have a 600-second bound. The whole Go test had a 28-minute internal limit and was interrupted after 8.86 minutes; no process reached 30 minutes. The externally requested stop is recorded separately in STOP.json because it was not a timeout. Go overlay evidence filenames end `.go.txt`; [build-overlay.py](build-overlay.py) performs that naming at generation time. Binaries are excluded here; their hashes and compiler/submodule pins are in [provenance.json](provenance.json).
-
-Setup-only mistakes were corrected without compiler changes: the first shard-generation attempt lacked gofmt on PATH; the retry sourced the configured tools and passed. An initial scratch types driver was renamed because `types.py` shadowed Python's standard module; the actual types measurements then passed. These are not reasons for the adapter-30 stop.
-
-To reproduce the blocker, prepare main's adapted tree with the pinned parser and upstream checkout, then run adapter 30 on that completed baseline tree. Its full replay rejects the existing core.ts declined read even without the new adapter. To reproduce the candidate proof, copy the proposed four-file directory into stage3/adapt, apply into a new tree, and use the saved scripts with their recorded scratch paths (or adjust the paths consistently). Keep measurements outside stage3/adapt so they do not change the apply product key.
-
-**Remaining:** resolve the existing adapter-30 whole-replay incompatibility through its owner, then rerun the complete adapter replay and the whole 398-shard Go lane. Only after those gates pass should a new adaptation commit be pushed. The requested separate adaptation push is intentionally not made under the explicit stop instruction.
+Reproduce using the pinned upstream checkout, locked stage3 parser/build dependencies and the committed adapter. Run apply.sh into a new output, then the saved final drivers (adjust their recorded absolute paths together when relocating). Keep every output outside stage3/adapt. The adapter README links this evidence branch. All final status files report child 0; the historical stop and failed ancestor candidate remain explicitly identified as history and rejection evidence.
