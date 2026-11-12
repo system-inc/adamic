@@ -234,16 +234,28 @@ func (l *lowering) noteOverloadCall(node *ast.Node) {
 	}
 }
 
-// checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done. It walks the
-// source the lowering lowered, every body lowerBody lowered (functionNodes, generic instances included,
-// an uninstantiated generic never) and each module's top-level statements, without descending into a
-// nested function, which is its own body if it was lowered. Every call, new or tagged template there
-// that resolves to a narrow overload must have been noted and settled (checked, proven or erased): one
-// missing from the notes or unsettled is a compiler bug, since censusOverload accepted that overload's
-// declaration only because every call to it is settled. So the claim doesn't rest on which entry point
-// lowered a call (Lower's must). A class at a module's top level isn't descended into, since a generic
-// class's initializers lower only per instance: its methods and constructor are walked as the bodies
-// lowerBody lowered, and its field initializers rest on the notes alone.
+// noteClassInitializer records only roots the constructor or static initialization road lowered.
+// Generic classes keep the existing call notes because their meanings depend on instantiation.
+func (l *lowering) noteClassInitializer(class, root *ast.Node) {
+	if root == nil || len(class.TypeParameters()) != 0 {
+		return
+	}
+	if l.classInitializers == nil {
+		l.classInitializers = map[*ast.Node]map[*ast.Node]bool{}
+	}
+	if l.classInitializers[class] == nil {
+		l.classInitializers[class] = map[*ast.Node]bool{}
+	}
+	l.classInitializers[class][root] = true
+}
+
+// checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done. It walks
+// module statements, bodies recorded in functionNodes, and the instance field expressions, static
+// field expressions and static block bodies recorded in classInitializers when they actually lower.
+// It never descends into nested functions or classes. Unconstructed instance initializers are absent;
+// generic class initialization stays on the call notes. Every narrow overload call in these roots
+// must be settled (checked, proven or erased), even if a lowering road failed to note it. Missing or
+// unsettled calls are compiler bugs because censusOverload accepted the promise only on that condition.
 func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
 	var visit func(node *ast.Node) bool
 	visit = func(node *ast.Node) bool {
@@ -263,6 +275,11 @@ func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
 	}
 	for _, declaration := range l.functionNodes {
 		declaration.ForEachChild(visit)
+	}
+	for _, roots := range l.classInitializers {
+		for root := range roots {
+			visit(root)
+		}
 	}
 	for node, settled := range l.overloadCalls {
 		if !settled {

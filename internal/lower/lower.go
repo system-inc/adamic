@@ -320,6 +320,9 @@ type lowering struct {
 	// function's index, so a judgment about what lies inside a declaration reads the source's own
 	// nesting (nestedGeneratorWrites). A helper lowering makes with no declaration isn't here.
 	functionNodes map[int]*ast.Node
+	// classInitializers holds the expression and block roots actually lowered for each non-generic
+	// class. Unconstructed instance fields and skipped initializers never enter this audit set.
+	classInitializers map[*ast.Node]map[*ast.Node]bool
 	// slots are what a value is judged against where the checker's contextual type isn't the whole
 	// answer (slotType, impliedTarget).
 	slots slotTargets

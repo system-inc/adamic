@@ -292,6 +292,9 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		}
 		if member.Kind == ast.KindClassStaticBlockDeclaration {
 			function.Body, err = l.statements(member.AsClassStaticBlockDeclaration().Body.AsBlock().Statements.Nodes)
+			if err == nil {
+				l.noteClassInitializer(declaration, member.AsClassStaticBlockDeclaration().Body)
+			}
 		} else {
 			of, _ := l.typeOf(member.Name())
 			value := zeroValue(of)
@@ -306,6 +309,9 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 				}
 			} else if initializer != nil {
 				value, err = l.expression(initializer)
+				if err == nil {
+					l.noteClassInitializer(declaration, initializer)
+				}
 				value = fit(value, of)
 			} else if of.IsReference() {
 				value = ir.Undefined{Of: of}
