@@ -64,7 +64,7 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 				// [key, value] is a tuple to a view, and its slots carry their representations as a literal's do.
 				e.line("%s->tuple = true;", pair)
 				e.line("adamic_object_field_types(%s)[0] = %d;", pair, ir.String)
-				e.line("adamic_object_field_types(%s)[1] = %d;", pair, call.Element)
+				e.line("adamic_object_field_types(%s)[1] = %s;", pair, slotRepresentation(int(call.Element), call.ElementNullish, slot+".reference"))
 				e.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
 				e.line("%s->slots[1] = %s;", pair, value)
 				// A planned array's pairs are adopted as they're made, as adamic_map_entries adopts a graph

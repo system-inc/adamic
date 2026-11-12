@@ -194,6 +194,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/json_objects_view_order.a", true, false},
 	{"internal/oracle/testdata/json_objects_hidden.a", true, false},
 	{"internal/oracle/testdata/json_objects_nullish.a", true, false},
+	{"internal/oracle/testdata/json_objects_null_variable.a", true, false},
+	{"internal/oracle/testdata/json_objects_undefined_variable.a", true, false},
 	{"internal/oracle/testdata/library_function_expressions.a", true, false},
 	{"internal/oracle/testdata/library_fnexpr_recurse.a", true, false},
 	{"internal/oracle/testdata/library_fnexpr_store.a", true, false},
