@@ -64,9 +64,9 @@ func TestErrorOwnKeysNotYet(t *testing.T) {
 	}
 }
 
-// Every other road that reads an Error's own keys or asks whether one exists, through the same view, stops
+// Other roads that read an Error's own keys or ask whether one exists, through the same view, stop
 // at compile time already: getOwnPropertyNames, the descriptors, fromEntries, hasOwn, Reflect's, for...in,
-// an object rest, JSON.stringify, a spread and Object.assign. This holds them there.
+// an object rest, a spread and Object.assign. This holds them there.
 func TestErrorOwnPropertyRoadsStop(t *testing.T) {
 	t.Parallel()
 	for _, file := range []string{
@@ -79,7 +79,6 @@ func TestErrorOwnPropertyRoadsStop(t *testing.T) {
 		"reflect_has_view.a",
 		"for_in_view.a",
 		"object_rest_view.a",
-		"json_view.a",
 		"spread_view.a",
 		"assign_view.a",
 	} {
@@ -98,6 +97,29 @@ func TestErrorOwnPropertyRoadsStop(t *testing.T) {
 				t.Logf("stops: %v", err)
 			}
 		})
+	}
+}
+
+// Stringifying the same view of an untouched Error follows its shape's enumerable keys.
+func TestErrorJSONViewAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys/json_view.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if why := disagreement(run{stdout: []byte("{}\n")}, truth); why != "" {
+		t.Fatalf("source Node: %s: exit %d, stdout %q, stderr %q", why, truth.exitCode, truth.stdout, truth.stderr)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual, _ := natively(t, program)
+	for name, got := range map[string]run{"native": actual, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+		if why := disagreement(truth, got); why != "" {
+			t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, why, got.exitCode, got.stdout, got.stderr)
+		}
 	}
 }
 
