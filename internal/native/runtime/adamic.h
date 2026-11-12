@@ -621,6 +621,16 @@ struct adamic_methods {
 extern const adamic_methods adamic_error_methods;
 extern const adamic_methods adamic_coded_error_methods;
 bool adamic_error_is(const adamic_object *object);
+// Complete error shapes publish their enumerable keys once, in the order Node records them.
+typedef struct adamic_error_json {
+ const adamic_shape *shape;
+ const char *const *keys;
+ size_t count;
+ struct adamic_error_json *next;
+ bool registered;
+} adamic_error_json;
+void adamic_register_error_json(adamic_error_json *entry);
+const adamic_error_json *adamic_error_json_lookup(const adamic_shape *shape);
 // adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
 // isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so an in test, a
 // read it narrows and a run-time key read all stop on it (union.c's host_stop, #ey7aysy). The emitter

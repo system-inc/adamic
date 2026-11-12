@@ -336,6 +336,9 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
     static const bool watch_error_references[] = {true, true, false, true, true, true, true};
     static const adamic_field_kind watch_error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};
     static const adamic_shape watch_error_shape = {7, watch_error_names, watch_error_references, &adamic_error_methods, watch_error_kinds};
+    static const char *const watch_error_shape_json_keys[] = {"errno", "syscall", "code", "path", "filename"};
+    static adamic_error_json watch_error_shape_json = {&watch_error_shape, watch_error_shape_json_keys, 5, NULL, false};
+    adamic_register_error_json(&watch_error_shape_json);
     adamic_output_flush();
     if (recursive) {
         static const char message[] = "NotYet: fs.watch with recursive: true";
