@@ -91,7 +91,7 @@ static bool named(const char *name, const char *const *names, size_t count) {
 }
 
 // describe_object stops by name on what Node prints by other rules than its own fields, before it
-// reads a name: a host object (a Date, a Stats, a collator), an Error, a class itself, and anything
+// reads a name: a host object (a Date, a Stats, a collator), an unrecorded Error, a class itself, and anything
 // with a toJSON, a class's method, inherited ones included (lowering copies a base's methods into
 // each subclass's table), or an own field of that name however it got there.
 static const adamic_json_schema *describe_object(const adamic_object *object) {
@@ -99,7 +99,17 @@ static const adamic_json_schema *describe_object(const adamic_object *object) {
 	if (object->tuple) stop("NotYet: JSON.stringify a tuple held by an object");
 	const adamic_shape *shape = object->shape;
 	if (shape->methods == &adamic_host_methods) stop("NotYet: JSON.stringify a runtime library value (a Date, a Stats or another whose own fields aren't Node's)");
-	if (adamic_error_is(object)) stop("NotYet: JSON.stringify an Error");
+	const adamic_error_json *error = NULL;
+	if (adamic_error_is(object)) {
+		error = adamic_error_json_lookup(shape);
+		if (error == NULL) stop("NotYet: JSON.stringify an Error whose own keys aren't recorded");
+		for (size_t index = 0; index < shape->count; index++) {
+			const char *name = shape->names[index];
+			if ((strcmp(name, "name") == 0 || strcmp(name, "message") == 0 || strcmp(name, "#message") == 0) &&
+				adamic_object_field_types(object)[index] != adamic_error_unwritten)
+				stop("NotYet: JSON.stringify an Error whose name or message was written after construction");
+		}
+	}
 	if (object->class != NULL && object->class->is_static) stop("NotYet: JSON.stringify a class itself");
 	if (shape->methods != NULL && named("toJSON", shape->methods->names, shape->methods->count)) stop("NotYet: JSON.stringify an object whose class has a toJSON method");
 	if (named("toJSON", shape->names, shape->count)) stop("NotYet: JSON.stringify an object with its own toJSON field");
@@ -111,11 +121,16 @@ static const adamic_json_schema *describe_object(const adamic_object *object) {
 	// Node's order: a class instance's public fields as Object.keys gives them (class_features.c),
 	// anything else's index keys first, then its names in the order they were written.
 	const adamic_shape *public_shape = object->class != NULL && object->write_order == NULL ? object->class->public_shape : NULL;
-	size_t *order = public_shape == NULL ? adamic_object_ordered(object) : NULL;
-	size_t count = public_shape == NULL ? shape->count : public_shape->count;
+	size_t *order = error == NULL && public_shape == NULL ? adamic_object_ordered(object) : NULL;
+	size_t count = error != NULL ? error->count : public_shape == NULL ? shape->count : public_shape->count;
 	for (size_t position = 0; position < count; position++) {
 		size_t index = shape->count;
-		if (public_shape == NULL) {
+		if (error != NULL) {
+			for (size_t at = 0; at < shape->count; at++) {
+				if (strcmp(error->keys[position], shape->names[at]) == 0) { index = at; break; }
+			}
+			if (index == shape->count) stop("NotYet: JSON.stringify an Error whose recorded key has no slot");
+		} else if (public_shape == NULL) {
 			index = order[position];
 		} else {
 			const char *name = public_shape->names[adamic_public_index(public_shape, position)];
