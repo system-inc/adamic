@@ -27,16 +27,21 @@ func TestOverloadResultViewDirectReadLowers(t *testing.T) {
 }
 
 // The caller's local holds the result as the call's declared type, never a narrowing, so the check's call
-// is where the value enters the view (viewSource.checkCall). A read through a wider type the result is
+// is where the value enters the view (overloadCheckCalls). A read through a wider type the result is
 // assigned or passed to is weighed as the predicate road's is, and stays NotYet until it checks against
 // the view (Language's q06 and Optimizer's matched pair on #z5d0jye: the same reads segfaulted natively
-// on step 1's road while the predicate road stopped them). Mutant: overloadResultCheck leaving checkCall
-// unset, and both lower.
+// on step 1's road while the predicate road stopped them). Mutant: overloadResultCheck not recording its
+// call, and both lower.
 func TestOverloadResultViewWidenedReadIsWeighed(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, tail string }{
 		{"through a structural local", "const w: { readonly name: string } = r;\nconsole.log(w.name.toUpperCase());\n"},
 		{"through a parameter", "function show(v: { readonly name: string }): void { console.log(v.name.toUpperCase()); }\nshow(r);\n"},
+		// A second call site of the same overload finds its view cached and registers none, so its call is an
+		// entry only because every check call is (Language's v10 on a44f6b8c, and its reverse). Mutant: only a
+		// call whose check registered a view recorded, and the second-site program lowers.
+		{"a second site widened", "const b: { readonly name: string } = tag({ kind: 2 }, true);\nconsole.log(String(r.kind));\nconsole.log(b.name.toUpperCase());\n"},
+		{"the first site widened", "const w: { readonly name: string } = r;\nconst b = tag({ kind: 2 }, true);\nconsole.log(String(b.kind));\nconsole.log(w.name.toUpperCase());\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
