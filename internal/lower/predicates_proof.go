@@ -1076,7 +1076,7 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 			node.ForEachChild(visit)
 			return false
 		}
-		if l.predicateSameReference(node, argument) && !ast.IsDeclarationName(node) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
+		if l.predicateNameReads(node, argument) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
 			actual := l.checker.GetTypeAtLocation(node)
 			if !checker.Checker_isTypeIdenticalTo(l.checker, actual, declared) {
 				if flow := node.FlowNodeData(); flow != nil {
@@ -1110,6 +1110,25 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 // it still reaches the checker.
 func predicateCannotMatch(node, argument *ast.Node) bool {
 	return argument.Kind == ast.KindIdentifier && node.Kind == ast.KindIdentifier && node.Text() != argument.Text()
+}
+
+// predicateNameReads is whether node reads argument's value: a reference that matches it, never a
+// declaration's own name, except a shorthand property's name, `{ v }`, which is a declaration name and a
+// read of v at once (Compiler's must on #39wtqdj). Its value symbol is the binding it reads, as
+// checkedPredicateInferredReference resolves it.
+func (l *lowering) predicateNameReads(node, argument *ast.Node) bool {
+	if !ast.IsDeclarationName(node) {
+		return l.predicateSameReference(node, argument)
+	}
+	parent := node.Parent
+	if parent == nil || parent.Kind != ast.KindShorthandPropertyAssignment || argument.Kind != ast.KindIdentifier {
+		return false
+	}
+	value := l.checker.GetShorthandAssignmentValueSymbol(parent)
+	if value != nil && value.Flags&ast.SymbolFlagsAlias != 0 {
+		value = l.checker.GetAliasedSymbol(value)
+	}
+	return value != nil && value == l.symbol(argument)
 }
 
 func (l *lowering) predicateSameReference(a, b *ast.Node) bool {

@@ -26,7 +26,9 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_some_false_valid", "undefined\n", "", "", false},
 		{"overload_some_false_read", "array\n", "", "overload 1 of some result: predicate array is false", true},
 		{"overload_some_objects", "1\n", "", "", false},
-		{"overload_some_true_only", "absent\n", "", "false", true},
+		// Its else prints without reading xs, so the lying false side is unobservable and it agrees with Node
+		// (#39wtqdj).
+		{"overload_some_true_only", "absent\n", "", "", false},
 		{"overload_callback", "true\n", "", "", false},
 		{"overload_erased", "true:false\n", "", "", false},
 		{"overload_checked", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
@@ -77,8 +79,8 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if counts, ok := map[string][3]int{
 				"overload_some_empty":      {0, 1, 1},
 				"overload_some_false_read": {0, 2, 0},
-				"overload_some_true_only":  {0, 2, 0},
-				"overload_checked":         {0, 2, 0},
+				"overload_some_true_only":  {0, 1, 1},
+				"overload_checked":         {0, 1, 1},
 				"overload_false":           {0, 2, 0},
 				"overload_assertion":       {0, 1, 0},
 			}[probe.name]; ok {
@@ -100,7 +102,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				stdout = probe.checkedOut
 				site := program.PredicateChecks.Sites[0]
 				branch := "true"
-				if probe.name == "overload_false" || (probe.name == "overload_some_false_read" || probe.name == "overload_some_true_only") {
+				if probe.name == "overload_false" || probe.name == "overload_some_false_read" {
 					branch = "false"
 				}
 				if probe.name == "overload_assertion" {
