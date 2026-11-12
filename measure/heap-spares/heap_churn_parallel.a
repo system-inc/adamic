@@ -3,6 +3,7 @@
 // its own spares. Each task's objects are pushed into an array it holds, so they live on the heap,
 // never in a region. After the last round the program spins for 400 ms so its idle memory can be read.
 import { parallelMap } from 'adamic';
+import { performance } from 'node:perf_hooks';
 
 interface Item {
 	readonly value: number;

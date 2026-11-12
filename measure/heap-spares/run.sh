@@ -114,12 +114,13 @@ for row in "${live[@]}"; do
 		cmp -s "$work/out/${name//\//_}.keep" "$work/out/${name//\//_}.$cap" || fail "$name prints differently at cap $cap" "$work/out/${name//\//_}.$cap"
 	done
 done
-say "PASS outputs match across caps ($(head -c 60 "$work/out/heap_churn.keep"))"
+say "PASS outputs match across caps ($(head -c 60 "$work/out/heap_churn.keep" 2> /dev/null || echo 'heap_churn not built'))"
 
 # Timing: rounds outermost, then modes, programs and caps, so load drifts across every cap alike.
 data=$work/timings.txt
 : > "$data"
-say "load before $(cut -d' ' -f1-3 /proc/loadavg)"
+loadBefore=$(cut -d' ' -f1-3 /proc/loadavg)
+say "load before $loadBefore"
 for round in $(seq "$rounds"); do
 	for mode in shipped pinned; do
 		extra=()
@@ -133,7 +134,8 @@ for round in $(seq "$rounds"); do
 		done
 	done
 done
-say "load after $(cut -d' ' -f1-3 /proc/loadavg)"
+loadAfter=$(cut -d' ' -f1-3 /proc/loadavg)
+say "load after $loadAfter"
 
 # Idle: VmRSS every 5 ms while the program runs, keeping the last read, three takes a cap and mode.
 idle=$work/idle.txt
@@ -166,6 +168,7 @@ cp "$data" "$idle" "$work/out/heap_churn.keep" "$TMPDIR/" 2> /dev/null
 
 # The table: per program, cap and mode, the best wall's run (wall, user, sys s; minor faults; max RSS
 # MB), and idle MB for each take.
+echo "== box $(hostname), load $loadBefore before and $loadAfter after the timing block (1, 5, 15 min)"
 echo "== table: best of $rounds by wall (that run's user, sys, minor faults, max RSS); idle is the last VmRSS, 3 takes"
 echo "program     cap  | s: wall  user   sys   faults  maxMB  idleMB          | p: wall  user   sys   faults  maxMB  idleMB"
 awk -v order="$(for row in "${live[@]}"; do IFS='|' read -r name source environment which <<< "$row"; for cap in $(row_caps "$which"); do printf '%s:%s ' "$name" "$cap"; done; done)" '

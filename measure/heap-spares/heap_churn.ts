@@ -4,6 +4,8 @@
 // round, so several classes churn. After the last round nothing is held, and the program spins for
 // 400 ms so its idle memory can be read before it prints.
 
+import { performance } from 'node:perf_hooks';
+
 interface Item {
 	readonly value: number;
 	readonly label: string;
