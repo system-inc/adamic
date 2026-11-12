@@ -65,6 +65,72 @@ func (l *lowering) checkedPredicateDirections(call *ast.CallExpression, claim *c
 	return directions
 }
 
+// checkedPredicateClosedRemainder is the type the checker narrows a direct call's argument to when the
+// predicate answers false, when every member of the argument's incoming type, so of the remainder and of
+// what the false side excludes, can be told by its tag at run time: an object whose
+// `kind` is a declared field (a property signature or a field, never an accessor, so the test and a later
+// read can't disagree) holding one literal, distinct by value from every other member's (tagLiteralsDistinct,
+// so two SyntaxKind members that alias one value are never told apart). nil otherwise: an open remainder,
+// a member with no literal kind, a class instance, a shared value, or an argument that isn't a reference.
+//
+// tsc's open `isX(node: Node)` makes the false side over Node's open SyntaxKind uncheckable, but a call on
+// an argument held as a closed union of tagged nodes narrows its false side to the rest of that union. The
+// false side's soundness is the check that follows, never the argument's type: the value's own tag must be
+// in the remainder's set, read through checked views as the true side's is, so a predicate that answers
+// false wrongly, or a value whose tag is outside its declared union however it got there, stops loudly
+// (#w3e1vr8, Lower's, Language's and Adamic's reading, applying rulings.md:128 and :137).
+func (l *lowering) checkedPredicateClosedRemainder(call *ast.CallExpression, index int) *checker.Type {
+	if index < 0 || index >= len(call.Arguments.Nodes) {
+		return nil
+	}
+	argument := ast.SkipParentheses(call.Arguments.Nodes[index])
+	if argument.Kind != ast.KindIdentifier && argument.Kind != ast.KindPropertyAccessExpression && argument.Kind != ast.KindElementAccessExpression && argument.Kind != ast.KindThisKeyword {
+		return nil
+	}
+	incoming := l.checker.GetTypeAtLocation(argument)
+	flow := &ast.FlowNode{Flags: ast.FlowFlagsFalseCondition, Node: call.AsNode(), Antecedent: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
+	remainder := l.concrete(predicateFlowType(l.checker, argument, incoming, incoming, nil, flow))
+	if remainder.Flags()&checker.TypeFlagsNever != 0 {
+		return nil
+	}
+	// Every member of the argument's incoming type is judged, not just the remainder's: a remainder tag
+	// that a member the false side excludes also holds would pass the check for the excluded member.
+	incoming = l.concrete(incoming)
+	members := []*checker.Type{incoming}
+	if incoming.Flags()&checker.TypeFlagsUnion != 0 {
+		members = incoming.Types()
+	}
+	var tags []*checker.Type
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(member) {
+			return nil
+		}
+		property := l.checker.GetPropertyOfType(member, "kind")
+		if property == nil || len(property.Declarations) == 0 {
+			return nil
+		}
+		for _, declaration := range property.Declarations {
+			if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration {
+				return nil
+			}
+		}
+		tag := l.fieldLiteral(member, "kind")
+		if tag == nil {
+			return nil
+		}
+		for _, other := range tags {
+			if !tagLiteralsDistinct(tag, other) {
+				return nil
+			}
+		}
+		tags = append(tags, tag)
+	}
+	if len(tags) == 0 {
+		return nil
+	}
+	return remainder
+}
+
 // predicateFalseRead is whether a read of argument, the reference call narrows, sits where the checker's
 // flow graph carries call's false answer to it, decided by the graph and never by comparing types
 // (Language's condition on #39wtqdj): walking the read's flow chain back, some path meets a condition that
@@ -619,11 +685,30 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		returned = ir.Read{Local: result, Of: ir.Boolean}
 	}
 	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
-	check, err := l.checkedPredicateCheck(call.AsNode(), declaration, arguments[index], source, claim.Type(), returned, directions&predicateFalse != 0, local, func(branch string) string {
+	message := func(branch string) string {
 		return fmt.Sprintf("predicate %s at %s %s branch: source %s, target %s", name, site.Where, branch, sourceName, targetName)
-	})
+	}
+	falseToo := directions&predicateFalse != 0
+	// Over an open tag domain the false side is checked against the argument's own false remainder when
+	// that remainder is closed (checkedPredicateClosedRemainder), so checkedPredicateCheck checks the true
+	// side alone and the false check follows it.
+	var remainder *checker.Type
+	if falseToo && !assertion && claim.Type() != nil && !l.checkedPredicateTagDomain(source, claim.Type()) {
+		if remainder = l.checkedPredicateClosedRemainder(call, index); remainder != nil {
+			falseToo = false
+		}
+	}
+	check, err := l.checkedPredicateCheck(call.AsNode(), declaration, arguments[index], source, claim.Type(), returned, falseToo, local, message)
 	if err != nil {
 		return nil, err
+	}
+	if remainder != nil {
+		setup, membership, err := l.predicateMembership(declaration, arguments[index], source, remainder, local, 0)
+		if err != nil {
+			return nil, err
+		}
+		failure := ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message("false"))}}}}
+		check = append(check, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: returned}, Then: append(append([]ir.Statement{}, setup...), failure)})
 	}
 	body = append(body, check...)
 	body = append(body, ir.Return{Value: returned})
