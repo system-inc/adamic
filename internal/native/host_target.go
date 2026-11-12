@@ -28,6 +28,17 @@ var wasiHostRefusals = map[string]TargetRefused{
 	"adamic_node_platform":         {"process.platform", "WASI has no Node host platform"},
 	"adamic_node_memory_usage":     {"process.memoryUsage", "WASI has no allocator observations"},
 	"adamic_node_set_timeout":      {"setTimeout", "wasi preview1 has no monotonic timer provider"},
+	// A Stats' fields preview 1's filestat holds no answer for (ir.DynamicKeyedStatsFieldNames), each
+	// read through its own function (ir.StatsFieldOperations): wasi-libc's stat zeroes them, or keeps
+	// only the file type in mode, so the read is refused by name rather than answer that (#6xfkdwj).
+	"adamic_fs_file_stats_mode":         {"fs.Stats.mode", "wasi preview1's filestat has no permission bits"},
+	"adamic_fs_file_stats_uid":          {"fs.Stats.uid", "wasi preview1's filestat has no owner"},
+	"adamic_fs_file_stats_gid":          {"fs.Stats.gid", "wasi preview1's filestat has no group"},
+	"adamic_fs_file_stats_rdev":         {"fs.Stats.rdev", "wasi preview1's filestat has no device number"},
+	"adamic_fs_file_stats_blksize":      {"fs.Stats.blksize", "wasi preview1's filestat has no block size"},
+	"adamic_fs_file_stats_blocks":       {"fs.Stats.blocks", "wasi preview1's filestat has no block count"},
+	"adamic_fs_file_stats_birthtime_ms": {"fs.Stats.birthtimeMs", "wasi preview1's filestat has no birth time"},
+	"adamic_fs_file_stats_birthtime":    {"fs.Stats.birthtime", "wasi preview1's filestat has no birth time"},
 }
 
 func validateBuild(source string, options Options) error {

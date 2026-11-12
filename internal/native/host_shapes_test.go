@@ -165,12 +165,12 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "node_fs_directory.c", name: "dirent_shape", verdict: hostShapeHost, stop: "stop_host_dirent.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "error_shape", verdict: hostShapeHost, errorShape: true, stop: "stop_host_fs_error_prototype.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "coded_error_shape", verdict: hostShapeHost, errorShape: true},
-	// A Stats' mtime and atime reach a program as unknown through a run-time key read of the Stats
+	// A Stats' four Dates reach a program as unknown through a run-time key read of the Stats
 	// (union.c's keyed_stats, stats_reads.a), so a Date's own run-time key read is the pin.
 	{file: hostShapeRuntime + "node_fs_file.c", name: "date_shape", verdict: hostShapeHost, stop: "stop_host_stats_date.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", scope: "realpath_system_error", name: "shape", verdict: hostShapeHost, errorShape: true},
-	// A Stats answers a run-time key read as Node's does where native holds the answer (union.c's
-	// keyed_stats, stats_reads.a), known by its shape before the host test, but its in test,
+	// A Stats answers a run-time key read as Node's does, every field Node gives it (union.c's
+	// keyed_stats, stats_reads.a, #6xfkdwj), known by its shape before the host test, but its in test,
 	// hasOwnProperty, Object.keys and String() still stop on it as a host's, so an in test of its isFile
 	// is the pin.
 	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_in_host_method.a"},

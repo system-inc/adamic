@@ -1,0 +1,18 @@
+// A Stats' mode read by a run-time key answers as Node's natively and on the JavaScript backend
+// (#6xfkdwj). On wasm32-wasi it stops by name, in the StatsField form, before any slot is read, since
+// preview 1's filestat has no permission bits (union.c's keyed_stats). Node prints directory true and
+// then mode number.
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? 'null' : 'undefined'} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
+
+const stats = fs.statSync(tmpdir());
+console.log(`directory ${String(stats.isDirectory())}`);
+const mode = propertyOf(stats, 'mode');
+console.log(`mode ${typeof mode}`);

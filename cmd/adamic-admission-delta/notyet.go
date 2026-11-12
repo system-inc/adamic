@@ -27,8 +27,10 @@ type runtimeNotYetStopList struct {
 
 // runtimeNotYetForms is the closed allowlist of run-time NotYet messages, each followed by
 // " (reading 'key')", and the ruling that made each. The words are internal/ir's DynamicKeyedStops, the
-// ten a ruled fixture reaches. The table's two compiler-bug stops never qualify, and nor does a form
-// not here: a new one needs Adamic's ruling and its line here.
+// nine a ruled fixture reaches. The table's two compiler-bug stops never qualify, and nor does a form
+// not here: a new one needs Adamic's ruling and its line here. A Stats field's stop left with #6xfkdwj:
+// both backends answer every field, and only a wasm32-wasi build stops on one, which no fixture of
+// this list runs.
 var runtimeNotYetForms = map[string]string{
 	"a primitive receiver's properties aren't read yet":                     "#zhgxzjg",
 	"a method isn't read by a run-time key yet":                             "#zhgxzjg",
@@ -39,7 +41,6 @@ var runtimeNotYetForms = map[string]string{
 	"an Error property Node sets and the native Error lacks isn't read yet": "#zhgxzjg",
 	"an object literal's getter isn't read by a run-time key yet":           "#zhgxzjg",
 	"a function's properties aren't read by a run-time key yet":             "#zhrjf2t",
-	"this Stats field isn't held natively yet":                              "#zhrjf2t",
 }
 
 // runtimeNotYetMessage is a stop's whole stderr: one line, its form, and the key it was reading.

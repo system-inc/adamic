@@ -41,8 +41,9 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// carries as a value, and a record may hold the name as its own where Node's setter took it.
 	{"Proto", "__proto__ isn't read by a run-time key yet"},
 	{"ErrorProperty", "an Error property Node sets and the native Error lacks isn't read yet"},
-	// A Stats answers what native's shape holds (#zhrjf2t), and a field Node gives it beyond those
-	// (DynamicKeyedStatsFieldNames) stops in narrower words than a host object's, until #6xfkdwj.
+	// A Stats answers every field Node gives it (#zhrjf2t, #6xfkdwj), but on wasm32-wasi, whose
+	// filestat holds no answer for DynamicKeyedStatsFieldNames, natively one of those stops in
+	// narrower words than a host object's.
 	{"StatsField", "this Stats field isn't held natively yet"},
 	{"ObjectLiteralGetter", "an object literal's getter isn't read by a run-time key yet"},
 	{"SetterOnly", "a setter without a getter isn't read by a run-time key yet"},
@@ -159,12 +160,12 @@ var DynamicKeyedRegExpStringIteratorNodeNames = DynamicKeyedRegExpStringIterator
 // function a read hands out: Stats.prototype's own constructor (Stats) and _checkModeProperty, then
 // StatsBase.prototype's seven is methods, whose own constructor Stats.prototype's shadows. Above
 // StatsBase.prototype is Object.prototype (DynamicKeyedPrototypeNames). Stats.prototype's other names
-// are its four date accessors, which DynamicKeyedStatsFieldNames and native's shape share between
-// them. A run-time key read of a Stats hands one out as Node does (#zhrjf2t, the second host shape
-// it lifts): on the JavaScript backend Node's own, natively one immortal closure for each name with
-// this length (union.c, from dynamic_keyed_names.h), whose call stops loudly, naming the prototype
-// Node's function lives on. TestDynamicKeyedStatsNamesAreNodes and TestDynamicKeyedStatsLengthsAreNodes
-// hold this table to the pinned Node's both ways.
+// are its four date accessors, which native's shape holds as fields. A run-time key read of a Stats
+// hands one out as Node does (#zhrjf2t, the second host shape it lifts): on the JavaScript backend
+// Node's own, natively one immortal closure for each name with this length (union.c, from
+// dynamic_keyed_names.h), whose call stops loudly, naming the prototype Node's function lives on.
+// TestDynamicKeyedStatsNamesAreNodes and TestDynamicKeyedStatsLengthsAreNodes hold this table to the
+// pinned Node's both ways.
 var DynamicKeyedStatsNames = DynamicKeyedFunctions{
 	{"constructor", 14}, {"_checkModeProperty", 1}, {"isDirectory", 0}, {"isFile", 0}, {"isBlockDevice", 0},
 	{"isCharacterDevice", 0}, {"isSymbolicLink", 0}, {"isFIFO", 0}, {"isSocket", 0},
@@ -177,15 +178,23 @@ var DynamicKeyedStatsNames = DynamicKeyedFunctions{
 // name from it.
 var DynamicKeyedStatsNodeNames = []string{"Stats", "", "", "", "", "", "", "", ""}
 
-// DynamicKeyedStatsFieldNames are the fields Node gives an fs.Stats that native's Stats doesn't hold:
-// its own numbers, then Stats.prototype's date accessors, less the four node_fs_file.c's stat shape
-// holds (size, mtimeMs, mtime and atime). A run-time key read of one stops on both backends in the
-// StatsField form rather than answer a value native would have to make up (#zhrjf2t; #6xfkdwj fills
-// them).
-// TestDynamicKeyedStatsFieldNamesAreNodes holds this list to the pinned Node's, in order.
-var DynamicKeyedStatsFieldNames = []string{
-	"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "blocks", "atimeMs", "ctimeMs",
-	"birthtimeMs", "ctime", "birthtime",
+// DynamicKeyedStatsFieldNames are the fields of an fs.Stats wasm32-wasi has no answer for: preview
+// 1's filestat holds a device, an inode, a file type, a link count, a size and three times, and
+// wasi-libc's stat zeroes the rest or keeps the type alone in the mode. node_fs_file.c's stat shape
+// holds every field Node gives a Stats (#6xfkdwj), and natively on wasm32-wasi a run-time key read
+// of one of these stops in the StatsField form, by its name, rather than answer a value made up
+// there; on every other target, and on the JavaScript backend, Node's own Stats, it answers. A
+// static read of one goes through its own host function (StatsFieldOperations), which the wasm32
+// build refuses by name. TestDynamicKeyedStatsFieldNamesAreNodes holds each to one of the pinned
+// Node's fields, in Node's order.
+var DynamicKeyedStatsFieldNames = []string{"mode", "uid", "gid", "rdev", "blksize", "blocks", "birthtimeMs", "birthtime"}
+
+// StatsFieldOperations are the NodeFSFile operations a static read of each of
+// DynamicKeyedStatsFieldNames lowers to: natively adamic_fs_file_<operation>, which reads the slot,
+// and which wasm32-wasi's build refuses by that name (internal/native's wasiHostRefusals).
+var StatsFieldOperations = map[string]string{
+	"mode": "stats_mode", "uid": "stats_uid", "gid": "stats_gid", "rdev": "stats_rdev", "blksize": "stats_blksize",
+	"blocks": "stats_blocks", "birthtimeMs": "stats_birthtime_ms", "birthtime": "stats_birthtime",
 }
 
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't

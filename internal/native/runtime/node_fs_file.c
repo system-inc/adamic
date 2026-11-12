@@ -1,7 +1,10 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
-#if defined(__linux__) && !defined(_DEFAULT_SOURCE)
-#define _DEFAULT_SOURCE
+// glibc declares statx and its struct in <sys/stat.h> under _GNU_SOURCE alone, the narrowest macro
+// that does (measured on glibc 2.39: _DEFAULT_SOURCE, _XOPEN_SOURCE and _ATFILE_SOURCE don't), so
+// file_status_read never takes <linux/stat.h>, whose struct statx collides with glibc's.
+#if defined(__linux__) && !defined(_GNU_SOURCE)
+#define _GNU_SOURCE
 #endif
 #define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
@@ -17,6 +20,9 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#if defined(__linux__)
+#include <sys/sysmacros.h>
+#endif
 #include "node_fs_wasi.h"
 
 static const char *const error_fields[] = {"name", "message", "code"};
@@ -534,26 +540,107 @@ void adamic_fs_file_realpath_walk_error(const adamic_string *path, int error, co
     realpath_system_error(path, name, error, operation);
 }
 
-static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
-static const bool stat_refs[] = {false, false, true, false, true};
-static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_number, adamic_field_reference};
-static const adamic_shape stat_shape = {5, stat_fields, stat_refs, &adamic_host_methods, stat_kinds};
+// file_status is one file's status as libuv's uv_stat_t holds it, the one record statSync's Stats and
+// watchFile's snapshots (node_watch_file_impl.h) are made from, so the two read every field alike.
+typedef struct file_status {
+    uint64_t dev, mode, nlink, uid, gid, rdev, blksize, ino, size, blocks, flags, generation;
+    struct timespec atime, mtime, ctime, birthtime;
+} file_status;
 
-static adamic_object *file_stat_value(const struct stat *information) {
-#ifdef __APPLE__
-    double atime = (double)information->st_atimespec.tv_sec * 1000 + (double)information->st_atimespec.tv_nsec / 1000000;
-    double mtime = (double)information->st_mtimespec.tv_sec * 1000 + (double)information->st_mtimespec.tv_nsec / 1000000;
-#else
-    double atime = (double)information->st_atim.tv_sec * 1000 + (double)information->st_atim.tv_nsec / 1000000;
-    double mtime = (double)information->st_mtim.tv_sec * 1000 + (double)information->st_mtim.tv_nsec / 1000000;
+// file_status_read is libuv's uv__fs_statx and its stat fallback, so a status is Node's: 0, or the
+// errno stat or statx failed with. On Linux statx asks for the basic fields and the birth time, and
+// stx_btime is taken whether or not its mask bit is set, 0 where the filesystem keeps none, as libuv
+// copies it. Where statx is refused (a seccomp filter's EPERM, a DVS filesystem's EOPNOTSUPP, EINVAL,
+// or ENOSYS, which glibc 2.28 and later answer for itself on a kernel without statx), it falls back
+// to stat with the birth time taken from ctime, as libuv's uv__to_stat does. macOS keeps a birth time
+// in stat's st_birthtimespec. wasm32-wasi's filestat holds none, nor permission bits, owners, a device
+// number or block counts: wasi-libc's stat zeroes those, and file_stat_value never hands them out.
+static int file_status_read(const char *name, file_status *status) {
+    memset(status, 0, sizeof *status);
+#if defined(__linux__)
+    struct statx extended;
+    if (statx(AT_FDCWD, name, 0, STATX_BASIC_STATS | STATX_BTIME, &extended) == 0) {
+        status->dev = makedev(extended.stx_dev_major, extended.stx_dev_minor);
+        status->mode = extended.stx_mode; status->nlink = extended.stx_nlink;
+        status->uid = extended.stx_uid; status->gid = extended.stx_gid;
+        status->rdev = makedev(extended.stx_rdev_major, extended.stx_rdev_minor);
+        status->blksize = extended.stx_blksize; status->ino = extended.stx_ino;
+        status->size = extended.stx_size; status->blocks = extended.stx_blocks;
+        status->atime = (struct timespec){extended.stx_atime.tv_sec, extended.stx_atime.tv_nsec};
+        status->mtime = (struct timespec){extended.stx_mtime.tv_sec, extended.stx_mtime.tv_nsec};
+        status->ctime = (struct timespec){extended.stx_ctime.tv_sec, extended.stx_ctime.tv_nsec};
+        status->birthtime = (struct timespec){extended.stx_btime.tv_sec, extended.stx_btime.tv_nsec};
+        return 0;
+    }
+    if (errno != ENOSYS && errno != EINVAL && errno != EPERM && errno != EOPNOTSUPP) { return errno; }
 #endif
+    struct stat information;
+    if (stat(name, &information) != 0) { return errno; }
+    status->dev = (uint64_t)information.st_dev; status->mode = (uint64_t)information.st_mode;
+    status->nlink = (uint64_t)information.st_nlink; status->uid = (uint64_t)information.st_uid;
+    status->gid = (uint64_t)information.st_gid; status->rdev = (uint64_t)information.st_rdev;
+    status->blksize = (uint64_t)information.st_blksize; status->ino = (uint64_t)information.st_ino;
+    status->size = (uint64_t)information.st_size; status->blocks = (uint64_t)information.st_blocks;
+#ifdef __APPLE__
+    status->atime = information.st_atimespec; status->mtime = information.st_mtimespec;
+    status->ctime = information.st_ctimespec; status->birthtime = information.st_birthtimespec;
+    status->flags = information.st_flags; status->generation = information.st_gen;
+#else
+    status->atime = information.st_atim; status->mtime = information.st_mtim;
+    status->ctime = information.st_ctim;
+#ifndef ADAMIC_TARGET_WASI
+    status->birthtime = information.st_ctim;
+#endif
+#endif
+    return 0;
+}
+
+// A Stats holds Node's fourteen own numbers in Node's order, each a double as Node's Float64Array
+// holds it, then the four Dates Stats.prototype's accessors give, each made once, so a read gives the
+// same object every time, as Node's cached accessor does (#6xfkdwj).
+static const char *const stat_fields[] = {"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "size", "blocks", "atimeMs", "mtimeMs", "ctimeMs", "birthtimeMs", "atime", "mtime", "ctime", "birthtime"};
+static const bool stat_refs[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
+static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape stat_shape = {18, stat_fields, stat_refs, &adamic_host_methods, stat_kinds};
+
+static double file_time(struct timespec time) {
+    return (double)time.tv_sec * 1000 + (double)time.tv_nsec / 1000000;
+}
+
+static adamic_object *file_stat_value(const file_status *status) {
+    double atime = file_time(status->atime), mtime = file_time(status->mtime), ctime = file_time(status->ctime);
     adamic_keyed_stats_shape_publish(&stat_shape);
     adamic_object *result = adamic_object_new(&stat_shape);
-    result->slots[0].number = (double)information->st_size;
-    result->slots[1].number = mtime;
-    result->slots[2].reference = adamic_fs_file_date_new(floor(mtime + 0.5));
-    result->slots[3].number = (double)information->st_mode;
-    result->slots[4].reference = adamic_fs_file_date_new(floor(atime + 0.5));
+    result->slots[0].number = (double)status->dev;
+    result->slots[1].number = (double)status->mode;
+    result->slots[2].number = (double)status->nlink;
+    result->slots[7].number = (double)status->ino;
+    result->slots[8].number = (double)status->size;
+    result->slots[10].number = atime;
+    result->slots[11].number = mtime;
+    result->slots[12].number = ctime;
+    result->slots[14].reference = adamic_fs_file_date_new(floor(atime + 0.5));
+    result->slots[15].reference = adamic_fs_file_date_new(floor(mtime + 0.5));
+    result->slots[16].reference = adamic_fs_file_date_new(floor(ctime + 0.5));
+#ifdef ADAMIC_TARGET_WASI
+    // Decided by name, never from what wasi-libc put in the struct: these are refused statically
+    // (host_target.go) and stop by a run-time key (union.c), so no program reads them, and a slip
+    // would read NaN, never a zero that looks real. mode keeps the file type, which the is
+    // predicates read (stat_mode) and nothing else does.
+    for (size_t index = 3; index <= 6; index++) { result->slots[index].number = NAN; }
+    result->slots[9].number = NAN;
+    result->slots[13].number = NAN;
+    result->slots[17].reference = adamic_fs_file_date_new(NAN);
+#else
+    double birthtime = file_time(status->birthtime);
+    result->slots[3].number = (double)status->uid;
+    result->slots[4].number = (double)status->gid;
+    result->slots[5].number = (double)status->rdev;
+    result->slots[6].number = (double)status->blksize;
+    result->slots[9].number = (double)status->blocks;
+    result->slots[13].number = birthtime;
+    result->slots[17].reference = adamic_fs_file_date_new(floor(birthtime + 0.5));
+#endif
     return result;
 }
 
@@ -567,22 +654,40 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
         free(name); return NULL;
     }
 #endif
-    struct stat information;
-    if (stat(name, &information) != 0) {
-        int error = errno;
+    file_status status;
+    int error = file_status_read(name, &status);
+    if (error != 0) {
         if (throw_if_missing || (error != ENOENT && error != ENOTDIR)) { system_error(error, "stat", name); }
         free(name);
         return NULL;
     }
     free(name);
-    return file_stat_value(&information);
+    return file_stat_value(&status);
+}
+
+// The fields a static read reaches through a function of its own (ir.StatsFieldOperations), so a
+// wasm32-wasi build refuses each by name (host_target.go's wasiHostRefusals) before it's compiled.
+// Natively each reads its slot, birthtime's Date retained, as a field read's result is owned.
+static double stats_number(const adamic_object *stats, const char *name, adamic_slot_cache *cache) {
+    return adamic_object_field(stats, name, cache)->number;
+}
+double adamic_fs_file_stats_mode(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "mode", &cache); }
+double adamic_fs_file_stats_uid(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "uid", &cache); }
+double adamic_fs_file_stats_gid(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "gid", &cache); }
+double adamic_fs_file_stats_rdev(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "rdev", &cache); }
+double adamic_fs_file_stats_blksize(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "blksize", &cache); }
+double adamic_fs_file_stats_blocks(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "blocks", &cache); }
+double adamic_fs_file_stats_birthtime_ms(const adamic_object *stats) { static adamic_slot_cache cache; return stats_number(stats, "birthtimeMs", &cache); }
+adamic_object *adamic_fs_file_stats_birthtime(const adamic_object *stats) {
+    static adamic_slot_cache cache;
+    return adamic_retain(adamic_object_field(stats, "birthtime", &cache)->reference);
 }
 
 bool adamic_fs_file_is_stats(const adamic_object *information) { return information->shape == &stat_shape; }
 
 static mode_t stat_mode(const adamic_object *information) {
     static adamic_slot_cache cache;
-    return (mode_t)adamic_object_field(information, "_fsFileMode", &cache)->number;
+    return (mode_t)adamic_object_field(information, "mode", &cache)->number;
 }
 bool adamic_fs_file_stat_is(const adamic_object *information, const char *method) {
     mode_t mode = stat_mode(information);
