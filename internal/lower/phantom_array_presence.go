@@ -24,12 +24,15 @@ import (
 //     array's own members (by the checker's symbol, never by name) and takes a property key, a string or
 //     symbol argument. Object brands refuse only Object.prototype.hasOwnProperty and
 //     propertyIsEnumerable, by symbol; their real methods remain real operations.
+//     Object prototype methods use the same literal-key rule as Object.hasOwn.
 //     Arrays retain the broader fail-closed method rule (#gb0fqaa).
 //  3. `Object.keys`, `values`, `entries`, `getOwnPropertyNames`, and `Object.assign`'s every argument.
 //  4. `JSON.stringify(x)`.
 //  5. An object spread `{ ...x }`. An array spread `[...x]` iterates elements, which observes nothing.
 //  6. A write to a brand member: an element write whose key is a literal naming one, or isn't a literal
 //     and may name one, and a property write naming one. Numeric array writes remain element writes.
+//  7. An object brand's phantom field read or binding. The base has no stored field, so
+//     these otherwise reach a checked read that stops at run time. Array reads keep their existing handling.
 //
 // A type parameter is judged by its constraint (phantomBrandIn), so b09's lie reached generically is refused
 // here too (Language's l13 and l14). Erased observations through `T extends object`, unknown or `object` see
@@ -44,7 +47,45 @@ func (l *lowering) phantomPresenceRefusal(node *ast.Node) error {
 			return l.phantomPresenceKeyed(node, binary.Right, binary.Left, "an `in` test")
 		}
 		if ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
-			return l.phantomPresenceWrite(node, ast.SkipParentheses(binary.Left))
+			target := ast.SkipParentheses(binary.Left)
+			if binary.OperatorToken.Kind == ast.KindEqualsToken && target.Kind == ast.KindObjectLiteralExpression {
+				for _, property := range target.AsObjectLiteralExpression().Properties.Nodes {
+					if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+						continue
+					}
+					name := property.Name()
+					if name != nil && (name.Kind == ast.KindIdentifier || name.Kind == ast.KindStringLiteral || name.Kind == ast.KindNumericLiteral) {
+						if err := l.phantomObjectRead(property, binary.Right, l.checker.GetTypeAtLocation(binary.Right), name.Text()); err != nil {
+							return err
+						}
+					}
+				}
+			}
+			return l.phantomPresenceWrite(node, target)
+		}
+	case ast.KindPropertyAccessExpression:
+		if l.isExpression(node) && !ast.IsAssignmentTarget(node) {
+			access := node.AsPropertyAccessExpression()
+			return l.phantomObjectRead(node, access.Expression, l.checker.GetTypeAtLocation(access.Expression), access.Name().Text())
+		}
+	case ast.KindBindingElement:
+		if node.Parent != nil && node.Parent.Kind == ast.KindObjectBindingPattern && node.AsBindingElement().DotDotDotToken == nil {
+			name := node.AsBindingElement().PropertyName
+			if name == nil {
+				name = node.Name()
+			}
+			declaration := node.Parent.Parent
+			// A signature's parameter pattern reads nothing at run time.
+			if declaration != nil && declaration.Kind == ast.KindParameter && declaration.Parent.Body() == nil {
+				return nil
+			}
+			var origin *ast.Node
+			if declaration != nil && declaration.Kind == ast.KindVariableDeclaration {
+				origin = declaration.Initializer()
+			}
+			if name != nil && (name.Kind == ast.KindIdentifier || name.Kind == ast.KindStringLiteral || name.Kind == ast.KindNumericLiteral) {
+				return l.phantomObjectRead(node, origin, l.checker.GetTypeAtLocation(node.Parent), name.Text())
+			}
 		}
 	case ast.KindSpreadAssignment:
 		return l.phantomPresenceWhole(node, node.AsSpreadAssignment().Expression, "an object spread")
@@ -73,9 +114,9 @@ func (l *lowering) phantomPresenceRefusal(node *ast.Node) error {
 		case l.objectPrototypeKeyMember(callee) && len(arguments) > 0:
 			// Object keys include numbers. The array road above deliberately
 			// keeps its element-key exception, so select only object brands here.
-			brand, members := l.phantomBrandMatching(l.checker.GetTypeAtLocation(access.Expression), func(base *checker.Type, members []string) bool { return !l.phantomArrayBase(base, members) })
+			brand, _ := l.phantomBrandMatching(l.checker.GetTypeAtLocation(access.Expression), func(base *checker.Type, members []string) bool { return !l.phantomArrayBase(base, members) })
 			if brand != nil {
-				return l.phantomPresenceRefused(node, brand, members, name)
+				return l.phantomPresenceKeyed(node, access.Expression, arguments[0], name)
 			}
 		}
 	}
@@ -157,6 +198,27 @@ func (l *lowering) phantomPresenceKeyed(node, value, key *ast.Node, road string)
 		members = []string{key.Text()}
 	}
 	return l.phantomPresenceRefused(node, brand, members, road)
+}
+
+// Only object brands take the read road. Their checked field reads require a
+// stored member that a phantom extension or supertype deliberately does not hold.
+// A const literal explicitly carrying the field already reads correctly and keeps doing so.
+func (l *lowering) phantomObjectRead(node, origin *ast.Node, receiver *checker.Type, field string) error {
+	brand, _ := l.phantomBrandMatching(receiver, func(base *checker.Type, members []string) bool {
+		return !l.phantomArrayBase(base, members) && slices.Contains(members, field)
+	})
+	if brand == nil {
+		return nil
+	}
+	// An optional read already maps an absent member to undefined. A literal
+	// explicitly carrying the field already has the storage its read requires.
+	if member := l.checker.GetPropertyOfType(receiver, field); member != nil && member.Flags&ast.SymbolFlagsOptional != 0 {
+		return nil
+	}
+	if origin != nil && l.literalReceiverGivesField(origin, field) {
+		return nil
+	}
+	return l.phantomPresenceRefused(node, brand, []string{field}, "a read")
 }
 
 // phantomPresenceWhole refuses a road that observes every own member of value at once (3 to 5).
