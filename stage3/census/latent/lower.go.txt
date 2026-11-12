@@ -73,6 +73,7 @@ func latentRecord(err error) {
 const LatentMeasurementLabel = "measured on a checker-rejected program"
 
 type LatentUnit struct {
+ PassLedger []latent.PassEntry `json:"pass_ledger,omitempty"`
 	Measurement        string   `json:"measurement"`
 	Where              string   `json:"where"`
 	Kind               string   `json:"kind"`
@@ -309,6 +310,7 @@ func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUni
                 unit.InstantiatedBy = witnesses[unit.Where]
             }
         }
+        latentAttachPassLedger(&record)
         emit(record)
     }
     return relations

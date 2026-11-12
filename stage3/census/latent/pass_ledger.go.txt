@@ -1,0 +1,60 @@
+// Compiled only in the measurement overlay. These are observations, not pass calls.
+package lower
+
+import "github.com/system-inc/adamic/stage3/census/latent"
+
+// The one ordered step list. Conditional blocks remain required omissions:
+// independent body lowering cannot establish their whole-program applicability.
+var latentPostLoweringSteps = []latent.PassStep{
+	{Name: "checkOverloadResults"},
+	{Name: "forwarderValues", Production: "lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)"},
+	{Name: "finishClassCalls"},
+	{Name: "finishAccessors"},
+	{Name: "finishToPrimitive"},
+	{Name: "checkIterableViews"},
+	{Name: "exceptions"},
+	{Name: "checkLibrarySpreads"},
+	{Name: "checkAccessorSpreads"},
+	{Name: "checkRecordGuardedReads"},
+	{Name: "checkDynamicKeyedGetters"},
+	{Name: "checkGeneratorRoads"},
+	{Name: "flow.NormalizeAsync"},
+	{Name: "asyncEntrySource", Production: "if lowering.result.AsyncEntry > 0 [calls:modulePath,len]"},
+	{Name: "findCycles", WholeProgram: true},
+	{Name: "checkBoundArguments"},
+	{Name: "checkViewOptionalWrites"},
+	{Name: "checkViewCopies"},
+	{Name: "checkViewWidenedReads"},
+	{Name: "checkHostMemberWrites"},
+	{Name: "asyncPayloadFailures", Production: "if len(lowering.asyncPayloadFailures) > 0 [calls:]"},
+	{Name: "checkPromiseConsumption"},
+	{Name: "checkViewLogicalWrites"},
+	{Name: "programRegion", WholeProgram: true, Production: "if discovery || plan != nil [calls:result.HasAsync,program.Where,entry.AsNode]"},
+	{Name: "applyProgramMetadata", WholeProgram: true, Production: "if plan != nil [calls:applyProgramMetadata]"},
+	{Name: "ownershipQuery", WholeProgram: true, Production: "if len(ownershipQuery) > 0 && ownershipQuery[0] && lowering.hasMovedParallelMap [calls:fresh.QueryOwnershipTransfers,moveRefused,transfer.Answer.Verdict.String,fmt.Sprint]"},
+	{Name: "readiness"},
+	{Name: "borrow"},
+	{Name: "counters"},
+	{Name: "voidDiscards"},
+	{Name: "checkInspectorDoomedContracts"},
+}
+
+// Finalized with the unit status and instantiation metadata, once all modes have
+// returned their records. Scan findings alone are not body-lowering stops.
+func latentAttachPassLedger(record *LatentFile) {
+	for i := range record.Units {
+		unit := &record.Units[i]
+		switch unit.Status {
+		case "attempted", "panic", "speculative":
+		default:
+			continue // A deferred or checker-excluded body was not attempted independently.
+		}
+		stopped := unit.Status == "panic"
+		for _, finding := range record.Findings {
+			if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration") {
+				stopped = true
+			}
+		}
+		unit.PassLedger = latent.OmittedPassLedger(latentPostLoweringSteps, stopped)
+	}
+}

@@ -119,10 +119,10 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
-        self.assertIn('Lowering, main: 1/4; root-order artifacts: 0.', text)
+        self.assertIn('Body lowering, main: 1/4; root-order artifacts: 0.', text)
         self.assertIn('| Root | Stop | Reason | Node result | Classification | Program result from entry census |', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
-        self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
+        self.assertLess(text.index('### Unowned'), text.index('Latent body lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
         self.assertEqual(result['trees']['area']['latent_lowering']['totals']['NotYet'], 10)
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
@@ -140,7 +140,7 @@ class ReportTests(unittest.TestCase):
                                                    'overflow_marked': False,
                                                    'why': 'assignable cache 1,000,001 pairs, past 1,000,000'})
         lines = (self.run / 'report.md').read_text().splitlines()
-        heading = lines.index('tsc entry lowering, main: measured on a checker-clean entry-root program.')
+        heading = lines.index('tsc entry body lowering, main: measured on a checker-clean entry-root program.')
         self.assertEqual(lines[heading - 1],
                          'Relation budget: red; assignable 1,000,001 of 1,000,000 pairs; assignable cache 1,000,001 pairs, past 1,000,000.')
 
@@ -496,7 +496,8 @@ class RootOrderTests(unittest.TestCase):
         self.assertEqual(result['totals']['lowering'], 2)
         artifact = {'root': 'src/compiler/later.ts', 'where': 'src/compiler/good.ts:7:9',
                     'reason': self.reason, 'node': self.node,
-                    'entry_program_attempted': True, 'entry_unattempted_sources': [], 'entry_next_stop': None}
+                    'entry_program_attempted': True, 'entry_unattempted_sources': [], 'entry_next_stop': None,
+                    'entry_whole_program_passes_measured': False}
         self.assertEqual(result['root_order_artifacts'], [artifact])
         self.assertEqual(result['readiness_node_checks'], [artifact])
         text = (self.run / 'report.md').read_text()
@@ -557,7 +558,7 @@ class RootOrderTests(unittest.TestCase):
         text = (self.run / 'report.md').read_text()
         for label in ('main', 'area'):
             self.assertEqual(len(result['trees'][label]['root_order_artifacts']), 1)
-            self.assertIn(f'Lowering, {label}: 2/4; root-order artifacts: 1.', text)
+            self.assertIn(f'Body lowering, {label}: 2/4; root-order artifacts: 1.', text)
         self.assertEqual(text.count('Node throws here as well; exit 1; ReferenceError:'), 2)
         self.assertIn('Node throws here as well; exit 1; ReferenceError:', (self.run / 'README.md').read_text())
         disk = json.loads((self.run / 'report.json').read_text())
@@ -758,3 +759,48 @@ class RelationBudgetTests(unittest.TestCase):
     def test_blocked_entry_is_unknown(self):
         from report import relation_budget
         self.assertEqual(relation_budget({'lowering_census': None})['status'], 'unknown')
+
+
+class PassLedgerReportTestsPb47(unittest.TestCase):
+    def ledger(self, status='not_run_scoped'):
+        from pass_ledger import required_steps
+        return [{'name': name, 'status': status} for name in required_steps()]
+
+    def observation(self):
+        from report import MEASUREMENT, lowering_summary
+        units = [dict(where='input.ts:1:1', status='attempted', pass_ledger=self.ledger()),
+                 dict(where='input.ts:2:1', status='attempted', pass_ledger=self.ledger('not_reached_lowering_stop')),
+                 dict(where='input.ts:3:1', status='attempted'),
+                 dict(where='input.ts:4:1', status='deferred_generic_instantiation', instantiated=True),
+                 dict(where='input.ts:5:1', status='skipped_checker_body')]
+        rows = [dict(status='measurement', measurement=MEASUREMENT, checker_rejected=False),
+                dict(file='input.ts', measurement=MEASUREMENT, units=units, findings=[])]
+        return lowering_summary(rows, {str(Path('input.ts').resolve())}, MEASUREMENT)
+
+    def test_body_only_pass_ledger_report_line_pb47(self):
+        from report import latent_table, entry_table
+        summary = self.observation()
+        line = '2 units lower without a body stop; 0 have their whole-program passes measured'
+        self.assertIn(line, latent_table('main', summary))
+        self.assertIn(line, entry_table('main', {'lowering_census':summary}))
+        self.assertEqual(summary['totals']['NotYet'], 0)
+
+    def test_omission_as_execution_report_mutant_is_red_pb47(self):
+        from report import latent_table
+        # A reporter that treats unmeasured passes as execution changes the new
+        # line even though the old finding totals remain zero.
+        with patch('pass_ledger.whole_passes_measured', return_value=True):
+            mutant = self.observation()
+        self.assertNotIn('2 units lower without a body stop; 0 have their whole-program passes measured',
+                         latent_table('main', mutant))
+        self.assertEqual(mutant['whole_program_passes_measured_units'], 2)
+
+    def test_whole_coverage_requires_complete_executed_vector_pb47(self):
+        from pass_ledger import whole_passes_measured
+        unit = dict(status='attempted', pass_ledger=self.ledger('executed'))
+        self.assertTrue(whole_passes_measured(unit))
+        for ledger in (None, [], unit['pass_ledger'][:-1], self.ledger(),
+                       [dict(unit['pass_ledger'][0])]*len(unit['pass_ledger'])):
+            self.assertFalse(whole_passes_measured(dict(status='attempted', pass_ledger=ledger)))
+        self.assertFalse(whole_passes_measured(dict(status='deferred_generic_instantiation',
+                                                  pass_ledger=self.ledger('executed'))))
