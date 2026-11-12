@@ -1,0 +1,21 @@
+// Named errors inherit their name until an own write makes it enumerable (#q7dr4kb).
+// The union requests the runtime reference provider for ordinary objects too.
+interface JSONObject { readonly marker: number; }
+function show(error: object | JSONObject): void {
+	console.log(JSON.stringify(error) ?? '<undefined>');
+}
+show({ marker: 1 });
+show(new TypeError('x'));
+show(new RangeError('x'));
+show(new Error('x'));
+function text(value: unknown): string { return String(value); }
+const record: Record<string, number> = {};
+record['toString'] = 3;
+try {
+	console.log(text(record));
+} catch (error) {
+	if (error instanceof Error) show(error);
+}
+const changed = new TypeError('x');
+changed.name = 'Changed';
+show(changed);
