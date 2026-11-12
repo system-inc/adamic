@@ -5,7 +5,7 @@ Base/main: `d57d3041901299743362fc8c52ac06dbb2db1d0e`.
 
 ## Decisive results
 
-HEAD oracle pins pass. Base and the specified mutant fail all four accessor fixture subtests with AddressSanitizer heap-buffer-overflow, READ of size 8 immediately after a 48-byte allocation. No JSON pin fails. The exact native selector matches zero tests on HEAD, base, and mutant; exit 0 does not establish native pin coverage. The 14 JSON wasm backend `/3` subtests skip because ADAMIC_ORACLE_WASI is unset.
+Overall: the requested proof is not fully green. The full lower suite fails one stored-C agreement test; IR guards pass and the complete admission delta passes. HEAD oracle pins pass. Base and the specified mutant fail all four accessor fixture subtests with AddressSanitizer heap-buffer-overflow, READ of size 8 immediately after a 48-byte allocation. No JSON pin fails. The exact native selector matches zero tests on HEAD, base, and mutant; exit 0 does not establish native pin coverage. The 14 JSON wasm backend `/3` subtests skip because ADAMIC_ORACLE_WASI is unset.
 
 ## Setup and step 1
 
@@ -469,6 +469,139 @@ Native: exit 0, no tests to run. Every red leaf is one of the four accessor fixt
 
 Restored class_accessors.go from original HEAD; `git diff --exit-code` exit 0, empty output.
 
-## Remaining work
+## Step 4 — full lower suite
 
-Steps 4 (full lower suite), 4b (IR guards), and 6 (admission delta and any isolated timeout reruns) are pending. This is the first report after steps 1–3; it will be updated with the remaining evidence.
+```sh
+go test ./internal/lower -count=1 -timeout 90m > /tmp/lower.log 2>&1
+```
+
+Exit **1**; wall time **617 seconds** (10m17s); Go test time 604.133s. One failing test. No environment failures.
+
+| Failing test | First error line | Environment? |
+|---|---|---|
+| TestNativeAgreementLeanBuildIsBuildsBytes | agree_test.go:143: ObjectDestructuringAssignmentGetter: the lower agreement C holds 26427 bytes of C, and this test lowers 26427 other bytes from its source | No: stored C differs from current lowering, despite equal lengths |
+
+The preceding agree_test.go:126/:163/:192 messages are build and successful case logs, not error lines. Full lower output:
+
+```text
+--- FAIL: TestNativeAgreementLeanBuildIsBuildsBytes (18.31s)
+    agree_test.go:126: build lower_agreement_C_v1 ba9001407e78 hit 0.01
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.02
+    agree_test.go:192: ArrayNarrowingBooleanCallback, features []: 643984 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.03
+    agree_test.go:192: ArrayNarrowingFindLastIndex, features []: 644384 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.10
+    agree_test.go:192: ArrayNarrowingOptionalNumber, features []: 643936 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.02
+    agree_test.go:192: ArrayNarrowingOptionalString, features []: 644128 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.06
+    agree_test.go:192: ArrayNarrowingPreservedUnion, features []: 644664 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.07
+    agree_test.go:192: ArrayNarrowingSomeNegated, features []: 644664 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.02
+    agree_test.go:192: FX5MixedLiteral, features []: 643896 bytes, the same six ways
+    agree_test.go:143: ObjectDestructuringAssignmentGetter: the lower agreement C holds 26427 bytes of C, and this test lowers 26427 other bytes from its source
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.04
+    agree_test.go:192: ObjectDestructuringAssignmentSwap, features []: 644776 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.10
+    agree_test.go:192: ObjectDestructuringAssignmentWiden, features []: 650136 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.06
+    agree_test.go:192: PlantedWrongExit, features []: 643664 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.05
+    agree_test.go:192: PlantedWrongOutput, features []: 643664 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.07
+    agree_test.go:192: RegExpEscapedSlashSource, features []: 645472 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.07
+    agree_test.go:192: RegExpSlashClassSource, features []: 645560 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.02
+    agree_test.go:192: RegExpUnicodeClassSource, features []: 645472 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.08
+    agree_test.go:192: TypedArrayFromArray, features []: 643704 bytes, the same six ways
+    agree_test.go:163: build native-runtime a9be2110e4cb hit 0.05
+    agree_test.go:192: TypedArrayFromEmptyArray, features []: 643608 bytes, the same six ways
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	604.133s
+FAIL
+```
+
+## Step 4b — IR source and field guards
+
+```sh
+go test ./internal/ir -count=1 -timeout 30m
+```
+
+Exit **0**; wall **56 seconds**; Go test time 41.675s. No failing tests. This full suite includes TestCallTargetReadersLower and the IR field guards. Output:
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	41.675s
+```
+
+## Supplemental native coverage for the empty selector
+
+The requested TestNullableSlot|TestJSONObjectsRuntime selector matches no current test names. To exercise the existing tests in the relevant source files, additionally ran on HEAD:
+
+```sh
+go test ./internal/native -run 'TestAbsentNullableFieldMetadata|TestJSONObjectsNullPointer' -count=1 -v
+```
+
+Exit **0**, wall **3 seconds**, Go test 1.414s. PASS: TestJSONObjectsNullPointers, TestJSONObjectsNullPointerMutants, TestAbsentNullableFieldMetadata, and its null, undefined, and uninitialized_union subtests. No skips or failures. This supplements, and does not relabel, the requested selector's zero-test result.
+
+## Step 6 — complete admission delta
+
+Generated the manifest with the repository's own cloud/admission-corpus/manifest.py at the requested HEAD (generator blob 09d061a03b1e016387e975d25ee0cd5b75ac6c1f). The report-only branch does not enter this comparison: both --base and --head are explicit original SHAs.
+
+```sh
+python3 cloud/admission-corpus/manifest.py --sha 8c35eec869fcd0d90f03a14361137b40a57b50d4 --repository /workspace/adamic > /tmp/adamic-proof-4gp/manifest.json
+go run ./cmd/adamic-admission-delta --base d57d3041901299743362fc8c52ac06dbb2db1d0e --head 8c35eec869fcd0d90f03a14361137b40a57b50d4 --manifest /tmp/adamic-proof-4gp/manifest.json --workers 2 --json
+```
+
+Ran alone, with no other proof/build/test command running. Exported both CA variables and strict_ssl=true, with the external npm wrapper for the gate's filtered npm environment. The gate provisions its temporary checkout's API install from its own pinned lockfile; the invoking repository's packages remain outside the repository.
+
+| Measure | Result |
+|---|---|
+| Exit | 0 |
+| Wall time | 509 seconds (8m29s) |
+| Verdict | pass |
+| Void | false |
+| Void reasons | none (no void_reason field; no per-program void_reason) |
+| diff_count | 4 |
+| admitted | 0 |
+| newly refused | 0 |
+| accepted-by-both | 3380 |
+| refused-by-both | 2006 |
+| Programs with classification stderr differences | 0 |
+| complete_corpus | true |
+| workers | 2 |
+| classification | lowering-only |
+| omitted | 0 |
+| budget | 0 (unbounded) |
+| negative witnesses / accepted witnesses | 50 / 50 |
+| Node agreements | 13 |
+| ruled run-time stops | 52 |
+| stale / pending run-time stops | 0 / 0 |
+| runtime timeout runs / retried / still timed out | 0 / 0 / 0 |
+
+Corpus sizes: witnesses 2, fixtures 4438, gaps 105, review 20, fuzz 0, stage3 821; total 5386. Compile timeout 45s; runtime timeout 10s. No compile observations or runtime observations contain error=timeout. No isolated timeout reruns are needed at either SHA.
+
+The four changed programs:
+
+- `internal/oracle/testdata/accessor_dispatch_absent/presence.a` (blob `482aae6df715f3c4e6988aac492b4b26921d05ef`)
+- `internal/oracle/testdata/accessor_dispatch_absent/presence.ts` (blob `482aae6df715f3c4e6988aac492b4b26921d05ef`)
+- `internal/oracle/testdata/accessor_dispatch_absent/undefined_compare.a` (blob `8f509852a71da04ee675f1b2f07011dcb8d1df2e`)
+- `internal/oracle/testdata/accessor_dispatch_absent/undefined_compare.ts` (blob `8f509852a71da04ee675f1b2f07011dcb8d1df2e`)
+
+Every program's base_compile.stderr was compared byte-for-byte with compile.stderr: **zero differences**, so there are no differing pairs of texts to list. All classification classes are accepted-by-both or refused-by-both. No program was newly admitted or refused.
+
+Gate stderr:
+
+```text
+negative witnesses: 50
+ruled run-time stops: 52
+ruled backend divergences: 0
+runtime timeouts: 0 runs timed out, 0 retried alone, 0 timed out again
+changed programs: 4
+```
+
+## Report publication and scope
+
+First report after steps 1–3: d5b34e072, pushed to origin/proof/lower-4gp-2-report before starting step 4. This final update adds steps 4, 4b, 6 and supplemental native coverage. Only proof/lower-4gp-2/report.md is committed, on proof/lower-4gp-2-report created from the requested HEAD; no other branch is pushed. Compiler source and mutants were restored before the first report commit. The full lower and IR suites ran on that report branch with source identical to the requested HEAD. No implementation or generated-C fixture was changed to hide the lower failure.
