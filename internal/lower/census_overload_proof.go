@@ -85,9 +85,6 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	unchanged := true
 	var scan ast.Visitor
 	scan = func(node *ast.Node) bool {
-		if node.Kind == ast.KindAsExpression || node.Kind == ast.KindTypeAssertionExpression || node.Kind == ast.KindNonNullExpression {
-			unchanged = false
-		}
 		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) {
 			for _, parameter := range parameters {
 				if l.symbol(node) == l.symbol(parameter.Name()) {
@@ -143,6 +140,24 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	statement = func(node *ast.Node, flows []*ast.FlowNode) ([]*ast.FlowNode, bool) {
 		if len(flows) > 256 {
 			return nil, false
+		}
+		if len(flows) == 0 {
+			// No path under this overload's parameters reaches it, so nothing in it runs (#z5d0jye step 2b).
+			return nil, true
+		}
+		// A cast or a non-null assertion is refused in any statement a path reaches, where it could type a
+		// value the proof reads: a return, a local a return names, a test. One in code no path reaches is
+		// never evaluated, as tsc's getSupportedExtensions has past its first return (Correctness's census of
+		// step 2).
+		switch node.Kind {
+		case ast.KindExpressionStatement, ast.KindVariableStatement, ast.KindReturnStatement:
+			if censusHoldsCast(node) {
+				return nil, false
+			}
+		case ast.KindIfStatement:
+			if censusHoldsCast(node.AsIfStatement().Expression) {
+				return nil, false
+			}
 		}
 		switch node.Kind {
 		case ast.KindBlock:
@@ -207,6 +222,27 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 		}
 	}
 	return true
+}
+
+// censusHoldsCast says whether node holds a cast or a non-null assertion anywhere, a nested function's
+// body included.
+func censusHoldsCast(node *ast.Node) bool {
+	if node == nil {
+		return false
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(child *ast.Node) bool {
+		if child.Kind == ast.KindAsExpression || child.Kind == ast.KindTypeAssertionExpression || child.Kind == ast.KindNonNullExpression {
+			found = true
+			return true
+		}
+		return child.ForEachChild(visit)
+	}
+	if visit(node) {
+		return true
+	}
+	return found
 }
 
 // censusTrustedTest says whether censusReturnProof may take an if's test as flow evidence. The branch
