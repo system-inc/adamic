@@ -19,7 +19,7 @@ function bindings(ts, program, source, nodes, done) {
     const uses = nodes(ts, source, n => ts.isIdentifier(n) && n.text === 'fs' && n !== binding);
     let qualified = 0, lazy = 0;
     for (const use of uses) {
-        assert.equal(checker.getSymbolAtLocation(use), symbol, 'tracing fs captured or shadowed');
+        assert(checker.getSymbolAtLocation(use) === symbol, 'tracing fs captured or shadowed');
         if (ts.isPropertyAccessExpression(use.parent) && use.parent.expression === use) qualified++;
         else {
             assert(!done && ts.isBinaryExpression(use.parent) && use.parent.left === use &&
