@@ -295,6 +295,10 @@ var timerMutations = []timerMutation{
 	{"cancel-leaks-registration", "cancel", "timers_impl.h", "if (!entry->firing) timer_drop(entry);", "if (!entry->firing) { /* deliberately leak */ }", "leak"},
 	{"cancel-frees-running-callback", "cancel-self", "timers_impl.h", "if (!entry->firing) timer_drop(entry);", "timer_drop(entry);", "heap-use-after-free"},
 	{"promise-checkpoint-omitted", "order", "async.c", "timer_dispatch(turn_time)) drain_jobs();", "timer_dispatch(turn_time)) {}", "Node"},
+	// A live timer missing from the identity table: clearTimeout misses it, so cancel's assertion fails.
+	{"known-insert-dropped", "cancel", "timers_impl.h", "timer_known_insert(entry);", "/* mutant: the timer never joins the identity table */", "Assertion"},
+	// A retired timer keeps its ref: the count never reaches zero, so the loop outlives its last timer.
+	{"ref-count-kept-at-retire", "deadlines", "timers_impl.h", "timer_ref_leave(entry);\n    entry->previous = NULL;", "/* mutant: a retired timer keeps its ref */\n    entry->previous = NULL;", "live"},
 }
 
 func TestTimerMutants(t *testing.T) {
@@ -308,6 +312,15 @@ func TestTimerMutants(t *testing.T) {
 					t.Fatalf("phase mutant must loop on the interval until its own deadline: expired=%t %+v", expired, run)
 				}
 				t.Log("caught by TestTimerTurnPhaseYieldsToHostCompletion's own 3 s deadline")
+				return
+			}
+			if mutant.caught == "live" {
+				// Killed at the deadline, the probe's buffered stdout past its flushed prefix is lost.
+				run, expired := timerRunWithin(timerPhaseDeadline, []string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mutant.mode)
+				if !expired || !bytes.HasPrefix(run.Stdout, []byte("prefix\n")) || len(run.Stderr) != 0 {
+					t.Fatalf("count mutant must keep the loop alive past its last timer until its own deadline: expired=%t %+v", expired, run)
+				}
+				t.Log("caught by its own 3 s deadline: Node's loop ends once its last referenced timer runs")
 				return
 			}
 			if mutant.caught == "throw" {
@@ -446,4 +459,12 @@ func TestProduct_TimerMutantTurnPhase(t *testing.T) {
 func TestProduct_TimerMutantCallbackUncaught(t *testing.T) {
 	t.Parallel()
 	timerProduct(t, "mutant-callback-uncaught-omitted", native.Options{Sanitize: true, Count: true})
+}
+func TestProduct_TimerMutantKnownInsertDropped(t *testing.T) {
+	t.Parallel()
+	timerProduct(t, "mutant-known-insert-dropped", native.Options{Sanitize: true, Count: true})
+}
+func TestProduct_TimerMutantRefCountKeptAtRetire(t *testing.T) {
+	t.Parallel()
+	timerProduct(t, "mutant-ref-count-kept-at-retire", native.Options{Sanitize: true, Count: true})
 }
