@@ -10,6 +10,7 @@ Each is one edit, run on a house box, then put back.
 | The shorthand read dropped | predicates_proof.go, `predicateNameReads`: `if parent == nil || parent.Kind != ast.KindShorthandPropertyAssignment || argument.Kind != ast.KindIdentifier {` made `if true {`, so a shorthand `{ items }` reads nothing | TestPredicateFalseRead/shorthand: some's false direction unobservable, want checked |
 | Holders read | predicates_proof.go, `predicateNameReads`: `return predicateReadPosition(node) && l.predicateSameReference(node, argument)` made `return l.predicateSameReference(node, argument)`, so an assignment or a declaration the checker matches against the reference, which carries no flow data, counts as a read the graph doesn't place | measured on the head's proof |
 | The name after a dot read | predicates_proof.go, `predicateReadPosition`: `return ast.IsExpressionNode(node) && !ast.IsRightSideOfPropertyAccess(node)` made `return ast.IsExpressionNode(node)`, so the xs in holder.xs reads the local xs | measured on the head's proof |
+| Labels read | predicates_proof.go, `predicateReadPosition`: `return ast.IsExpressionNode(node) && !ast.IsRightSideOfPropertyAccess(node)` made `return !ast.IsRightSideOfPropertyAccess(node)`, so the label in `items: for (;;) { break items; }` reads the local items | measured on the head's proof |
 
 The condition-only arm, inserted before `checkedPredicateDirections`' last `return directions`:
 
