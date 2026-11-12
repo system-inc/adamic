@@ -538,6 +538,88 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer && l.nodeHostConsumesArgument(outer.Parent, index)
 }
 
+// nodeStatsField is the field a node names when it's one of the Stats fields wasm32-wasi's filestat
+// has no answer for (ir.DynamicKeyedStatsFieldNames), or "". These aren't registered: a plain read
+// lowers to its own host operation (nodeStatsFieldRead), and anywhere else the field is NotYet, so no
+// view, binding or write reaches its slot without the function a wasm32 build refuses by name.
+func (l *lowering) nodeStatsField(node *ast.Node) string {
+	field, found := strings.CutPrefix(l.nodeLibraryMember(node), "node:fs.StatsBase.")
+	if _, held := ir.StatsFieldOperations[field]; !found || !held {
+		return ""
+	}
+	return field
+}
+
+// nodeStatsFieldRead lowers a plain read of one of nodeStatsField's fields to its host operation
+// (ir.StatsFieldOperations, #6xfkdwj): natively the slot's number, or birthtime's Date, as any other
+// field of a Stats is read, and on wasm32-wasi a refusal by name before the build (wasiHostRefusals),
+// since wasi-libc's stat zeroes the field or keeps only the file type in mode.
+func (l *lowering) nodeStatsFieldRead(node *ast.Node) (ir.Expression, bool, error) {
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return nil, false, nil
+	}
+	field := l.nodeStatsField(node)
+	if field == "" {
+		return nil, false, nil
+	}
+	if err := l.nodeStatsFieldReadRefusal(node, field); err != nil {
+		return nil, true, err
+	}
+	receiver, err := l.expression(node.AsPropertyAccessExpression().Expression)
+	if err != nil {
+		return nil, true, err
+	}
+	if receiver.Type() != ir.Object {
+		return nil, true, l.notYet(node, "node:fs.StatsBase."+field+" of a "+typeName(receiver.Type()))
+	}
+	of := ir.Number
+	if field == "birthtime" {
+		of = ir.Object
+	}
+	return ir.NodeFSFile{Operation: ir.StatsFieldOperations[field], Arguments: []ir.Expression{receiver}, Of: of}, true, nil
+}
+
+// nodeStatsFieldReadRefusal names every use of nodeStatsField's fields but a plain read: a write, a
+// delete, an optional read, and the field anywhere else, such as a destructured binding.
+func (l *lowering) nodeStatsFieldReadRefusal(node *ast.Node, field string) error {
+	member := "node:fs.StatsBase." + field
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return l.notYet(node, member+" used as a value")
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	switch {
+	case outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression:
+		return l.notYet(node, member+" deleted")
+	case ast.IsAssignmentTarget(outer):
+		return l.notYet(node, member+" written")
+	case node.Flags&ast.NodeFlagsOptionalChain != 0:
+		return l.notYet(node, member+" read through an optional chain")
+	}
+	return nil
+}
+
+// nodeStatsFieldUseRefusal is the refusal visitor's view of nodeStatsField's fields: the property
+// name is part of the admitted read, the read itself is judged by nodeStatsFieldReadRefusal, and the
+// field anywhere else is NotYet, as process.platform's is (nodePlatformUseRefusal).
+func (l *lowering) nodeStatsFieldUseRefusal(node *ast.Node) (bool, error) {
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		if field := l.nodeStatsField(node.Parent); field != "" {
+			return true, l.nodeStatsFieldReadRefusal(node.Parent, field)
+		}
+	}
+	field := l.nodeStatsField(node)
+	if field == "" {
+		return false, nil
+	}
+	return true, l.nodeStatsFieldReadRefusal(node, field)
+}
+
+// A Stats' fields wasm32-wasi has an answer for are registered as any member is: Node's own numbers
+// and the four Dates (#6xfkdwj), less nodeStatsField's, which aren't.
 func init() {
-	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers("node:fs.StatsBase.dev", "node:fs.StatsBase.nlink", "node:fs.StatsBase.ino", "node:fs.StatsBase.size", "node:fs.StatsBase.atimeMs", "node:fs.StatsBase.mtimeMs", "node:fs.StatsBase.ctimeMs", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtime", "node:fs.StatsBase.ctime")
 }

@@ -89,7 +89,7 @@ type watchFileMutation struct {
 }
 
 var watchFileMutations = []watchFileMutation{
-	{"size-only", "mtime", "node_watch_file_impl.h", "if (old->value.st_size != current->value.st_size) return true;", "return old->value.st_size != current->value.st_size;", "TestWatchFileSameSizeMtimeMatchesNode", true},
+	{"size-only", "mtime", "node_watch_file_impl.h", "if (old->size != current->size) return true;", "return old->size != current->size;", "TestWatchFileSameSizeMtimeMatchesNode", true},
 	{"initial-missing-suppressed", "missing", "node_watch_file_impl.h", "status != 0 ? poller->status != status :", "status != 0 ? poller->status != 0 && poller->status != status :", "TestWatchFileInitialMissingMatchesNode", true},
 	{"unref-ignored", "unref", "node_watch_file_impl.h", "if (!initial && !poller->persistent)", "if (false)", "TestWatchFileUnrefInitialStatMatchesNode", true},
 	{"listener-identity-ignored", "cancel_one", "node_watch_file_impl.h", "if ((*at)->callback == callback) match = at;", "if ((*at)->callback != callback) match = at;", "TestWatchFileCancelOneMatchesNode", false},
