@@ -216,11 +216,11 @@ type accessorReach struct {
 	owners map[int]map[string]bool
 }
 
-func newAccessorReach(program *ir.Program) *accessorReach {
+func (l *lowering) newAccessorReach(program *ir.Program) *accessorReach {
 	numbered := *program
 	numbered.Functions = append([]ir.Function(nil), program.Functions...)
 	assignAllocationSites(&numbered)
-	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}}
+	reach := &accessorReach{graph: l.flowGraph(&numbered), owners: map[int]map[string]bool{}}
 	own := func(node any) bool {
 		literal, isLiteral := node.(ir.ObjectLiteral)
 		if !isLiteral || literal.Class == 0 || len(literal.GraphTypes) == 0 {
@@ -302,7 +302,7 @@ func (l *lowering) finishAccessors() error {
 	if len(names) == 0 {
 		return nil
 	}
-	reach := newAccessorReach(l.result)
+	reach := l.newAccessorReach(l.result)
 	if err := l.refuseReachedContractGetters(reach, names); err != nil {
 		return err
 	}
