@@ -62,6 +62,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "new Date()"
 	case "time_now":
 		return "Date.now()"
+	case "date_iso_string":
+		return "(" + args[0] + ").toISOString()"
 	case "date_time":
 		return "(" + args[0] + ").getTime()"
 	case "is_file":

@@ -6,7 +6,8 @@ package ir
 // fs.watch's result is an FSWatcher host object the runtime also holds while it's open.
 // Environment assignment and delete mutate live process state, returning the assigned string
 // and true respectively. Every operation except raw output, environment operations and platform
-// reads, exists, the Stats/Date observations and the timer operations may throw.
+// reads, exists, the Stats/Date time observations and the timer operations may throw.
+// date_iso_string may throw RangeError for an invalid Date.
 // host_require_missing, a require of a module that isn't installed, always throws: Node's
 // MODULE_NOT_FOUND for its specifier.
 // host_inspector_unavailable also always throws, on every target, including WASI.

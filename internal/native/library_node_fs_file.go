@@ -17,6 +17,9 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(argument)
 	}
 	code := fmt.Sprintf("adamic_fs_file_%s(%s)", call.Operation, strings.Join(args, ", "))
+	if call.Operation == "date_iso_string" {
+		code = "adamic_date_to_iso_string(adamic_fs_file_date_time(" + args[0] + "))"
+	}
 	if call.Operation == "host_watch_file" {
 		code = "adamic_fs_file_watch(" + strings.Join(args, ", ") + ")"
 	}
