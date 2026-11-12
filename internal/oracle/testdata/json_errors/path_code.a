@@ -1,0 +1,7 @@
+// A coded path validation error enumerates code alone (#z4a9p9e).
+import * as fs from 'node:fs';
+try {
+	fs.symlinkSync('x\0y', '/__adamic_error_json_missing__/link');
+} catch (error) {
+	if (error instanceof Error) console.log(JSON.stringify(error) ?? '<undefined>');
+}

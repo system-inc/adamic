@@ -1,0 +1,4 @@
+// A program name write invalidates the native construction tag (#z4a9p9e).
+const e = new Error('x');
+e.name = 'Changed';
+console.log(JSON.stringify(e) ?? '<undefined>');

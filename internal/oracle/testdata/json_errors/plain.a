@@ -1,0 +1,4 @@
+// Standard errors have no enumerable own keys (#z4a9p9e).
+console.log(JSON.stringify(new Error('x')) ?? '<undefined>');
+console.log(JSON.stringify(new Error()) ?? '<undefined>');
+console.log(JSON.stringify(new TypeError('x')) ?? '<undefined>');
