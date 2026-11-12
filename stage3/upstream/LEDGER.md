@@ -773,3 +773,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   typescript/tracing-fs-import-evidence.
 
 - `99-correctness-path-from-components`, type-only: replace internal getPathFromPathComponents's generic result casts with Path/string overloads and a string implementation, pinning the complete owner before and after and preserving emitted comments. Measured source instantiations are string 13, Path 2. Leave forEachAncestorDirectory unchanged: its string implementation candidate fails TS2394 for the Path callback overload. Proof and seam results are on typescript/path-from-components-evidence, outside stage3/adapt; see the adaptation README.
+
+- getSupportedExtensions (`src/compiler/utilities.ts`): replace `flatBuiltins.includes(x.extension as Extension)` with `(flatBuiltins as readonly string[]).includes(x.extension)`. Widening the readonly receiver removes an unchecked enum downcast without changing the SameValueZero comparison or emitted JavaScript. Whole-owner pins: `99-correctness-supported-extensions`; proof records: branch `typescript/supported-extensions-evidence`.
