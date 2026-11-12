@@ -171,3 +171,78 @@ func phantomObjectPresenceRule(t *testing.T, source, extension string) error {
 	program.Files()[0].AsNode().ForEachChild(visit)
 	return err
 }
+
+const phantomObjectTaggedSource = `interface Node { readonly kind: number }
+interface TaggedNode extends Node { __tagged: undefined }
+function tag(node: Node, sure: true): TaggedNode;
+function tag(node: Node, sure: boolean): Node;
+function tag(node: Node, sure: boolean): Node { return node; }
+const r = tag({ kind: 1 }, true);
+`
+
+// Mutant run and restored: dropping the read road lets this binding lower again;
+// native with ASan/UBSan and JavaScript then stop at exit 70 where Node prints undefined.
+func TestPhantomObjectReadsAreRefused(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, body, where string }{
+		{"dot", "console.log(String(r.__tagged));", "7:20"},
+		{"binding", "const { __tagged: mark } = r; console.log(String(mark));", "7:9"},
+		{"binding assignment", "let mark: undefined; ({ __tagged: mark } = r); console.log(String(mark));", "7:25"},
+		{"shorthand binding", "const { __tagged } = r; console.log(String(__tagged));", "7:9"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, phantomObjectTaggedSource+row.body, extension)
+				phantomObjectPresenceWant(t, err, "main"+extension+":"+row.where+": Adamic 0.1 refuses an observation of TaggedNode's phantom member __tagged (a read); "+phantomObjectPresenceFix)
+			})
+		}
+	}
+}
+
+func TestPhantomObjectPrototypeKeys(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, body, where string }{
+		{"phantom", "console.log(String(r.hasOwnProperty('__tagged')));", "7:20"},
+		{"dynamic", "function own(k: string): boolean { return r.hasOwnProperty(k); }\nconsole.log(String(own('kind')));", "7:43"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, phantomObjectTaggedSource+row.body, ".ts")
+			phantomObjectPresenceWant(t, err, "main.ts:"+row.where+": Adamic 0.1 refuses an observation of TaggedNode's phantom member __tagged (hasOwnProperty); "+phantomObjectPresenceFix)
+		})
+	}
+	lowersAndAgreesWithNodeAs(t, phantomObjectTaggedSource+"console.log(String(r.hasOwnProperty('kind')));", ".ts")
+	// The indirect call observes the actual base and agrees with Node, printing false.
+	lowersAndAgreesWithNodeAs(t, phantomObjectTaggedSource+"console.log(String(Object.prototype.hasOwnProperty.call(r, '__tagged')));", ".ts")
+}
+
+func TestPhantomObjectAgreeingReads(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source string }{
+		{"literal field", "interface Node { readonly kind: number }\ninterface TaggedNode extends Node { __tagged: undefined }\nconst r: TaggedNode = { kind: 1, __tagged: undefined };\nconsole.log(String(r.__tagged));"},
+		{"primitive brand", "const r = 'abc' as string & { readonly __tagged?: undefined }; console.log(String(r.__tagged));"},
+		{"optional object brand", strings.Replace(phantomObjectTaggedSource, "__tagged: undefined", "__tagged?: undefined", 1) + "console.log(String(r.__tagged));"},
+		{"type-only parameter", "interface Node { readonly kind: number }\ninterface TaggedNode extends Node { __tagged: undefined }\ninterface API { f({ __tagged }: TaggedNode): void }\nconsole.log('signature');"},
+	} {
+		t.Run(row.name, func(t *testing.T) { t.Parallel(); lowersAndAgreesWithNodeAs(t, row.source, ".ts") })
+	}
+}
+
+func TestPhantomObjectPresenceHeldElsewhere(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, body, want string }{
+		{"element read", "console.log(String(r['__tagged']));", "main.ts:7:20: Adamic 0.1 refuses view member read by element access is not yet checked; use view.__tagged"},
+		{"for...in", "let k = ''; for (const each in r) k += each; console.log(k);", "main.ts:7:32: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet"},
+		{"Reflect.has", "console.log(String(Reflect.has(r, '__tagged')));", "main.ts:7:20: stage 0 can't lower a namespace member without a lowered binding yet"},
+		{"delete", "delete (r as { __tagged?: undefined }).__tagged; console.log('deleted');", "main.ts:7:1: Adamic 0.1 refuses delete; fixed objects cannot lose fields; use a record or Map"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, phantomObjectTaggedSource+row.body, ".ts")
+			if err == nil || !strings.HasSuffix(err.Error(), row.want) {
+				t.Fatalf("want %s, got %v", row.want, err)
+			}
+		})
+	}
+}
