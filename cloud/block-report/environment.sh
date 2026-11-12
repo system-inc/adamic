@@ -36,7 +36,11 @@ esac
 
 # What the builder's own shell holds must not reach the lay: each of these is set below, or by setup.sh's env.sh.
 unset GOFLAGS GOWORK GOTOOLCHAIN GOPROXY GOSUMDB GOMODCACHE GOCACHEPROG NPM_CONFIG_CACHE npm_config_cache \
-	npm_config_offline ADAMIC_TOOLS ADAMIC_TYPESCRIPT_SOURCE
+	npm_config_offline ADAMIC_TOOLS ADAMIC_TYPESCRIPT_SOURCE WASI_SYSROOT
+# setup.sh keeps any Go, Node or clang it finds on PATH, so a builder whose shell already carries a toolchain would lay
+# paths outside the prefix into the job's environment, and the job would find them missing. Only the system's own
+# directories stay (a trial on Home, Nov 12: clang came from ~/.adamic-tools and the prefix's tsc check failed).
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 started=$EPOCHREALTIME
 stepStarted=$started
