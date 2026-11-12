@@ -447,6 +447,7 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 			if err != nil {
 				return nil, err
 			}
+			l.noteClassInitializer(declaration, member.AsPropertyDeclaration().Initializer)
 			value = fit(value, of)
 		} else if of.IsReference() {
 			value = ir.Undefined{Of: of}
