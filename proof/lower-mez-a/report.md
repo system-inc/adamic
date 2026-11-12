@@ -1,5 +1,17 @@
 # Compiler proof: #mez92e7
 
+## Final verdict
+
+- Baseline pins: PASS, all 10 subtests; command exit 0, wall 349 seconds.
+- All 3 mutants caught. Shorthand: exactly f02 red. Binding: exactly f07 and f07b red. Logical assignment: f05c red with a native emitter panic; the process aborted, so the other expected logical reds were not observed. Full verbatim evidence follows below.
+- Full lower suite retry: PASS, exit 0, wall 1193 seconds (19m53s); no failing tests or environment failures. First attempt was interrupted by the session/environment after about 24 minutes and yielded no verdict.
+- IR suite: PASS, exit 0, wall 129 seconds; no failures.
+- Formatting and vet: PASS.
+
+The compiler change passes the requested baseline and full lower/IR tests, and each mutant makes the pins fail. The logical mutant is caught by a compiler panic rather than the table-promised sanitized native witnesses; this proof does not claim those unobserved witnesses.
+
+Report checkpoints pushed to `origin/proof/lower-mez-a-report`: `a786b5cc9` after step 2; `2a406c288` after step 3; `5e8bf6e22` for the interrupted step 4 attempt; `b1973d89e` after the passing step 4 retry. This final report adds step 4b and the final verdict. Every commit on this branch changes only this report. No other branch was pushed, no force push was used, and all compiler mutations were restored.
+
 Base: `11db2faf88c95c059a45ec1dde98937d2ad93ebb`
 
 Parent: `219dbb6e7e20ea99d3e5d4b61c0cb14102dc9205`
@@ -359,6 +371,22 @@ exit=0 wall_seconds=1193
 
 ```text
 ok  	github.com/system-inc/adamic/internal/lower	1184.867s
+
+```
+
+## Step 4b: PASS
+
+Command: go test ./internal/ir -count=1 -timeout 30m
+
+Failing tests: none. Complete output follows.
+
+```text
+exit=0 wall_seconds=129
+
+```
+
+```text
+ok  	github.com/system-inc/adamic/internal/ir	96.130s
 
 ```
 
