@@ -393,6 +393,8 @@ type lowering struct {
 
 	// optionalReceiverCall identifies the call whose receiver optionalIntrinsic guards.
 	optionalReceiverCall *ast.Node
+	// optionalReceiverBinding is scoped to the builtin of that call, never carried.
+	optionalReceiverBinding optionalReceiverBinding
 	// generatorArguments are the generators' calls handed into an Iterable<T> parameter, by
 	// IterableOf's Site (iterableOfGenerator), which checkIterableViews proves.
 	generatorArguments []generatorArgument

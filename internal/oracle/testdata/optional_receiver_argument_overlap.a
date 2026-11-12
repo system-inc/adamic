@@ -1,0 +1,27 @@
+class Changing {
+    reads = 0;
+    get b(): Set<number> {
+        this.reads++;
+        const values = new Set<number>();
+        values.add(1);
+        if (this.reads > 1) values.add(2);
+        return values;
+    }
+}
+let argumentsRun = 0;
+interface OptionalHolder { b?: Set<number>; }
+function absent(a: OptionalHolder): void {
+    const result = a.b?.has((argumentsRun++, 1));
+    console.log(`${result} ${argumentsRun} 0`);
+}
+function probe(a: Changing): void {
+    const result = a.b?.has((argumentsRun++, a.b.size));
+    console.log(`${result} ${argumentsRun} ${a.reads}`);
+}
+absent({});
+probe(new Changing());
+interface Holder { b: Set<number>; }
+function plain(a: Holder): void {
+    console.log(`${a.b?.has(a.b.size)}`);
+}
+plain({ b: new Set<number>([1]) });
