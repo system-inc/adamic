@@ -1,0 +1,276 @@
+{
+  "scope": "all src/compiler TS sources, including generated diagnostics",
+  "counts": {
+    "comment": 32,
+    "string": 2,
+    "reachable": 4
+  },
+  "rows": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3878,
+      "column": 46,
+      "kind": "comment",
+      "text": "// const dep_1 = __importDefault(require(\"./dep.mjs\")); // wraps like { default: require(\"./dep.mjs\") }"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3878,
+      "column": 94,
+      "kind": "comment",
+      "text": "// const dep_1 = __importDefault(require(\"./dep.mjs\")); // wraps like { default: require(\"./dep.mjs\") }"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3879,
+      "column": 34,
+      "kind": "comment",
+      "text": "// dep_1.default; // require(\"./dep.mjs\") -> the `module.exports` export value"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3883,
+      "column": 30,
+      "kind": "comment",
+      "text": "// const dep_1 = require(\"./dep.mjs\"); // the `module.exports` export value (could be primitive)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10198,
+      "column": 39,
+      "kind": "comment",
+      "text": "// import Foo_1 = require(\"./exporter\");"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10204,
+      "column": 81,
+      "kind": "comment",
+      "text": "// This is needed because in JS, statements like `const x = require(\"./f\")` support both type and value lookup, even if they're"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10420,
+      "column": 54,
+      "kind": "comment",
+      "text": "// const { SomeClass } = require('./lib');"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10457,
+      "column": 56,
+      "kind": "comment",
+      "text": "// commonjs require: const x = require('y')"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10459,
+      "column": 42,
+      "kind": "comment",
+      "text": "// const x = require('y').z"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10460,
+      "column": 124,
+      "kind": "comment",
+      "text": "const initializer = (node as VariableDeclaration).initializer! as PropertyAccessExpression; // require('y').z"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10463,
+      "column": 44,
+      "kind": "comment",
+      "text": "// import _x = require('y');"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10464,
+      "column": 133,
+      "kind": "comment",
+      "text": "context.approximateLength += 22 + specifier.length + idText(uniqueName).length; // `import uniqueName = require(\"specifier\");`"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10496,
+      "column": 60,
+      "kind": "comment",
+      "text": "// an external `import localName = require(\"whatever\")`"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48288,
+      "column": 85,
+      "kind": "comment",
+      "text": "// import a = e.x; in module augmentation is ok, but not import a = require('fs)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50299,
+      "column": 35,
+      "kind": "comment",
+      "text": "// 1). import x = require(\"./mo/*gotToDefinitionHere*/d\")"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "line": 773,
+      "column": 246,
+      "kind": "string",
+      "text": "_0_can_only_be_imported_by_using_import_1_require_2_or_a_default_import: diag(2616, DiagnosticCategory.Error, \"_0_can_only_be_imported_by_using_import_1_require_2_or_a_default_import_2616\", \"'{0}' can only be imported by using 'import {1} = require({2})' or a default import.\") as DiagnosticMessage,"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "line": 774,
+      "column": 324,
+      "kind": "string",
+      "text": "_0_can_only_be_imported_by_using_import_1_require_2_or_by_turning_on_the_esModuleInterop_flag_and_using_a_default_import: diag(2617, DiagnosticCategory.Error, \"_0_can_only_be_imported_by_using_import_1_require_2_or_by_turning_on_the_esModuleInterop_flag_and_us_2617\", \"'{0}' can only be imported by using 'import {1} = require({2})' or by turning on the 'esModuleInterop' flag and using a default import.\") as DiagnosticMessage,"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 744,
+      "column": 86,
+      "kind": "comment",
+      "text": "// When we emit to a non-ES module, generate a synthetic `import tslib = require(\"tslib\")` to be further transformed."
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1673,
+      "column": 28,
+      "kind": "comment",
+      "text": "* No way to do this with `require()`: https://github.com/nodejs/node/issues/5963"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5935,
+      "column": 36,
+      "kind": "comment",
+      "text": "//      var foo3 = require(\"subfolder"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1593,
+      "column": 21,
+      "kind": "reachable",
+      "text": "require(\"source-map-support\").install();"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1615,
+      "column": 38,
+      "kind": "reachable",
+      "text": "return { module: require(modulePath), modulePath, error: undefined };"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1646,
+      "column": 59,
+      "kind": "reachable",
+      "text": "const inspector: typeof import(\"inspector\") = require(\"inspector\");"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 66,
+      "column": 22,
+      "kind": "reachable",
+      "text": "fs = require(\"fs\");"
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 203,
+      "column": 19,
+      "kind": "comment",
+      "text": "* Creates a `require()` call to import an external module."
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1243,
+      "column": 60,
+      "kind": "comment",
+      "text": "//          ? __resolved.then(function () { return require(x); }) /*CommonJs Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1244,
+      "column": 55,
+      "kind": "comment",
+      "text": "//          : new Promise(function (_a, _b) { require([x], _a, _b); }); /*Amd Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1277,
+      "column": 48,
+      "kind": "comment",
+      "text": "//     new Promise(function (_a, _b) { require([x], _a, _b); }); /*Amd Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1335,
+      "column": 48,
+      "kind": "comment",
+      "text": "// Promise.resolve(`${x}`).then((s) => require(s)) /*CommonJs Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1339,
+      "column": 39,
+      "kind": "comment",
+      "text": "// Otherwise, we inline it in require() so that it's statically analyzable"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1534,
+      "column": 19,
+      "kind": "comment",
+      "text": "* Creates a `require()` call to import an external module."
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 212,
+      "column": 35,
+      "kind": "comment",
+      "text": "// import x = require(\"mod\")"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3669,
+      "column": 17,
+      "kind": "comment",
+      "text": "* - import x = require(\"mod\");"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3832,
+      "column": 39,
+      "kind": "comment",
+      "text": "* exactly one argument (of the form 'require(\"name\")')."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3869,
+      "column": 83,
+      "kind": "comment",
+      "text": "* Like {@link isVariableDeclarationInitializedToRequire} but allows things like `require(\"...\").foo.bar` or `require(\"...\")[\"baz\"]`."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3869,
+      "column": 111,
+      "kind": "comment",
+      "text": "* Like {@link isVariableDeclarationInitializedToRequire} but allows things like `require(\"...\").foo.bar` or `require(\"...\")[\"baz\"]`."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12093,
+      "column": 4,
+      "kind": "comment",
+      "text": "// require('module').builtinModules.filter(x => !x.match(/^(?:_|node:)/))"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12154,
+      "column": 4,
+      "kind": "comment",
+      "text": "// require('module').builtinModules.filter(x => x.startsWith('node:'))"
+    }
+  ]
+}

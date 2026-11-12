@@ -1,0 +1,26 @@
+{
+  "exclusions": [
+    ".git",
+    "root node_modules",
+    "root built"
+  ],
+  "scope": "all remaining adapted-tree text, including nested corpus node_modules",
+  "files": 4343,
+  "hits": 10676,
+  "counts": {
+    "dead": 0,
+    "string": 10514,
+    "comment": 66,
+    "reachable": 96
+  },
+  "byContext": {
+    "upstream build/test or shipped CommonJS infrastructure / reachable": 92,
+    "upstream build/test or shipped CommonJS infrastructure / string": 93,
+    "upstream build/test or shipped CommonJS infrastructure / comment": 34,
+    "corpus or documentation data / string": 10415,
+    "adapted compiler / comment": 32,
+    "adapted compiler / string": 6,
+    "adapted compiler / reachable": 4
+  },
+  "interpretation": "Corpus files and baselines are strings consumed by the harness. Infrastructure code runs in its own declared CommonJS/build context; only compiler calls belong to the newly enabled isNodeLikeSystem paths."
+}

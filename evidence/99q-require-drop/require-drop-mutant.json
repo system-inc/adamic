@@ -1,0 +1,14 @@
+{
+  "node": "v24.19.0",
+  "mutation": "Restore the require test in H05 after text; recompute its temporary after hash",
+  "applied": {
+    "files": 1,
+    "edits": 4,
+    "javascriptChanging": true
+  },
+  "result": {
+    "isNodeLikeSystem": false,
+    "requireType": "undefined"
+  },
+  "temporaryMutationRemoved": true
+}
