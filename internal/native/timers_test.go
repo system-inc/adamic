@@ -286,7 +286,7 @@ func timerMutant(t *testing.T, file, before, after string) timerRuntime {
 type timerMutation struct{ name, mode, file, before, after, caught string }
 
 var timerMutations = []timerMutation{
-	{"turn-phase-never-yields", "turn-phase", "async.c", "entry->deadline <= turn_time", "entry->deadline <= timer_now()", "deadline"},
+	{"turn-phase-never-yields", "turn-phase", "async.c", "timer_dispatch(turn_time)", "timer_dispatch(timer_now())", "deadline"},
 	{"callback-uncaught-omitted", "throw", "timers_impl.h", "    if (adamic_thrown != NULL) adamic_uncaught();", "    /* mutant: ignore the callback's pending exception */", "throw"},
 	{"custom-hooks-admitted", "custom-hooks", "timers_impl.h", "if (host_wait_hook != host_default_wait) {", "if (false) {", "custom-hooks"},
 	{"released-before-last-fire", "interval", "timers_impl.h", "chosen->firing = false;", "if (chosen->active) adamic_release(chosen->callback);\n    chosen->firing = false;", "heap-use-after-free"},
@@ -294,7 +294,7 @@ var timerMutations = []timerMutation{
 	{"unref-ignored", "unref", "timers_impl.h", "entry->referenced = false;", "entry->referenced = true;", "Node"},
 	{"cancel-leaks-registration", "cancel", "timers_impl.h", "if (!entry->firing) timer_drop(entry);", "if (!entry->firing) { /* deliberately leak */ }", "leak"},
 	{"cancel-frees-running-callback", "cancel-self", "timers_impl.h", "if (!entry->firing) timer_drop(entry);", "timer_drop(entry);", "heap-use-after-free"},
-	{"promise-checkpoint-omitted", "order", "async.c", "            if (!due || !timer_dispatch()) break;\n            drain_jobs();", "            if (!due || !timer_dispatch()) break;", "Node"},
+	{"promise-checkpoint-omitted", "order", "async.c", "timer_dispatch(turn_time)) drain_jobs();", "timer_dispatch(turn_time)) {}", "Node"},
 }
 
 func TestTimerMutants(t *testing.T) {
