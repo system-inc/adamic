@@ -7,6 +7,33 @@ import (
 	"strings"
 )
 
+// This is a per-program fact, not an admission proof. Inspect the checker's whole
+// resolved graph once: Files lists only named roots. Filter the literal before
+// the ordinary require-form check so unrelated calls need no member lookup.
+func (l *lowering) inspectorProgramHasRequire() bool {
+	if !l.inspectorRequireKnown {
+		// A partial analysis without a program cannot establish absence.
+		if l.program == nil {
+			return true
+		}
+		l.inspectorRequireKnown = true
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindCallExpression && nodeInspectorRequireThrows(node) && l.nodeCommonJSRequireRoot(node) == node {
+				return true
+			}
+			return node.ForEachChild(visit)
+		}
+		for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+			if !file.IsDeclarationFile && file.AsNode().ForEachChild(visit) {
+				l.inspectorRequirePresent = true
+				break
+			}
+		}
+	}
+	return l.inspectorRequirePresent
+}
+
 // Only a const whose initializer cannot complete has no value at every read,
 // closures included. Early reads still use the ordinary TDZ/refusal path.
 func (l *lowering) inspectorDoomedBinding(node *ast.Node, seen map[*ast.Symbol]bool) *ast.Node {
@@ -98,6 +125,9 @@ func inspectorContractNode(node *ast.Node) *ast.Node {
 // Only a lowering entry records an obligation. The same helper is used by the
 // trap and by direct member/call/builtin roads that could bypass it.
 func (l *lowering) inspectorRecordBuiltUse(node *ast.Node) (root, require *ast.Node) {
+	if !l.inspectorProgramHasRequire() {
+		return nil, nil
+	}
 	node = inspectorContractNode(node)
 	root, require = l.inspectorDoomedUse(node)
 	if root == nil {
@@ -115,6 +145,9 @@ func (l *lowering) inspectorRecordBuiltUse(node *ast.Node) (root, require *ast.N
 // Every admitted expression goes through this constructor. Its ordinary read
 // may refuse, or throw the caught TDZ ReferenceError, before the terminal Panic.
 func (l *lowering) inspectorDoomedValue(node *ast.Node) (ir.Expression, bool, error) {
+	if !l.inspectorProgramHasRequire() {
+		return nil, false, nil
+	}
 	node = inspectorContractNode(node)
 	root, require := l.inspectorRecordBuiltUse(node)
 	if root == nil {
