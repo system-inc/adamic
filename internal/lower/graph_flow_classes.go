@@ -2,6 +2,7 @@ package lower
 
 import (
 	"reflect"
+	"slices"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -228,8 +229,8 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 		reduce := expression.(ir.ArrayReduce)
 		return graphFlowSources{operands: []ir.Expression{reduce.Initial}, results: program.ClosureTargets(reduce).Functions}, true
 	}},
-	reflect.TypeFor[ir.GeneratorNext](): {class: graphFlowForwards, why: "the value Function's body yields (generator.go:13)", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
-		return graphFlowSources{yields: []int{expression.(ir.GeneratorNext).Function}}, true
+	reflect.TypeFor[ir.GeneratorNext](): {class: graphFlowForwards, why: "the value any of Functions' bodies yields (generator.go:13)", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
+		return graphFlowSources{yields: slices.Clone(expression.(ir.GeneratorNext).Functions)}, true
 	}},
 
 	// Elsewhere: planned where it was made or stored, not here.

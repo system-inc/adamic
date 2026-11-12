@@ -80,9 +80,12 @@ func CheckPure(program *ir.Program, function int) error {
 			case ir.GeneratorNext:
 				// A step runs the body of the generator its frame was made by, whose call may be
 				// outside what this inspects (a caller handed the frame in), so the body is
-				// inspected here.
-				if err := inspect(node.Function); err != nil {
-					return err
+				// inspected here: every body of Functions, since any of them may have made the
+				// frame, and one impure body makes the step impure (#qk8rztp S3c-2).
+				for _, function := range node.Functions {
+					if err := inspect(function); err != nil {
+						return err
+					}
 				}
 			case ir.IteratorNext:
 				// A hand-driven next() steps a generator as GeneratorNext does, and a collection's
