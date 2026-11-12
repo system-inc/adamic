@@ -1,0 +1,4 @@
+class Host { m(a: number, b: number): number { return a + b; } }
+const host = new Host();
+const bound = host.m.bind(host);
+console.log(`${bound.length}`);

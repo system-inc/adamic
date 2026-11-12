@@ -26,7 +26,7 @@ func TestPassThroughsAreNotConsumers(t *testing.T) {
 	}
 	consumers := map[string]ir.Expression{
 		"Unary": ir.Unary{}, "Binary": ir.Binary{}, "NumberToString": ir.NumberToString{}, "BooleanToString": ir.BooleanToString{},
-		"Concat": ir.Concat{}, "Length": ir.Length{}, "StringLength": ir.StringLength{}, "CharCodeAt": ir.CharCodeAt{},
+		"Concat": ir.Concat{}, "FunctionLength": ir.FunctionLength{}, "Length": ir.Length{}, "StringLength": ir.StringLength{}, "CharCodeAt": ir.CharCodeAt{},
 		"StringIndex": ir.StringIndex{}, "ArrayIndex": ir.ArrayIndex{}, "Property": ir.Property{}, "MapGet": ir.MapGet{},
 		"MapHas": ir.MapHas{}, "MapSize": ir.MapSize{}, "HasOwn": ir.HasOwn{}, "IsUndefined": ir.IsUndefined{},
 		"TypeOf": ir.TypeOf{}, "MathCall": ir.MathCall{}, "NumberCall": ir.NumberCall{}, "ToFixed": ir.ToFixed{},

@@ -103,6 +103,7 @@ var writesNothing = []struct {
 	{ir.JSONStringify{}, "reads a value into a new string; lowering refuses a replacer function"},
 	{ir.JoinEnter{}, "compares the array's identity with the joins under way, kept by the runtime, never a program value"},
 	{ir.JoinLeave{}, "pops the runtime's join stack, never a program value"},
+	{ir.FunctionLength{}, "reads a closure's runtime source arity without running program code"},
 	{ir.Length{}, "reads an array's length"},
 	{ir.LibraryGlobal{}, "a built-in's identity"},
 	{ir.Logical{}, "one of its operands"},

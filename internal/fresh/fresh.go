@@ -1235,6 +1235,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			target.addStrong(o)
 		}
 		return target
+	case ir.FunctionLength:
+		a.value(expression.Function)
+		return value{}
 	case ir.Length:
 		a.value(expression.Array)
 		return value{}

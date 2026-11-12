@@ -1,0 +1,3 @@
+function f(a: number): number { return a; }
+const bound = f.bind(undefined);
+console.log(bound.name);

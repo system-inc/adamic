@@ -23,8 +23,8 @@ func TestInertFailsClosedOnAMadeUpExpression(t *testing.T) {
 			t.Errorf("%T is inert, but it runs program code or reaches the host", expression)
 		}
 	}
-	if !Inert(Read{}) || !Inert(Binary{}) {
-		t.Fatal("a read and a binary operation must be inert")
+	if !Inert(Read{}) || !Inert(Binary{}) || !Inert(FunctionLength{}) {
+		t.Fatal("a read, a binary operation, and a function length read must be inert")
 	}
 }
 

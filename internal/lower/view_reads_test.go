@@ -109,6 +109,7 @@ var viewNoField = []viewReadExample{
 	{ir.JSONDecode{}, "parses a string"},
 	{ir.JSONStringify{}, "a scalar or an array of scalars, or an object reference, whose fields json_objects.c reads by the allocation's own representation bytes, never a type's claim (view_widened_held_json.ts agrees with Node in TestViewWidenedRoadsHeld)"},
 	{ir.JoinEnter{}, "compares the array's identity with the arrays being joined"},
+	{ir.FunctionLength{}, "a closure's runtime source arity, not an object field"},
 	{ir.Length{}, "an array's length"},
 	{ir.Logical{}, "one of its operands"},
 	{ir.LogicalAssignment{}, "its read is a Property and its write a SetProperty, each classed where it is"},

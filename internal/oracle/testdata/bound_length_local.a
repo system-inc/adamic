@@ -1,0 +1,16 @@
+function f(a: number, b: number, c: number): number { return a + b + c; }
+const b0 = f.bind(undefined);
+const b1 = f.bind(undefined, 1);
+const b2 = f.bind(undefined, 1, 2);
+const b3 = f.bind(undefined, 1, 2, 3);
+const wide: (a: number, b: number, c: number, d?: number) => number = f;
+const b4 = wide.bind(undefined, 1, 2, 3, 4);
+console.log(`${b0.length} ${b1.length} ${b2.length} ${b3.length} ${b4.length}`);
+function defaults(a: number, b = 2, c = 3): number { return a + b + c; }
+const d0 = defaults.bind(undefined);
+const d1 = defaults.bind(undefined, 1);
+console.log(`${d0.length} ${d1.length}`);
+const typed: (a: number, b: number) => number = (a) => a;
+const t0 = typed.bind(undefined);
+const t1 = typed.bind(undefined, 1);
+console.log(`${t0.length} ${t1.length}`);

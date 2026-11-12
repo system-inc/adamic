@@ -55,8 +55,6 @@ func TestFunctionBindRefusals(t *testing.T) {
 	for name, reason := range map[string]string{
 		"this_widening":     "this outside a method",
 		"inherited_library": "bind of an inherited library function",
-		"length":            "a bound function's length",
-		"typeof_length":     "a bound function's length",
 		"name":              "a bound function's name",
 		"rebind":            "bind of a bound function",
 		"new":               "new on a bound function",

@@ -613,6 +613,12 @@ type (
 		Metadata []Field
 	}
 
+	// FunctionLength reads a proven bound closure's runtime source arity, without running program code.
+	FunctionLength struct {
+		Function Expression
+		Optional bool
+	}
+
 	// Length is array.length.
 	Length struct {
 		Array Expression
@@ -895,6 +901,7 @@ type (
 	// BoundClosure snapshots a target, receiver and fixed arguments in the ordinary
 	// captured cells of Function. It has fresh identity and no canonical cache.
 	BoundClosure struct {
+		Fixed         int // Number of arguments captured after thisArg, including excess arguments.
 		Function      int
 		GraphTypes    []int
 		ProgramRegion bool
@@ -1200,6 +1207,12 @@ func (p Property) Type() Type {
 }
 func (ArrayLiteral) Type() Type { return Array }
 func (l Length) Type() Type {
+	if l.Optional {
+		return MaybeNumber
+	}
+	return Number
+}
+func (l FunctionLength) Type() Type {
 	if l.Optional {
 		return MaybeNumber
 	}

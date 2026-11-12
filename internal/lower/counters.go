@@ -177,10 +177,10 @@ func boundRange(bound ir.Expression, known facts, depth int) (float64, float64, 
 	}
 	var low, high float64
 	switch bound := bound.(type) {
-	case ir.Length, ir.StringLength, ir.MapSize:
+	case ir.FunctionLength, ir.Length, ir.StringLength, ir.MapSize:
 		// A typed array's length can pass 2^32: new Uint8Array(4294967297)
 		// runs in Node and natively. The spec bounds every length and size by
-		// 2^53 - 1, so this range holds for all three expressions.
+		// 2^53 - 1, so this range holds for these metadata reads.
 		low, high = 0, math.Ldexp(1, 53)-1
 	case ir.NumberConstant:
 		low, high = bound.Value, bound.Value
@@ -248,7 +248,7 @@ func neverNegativeZero(expression ir.Expression, known facts, depth int) bool {
 		return false
 	}
 	switch expression := expression.(type) {
-	case ir.Length, ir.StringLength, ir.MapSize:
+	case ir.FunctionLength, ir.Length, ir.StringLength, ir.MapSize:
 		return true
 	case ir.NumberConstant:
 		return !(expression.Value == 0 && math.Signbit(expression.Value))
