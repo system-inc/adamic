@@ -23,8 +23,15 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		receiver := callee.AsPropertyAccessExpression().Expression
 		if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") {
-			if symbol.Name != "getTime" && symbol.Name != "valueOf" {
+			if symbol.Name != "getTime" && symbol.Name != "valueOf" && symbol.Name != "toISOString" {
 				return nil, true, l.notYet(node, memberName+": "+"Date methods other than getTime/valueOf in the fs file host")
+			}
+			if symbol.Name == "toISOString" {
+				if len(call.Arguments.Nodes) != 0 {
+					return nil, true, l.notYet(node, "toISOString: Date toISOString with arguments")
+				}
+				value, err := l.expression(receiver)
+				return ir.NodeFSFile{Operation: "date_iso_string", Arguments: []ir.Expression{value}, Of: ir.String}, true, err
 			}
 			if len(call.Arguments.Nodes) != 0 {
 				return nil, true, l.notYet(node, memberName+": "+"Date getTime/valueOf with arguments")

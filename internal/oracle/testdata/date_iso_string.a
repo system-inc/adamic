@@ -1,0 +1,22 @@
+function print(label: string, time: number): void {
+    console.log(label + "=" + new Date(time).toISOString());
+}
+print("epoch", 0);
+print("one-ms", 1);
+print("before-epoch", -1);
+print("year-9999-last", 253402300799999);
+print("year-10000", 253402300800000);
+print("maximum", 8640000000000000);
+print("minimum", -8640000000000000);
+print("year-zero", -62167219200000);
+print("year-minus-one", -62198755200000);
+print("nonzero-ms", 1234567890123);
+print("fraction-999", 999);
+console.log("shape=" + (new Date(0)).toISOString().replace(/:/g, "-"));
+try {
+    console.log(new Date(NaN).toISOString());
+    console.log("missing RangeError");
+} catch (error) {
+    if (error instanceof Error) console.log(error.name + ": " + error.message);
+    else console.log("not an Error");
+}
