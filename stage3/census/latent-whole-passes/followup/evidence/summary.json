@@ -1,0 +1,16 @@
+{
+  "main": "529705a1e6346ed7c5babaf9b4449e97e8abef38",
+  "units": 265,
+  "origin_split": {
+    "orphan preflight predicate registration": 243,
+    "CheckedCast": 8,
+    "predicate narrowing": 14
+  },
+  "overload_functions": {},
+  "original_kind_Node": 243,
+  "isolated_kind_Node": 0,
+  "isolated_remaining": 22,
+  "all_shared_probe_events": 251,
+  "whole_predicate": "accepted",
+  "whole_literal_overload": "a read of field kind through type Node, which may hold a checked view's value"
+}

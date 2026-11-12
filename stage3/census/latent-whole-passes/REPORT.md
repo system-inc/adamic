@@ -1,5 +1,7 @@
 # hcxsh1k — latent census whole-pass audit
 
+Follow-up: [WIDENED.md](WIDENED.md) attributes the 243 to orphan preflight registrations; [PIN.md](PIN.md) records the full-mode generator probes.
+
 <!-- measured-summary:start -->
 **Measured result:** 4,566 top-level entry units; **271 newly stopped units** in the scoped tail probe; **13.599 seconds** of directly timed added pass work. This unit-only experiment omits independent whole-file refusal scans, and graph-dependent results are partial.
 

@@ -1,0 +1,39 @@
+package lower
+import("encoding/json";"fmt";"os";"strings";"github.com/microsoft/TypeScript/tsc/shim/ast";"github.com/system-inc/adamic/internal/ir")
+var pinSites map[string]string
+var pinSaved map[string][]ir.Statement
+var pinActive string
+func pinWrite(row any){f,e:=os.OpenFile(os.Getenv("PIN_LOG"),os.O_APPEND|os.O_CREATE|os.O_WRONLY,0600);if e!=nil{panic(e)};defer f.Close();if e=json.NewEncoder(f).Encode(row);e!=nil{panic(e)}}
+func pinLoad(){if pinSites!=nil{return};b,e:=os.ReadFile(os.Getenv("PIN_SITES"));if e!=nil{panic(e)};if e=json.Unmarshal(b,&pinSites);e!=nil{panic(e)};pinSaved=map[string][]ir.Statement{}}
+func pinWhere(l *lowering,n *ast.Node)string {w:=l.program.Where(n);at:=strings.Index(w,"/src/");if at>=0{w=w[at+1:]};return w}
+func (l *lowering) pinStatement(node *ast.Node,body []ir.Statement,failure error){
+ pinLoad();where:=pinWhere(l,node);call,wanted:=pinSites[where];if !wanted{return}
+ row:=map[string]any{"event":"statement_end","statement":where,"call":call,"owner":latentFindingOwner,"ir_statements":len(body),"views":len(l.iterableViews),"generator_arguments":len(l.generatorArguments)}
+ if failure!=nil{row["body_error"]=failure.Error();pinWrite(row);return};if len(body)==0{row["body_error"]="no statement IR";pinWrite(row);return}
+ pinSaved[where]=latentCopyIR(body,map[any]any{})
+ p:=l.latentSnapshot();p.entry=l.program.Files()[0]
+ for id,n:=range p.functionNodes {if n.Name()!=nil {switch n.Name().Text(){case "elaborateJsxComponents","elaborateArrayLiteral","elaborateObjectLiteral":p.result.Functions[id].Body=nil}}}
+ row["function_context"]=l.result.Functions[l.functionIndex].Name
+
+ if l.functionIndex>=0 {p.result.Functions[l.functionIndex].Body=append(p.result.Functions[l.functionIndex].Body,body...)}else{p.result.Main=append(p.result.Main,body...)}
+ pinActive=where;defer func(){pinActive=""}()
+ p.finishClassCalls();e:=p.finishAccessors();if e==nil{p.finishToPrimitive();e=p.checkIterableViews()};if e!=nil{row["tail_error"]=e.Error()}else{row["tail_result"]="admitted"};pinWrite(row)
+}
+func (l *lowering) pinPrepare(){
+ l.entry=l.program.Files()[0]
+ for _,name:=range []string{"generateJsxAttributes","generateJsxChildren","generateLimitedTupleElements","generateObjectLiteralElements"}{for id,node:=range l.latentDeclarations {if node.Name()!=nil&&node.Name().Text()==name {e:=l.lowerFunction(id,node,-1);f:=l.result.Functions[id];y:=0;walk(f.Body,func(n any)bool{if _,ok:=n.(ir.Yield);ok{y++};return true});row:=map[string]any{"event":"producer_lowered","name":name,"generator":f.Generator,"yields":iterableTypeName(f.Yields),"yield_nodes":y,"body_statements":len(f.Body)};if e!=nil{row["error"]=e.Error()};pinWrite(row);break}}}
+ for id,node:=range l.latentDeclarations {if node.Name()!=nil&&node.Name().Text()=="elaborateElementwise" {e:=l.lowerFunction(id,node,-1);row:=map[string]any{"event":"consumer_lowered","function":id,"body_statements":len(l.result.Functions[id].Body),"views":len(l.iterableViews)};if e!=nil{row["error"]=e.Error()};pinWrite(row);return}}
+ panic("elaborateElementwise declaration missing")
+}
+func (l *lowering) pinOthers(){
+ for _,name:=range []string{"elaborateArrayLiteral","elaborateObjectLiteral"}{for id,node:=range l.latentDeclarations{if node.Name()!=nil&&node.Name().Text()==name{e:=l.lowerFunction(id,node,-1);row:=map[string]any{"event":"additional_caller_lowered","name":name};if e!=nil{row["error"]=e.Error()};pinWrite(row);break}}}
+ pinLoad();p:=l.latentSnapshot();p.result.Main=nil
+ for where:=range pinSites {p.result.Main=append(p.result.Main,pinSaved[where]...)}
+ for id,node:=range p.functionNodes {if node.Name()!=nil {switch node.Name().Text(){case "elaborateJsxComponents","elaborateArrayLiteral","elaborateObjectLiteral":p.result.Functions[id].Body=nil}}}
+ views:=p.iterableViews[:0];for _,v:=range p.iterableViews{if n:=p.functionNodes[v.function];n!=nil&&n.Name()!=nil&&n.Name().Text()=="elaborateElementwise"{views=append(views,v)}};p.iterableViews=views
+ pinActive="combined-five-source-statements";defer func(){pinActive=""}()
+ p.finishClassCalls();e:=p.finishAccessors();if e==nil{p.finishToPrimitive();e=p.checkIterableViews()}
+ row:=map[string]any{"event":"combined","saved_sites":len(pinSaved),"views":len(views),"main_statements":len(p.result.Main)};if e!=nil{row["error"]=e.Error()}else{row["result"]="admitted"};pinWrite(row)
+}
+func (l *lowering) pinFunctions(view iterableView,functions []int){rows:=[]map[string]any{};for _,id:=range functions{f:=l.result.Functions[id];rows=append(rows,map[string]any{"id":id,"name":f.Name,"yields":iterableTypeName(f.Yields)})};pinWrite(map[string]any{"event":"generatorFunctions","active":pinActive,"view":l.program.Where(view.where),"functions":rows})}
+var _ = fmt.Sprint

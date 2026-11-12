@@ -1,0 +1,13 @@
+interface Broad { readonly kind: number }
+interface Node { readonly kind: 1 | 2 }
+interface NarrowNode extends Node { readonly kind: 1; readonly name: string }
+function tag(node: Broad, sure: true): NarrowNode;
+function tag(node: Broad, sure: boolean): Broad;
+function tag(node: Broad, sure: boolean): Broad { return node; }
+function demonstrate(): void {
+ const actual = { kind: 1, name: "ok" };
+ const viewed = tag(actual, true);
+ const wide: Node = viewed;
+ console.log(String(wide.kind));
+}
+demonstrate();

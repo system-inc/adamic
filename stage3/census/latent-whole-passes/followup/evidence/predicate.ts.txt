@@ -1,0 +1,5 @@
+interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: 1; readonly text: string }
+function isIdentifier(node: Node): node is Identifier { return node.kind === 1; }
+const actual = { kind: 1, text: "ok" };
+console.log(String(isIdentifier(actual)));

@@ -1,0 +1,122 @@
+{
+  "parent": {
+    "statement_ir_admitted": 4,
+    "body_blocked": 1,
+    "combined_generator_functions": [
+      {
+        "id": 4803,
+        "name": "generateJsxAttributes",
+        "yields": "an object"
+      },
+      {
+        "id": 4808,
+        "name": "generateLimitedTupleElements",
+        "yields": "an object"
+      },
+      {
+        "id": 4810,
+        "name": "generateObjectLiteralElements",
+        "yields": "an object"
+      }
+    ],
+    "combined": {
+      "event": "combined",
+      "main_statements": 4,
+      "result": "admitted",
+      "saved_sites": 4,
+      "views": 1
+    }
+  },
+  "87028b08": {
+    "statement_ir_admitted": 4,
+    "body_blocked": 1,
+    "combined_generator_functions": [
+      {
+        "id": 4803,
+        "name": "generateJsxAttributes",
+        "yields": "an object"
+      },
+      {
+        "id": 4808,
+        "name": "generateLimitedTupleElements",
+        "yields": "an object"
+      },
+      {
+        "id": 4810,
+        "name": "generateObjectLiteralElements",
+        "yields": "an object"
+      }
+    ],
+    "combined": {
+      "event": "combined",
+      "main_statements": 4,
+      "result": "admitted",
+      "saved_sites": 4,
+      "views": 1
+    }
+  },
+  "isolated-parent": {
+    "statement_ir_admitted": 4,
+    "body_blocked": 1,
+    "combined_generator_functions": [
+      {
+        "id": 4803,
+        "name": "generateJsxAttributes",
+        "yields": "an object"
+      },
+      {
+        "id": 4808,
+        "name": "generateLimitedTupleElements",
+        "yields": "an object"
+      },
+      {
+        "id": 4810,
+        "name": "generateObjectLiteralElements",
+        "yields": "an object"
+      }
+    ],
+    "combined": {
+      "event": "combined",
+      "main_statements": 4,
+      "result": "admitted",
+      "saved_sites": 4,
+      "views": 1
+    }
+  },
+  "isolated-child": {
+    "statement_ir_admitted": 4,
+    "body_blocked": 1,
+    "combined_generator_functions": [
+      {
+        "id": 4803,
+        "name": "generateJsxAttributes",
+        "yields": "an object"
+      },
+      {
+        "id": 4808,
+        "name": "generateLimitedTupleElements",
+        "yields": "an object"
+      },
+      {
+        "id": 4810,
+        "name": "generateObjectLiteralElements",
+        "yields": "an object"
+      }
+    ],
+    "combined": {
+      "event": "combined",
+      "main_statements": 4,
+      "result": "admitted",
+      "saved_sites": 4,
+      "views": 1
+    }
+  },
+  "obsolete_stop_mutant": {
+    "error": "/workspace/lwp-scratch/parent-adapted/src/compiler/checker.ts:21553:29: stage 0 can't lower a view that generators of more than one function feed (a step names the one function whose throws it may leave) (#qk8rztp S2c-1) yet",
+    "event": "combined",
+    "main_statements": 4,
+    "saved_sites": 4,
+    "views": 1
+  },
+  "positive_five_site_pin": "blocked: inline yield does not lower"
+}

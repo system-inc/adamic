@@ -1,0 +1,9 @@
+interface Node { readonly kind: number }
+interface TaggedNode extends Node { readonly __tagged: undefined; readonly name: string }
+function tag(node: Node, sure: true): TaggedNode;
+function tag(node: Node, sure: boolean): Node;
+function tag(node: Node, sure: boolean): Node { return node; }
+function readKind(node: Node): number { return node.kind; }
+const actual = { kind: 1, name: "ok" };
+const viewed = tag(actual, true);
+console.log(String(readKind(viewed)));
