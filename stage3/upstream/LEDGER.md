@@ -771,3 +771,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   and validates all qualified bindings; 65 stops adding ambient require
   and keeps the readonly process.pid declaration. Evidence belongs on
   typescript/tracing-fs-import-evidence.
+
+- getSupportedExtensions (`src/compiler/utilities.ts`): replace `flatBuiltins.includes(x.extension as Extension)` with `(flatBuiltins as readonly string[]).includes(x.extension)`. Widening the readonly receiver removes an unchecked enum downcast without changing the SameValueZero comparison or emitted JavaScript. Whole-owner pins: `99-correctness-supported-extensions`; proof records: branch `typescript/supported-extensions-evidence`.
