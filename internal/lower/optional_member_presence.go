@@ -58,9 +58,15 @@ type optionalPresenceKey struct {
 // declaration of the member is a method or property signature with a question token in a file the
 // program wrote, never TypeScript's library, Node's types or the prelude, and the member's type, once
 // undefined is taken out, can be called. A class's optional method is a method declaration, so it and any
-// merge holding one stay refused.
+// merge holding one stay refused. A test of setBlocking off stdout's handle is the host's, and stays as it
+// was: both backends' handle holds it as a closure of its own (#0bxc4jh), so its test reads alike, and
+// stdoutHandleSetBlockingRefusal judges every read of it (#5abf5v8), where this check would stop it for a
+// receiver the program didn't build (node_process_terminal.a).
 func (l *lowering) optionalMemberPresenceTest(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression || !presenceConsumer(node) {
+		return false
+	}
+	if node.Name().Text() == "setBlocking" && l.stdoutHandleOrigin(node.AsPropertyAccessExpression().Expression, 0) {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(node)
