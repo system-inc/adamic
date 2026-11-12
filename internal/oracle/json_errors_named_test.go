@@ -7,8 +7,8 @@ import (
 )
 
 // Like the runtime-stop fixtures in library_intl_test.go, this stays outside the
-// ordinary fixture and counts tables. Native must keep its named runtime stop;
-// the JavaScript backend must agree with Node through the entire program.
+// ordinary fixture and counts tables. Native prints untouched errors, then stops
+// at the name write; JavaScript agrees with Node through the entire program.
 const jsonNamedErrorsFixture = "internal/oracle/testdata/json_errors_named/named.a"
 
 // Restoring Object.assign(new Error(message), {name}) reds type_error,
@@ -60,7 +60,7 @@ func TestJSONNamedErrorsNativeStop(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := run{stdout: []byte("{\"marker\":1}\n"), stderr: []byte("adamic: panic: NotYet: JSON.stringify an Error\n"), exitCode: 70}
+	want := run{stdout: []byte("{\"marker\":1}\n{}\n{}\n{}\n{}\n"), stderr: []byte(jsonErrorWritten), exitCode: 70}
 	for _, backend := range []string{"sanitized", "release"} {
 		t.Run(backend, func(t *testing.T) {
 			var got run
