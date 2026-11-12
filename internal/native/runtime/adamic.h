@@ -546,6 +546,15 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
 	return adamic_object_initialized(object) + object->shape->count;
 }
+// Error construction owns this tag; ordinary program stores only produce ir.Type tags.
+enum { adamic_error_unwritten = 255 };
+// Every interpreting reader sees the string representation; only the error walker tests the raw tag.
+static inline unsigned char adamic_object_field_type(const adamic_object *object, size_t index) {
+ unsigned char type = adamic_object_field_types(object)[index];
+ return type == adamic_error_unwritten ? adamic_ir_String : type;
+}
+void adamic_error_initialize(adamic_object *object);
+
 // adamic_slot_index is where a slot sits in its object, for that object's per-slot bytes. It's taken
 // from the slot a lookup returned, never from a slot cache: the cache is one packed word another
 // thread may overwrite with a different shape's slot (adamic_slot_cache below).
