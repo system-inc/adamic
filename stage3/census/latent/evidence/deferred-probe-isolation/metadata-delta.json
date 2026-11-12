@@ -1,0 +1,125 @@
+{
+  "all_unit_status_and_instantiated_flags_equal": true,
+  "finding_occurrences_equal": true,
+  "relation_cache_changes": [
+    {
+      "after": 121326,
+      "before": 121015,
+      "cache": "assignable",
+      "delta": 311,
+      "group": 1
+    },
+    {
+      "after": 21778,
+      "before": 21770,
+      "cache": "strictSubtype",
+      "delta": 8,
+      "group": 1
+    }
+  ],
+  "unit_metadata_changes": [
+    {
+      "base": {
+        "body_end": 5850,
+        "body_start": 5599,
+        "checker_diagnostics": [],
+        "instantiated": true,
+        "instantiated_by": [
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10304:12",
+            "type_arguments": [
+              "Extension"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10303:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7625:12",
+            "type_arguments": [
+              "Extension"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7624:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8045:59",
+            "type_arguments": [
+              "Declaration"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8043:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+            "type_arguments": [
+              "JSDocTag"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1106:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+            "type_arguments": [
+              "JSDocTag"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1111:1"
+          }
+        ],
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "find",
+        "status": "deferred_generic_instantiation",
+        "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+      },
+      "changed_fields": [
+        "instantiated_by"
+      ],
+      "head": {
+        "body_end": 5850,
+        "body_start": 5599,
+        "checker_diagnostics": [],
+        "instantiated": true,
+        "instantiated_by": [
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10304:12",
+            "type_arguments": [
+              "Extension"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:10303:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:4768:27",
+            "type_arguments": [
+              "JSDocTag"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:4765:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7625:12",
+            "type_arguments": [
+              "Extension"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:7624:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8045:59",
+            "type_arguments": [
+              "Declaration"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilities.ts:8043:1"
+          },
+          {
+            "call_site": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1280:12",
+            "type_arguments": [
+              "JSDocTag"
+            ],
+            "unit": "/workspace/ldpi/adapted/src/compiler/utilitiesPublic.ts:1106:1"
+          }
+        ],
+        "kind": "KindFunctionDeclaration",
+        "measurement": "measured on a checker-clean entry-root program",
+        "name": "find",
+        "status": "deferred_generic_instantiation",
+        "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+      },
+      "name": "find",
+      "where": "/workspace/ldpi/adapted/src/compiler/core.ts:166:1"
+    }
+  ]
+}

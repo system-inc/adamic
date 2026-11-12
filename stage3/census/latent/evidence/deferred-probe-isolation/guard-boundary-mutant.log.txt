@@ -1,0 +1,8 @@
+=== RUN   TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+=== PAUSE TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+=== CONT  TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+    deferred_probe_test.go:63: deferred probe must isolate state then reset its refusal: methods=1 snapshots=0 resets=1
+--- FAIL: TestLatentDeferredProbeSnapshotBoundaryHcxsh1k (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/overlaytext	0.008s
+FAIL

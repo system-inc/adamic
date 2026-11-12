@@ -1,0 +1,45 @@
+# Deferred-probe isolation and stock census delta
+
+Measured main tip: **`4bba06cb2dc4a0046c11fc97e9953ec85ed0e638`**. Input: its own adapted tsc entry, 81 resolved non-library source files and **4,566 top-level units**. The source hashes, compiler/submodule pins and runtime overlay hashes are in [provenance.json](provenance.json).
+
+`latentDeferredStop` now probes `*l.latentSnapshot()` and then clears the copy's refusal state. Predicate preflight can register checked fields and view sources, so copying only the lowering struct allowed writes through its shared IR result. The comment now guarantees isolation of lowering-owned registrations while retaining the snapshot policy for immutable identities and explicitly shared pure caches.
+
+| Difference, fixed against shallow | Raw findings | Distinct reads |
+| --- | ---: | ---: |
+| Removed with no remaining finding | 0 | 0 |
+| Moved to another reason | 0 | 0 |
+| New findings | 0 | 0 |
+| New sites | 0 | 0 |
+| Units whose first stop changed | 0 | 0 |
+| Regressions in the paired stock observation | 0 | 0 |
+
+| Kind | Raw before → after | Distinct before → after |
+| --- | ---: | ---: |
+| NotYet | 515 → 515 | 508 → 508 |
+| Refused | 4382 → 4382 | 4187 → 4187 |
+
+**No differing finding/reason words or unit first-stop words.** Every changed-record array is empty in [delta.json.gz](delta.json.gz), produced by `stage3/census/pair/pair.py` with stock TypeScript 6.0.3 access-chain normalization.
+
+Status counts on both sides: `{'attempted': 4063, 'deferred_generic_instantiation': 503}`. Per-file declaration/unit coverage matches the independent stock-TypeScript AST manifest, with each of all 4,566 units observed once per variant. Every finding event, unit status and instantiated flag matches. The metadata differences below account for the streams not being byte-identical. This is a stock lowering/scan result at this pin, not evidence that whole-program tail passes accepted tsc.
+
+The zero finding/first-stop delta does not mean all metadata is unchanged. Exactly one unit changes only its capped `instantiated_by` sample: `src/compiler/core.ts:166:1` (`find`) gains the `JSDocTag` witness from `src/compiler/utilities.ts:4765:1`, call `4768:27`; the five-entry cap drops the sample from `src/compiler/utilitiesPublic.ts:1111:1`, call `1280:12`. Its instantiated flag stays true, and every unit status and instantiated flag is unchanged. In group 1, assignable cache pairs change **121,015 → 121,326 (+311)** and strict-subtype pairs **21,770 → 21,778 (+8)**. All other per-child cache sizes match, with zero flags/TS2859. [metadata-delta.json](metadata-delta.json) preserves the exact before/after unit and cache observations. These per-child cache counts do not establish the unsliced whole-run cache budget.
+
+Each child uses the meter's unchanged entry driver, `LATENT_FULL=0`, `LATENT_SPECULATIVE=0`, and the no-output assertion. All whole-file syntax/contract scans remain enabled. Six disjoint complete-file groups keep every child below 30 minutes; all retain the entire resolved program, original entry root, full function registration and normal dependency-body lowering. The scratch selector filters only the first-error file observation loop. No tail pass is added and no unit IR IDs or functions are compacted. Global generic-entry flags and the first five witnesses are unioned with the same Go JSON sort order. An unsliced three-file predicate/generic control and its reassembled file slices match exactly for both variants, including the five-witness cap.
+
+Every final census child exited **0**, with complete file rows and a relation trailer; none reached its 1,700-second deadline or reported an after-load/end relation overflow or flagged cache pair. [checks.json](checks.json) records each child's own exit, wall time and peak RSS. Children overlap, so these wall times are not a causal performance comparison. Relation-cache sizes remain per child; no whole-run relation-cache budget is manufactured by summing them. Setup, environment-interrupted and superseded unsliced attempts are excluded.
+
+Guard: **`TestLatentDeferredProbeOwnsPredicateRegistrationsHcxsh1k`**, [source](../../deferred_probe_test.go.txt). It compiles against main's real preflight and generated snapshot copier. A direct preflight witness must register a predicate checked field and view source. The actual deferred probe must leave the entire unit result, view sources and pre-existing refusal state unchanged. It calls `t.Parallel()` and starts no subprocess. The guard passes in **0.14 s**; restoring only `probe := *l` makes it fail in **0.06 s** with:
+
+```text
+deferred probe leaked IR registrations: CheckedFields before=map[] after=map[3806:kind:true 3806:text:true]
+```
+
+The ordinary main-source boundary guard, **`TestLatentDeferredProbeSnapshotBoundaryHcxsh1k`**, reads the active overlay method and guards its snapshot/reset and compiled-guard wiring. It also calls `t.Parallel()`; the shallow-copy source mutant makes it red. Both names are repo-wide unique. Neither test runs `go build`. Measurement setup builds happen outside tests. The real guard is run with the overlay's production lower source files plus its one virtual test file: unrelated production tests require `lowerChecked`, which the no-output overlay deliberately removes. Exact commands and child statuses are preserved with the raw evidence.
+
+Whole package checks: `go test ./stage3/census/latent/...` passed (60 tests/subtests; longest 9.59 s), and the same tree with `-tags=census_overlay -overlay=…` passed (65 tests/subtests; longest 4.11 s). The compiled predicate guard above is an additional invocation. All use a 25-second test timeout. The compiler dependency audit passes; `cloud/fast-gate/compiler-dependencies.json` retains load/lower and now explicitly includes `internal/ir`, which the new registration guard reads.
+
+Shallow-copy search: this was the sole active latent-overlay probe using `:= *l`. The separate `stage3/census/predicates/tools/lower.go.txt:320` also contains that copy; it is not compiled by the latent overlay, has no snapshot facility, and was not measured here, so it is unchanged. Historical evidence/mutant copies are retained as evidence. No other active latent probe needed a fix.
+
+Large raw streams, per-slice exports/statuses, the independent unit manifest, reassembly control, frozen Go sources (`.go.txt`) and scratch tooling are on **`typescript/latent-deferred-probe-isolation-evidence`**, under `stage3/census/latent/evidence/deferred-probe-isolation/raw/`. This change holds only the small delta, provenance, guard logs and summary. No evidence here names a Python test.
+
+Raw evidence commit: [`2ecc0f5994f3b334aa70749334bd2c6b1f1a9681`](https://github.com/system-inc/adamic/tree/2ecc0f5994f3b334aa70749334bd2c6b1f1a9681/stage3/census/latent/evidence/deferred-probe-isolation/raw).
