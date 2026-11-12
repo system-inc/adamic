@@ -24,3 +24,6 @@ start parent-measure pid=13740
 start head-measure pid=13741
 parent-measure child_exit=0
 start checkpoint-parent pid=14063
+checkpoint-parent child_exit=0
+head-measure child_exit=0
+start checkpoint-head pid=14097
