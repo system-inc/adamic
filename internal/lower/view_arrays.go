@@ -91,6 +91,41 @@ type viewElementKey struct {
 	misses  []string
 }
 
+// viewedElementNesting is how deep a generic target may nest inside its own type arguments before
+// collectViewedElements counts it as growing without end.
+const viewedElementNesting = 5
+
+// selfNesting is how deep a generic reference's target nests inside its own type arguments, Grow<number>
+// 1 and Grow<Grow<number>> 2, counting at most limit. generic is the target being counted, or nil to
+// count each reference's own. Past selfNestingDepth levels of type arguments of any target, it answers
+// limit, as if grown, so an expansion that alternates targets can't recurse without end either.
+func (l *lowering) selfNesting(proven *checker.Type, generic *checker.Type, limit int) int {
+	return l.selfNestingAt(proven, generic, limit, selfNestingDepth)
+}
+
+const selfNestingDepth = 64
+
+func (l *lowering) selfNestingAt(proven *checker.Type, generic *checker.Type, limit, depth int) int {
+	if limit <= 0 || proven == nil || proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 || proven.Target() == nil {
+		return 0
+	}
+	if depth <= 0 {
+		return limit
+	}
+	if generic == nil {
+		generic = proven.Target()
+	}
+	own := 0
+	if proven.Target() == generic {
+		own = 1
+	}
+	deepest := 0
+	for _, argument := range l.checker.GetTypeArguments(proven) {
+		deepest = max(deepest, l.selfNestingAt(argument, generic, limit-own, depth-1))
+	}
+	return min(own+deepest, limit)
+}
+
 // collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
 // (a speculation's result is a cast too), so it reads every one in every module the program loads,
 // .a and .ts alike, and collects the element type of every array its target can hold, through
@@ -104,12 +139,22 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 	key.viewed = map[*checker.Type]bool{}
 	key.related = map[*checker.Type]bool{}
 	seen := map[*checker.Type]bool{}
+	// A generic that instantiates itself deeper at each step (interface Grow<T> { next?: Grow<Grow<T>> })
+	// is a new type at every level, so seen never stops the walk, and it ran until Go's stack overflowed
+	// (#k031ey0). A type whose generic target nests inside its own type arguments more than
+	// viewedElementNesting deep is that growth, and the walk can't see to its end, so every read is
+	// checked, the pre-pass's answer wherever it can't decide. Many instantiations of one generic along a
+	// path (NodeArray<Node>, NodeArray<Statement>) never nest, so they never count (Optimizer's should).
 	var hold func(target *checker.Type, arm bool)
 	hold = func(target *checker.Type, arm bool) {
-		if target == nil || seen[target] {
+		if target == nil || seen[target] || key.every {
 			return
 		}
 		seen[target] = true
+		if l.selfNesting(target, nil, viewedElementNesting+1) > viewedElementNesting {
+			key.every = true
+			return
+		}
 		switch {
 		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
 			for _, member := range target.Types() {
