@@ -241,6 +241,25 @@
       "parse_error": null
     },
     {
+      "file": "emitter.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 1357.596,
+      "timeout": false,
+      "total_findings": 767,
+      "observed_findings": 767,
+      "compiler_findings": 335,
+      "kinds": {
+        "Refused": 183,
+        "NotYet": 152,
+        "Boundary": 432
+      },
+      "new_reason_findings": [],
+      "sha256": "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7",
+      "raw_sha256": "5832e877e20fffb1c4a0e63d2f577b5065c47d8938da57c455c63437bd7d2a20",
+      "parse_error": null
+    },
+    {
       "file": "executeCommandLine.ts",
       "status": "ran",
       "exit": 0,
@@ -373,7 +392,7 @@
     "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
   },
   "coverage": {
-    "ran": 18,
+    "ran": 19,
     "timed_out": 1
   },
   "expected_files": 79,

@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript's compiler
 
-**0 new-reason sites observed** across 19/79 attempted files. This is a completed census only when all 79 files have status `ran`.
+**0 new-reason sites observed** across 20/79 attempted files. This is a completed census only when all 79 files have status `ran`.
 
 
 ## Control
@@ -39,7 +39,7 @@ Head `e4b65199b13da9dcce678ffe93e0f06fe11bb2e5`; TypeScript `050880ce59e30b356b6
 | corePublic.ts | ran | 0 | 32.716 | False | 0 | 0 |
 | debug.ts | ran | 0 | 84.415 | False | 10 | 5 |
 | diagnosticInformationMap.generated.ts | ran | 0 | 33.865 | False | 0 | 0 |
-| emitter.ts | not run | | | | unknown | unknown |
+| emitter.ts | ran | 0 | 1357.596 | False | 767 | 335 |
 | executeCommandLine.ts | ran | 0 | 192.473 | False | 365 | 187 |
 | expressionToTypeNode.ts | ran | 0 | 198.716 | False | 183 | 97 |
 | factory/baseNodeFactory.ts | ran | 0 | 37.64 | False | 10 | 5 |
