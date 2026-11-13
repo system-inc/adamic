@@ -119,7 +119,7 @@ type SetTimeoutView = (callback: () => void, ms: number) => unknown;
 const host: Host = { setTimeout, clearTimeout };
 const again: Host = { setTimeout, clearTimeout };
 const view: SetTimeoutView = setTimeout;
-console.log(String(view === setTimeout), String(clearTimeout === clearTimeout), String([host, again].length));`)
+console.log(String(view === setTimeout) + ' ' + String(clearTimeout === clearTimeout) + ' ' + String([host, again].length));`)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -142,7 +142,9 @@ console.log(String(view === setTimeout), String(clearTimeout === clearTimeout), 
 
 // A timer's value is admitted only where its slot sees it exactly as its view (Adamic's ruling on
 // #995spev, Nov 13), an optional method's undefined aside; any other slot, and none, is NotYet naming
-// what it saw. Mutant: nodeTimerView admitting a third parameter, and the wider view's row goes red.
+// what it saw. An optional callback is refused before it, at the relation, by 0.1's rule for a
+// method's parameters. Mutant: nodeTimerView admitting a third parameter, and the wider view's row
+// goes red.
 func TestNodeTimerValuesNeedTheirView(t *testing.T) {
 	t.Parallel()
 	const setView = "node:timers.setTimeout value needs exactly (callback: () => void, ms: number) => unknown, not "
@@ -151,11 +153,11 @@ func TestNodeTimerValuesNeedTheirView(t *testing.T) {
 		// System's slot as rulings.md:314 had it before the ruling.
 		"interface Host { setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown; }\nconst host: Host = { setTimeout };": setView,
 		"const wide: (callback: () => void, ms: number, label: string) => unknown = setTimeout;":                                                                             setView,
-		"interface Host { setTimeout(callback?: () => void, ms?: number): unknown; }\nconst host: Host = { setTimeout };":                                                    setView,
+		"interface Host { setTimeout(callback: () => void, ms?: number): unknown; }\nconst host: Host = { setTimeout };":                                                     setView,
 		"interface Host { setTimeout(callback: (...names: string[]) => void, ms: number): unknown; }\nconst host: Host = { setTimeout };":                                    setView,
 		"interface Host { setTimeout(callback: () => void, ms: number): NodeJS.Timeout; }\nconst host: Host = { setTimeout };":                                               setView,
 		"const read = setTimeout;":   setView + "typeof setTimeout with no slot",
-		"const read = clearTimeout;": clearView + "typeof clearTimeout with no slot",
+		"const read = clearTimeout;": clearView + "(timeout: unknown) => void with no slot",
 		"interface Host { clearTimeout(timeoutId: NodeJS.Timeout): void; }\nconst host: Host = { clearTimeout };":                                                   clearView,
 		"class Holder { get _onTimeout(): number { return 1; } }\ninterface Host { clearTimeout(timeoutId: unknown): void; }\nconst host: Host = { clearTimeout };": "node:timers.clearTimeout value where the program declares an _onTimeout method or accessor, which Node reads",
 	} {
@@ -167,5 +169,16 @@ func TestNodeTimerValuesNeedTheirView(t *testing.T) {
 				t.Fatalf("want NotYet %q, got %v", want, err)
 			}
 		})
+	}
+}
+
+// An optional callback in setTimeout's slot is refused by 0.1 before the value's view is judged, since
+// tsc relates a method's parameters both ways.
+func TestNodeTimerValueOptionalCallbackIsRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "import 'node:timers';\ninterface Host { setTimeout(callback?: () => void, ms?: number): unknown; }\nconst host: Host = { setTimeout };")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "a function taking () => void seen as one taking (() => void) | undefined") {
+		t.Fatalf("want 0.1's refusal of the optional callback, got %v", err)
 	}
 }
