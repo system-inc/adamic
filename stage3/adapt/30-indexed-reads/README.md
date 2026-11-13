@@ -1273,3 +1273,45 @@ getfunctionname-home.json in this directory. Full paired replay and the
 original-home apply outcome are recorded by
 99-correctness-core-getfunctionname-move. This is a replay-recognition
 amendment, with no new emitted JavaScript edit in this earlier adaptation.
+
+## 2026-11-13: remove the unread ambient require (task 93w9rtz)
+
+Adamic's ruling, Nov 13 at 09:08Z, removes only ` declare const require: unknown;`
+from `whole-files.cjs`'s inserted core header. The process declaration remains
+exactly `declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;`.
+The Nov 8 amendment at `docs/rulings.md:220` made require a host-binding row only
+until its test disappeared. Adaptation 99q removed that test in `529705a1`.
+Workers' checker survey on task 93w9rtz found no remaining reader over all 79
+roots. An unread ambient declaration itself stops under the CommonJS bundle,
+because its CommonJS and ES answers differ. Removing it emits no JavaScript.
+`internal/load/host_bindings.json`'s require row remains. All of `internal/`,
+including oracle fixtures that declare require in their own programs, is untouched.
+
+`whole-sites.json` now records only the process declaration and its remaining
+host diagnostics, with the require removal attributed to the ruling.
+`whole-files.cjs` now rejects any `declare const require` in core in check mode.
+`require-mutant.cjs` runs that actual check on a 30-after snapshot, restores the
+declaration, requires exit 1 with the new guard's message, restores the bytes,
+and requires exit 0 again. Each child exit is printed.
+
+Outside-file audit and amendments:
+
+- `32-indexed-reads-program/record-tables-measure-plan.json`: remove the declaration
+  from both embedded core sources and recompute each source SHA-256 over CRLF bytes, matching the existing convention. This is an
+  amendment to 32's measurement plan; no other source in that plan changes.
+- Owner pins (including 99q's isNodeLikeSystem body) exclude the ambient line;
+  none spans it and none needs amendment. Historical whole-file source-hash
+  evidence describes its original tree and is retained as historical evidence.
+- `65-temporary-node-builtins/adapt.cjs` preserves the same process declaration;
+  its require declarations concern other files. Its `evidence/previous-process-*`
+  files are historical programs, not active core adapters, and remain intact.
+- `stage3/lane/sanctioned-api.json` and `stage3/lane/shard-plan.json`: regenerate
+  and compare. Their public-owner proofs and test partitions do not consume this
+  ambient declaration; any changed generated input is carried with this amendment.
+  Adaptation 30 does feed the lane's artifact key, so whole and shard lane proofs
+  are required. Proof logs and exact exits are on the companion evidence branch
+  `typescript/adapt30-drop-require-evidence`.
+
+Reproduce the mutant with stock 6.0.3 on NODE_PATH and a tree extracted from the
+full apply's `refs/stage3/30-indexed-reads-after` snapshot:
+`node stage3/adapt/30-indexed-reads/require-mutant.cjs TREE`.
