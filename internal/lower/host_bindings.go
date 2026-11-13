@@ -379,17 +379,47 @@ func hostBindingRowStop(row load.HostBinding) string {
 	return ""
 }
 
-// hostBindingStopIn is why a row doesn't lower in this lowering's build, or "" when it does. A row's Node
-// answer is measured in ES module mode, as the oracle runs every program, so it says nothing of a build
-// that declares one CommonJS bundle (ModuleFormatCommonJSBundle), where Node answers otherwise: typeof
+// hostBindingStopIn is why a row doesn't lower in this lowering's build, or "" when it does. A row's ES
+// answer is measured as the oracle runs every program, an ES module, so it says nothing of a build that
+// declares one CommonJS bundle (ModuleFormatCommonJSBundle), where Node may answer otherwise: typeof
 // require is "function" there, and folding core.ts's require Absent would make isNodeLikeSystem silently
-// false. Such a build stops at every row measured only in ES module mode, at its declaration and at every
-// use, until that format's answer is measured into the row (#redxes2; WebAssembly's must on #00qn5az).
+// false. Such a build judges a row by its CommonJS answer (#93w9rtz): a row with none recorded stops,
+// measured in ES module mode only (#redxes2; WebAssembly's must on #00qn5az). So does a row whose two
+// answers differ, even both defined, since its model was built and held to the ES answer (Platforms'
+// must on #93w9rtz), and so does a row whose columns don't give its CommonJS answer, each at its
+// declaration and at every use, with nothing folded.
 func (l *lowering) hostBindingStopIn(row load.HostBinding) string {
-	if l.moduleFormat == ModuleFormatCommonJSBundle && row.Node.Module == "ES" {
-		return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"
+	if l.moduleFormat == ModuleFormatCommonJSBundle {
+		if row.Node.CommonJS == "" {
+			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"
+		}
+		if row.Node.CommonJS != row.Node.TypeOf {
+			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, where Node's typeof is \"" + row.Node.CommonJS + "\" as a CommonJS script and \"" + row.Node.TypeOf + "\" as an ES module (#93w9rtz),"
+		}
+		if !hostBindingColumnsGive(row, row.Node.CommonJS) {
+			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, where Node's typeof is \"" + row.Node.CommonJS + "\" and its columns don't give that (#93w9rtz),"
+		}
 	}
 	return hostBindingRowStop(row)
+}
+
+// hostBindingColumnsGive reports whether every cleared column of a row gives Node's typeof answer: Absent
+// where it's "undefined", Provided where it's anything else. A pending column gives nothing yet, and
+// hostBindingRowStop names it.
+func hostBindingColumnsGive(row load.HostBinding, typeOf string) bool {
+	for _, target := range row.Targets() {
+		switch target.Column.Answer {
+		case load.HostBindingAbsent:
+			if typeOf != "undefined" {
+				return false
+			}
+		case load.HostBindingProvided:
+			if typeOf == "undefined" {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 // possessive is an owner's name with its possessive ending: Runtime's, Platforms'.
