@@ -152,14 +152,6 @@ func watchFileProduct(t *testing.T, fixture, variant string) string {
 				data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
 				matched = true
 			}
-			if variant == "throw-ignored" && entry.Name() == "async.c" {
-				// Omit the drain's fallback as well as the timer's exception check.
-				before := "static void check_unhandled(void) {\n    if (adamic_thrown != NULL) adamic_uncaught();"
-				if strings.Count(string(data), before) != 1 {
-					return fmt.Errorf("pending exception mutant must match once")
-				}
-				data = []byte(strings.Replace(string(data), before, "static void check_unhandled(void) {", 1))
-			}
 			if err := os.WriteFile(filepath.Join(runtimeDirectory, entry.Name()), data, 0600); err != nil {
 				return err
 			}

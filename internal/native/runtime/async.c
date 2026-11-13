@@ -183,7 +183,6 @@ static bool source_closes_waiting(void);
 /* A queue entry owns its promise until this checkpoint, even if the caller
  * discarded the result. A later await in the same drain can still handle it. */
 static void check_unhandled(void) {
-    if (adamic_thrown != NULL) adamic_uncaught();
     while (unhandled_first != NULL) {
         pending *entry = unhandled_first;
         adamic_async_promise *promise = entry->promise;
@@ -215,7 +214,6 @@ static void drain_jobs(void) {
         if (jobs == NULL) jobs_last = NULL;
         reaction->next = NULL;
         reaction->frame->resume(reaction->frame, reaction->promise->value, reaction->promise->rejected);
-        if (adamic_thrown != NULL) adamic_uncaught();
         adamic_release(reaction);
     }
     /* Node's ticks after the microtasks: a warning a job's setTimeout gave, or main's, which the

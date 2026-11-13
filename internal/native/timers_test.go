@@ -388,23 +388,6 @@ func timerProduct(t *testing.T, variant string, options native.Options) string {
 		for _, mutation := range timerMutations {
 			if variant == "mutant-"+mutation.name || variant == "counted-"+mutation.name {
 				runtime := timerMutant(t, mutation.file, mutation.before, mutation.after)
-				if mutation.name == "callback-uncaught-omitted" {
-					// The drain also reports pending synchronous exceptions. Omit
-					// that fallback so this mutant still reaches a successful exit.
-					path := filepath.Join(runtime.directory, "async.c")
-					data, err := os.ReadFile(path)
-					if err != nil {
-						return err
-					}
-					before := "static void check_unhandled(void) {\n    if (adamic_thrown != NULL) adamic_uncaught();"
-					if strings.Count(string(data), before) != 1 {
-						return fmt.Errorf("pending exception mutant must match once")
-					}
-					data = []byte(strings.Replace(string(data), before, "static void check_unhandled(void) {", 1))
-					if err := os.WriteFile(path, data, 0600); err != nil {
-						return err
-					}
-				}
 				return runtime.build(code, output, options)
 			}
 		}
