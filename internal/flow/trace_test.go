@@ -150,6 +150,11 @@ const adamicPoint = (point, variables) => {
 };
 `
 
+// traceMutable reports whether a value can be mutated; strings are immutable.
+func traceMutable(valueType ir.Type) bool {
+	return valueType.IsReference() && valueType != ir.String
+}
+
 // traced runs a program on Node, through the JavaScript backend with every point marked, and returns
 // its graphs (each in single assignment form) and the trace.
 func prepareTrace(t *testing.T, path string) traceSetup {
@@ -172,7 +177,7 @@ func prepareTrace(t *testing.T, path string) traceSetup {
 		seen := map[DeclarationId]bool{}
 		for _, identifier := range graph.Identifiers {
 			local := int(identifier.Declaration) - 1
-			if identifier.Declaration == 0 || seen[identifier.Declaration] || !mutable(program.Locals[local].Type) {
+			if identifier.Declaration == 0 || seen[identifier.Declaration] || !traceMutable(program.Locals[local].Type) {
 				continue
 			}
 			seen[identifier.Declaration] = true
