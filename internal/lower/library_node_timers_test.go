@@ -73,13 +73,12 @@ setTimeout(() => { console.log('none'); });`)
 	}
 }
 
-// What this head doesn't hold stays NotYet, in words that say what.
+// What this head doesn't hold stays NotYet, in words that say what. A callback returning a promise is
+// Refused before it reaches the host, as :355's floating task (TestPromiseIntoVoidRefusesTimerCallbacks).
 func TestNodeTimersStayLoud(t *testing.T) {
 	t.Parallel()
 	for source, want := range map[string]string{
 		"setTimeout((...names: string[]) => { console.log(names.join()); }, 1, 'a');":                                     "node:timers.setTimeout with a generic, this-typed or rest-parameter callback",
-		"setTimeout(async () => { console.log('a'); }, 1);":                                                               "node:timers.setTimeout with a callback returning a promise",
-		"setTimeout((flag: boolean): Promise<number> | number => flag ? Promise.resolve(1) : 1, 1, true);":                "node:timers.setTimeout with a callback returning a promise",
 		"const handle = setTimeout(() => {}, 1); handle.unref();":                                                         "node:timers.Timeout.unref",
 		"const handle = setTimeout(() => {}, 1); handle.refresh();":                                                       "node:timers.Timeout.refresh",
 		"const handle = setTimeout(() => {}, 1); const cleared = clearTimeout(handle);":                                   "node:timers.clearTimeout used as a value; call it as a statement",
