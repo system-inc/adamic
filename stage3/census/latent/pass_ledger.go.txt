@@ -37,6 +37,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "counters", Scoped: true},
 	{Name: "voidDiscards"},
 	{Name: "checkInspectorDoomedContracts"},
+	// checkFlowLiveness judges, once nothing more changes the program, that no function a flow graph
+	// took to never run is named after (#p2n17c4 H3): it reads the IR and rewrites nothing, so a body
+	// lowered on its own has no graph to hold and the latent census records it as not run, as it does
+	// every judging pass.
+	{Name: "checkFlowLiveness"},
 }
 
 // Finalized with the unit status and instantiation metadata, once all modes have
