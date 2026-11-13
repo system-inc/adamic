@@ -228,33 +228,32 @@ func TestHostBindingRequireIsAbsent(t *testing.T) {
 	}
 }
 
-// A row's Node answer is measured in ES module mode, so a build that declares one CommonJS bundle, where
-// Node answers typeof require "function", stops at core.ts's require rather than folding it Absent, at
-// its declaration, and so does a row of any name, Absent or routed (WebAssembly's must on #00qn5az, #redxes2). The
-// same program lowers in the default ES build. Mutant (l), internal/oracle/testdata/host_bindings/
-// mutants.md: hostBindingStopIn's format test dropped, and the bundle build lowers require as Absent.
+// A build that declares one CommonJS bundle judges a row by Node's answer to the probe run as a CommonJS
+// script (#93w9rtz). core.ts's require is Absent, Node's answer as an ES module, but "function" as a
+// script, so the bundle build stops at its declaration rather than folding it Absent (WebAssembly's must
+// on #00qn5az, #redxes2), and the reason names the answer. The rows whose two answers agree lower in the
+// bundle build as they do in the ES build: onProfilerEvent Absent, and process and performance routed
+// through their models (Compiler's read of #00qn5az's seam with #yewmv46: the routed rows are judged at
+// the declaration before any read is routed). Every program lowers in the default ES build. Mutants (l)
+// and (s), internal/oracle/testdata/host_bindings/mutants.md: hostBindingStopIn's format test dropped,
+// and the bundle build lowers require as Absent, or its equality test, and require stops for its columns
+// instead of naming both answers.
 func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, file, source, want string }{
-		{"core.ts's require", "core.ts", "declare const require: unknown;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof require !== \"undefined\";\n}\n",
-			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
-		{"performance.ts's onProfilerEvent", "performance.ts", profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n",
-			"performance.ts:1:13: stage 0 can't lower the host binding onProfilerEvent in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
-		// A routed row too: process is Provided and routes its reads through node:process in the ES build, and a
-		// bundle build stops at its declaration before any read is routed (Compiler's read of #00qn5az's seam with
-		// #yewmv46).
-		{"core.ts's process, a routed row", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nconsole.log(typeof process);\n",
-			"core.ts:1:15: stage 0 can't lower the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2), yet"},
+	for _, probe := range []struct{ name, file, source, imports, want string }{
+		{"core.ts's require", "core.ts", "declare const require: unknown;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof require !== \"undefined\";\n}\n", "",
+			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"undefined\" as an ES module (#93w9rtz), yet"},
+		{"performance.ts's onProfilerEvent", "performance.ts", profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n", "", ""},
+		// The routed rows' model exports are node:process's and node:perf_hooks', which the program has to load
+		// (processModules).
+		{"core.ts's process, a routed row", "core.ts", "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;\nconsole.log(typeof process);\n", "import 'node:process';\n", ""},
+		{"tracing.ts's process, a routed row", "tracing.ts", "declare const process: { readonly pid: number };\nconsole.log(typeof process);\n", "import 'node:process';\n", ""},
+		{"performanceCore.ts's performance, a routed row", "performanceCore.ts", "export interface Performance { now(): number; readonly timeOrigin: number; mark(name: string): void; measure(name: string, startMark?: string, endMark?: string): void; clearMeasures(name?: string): void; clearMarks(name?: string): void; }\ndeclare const performance: Performance | undefined;\nconsole.log(typeof performance);\n", "import 'node:perf_hooks';\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			directory := t.TempDir()
-			main := "import './" + probe.file + "';\n"
-			if strings.Contains(probe.name, "process") {
-				// The routed row's model export is node:process's, which the program has to load (processModules).
-				main = "import 'node:process';\n" + main
-			}
-			for name, source := range map[string]string{probe.file: probe.source, "main.ts": main} {
+			for name, source := range map[string]string{probe.file: probe.source, "main.ts": probe.imports + "import './" + probe.file + "';\n"} {
 				if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
 					t.Fatal(err)
 				}
@@ -267,10 +266,72 @@ func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 				t.Fatalf("the ES build: want it to lower, got %v", err)
 			}
 			_, err = LowerWithOptions(context.Background(), program, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+			if probe.want == "" {
+				if err != nil {
+					t.Errorf("the bundle build: want the row's CommonJS answer to admit it, got %v", err)
+				}
+				return
+			}
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
 				t.Errorf("the bundle build: got %v, want %s", err, probe.want)
 			}
 		})
+	}
+}
+
+// The bundle's judgment of one row, by the row alone (#93w9rtz): a row with no CommonJS answer stops,
+// measured in ES module mode only, whatever its columns; a row whose two answers differ stops naming
+// both, in either direction and when both are defined (Platforms' must: object as a module, function as
+// a script); a row whose answers agree but whose columns don't give them stops naming the answer; and a
+// row whose columns give it lowers as it does in the ES build, whose judgment never reads the CommonJS
+// answer. Every table row is measured today, so these are table rows with an answer changed. Mutants (n),
+// (o) and (s), internal/oracle/testdata/host_bindings/mutants.md: hostBindingStopIn's unmeasured test,
+// columns test or equality test dropped, and that row lowers in the bundle.
+func TestHostBindingStopInJudgesTheCommonJSAnswer(t *testing.T) {
+	t.Parallel()
+	rows, err := load.HostBindings()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var process, require load.HostBinding
+	for _, row := range rows {
+		switch {
+		case row.Name == "process" && row.Declaration.File == "core.ts":
+			process = row
+		case row.Name == "require" && row.Declaration.File == "core.ts":
+			require = row
+		}
+	}
+	if process.Node.CommonJS != "object" || require.Node.CommonJS != "function" {
+		t.Fatalf("the table's core.ts rows answer %q and %q as CommonJS scripts, want \"object\" and \"function\"", process.Node.CommonJS, require.Node.CommonJS)
+	}
+	unmeasured, absentAnswer, otherDefined, unclaimed := process, process, process, process
+	unmeasured.Node.CommonJS = ""
+	absentAnswer.Node.CommonJS = "undefined"
+	// Both answers defined and different: the model was held to "object", and the bundle's Node says
+	// "function" (Platforms' must on #93w9rtz).
+	otherDefined.Node.CommonJS = "function"
+	// Both answers "undefined", agreeing, and the columns Provided: only the columns test stops it.
+	unclaimed.Node.TypeOf, unclaimed.Node.CommonJS = "undefined", "undefined"
+	bundle, es := &lowering{moduleFormat: ModuleFormatCommonJSBundle}, &lowering{}
+	for _, probe := range []struct {
+		name  string
+		judge *lowering
+		row   load.HostBinding
+		want  string
+	}{
+		{"unmeasured, bundle", bundle, unmeasured, "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"},
+		{"unmeasured, ES", es, unmeasured, ""},
+		{"Absent columns, function", bundle, require, "the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"undefined\" as an ES module (#93w9rtz),"},
+		{"Absent columns, function, ES", es, require, ""},
+		{"Provided columns, undefined", bundle, absentAnswer, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"undefined\" as a CommonJS script and \"object\" as an ES module (#93w9rtz),"},
+		{"Provided columns, object then function", bundle, otherDefined, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"object\" as an ES module (#93w9rtz),"},
+		{"Provided columns, undefined in both", bundle, unclaimed, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"undefined\" and its columns don't give that (#93w9rtz),"},
+		{"Provided columns, object", bundle, process, ""},
+	} {
+		if got := probe.judge.hostBindingStopIn(probe.row); got != probe.want {
+			t.Errorf("%s: got %q, want %q", probe.name, got, probe.want)
+		}
 	}
 }

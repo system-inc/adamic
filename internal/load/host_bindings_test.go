@@ -75,10 +75,14 @@ func hostBindingCells(row HostBinding) []string {
 	if row.Divergence != "" {
 		divergence = row.Divergence
 	}
+	node := fmt.Sprintf("%s, %s module, `%s`", row.Node.Version, row.Node.Module, row.Node.TypeOf)
+	if row.Node.CommonJS != "" {
+		node += fmt.Sprintf("; CommonJS script, `%s`", row.Node.CommonJS)
+	}
 	return []string{
 		row.Name,
 		fmt.Sprintf("%s, `declare %s %s: %s`", row.Declaration.File, row.Declaration.Keyword, row.Name, row.Declaration.Type),
-		fmt.Sprintf("%s, %s module, `%s`", row.Node.Version, row.Node.Module, row.Node.TypeOf),
+		node,
 		column(row.Native), column(row.JavaScript), column(row.WASM32),
 		model, divergence, row.Ruling,
 	}
@@ -148,6 +152,7 @@ func TestHostBindingsRefuseAnUntrustedRow(t *testing.T) {
 		{"a Provided column with no model", `"javascript": {"answer": "Absent"}`, `"javascript": {"answer": "Provided"}`, "a model is named exactly when a column is Provided"},
 		{"a model with no Provided column", `"path": ""`, `"path": "node:process"`, "a model is named exactly when a column is Provided"},
 		{"a CommonJS answer", `"module": "ES"`, `"module": "CommonJS"`, "Node's answer needs its version, module mode ES and a typeof answer"},
+		{"a CommonJS answer typeof never gives", `"typeof": "undefined"`, `"typeof": "undefined", "commonjs": "absent"`, "Node's CommonJS answer, when it's recorded, is a typeof answer"},
 		{"a var", `"keyword": "let"`, `"keyword": "var"`, "the declaration's keyword is neither const nor let"},
 		{"a path", `"file": "performance.ts"`, `"file": "compiler/performance.ts"`, "the declaration's file isn't the basename of a .ts file"},
 		{"an unknown field", `"divergence": ""`, `"divergence": "", "trusted": true`, `unknown field "trusted"`},
