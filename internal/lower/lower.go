@@ -288,6 +288,8 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 }
 
 type lowering struct {
+	inspectorRequireKnown     bool // Lazy, immutable program facts; no IR or unit ownership.
+	inspectorRequirePresent   bool
 	inspectorSkippedContracts map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
 	bindGetters               map[string]bool   // source getter names, memoized for bind receiver admission
 	debug                     bool
