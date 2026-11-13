@@ -37,9 +37,9 @@ after:  Timeout callback:: count: 1\r\n1: undefined
 ```
 
 The byte-identity assertion exits 1, by design. This is a focused counterexample,
-not a complete lane run or a completed adaptation. result.json was collected
-while main's apply was still running; upstream-result.json independently
-reproduces the same mismatch against the immutable pinned upstream checkout.
+not a complete lane run or a completed adaptation. result.json was regenerated after main's full apply completed with exit 0.
+upstream-result.json independently reproduces the same mismatch against the
+immutable pinned upstream checkout. Both probe invocations exited 1.
 
 For a real checked-in baseline example, see TypeScript's
 `tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js`,
@@ -90,3 +90,15 @@ comparison, complete lane, three required temporal witnesses, three required
 mutants, ledger change, or final sys.ts latent census exists at this stop.
 Only the focused baseline counterexample is claimed. It is not one of the
 three requested production mutants.
+
+## Main apply receipt
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-source \
+  stage3/apply.sh /workspace/scratch/timer-main \
+  > /workspace/scratch/timer-main-apply.log 2>&1
+```
+
+Exit: 0. Raw log: main-apply.log. This is main's apply, not an adapted
+production change, and does not establish the requested adapted replay proof.
