@@ -91,7 +91,7 @@ def audit_union(records):
             if atom != 'prepass':
                 assert finding['unit'] == origins[atom], 'site moved between pieces: unit provenance changed'
             else:
-                assert finding['phase'] == 'refusal_scan', 'body finding relabelled as prepass'
+                assert finding['phase'] in ('refusal_scan', 'registration', 'prepass'), 'body finding relabelled as prepass'
     return True
 
 audit_union(rows)

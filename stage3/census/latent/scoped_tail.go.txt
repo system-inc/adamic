@@ -23,7 +23,7 @@ func (l *lowering) latentFinishUnit(unit *LatentUnit, node *ast.Node) {
 		return
 	}
 	for _, finding := range latentFindings {
-		if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration") {
+		if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration" || finding.Phase == "prepass") {
 			return
 		}
 	}

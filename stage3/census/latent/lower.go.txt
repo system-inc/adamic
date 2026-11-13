@@ -400,7 +400,13 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 						return
 					}
 				}
-				func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
+				var prepassErr error
+				func() { defer latentPrepassTimer("collectViewedElements")(); prepassErr = l.collectViewedElements(modules) }()
+				if prepassErr != nil {
+					latentFindingPhase = "prepass"
+					latentRecord(prepassErr)
+					return
+				}
 				func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
 				func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
 				if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }

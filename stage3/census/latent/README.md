@@ -481,3 +481,5 @@ traces, source-level explanation and first-stop comparison.
 The paired reader's metadata exclusion and its positive and red-mutant tests
 ship in this same tooling commit. Restoring instantiated_by to its eligibility
 comparison must make the unchanged positive test fail.
+
+View-target prepass errors are recorded with phase `prepass`, both at file scope and for each affected eligible unit. Such units are not lowered and cannot pass the scoped tail or pass ledger. Deferred generic bodies remain unexamined.
