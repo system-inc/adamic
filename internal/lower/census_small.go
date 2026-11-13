@@ -162,6 +162,11 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()
 	outerMapper := l.typeMapper
 	defer func() { l.typeMapper = outerMapper }()
+	// Rigid, whoever asks: lowering an instance of a generic call installs that call's mapper
+	// (instantiateFunctionSignature) before its signature reaches here, and a set judged under it was
+	// judged at one call's types and kept for every other (#6zqxygf, Correctness's stack on #68x1t2y).
+	// An implementation with binders of its own replaces it below; one without would have kept it.
+	l.typeMapper = nil
 	if len(servedTypes) > 0 {
 		sources, targets := []*checker.Type{}, []*checker.Type{}
 		inferred := map[*checker.Type]*checker.Type{}
