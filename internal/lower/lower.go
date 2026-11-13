@@ -398,12 +398,11 @@ type lowering struct {
 	// optionalPresenceReads are the presence tests of an optional member lowering read off its slot,
 	// judged by what their receivers may hold once the program is lowered (optional_member_presence.go).
 	optionalPresenceReads []optionalPresenceRead
-	// dispatchedPresenceReads are the presence reads finishAccessors made a dispatcher's call, each keyed by
-	// what the read had before the dispatcher's fallback zeroed it, with its receiver as lowering made it;
-	// presenceAccessorReach is the reach finishAccessors decided those dispatches by, so the check judges a
-	// dispatched read by the same graph and owners (optional_member_presence.go).
-	dispatchedPresenceReads map[optionalPresenceKey][]ir.Expression
-	presenceAccessorReach   *accessorReach
+	// dispatchedPresenceReads are the presence reads finishAccessors made a dispatcher's call, each with the
+	// key the read had before the dispatcher's fallback zeroed it and what its receiver may hold, read
+	// there from the reach and owners the dispatch was decided by (optional_member_presence.go). It holds
+	// plain values, never the graph, so the latent census copies it as it copies any lowering field.
+	dispatchedPresenceReads []dispatchedPresenceRead
 	// hostMemberWrites are the writes to a method a program's interface or type literal declares, each
 	// with main's stop for it, which lowering stores as fields and checkHostMemberWrites judges once
 	// lowering is done (host_member_write.go).
