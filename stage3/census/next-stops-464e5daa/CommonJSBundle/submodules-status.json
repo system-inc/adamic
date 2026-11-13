@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "submodule",
+    "update",
+    "--init",
+    "--recursive",
+    "--depth",
+    "1"
+  ],
+  "exit_code": 0,
+  "seconds": 30.53241244199998,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
