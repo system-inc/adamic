@@ -1,0 +1,6 @@
+/*
+ * tsc's ts namespace (src/compiler/_namespaces/ts.ts, re-exported by src/tsc/_namespaces/ts.ts): a barrel
+ * of export *, which main imports as a namespace (#p2n17c4 T1).
+ */
+export * from './system.a';
+export * from './execute.a';
