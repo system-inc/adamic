@@ -403,7 +403,7 @@ def artifact_lowers_whole(artifact):
 
 def root_order_table(label, result):
     totals = result['totals']
-    lines = ['', f"Body lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
+    lines = ['', f"Lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
              f"root-order artifacts: {len(result.get('root_order_artifacts', []))}.",
              '', '| Root | Stop | Reason | Node result | Classification | Program result from entry census |',
              '| --- | --- | --- | --- | --- | --- |']
@@ -496,7 +496,9 @@ def report(tree, run, stamp, compiler_commit=None):
     for row in rows.values():
         if row['file'] in artifact_roots:
             artifact = artifact_roots[row['file']]
-            row['lowering'] = artifact_lowers_body(artifact)
+            # An ordinary root's row is production lower.Lower whole (stage3/census/tool/main.go).
+            # An artifact root's comes from the entry census, so it needs its whole-program passes too.
+            row['lowering'] = artifact_lowers_whole(artifact)
             row['lowering_stop'] = artifact['entry_next_stop']
             row['lowering_evidence'] = 'entry census'
     files = [rows[name] for name in sorted(rows)]
@@ -525,13 +527,13 @@ def report(tree, run, stamp, compiler_commit=None):
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = [f"Whole program: {totals['checker_whole_program']}/{totals['source_files']}",
              f"Own file: {totals['checker_own_file']}/{totals['source_files']}", '',
-             f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Body lowering |',
+             f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Lowering |',
              '| --- | --- | --- | --- |']
     for row in files:
         lowering = 'pass' if row['lowering'] else 'fail' if row['lowering_attempted'] else 'blocked'
         lines.append(f"| {row['file']} | {'pass' if row['checker'] else 'fail'} | {'pass' if row['checker_own_file'] else 'fail'} | {lowering} |")
     lines += ['', f"Checker: {totals['checker']}/{totals['source_files']} source files. "
-              f"Body lowering: {totals['lowering']}/{totals['source_files']} source files.",
+              f"Lowering: {totals['lowering']}/{totals['source_files']} source files.",
               f"All files: {totals['files']}; JSON inputs fail the source-extension gate.",
               'Blocked means lowering was not attempted because the checker/input gate failed.', '']
     lines += root_order_table('file roots', result)
@@ -554,7 +556,7 @@ def write_readme(run, result, committed_runs):
     previous = max(candidates, default=None, key=lambda item: item[0])
     lines = ['# Stage 3 meter ' + result['timestamp_utc'], '',
              'The area label repeats the pinned main tree for reporter compatibility.', '',
-             '| Run | Main SHA | Whole program | Own file | Body lowering | tsc entry diagnostics |',
+             '| Run | Main SHA | Whole program | Own file | Lowering | tsc entry diagnostics |',
              '| --- | --- | ---: | ---: | ---: | ---: |']
     observations = [('Current', result)]
     if previous:
@@ -569,7 +571,7 @@ def write_readme(run, result, committed_runs):
     if not previous:
         lines += ['', 'No previous committed paired run was found.']
     lines += root_order_table('main', result['trees']['main'])
-    lines += ['', 'For artifact roots, body lowering requires attempted units in every program source and no entry-census finding in the program. No native output is claimed.', '']
+    lines += ['', 'For artifact roots, lowering requires attempted units in every program source, no entry-census finding in the program, and the whole-program passes of every unit measured. No native output is claimed.', '']
     (run / 'README.md').write_text('\n'.join(lines))
 
 
@@ -666,7 +668,7 @@ if __name__ == '__main__':
                  and Path(row['roots'][0]).suffix in ('.ts', '.a')]
         result = {'readiness_node_checks': checks, 'root_order_artifacts': artifacts,
                   'totals': {'lowering': sum(row['kind'] == 'accepted' for row in roots)
-                                         + sum(artifact_lowers_body(row) for row in artifacts),
+                                         + sum(artifact_lowers_whole(row) for row in artifacts),
                              'source_files': len(roots)}}
         (run / 'root-order.json').write_text(json.dumps(result, indent=2) + '\n')
         lines = ['Recorded roots only; census coverage is not asserted.'] + root_order_table('recorded roots', result)
