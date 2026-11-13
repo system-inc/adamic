@@ -109,11 +109,10 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 }
 
 func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
-	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
+	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key, moduleFormat: moduleFormat}
 	// A stop before checkHostMemberWrites judges a deferred host member write is main's stop at that write.
 	defer func() { err = lowering.hostMemberPending(err) }()
 	lowering.debug = debug
-	lowering.moduleFormat = moduleFormat
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types

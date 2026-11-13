@@ -98,6 +98,14 @@ def kind_sites(sites, kind):
                   key=lambda site: (site['where'], site['reason'], site['text']))
 
 
+def measured_format(records):
+    # Historical records predate the declaration; preserve their actual ES default.
+    values = {record.get('module_format', 'EcmaScript') for record in records}
+    if len(values) != 1 or not values <= {'EcmaScript', 'CommonJSBundle'}:
+        raise ValueError('inconsistent or invalid census module_format')
+    return values.pop()
+
+
 def site_lines(summary):
     lines = []
     for kind in ('panic', 'error'):
@@ -151,6 +159,7 @@ def lowering_summary(records, expected, measurement):
     reason_rows = sorted(groups.values(), key=lambda row: (-row['count'], row['reason']))
     return {
         'measurement': measurement,
+        'module_format': measured_format(records[:1]),
         **pass_coverage(records[1:]),
         'relation_report_complete': trailer is not None,
         'relation_overflow': trailer['relation_overflow'] if trailer else None,
@@ -197,9 +206,10 @@ def entry_summary(tree, run):
     if not latent or latent[0].get('roots') != [str(entry)]:
         raise ValueError('invalid tsc entry lowering roots')
     header = latent[0]
+    module_format = measured_format([*records, header])
     if header.get('checker_rejected') != (not checked) or sorted(header.get('diagnostics', [])) != sorted(diagnostics):
         raise ValueError('tsc entry checker and lowering diagnostics disagree')
-    result = {'root': 'src/tsc/tsc.ts', 'checker_whole_program': checked,
+    result = {'module_format': module_format, 'root': 'src/tsc/tsc.ts', 'checker_whole_program': checked,
               'whole_program_diagnostics': len(diagnostics), 'diagnostics': diagnostics,
               'outcome': record['kind'], 'lowering_attempted': checked, 'lowering_census': None}
     if not checked and header.get('latent_mode') != 'full':
@@ -261,7 +271,7 @@ def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
         return ['', relation_budget_line(entry), f'tsc entry body lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', relation_budget_line(entry), f"tsc entry body lowering, {label}: {summary['measurement']}.", *relation_lines(summary), coverage_line(summary), tail_line(summary),
+    lines = ['', relation_budget_line(entry), f"tsc entry body lowering, {label}: {summary['measurement']}.", f"Module format: {summary.get('module_format', 'EcmaScript')}.", *relation_lines(summary), coverage_line(summary), tail_line(summary),
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -279,7 +289,7 @@ def entry_table(label, entry):
 
 def latent_table(label, summary):
     totals = summary['totals']
-    lines = ['', f'Latent body lowering, {label}: {MEASUREMENT}.', *relation_lines(summary), coverage_line(summary), tail_line(summary),
+    lines = ['', f"Latent body lowering, {label}: {MEASUREMENT}. Module format: {summary.get('module_format', 'EcmaScript')}.", *relation_lines(summary), coverage_line(summary), tail_line(summary),
              f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
              f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.",
              f"Errors: {totals['error']}; panics: {totals['panic']}.", *site_lines(summary), '',
@@ -509,6 +519,7 @@ def report(tree, run, stamp, compiler_commit=None):
         'checker_own_file': sum(row['checker_own_file'] for row in files),
     }
     result = {
+        'module_format': measured_format(records),
         'timestamp_utc': stamp,
         'adamic_commit': compiler_commit,
         'profile': 'unmodified stage 0 checker options and prelude',
@@ -524,7 +535,7 @@ def report(tree, run, stamp, compiler_commit=None):
     }
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = [f"Whole program: {totals['checker_whole_program']}/{totals['source_files']}",
-             f"Own file: {totals['checker_own_file']}/{totals['source_files']}", '',
+             f"Own file: {totals['checker_own_file']}/{totals['source_files']}", f"Module format: {result['module_format']}", '',
              f'Stage 3 meter {stamp}', '', '| File | Whole program | Own file | Body lowering |',
              '| --- | --- | --- | --- |']
     for row in files:
@@ -595,6 +606,9 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit, comm
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
         trees[label]['latent_time'] = latent_time_summary(run / label)
         trees[label]['tsc_entry'] = entry_summary(tree, run / label / 'tsc')
+        formats = {trees[label]['module_format'], trees[label]['latent_lowering']['module_format'], trees[label]['tsc_entry']['module_format']}
+        if len(formats) != 1:
+            raise ValueError('ordinary, latent and entry census module_format disagree')
         if metadata and 'latent_mode' in metadata:
             if trees[label]['latent_lowering']['latent_mode'] != metadata['latent_mode']:
                 raise ValueError('latent overlay mode does not match requested mode')
@@ -618,6 +632,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit, comm
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
         values = [f"{label}: {trees[label]['totals'][key]}/{trees[label]['totals']['source_files']}" for label in trees]
         lines.append(f"{title}: " + '; '.join(values))
+    lines.append('Module format: ' + '; '.join(f"{label}: {tree['module_format']}" for label, tree in trees.items()))
     lines.append('tsc entry: ' + '; '.join(f"{label}: {'pass' if tree['tsc_entry']['checker_whole_program'] else 'fail'}"
                                         for label, tree in trees.items()))
     lines.append('tsc entry diagnostics: ' + '; '.join(f"{label}: {tree['tsc_entry']['whole_program_diagnostics']}"

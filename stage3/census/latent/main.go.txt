@@ -1,6 +1,7 @@
 package main
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -40,7 +41,7 @@ func main() {
 		panic(err)
 	}
 	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
-		output, failure := lower.Lower(context.Background(), program)
+		output, failure := lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
 		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
 			panic("measurement returned usable IR")
 		}
@@ -53,7 +54,7 @@ func main() {
 	if diagnostics == nil {
 		diagnostics = []string{}
 	}
-	header := map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
+	header := map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
 	writeLatentStream(encoder, header, output.Sync, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
 		return lower.Latent(context.Background(), program, func(record lower.LatentFile) {
 			emit(record)
@@ -76,7 +77,7 @@ func writeLatentStream(encoder *json.Encoder, header map[string]any, flush func(
 	}
 	writeRecord(header)
 	relations := run(func(record lower.LatentFile) { writeRecord(record) })
-	writeRecord(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
+	writeRecord(map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
 }
 
 func censusMode() string {
