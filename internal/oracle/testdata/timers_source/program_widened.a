@@ -1,0 +1,15 @@
+// A program function of two parameters, widened to a view with a third and called with it (probe f
+// on #995spev): Node drops the extra argument too, so both sides print undefined. Only the host's
+// value forwards what a view passes past its own parameters.
+import 'node:timers';
+
+type Narrow = (callback: () => void, ms: number) => unknown;
+type Wide = (callback: (extra?: string) => void, ms: number, extra: string) => unknown;
+
+function wrappedSet(callback: () => void, ms: number): unknown {
+    return setTimeout(callback, ms);
+}
+
+const narrow: Narrow = wrappedSet;
+const wide: Wide = narrow;
+wide((extra?: string) => console.log(`extra ${String(extra)}`), 1, 'e');

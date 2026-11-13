@@ -180,15 +180,19 @@ func (l *lowering) declaresTimeoutMember() bool {
 	return found
 }
 
-// The one view each timer's value is admitted in (Adamic's ruling on #995spev, Nov 13): System's
+// The one view each timer's value is admitted in (Adamic's ruling (c) on #995spev, Nov 13): System's
 // timer slots as the adapted sys.ts declares them, concrete, so the value's closure has one calling
-// convention. Node's setTimeout is variadic and this closure takes two parameters, so a program that
-// widens the value afterwards to a view with more of them loses what Node would forward
-// (timers_source/widened.a), which is open on #995spev.
+// convention. setTimeout's view takes the one label tsc hands its callbacks (sys.ts:377), which the
+// closure forwards as Node's variadic setTimeout does; a program that widens the value to hand it more
+// stops at run time (nodeTimerClosure).
 const (
-	nodeSetTimeoutView   = "(callback: () => void, ms: number) => unknown"
+	nodeSetTimeoutView   = "(callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown"
 	nodeClearTimeoutView = "(timeoutId: unknown) => void"
 )
+
+// nodeSetTimeoutForwards is how many arguments setTimeout's value forwards: the callback, the delay
+// and the label.
+const nodeSetTimeoutForwards = 3
 
 // nodeTimerValueName is the timer a node reads as a value, by its library declaration: an identifier
 // that isn't a call's callee, a property's name, a typeof's operand, a qualified namespace member's
@@ -258,8 +262,9 @@ func (l *lowering) nodeTimerValueRefusal(node *ast.Node, name string) error {
 }
 
 // nodeTimerView says whether a slot sees a timer exactly as its view: setTimeout's callback a
-// function taking nothing and returning void, its delay a number, both required, and its result
-// unknown; clearTimeout's one required parameter unknown and its result void.
+// function of one optional unknown parameter returning void, its delay a number, both required, its
+// label an optional unknown and its result unknown; clearTimeout's one required parameter unknown and
+// its result void.
 func (l *lowering) nodeTimerView(slot *checker.Type, name string) bool {
 	signature, plain := l.nodeTimerSignature(l.concrete(l.checker.GetNonNullableType(slot)))
 	if !plain {
@@ -270,11 +275,14 @@ func (l *lowering) nodeTimerView(slot *checker.Type, name string) bool {
 	if name == nodeClearTimeoutName {
 		return len(parameters) == 1 && signature.MinArgumentCount() == 1 && l.concrete(l.checker.GetTypeOfSymbol(parameters[0])).Flags() == checker.TypeFlagsUnknown && returned == checker.TypeFlagsVoid
 	}
-	if len(parameters) != 2 || signature.MinArgumentCount() != 2 || l.concrete(l.checker.GetTypeOfSymbol(parameters[1])).Flags() != checker.TypeFlagsNumber || returned != checker.TypeFlagsUnknown {
+	if len(parameters) != nodeSetTimeoutForwards || signature.MinArgumentCount() != 2 || l.concrete(l.checker.GetTypeOfSymbol(parameters[1])).Flags() != checker.TypeFlagsNumber || l.concrete(l.checker.GetTypeOfSymbol(parameters[2])).Flags() != checker.TypeFlagsUnknown || returned != checker.TypeFlagsUnknown {
 		return false
 	}
 	callback, plain := l.nodeTimerSignature(l.concrete(l.checker.GetTypeOfSymbol(parameters[0])))
-	return plain && len(callback.Parameters()) == 0 && l.concrete(l.checker.GetReturnTypeOfSignature(callback)).Flags() == checker.TypeFlagsVoid
+	if !plain || len(callback.Parameters()) != 1 || callback.MinArgumentCount() != 0 {
+		return false
+	}
+	return l.concrete(l.checker.GetTypeOfSymbol(callback.Parameters()[0])).Flags() == checker.TypeFlagsUnknown && l.concrete(l.checker.GetReturnTypeOfSignature(callback)).Flags() == checker.TypeFlagsVoid
 }
 
 // nodeTimerSignature is a function type's one call signature, when it has exactly one, not generic,
@@ -314,18 +322,27 @@ func (l *lowering) nodeTimerValue(node *ast.Node) (ir.Expression, bool, error) {
 	if err := l.nodeTimerValueRefusal(node, name); err != nil {
 		return nil, true, err
 	}
-	return l.nodeTimerClosure(name), true, nil
+	return l.nodeTimerClosure(node, name), true, nil
 }
 
 // nodeTimerClosure is a timer's one closure, made the first time either is read and held by a global
 // made before anything runs, as Realpath's value is (nodeRealpathValue), so setTimeout === setTimeout
 // holds as on Node. Its body is the timer's direct call on its own parameters, as nodeTimer lowers
-// one: setTimeout's Timeout goes back as the view's unknown, a union, and clearTimeout's call is the
-// body's one statement. No checker type names the callback's view here, since one closure serves
-// every slot that holds it, so the thunk's CallbackType is left unresolved, and the thunk packs its
-// arguments for every function value the program makes (ClosureArgumentLayout), as for a callback
-// bounded by none. Either guard for the open widening goes here.
-func (l *lowering) nodeTimerClosure(name string) ir.Expression {
+// one: clearTimeout's call is the body's one statement, and setTimeout's hands the label over as an
+// extra argument when the caller gave one, so the callback sees what Node's would, and gives its
+// Timeout back as the view's unknown, a union. No checker type names the callback's view here, since
+// one closure serves every slot that holds it, so the thunk's CallbackType is left unresolved, and
+// the thunk packs the label for every function value the program makes (ClosureArgumentLayout), as
+// for a callback bounded by none.
+//
+// Past the label, Node would hand the callback what a widened view passes, and this closure can't
+// (Adamic's ruling on #995spev, Nov 13 05:48Z): its rest parameter, never read, puts it on the counted
+// convention, so it's handed its real argument count however it's called, a view, a bind or a
+// forwarder, and it stops at its entry on more than three, before anything is scheduled, reading the
+// count and never the tail. The tail is packed as numbers, so a caller's copy of it reads no word as a
+// reference whatever the view put there. The record makes it a target of every function type it can
+// be seen as, so every such call passes the count.
+func (l *lowering) nodeTimerClosure(node *ast.Node, name string) ir.Expression {
 	role := "host_set_timeout"
 	if name == nodeClearTimeoutName {
 		role = "host_clear_timeout"
@@ -338,11 +355,13 @@ func (l *lowering) nodeTimerClosure(name string) ir.Expression {
 	index := len(l.result.Functions)
 	function := ir.Function{Name: role + "_value", Closure: true}
 	function.Source.Role = role
-	parameter := func(name string, of ir.Type) ir.Expression {
-		local := len(l.result.Locals)
+	local := func(name string, of ir.Type) int {
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: index})
-		function.Parameters = append(function.Parameters, local)
-		return ir.Read{Local: local, Of: of}
+		return len(l.result.Locals) - 1
+	}
+	parameter := func(name string, of ir.Type) ir.Expression {
+		function.Parameters = append(function.Parameters, local(name, of))
+		return ir.Read{Local: function.Parameters[len(function.Parameters)-1], Of: of}
 	}
 	// Node's names for the parameters, and its lengths: setTimeout's is 2 and clearTimeout's 1.
 	if name == nodeClearTimeoutName {
@@ -352,11 +371,27 @@ func (l *lowering) nodeTimerClosure(name string) ir.Expression {
 	} else {
 		callback := parameter("callback", ir.Closure)
 		after := parameter("after", ir.Number)
+		label := parameter("label", ir.Union)
+		parameter("extras", ir.Array)
+		function.RestElement = ir.Number
+		function.OptionalParameters = map[int]bool{function.Parameters[2]: true}
+		function.ReadsArguments = true
+		function.ArgumentsCount = local("argument_count", ir.Number) + 1
+		count := ir.Read{Local: function.ArgumentsCount - 1, Of: ir.Number}
+		forwards := ir.NumberConstant{Value: nodeSetTimeoutForwards}
+		set := func(arguments ...ir.Expression) ir.Statement {
+			return ir.Return{Value: fit(ir.NodeFSFile{Operation: "set_timeout", Arguments: arguments, Of: ir.Object}, ir.Union)}
+		}
 		function.SourceLength = 2
 		function.Returns = ir.Union
-		function.Body = []ir.Statement{ir.Return{Value: fit(ir.NodeFSFile{Operation: "set_timeout", Arguments: []ir.Expression{callback, after}, Of: ir.Object}, ir.Union)}}
+		function.Body = []ir.Statement{
+			ir.If{Condition: ir.Binary{Operator: ir.Greater, Left: count, Right: forwards}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(ir.HostForwardStop)}}}},
+			ir.If{Condition: ir.Binary{Operator: ir.Less, Left: count, Right: forwards}, Then: []ir.Statement{set(callback, after)}},
+			set(callback, after, label),
+		}
 	}
 	l.result.Functions = append(l.result.Functions, function)
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: role + "_value", Type: ir.Closure, Global: true, Function: -1})
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
