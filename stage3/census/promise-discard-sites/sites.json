@@ -1,0 +1,220 @@
+{
+  "head": "e4b65199b13da9dcce678ffe93e0f06fe11bb2e5",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "module_format": "CommonJSBundle",
+  "mode": "full",
+  "timeout_seconds": 1500,
+  "files": [
+    {
+      "file": "_namespaces/ts.moduleSpecifiers.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 37.439,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "raw_sha256": "26d0fa07cdc5861994c765697a14a7b821f747a4089df4a100eee235aa452da3",
+      "parse_error": null
+    },
+    {
+      "file": "_namespaces/ts.performance.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 36.445,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "raw_sha256": "88bb9725ed675393d92e64777d7df1b72bb7f0f17162dd8bb488e01f9e542f9b",
+      "parse_error": null
+    },
+    {
+      "file": "_namespaces/ts.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 62.66,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b",
+      "raw_sha256": "452c443007dd76c824024415210cf94c1d1e0b20cb53ec5e7d3fafcafb65708a",
+      "parse_error": null
+    },
+    {
+      "file": "binder.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 393.778,
+      "timeout": false,
+      "total_findings": 504,
+      "observed_findings": 504,
+      "compiler_findings": 270,
+      "kinds": {
+        "NotYet": 106,
+        "Refused": 164,
+        "Boundary": 234
+      },
+      "new_reason_findings": [],
+      "sha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+      "raw_sha256": "2b6a1984d6b9d838f6329730e507b3b0eb32f91ceb849b448fbde4f39b98feee",
+      "parse_error": null
+    },
+    {
+      "file": "builder.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 180.526,
+      "timeout": false,
+      "total_findings": 399,
+      "observed_findings": 399,
+      "compiler_findings": 240,
+      "kinds": {
+        "Refused": 120,
+        "NotYet": 120,
+        "Boundary": 159
+      },
+      "new_reason_findings": [],
+      "sha256": "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c",
+      "raw_sha256": "2e52e47e30166ade2c0dff74d0b98040a66ce1c58a6c6400ed91ecaaf67fd93e",
+      "parse_error": null
+    },
+    {
+      "file": "builderPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 50.686,
+      "timeout": false,
+      "total_findings": 3,
+      "observed_findings": 3,
+      "compiler_findings": 1,
+      "kinds": {
+        "Refused": 1,
+        "Boundary": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+      "raw_sha256": "19c0588bebfb3ab7cdbc2a0a5c0dbc0e06ccd343361e6204dc22945d37ca988e",
+      "parse_error": null
+    },
+    {
+      "file": "builderState.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 127.299,
+      "timeout": false,
+      "total_findings": 37,
+      "observed_findings": 37,
+      "compiler_findings": 18,
+      "kinds": {
+        "Refused": 3,
+        "NotYet": 15,
+        "Boundary": 19
+      },
+      "new_reason_findings": [],
+      "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+      "raw_sha256": "d226d8b4dc3292fe8b6f7e6019bffb04ba9368d07f724dd3766bdd0c1ff65aee",
+      "parse_error": null
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 38.806,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "raw_sha256": "35465d15bc0293117cb384411385b4862b7b3f3aabf6497967c9c84d8e942820",
+      "parse_error": null
+    },
+    {
+      "file": "checker.ts",
+      "status": "timed_out",
+      "exit": -9,
+      "seconds": 1500.312,
+      "timeout": true,
+      "total_findings": null,
+      "observed_findings": 0,
+      "compiler_findings": null,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+      "raw_sha256": "af4777d5e0c7fedcdfd34c310cf83c15bbc51c10aaa97533ec1b22bf92b57958",
+      "parse_error": null
+    },
+    {
+      "file": "commandLineParser.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 272.421,
+      "timeout": false,
+      "total_findings": 367,
+      "observed_findings": 367,
+      "compiler_findings": 215,
+      "kinds": {
+        "Refused": 101,
+        "NotYet": 114,
+        "Boundary": 152
+      },
+      "new_reason_findings": [],
+      "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
+      "raw_sha256": "12f918e44f57fda1e1f3f196cbf188ebed456e1f8be44b02163b300d10bcd44f",
+      "parse_error": null
+    }
+  ],
+  "new_reason_sites": [],
+  "control": {
+    "file": "control",
+    "status": "ran",
+    "exit": 0,
+    "seconds": 0.173,
+    "timeout": false,
+    "total_findings": 1,
+    "observed_findings": 1,
+    "compiler_findings": 1,
+    "kinds": {
+      "Refused": 1
+    },
+    "new_reason_findings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/promise-discard-sites-run/control.ts:2:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28",
+        "reason": "an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task",
+        "text": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28: Adamic 0.1 refuses an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task; await the task inside a function that returns void, or keep the Promise in the type it's seen as",
+        "file": "/workspace/scratch/promise-discard-sites-run/control.ts",
+        "line": 2,
+        "column": 28,
+        "rule": "3210 refusePromiseIntoVoid",
+        "named_type": "Promise<void>"
+      }
+    ],
+    "sha256": "ccd5cda162d1fb7889816f8b650c82bc0f8f445534337a729f1e3673022f8a4c",
+    "raw_sha256": "0c3cb77f94cb6bbbf1ff193f5051fd17847564ebd6deec51a253560df5a751d2",
+    "parse_error": null,
+    "raw_output": "{\"checker_rejected\":false,\"diagnostic_sites\":[],\"diagnostics\":[],\"latent_mode\":\"full\",\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"status\":\"measurement\"}\n{\"measurement\":\"measured on a checker-rejected program\",\"file\":\"/workspace/scratch/promise-discard-sites-run/control.ts\",\"declarations\":[{\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:1:1\",\"name\":\" fails\",\"kind\":\"KindFunctionDeclaration\",\"start\":0,\"end\":40},{\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:7\",\"name\":\" run\",\"kind\":\"KindVariableDeclaration\",\"start\":46,\"end\":73}],\"units\":[{\"pass_ledger\":[{\"name\":\"checkOverloadResults\",\"status\":\"not_run_scoped\"},{\"name\":\"forwarderValues\",\"status\":\"not_run_scoped\"},{\"name\":\"finishClassCalls\",\"status\":\"not_run_scoped\"},{\"name\":\"finishAccessors\",\"status\":\"not_run_scoped\"},{\"name\":\"finishToPrimitive\",\"status\":\"not_run_scoped\"},{\"name\":\"checkIterableViews\",\"status\":\"not_run_scoped\"},{\"name\":\"exceptions\",\"status\":\"not_run_scoped\"},{\"name\":\"checkLibrarySpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkAccessorSpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkRecordGuardedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkDynamicKeyedGetters\",\"status\":\"not_run_scoped\"},{\"name\":\"checkGeneratorRoads\",\"status\":\"not_run_scoped\"},{\"name\":\"flow.NormalizeAsync\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncEntrySource\",\"status\":\"not_run_scoped\"},{\"name\":\"findCycles\",\"status\":\"not_run_whole_program\"},{\"name\":\"checkBoundArguments\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewOptionalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewCopies\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewWidenedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkHostMemberWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncPayloadFailures\",\"status\":\"not_run_scoped\"},{\"name\":\"checkPromiseConsumption\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewLogicalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"programRegion\",\"status\":\"not_run_whole_program\"},{\"name\":\"applyProgramMetadata\",\"status\":\"not_run_whole_program\"},{\"name\":\"ownershipQuery\",\"status\":\"not_run_whole_program\"},{\"name\":\"readiness\",\"status\":\"not_run_scoped\"},{\"name\":\"borrow\",\"status\":\"not_run_scoped\"},{\"name\":\"counters\",\"status\":\"not_run_scoped\"},{\"name\":\"voidDiscards\",\"status\":\"not_run_scoped\"},{\"name\":\"checkInspectorDoomedContracts\",\"status\":\"not_run_scoped\"},{\"name\":\"checkFlowLiveness\",\"status\":\"not_run_scoped\"}],\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:1:1\",\"kind\":\"KindFunctionDeclaration\",\"body_start\":37,\"body_end\":40,\"instantiated\":false,\"status\":\"attempted\",\"checker_diagnostics\":[],\"name\":\"fails\",\"top\":\"/workspace/scratch/promise-discard-sites-run/control.ts:1:1\"},{\"pass_ledger\":[{\"name\":\"checkOverloadResults\",\"status\":\"not_run_scoped\"},{\"name\":\"forwarderValues\",\"status\":\"not_run_scoped\"},{\"name\":\"finishClassCalls\",\"status\":\"not_run_scoped\"},{\"name\":\"finishAccessors\",\"status\":\"not_run_scoped\"},{\"name\":\"finishToPrimitive\",\"status\":\"not_run_scoped\"},{\"name\":\"checkIterableViews\",\"status\":\"not_run_scoped\"},{\"name\":\"exceptions\",\"status\":\"not_run_scoped\"},{\"name\":\"checkLibrarySpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkAccessorSpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkRecordGuardedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkDynamicKeyedGetters\",\"status\":\"not_run_scoped\"},{\"name\":\"checkGeneratorRoads\",\"status\":\"not_run_scoped\"},{\"name\":\"flow.NormalizeAsync\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncEntrySource\",\"status\":\"not_run_scoped\"},{\"name\":\"findCycles\",\"status\":\"not_run_whole_program\"},{\"name\":\"checkBoundArguments\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewOptionalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewCopies\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewWidenedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkHostMemberWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncPayloadFailures\",\"status\":\"not_run_scoped\"},{\"name\":\"checkPromiseConsumption\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewLogicalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"programRegion\",\"status\":\"not_run_whole_program\"},{\"name\":\"applyProgramMetadata\",\"status\":\"not_run_whole_program\"},{\"name\":\"ownershipQuery\",\"status\":\"not_run_whole_program\"},{\"name\":\"readiness\",\"status\":\"not_run_scoped\"},{\"name\":\"borrow\",\"status\":\"not_run_scoped\"},{\"name\":\"counters\",\"status\":\"not_run_scoped\"},{\"name\":\"voidDiscards\",\"status\":\"not_run_scoped\"},{\"name\":\"checkInspectorDoomedContracts\",\"status\":\"not_run_scoped\"},{\"name\":\"checkFlowLiveness\",\"status\":\"not_run_scoped\"}],\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:1\",\"kind\":\"KindVariableStatement\",\"instantiated\":false,\"status\":\"attempted\",\"checker_diagnostics\":[],\"top\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:1\"},{\"pass_ledger\":[{\"name\":\"checkOverloadResults\",\"status\":\"not_run_scoped\"},{\"name\":\"forwarderValues\",\"status\":\"not_run_scoped\"},{\"name\":\"finishClassCalls\",\"status\":\"not_run_scoped\"},{\"name\":\"finishAccessors\",\"status\":\"not_run_scoped\"},{\"name\":\"finishToPrimitive\",\"status\":\"not_run_scoped\"},{\"name\":\"checkIterableViews\",\"status\":\"not_run_scoped\"},{\"name\":\"exceptions\",\"status\":\"not_run_scoped\"},{\"name\":\"checkLibrarySpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkAccessorSpreads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkRecordGuardedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkDynamicKeyedGetters\",\"status\":\"not_run_scoped\"},{\"name\":\"checkGeneratorRoads\",\"status\":\"not_run_scoped\"},{\"name\":\"flow.NormalizeAsync\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncEntrySource\",\"status\":\"not_run_scoped\"},{\"name\":\"findCycles\",\"status\":\"not_run_whole_program\"},{\"name\":\"checkBoundArguments\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewOptionalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewCopies\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewWidenedReads\",\"status\":\"not_run_scoped\"},{\"name\":\"checkHostMemberWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"asyncPayloadFailures\",\"status\":\"not_run_scoped\"},{\"name\":\"checkPromiseConsumption\",\"status\":\"not_run_scoped\"},{\"name\":\"checkViewLogicalWrites\",\"status\":\"not_run_scoped\"},{\"name\":\"programRegion\",\"status\":\"not_run_whole_program\"},{\"name\":\"applyProgramMetadata\",\"status\":\"not_run_whole_program\"},{\"name\":\"ownershipQuery\",\"status\":\"not_run_whole_program\"},{\"name\":\"readiness\",\"status\":\"not_run_scoped\"},{\"name\":\"borrow\",\"status\":\"not_run_scoped\"},{\"name\":\"counters\",\"status\":\"not_run_scoped\"},{\"name\":\"voidDiscards\",\"status\":\"not_run_scoped\"},{\"name\":\"checkInspectorDoomedContracts\",\"status\":\"not_run_scoped\"},{\"name\":\"checkFlowLiveness\",\"status\":\"not_run_scoped\"}],\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:3:1\",\"kind\":\"KindExpressionStatement\",\"instantiated\":false,\"status\":\"attempted\",\"checker_diagnostics\":[],\"top\":\"/workspace/scratch/promise-discard-sites-run/control.ts:3:1\"}],\"findings\":[{\"root_kind\":\"\",\"depth\":0,\"measurement\":\"measured on a checker-rejected program\",\"unit\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:1\",\"phase\":\"refusal_scan\",\"kind\":\"Refused\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:28\",\"reason\":\"an unawaited async task: a Promise\\u003cvoid\\u003e at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task\",\"text\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:28: Adamic 0.1 refuses an unawaited async task: a Promise\\u003cvoid\\u003e at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task; await the task inside a function that returns void, or keep the Promise in the type it's seen as\"}]}\n{\"findings\":[],\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"relation_overflow\":{\"per_unit\":false,\"after_load\":\"\",\"end\":\"\",\"attribution\":\"endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown\",\"cache_sizes\":{\"assignable\":240,\"comparable\":0,\"enum\":0,\"flaggedPairs\":0,\"identity\":0,\"strictSubtype\":4,\"subtype\":0,\"ts2859\":0}},\"status\":\"relation_report\"}\n",
+    "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
+  },
+  "coverage": {
+    "ran": 9,
+    "timed_out": 1
+  },
+  "expected_files": 79
+}
