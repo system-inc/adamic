@@ -1,0 +1,4 @@
+// A constructed message stays non-enumerable after a direct write (#z4a9p9e).
+const e = new Error('x');
+e.message = 'y';
+console.log(JSON.stringify(e) ?? '<undefined>');
