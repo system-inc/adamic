@@ -114,6 +114,7 @@ const (
 	opaqueRefusal      = "an opaque host or collection value viewed as unknown or object (dynamic property metadata)"
 	nullableRefusal    = "an object with a nullable field viewed as unknown or object (null and undefined slot tags)"
 	nonconstantRefusal = "RegExp with a nonconstant pattern"
+	appleRefusal       = "an Apple object viewed as unknown or object (Objective-C property metadata)"
 )
 
 var hostShapeTable = []hostShapeRow{
@@ -124,6 +125,7 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "directory.c", scope: "real_path", name: "shape", verdict: hostShapeHost, internal: "realpath's result: fs.realpathSync, its one caller a program reaches, hands over the path alone"},
 	{file: hostShapeRuntime + "exceptions.c", name: "error_shape", verdict: hostShapeHost, errorShape: true, stop: "stop_host_error_prototype.a"},
 	{file: hostShapeRuntime + "exceptions.c", name: "absent_message_shape", verdict: hostShapeHost, errorShape: true},
+	{file: hostShapeRuntime + "foreign.c", name: "foreign_shape", verdict: hostShapeUnreachable, refusal: "apple_object.a", refused: appleRefusal},
 	{file: hostShapeRuntime + "input.c", name: "ok_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('read', "},
 	{file: hostShapeRuntime + "input.c", name: "error_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('read error', "},
 	{file: hostShapeRuntime + "input.c", name: "written_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('written', "},
