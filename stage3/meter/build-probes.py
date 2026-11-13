@@ -25,7 +25,7 @@ def key():
     # effective dependencies, module hashes, toolchain contents and flags.
     paths = set(ROOT.rglob('*.go')) | set((ROOT / 'stage3/census').rglob('*.txt'))
     paths.update([Path(__file__), ROOT / 'stage3/census/latent/make_overlay.py',
-                  ROOT / 'stage3/meter/entry_overlay.py'])
+                  ROOT / 'stage3/meter/entry_overlay.py', ROOT / 'stage3/meter/entry.go.txt'])
     files = [(str(p.relative_to(ROOT)), hashlib.sha256(p.read_bytes()).hexdigest())
              for p in sorted(paths) if '.git' not in p.parts and 'node_modules' not in p.parts]
     return hashlib.sha256(json.dumps([hook.action_key(ROOT), files]).encode()).hexdigest()

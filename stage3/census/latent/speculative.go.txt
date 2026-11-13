@@ -2,6 +2,7 @@
 package lower
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -314,7 +315,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		catalogue(file.AsNode())
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
 		checker, release := program.Checker(ctx, file)
-		l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		l := &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 		// The existing syntax scanner supplies its real reasons and never stubs types.
 		func() {
 			defer func() {

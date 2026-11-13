@@ -2,6 +2,7 @@
 package lower
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
  "encoding/json"
  "sort"
@@ -347,7 +348,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums}
 		}
 		func() {
 			defer func() {
@@ -457,7 +458,7 @@ func (l *lowering) latentPrepassModules() ([]*ast.SourceFile, error) {
 	for _, root := range l.program.LatentRoots() {
 		// Order on a disposable lowering: keep production's refusal, while leaving
 		// cycle-read proof effects at their existing first query in each unit.
-		probe := &lowering{program: l.program, checker: l.checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		probe := &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: l.program, checker: l.checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 		order, err := probe.moduleOrder(root)
 		if err != nil {
 			return nil, err
