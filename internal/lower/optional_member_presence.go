@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -154,27 +155,57 @@ func (l *lowering) checkOptionalMemberPresence() error {
 		if l.objectPrototypeName(read.name) {
 			return l.notYet(read.node, tested+", a name Object.prototype holds too, which Node finds on an object without its own where native reads own slots alone")
 		}
-		if len(found[key]) != 1 {
-			return l.notYet(read.node, tested+" that lowering didn't leave as one field read")
-		}
-		reach := graph.ReachingAllocations(found[key][0].Object)
-		if reach.Unknown {
-			return l.notYet(read.node, tested+" whose receiver may hold a value the program didn't build as a plain object literal ("+strings.Join(reach.Reasons, "; ")+")")
-		}
-		records := graph.projectionIndex().records
-		for _, site := range reach.Sites {
-			literal, isLiteral := records[site]
-			switch {
-			case !isLiteral:
-				return l.notYet(read.node, tested+" whose receiver may be an allocation that isn't an object literal")
-			case literal.Class != 0:
-				return l.notYet(read.node, tested+" whose receiver may be a class instance, whose method lives on its prototype, not an own slot")
-			case literal.Spread != nil:
-				return l.notYet(read.node, tested+" whose receiver may be an object a spread made")
-			case literal.Record:
-				return l.notYet(read.node, tested+" whose receiver may be record storage")
+		dispatched := l.dispatchedPresenceReads[key]
+		switch {
+		case len(found[key]) == 1 && len(dispatched) == 0:
+			if err := l.judgePresenceReceiver(read, tested, graph, graph.ReachingAllocations(found[key][0].Object), nil); err != nil {
+				return err
 			}
+		case len(found[key]) == 0 && len(dispatched) > 0 && l.presenceAccessorReach != nil:
+			// finishAccessors made the read a dispatcher's call (#4gpbn7w's road): it calls a getter of the
+			// name on an object whose class owns one, and otherwise reads the slot as the read did. So each
+			// receiver is judged by the graph and owners that dispatch was decided by, where a class instance
+			// passes only when the dispatcher calls its getter (Compiler's and Lower's ruling on shape 1).
+			reach := l.presenceAccessorReach
+			for _, receiver := range dispatched {
+				if err := l.judgePresenceReceiver(read, tested, reach.graph, reach.graph.ReachingAllocations(receiver), reach); err != nil {
+					return err
+				}
+			}
+		default:
+			return l.notYet(read.node, tested+" that lowering didn't leave as one field read")
 		}
 	}
 	return nil
+}
+
+// judgePresenceReceiver stops a presence read unless every allocation reaching its receiver (reach, in
+// graph's numbering) reads the same on both backends: a plain object literal, or, for a read a
+// dispatcher took (owners non-nil), a class instance whose getter of the name the dispatcher calls and
+// whose class chain holds no method of that name, which Node would find on the prototype first.
+func (l *lowering) judgePresenceReceiver(read optionalPresenceRead, tested string, graph *allocationFlowGraph, reach ir.AllocationSet, owners *accessorReach) error {
+	if reach.Unknown {
+		return l.notYet(read.node, tested+" whose receiver may hold a value the program didn't build as a plain object literal ("+strings.Join(reach.Reasons, "; ")+")")
+	}
+	records := graph.projectionIndex().records
+	for _, site := range reach.Sites {
+		literal, isLiteral := records[site]
+		switch {
+		case !isLiteral:
+			return l.notYet(read.node, tested+" whose receiver may be an allocation that isn't an object literal")
+		case literal.Class != 0 && (owners == nil || !owners.owners[site][read.name] || l.classChainHasMethod(literal.Class, read.name)):
+			return l.notYet(read.node, tested+" whose receiver may be a class instance, whose method lives on its prototype, not an own slot")
+		case literal.Spread != nil:
+			return l.notYet(read.node, tested+" whose receiver may be an object a spread made")
+		case literal.Record:
+			return l.notYet(read.node, tested+" whose receiver may be record storage")
+		}
+	}
+	return nil
+}
+
+// classChainHasMethod is whether class's method table, which holds its bases' methods too, has a method
+// named name, its accessors' own entries aside (DynamicKeyedMethodNames).
+func (l *lowering) classChainHasMethod(class int, name string) bool {
+	return slices.Contains(l.result.DynamicKeyedMethodNames(class), name)
 }
