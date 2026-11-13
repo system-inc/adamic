@@ -4,11 +4,12 @@ function planWhole(ts, file, text, check = false) {
     if (!entries.some(entry => entry.file === file && !entry.action.startsWith("decline"))) return { text, edits: 0 };
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (file === "core.ts") {
+        if (check && /\bdeclare\s+const\s+require\b/.test(text)) throw new Error("forbidden declare const require in core.ts");
         const before = "for (const elements of arrayFrom(multiMap.values()))";
         const after = "for (const elements of arrayFrom<TElement | TElement[]>(multiMap.values()))";
         const newline = text.includes("\r\n") ? "\r\n" : "\n";
         const marker = newline + "/** @internal */" + newline + "export function isNodeLikeSystem(): boolean {";
-        const host = "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined; declare const require: unknown;" + marker;
+        const host = "declare const process: { nextTick?: unknown; browser?: unknown; } | undefined;" + marker;
         let edits = 0;
         for (const [original, adapted] of [[before, after], [marker, host]]) {
             if (text.split(adapted).length === 2) continue;
