@@ -20,10 +20,13 @@ def run(name,cmd,env=None):
  (out/(name+'-status.json')).write_text(json.dumps(status,indent=2)+'\n'); print(name,'child_exit='+str(rc),round(status['seconds'],3),flush=True)
  if rc: raise SystemExit(rc if rc>0 else 128-rc)
  return status
-if sys.argv[1]=='group':
+if sys.argv[1] in ('group','range'):
  group=int(sys.argv[2]); roots=sorted((tree/'src/compiler').rglob('*.ts')); assert len(roots)==79,len(roots)
  (out/'roots.json').write_text(json.dumps([str(r.relative_to(tree)) for r in roots],indent=2)+'\n')
- for i in range((group-1)*20,min(group*20,79)):
+ start,end=((group-1)*20,min(group*20,79)) if sys.argv[1]=='group' else (int(sys.argv[2])-1,int(sys.argv[3]))
+ assert 0 <= start < end <= 79
+ assert sys.argv[1]!='range' or end-start <= 10
+ for i in range(start,end):
   for side in ('parent','head'):
    name=f'{side}-root-{i+1:02}'; dest=out/(name+'.jsonl')
    run(name,[str(base/(side+'-census')),str(roots[i]),str(dest)])

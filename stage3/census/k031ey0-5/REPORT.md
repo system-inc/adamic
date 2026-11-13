@@ -1,6 +1,6 @@
 # k031ey0 -5 paired census: partial checkpoint
 
-Evidence only. Paused at the user’s request and pushed before starting the remaining pieces.
+Evidence only. The first 60 pairs were pushed at the requested checkpoint. Continuation groups are pushed after each group of at most 10 roots.
 
 Parent: `f44b5c272a39bcbd7cd2fb278939ac1c1832ce2e`. Head: `e64bc123c51fc333133684f0abb3bee8e522acf3`. TypeScript v6.0.3 upstream: `050880ce59e30b356b686bd3144efe24f875ebc8`. One adapted tree prepared from parent; stage3 is identical at head. Head production sources are unmodified. The diagnostic seam is scratch-only, saved in [seam.diff](seam.diff), and was compiled but has not been run.
 
@@ -8,8 +8,8 @@ Parent: `f44b5c272a39bcbd7cd2fb278939ac1c1832ce2e`. Head: `e64bc123c51fc33313368
 
 | Side | Completed roots | First observations (s) | Duplicate observations (s) | All measured child wall (s) |
 |---|---:|---:|---:|---:|
-| parent | 60/79 | 776.084811 | 755.075717 | 1536.630927 |
-| head | 60/79 | 774.211444 | 767.191007 | 1549.213221 |
+| parent | 70/79 | 910.922355 | 884.116997 | 1801.353397 |
+| head | 70/79 | 906.438314 | 896.716106 | 1811.890959 |
 
 Changed first stops among completed pairs: **0**. First stop compares kind, location, exact reason and diagnostics. All duplicate observations agree in every non-timing field.
 
@@ -22,25 +22,15 @@ Entry latent census: **not run on either side**. No latent unit counts, whole-pa
 
 The first-observation seconds are the census tool’s load+Lower elapsed time. Child wall includes both observations and process overhead; totals exclude builds and adaptation. This is a single alternating measurement, with no statistical performance claim.
 
-parent: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [2.01220703125, 4.4755859375, 3.11669921875]; end load [1.244140625, 1.2734375, 1.35546875]; sampled 1-minute range 1.00–2.01. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
+parent: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [2.01220703125, 4.4755859375, 3.11669921875]; end load [1.97216796875, 1.40576171875, 1.28173828125]; sampled 1-minute range 0.25–2.01. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
 
-head: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [1.93701171875, 4.259765625, 3.080078125]; end load [1.35791015625, 1.30712890625, 1.36328125]; sampled 1-minute range 1.00–1.94. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
+head: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [1.93701171875, 4.259765625, 3.080078125]; end load [1.88916015625, 1.435546875, 1.2939453125]; sampled 1-minute range 0.51–1.97. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
 
-Roots run sequentially, parent then head, in groups of at most 20; no measured children overlap. Each child has a 1780-second bound. All completed children exited 0. Group 3 was allowed to finish because it was within ten minutes of completion when the user requested the checkpoint; group 4 and both latent passes were not started.
+Roots run sequentially, parent then head, in groups of at most 20; no measured children overlap. Each child has a 1780-second bound. All completed children exited 0. The initial checkpoint completed roots 1–60 in groups of 20. Continuation uses groups 61–70 and 71–79, pushed separately before proceeding. Both latent passes are not yet started.
 
 ## Unrun
 
-parent: 19 ordinary roots:
-- 61: `src/compiler/transformers/legacyDecorators.ts`
-- 62: `src/compiler/transformers/module/esnextAnd2015.ts`
-- 63: `src/compiler/transformers/module/impliedNodeFormatDependent.ts`
-- 64: `src/compiler/transformers/module/module.ts`
-- 65: `src/compiler/transformers/module/system.ts`
-- 66: `src/compiler/transformers/namedEvaluation.ts`
-- 67: `src/compiler/transformers/taggedTemplate.ts`
-- 68: `src/compiler/transformers/ts.ts`
-- 69: `src/compiler/transformers/typeSerializer.ts`
-- 70: `src/compiler/transformers/utilities.ts`
+parent: 9 ordinary roots:
 - 71: `src/compiler/tsbuild.ts`
 - 72: `src/compiler/tsbuildPublic.ts`
 - 73: `src/compiler/types.ts`
@@ -50,17 +40,7 @@ parent: 19 ordinary roots:
 - 77: `src/compiler/watch.ts`
 - 78: `src/compiler/watchPublic.ts`
 - 79: `src/compiler/watchUtilities.ts`
-head: 19 ordinary roots:
-- 61: `src/compiler/transformers/legacyDecorators.ts`
-- 62: `src/compiler/transformers/module/esnextAnd2015.ts`
-- 63: `src/compiler/transformers/module/impliedNodeFormatDependent.ts`
-- 64: `src/compiler/transformers/module/module.ts`
-- 65: `src/compiler/transformers/module/system.ts`
-- 66: `src/compiler/transformers/namedEvaluation.ts`
-- 67: `src/compiler/transformers/taggedTemplate.ts`
-- 68: `src/compiler/transformers/ts.ts`
-- 69: `src/compiler/transformers/typeSerializer.ts`
-- 70: `src/compiler/transformers/utilities.ts`
+head: 9 ordinary roots:
 - 71: `src/compiler/tsbuild.ts`
 - 72: `src/compiler/tsbuildPublic.ts`
 - 73: `src/compiler/types.ts`
@@ -137,5 +117,15 @@ Both parent and head entry latent censuses remain unrun, including LATENT_TIMES,
 | 58: `transformers/esnext.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.270370 | 13.395045 | 26.760531 | 26.909715 |
 | 59: `transformers/generators.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 14.371806 | 13.571028 | 28.752012 | 27.571465 |
 | 60: `transformers/jsx.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.436229 | 15.196168 | 27.896377 | 29.454350 |
+| 61: `transformers/legacyDecorators.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 15.399753 | 12.985447 | 27.808643 | 26.005601 |
+| 62: `transformers/module/esnextAnd2015.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.105748 | 13.741891 | 26.547658 | 27.039620 |
+| 63: `transformers/module/impliedNodeFormatDependent.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.192489 | 13.189469 | 26.367447 | 26.336536 |
+| 64: `transformers/module/module.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.550148 | 14.090598 | 26.740911 | 27.561982 |
+| 65: `transformers/module/system.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.684140 | 13.339230 | 27.459253 | 25.805785 |
+| 66: `transformers/namedEvaluation.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.875507 | 12.433685 | 25.281678 | 24.966018 |
+| 67: `transformers/taggedTemplate.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.763547 | 12.850084 | 25.767393 | 25.677162 |
+| 68: `transformers/ts.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.094377 | 13.424622 | 25.664326 | 25.953942 |
+| 69: `transformers/typeSerializer.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.970567 | 13.155709 | 26.668251 | 26.578187 |
+| 70: `transformers/utilities.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.201269 | 13.016134 | 26.416910 | 26.752903 |
 
 Raw JSONL observations, stderr logs and command/exit/load status JSON are adjacent to this report. Setup logs are under `preparation/`. See [COMMANDS.md](COMMANDS.md) and executable [measure.py](measure.py). `analyze.py` is saved for the later full run; this checkpoint report is produced by `partial-report.py`.

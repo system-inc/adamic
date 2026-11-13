@@ -5,7 +5,7 @@ needle='a view of a type that reaches '
 def read(p):return json.loads(p.read_text())
 def rows(p):return [json.loads(l) for l in p.read_text().splitlines()]
 def clean(s):return s.replace('/workspace/scratch/k031ey0-5/adapted/src/compiler/','')
-data={};summary={'ordinary':{},'latent':'not run','scope':'Partial evidence at user-requested checkpoint; no further measurement started.'}
+data={};summary={'ordinary':{},'latent':'not run','scope':'Incremental ordinary census evidence; latent census not yet started.'}
 for side in ['parent','head']:
  d=[]
  for status in sorted(out.glob(side+'-root-*-status.json')):
@@ -21,7 +21,7 @@ for i in sorted(pair['parent'].keys() & pair['head'].keys()):
 summary['changes']=changes
 (out/'partial-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 roots=read(out/'roots.json')
-report=['# k031ey0 -5 paired census: partial checkpoint','','Evidence only. Paused at the user’s request and pushed before starting the remaining pieces.','','Parent: `f44b5c272a39bcbd7cd2fb278939ac1c1832ce2e`. Head: `e64bc123c51fc333133684f0abb3bee8e522acf3`. TypeScript v6.0.3 upstream: `050880ce59e30b356b686bd3144efe24f875ebc8`. One adapted tree prepared from parent; stage3 is identical at head. Head production sources are unmodified. The diagnostic seam is scratch-only, saved in [seam.diff](seam.diff), and was compiled but has not been run.','','## Measured so far','', '| Side | Completed roots | First observations (s) | Duplicate observations (s) | All measured child wall (s) |','|---|---:|---:|---:|---:|']
+report=['# k031ey0 -5 paired census: partial checkpoint','','Evidence only. The first 60 pairs were pushed at the requested checkpoint. Continuation groups are pushed after each group of at most 10 roots.','','Parent: `f44b5c272a39bcbd7cd2fb278939ac1c1832ce2e`. Head: `e64bc123c51fc333133684f0abb3bee8e522acf3`. TypeScript v6.0.3 upstream: `050880ce59e30b356b686bd3144efe24f875ebc8`. One adapted tree prepared from parent; stage3 is identical at head. Head production sources are unmodified. The diagnostic seam is scratch-only, saved in [seam.diff](seam.diff), and was compiled but has not been run.','','## Measured so far','', '| Side | Completed roots | First observations (s) | Duplicate observations (s) | All measured child wall (s) |','|---|---:|---:|---:|---:|']
 for side,s in summary['ordinary'].items():report += [f"| {side} | {s['count']}/79 | {s['first_seconds']:.6f} | {s['duplicate_seconds']:.6f} | {s['child_wall_seconds']:.6f} |"]
 report+=['',f"Changed first stops among completed pairs: **{len(changes)}**. First stop compares kind, location, exact reason and diagnostics. All duplicate observations agree in every non-timing field.",'']
 for c in changes:report+=['```json',json.dumps(c,indent=2),'```']
@@ -33,7 +33,7 @@ for side,d in data.items():
  if not d:continue
  before=d[0]['status']['before'];after=d[-1]['status']['after'];loads=[x['status'][k]['load'][0] for x in d for k in ['before','after']]
  report += ['',f"{side}: box `{before['hostname']}`; {before['cpus']} available CPUs; cpu.max `{before['cpu_max']}` (4 CPU quota). Start load {before['load']}; end load {after['load']}; sampled 1-minute range {min(loads):.2f}–{max(loads):.2f}. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON."]
-report += ['', 'Roots run sequentially, parent then head, in groups of at most 20; no measured children overlap. Each child has a 1780-second bound. All completed children exited 0. Group 3 was allowed to finish because it was within ten minutes of completion when the user requested the checkpoint; group 4 and both latent passes were not started.','','## Unrun','']
+report += ['', 'Roots run sequentially, parent then head, in groups of at most 20; no measured children overlap. Each child has a 1780-second bound. All completed children exited 0. The initial checkpoint completed roots 1–60 in groups of 20. Continuation uses groups 61–70 and 71–79, pushed separately before proceeding. Both latent passes are not yet started.','','## Unrun','']
 for side,s in summary['ordinary'].items():
  report += [f"{side}: {len(s['unrun_indices'])} ordinary roots:"]
  for i in s['unrun_indices']:report += [f"- {i}: `{roots[i-1]}`"]

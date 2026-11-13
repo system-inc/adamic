@@ -45,3 +45,9 @@ daily meter's resolved-entry reach invocation. The seam prints the error and
 continues the existing latent measurement; it does not manufacture unit stops.
 
 Initial head ordinary build without -buildvcs=false exited 1: Git rejected the scratch submodule symlink. Both ordinary binaries were then built with -buildvcs=false; all final builds exited 0.
+
+Continuation, per user instruction (groups of at most 10, each pushed before the next):
+```bash
+python3 /workspace/scratch/k031ey0-5/evidence/measure.py range 61 70
+# Commit and push this group before starting range 71 79.
+```
