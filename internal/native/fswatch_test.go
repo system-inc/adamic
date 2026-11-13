@@ -102,6 +102,38 @@ func TestFSWatchErrorClosesTheWatcher(t *testing.T) {
 	}
 }
 
+// Node takes a microtask checkpoint after each event's listener, so a job one listener queues runs
+// before the next event's listener, though the three events came in one read (#cbj1hpd). This is the
+// drain's witness: no program can queue a job from a listener, since an async listener in a void slot is
+// refused for good (#8j8ecw0), so two_events.a pins that refusal and holds no drain.
+const fsWatchDrained = "rename a\njob\nrename b\njob\nrename end\ndone\n"
+
+func TestFSWatchDrainsJobsPerEvent(t *testing.T) {
+	t.Parallel()
+	for _, variant := range fsWatchVariants {
+		got, expired := fsWatchRun(t, variant.env, fsWatchProduct(t, variant.name, variant.options), "drain")
+		if expired || got.ExitCode != 0 || string(got.Stdout) != fsWatchDrained {
+			t.Fatalf("%s: expired %t, %+v", variant.name, expired, got)
+		}
+		if variant.name == "sanitized" {
+			if report := leakcheck.Unbalanced(got); report != "" {
+				t.Fatal(report)
+			}
+		}
+	}
+}
+
+// With one checkpoint for the whole read, the loop's own after the source phase, every listener runs
+// before either job.
+func TestFSWatchMutantDrainDropped(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-drain-dropped", native.Options{Release: true}), "drain")
+	if expired || got.ExitCode != 0 || string(got.Stdout) != "rename a\nrename b\nrename end\njob\njob\ndone\n" {
+		t.Fatalf("the mutant must run both jobs after every listener: expired %t, %+v", expired, got)
+	}
+	t.Log("TestFSWatchDrainsJobsPerEvent goes red with the per-event job drain dropped")
+}
+
 // An 'error' nobody listens for is thrown, as EventEmitter's emit throws it, and nothing catches it.
 func TestFSWatchErrorWithoutListenerIsUncaught(t *testing.T) {
 	t.Parallel()
@@ -180,6 +212,8 @@ func TestFSWatchMutantAddErrorDropsSyscall(t *testing.T) {
 }
 
 const (
+	fsWatchDrain       = "                // Node takes a microtask checkpoint after each event's callback.\n                adamic_source_drain_jobs();\n"
+	fsWatchDrainMutant = "                /* mutant: no checkpoint per event, only the loop's after the source phase */\n"
 	fsWatchErrorClose  = "    adamic_object *object = adamic_retain(watcher->object);\n    fs_watcher_close(watcher);\n"
 	fsWatchErrorMutant = "    adamic_object *object = adamic_retain(watcher->object);\n    /* mutant: the watcher stays open */\n"
 	// watch_error_shape's four tables, then the same with syscall's name, reference and kind dropped and
@@ -224,6 +258,13 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			if err := os.WriteFile(header, data, 0600); err != nil {
 				return err
 			}
+			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			if err != nil {
+				return err
+			}
+			return native.BuildWithRuntime(code, output, options, library)
+		case "mutant-drain-dropped":
+			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchDrain, fsWatchDrainMutant)
 			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
@@ -310,6 +351,10 @@ func TestProduct_FSWatchHarnessMutantErrorKeepsSource(t *testing.T) {
 func TestProduct_FSWatchHarnessMutantAddErrorDropsSyscall(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "mutant-add-error-drops-syscall", native.Options{Release: true})
+}
+func TestProduct_FSWatchHarnessMutantDrainDropped(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "mutant-drain-dropped", native.Options{Release: true})
 }
 
 // The tree builds each product above ahead by its row in cloud/fast-gate/product-order.json, which
