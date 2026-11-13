@@ -61,6 +61,21 @@ read isn't.
 Held by: `wasiHostPlatformFixtures` in the `WASI` and shim oracles and the wasmtime witness, asserted both ways, so a fixture that reads
 the platform is listed and a listed one reads it.
 
+## The host's errno numbers
+
+Node's `errno` on a system error is libuv's, which is the host's own number negated: -2 for `ENOENT` on Linux and on
+macOS, and libuv's -4058 on Windows. A module can't see which host it runs on, and wasi-libc's constants are `WASI`'s
+numbering, where `ENOENT` is 44. So a wasm32-wasi build gives every code the runtime names Linux's number, Node's on
+the gate of record and every box, and any other code libuv's `UNKNOWN`, -4094 (internal/native/runtime/node_errno.h;
+Adamic on #z4a9p9e, Nov 13 2026). That's Node's answer on Linux. On macOS it's Node's for every named code but
+`EAGAIN` (11, macOS 35), `ENAMETOOLONG` (36, 63), `ENOSYS` (38, 78), `ENOTEMPTY` (39, 66) and `ELOOP` (40, 62), and it's never
+Windows'. The `code` string is the portable answer and agrees on every host. A program that reports `errno` reads
+Linux's number, and one that branches on it should branch on `code`.
+
+Held by: `TestWASIErrnoIsNodesOnLinux`, which holds every mapped number to Node's own `os.constants.errno` and
+`util.getSystemErrorName` on Linux and fails anywhere else, and `TestWASIEmptySymlinkAgreesWithNode`, which prints the
+runtime's mapped number rather than one of its own.
+
 ## The engine's own stack
 
 A Wasm engine keeps a call stack the program can't see, separate from the linear-memory stack Adamic's
