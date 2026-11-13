@@ -15,6 +15,7 @@ for g in json.loads((out/'grouped-first-stops.json').read_text()):assert g['phas
 manifest=json.loads((base/'adapted-source-manifest.json').read_text());assert all(hashlib.sha256((tree/n).read_bytes()).hexdigest()==h for n,h in manifest.items())
 assert manifest==json.loads((base/'adapted-source-before-remaining.json').read_text())
 binary=json.loads((base/'binaries.json').read_text())['ordinary'];assert hashlib.sha256(Path(binary['path']).read_bytes()).hexdigest()==binary['sha256']
+assert all(json.loads((out/f'group-{a}-{z}-status.json').read_text())['exit_code']==0 for a,z in [(1,10),(11,20),(21,30),(31,40),(41,50),(51,60),(61,70),(71,79)])
 assert all(r['module_format']==os.environ['CENSUS_MODULE_FORMAT'] for r in rows)
 comparisons=json.loads((out/'comparison.json').read_text());baseline=json.loads((out/'baseline.json').read_text())
 for row,c in zip(rows,comparisons):
@@ -25,6 +26,6 @@ assert all(n.startswith('stage3/census/next-stops-f2546f1f/') for n in subproces
 assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_000_000]
 statuses={str(p.relative_to(base)):json.loads(p.read_text()) for p in base.rglob('*-status.json')}
 assert all(isinstance(s['exit_code'],int) and s['seconds']<1800 and s['process_group_cleaned'] for s in statuses.values())
-processes=subprocess.check_output(['ps','-eo','comm'],text=True);assert 'next-stops-464e' not in processes
+processes=subprocess.check_output(['ps','-eo','comm'],text=True);assert 'next-stops-f254' not in processes
 result=dict(roots=79,observations=158,duplicates_agree=True,root_exits_zero=True,source_clean_outside_evidence=True,all_child_exits={n:s['exit_code'] for n,s in statuses.items()},all_child_durations_below_1800=True,adapted_source_hashes_verified=True,no_live_census_children=True)
 (out/'validation.json').write_text(json.dumps(result,indent=2)+'\n');print('validation passed')
