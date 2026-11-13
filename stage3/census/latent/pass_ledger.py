@@ -33,7 +33,7 @@ def body_lowers(unit, findings):
            for row in (unit.get('pass_ledger') or [])):
         return False
     return not any(finding.get('unit') == unit.get('where') and
-                   finding.get('phase') in ('lowering', 'deferred', 'registration')
+                   finding.get('phase') in ('lowering', 'deferred', 'registration', 'prepass')
                    for finding in findings)
 
 

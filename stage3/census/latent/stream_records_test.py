@@ -12,6 +12,17 @@ class LatentRelationStreamRecordsTests(unittest.TestCase):
         self.assertEqual(census_records([{'status': 'measurement'}, file])[1]['units'][0], new)
         self.assertEqual(eligibility_units([old]), eligibility_units([new]))
 
+    def test_prepass_finding_blocks_body_coverage(self):
+        from pass_ledger import body_lowers, coverage
+        unit = {'where': 'only.ts:1:1', 'status': 'attempted'}
+        finding = {'unit': unit['where'], 'phase': 'prepass', 'kind': 'NotYet',
+                   'reason': 'a view of a type that reaches a growing generic'}
+        record = {'file': 'only.ts', 'units': [unit], 'findings': [finding]}
+        rows = census_records([{'status': 'measurement'}, record])
+        self.assertEqual(rows[1]['findings'], [finding])
+        self.assertFalse(body_lowers(unit, rows[1]['findings']))
+        self.assertEqual(coverage(rows[1:])['body_lowered_units'], 0)
+
     def test_partial_header_has_no_invented_end_answer(self):
         header = {'status': 'measurement', 'diagnostics': ['retained']}
         self.assertEqual(census_records([header]), [header])

@@ -56,7 +56,7 @@ func latentAttachPassLedger(record *LatentFile) {
 		}
 		stopped := unit.Status == "panic"
 		for _, finding := range record.Findings {
-			if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration") {
+			if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration" || finding.Phase == "prepass") {
 				stopped = true
 			}
 		}

@@ -126,7 +126,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		return nil, err
 	}
 	// Before any view is made or any element read lowers, so every read is keyed by the whole program.
-	lowering.collectViewedElements(modules)
+	if err := lowering.collectViewedElements(modules); err != nil {
+		return nil, err
+	}
 	lowering.noteInheritance(modules)
 	if err := lowering.enumInitialization(modules); err != nil {
 		return nil, err

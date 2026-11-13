@@ -229,6 +229,13 @@ sys.exit(not result.wasSuccessful())
         self.assertEqual(stops[0]['head']['reason'], 'new')
         self.assertEqual(len(d['distinct_reads']['regressions']), 0)
 
+    def test_prepass_changes_unit_first_stop(self):
+        unit = dict(where='input.ts:1:1', kind='function', status='attempted')
+        d = self.synthetic('a.b;', [], [(1, 'growing view', 'prepass')], [unit])
+        stops = d['distinct_reads']['unit_first_stop_delta']
+        self.assertEqual(len(stops), 1)
+        self.assertEqual(stops[0]['head']['reason'], 'growing view')
+
     def test_panic_is_retained_when_read_reason_is_unchanged(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
