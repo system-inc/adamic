@@ -21,6 +21,7 @@ var gccRuntimeUnits = []string{
 	"directory.c",
 	"dtoa.c",
 	"exceptions.c",
+	"foreign.c",
 	"from_codes.c",
 	"generator.c",
 	"graph_regions.c",
@@ -538,3 +539,6 @@ func TestGCCRuntimeProcess(t *testing.T)         { t.Parallel(); checkGCCRuntime
 
 func TestProduct_GCCRuntimeDate(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "date.c") }
 func TestGCCRuntimeDate(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "date.c") }
+
+func TestProduct_GCCRuntimeForeign(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "foreign.c") }
+func TestGCCRuntimeForeign(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "foreign.c") }
