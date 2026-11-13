@@ -119,7 +119,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(result['files'], result['trees']['area']['files'])
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
-        self.assertIn('Body lowering, main: 1/4; root-order artifacts: 0.', text)
+        self.assertIn('\nLowering, main: 1/4; root-order artifacts: 0.', text)
         self.assertIn('| Root | Stop | Reason | Node result | Classification | Program result from entry census |', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent body lowering, main:'))
@@ -447,7 +447,7 @@ class RootOrderTests(unittest.TestCase):
     setUp = ReportTests.setUp
     render = ReportTests.render
 
-    def readiness(self, *, entry_reason=None, attempted=True, node_throws=True):
+    def readiness(self, *, entry_reason=None, attempted=True, node_throws=True, whole_passes=False):
         from entry_test import write_entry
         from report import READINESS_REASONS, ENTRY_MEASUREMENT
         self.reason = sorted(READINESS_REASONS)[0]
@@ -463,6 +463,12 @@ class RootOrderTests(unittest.TestCase):
         rows = [json.loads(line) for line in path.read_text().splitlines()]
         rows[3]['units'] = [{'status': 'attempted'}]
         rows[2]['units'] = [{'status': 'attempted' if attempted else 'skipped_checker_body'}]
+        if whole_passes:
+            # Every production post-lowering step executed, which the census itself never records today.
+            from pass_ledger import required_steps
+            for row in (rows[2], rows[3]):
+                for unit in row['units']:
+                    unit['pass_ledger'] = [dict(name=name, status='executed') for name in required_steps()]
         if entry_reason:
             # Attribute by finding location even when a different file's unit found it.
             rows[1]['findings'] = [{'measurement': ENTRY_MEASUREMENT, 'kind': 'NotYet',
@@ -490,14 +496,14 @@ class RootOrderTests(unittest.TestCase):
         self.assertEqual(self.mock.call_args.args[1], [])
 
     def test_root_only_readiness_with_node_throw_is_visible_artifact(self):
-        self.readiness()
+        self.readiness(whole_passes=True)
         result = self.render()
         self.assertTrue(self.root_row(result)['lowering'])
         self.assertEqual(result['totals']['lowering'], 2)
         artifact = {'root': 'src/compiler/later.ts', 'where': 'src/compiler/good.ts:7:9',
                     'reason': self.reason, 'node': self.node,
                     'entry_program_attempted': True, 'entry_unattempted_sources': [], 'entry_next_stop': None,
-                    'entry_whole_program_passes_measured': False}
+                    'entry_whole_program_passes_measured': True}
         self.assertEqual(result['root_order_artifacts'], [artifact])
         self.assertEqual(result['readiness_node_checks'], [artifact])
         text = (self.run / 'report.md').read_text()
@@ -543,7 +549,7 @@ class RootOrderTests(unittest.TestCase):
 
     def test_daily_table_keeps_artifacts_beside_counts(self):
         from shutil import copytree
-        self.readiness()
+        self.readiness(whole_passes=True)
         self.render()
         for label in ('main', 'area'):
             directory = self.run / label
@@ -558,7 +564,7 @@ class RootOrderTests(unittest.TestCase):
         text = (self.run / 'report.md').read_text()
         for label in ('main', 'area'):
             self.assertEqual(len(result['trees'][label]['root_order_artifacts']), 1)
-            self.assertIn(f'Body lowering, {label}: 2/4; root-order artifacts: 1.', text)
+            self.assertIn(f'\nLowering, {label}: 2/4; root-order artifacts: 1.', text)
         self.assertEqual(text.count('Node throws here as well; exit 1; ReferenceError:'), 2)
         self.assertIn('Node throws here as well; exit 1; ReferenceError:', (self.run / 'README.md').read_text())
         disk = json.loads((self.run / 'report.json').read_text())
@@ -566,13 +572,13 @@ class RootOrderTests(unittest.TestCase):
 
     def test_enum_readiness_with_node_throw_is_also_an_artifact(self):
         from report import READINESS_REASONS
-        self.readiness()
+        self.readiness(whole_passes=True)
         self.records[2]['reason'] = sorted(READINESS_REASONS)[1]
         result = self.render()
         self.assertTrue(self.root_row(result)['lowering'])
         self.assertEqual(result['root_order_artifacts'][0]['reason'], sorted(READINESS_REASONS)[1])
 
-    def test_artifact_tail_stop_preserves_body_count_loom03dg(self):
+    def test_artifact_tail_stop_withholds_lowering_loom03dg(self):
         from report import ENTRY_MEASUREMENT
         self.readiness()
         path = self.run / 'tsc/latent.jsonl'
@@ -584,14 +590,37 @@ class RootOrderTests(unittest.TestCase):
                                     measurement=ENTRY_MEASUREMENT)]
         path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
         result = self.render()
-        self.assertTrue(self.root_row(result)['lowering'])
-        self.assertEqual(result['totals']['lowering'], 2)
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
         artifact = result['root_order_artifacts'][0]
         self.assertIsNone(artifact['entry_next_stop'])
         self.assertEqual(artifact['entry_tail_stops'][0]['pass_name'], 'checkRecordGuardedReads')
         self.assertFalse(artifact['entry_whole_program_passes_measured'])
         self.assertIn('scoped tail stop checkRecordGuardedReads: guarded record',
                       (self.run / 'report.md').read_text())
+
+    def test_artifact_body_only_does_not_lower_sx8wdg7(self):
+        # Body lowering alone is not lowering: the entry census omits the whole-program passes.
+        self.readiness()
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(len(result['root_order_artifacts']), 1)
+        self.assertIsNone(result['root_order_artifacts'][0]['entry_next_stop'])
+        self.assertFalse(result['root_order_artifacts'][0]['entry_whole_program_passes_measured'])
+        text = (self.run / 'report.md').read_text()
+        self.assertIn('\nLowering, file roots: 1/4; root-order artifacts: 1.', text)
+        self.assertIn('| src/compiler/later.ts | pass | pass | fail |', text)
+        self.assertIn('all program files attempted; no findings; body lowering only; whole-program passes unmeasured', text)
+
+    def test_artifact_body_count_mutant_is_red_sx8wdg7(self):
+        # Counting an artifact root by its body alone, the old rule, credits the root above.
+        import report
+        self.readiness()
+        with patch('report.artifact_lowers_whole', report.artifact_lowers_body):
+            result = self.render()
+        self.assertTrue(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 2)
 
     def test_artifact_with_entry_refusal_does_not_lower_whole(self):
         from report import ENTRY_MEASUREMENT
