@@ -1,0 +1,42 @@
+{
+  "scanner": {
+    "baseline_findings": 138,
+    "candidate_findings": 137,
+    "new": [],
+    "removed": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "<tree>/src/compiler/scanner.ts:468:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "<tree>/src/compiler/scanner.ts:469:12",
+        "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+        "text": "<tree>/src/compiler/scanner.ts:469:12: Adamic 0.1 refuses a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it); call it in an arrow that keeps the object: (value) => sourceFile.getPositionOfLineAndCharacter(value) (unbound-method)"
+      }
+    ],
+    "new_or_changed_attempts": [],
+    "removed_or_changed_attempts": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "<tree>/src/compiler/scanner.ts:468:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "<tree>/src/compiler/scanner.ts:469:12",
+        "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+        "text": "<tree>/src/compiler/scanner.ts:469:12: Adamic 0.1 refuses a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it); call it in an arrow that keeps the object: (value) => sourceFile.getPositionOfLineAndCharacter(value) (unbound-method)"
+      }
+    ]
+  },
+  "types": {
+    "baseline_findings": 0,
+    "candidate_findings": 0,
+    "new": [],
+    "removed": [],
+    "new_or_changed_attempts": [],
+    "removed_or_changed_attempts": []
+  }
+}

@@ -1,0 +1,19 @@
+git fetch origin main && git worktree add --detach /workspace/scratch/sourcefile-like-position origin/main
+Exit: 0
+Main: 751879544ea6e627e67c91d6ab3c4ba595be6356
+No AGENTS.md found under /workspace.
+npm ci (stage3/api)
+Exit: 0
+added 3 packages in 6s
+git submodule update --init --recursive
+Exit: 0
+cohere: 5360753e19e4417675a90e92a1823bea66b13918
+cohere/TypeScript: d92d9bfee114c80be2c375d72edae966176e3a4f
+No credential errors.
+source /workspace/adamic-tools/env.sh; go version
+Exit: 0
+go version go1.27.1 linux/amd64
+git clone https://github.com/microsoft/TypeScript.git /workspace/scratch/sourcefile-like-position-upstream && git -C /workspace/scratch/sourcefile-like-position-upstream checkout --detach 050880ce59e30b356b686bd3144efe24f875ebc8 && git -C /workspace/scratch/sourcefile-like-position-upstream describe --tags --exact-match
+Exit: 0
+HEAD is now at 050880ce59 Bump version to 6.0.3 and LKG
+v6.0.3

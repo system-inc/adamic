@@ -1,0 +1,56 @@
+{
+  "status": "stopped",
+  "main": "751879544ea6e627e67c91d6ab3c4ba595be6356",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "tag": "v6.0.3",
+  "ownership": {
+    "status": "pass",
+    "wholeInterfacePinned": false,
+    "proposedDirectory": "99-correctness-sourcefile-like-position"
+  },
+  "javascript": {
+    "status": "pass",
+    "typescript": "6.0.3",
+    "files": 604,
+    "emits": 1208,
+    "changed": [
+      "src/compiler/types.ts"
+    ],
+    "method": "getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;",
+    "property": "getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;"
+  },
+  "adamic": {
+    "status": "pass",
+    "scanner": {
+      "before": 138,
+      "after": 137,
+      "new": 0,
+      "removed": [
+        "src/compiler/scanner.ts:469:12"
+      ]
+    },
+    "types": {
+      "before": 0,
+      "after": 0
+    },
+    "sourcefile_view_probe": {
+      "where": "src/compiler/utilities.ts:7959:37",
+      "baseline_findings": 0,
+      "candidate_findings": 0
+    }
+  },
+  "declarations": {
+    "status": "measurement_failed_on_baseline",
+    "exit": 1,
+    "diagnostics": 64,
+    "cause": "The flattened single-program probe read src/typescript/tsconfig.json (types: []) and did not preserve compiler project types: [node]. No candidate declaration emit was attempted. No candidate regression is established.",
+    "upstreamBundler": "not run after failure",
+    "laneApi": "not run after failure"
+  },
+  "types": "not run after failure",
+  "built": false,
+  "restoringMutant": "not run: all-pass prerequisite not met",
+  "lane": "not run: no adaptation built",
+  "loom": "not submitted",
+  "adaptationBranch": "not created"
+}

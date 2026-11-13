@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "typescript": "6.0.3",
+  "files": 604,
+  "emits": 1208,
+  "changed": [
+    "src/compiler/types.ts"
+  ],
+  "method": "getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;",
+  "property": "getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;"
+}

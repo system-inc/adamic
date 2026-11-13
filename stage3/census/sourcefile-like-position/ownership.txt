@@ -1,0 +1,4 @@
+Command: rg -l "SourceFileLike|getPositionOfLineAndCharacter" stage3/adapt -g adapt.cjs -g owners.json
+Exit: 0
+Matches: 71-writable-views/adapt.cjs (lineMap member only); core-multimap/owners.json and core-or-predicate/owners.json (import owners only).
+No whole-interface pin. Candidate destination if all gates pass: 99-correctness-sourcefile-like-position.

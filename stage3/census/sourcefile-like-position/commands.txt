@@ -1,0 +1,47 @@
+Setup (all commands run in the detached scratch worktree unless noted):
+1. /workspace/adamic: git fetch origin main && git worktree add --detach /workspace/scratch/sourcefile-like-position origin/main
+   exit 0; main 751879544ea6e627e67c91d6ab3c4ba595be6356
+2. git submodule update --init --recursive
+   exit 0; pins in submodules.txt
+3. git clone https://github.com/microsoft/TypeScript.git /workspace/scratch/sourcefile-like-position-upstream && git -C /workspace/scratch/sourcefile-like-position-upstream checkout --detach 050880ce59e30b356b686bd3144efe24f875ebc8 && git -C /workspace/scratch/sourcefile-like-position-upstream describe --tags --exact-match
+   pending
+4. stage3/api: npm ci
+   exit 0; added 3 packages
+5. rg -l 'SourceFileLike|getPositionOfLineAndCharacter' stage3/adapt
+   exit 0; ownership-matching-files.txt
+6. rg -n 'SourceFileLike|getPositionOfLineAndCharacter' stage3/adapt -g adapt.cjs
+   exit 0; ownership-adapters.txt
+7. git fetch origin typescript/promise-discard-sites
+   exit 0; wrapper inspected, not used because callable-contract body lowering must be measured
+8. /workspace/scratch/sourcefile-like-position-evidence/build-census.sh
+   see overlay.exit, build.exit, overlay.log, build.log
+9. export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/sourcefile-like-position-upstream; export STAGE3_CACHE=/workspace/scratch/sourcefile-like-position-evidence/cache; stage3/apply.sh /workspace/scratch/sourcefile-like-position-main-tree
+   see apply-main.exit, apply-main.log
+10. source /workspace/adamic-tools/env.sh; export TMPDIR=/workspace/scratch/sourcefile-like-position-evidence/tmp; go build -o /workspace/scratch/sourcefile-like-position-evidence/adamic ./cmd/adamic
+   exit 0; production-build.exit, production-build.log
+Upstream clone command (3) completed with exit 0; HEAD and exact tag confirmed (setup.txt).
+Command 9 was interrupted by an environment lifecycle change while applying adapters; no exit code was produced. Its output tree was not used for measurements.
+11. export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/sourcefile-like-position-upstream; export STAGE3_CACHE=/workspace/scratch/sourcefile-like-position-evidence/cache; stage3/apply.sh /workspace/scratch/sourcefile-like-position-main-tree-2
+    Fresh output; see apply-main-2.exit and apply-main-2.log.
+12. cp -a --reflink=auto /workspace/scratch/sourcefile-like-position-main-tree-2 /workspace/scratch/sourcefile-like-position-trial-tree
+    exit 0; copy.exit
+13. node --max-old-space-size=4096 stage3/census/sourcefile-like-position/trial.cjs /workspace/scratch/sourcefile-like-position-main-tree-2 /workspace/scratch/sourcefile-like-position-trial-tree
+    see javascript.exit, javascript.json, javascript.log
+    Stock TypeScript transpileModule, target ES2024, module ESNext, comments retained and removed. Identical source bytes reuse the deterministic identical emit. Only types.ts may differ in source bytes.
+14. /workspace/scratch/sourcefile-like-position-evidence/measure.sh (retained as measure.sh)
+    For each baseline/candidate and scanner/types: LATENT_FULL=1 LATENT_ONLY_FILE=<exact adapted filename> LATENT_TIMES=<times.jsonl> latent <adapted>/src/compiler <output.jsonl>
+    see each .exit, .log, .jsonl and -times.jsonl
+15. source /workspace/adamic-tools/env.sh; for each baseline/candidate: adamic js <tree>/src/compiler/sys.ts --module-format commonjs-bundle
+    see main-sys/trial-sys .exit, .stdout, .stderr
+16. source /workspace/adamic-tools/env.sh; go build -buildvcs=false -overlay=/workspace/scratch/sourcefile-like-position-evidence/overlay/overlay.json -o /workspace/scratch/sourcefile-like-position-evidence/replay ./stage3/census/latent/replay/worker
+    exit 0; replay-build.log, replay-build.exit
+17. for each baseline/candidate: replay -project <tree>/src/compiler -where <tree>/src/compiler/utilities.ts:7959:37 -kind Refused -reason 'a checked view with a callable contract'
+    see main-view/trial-view .json, .log, .exit; an absent baseline signature is an expected negative control, not a candidate check failure.
+18. python3 stage3/census/sourcefile-like-position/compare.py
+    exit 0; finding-diff.json and finding-diff.txt contain every normalized finding change.
+19. baseline tree: npm ci
+    exit 0; upstream-npm-ci.log, upstream-npm-ci.exit; 338 packages installed.
+20. ln -s /workspace/scratch/sourcefile-like-position-main-tree-2/node_modules /workspace/scratch/sourcefile-like-position-trial-tree/node_modules
+    exit 0; same locked upstream dependencies used by both scratch trees.
+21. node --max-old-space-size=4096 stage3/census/sourcefile-like-position/strip-declarations.cjs /workspace/scratch/sourcefile-like-position-main-tree-2 /workspace/scratch/sourcefile-like-position-trial-tree /workspace/scratch/sourcefile-like-position-evidence/strip
+    EXIT 1: 64 baseline diagnostics. Probe omitted the compiler project's Node ambient types by flattening references. Complete diagnostics: strip-declarations.log. No candidate declaration emission, bundler, API guard, types check, adaptation, mutant or lane run followed this failed measurement.
