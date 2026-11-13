@@ -20,6 +20,7 @@ main_path.write_text(main)
 overlay['Replace'][main_key] = str(main_path)
 scan = r'''package lower
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
  "context"
  "fmt"
  "github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -32,7 +33,7 @@ func VoidWideningSourceScan(ctx context.Context, program *load.Program, emit fun
  for _, file := range program.Files() {
   latentFindings = nil
   checker, release := program.Checker(ctx, file)
-  l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+  l := &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
   var visit ast.Visitor
   visit = func(node *ast.Node) bool {
    latentFindingOwner, latentFindingPhase = program.Where(node), "void_widening_only_source_scan"
