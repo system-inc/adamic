@@ -6,6 +6,7 @@ prefix='/workspace/scratch/next-stops-516c3ded-adapted/src/compiler/'
 def read(name):
  rows=[json.loads(l) for l in (base/('sys-'+name+'-full.jsonl')).read_text().splitlines()]
  assert rows[0]['latent_mode']=='full' and rows[-1]['status']=='relation_report'
+ assert not rows[-1].get('findings'), 'trailer findings must be included in delta'
  assert rows[-1]['relation_overflow']['complete'] if 'complete' in rows[-1]['relation_overflow'] else True
  files=[r for r in rows if 'file' in r];assert len(files)==1 and files[0]['file']==prefix+'sys.ts'
  assert json.loads((base/'CommonJSBundle'/('sys-'+name+'-full-status.json')).read_text())['exit_code']==0
@@ -36,7 +37,7 @@ s+=['','Every new, gone, or changed finding follows. Text is exact except that t
 def row(kind,before,after):
  f=after or before
  vals=[kind,f['phase'],f['kind'],short(f['unit']),short(before['text']) if before else '—',short(after['text']) if after else '—']
- s.append('| '+' | '.join(v.replace('|','\\|').replace('\n','<br>') for v in vals)+' |')
+ s.append('| '+' | '.join(v.replace('|','\\|').replace('<','&lt;').replace('>','&gt;').replace('\n','<br>') for v in vals)+' |')
 for f in gone:row('gone',f,None)
 for f in added:row('new',None,f)
 for pair in changed:row('changed',pair['before'],pair['after'])
