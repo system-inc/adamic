@@ -1,0 +1,114 @@
+{
+  "main": {
+    "total": 1,
+    "classes": [
+      {
+        "every_on_entry": "false",
+        "every": "false",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "false",
+        "every": "false",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "false",
+        "every": "true",
+        "trip_nonempty": false,
+        "count": 1
+      },
+      {
+        "every_on_entry": "false",
+        "every": "true",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "false",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "false",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "true",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "true",
+        "trip_nonempty": true,
+        "count": 0
+      }
+    ],
+    "lines": [
+      "viewed-elements: build=main every-on-entry=false every=true viewed=180 trip=\"\""
+    ]
+  },
+  "head": {
+    "total": 1,
+    "classes": [
+      {
+        "every_on_entry": "false",
+        "every": "false",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "false",
+        "every": "false",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "false",
+        "every": "true",
+        "trip_nonempty": false,
+        "count": 1
+      },
+      {
+        "every_on_entry": "false",
+        "every": "true",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "false",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "false",
+        "trip_nonempty": true,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "true",
+        "trip_nonempty": false,
+        "count": 0
+      },
+      {
+        "every_on_entry": "true",
+        "every": "true",
+        "trip_nonempty": true,
+        "count": 0
+      }
+    ],
+    "lines": [
+      "viewed-elements: build=head every-on-entry=false every=true viewed=1 trip=\"\""
+    ]
+  }
+}

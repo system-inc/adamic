@@ -1,0 +1,12 @@
+diff --git a/stage3/census/latent/units.go.txt b/stage3/census/latent/units.go.txt
+index ae9e1e166..e6d4d21c8 100644
+--- a/stage3/census/latent/units.go.txt
++++ b/stage3/census/latent/units.go.txt
+@@ -142,6 +142,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
+ 		}
+ 		// Registration is prepared once per file, then deep-copied per attempted unit.
+ 		base := fresh()
++		base.elementKey = &viewElementKey{}
+ 		var orderErr error
+ 		if modules == nil {
+ 			modules, orderErr = base.latentPrepassModules()
