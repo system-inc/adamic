@@ -1,0 +1,19 @@
+{
+  "measured_main": "751879544ea6e627e67c91d6ab3c4ba595be6356",
+  "final_base": "578ace8577a350d7f7623316c40532c8d40e9998",
+  "changed_paths": [
+    "docs/wasm-limits.md",
+    "internal/flow/flow_test.go",
+    "internal/native/runtime/node_errno.h",
+    "internal/native/runtime/node_fs_file.c",
+    "internal/native/testdata/runtime-statics/storage.txt",
+    "internal/oracle/testdata/wasi/errno.mutants.md",
+    "internal/oracle/wasi_errno_test.go",
+    "internal/oracle/wasi_symlink_test.go",
+    "review/test-split-flow/generate.py"
+  ],
+  "stage3_inputs_changed": false,
+  "apply_key_unchanged": "d5c9264a488bb1ce149b3ecc9f3eb6a1ab0ae4c9fa75e7192bfaa81b7b345d19",
+  "adapter_bytes_unchanged": true,
+  "reason_no_repeat": "Full lane consumes unchanged stage3 inputs; upstream-only Node build/tests and checker/lower sources are unchanged. Changes are wasm runtime, documentation and test coverage."
+}

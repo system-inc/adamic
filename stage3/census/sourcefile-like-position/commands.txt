@@ -45,3 +45,5 @@ Command 9 was interrupted by an environment lifecycle change while applying adap
     exit 0; same locked upstream dependencies used by both scratch trees.
 21. node --max-old-space-size=4096 stage3/census/sourcefile-like-position/strip-declarations.cjs /workspace/scratch/sourcefile-like-position-main-tree-2 /workspace/scratch/sourcefile-like-position-trial-tree /workspace/scratch/sourcefile-like-position-evidence/strip
     EXIT 1: 64 baseline diagnostics. Probe omitted the compiler project's Node ambient types by flattening references. Complete diagnostics: strip-declarations.log. No candidate declaration emission, bundler, API guard, types check, adaptation, mutant or lane run followed this failed measurement.
+
+22. Resumed by user instruction: replace invalid check 4 with upstream own project declaration build. See upstream-declarations/commands.txt and its complete results. All replacement checks and full lane passed.

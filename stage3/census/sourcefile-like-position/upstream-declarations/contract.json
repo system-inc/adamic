@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "exactCandidate": true,
+  "idempotent": true,
+  "restoringRoundTrip": true,
+  "noWriteControls": [
+    "owner-drift",
+    "duplicate-owner",
+    "parse-error"
+  ],
+  "outsideOwnerEditAccepted": true
+}

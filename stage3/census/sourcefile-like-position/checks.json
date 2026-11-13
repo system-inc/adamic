@@ -1,5 +1,5 @@
 {
-  "status": "stopped",
+  "status": "pass",
   "main": "751879544ea6e627e67c91d6ab3c4ba595be6356",
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "tag": "v6.0.3",
@@ -40,17 +40,160 @@
     }
   },
   "declarations": {
-    "status": "measurement_failed_on_baseline",
-    "exit": 1,
-    "diagnostics": 64,
-    "cause": "The flattened single-program probe read src/typescript/tsconfig.json (types: []) and did not preserve compiler project types: [node]. No candidate declaration emit was attempted. No candidate regression is established.",
-    "upstreamBundler": "not run after failure",
-    "laneApi": "not run after failure"
+    "status": "pass",
+    "method": "Separate npm ci and upstream node_modules/.bin/hereby dts on baseline and candidate, preserving each project options; upstream scripts/dtsBundler.mjs unmodified",
+    "comparison": {
+      "files": {
+        "typescript.d.ts": {
+          "main_sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+          "candidate_sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+          "bytes": 593536,
+          "identical": true
+        },
+        "tsserverlibrary.d.ts": {
+          "main_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+          "candidate_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+          "bytes": 866,
+          "identical": true
+        }
+      },
+      "status": "pass"
+    },
+    "laneApi": {
+      "status": "pass",
+      "errors": [],
+      "details": {
+        "reference_declarations": 28,
+        "composed_declarations": 273,
+        "sanctioned_declarations": 273,
+        "added_lines": 327,
+        "removed_lines": 245
+      },
+      "sanctioned_api_sha256": "42851b6eb29f2c94fda1f9bfd4c819fc5eaf6b2fa65c0263de5ffb0490bf81d4",
+      "sanctioned_api_changed": false
+    },
+    "invalid_prior_probe": "retained as historical evidence; superseded, not used for measurement"
   },
-  "types": "not run after failure",
-  "built": false,
-  "restoringMutant": "not run: all-pass prerequisite not met",
-  "lane": "not run: no adaptation built",
+  "types": {
+    "command": [
+      "/workspace/scratch/sourcefile-like-position-evidence/adamic",
+      "types",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/binder.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/builder.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/builderPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/builderState.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/checker.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/core.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/corePublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/debug.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/emitter.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/hostErrors.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/parser.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/path.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/performance.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/performanceCore.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/program.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/scanner.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/semver.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/sourcemap.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/sys.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/tracing.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformer.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/tsbuild.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/types.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/utilities.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/watch.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/watchPublic.ts",
+      "/workspace/scratch/sourcefile-like-position-trial-tree/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/scratch/sourcefile-like-position",
+    "exit": 0,
+    "seconds": 7.332779135999772,
+    "roots": 79
+  },
+  "built": true,
+  "restoringMutant": {
+    "status": "red_as_expected",
+    "exit": 1,
+    "where": "src/compiler/scanner.ts:469:12"
+  },
+  "lane": {
+    "status": "pass",
+    "exit": 0,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 273,
+      "sanctioned_declarations": 273,
+      "added_lines": 327,
+      "removed_lines": 245
+    },
+    "artifacts": "upstream-declarations/full-lane"
+  },
   "loom": "not submitted",
-  "adaptationBranch": "not created"
+  "adaptationBranch": {
+    "name": "typescript/sourcefile-like-position-1",
+    "commit": "0ed68349e7c60764a5333f0d2d326965a64d53d1",
+    "base": "578ace8577a350d7f7623316c40532c8d40e9998",
+    "commits_on_main": 1
+  }
 }

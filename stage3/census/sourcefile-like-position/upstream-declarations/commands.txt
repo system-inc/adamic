@@ -1,0 +1,44 @@
+Replacement check 4 (all source pins unchanged):
+Main cwd: /workspace/scratch/sourcefile-like-position-main-tree-2
+npm ci (main-install.log / main-install.exit = 0)
+node_modules/.bin/hereby dts (main-dts.log / main-dts.exit = 0)
+Main succeeded before candidate build began.
+Candidate cwd: /workspace/scratch/sourcefile-like-position-trial-tree
+unlink node_modules (old shared symlink only)
+npm ci (trial-install.log / trial-install.exit = 0)
+node_modules/.bin/hereby dts (trial-dts.log / trial-dts.exit = 0)
+
+Evidence-worktree cwd: /workspace/scratch/sourcefile-like-position
+NODE_PATH="$PWD/stage3/api/node_modules" python3 -B stage3/census/sourcefile-like-position/upstream-declarations/compare-and-api.py
+Exit 0. comparison.json and api-check.json. Calls unmodified lane.check.api_check and verifies sanctioned-api.json did not change.
+
+adamic types: exact 79-root command, elapsed time and exit 0 in adamic-types.json; stdout and stderr retained. No checker options changed.
+
+Adaptation worktree: git worktree add -b typescript/sourcefile-like-position-1 /workspace/scratch/sourcefile-like-position-build origin/main (751879544ea6e627e67c91d6ab3c4ba595be6356)
+Pinned submodules initialized using existing verified local clones, then git submodule update --init --recursive completed. No gitlink or .gitmodules changes.
+Build worktree stage3/api: npm ci (adapter-api-install.exit = 0)
+
+NODE_PATH=<evidence-worktree>/stage3/api/node_modules node upstream-declarations/contract.cjs
+Exit 0. Exact candidate output, no-write idempotence (mtime unchanged), three no-write refusal controls, unrelated outside-owner edit accepted, restoring round trip.
+
+Mutant copy: src and package.json copied from candidate to /workspace/scratch/sourcefile-like-position-mutant-tree; same node_modules via symlink.
+NODE_PATH=<evidence-worktree>/stage3/api/node_modules node <build-worktree>/stage3/adapt/99-correctness-sourcefile-like-position/mutant.cjs <mutant-tree>
+Exit 0, mutant-restore.json.
+adamic js <mutant-tree>/src/compiler/sys.ts --module-format commonjs-bundle
+Exit 1; mutant.stderr reproduces scanner.ts:469:12 unbound-method refusal.
+
+Build worktree: regenerated shard-plan.json and shards.json through shard_plan.build_plan/gate_manifest with artifact.payload_digest(stage3/api/node_modules/typescript), and shards_generated_test.go through generate_shards.render. All bytes unchanged: shard-regeneration.json.
+source /workspace/adamic-tools/env.sh; python3 -B stage3/lane/generate_shards.py --check
+Exit 0.
+
+Build worktree: source /workspace/adamic-tools/env.sh; export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/sourcefile-like-position-upstream; export STAGE3_CACHE=/workspace/scratch/sourcefile-like-position-evidence/cache; export TMPDIR=/workspace/scratch/sourcefile-like-position-evidence/tmp
+stage3/lane/run.sh /workspace/scratch/sourcefile-like-position-lane
+See lane.log, lane.exit and preserved result report. No filters, expected count changes, worker changes or API sanctions.
+
+Final results: lane.exit = 0; full-lane/verdict.txt = PASS. Counts 106366 passing, 1 sanctioned Public APIs failure, 0 pending.
+Full apply's 747 source files compared against the measured candidate: exit 0, applied-source-comparison.json.
+Post-lane adapter hashes and apply key unchanged: exit 0, final-input-check.json.
+Final fetch found two unrelated main commits; git merge --ff-only origin/main fast-forwarded the base. Exact changed paths, unaffected stage3 inputs and unchanged key recorded in main-advance.json.
+git diff --cached --check: exit 0.
+git commit -m 'stage3/adapt: retype the internal SourceFileLike position member as a function property': exit 0, 0ed68349e7c60764a5333f0d2d326965a64d53d1.
+git rev-list --count origin/main..HEAD: exit 0, result 1.

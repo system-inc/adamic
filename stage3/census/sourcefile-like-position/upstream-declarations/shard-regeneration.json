@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "api_digest": "1512f1871eebe448dac94546c5a6337daa1cb64ff20c80f3d9e93f85a0f48dce",
+  "runtime": "773d43b9d47cd9b9b9cad421e29b467e26d5720bf98c237dbf0992ddee485117",
+  "units": 398,
+  "before": {
+    "shard-plan.json": "b07180a064fb4048b3e8c5b74529002e960ab2af2dfe399ef457c62c785ca42b",
+    "shards.json": "c6aac4b07abc5164021e2382fccef265b7a0047de40bd33b2151b6ce5185a647",
+    "shards_generated_test.go": "f9e1eb2afbdd50f7c6afe90ea155d9216079da5f494ce5d32d0988805a1b9a1b"
+  },
+  "after": {
+    "shard-plan.json": "b07180a064fb4048b3e8c5b74529002e960ab2af2dfe399ef457c62c785ca42b",
+    "shards.json": "c6aac4b07abc5164021e2382fccef265b7a0047de40bd33b2151b6ce5185a647",
+    "shards_generated_test.go": "f9e1eb2afbdd50f7c6afe90ea155d9216079da5f494ce5d32d0988805a1b9a1b"
+  },
+  "generated_files_changed": false,
+  "artifact_key": "709552a2b4f5f7ce21d3f7dd2a4bd969dd6626a926013ec90f39b4306208a718",
+  "artifact_inputs": {
+    "files": "c3e143af98f1b5d685bed5a356c6e228e6e4e85d267f921c34e9fb928092d7f9",
+    "tools": {
+      "node": "v24.19.0",
+      "npm": "11.9.0",
+      "git": "git version 2.52.0",
+      "python3": "Python 3.12.14"
+    },
+    "preparation": "17a48460f44f46025f29ada928c5a796e3973ba39e9f84fce9e5dfcc4cbbdc90",
+    "platform": "linux/x64"
+  }
+}
