@@ -56,6 +56,7 @@ type entry struct {
 	Native                 *observation `json:"native"`
 	JavaScriptCompile      *observation `json:"javascript_compile,omitempty"`
 	NativeCompile          *observation `json:"native_compile,omitempty"`
+	BaseNativeCompile      *observation `json:"base_native_compile,omitempty"`
 	Agree                  *bool        `json:"agree"`
 	NegativeRelated        bool         `json:"negative_related"`
 	NegativeWitness        bool         `json:"negative_witness"`
@@ -499,7 +500,7 @@ func run(args []string) error {
 	var voids []string
 	for index := range result.Programs {
 		record := &result.Programs[index]
-		stopped, err := judge.stop(record, record.Head)
+		stopped, err := judge.stop(record, record.Head, nil)
 		if err != nil {
 			return err
 		}
@@ -616,7 +617,10 @@ func run(args []string) error {
 		record.JavaScript = &javascript
 		record.NativeCompile = &nativeCompile
 		record.Native = &native
-		stopped, err := judge.stop(record, nativeCompile)
+		stopped, err := judge.stop(record, nativeCompile, func() observation {
+			output := filepath.Join(scratch, fmt.Sprintf("base-native-%d", index))
+			return execute(headTree, *limit, b, "build", record.Path, "-o", output)
+		})
 		if err != nil {
 			return err
 		}
