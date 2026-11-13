@@ -2,7 +2,7 @@
 
 Both formats independently measured all 79 sorted compiler roots. All 79 first-stop (location, kind, exact reason) tuples agree between formats. Each root has two raw observations agreeing except timing: 316 raw observations across both modes.
 
-CommonJSBundle was completed, validated and pushed at ef97b8ca2 before any EcmaScript root ran. The final branch is one evidence commit directly on 464e5daa23a60588f5aaa656e95d93af05d582c3. Checkpoint history is retained separately on typescript/next-stops-464e5daa-checkpoint.
+CommonJSBundle was completed, validated and pushed at ef97b8ca2 before any EcmaScript root ran. The initial evidence commit 8fc5006daeb270079b96f6ab3133a585fb67d916 is directly on 464e5daa23a60588f5aaa656e95d93af05d582c3. A fast-forward correction commit fixes the ES comparison narrative after the initial push; the final branch therefore has two commits, a deviation from the requested one-commit layout. No force-push was used. Checkpoint history is retained separately on typescript/next-stops-464e5daa-checkpoint.
 
 ## Grouped tables
 
@@ -32,7 +32,7 @@ CommonJSBundle was completed, validated and pushed at ef97b8ca2 before any EcmaS
 
 Bundle versus stage3/meter/README.md, Nov 13 method-change reading: 74 changed, 5 unchanged. Of the 73 formerly at core.ts:2599:15 (process), 72 now stop at sys.ts:142:81 and sys.ts itself stops at scanner.ts:469:12. core.ts itself moves from performanceCore.ts:29:15 to sys.ts:142:81, bringing the new shared group to 73.
 
-ES versus typescript/next-stops-f44b5c27-2: all 73 formerly at sys.ts:57:1 now stop at sys.ts:142:81; the other 6 roots are unchanged.
+ES versus typescript/next-stops-f44b5c27-2: 74 changed, 5 unchanged. All 73 formerly at sys.ts:57:1 now stop at sys.ts:142:81. The sys.ts root moves from path.ts:1105:28 (Refused: a cast the runtime can't check) to scanner.ts:469:12. The other 5 roots are unchanged. The later meter ES reading already had this scanner stop, but it is not the requested f44b5c27-2 comparison baseline.
 
 The sys.ts root is Refused at scanner.ts:469:12 in both modes, exactly: a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it).
 
