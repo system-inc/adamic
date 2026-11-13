@@ -84,7 +84,7 @@
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
-    "after": "declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;",
+    "after": "declare function setTimeout(handler: (label?: unknown) => void, timeout: number, label?: unknown): unknown;",
     "reason": "Only getNodeSystem captures this ambient Node global. The callback parameters are not inspected by this owner. Node returns its Timeout object."
   },
   {
@@ -92,7 +92,7 @@
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function clearTimeout(handle: any): void;",
-    "after": "declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;",
+    "after": "declare function clearTimeout(handle: unknown): void;",
     "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
   },
   {

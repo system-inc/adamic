@@ -152,3 +152,12 @@ comparisons pass. Both required whole lanes and all 398 shards for each pass,
 with exact test-identity/status and API-byte unions. All six CW051 units are
 measured before and after main plus 32 plus 99x. See PROOF.md for the table
 and composition/ for packed current receipts.
+
+## 995spev timer amendment, Nov 13
+
+The pinned createWatchProgram owner now also captures both timer tails into
+consts at scheduling, wraps each callback in a zero-parameter closure, and retains
+the first tail as the label. Captured timer methods preserve the original receiver
+with Function.call; the existing presence guards justify the non-null assertions.
+The two callback functions that ignored their original label now declare an unused
+optional string parameter. No optional timer call is introduced.

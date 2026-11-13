@@ -179,3 +179,12 @@ including foreign edits that shift lines, changed-owner refusals and zero-write
 reruns. All 81,504 product files (746 under src) match the pending branch's own
 adapted tree, excluding Git metadata. Shard generation and the serial lane Go
 checks pass. The oracle shards are not repeated because the product bytes match.
+
+## 995spev timer amendment, Nov 13
+
+Adamic's 05:48Z amendment gives each timer the concrete optional-label contract.
+This whole getNodeSystem owner now spells both forwarding pairs as annotated
+arrows. setTimeout forwards callback, ms and label; clearTimeout forwards the
+opaque unknown handle. The ambient declarations remain in 41 with this concrete
+contract. The after owner pin includes these arrows. The crypto adapter's
+before/after pins include them too. No other builtin binding changes.
