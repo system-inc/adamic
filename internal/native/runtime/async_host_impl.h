@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <poll.h>
+#include <time.h>
 #endif
 
 typedef struct host_entry host_entry;
@@ -85,6 +86,17 @@ static void host_default_wake(void) {
 /* A turn a pending close keeps never blocks, whatever else is armed: libuv's
  * backend timeout is zero while a handle closes. */
 static int host_wait_ms(void) { return source_closes_waiting() ? 0 : timer_wait_ms(); }
+static int64_t host_quiet_clock_ms(void) {
+    struct timespec now;
+    if (clock_gettime(CLOCK_MONOTONIC, &now) != 0) abort();
+    return (int64_t)now.tv_sec * 1000 + now.tv_nsec / 1000000;
+}
+/* The loop's quiet point (#vea9pph, Adamic's ruling): a wait that would block at least
+ * ADAMIC_HEAP_QUIET_MS while the heap holds spare chunks past its cap first waits that long. If that
+ * ends with nothing to do, the thread has sat quiet, so its spares go back (adamic_heap_quiet), and the
+ * wait goes on to the loop's own deadline, recomputed from the timers as an interrupted wait's is, so
+ * a timer fires when it would have. A wake inside the span that brings nothing waits on toward the
+ * same span's end; work that arrives first releases nothing. */
 static void host_default_wait(void) {
     /* The queue is the predicate. A byte published before poll stays readable.
      * A source of either kind is something to wait on, as an unref timer is. */
@@ -103,10 +115,28 @@ static void host_default_wait(void) {
     descriptors[1] = (struct pollfd){.fd = adamic_host_stdout_wake_descriptor(), .events = POLLIN};
     source_poll_set(descriptors + 2);
     int result;
-    do {
-        result = poll(descriptors, (nfds_t)(2 + source_total), timeout);
-        if (result == -1 && errno == EINTR) timeout = host_wait_ms();
-    } while (result == -1 && errno == EINTR);
+    int64_t quiet_end = 0;
+    if (adamic_heap_quiet_pending() && (timeout < 0 || timeout >= ADAMIC_HEAP_QUIET_MS)) quiet_end = host_quiet_clock_ms() + ADAMIC_HEAP_QUIET_MS;
+    for (;;) {
+        int wait = timeout;
+        if (quiet_end != 0) {
+            int64_t left = quiet_end - host_quiet_clock_ms();
+            wait = left > 0 ? (int)left : 0;
+        }
+        result = poll(descriptors, (nfds_t)(2 + source_total), wait);
+        if (result == -1 && errno == EINTR) {
+            timeout = host_wait_ms();
+            continue;
+        }
+        if (result == 0 && quiet_end != 0) {
+            if (host_quiet_clock_ms() < quiet_end) continue;
+            adamic_heap_quiet();
+            quiet_end = 0;
+            timeout = host_wait_ms();
+            if (timeout != 0) continue;
+        }
+        break;
+    }
     /* An error on either pipe is the runtime's own failure. One on a source is
      * its owner's to handle, so it reaches the dispatch as an error bit. */
     if (result < 0 || ((descriptors[0].revents | descriptors[1].revents) & (POLLERR | POLLNVAL))) abort();

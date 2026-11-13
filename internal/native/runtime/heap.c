@@ -1,5 +1,7 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
+// madvise and its MADV_ names under -std=c11 on glibc (spare chunks' return, below).
+#define _DEFAULT_SOURCE
 #ifdef ADAMIC_TARGET_WASI
 // Keep the inline path and also supply the request host's ownership export.
 #define adamic_release adamic_release_inline
@@ -15,6 +17,7 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #include "graph_regions.h"
 #include "slab_quarantine.h"
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdatomic.h>
@@ -67,6 +70,29 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #define CLASSES 16
 #define CHUNK 65536
 
+// Spare chunks go back to the kernel when their thread goes quiet (#vea9pph, Adamic's ruling): a wait
+// that would block at least ADAMIC_HEAP_QUIET_MS first waits that long, and if it ends with nothing to
+// do, every spare past ADAMIC_HEAP_SPARE_CAP bytes is released (adamic_heap_quiet), then the wait goes
+// on to its own deadline. Never at a drop: returning a chunk the moment it emptied cost a churning
+// program 40 to 45% of its wall in faults that came straight back (Runtime Performance's table on
+// #vea9pph, heap_churn on Pupa), while released at a quiet point the same program's idle memory fell
+// from 278 MB to about 34 MB. A loop that never waits as long as ADAMIC_HEAP_QUIET_MS keeps its spares,
+// as before. The chunk stays malloc's and registered, since values' headers name it by number; only its
+// page-aligned interior past FIRST_SLOT goes back, so its header page stays. Linux's MADV_DONTNEED
+// drops the pages at once, which the idle pin can read, and macOS takes MADV_FREE_REUSABLE with
+// MADV_FREE_REUSE before a released chunk is carved again. wasm32's memory can't shrink and Windows
+// keeps its malloc path, so neither returns anything, nor does a build without the classes.
+#ifndef ADAMIC_HEAP_SPARE_CAP
+#define ADAMIC_HEAP_SPARE_CAP ((size_t)1048576)
+#endif
+#if !SLABS || defined(ADAMIC_TARGET_WASI) || defined(_WIN32)
+#define SPARE_RETURN 0
+#else
+#define SPARE_RETURN 1
+#include <sys/mman.h>
+#include <unistd.h>
+#endif
+
 
 // A free slot holds the next free slot of its chunk.
 typedef struct free_slot {
@@ -94,10 +120,19 @@ typedef struct chunk {
 } chunk;
 
 #define FIRST_SLOT ((sizeof(chunk) + GRANULE - 1) / GRANULE * GRANULE)
+// A release gives back only what lies past FIRST_SLOT, so the one field another thread writes (a
+// remote free's list head) stays in memory its owner never releases (Runtime's condition on #vea9pph).
+_Static_assert(offsetof(chunk, remote) + sizeof(_Atomic(struct remote_slot *)) <= FIRST_SLOT, "a remote free's list head must sit before the released interior");
 
 static _Thread_local chunk *giving[CLASSES];
 static _Thread_local chunk *spares;
 static _Thread_local chunk *owned_chunks;
+#if SPARE_RETURN
+// spare_count is how many chunks are on spares, and released the chunks whose interiors went back to
+// the kernel, reused only once no committed spare is left.
+static _Thread_local size_t spare_count;
+static _Thread_local chunk *released;
+#endif
 
 #include "heap_parallel.h"
 
@@ -123,11 +158,61 @@ static void unlist_chunk(chunk *each) {
 	each->listed = false;
 }
 
-// new_chunk gives a class a chunk: a spare one, whatever class it held, or a new one from malloc.
+#if SPARE_RETURN
+// interior is the page-aligned span of a chunk past its header, the part a release gives back.
+static void interior(chunk *each, char **from, size_t *length) {
+	uintptr_t page = (uintptr_t)sysconf(_SC_PAGESIZE);
+	uintptr_t start = ((uintptr_t)each + FIRST_SLOT + page - 1) & ~(page - 1);
+	uintptr_t end = ((uintptr_t)each + CHUNK) & ~(page - 1);
+	*from = (char *)start;
+	*length = end > start ? (size_t)(end - start) : 0;
+}
+
+// release is the one path a chunk's pages take back to the kernel. Its slots are already poisoned
+// (give_local), and madvise leaves the sanitizer's shadow alone, so a use after a free into it is
+// still caught where slabs run under ASan.
+static void release(chunk *each) {
+	char *from;
+	size_t length;
+	interior(each, &from, &length);
+	if (length != 0) {
+#ifdef __APPLE__
+		(void)madvise(from, length, MADV_FREE_REUSABLE);
+#else
+		(void)madvise(from, length, MADV_DONTNEED);
+#endif
+	}
+#ifdef ADAMIC_COUNT
+	atomic_fetch_add_explicit(&adamic_counted.heap_chunks_released, 1, memory_order_relaxed);
+#endif
+}
+
+// reuse readies a released chunk to be carved again. Linux gives zeroed pages on the next touch, and
+// no slot is ever read before it's written; macOS is told the pages are wanted again.
+static void reuse(chunk *each) {
+#ifdef __APPLE__
+	char *from;
+	size_t length;
+	interior(each, &from, &length);
+	if (length != 0) { (void)madvise(from, length, MADV_FREE_REUSE); }
+#else
+	(void)each;
+#endif
+}
+#endif
+
+// new_chunk gives a class a chunk: a spare one, whatever class it held, then a released one, or a new
+// one from malloc.
 static chunk *new_chunk(size_t class) {
 	chunk *each = spares;
 	if (each != NULL) {
 		spares = each->next;
+#if SPARE_RETURN
+		spare_count--;
+	} else if ((each = released) != NULL) {
+		released = each->next;
+		reuse(each);
+#endif
 	} else {
 		each = malloc(CHUNK);
 		if (each == NULL) {
@@ -211,7 +296,49 @@ static void give_local(void *slot, chunk *each) {
 		unlist_chunk(each);
 		each->next = spares;
 		spares = each;
+#if SPARE_RETURN
+		spare_count++;
+#endif
 	}
+}
+
+// adamic_heap_quiet_pending says whether this thread may hold chunks to give back: spares past the cap,
+// or, once a second heap thread exists, frees other threads queued on its chunks, which only it drains
+// and which could empty a chunk it would otherwise keep until it next allocates.
+bool adamic_heap_quiet_pending(void) {
+#if SPARE_RETURN
+	if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) { return true; }
+	return owned_chunks != NULL && atomic_load_explicit(&thread_count, memory_order_relaxed) > 1;
+#else
+	return false;
+#endif
+}
+
+// adamic_heap_quiet takes in the frees other threads queued on this thread's chunks, then keeps the
+// spares that fit the cap, the most recently emptied first, and releases the rest. Only a quiet point
+// calls it: the event loop's wait and a pool worker's park, once they've sat ADAMIC_HEAP_QUIET_MS with
+// nothing to do (async_host_impl.h, parallel.c).
+void adamic_heap_quiet(void) {
+#if SPARE_RETURN
+	if (atomic_load_explicit(&thread_count, memory_order_relaxed) > 1) {
+		for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
+	}
+	size_t kept = 0;
+	chunk **link = &spares;
+	while (*link != NULL) {
+		chunk *each = *link;
+		if ((kept + 1) * CHUNK <= ADAMIC_HEAP_SPARE_CAP) {
+			kept++;
+			link = &each->next;
+			continue;
+		}
+		*link = each->next;
+		spare_count--;
+		release(each);
+		each->next = released;
+		released = each;
+	}
+#endif
 }
 
 // A remote free does not touch any owner-only list or live count. Queue nodes are out of line so
