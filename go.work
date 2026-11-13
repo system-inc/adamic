@@ -4,5 +4,6 @@ toolchain go1.27.1
 
 use (
 	.
+	./cohere/static_single_assignment
 	./cohere/TypeScript/tsc
 )
