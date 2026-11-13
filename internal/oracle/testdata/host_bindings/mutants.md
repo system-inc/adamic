@@ -261,3 +261,16 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -run '^TestHostBinding
     host_bindings_test.go:184: the same name in another file: got load: host binding row 2 (process): a second row for the name in tracing.ts, want two rows
     host_bindings_test.go:19: load: host binding row 3 (process): a second row for the name in tracing.ts
 ```
+
+## CommonJS answers (#93w9rtz, Nov 13 2026)
+
+Measured on Pupa through `ahra loom job`, at 5f01e47154cbec7fbd9638c4b189eeda682c8ecd, Go 1.27.1, Node v24.19.0, `GOFLAGS=-buildvcs=false`, `ADAMIC_GATE_UNCACHED=1`: J-nnq15xv for all six, and J-0ezjwa3 again for (l), (n) and (o), with only the failing lines kept. Each edit was applied exactly once (perl counts the substitution and refuses otherwise), its tests ran, and the file was restored from a saved copy before the next. Both jobs exited 0, which the script gives only when every mutant went red and `git diff --quiet` held after the last. (l) restates the row above for hostBindingStopIn's new shape: its format test is now the whole bundle branch.
+
+| Mutant | Exact edit | Red |
+| --- | --- | --- |
+| (l) A bundle build judged as an ES one | lower/host_bindings.go, `hostBindingStopIn`: `	if l.moduleFormat == ModuleFormatCommonJSBundle {` made `	if false {` | TestHostBindingRowsStopInACommonJSBundle/core.ts's_require: the bundle build lowers require Absent (got `<nil>`), and TestHostBindingStopInJudgesTheCommonJSAnswer's bundle cases all get `""` |
+| (n) An unmeasured row admitted | the same function: `		if row.Node.CommonJS == "" {` made `		if false {` | TestHostBindingStopInJudgesTheCommonJSAnswer, "unmeasured, bundle": got `""`, want "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2)," |
+| (o) The columns not judged against the CommonJS answer | the same function: `		if !hostBindingColumnsGive(row, row.Node.CommonJS) {` made `		if false {` | TestHostBindingStopInJudgesTheCommonJSAnswer, "Absent columns, function" and "Provided columns, undefined", both `""`; TestHostBindingRowsStopInACommonJSBundle/core.ts's_require, the bundle build lowering require (got `<nil>`) |
+| (p) A recorded CommonJS answer flipped | internal/load/host_bindings.json, the first `"commonjs": "object"` (core.ts's process) made `"commonjs": "undefined"` | TestHostBindingsHeldToNode/process/core.ts: Node as a CommonJS script prints `object` |
+| (q) The probe run as a module, not a script | internal/oracle/host_bindings_test.go, `onNodeCommonJS`: `"probe.cjs"` made `"probe.mjs"` | TestNodeCommonJSProbeIsAScript: stdout "undefined undefined undefined undefined", want the module wrapper's names; TestHostBindingsHeldToNode/require/core.ts: stdout "undefined", want the row's CommonJS typeof "function" |
+| (r) A row naming a Node the test doesn't run | internal/load/host_bindings.json, the first `"version": "v24.19.0"` (onProfilerEvent's) made `"version": "v24.21.0"` | TestHostBindingsHeldToNode: "onProfilerEvent in performance.ts: the row names Node v24.21.0, and this test runs v24.19.0" |
