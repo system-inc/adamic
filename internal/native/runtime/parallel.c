@@ -4,9 +4,7 @@
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include "parallel.h"
-#ifdef ADAMIC_TSAN_TEST
 #include <time.h>
-#endif
 #include <errno.h>
 #include <pthread.h>
 #ifndef ADAMIC_TARGET_WASI
@@ -221,6 +219,39 @@ static void execute_range(scope *scope, size_t from, size_t end) {
 	pthread_mutex_unlock(&scheduler);
 }
 
+// park waits, holding the scheduler, until this worker claims a range or the pool stops, and says
+// which. It's a worker's quiet point (#vea9pph, Adamic's ruling): while the worker holds spare heap
+// chunks past the cap, it first waits ADAMIC_HEAP_QUIET_MS, to one deadline however often it's woken
+// for work another worker takes. If the span runs out with nothing claimed, it gives its spares back
+// outside the lock and parks as before. Every wake rechecks for work first, so a release never runs
+// while work is waiting.
+static bool park(scope **claimed, size_t *from, size_t *end) {
+	bool quiet = adamic_heap_quiet_pending();
+	struct timespec deadline;
+	if (quiet && clock_gettime(CLOCK_REALTIME, &deadline) == 0) {
+		deadline.tv_nsec += (long)ADAMIC_HEAP_QUIET_MS * 1000000L;
+		deadline.tv_sec += deadline.tv_nsec / 1000000000L;
+		deadline.tv_nsec %= 1000000000L;
+	} else {
+		quiet = false;
+	}
+	for (;;) {
+		if (stopping) { return false; }
+		if (claim(claimed, from, end)) { return true; }
+		if (!quiet) {
+			pthread_cond_wait(&changed, &scheduler);
+			continue;
+		}
+		if (pthread_cond_timedwait(&changed, &scheduler, &deadline) != ETIMEDOUT) { continue; }
+		if (stopping) { return false; }
+		if (claim(claimed, from, end)) { return true; }
+		quiet = false;
+		pthread_mutex_unlock(&scheduler);
+		adamic_heap_quiet();
+		pthread_mutex_lock(&scheduler);
+	}
+}
+
 static void *worker_main(void *given) {
 	worker_index = (size_t)given;
 	adamic_stack_thread_start();
@@ -228,8 +259,7 @@ static void *worker_main(void *given) {
 	for (;;) {
 		scope *scope;
 		size_t from, end;
-		while (!stopping && !claim(&scope, &from, &end)) { pthread_cond_wait(&changed, &scheduler); }
-		if (stopping) { break; }
+		if (!park(&scope, &from, &end)) { break; }
 		pthread_mutex_unlock(&scheduler);
 		ADAMIC_TSAN_PAUSE(adamic_tsan_claim);
 		execute_range(scope, from, end);

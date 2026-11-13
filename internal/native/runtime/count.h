@@ -32,6 +32,9 @@ typedef struct adamic_counts {
 	// back: once every thread's cache is let go (adamic_region_thread_end), they're equal (#yecmp1d).
 	_Atomic size_t region_blocks;
 	_Atomic size_t region_blocks_freed;
+	// heap_chunks_released is the spare chunks heap.c gave back to the kernel at a quiet point
+	// (#vea9pph), written on a line of its own when there are any, never a column of the counts line.
+	_Atomic size_t heap_chunks_released;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
