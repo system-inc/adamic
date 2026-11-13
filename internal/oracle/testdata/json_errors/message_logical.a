@@ -1,0 +1,4 @@
+// A taken logical message write keeps its construction's enumerability (#z4a9p9e).
+const e = new Error('x');
+e.message &&= 'y';
+console.log(JSON.stringify(e) ?? '<undefined>');
