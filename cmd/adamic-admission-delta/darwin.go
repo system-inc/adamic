@@ -172,8 +172,9 @@ func platformStopped(o observation) bool {
 }
 
 // stop makes the whole row unjudged, including observations already recorded.
-// An old apple-dependent file cannot acquire this exemption by changing its stop.
-func (j *platformJudge) stop(record *entry, o observation) (bool, error) {
+// Only a judged base can move into darwin. The lazy native build is needed
+// only when head stopped natively and the base file already reaches apple/.
+func (j *platformJudge) stop(record *entry, o observation, baseBuild func() observation) (bool, error) {
 	if !platformStopped(o) {
 		return false, nil
 	}
@@ -201,9 +202,17 @@ func (j *platformJudge) stop(record *entry, o observation) (bool, error) {
 			return false, err
 		}
 		if apple {
-			record.Class = "moved-into-darwin"
-			record.PlatformReason = "a reachable apple/ import already exists at base"
-			return true, nil
+			baseStopped := platformStopped(record.Base)
+			if baseBuild != nil {
+				observed := baseBuild()
+				record.BaseNativeCompile = &observed
+				baseStopped = platformStopped(observed)
+			}
+			if !baseStopped {
+				record.Class = "moved-into-darwin"
+				record.PlatformReason = "a reachable apple/ import was judged at base"
+				return true, nil
+			}
 		}
 	}
 	record.Class = "darwin"

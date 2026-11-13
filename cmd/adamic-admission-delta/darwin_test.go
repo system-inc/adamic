@@ -187,7 +187,7 @@ func TestDarwinNativeStopKeepsObservations(t *testing.T) {
 	r, o := platformRun(t, dir, base, head, refusing, headCompiler, "corpus")
 	requireDarwin(t, r, o, "corpus/input.a")
 	p := r.Programs[0]
-	if p.Head.Exit != 0 || p.Node == nil || p.Node.Stdout != "42\n" || p.JavaScriptCompile == nil || p.JavaScript == nil || p.JavaScript.Stdout != "changed\n" || p.NativeCompile == nil || p.NativeCompile.Exit != 5 || p.NativeCompile.Stderr != "native platform unavailable\n" || p.Native == nil || !p.Sampled {
+	if p.Head.Exit != 0 || p.Node == nil || p.Node.Stdout != "42\n" || p.JavaScriptCompile == nil || p.JavaScript == nil || p.JavaScript.Stdout != "changed\n" || p.NativeCompile == nil || p.NativeCompile.Exit != 5 || p.NativeCompile.Stderr != "native platform unavailable\n" || p.Native == nil || !p.Sampled || p.BaseNativeCompile != nil {
 		t.Fatalf("lost native-stop observations: %+v", p)
 	}
 }
@@ -225,7 +225,7 @@ func TestMovedIntoDarwinNative(t *testing.T) {
 	writeExecutable(t, baseCompiler, "#!/bin/sh\nexit 0\n")
 	writeExecutable(t, headCompiler, platformBuildScript)
 	r, o := platformRun(t, dir, base, base, baseCompiler, headCompiler, "corpus")
-	if o.Exit != 1 || r.Programs[0].Class != "moved-into-darwin" || r.Programs[0].NativeCompile == nil || r.Programs[0].NativeCompile.Exit != 5 {
+	if o.Exit != 1 || r.Programs[0].Class != "moved-into-darwin" || r.Programs[0].NativeCompile == nil || r.Programs[0].NativeCompile.Exit != 5 || r.Programs[0].BaseNativeCompile == nil || r.Programs[0].BaseNativeCompile.Exit != 0 {
 		t.Fatalf("native stop escaped selection: %+v %s", r, o.Stderr)
 	}
 }
@@ -324,5 +324,47 @@ func TestDarwinRelativeResolution(t *testing.T) {
 				t.Fatalf("relative run: %+v %s", r, o.Stderr)
 			}
 		})
+	}
+}
+
+// An edited witness that already platform-stopped at base has not moved into
+// darwin. The test fails with the fix removed.
+func TestAlreadyDarwinAtBaseCompile(t *testing.T) {
+	t.Parallel()
+	dir, _, baseCompiler, headCompiler := commandFixture(t)
+	platformWrite(t, dir, "corpus/input.a", "import 'apple/view'; console.log('42');")
+	base := platformCommit(t, dir)
+	platformWrite(t, dir, "corpus/input.a", "import 'apple/view'; console.log('42 changed');")
+	head := platformCommit(t, dir)
+	writeExecutable(t, baseCompiler, platformCompileScript)
+	writeExecutable(t, headCompiler, platformCompileScript)
+	r, o := platformRun(t, dir, base, head, baseCompiler, headCompiler, "corpus")
+	requireDarwin(t, r, o, "corpus/input.a")
+	p := r.Programs[0]
+	if p.Base.Exit != 5 || p.Head.Exit != 5 || p.BaseNativeCompile != nil || p.Node != nil {
+		t.Fatalf("compile-stop observations: %+v", p)
+	}
+}
+
+// A native-only stop needs the base's native build too. Both unavailable builds
+// leave the row unjudged, with the extra build recorded exactly once.
+func TestAlreadyDarwinAtBaseNative(t *testing.T) {
+	t.Parallel()
+	dir, _, baseCompiler, headCompiler := commandFixture(t)
+	platformWrite(t, dir, "corpus/input.a", "import 'apple/view'; console.log('42');")
+	base := platformCommit(t, dir)
+	platformWrite(t, dir, "corpus/input.a", "import 'apple/view'; console.log('42 changed');")
+	head := platformCommit(t, dir)
+	writeExecutable(t, baseCompiler, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nbuild) echo build >> \"$0.builds\"; echo 'base platform unavailable' >&2; exit 5;;\nesac\n")
+	writeExecutable(t, headCompiler, platformBuildScript)
+	r, o := platformRun(t, dir, base, head, baseCompiler, headCompiler, "corpus")
+	requireDarwin(t, r, o, "corpus/input.a")
+	p := r.Programs[0]
+	if p.Base.Exit != 0 || p.Head.Exit != 0 || p.BaseNativeCompile == nil || p.BaseNativeCompile.Exit != 5 || p.BaseNativeCompile.Error != "" || p.BaseNativeCompile.Stderr != "base platform unavailable\n" || p.NativeCompile == nil || p.NativeCompile.Exit != 5 || p.JavaScript == nil || p.JavaScript.Stdout != "changed\n" {
+		t.Fatalf("native-stop observations: %+v", p)
+	}
+	calls, err := os.ReadFile(baseCompiler + ".builds")
+	if err != nil || string(calls) != "build\n" {
+		t.Fatalf("base builds: %q, %v", calls, err)
 	}
 }
