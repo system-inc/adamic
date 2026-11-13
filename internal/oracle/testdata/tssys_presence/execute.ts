@@ -1,0 +1,33 @@
+/*
+ * executeCommandLine.ts's chains, for the presence tests read off ts.sys (#p2n17c4 T1): run is the entry
+ * tsc.ts:24 calls with ts.sys, and hands its system to inner once directly and once from an arrow that
+ * captured it, as :765 and :789 do. inner tests the optional members as executeCommandLine.ts does: a
+ * condition guarding the call (:166's writeOutputIsTTY), a ! (:801, :848), a ?: (:1170's
+ * getMemoryUsage) and typeof, over a method present and one absent and a field present and one absent.
+ */
+import type { System } from './system.ts';
+
+export function run(system: System): void {
+	inner(system, 'direct');
+	const later = (): void => {
+		inner(system, 'arrow');
+	};
+	later();
+}
+
+function inner(sys: System, how: string): void {
+	if (sys.writeOutputIsTTY) {
+		sys.write(`${how}: writeOutputIsTTY ${String(sys.writeOutputIsTTY())}`);
+	}
+	if (!sys.getMemoryUsage) {
+		sys.write(`${how}: no getMemoryUsage`);
+	}
+	const memoryUsed = sys.getMemoryUsage ? sys.getMemoryUsage() : -1;
+	sys.write(`${how}: memory ${memoryUsed}, base64encode ${typeof sys.base64encode}, clearScreen ${typeof sys.clearScreen}`);
+	if (sys.base64encode) {
+		sys.write(sys.base64encode(how));
+	}
+	sys.createDirectory('src');
+	sys.createDirectory('out');
+	sys.write(`${how}: tsconfig.json ${sys.readFile('tsconfig.json') ?? 'missing'}`);
+}
