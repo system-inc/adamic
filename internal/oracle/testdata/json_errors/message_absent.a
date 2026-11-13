@@ -1,0 +1,4 @@
+// A message written after an absent construction becomes enumerable (#z4a9p9e).
+const e = new Error();
+e.message = 'y';
+console.log(JSON.stringify(e) ?? '<undefined>');
