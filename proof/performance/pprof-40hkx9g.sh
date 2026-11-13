@@ -95,8 +95,9 @@ for line in (1550, 1536, 1416, 870, 1422):
     hit = [r for r in up if r['where'].endswith(f'.ts:{line}:1')]
     print(f"  line {line}: " + (f"{hit[0]['wall_seconds']:.2f} s wall, {hit[0].get('cpu_seconds', 0):.2f} s cpu" if hit else "no unit"))
 PYTHON
-echo "== top by cumulative"
-go tool pprof -top -cum -nodecount=17 "$O/entry-census" "$O/cpu.pprof" 2> /dev/null | sed -n '5,22p' | cut -c1-150
-echo "== top by flat"
-go tool pprof -top -nodecount=7 "$O/entry-census" "$O/cpu.pprof" 2> /dev/null | sed -n '6,12p' | cut -c1-150
+# Under the unit closure, the compiler's own functions by cumulative time: which lowering asks for the walk.
+echo "== internal/lower by cumulative, under the units"
+go tool pprof -top -cum -nodecount=400 -focus='latentFullSelected.func7' "$O/entry-census" "$O/cpu.pprof" 2> /dev/null | grep -E 'adamic/internal/(lower|load|flow)' | grep -v -E 'latentFull|latentRun|LatentWith|lower\.Latent\b' | head -16 | awk '{printf "%8s %6s  %s\n", $4, $5, $6}' | sed 's#github.com/system-inc/adamic/##'
+echo "== the walk's callers"
+go tool pprof -peek='ast\.\(\*Node\)\.ForEachChild$' "$O/entry-census" "$O/cpu.pprof" 2> /dev/null | grep -E 'adamic/internal' | head -8 | awk '{printf "%8s  %s\n", $1, $NF}' | sed 's#github.com/system-inc/adamic/##'
 echo "VERDICT OK profile at $O/cpu.pprof, census exit $code"
