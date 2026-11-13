@@ -300,6 +300,24 @@
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
       "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
+    },
+    "f65ce231afe1ba4a079b8f50e20f3d0be2611dd95d451dcbda746372adf77312": {
+      "path": "internal/oracle/testdata/timers_source/stop_extra_assignment.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#8q1pjsp",
+      "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
+    },
+    "62434e67a6ba285385cb9185111ae636553a56bedcad9c409da8e83e1bda77ca": {
+      "path": "internal/oracle/testdata/timers_source/stop_extra_argument.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#8q1pjsp",
+      "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
+    },
+    "0d24f27ccd7174be7e81937189013512d9ac9c78986a630c30a6868ed3c69fc1": {
+      "path": "internal/oracle/testdata/timers_source/stop_extra_array.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#8q1pjsp",
+      "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
     }
   }
 }

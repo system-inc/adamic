@@ -24,6 +24,9 @@ func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
 		}
 		return l.nodeRealpathReferenceRefusal(node) == nil
 	}
+	if name := l.nodeTimerValueName(node); name != "" {
+		return l.nodeTimerValueRefusal(node, name) == nil
+	}
 	if called(node) {
 		return true
 	}
