@@ -304,7 +304,10 @@ static void give_local(void *slot, chunk *each) {
 
 // adamic_heap_quiet_pending says whether this thread may hold chunks to give back: spares past the cap,
 // or, once a second heap thread exists, frees other threads queued on its chunks, which only it drains
-// and which could empty a chunk it would otherwise keep until it next allocates.
+// and which could empty a chunk it would otherwise keep until it next allocates. So in a program with
+// a second heap thread, every thread that owns chunks is pending, and each of its waits of
+// ADAMIC_HEAP_QUIET_MS or more takes one extra wakeup, whether or not anything goes back: the price of
+// draining a parked worker's frees, one wakeup a wait, never a spin (Runtime's should on #vea9pph).
 bool adamic_heap_quiet_pending(void) {
 #if SPARE_RETURN
 	if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) { return true; }

@@ -95,8 +95,9 @@ static int64_t host_quiet_clock_ms(void) {
  * ADAMIC_HEAP_QUIET_MS while the heap holds spare chunks past its cap first waits that long. If that
  * ends with nothing to do, the thread has sat quiet, so its spares go back (adamic_heap_quiet), and the
  * wait goes on to the loop's own deadline, recomputed from the timers as an interrupted wait's is, so
- * a timer fires when it would have. A wake inside the span that brings nothing waits on toward the
- * same span's end; work that arrives first releases nothing. */
+ * a timer fires when it would have. The span never outlasts the loop's own timeout, so a timer due
+ * inside it fires on time. A wake inside the span that brings nothing waits on toward the same span's
+ * end; work that arrives first releases nothing. */
 static void host_default_wait(void) {
     /* The queue is the predicate. A byte published before poll stays readable.
      * A source of either kind is something to wait on, as an unref timer is. */
@@ -122,6 +123,7 @@ static void host_default_wait(void) {
         if (quiet_end != 0) {
             int64_t left = quiet_end - host_quiet_clock_ms();
             wait = left > 0 ? (int)left : 0;
+            if (timeout >= 0 && timeout < wait) wait = timeout;
         }
         result = poll(descriptors, (nfds_t)(2 + source_total), wait);
         if (result == -1 && errno == EINTR) {
@@ -129,7 +131,12 @@ static void host_default_wait(void) {
             continue;
         }
         if (result == 0 && quiet_end != 0) {
-            if (host_quiet_clock_ms() < quiet_end) continue;
+            if (host_quiet_clock_ms() < quiet_end) {
+                /* A timer due inside the span ends the wait, as it would have. */
+                timeout = host_wait_ms();
+                if (timeout == 0) break;
+                continue;
+            }
             adamic_heap_quiet();
             quiet_end = 0;
             timeout = host_wait_ms();
