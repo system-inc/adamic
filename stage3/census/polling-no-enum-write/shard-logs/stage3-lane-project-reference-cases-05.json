@@ -1,0 +1,28 @@
+{
+  "name": "stage3-lane-project-reference-cases-05",
+  "counts": {
+    "pass": 15,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "80b4ce8d037aad86f4f4e5b0a4744bcba6fe3951a1bebb63747e0b1c78283db0",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/polling-shards/stage3-lane-project-reference-cases-05/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ doesnt\\ have\\ project\\ reference\\ usage\\ file\\ changes,\\ when\\ timeout\\ does\\ not\\ occur\\ before\\ request$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ with\\ dts\\ file,\\ change\\ as\\ rename\\ \\ no\\ timeout$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ with\\ dts\\ file,\\ change\\ as\\ rename\\ \\ no\\ timeout$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ project\\ that\\ uses\\ dependency:\\ goToDef\\ when\\ main\\ tsconfig\\ doesnt\\ have\\ project\\ reference\\ with\\ dts\\ file,\\ when\\ file\\ is\\ created\\ after\\ actions\\ on\\ projects$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ project\\ that\\ uses\\ dependency:\\ goToDef\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ with\\ dtsMap\\ file,\\ change\\ as\\ rename\\ \\ action\\ before\\ write$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ project\\ that\\ uses\\ dependency:\\ goToDef\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ with\\ dtsMap\\ file,\\ change\\ as\\ rename\\ \\ action\\ before\\ write$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ doesnt\\ have\\ project\\ reference\\ with\\ dtsMap\\ file,\\ change\\ as\\ rename\\ \\ timeout\\ after\\ delete$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ with\\ dtsMap\\ file,\\ when\\ file\\ is\\ created\\ after\\ actions\\ on\\ projects$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ with\\ dtsMap\\ file,\\ change\\ as\\ rename\\ \\ timeout\\ after\\ write$"
+  ],
+  "failures": [],
+  "seconds": 14.525642677000178
+}

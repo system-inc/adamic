@@ -1,0 +1,26 @@
+{
+  "name": "stage3-lane-file-114",
+  "counts": {
+    "pass": 305,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "def9b9644c4a3a1e16f716996dd479001e6cefa0c90d6567669bd1c48708cd48",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/adamic/stage3/oracle/run-tasks.cjs",
+    "/workspace/scratch/polling-shards/stage3-lane-file-114/adapted-tree",
+    "/workspace/scratch/polling-shards/stage3-lane-file-114/tasks.json",
+    "/workspace/scratch/polling-shards/stage3-lane-file-114/oracle/worker",
+    "1"
+  ],
+  "failures": [],
+  "seconds": 45.057349084999714
+}

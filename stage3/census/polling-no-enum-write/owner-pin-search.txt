@@ -1,0 +1,7 @@
+stage3/adapt/99-correctness-timer-closures/PROOF.md:23:- The complete dynamic poller and setCustomPollingValues; swap Low and Medium
+stage3/adapt/99-correctness-timer-closures/witness.cjs:38:const pollingDeclarations = sys.slice(sys.indexOf('export enum PollingInterval'), sys.indexOf('function setCustomPollingValues'));
+stage3/adapt/99-correctness-timer-closures/witness.cjs:46:    fn(sys, 'setCustomPollingValues'),
+stage3/adapt/99-correctness-timer-closures/witness.cjs:55:    setCustomPollingValues({getEnvironmentVariable: key => ({
+stage3/adapt/99-correctness-timer-closures/witness.cjs:77:    setCustomPollingValues({getEnvironmentVariable: key => ({
+
+search exit=0

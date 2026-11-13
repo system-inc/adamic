@@ -1,0 +1,12 @@
+Using /workspace/scratch/polling-before/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 1s
+Starting bundle-tests
+Starting build-tests
+Finished lib in 2.4s
+Finished bundle-tests in 11.1s
+Finished build-tests in 53.5s
+Completed tests in 54.5s

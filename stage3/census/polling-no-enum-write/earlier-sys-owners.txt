@@ -1,0 +1,14 @@
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:11:const file = path.join(tree, 'src/compiler/sys.ts');
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:40:    // sys.ts is bundled by upstream; also compare its own stock JavaScript emission.
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:41:    const emit = text => ts.transpileModule(text, {fileName: 'sys.ts', compilerOptions: {target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ESNext, removeComments: false}}).outputText;
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:43:    assert.equal(newJS, oldJS, 'sys.ts emitted JavaScript bytes');
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:52:    mutants.push('sys.ts emitted byte mutant caught by exact comparison');
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:53:    const planned = require('./classes.cjs').planEnum(before, 'src/compiler/sys.ts', 'filesystem');
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:56:    const second = require('./classes.cjs').planEnum(adapted, 'src/compiler/sys.ts', 'filesystem');
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:58:    assert.throws(() => require('./classes.cjs').planEnum(before.replace('let stat: any;', 'let stat: string;'), 'src/compiler/sys.ts', 'filesystem'));
+stage3/adapt/40-explicit-any/filesystem-proof.cjs:68:        assert.throws(() => require('./classes.cjs').planEnum(mutate(before), 'src/compiler/sys.ts', 'filesystem'));
+stage3/adapt/40-explicit-any/error-host.cjs:6:    ['src/compiler/sys.ts', 75, '    if ((Error as any).stackTraceLimit < 100) { // Also tests that we won\'t set the property if it doesn\'t exist.'],
+stage3/adapt/40-explicit-any/error-host.cjs:7:    ['src/compiler/sys.ts', 76, '        (Error as any).stackTraceLimit = 100;'],
+stage3/adapt/40-explicit-any/class-rules.json:5:      "file": "src/compiler/sys.ts",
+
+search exit=0

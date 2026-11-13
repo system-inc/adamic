@@ -1,0 +1,108 @@
+{
+  "owner-contract": {
+    "exit": 0,
+    "seconds": 5.421941288000198
+  },
+  "replay": {
+    "exit": 0,
+    "seconds": 4.590434577999986
+  },
+  "after-adamic": {
+    "exit": 0,
+    "seconds": 9.609909433999746
+  },
+  "before-adamic": {
+    "exit": 0,
+    "seconds": 15.197761280000122
+  },
+  "before-custom": {
+    "exit": 0,
+    "seconds": 19.746285197999896
+  },
+  "before-no-vars": {
+    "exit": 0,
+    "seconds": 15.612885301000006
+  },
+  "after-custom": {
+    "exit": 0,
+    "seconds": 30.983475423000073
+  },
+  "after-no-vars": {
+    "exit": 0,
+    "seconds": 60.26304165900001
+  },
+  "after-enum-census": {
+    "exit": 0,
+    "seconds": 111.45871927600001
+  },
+  "restoring-mutant": {
+    "exit": 1,
+    "seconds": 77.2238928300003
+  },
+  "before-stock": {
+    "exit": 0,
+    "diagnostics": 0,
+    "roots": 79,
+    "log": "before-stock-corrected.log"
+  },
+  "after-stock": {
+    "exit": 0,
+    "diagnostics": 0,
+    "roots": 79,
+    "log": "after-stock-corrected.log"
+  },
+  "before-apply": {
+    "exit": 0
+  },
+  "after-apply": {
+    "exit": 0
+  },
+  "adamic-build": {
+    "exit": 0
+  },
+  "owner-contract-final": {
+    "exit": 0
+  },
+  "tables": {
+    "exit": 0
+  },
+  "published-custom": {
+    "exit": 0
+  },
+  "published-no-vars": {
+    "exit": 0
+  },
+  "shipped-tsc-custom": {
+    "exit": 0
+  },
+  "shipped-tsc-no-vars": {
+    "exit": 0
+  },
+  "issue-repro": {
+    "exit": 0
+  },
+  "wip-push": {
+    "exit": 0
+  },
+  "scope-and-api-reference": {
+    "exit": 0
+  },
+  "declaration-comparison": {
+    "exit": 0
+  },
+  "lane-398-shards": {
+    "exit": 0
+  },
+  "final-audit": {
+    "exit": 0
+  },
+  "archive-shards": {
+    "exit": 0
+  },
+  "adaptation-push": {
+    "exit": 0
+  },
+  "evidence-content-inspection": {
+    "exit": 0
+  }
+}

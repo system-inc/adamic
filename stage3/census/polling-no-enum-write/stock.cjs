@@ -1,0 +1,16 @@
+'use strict';
+const ts = require('../../api/node_modules/typescript');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const tree = path.resolve(process.argv[2]);
+const roots = ts.sys.readDirectory(path.join(tree,'src/compiler'),['.ts']);
+assert.equal(ts.version,'6.0.3');
+assert.equal(roots.length,79);
+const options = {strict:true,exactOptionalPropertyTypes:true,noUncheckedIndexedAccess:true,verbatimModuleSyntax:true,erasableSyntaxOnly:false,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
+const nodeRoot = '/workspace/scratch/polling-node-types/node_modules/@types';
+options.typeRoots=[nodeRoot];
+const program = ts.createProgram([...roots,path.join(nodeRoot,'node/index.d.ts')], options);
+const diagnostics = ts.getPreEmitDiagnostics(program);
+console.log(ts.formatDiagnosticsWithColorAndContext(diagnostics,{getCanonicalFileName:x=>x,getCurrentDirectory:()=>process.cwd(),getNewLine:()=> '\n'}));
+console.log(JSON.stringify({version:ts.version,roots:roots.length,diagnostics:diagnostics.length}));
+process.exit(diagnostics.length ? 1 : 0);

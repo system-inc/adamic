@@ -1,0 +1,22 @@
+{
+  "built/local/typescript.d.ts": {
+    "before": {
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+      "bytes": 593536
+    },
+    "after": {
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+      "bytes": 593536
+    }
+  },
+  "tests/baselines/reference/api/typescript.d.ts": {
+    "before": {
+      "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "bytes": 588626
+    },
+    "after": {
+      "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "bytes": 588626
+    }
+  }
+}

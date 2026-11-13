@@ -1,0 +1,81 @@
+120:     Low: number;
+121:     Medium: number;
+122:     High: number;
+123: }
+124: 
+125: function createPollingIntervalBasedLevels(levels: Levels) {
+126:     return {
+127:         [PollingInterval.Low]: levels.Low,
+128:         [PollingInterval.Medium]: levels.Medium,
+129:         [PollingInterval.High]: levels.High,
+130:     };
+131: }
+132: 
+133: const defaultChunkLevels: Levels = { Low: 32, Medium: 64, High: 256 };
+134: let pollingChunkSize = createPollingIntervalBasedLevels(defaultChunkLevels);
+135: /** @internal */
+136: export let unchangedPollThresholds: { [K in PollingInterval]: number; } = createPollingIntervalBasedLevels(defaultChunkLevels);
+137: 
+138: function setCustomPollingValues(system: System) {
+139:     if (!system.getEnvironmentVariable) {
+140:         return;
+141:     }
+142:     const pollingIntervalChanged = setCustomLevels("TSC_WATCH_POLLINGINTERVAL", PollingInterval);
+143:     pollingChunkSize = getCustomPollingBasedLevels("TSC_WATCH_POLLINGCHUNKSIZE", defaultChunkLevels) || pollingChunkSize;
+144:     unchangedPollThresholds = getCustomPollingBasedLevels("TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS", defaultChunkLevels) || unchangedPollThresholds;
+145: 
+146:     function getLevel(envVar: string, level: keyof Levels) {
+147:         return system.getEnvironmentVariable(`${envVar}_${level.toUpperCase()}`);
+148:     }
+149: 
+150:     function getCustomLevels(baseVariable: string) {
+151:         let customLevels: Partial<Levels> | undefined;
+152:         setCustomLevel("Low");
+153:         setCustomLevel("Medium");
+154:         setCustomLevel("High");
+155:         return customLevels;
+156: 
+157:         function setCustomLevel(level: keyof Levels) {
+158:             const customLevel = getLevel(baseVariable, level);
+159:             if (customLevel) {
+160:                 (customLevels || (customLevels = {}))[level] = Number(customLevel);
+161:             }
+162:         }
+163:     }
+164: 
+165:     function setCustomLevels(baseVariable: string, levels: Levels) {
+166:         const customLevels = getCustomLevels(baseVariable);
+167:         if (customLevels) {
+168:             setLevel("Low");
+169:             setLevel("Medium");
+170:             setLevel("High");
+171:             return true;
+172:         }
+173:         return false;
+174: 
+175:         function setLevel(level: keyof Levels) {
+176:             levels[level] = customLevels![level] || levels[level];
+177:         }
+178:     }
+179: 
+180:     function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {
+181:         const customLevels = getCustomLevels(baseVariable);
+182:         return (pollingIntervalChanged || customLevels) &&
+183:             createPollingIntervalBasedLevels(customLevels ? { ...defaultLevels, ...customLevels } : defaultLevels);
+184:     }
+185: }
+186: 
+187: interface WatchedFileWithIsClosed extends WatchedFile {
+188:     isClosed?: boolean;
+189: }
+190: function pollWatchedFileQueue<T extends WatchedFileWithIsClosed>(
+191:     host: { getModifiedTime: NonNullable<System["getModifiedTime"]>; },
+192:     queue: (T | undefined)[],
+193:     pollIndex: number,
+194:     chunkSize: number,
+195:     callbackOnWatchFileStat?: (watchedFile: T, pollIndex: number, fileChanged: boolean) => void,
+196: ) {
+197:     let definedValueCopyToIndex = pollIndex;
+198:     // Max visit would be all elements of the queue
+199:     for (let canVisit = queue.length; chunkSize && canVisit; nextPollIndex(), canVisit--) {
+200:         const watchedFile = queue[pollIndex];

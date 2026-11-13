@@ -1,0 +1,9 @@
+6.0.3
+17 41 89
+250 ok
+500 ok
+2000 ok
+17 TypeError: Cannot read properties of undefined (reading 'push')
+41 TypeError: Cannot read properties of undefined (reading 'push')
+89 TypeError: Cannot read properties of undefined (reading 'push')
+[ 250, 500, 2000 ]

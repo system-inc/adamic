@@ -1,0 +1,12 @@
+mode source CommonJS (transpileModule; no enum inlining)
+Node v24.19.0
+environment DynamicPriorityPolling 17/41/89
+TypeScript 6.0.3
+PollingInterval {"250":"Low","500":"Medium","2000":"High","High":2000,"Medium":500,"Low":250}
+watchFile 250 ok
+watchFile 500 ok
+watchFile 2000 ok
+watchFile 17 TypeError: Cannot read properties of undefined (reading 'push')
+watchFile 41 TypeError: Cannot read properties of undefined (reading 'push')
+watchFile 89 TypeError: Cannot read properties of undefined (reading 'push')
+scheduled [{"callback":"","interval":250},{"callback":"","interval":500},{"callback":"","interval":2000}]

@@ -1,0 +1,15 @@
+{
+  "before": [
+    17,
+    41,
+    89
+  ],
+  "after": [
+    250,
+    500,
+    2000
+  ],
+  "noVariables": "byte-identical",
+  "defaultCallersBefore": "throw",
+  "defaultCallersAfter": "ok"
+}

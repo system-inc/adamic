@@ -1,0 +1,9 @@
+mode published bundle
+Node v24.19.0
+environment none
+TypeScript 6.0.3
+PollingInterval {"250":"Low","500":"Medium","2000":"High","High":2000,"Medium":500,"Low":250}
+watchFile 250 ok
+watchFile 500 ok
+watchFile 2000 ok
+scheduled []

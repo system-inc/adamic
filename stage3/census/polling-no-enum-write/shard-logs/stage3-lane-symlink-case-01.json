@@ -1,0 +1,28 @@
+{
+  "name": "stage3-lane-symlink-case-01",
+  "counts": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "951ae3fd82cfb9d674319885c49371665dd6e6aaa8d2ae6ac226f0a989ef9e93",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/polling-shards/stage3-lane-symlink-case-01/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ sys::\\ symlinkWatching::\\ with\\ ts\\.sys::\\ watchDirectory\\ using\\ polling\\ watchDirectory\\ using\\ polling$"
+  ],
+  "failures": [],
+  "seconds": 14.475177845999497
+}

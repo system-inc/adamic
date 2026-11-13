@@ -1,0 +1,49 @@
+Using /workspace/scratch/polling-before/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished bundle-watch-guard in 179ms
+Finished shim-compile-cache-typings-installer in 194ms
+Finished shim-compile-cache-tsc in 200ms
+Finished shim-compile-cache-tsserver in 204ms
+Finished generate-types-map in 197ms
+Finished generate-diagnostics in 374ms
+Starting localize
+> /workspace/adamic-tools/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 62ms
+Finished bundle-typings-installer in 2s
+Finished bundle-tsserver in 2.6s
+Finished lib in 3.7s
+Finished build-watch-guard in 4.3s
+Finished bundle-tsc in 6.3s
+Finished bundle-services in 11.1s
+Finished localize in 15s
+Finished build-tsc in 2m 20.8s
+Finished build-services in 2m 20.8s
+Finished build-tsserver in 2m 20.8s
+Finished build-typings-installer in 2m 20.8s
+Starting dts-services
+> /workspace/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 32ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 21.8s
+Starting dts-lssl
+Finished dts-lssl in 3ms
+Completed local in 2m 43.1s

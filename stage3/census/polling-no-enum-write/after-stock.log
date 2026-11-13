@@ -1,0 +1,258 @@
+[96m../scratch/polling-after/src/compiler/debug.ts[0m:[93m178[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+
+[7m178[0m         if (Error.captureStackTrace) {
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/debug.ts[0m:[93m179[0m:[93m19[0m - [91merror[0m[90m TS2339: [0mProperty 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+
+[7m179[0m             Error.captureStackTrace(e, stackCrawlMark || fail);
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/performanceCore.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m2[0m import * as perfHooks from "node:perf_hooks";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m52[0m:[93m22[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m52[0m import * as _fs from "node:fs";
+[7m  [0m [91m                     ~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m53[0m:[93m24[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m53[0m import * as _path from "node:path";
+[7m  [0m [91m                       ~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m54[0m:[93m22[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m54[0m import * as _os from "node:os";
+[7m  [0m [91m                     ~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m55[0m:[93m26[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m55[0m import * as _crypto from "node:crypto";
+[7m  [0m [91m                         ~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m80[0m:[93m15[0m - [91merror[0m[90m TS2339: [0mProperty 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+
+[7m80[0m     if (Error.stackTraceLimit < 100) { // Also tests that we won't set the property if it doesn't exist.
+[7m  [0m [91m              ~~~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m81[0m:[93m15[0m - [91merror[0m[90m TS2339: [0mProperty 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+
+[7m81[0m         Error.stackTraceLimit = 100;
+[7m  [0m [91m              ~~~~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1480[0m:[93m35[0m - [91merror[0m[90m TS2591: [0mCannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1480[0m         let activeSession: import("inspector").Session | "stopping" | undefined;
+[7m    [0m [91m                                  ~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1483[0m:[93m25[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1483[0m         const isMacOs = process.platform === "darwin";
+[7m    [0m [91m                        ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1484[0m:[93m32[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1484[0m         const isLinuxOrMacOs = process.platform === "linux" || isMacOs;
+[7m    [0m [91m                               ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1490[0m:[93m56[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1490[0m         const fsRealpath = !!_fs.realpathSync.native ? process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;
+[7m    [0m [91m                                                       ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1497[0m:[93m35[0m - [91merror[0m[90m TS2304: [0mCannot find name '__filename'.
+
+[7m1497[0m         const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+[7m    [0m [91m                                  ~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1497[0m:[93m92[0m - [91merror[0m[90m TS2304: [0mCannot find name '__dirname'.
+
+[7m1497[0m         const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+[7m    [0m [91m                                                                                           ~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1497[0m:[93m121[0m - [91merror[0m[90m TS2304: [0mCannot find name '__filename'.
+
+[7m1497[0m         const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+[7m    [0m [91m                                                                                                                        ~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1499[0m:[93m44[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1499[0m         const fsSupportsRecursiveFsWatch = process.platform === "win32" || isMacOs;
+[7m    [0m [91m                                           ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1500[0m:[93m51[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1500[0m         const getCurrentDirectory = memoize(() => process.cwd());
+[7m    [0m [91m                                                  ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1504[0m:[93m104[0m - [91merror[0m[90m TS2304: [0mCannot find name 'setTimeout'.
+
+[7m1504[0m             setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),
+[7m    [0m [91m                                                                                                       ~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1505[0m:[93m57[0m - [91merror[0m[90m TS2304: [0mCannot find name 'clearTimeout'.
+
+[7m1505[0m             clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+[7m    [0m [91m                                                        ~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1505[0m:[93m86[0m - [91merror[0m[90m TS2304: [0mCannot find name 'clearTimeout'.
+
+[7m1505[0m             clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+[7m    [0m [91m                                                                                     ~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1515[0m:[93m27[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1515[0m             tscWatchFile: process.env.TSC_WATCHFILE,
+[7m    [0m [91m                          ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1516[0m:[93m38[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1516[0m             useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,
+[7m    [0m [91m                                     ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1517[0m:[93m32[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1517[0m             tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,
+[7m    [0m [91m                               ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1523[0m:[93m19[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1523[0m             args: process.argv.slice(2),
+[7m    [0m [91m                  ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1527[0m:[93m17[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1527[0m                 process.stdout.write(s);
+[7m    [0m [91m                ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1530[0m:[93m24[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1530[0m                 return process.stdout.columns ?? 0;
+[7m    [0m [91m                       ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1533[0m:[93m26[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1533[0m                 return !!process.stdout.isTTY;
+[7m    [0m [91m                         ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1565[0m:[93m24[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1565[0m                 return process.env[name] || "";
+[7m    [0m [91m                       ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1574[0m:[93m21[0m - [91merror[0m[90m TS2304: [0mCannot find name 'global'.
+
+[7m1574[0m                 if (global.gc) {
+[7m    [0m [91m                    ~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1575[0m:[93m21[0m - [91merror[0m[90m TS2304: [0mCannot find name 'global'.
+
+[7m1575[0m                     global.gc();
+[7m    [0m [91m                    ~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1577[0m:[93m24[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1577[0m                 return process.memoryUsage().heapUsed;
+[7m    [0m [91m                       ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1587[0m:[93m42[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1587[0m                 disableCPUProfiler(() => process.exit(exitCode));
+[7m    [0m [91m                                         ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1591[0m:[93m68[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1591[0m             cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),
+[7m    [0m [91m                                                                   ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1591[0m:[93m112[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1591[0m             cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),
+[7m    [0m [91m                                                                                                               ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1593[0m:[93m26[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1593[0m             debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
+[7m    [0m [91m                         ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1593[0m:[93m62[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1593[0m             debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
+[7m    [0m [91m                                                             ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1593[0m:[93m107[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1593[0m             debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
+[7m    [0m [91m                                                                                                          ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1593[0m:[93m180[0m - [91merror[0m[90m TS2345: [0mArgument of type 'unknown' is not assignable to parameter of type 'string'.
+
+[7m1593[0m             debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
+[7m    [0m [91m                                                                                                                                                                                   ~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1593[0m:[93m192[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1593[0m             debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
+[7m    [0m [91m                                                                                                                                                                                               ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1596[0m:[93m21[0m - [91merror[0m[90m TS2591: [0mCannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1596[0m                     require("source-map-support").install();
+[7m    [0m [91m                    ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1602[0m:[93m104[0m - [91merror[0m[90m TS2304: [0mCannot find name 'setTimeout'.
+
+[7m1602[0m             setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),
+[7m    [0m [91m                                                                                                       ~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1603[0m:[93m57[0m - [91merror[0m[90m TS2304: [0mCannot find name 'clearTimeout'.
+
+[7m1603[0m             clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+[7m    [0m [91m                                                        ~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1603[0m:[93m86[0m - [91merror[0m[90m TS2304: [0mCannot find name 'clearTimeout'.
+
+[7m1603[0m             clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+[7m    [0m [91m                                                                                     ~~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1605[0m:[93m17[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1605[0m                 process.stdout.write("\x1B[2J\x1B[3J\x1B[H");
+[7m    [0m [91m                ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1608[0m:[93m33[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1608[0m                 const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };
+[7m    [0m [91m                                ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1613[0m:[93m36[0m - [91merror[0m[90m TS2591: [0mCannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1613[0m             base64decode: input => Buffer.from(input, "base64").toString("utf8"),
+[7m    [0m [91m                                   ~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1614[0m:[93m36[0m - [91merror[0m[90m TS2591: [0mCannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1614[0m             base64encode: input => Buffer.from(input).toString("base64"),
+[7m    [0m [91m                                   ~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1618[0m:[93m38[0m - [91merror[0m[90m TS2591: [0mCannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1618[0m                     return { module: require(modulePath), modulePath, error: undefined };
+[7m    [0m [91m                                     ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1628[0m:[93m49[0m - [91merror[0m[90m TS2591: [0mCannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1628[0m         function statSync(path: string): import("fs").Stats | undefined {
+[7m    [0m [91m                                                ~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1649[0m:[93m44[0m - [91merror[0m[90m TS2591: [0mCannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1649[0m             const inspector: typeof import("inspector") = require("inspector");
+[7m    [0m [91m                                           ~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1649[0m:[93m59[0m - [91merror[0m[90m TS2591: [0mCannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1649[0m             const inspector: typeof import("inspector") = require("inspector");
+[7m    [0m [91m                                                          ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1671[0m:[93m47[0m - [91merror[0m[90m TS2591: [0mCannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1671[0m         function cleanupPaths(profile: import("inspector").Profiler.Profile) {
+[7m    [0m [91m                                              ~~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1695[0m:[93m54[0m - [91merror[0m[90m TS7006: [0mParameter 'err' implicitly has an 'any' type.
+
+[7m1695[0m                 activeSession.post("Profiler.stop", (err, { profile }) => {
+[7m    [0m [91m                                                     ~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1695[0m:[93m61[0m - [91merror[0m[90m TS7031: [0mBinding element 'profile' implicitly has an 'any' type.
+
+[7m1695[0m                 activeSession.post("Profiler.stop", (err, { profile }) => {
+[7m    [0m [91m                                                            ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1698[0m:[93m120[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1698[0m                             profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, "-")}+P${process.pid}.cpuprofile`);
+[7m    [0m [91m                                                                                                                       ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1727[0m:[93m41[0m - [91merror[0m[90m TS2304: [0mCannot find name '__filename'.
+
+[7m1727[0m             return !fileExists(swapCase(__filename));
+[7m    [0m [91m                                        ~~~~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1745[0m:[93m47[0m - [91merror[0m[90m TS2591: [0mCannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1745[0m             function fileChanged(curr: import("fs").Stats, prev: import("fs").Stats) {
+[7m    [0m [91m                                              ~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1745[0m:[93m73[0m - [91merror[0m[90m TS2591: [0mCannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1745[0m             function fileChanged(curr: import("fs").Stats, prev: import("fs").Stats) {
+[7m    [0m [91m                                                                        ~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1787[0m:[93m25[0m - [91merror[0m[90m TS2591: [0mCannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1787[0m             let buffer: Buffer;
+[7m    [0m [91m                        ~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1852[0m:[93m38[0m - [91merror[0m[90m TS2591: [0mCannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1852[0m                     let stat: import("fs").Stats | import("fs").Dirent | undefined;
+[7m    [0m [91m                                     ~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1852[0m:[93m59[0m - [91merror[0m[90m TS2591: [0mCannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1852[0m                     let stat: import("fs").Stats | import("fs").Dirent | undefined;
+[7m    [0m [91m                                                          ~~~~[0m
+[96m../scratch/polling-after/src/compiler/sys.ts[0m:[93m1882[0m:[93m96[0m - [91merror[0m[90m TS2591: [0mCannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m1882[0m             return matchFiles(path, extensions, excludes, includes, useCaseSensitiveFileNames, process.cwd(), depth, getAccessibleFileSystemEntries, realpath);
+[7m    [0m [91m                                                                                               ~~~~~~~[0m
+[96m../scratch/polling-after/src/compiler/tracing.ts[0m:[93m27[0m:[93m21[0m - [91merror[0m[90m TS2591: [0mCannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+
+[7m27[0m import * as fs from "node:fs";
+[7m  [0m [91m                    ~~~~~~~~~[0m
+
+{"version":"6.0.3","roots":79,"diagnostics":64}

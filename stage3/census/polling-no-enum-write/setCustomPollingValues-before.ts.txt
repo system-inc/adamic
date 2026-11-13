@@ -1,0 +1,48 @@
+function setCustomPollingValues(system: System) {
+    if (!system.getEnvironmentVariable) {
+        return;
+    }
+    const pollingIntervalChanged = setCustomLevels("TSC_WATCH_POLLINGINTERVAL", PollingInterval);
+    pollingChunkSize = getCustomPollingBasedLevels("TSC_WATCH_POLLINGCHUNKSIZE", defaultChunkLevels) || pollingChunkSize;
+    unchangedPollThresholds = getCustomPollingBasedLevels("TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS", defaultChunkLevels) || unchangedPollThresholds;
+
+    function getLevel(envVar: string, level: keyof Levels) {
+        return system.getEnvironmentVariable(`${envVar}_${level.toUpperCase()}`);
+    }
+
+    function getCustomLevels(baseVariable: string) {
+        let customLevels: Partial<Levels> | undefined;
+        setCustomLevel("Low");
+        setCustomLevel("Medium");
+        setCustomLevel("High");
+        return customLevels;
+
+        function setCustomLevel(level: keyof Levels) {
+            const customLevel = getLevel(baseVariable, level);
+            if (customLevel) {
+                (customLevels || (customLevels = {}))[level] = Number(customLevel);
+            }
+        }
+    }
+
+    function setCustomLevels(baseVariable: string, levels: Levels) {
+        const customLevels = getCustomLevels(baseVariable);
+        if (customLevels) {
+            setLevel("Low");
+            setLevel("Medium");
+            setLevel("High");
+            return true;
+        }
+        return false;
+
+        function setLevel(level: keyof Levels) {
+            levels[level] = customLevels![level] || levels[level];
+        }
+    }
+
+    function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {
+        const customLevels = getCustomLevels(baseVariable);
+        return (pollingIntervalChanged || customLevels) &&
+            createPollingIntervalBasedLevels(customLevels ? { ...defaultLevels, ...customLevels } : defaultLevels);
+    }
+}

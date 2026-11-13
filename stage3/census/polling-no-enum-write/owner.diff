@@ -1,0 +1,33 @@
+--- before/sys.ts owner
++++ after/sys.ts owner
+@@ -2,7 +2,7 @@
+     if (!system.getEnvironmentVariable) {
+         return;
+     }
+-    const pollingIntervalChanged = setCustomLevels("TSC_WATCH_POLLINGINTERVAL", PollingInterval);
++    const pollingIntervalChanged = !!getCustomLevels("TSC_WATCH_POLLINGINTERVAL");
+     pollingChunkSize = getCustomPollingBasedLevels("TSC_WATCH_POLLINGCHUNKSIZE", defaultChunkLevels) || pollingChunkSize;
+     unchangedPollThresholds = getCustomPollingBasedLevels("TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS", defaultChunkLevels) || unchangedPollThresholds;
+ 
+@@ -25,21 +25,6 @@
+         }
+     }
+ 
+-    function setCustomLevels(baseVariable: string, levels: Levels) {
+-        const customLevels = getCustomLevels(baseVariable);
+-        if (customLevels) {
+-            setLevel("Low");
+-            setLevel("Medium");
+-            setLevel("High");
+-            return true;
+-        }
+-        return false;
+-
+-        function setLevel(level: keyof Levels) {
+-            levels[level] = customLevels![level] || levels[level];
+-        }
+-    }
+-
+     function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {
+         const customLevels = getCustomLevels(baseVariable);
+         return (pollingIntervalChanged || customLevels) &&
