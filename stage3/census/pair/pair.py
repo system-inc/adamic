@@ -71,7 +71,7 @@ def compare(base, head, tree, typescript, normalize=True):
                 key = (site(f['where'], distinct), f['reason']) if distinct else (
                     site(f['where'], False), f['kind'], f['reason'], f['text'])
                 findings.setdefault(key, f)
-                if f.get('phase') in ('lowering', 'deferred') and site(f['unit'], False) in units:
+                if f.get('phase') in ('lowering', 'deferred', 'prepass') and site(f['unit'], False) in units:
                     first.setdefault(site(f['unit'], False), f)
         bysite = defaultdict(list)
         for f in findings.values():
