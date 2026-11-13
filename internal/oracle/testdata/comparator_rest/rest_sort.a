@@ -1,0 +1,9 @@
+// A sort comparator that collects its second argument as a rest: the sort's adapter packs a tail for
+// every comparison, and lets go of it once the comparison returns (#kwns2n5). Under the leak check a
+// tail kept past its call is a leak, so this pins closureComparator's end of statement.
+const values = [5, 3, 9, 1, 7, 2];
+values.sort((left: number, ...rest: number[]) => left - (rest[0] ?? 0));
+console.log(values.join(','));
+const words = ['pear', 'fig', 'apple'];
+words.sort((left: string, ...rest: string[]) => left.length - (rest[0] ?? '').length);
+console.log(words.join(','));

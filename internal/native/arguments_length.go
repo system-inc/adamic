@@ -78,6 +78,9 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 	packed := adapter.closureSlots(call, []string{"left", "right"}, "", "2")
 	adapter.line("adamic_closure *compare = context;")
 	adapter.line("double result = %s.number;", adapter.packedClosureCall(call, "compare", packed, "2"))
+	// What packing the call made, a rest tail for a comparator that collects one above all, is the
+	// adapter's, let go of once the call is done, as timerInvoke does (#kwns2n5).
+	adapter.end()
 	adapter.releaseScopes(0)
 	adapter.line("return result < 0 ? -1 : result > 0 ? 1 : 0;")
 	name, exists := e.sharedDeclaration("adamic_compare", adapter.out.String())
