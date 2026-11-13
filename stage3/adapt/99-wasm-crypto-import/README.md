@@ -238,3 +238,9 @@ JSON retains every phase and the complete verdict. The evidence is fresh, not
 cached test success. All raw logs are gzip-compressed under proofs/logs, as in
 92 and 93. The adapter directory is the entire repository diff; no shared lane,
 oracle, fixture, meter, owners map or committed patch table is edited.
+
+## 995spev timer amendment, Nov 13
+
+The whole getNodeSystem before/after pins now include 93's concrete timer
+forwarding arrows. They forward the optional label and opaque unknown handle
+under Adamic's 05:48Z contract. This adapter's crypto transformation is unchanged.

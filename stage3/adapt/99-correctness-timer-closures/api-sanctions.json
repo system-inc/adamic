@@ -1,0 +1,70 @@
+[
+  {
+    "path": [
+      "System",
+      "setTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+    "after": "setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  },
+  {
+    "path": [
+      "System",
+      "clearTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "clearTimeout?(timeoutId: any): void;",
+    "after": "clearTimeout?(timeoutId: unknown): void;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  },
+  {
+    "path": [
+      "WatchHost",
+      "setTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+    "after": "setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  },
+  {
+    "path": [
+      "WatchHost",
+      "clearTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "clearTimeout?(timeoutId: any): void;",
+    "after": "clearTimeout?(timeoutId: unknown): void;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  },
+  {
+    "path": [
+      "server",
+      "ServerHost",
+      "setTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+    "after": "setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  },
+  {
+    "path": [
+      "server",
+      "ServerHost",
+      "clearTimeout"
+    ],
+    "kind": "MethodSignature",
+    "replace": "member",
+    "before": "clearTimeout(timeoutId: any): void;",
+    "after": "clearTimeout(timeoutId: unknown): void;",
+    "why": "Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits."
+  }
+]

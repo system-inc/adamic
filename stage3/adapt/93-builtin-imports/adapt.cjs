@@ -99,6 +99,13 @@ function adapt(tree) {
         const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
         edits.push({start: at, end: at, text: targets.map(t => `${newline}import * as ${t.local} from "node:${t.module}";`).join('')});
     }
+    // 995spev: explicit concrete forwarding closures, in this whole owner.
+    if (!done) for (const property of nodes(ts, owner, n => ts.isShorthandPropertyAssignment(n) && ['setTimeout', 'clearTimeout'].includes(n.name.text))) {
+        const replacement = property.name.text === 'setTimeout'
+            ? 'setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label)'
+            : 'clearTimeout: (timeoutId: unknown): void => clearTimeout(timeoutId)';
+        edits.push({start:property.getStart(file),end:property.end,text:replacement});
+    }
     const insertion = importAnchor(file).end;
     const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
     let insertions = 0;

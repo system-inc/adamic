@@ -3,6 +3,24 @@ const e = require('./engine.cjs');
 const {fs, path, assert, ts} = e;
 const owners = require('./owners.json');
 const inventory = require('./inventory.json');
+const timerChanges = [
+  [
+    "host.setTimeout(invalidateResolutionsOfFailedLookup, 250, \"timerToInvalidateFailedLookupResolutions\")",
+    "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = invalidateResolutionsOfFailedLookup;\n            const timeoutDelay = 250;\n            const t1 = \"timerToInvalidateFailedLookupResolutions\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()"
+  ],
+  [
+    "host.setTimeout(updateProgramWithWatchStatus, 250, \"timerToUpdateProgram\")",
+    "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = updateProgramWithWatchStatus;\n            const timeoutDelay = 250;\n            const t1 = \"timerToUpdateProgram\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()"
+  ],
+  [
+    "function invalidateResolutionsOfFailedLookup() {",
+    "function invalidateResolutionsOfFailedLookup(_timeoutType?: string) {"
+  ],
+  [
+    "function updateProgramWithWatchStatus() {",
+    "function updateProgramWithWatchStatus(_timeoutType?: string) {"
+  ]
+];
 function inspect(texts, coreCalls) {
     assert(Array.isArray(coreCalls), "inspect requires symbol-resolved core calls");
     const states = [];
@@ -62,6 +80,10 @@ function adapt(tree) {
         const removal = e.removableImport(file,after,calls);
         assert.equal(!!removal,calls === 0, `${file}: import usage drift`);
         if (removal) after = e.edit(after,[removal]);
+        if (file === 'watchPublic.ts') for (const [before, replacement] of timerChanges) {
+            assert.equal(after.split(before).length, 2, 'timer amendment drift');
+            after = after.replace(before, replacement);
+        }
         texts.set(file,after);
         const original = raw.get(name);
         if (original.includes('\r\n')) after = after.replace(/\n/g,'\r\n');
