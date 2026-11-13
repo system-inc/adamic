@@ -1,0 +1,64 @@
+{
+  "reason": "environment/session reset removed outer bounded runner; its group was orphaned",
+  "group_exit_code": null,
+  "terminated_processes": [
+    {
+      "pid": 8624,
+      "args": [
+        "python3",
+        "stage3/census/next-stops-f2546f1f/group.py",
+        "51",
+        "60"
+      ]
+    },
+    {
+      "pid": 8734,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/next-stops-f2546f1f/stage3/census/next-stops-f2546f1f/run-one.py",
+        "58"
+      ]
+    },
+    {
+      "pid": 8735,
+      "args": [
+        "/workspace/scratch/next-stops-f2546f1f-census",
+        "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/next-stops-f2546f1f-root-58.jsonl"
+      ]
+    },
+    {
+      "pid": 8743,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/next-stops-f2546f1f/stage3/census/next-stops-f2546f1f/run-one.py",
+        "59"
+      ]
+    },
+    {
+      "pid": 8744,
+      "args": [
+        "/workspace/scratch/next-stops-f2546f1f-census",
+        "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/next-stops-f2546f1f-root-59.jsonl"
+      ]
+    },
+    {
+      "pid": 8834,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/next-stops-f2546f1f/stage3/census/next-stops-f2546f1f/run-one.py",
+        "60"
+      ]
+    },
+    {
+      "pid": 8835,
+      "args": [
+        "/workspace/scratch/next-stops-f2546f1f-census",
+        "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/next-stops-f2546f1f-root-60.jsonl"
+      ]
+    }
+  ],
+  "action": "retain attempt and repeat full group"
+}
