@@ -481,3 +481,22 @@ traces, source-level explanation and first-stop comparison.
 The paired reader's metadata exclusion and its positive and red-mutant tests
 ship in this same tooling commit. Restoring instantiated_by to its eligibility
 comparison must make the unchanged positive test fail.
+
+Tsc census lowerings declare `CommonJSBundle`, the format of the shipped
+`_tsc.js`. This includes ordinary, first-error, full, speculative, replay,
+predicate, and meter entry probes. `CENSUS_MODULE_FORMAT=EcmaScript` requests an
+explicit comparison; unknown values fail. Ordinary rows and measurement headers
+record `module_format`, and meter reports display it beside their counts.
+Historical meter records without this field are labeled `EcmaScript`.
+The entry overlay reuses the latent lowering templates, including this input;
+`build-probes.py` keys those templates and builds both overlays.
+
+`overlaytext.TestLatentModuleFormatMatchesProduction` checks the build setting
+in full-mode `fresh()` against production's `lowerWithElementKey` literal plus
+assignments to `lowering.<field>` in that function. Production lowering is
+never edited.
+`overlaytext.TestLatentModuleFormatOmissionMutant` drops that field and must fail
+the same guard. `overlaytext.TestProductionModuleFormatAssignmentOmissionMutant`
+deletes production’s format assignment and must fail the guard too. `elementKey`
+is the sole known setting exception, tracked by a fixed list that cannot grow
+without redding the guard; its separate task remains open. Per-attempt program/checker/entry/plan context is outside this comparison.
