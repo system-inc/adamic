@@ -172,14 +172,13 @@
     "owner": "isNodeLikeSystem host bindings",
     "line": 2588,
     "class": "truthful ambient host declarations",
-    "action": "declare optional process shape and unknown require, type-only",
+    "action": "declare optional process shape, type-only",
     "diagnostics": [
       "TS2591 at core.ts:2591",
       "TS2591 at core.ts:2592",
-      "TS2591 at core.ts:2593",
-      "TS2591 at core.ts:2594"
+      "TS2591 at core.ts:2593"
     ],
-    "proof": "Only isNodeLikeSystem reads these host bindings. process may be absent and is tested with typeof before fields; nextTick/browser may be absent and are only tested for truthiness. require is only tested with typeof, so unknown is truthful. Module-local ambient declarations emit no binding and leave Node global lookup unchanged."
+    "proof": "isNodeLikeSystem reads process, which may be absent and is tested with typeof before fields; nextTick/browser may be absent and are only tested for truthiness. The module-local ambient process declaration emits no binding and leaves Node global lookup unchanged. 99q removed the require test in 529705a1; Workers found no reader over 79 roots on task 93w9rtz, and Adamic ruled Nov 13 2026 09:08Z to remove its now-unread declaration."
   },
   {
     "file": "core.ts",
