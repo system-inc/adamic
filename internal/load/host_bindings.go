@@ -16,8 +16,9 @@ import (
 // docs/rulings.md's entry "A `.ts` file's ambient value declaration is a host binding"). Each row is
 // an axiom under Language's audit, docs/axioms/host-bindings.md, which TestHostBindingsAudit holds to
 // these rows both ways. A row says, per target, whether the host gives the name a value, what Node
-// answers for its typeof under the oracle's module mode (internal/oracle/host_bindings_test.go holds
-// every column to that), and the ruling or task that made it. Lowering reads the rows; it decides what
+// answers for its typeof under the oracle's module mode and as a CommonJS script
+// (internal/oracle/host_bindings_test.go holds every column and both answers to Node), and the ruling or
+// task that made it. Lowering reads the rows; it decides what
 // a row admits (internal/lower/host_bindings.go).
 //
 //go:embed host_bindings.json
@@ -44,11 +45,15 @@ type HostBindingDeclaration struct {
 }
 
 // HostBindingNode is Node's answer for the name's typeof, measured on the version named, running the
-// declaring file as an ECMAScript module, as oracle/node.mjs runs every program.
+// declaring file as an ECMAScript module, as oracle/node.mjs runs every program. CommonJS is Node's answer
+// with the same probe run as a CommonJS script (`node probe.cjs`), the mode tsc's own bundle `_tsc.js`
+// runs in, or "" while it's unmeasured; a build declared one CommonJS bundle admits a row only by that
+// answer (internal/lower/host_bindings.go, hostBindingStopIn; #93w9rtz).
 type HostBindingNode struct {
-	Version string `json:"version"`
-	Module  string `json:"module"`
-	TypeOf  string `json:"typeof"`
+	Version  string `json:"version"`
+	Module   string `json:"module"`
+	TypeOf   string `json:"typeof"`
+	CommonJS string `json:"commonjs"`
 }
 
 // HostBindingColumn is one target's answer; a pending column names the owner who clears it.
@@ -142,6 +147,9 @@ func hostBindingProblem(row HostBinding) string {
 	}
 	if !strings.HasPrefix(row.Node.Version, "v") || row.Node.Module != "ES" || !hostBindingTypeOfAnswers[row.Node.TypeOf] {
 		return "Node's answer needs its version, module mode ES and a typeof answer"
+	}
+	if row.Node.CommonJS != "" && !hostBindingTypeOfAnswers[row.Node.CommonJS] {
+		return "Node's CommonJS answer, when it's recorded, is a typeof answer"
 	}
 	provided := false
 	for _, target := range row.Targets() {
