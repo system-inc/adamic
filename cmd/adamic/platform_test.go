@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
@@ -55,5 +56,21 @@ func TestPlatformMissingBuildExit(t *testing.T) {
 	})
 	if code != toolchain.PlatformMissingExitCode {
 		t.Fatalf("native build: exit %d", code)
+	}
+}
+
+func TestAppleImportExitsPlatformMissing(t *testing.T) {
+	// Process environment is serial: use the real loader rather than an injected error.
+	if runtime.GOOS == "darwin" {
+		t.Skip("Linux missing-platform control")
+	}
+	t.Setenv(load.AppleBindingsVariable, "")
+	source := filepath.Join(t.TempDir(), "apple.a")
+	if err := os.WriteFile(source, []byte("import 'apple/foundation';\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	_, code := check([]string{source})
+	if code != toolchain.PlatformMissingExitCode {
+		t.Fatalf("Apple import: exit %d, want 5", code)
 	}
 }

@@ -29,6 +29,8 @@ var rawStoreAllowed = map[string]string{
 	"emit_statements.go:emitter.writeProperty:1":       "a number or boolean box behind a checked field, which graph programs refuse",
 	"emit_statements.go:emitter.writeProperty:2":       "keptValue is e.keptIn(object, value), made above for every reference",
 	"exceptions.go:emitter.throwNamed:1":               "a fresh error object's name, a static string; the error is never adopted",
+	"foreign.go:emitter.blockFunctions:1":              "an Apple block's deliver filling its own stack array of arguments for the closure call with a retained box, never an object's slot",
+	"foreign.go:emitter.blockFunctions:2":              "an Apple block's deliver filling its own stack array of arguments for the closure call with a fresh string, never an object's slot",
 	"reuse.go:emitter.checkDefinedWhen:1":              "a fresh error object's name, a static string; the error is never adopted",
 	"reuse.go:emitter.reused:1":                        "a reused spread bails on graph literals, and reuses only a source adamic_graph_counted says is no member",
 }
