@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -72,7 +73,8 @@ setTimeout(() => {
 	console.log(` + "`total ${total}`" + `);
 }, 300);
 `,
-	"fast timer churn": `interface Item {
+	"fast timer churn": `import 'node:timers';
+interface Item {
 	readonly value: number;
 	readonly label: string;
 }
@@ -111,7 +113,8 @@ setTimeout(() => {
 `,
 }
 
-const heapQuietWorkers = `import { parallelMap } from 'adamic';
+const heapQuietWorkers = `import 'node:timers';
+import { parallelMap } from 'adamic';
 interface Item {
 	readonly value: number;
 	readonly label: string;
@@ -163,10 +166,12 @@ func TestHeapQuietPoints(t *testing.T) {
 		}
 		return output
 	}
+	// The programs write their own measurements to stderr, which differ from Node's, so they agree with
+	// Node by their output and exit code.
 	agrees := func(t *testing.T, path string, got run) {
 		t.Helper()
-		if difference := disagreement(onNode(t, path), got); difference != "" {
-			t.Fatalf("native: %s; stdout %q; stderr %q", difference, got.stdout, got.stderr)
+		if truth := onNode(t, path); truth.exitCode != got.exitCode || !bytes.Equal(truth.stdout, got.stdout) {
+			t.Fatalf("native: exit %d, stdout %q; Node: exit %d, stdout %q; stderr %q", got.exitCode, got.stdout, truth.exitCode, truth.stdout, got.stderr)
 		}
 	}
 	released := func(stderr []byte) int {
