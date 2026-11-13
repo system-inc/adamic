@@ -2,6 +2,7 @@
 package main
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"encoding/json"
 	"flag"
@@ -62,7 +63,7 @@ func main() {
 		program.LatentReplayEntryReach()
 	}
 	// The replay worker always checks the census output guards.
-	output, failure := lower.Lower(context.Background(), program)
+	output, failure := lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
 	if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
 		panic("measurement returned usable IR")
 	}
@@ -87,7 +88,7 @@ func main() {
 			record.Findings[index].Measurement = label
 		}
 	}
-	if err := json.NewEncoder(os.Stdout).Encode(record); err != nil {
+	if err := json.NewEncoder(os.Stdout).Encode(struct { lower.LatentFile; ModuleFormat string `json:"module_format"` }{record, moduleformat.Name()}); err != nil {
 		panic(err)
 	}
 	fmt.Fprintf(os.Stderr, "replay load/register/lower: %s\n", time.Since(started))
