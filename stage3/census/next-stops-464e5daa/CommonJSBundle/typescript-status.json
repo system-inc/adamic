@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "--branch",
+    "v6.0.3",
+    "https://github.com/microsoft/TypeScript.git",
+    "/workspace/scratch/typescript-source"
+  ],
+  "exit_code": 0,
+  "seconds": 17.163325488999988,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

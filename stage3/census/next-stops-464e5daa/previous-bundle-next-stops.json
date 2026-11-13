@@ -1,0 +1,1573 @@
+{
+  "main": [
+    {
+      "roots": [
+        "_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 37.968946822
+    },
+    {
+      "roots": [
+        "_namespaces/ts.performance.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 34.40582853
+    },
+    {
+      "roots": [
+        "_namespaces/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 35.60853273
+    },
+    {
+      "roots": [
+        "binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 38.903987502
+    },
+    {
+      "roots": [
+        "builder.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 16.014752931
+    },
+    {
+      "roots": [
+        "builderPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 18.013419399
+    },
+    {
+      "roots": [
+        "builderState.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 26.299705045
+    },
+    {
+      "roots": [
+        "builderStatePublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.333410317
+    },
+    {
+      "roots": [
+        "checker.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.439727816
+    },
+    {
+      "roots": [
+        "commandLineParser.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 24.610652941
+    },
+    {
+      "roots": [
+        "core.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 21.088947439
+    },
+    {
+      "roots": [
+        "corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.107614985
+    },
+    {
+      "roots": [
+        "debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 7.147742542
+    },
+    {
+      "roots": [
+        "diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 7.531932308
+    },
+    {
+      "roots": [
+        "emitter.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.941090964
+    },
+    {
+      "roots": [
+        "executeCommandLine.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 21.587657626
+    },
+    {
+      "roots": [
+        "expressionToTypeNode.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 19.967607062
+    },
+    {
+      "roots": [
+        "factory/baseNodeFactory.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 20.868825623
+    },
+    {
+      "roots": [
+        "factory/emitHelpers.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 20.558071557
+    },
+    {
+      "roots": [
+        "factory/emitNode.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 18.025601995
+    },
+    {
+      "roots": [
+        "factory/nodeChildren.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 21.293813767
+    },
+    {
+      "roots": [
+        "factory/nodeConverters.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 18.096813393
+    },
+    {
+      "roots": [
+        "factory/nodeFactory.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 20.20626084
+    },
+    {
+      "roots": [
+        "factory/nodeTests.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.826233585
+    },
+    {
+      "roots": [
+        "factory/parenthesizerRules.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 23.301543871
+    },
+    {
+      "roots": [
+        "factory/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 26.464930175
+    },
+    {
+      "roots": [
+        "factory/utilitiesPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 28.322916359
+    },
+    {
+      "roots": [
+        "hostErrors.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.134123525
+    },
+    {
+      "roots": [
+        "moduleNameResolver.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 31.941095562
+    },
+    {
+      "roots": [
+        "moduleSpecifiers.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 29.588116594
+    },
+    {
+      "roots": [
+        "parser.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 239.523403019
+    },
+    {
+      "roots": [
+        "path.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 15.687272416
+    },
+    {
+      "roots": [
+        "performance.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.923519912
+    },
+    {
+      "roots": [
+        "performanceCore.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 19.215628523
+    },
+    {
+      "roots": [
+        "program.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.586369494
+    },
+    {
+      "roots": [
+        "programDiagnostics.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.2077051
+    },
+    {
+      "roots": [
+        "resolutionCache.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.151885459
+    },
+    {
+      "roots": [
+        "scanner.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.600167006
+    },
+    {
+      "roots": [
+        "semver.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.692885609
+    },
+    {
+      "roots": [
+        "sourcemap.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.536550021
+    },
+    {
+      "roots": [
+        "symbolWalker.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 32.49427976
+    },
+    {
+      "roots": [
+        "sys.ts"
+      ],
+      "kind": "Refused",
+      "where": "scanner.ts:469:12",
+      "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+      "fix": "call it in an arrow that keeps the object: (value) => sourceFile.getPositionOfLineAndCharacter(value) (unbound-method)",
+      "seconds": 27.807390129
+    },
+    {
+      "roots": [
+        "tracing.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.286433821
+    },
+    {
+      "roots": [
+        "transformer.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 29.045981663
+    },
+    {
+      "roots": [
+        "transformers/classFields.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 25.887586772
+    },
+    {
+      "roots": [
+        "transformers/classThis.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 27.578812113
+    },
+    {
+      "roots": [
+        "transformers/declarations/diagnostics.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 238.011955198
+    },
+    {
+      "roots": [
+        "transformers/declarations.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 15.116685848
+    },
+    {
+      "roots": [
+        "transformers/destructuring.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.53995541
+    },
+    {
+      "roots": [
+        "transformers/es2015.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 18.624273488
+    },
+    {
+      "roots": [
+        "transformers/es2016.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.851013812
+    },
+    {
+      "roots": [
+        "transformers/es2017.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 12.777261352
+    },
+    {
+      "roots": [
+        "transformers/es2018.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.848376617
+    },
+    {
+      "roots": [
+        "transformers/es2019.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.705482642
+    },
+    {
+      "roots": [
+        "transformers/es2020.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.783886498
+    },
+    {
+      "roots": [
+        "transformers/es2021.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.074389485
+    },
+    {
+      "roots": [
+        "transformers/esDecorators.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.391497922
+    },
+    {
+      "roots": [
+        "transformers/esnext.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.843927235
+    },
+    {
+      "roots": [
+        "transformers/generators.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.434005218
+    },
+    {
+      "roots": [
+        "transformers/jsx.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 12.579542525
+    },
+    {
+      "roots": [
+        "transformers/legacyDecorators.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.216127847
+    },
+    {
+      "roots": [
+        "transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 14.447671464999999
+    },
+    {
+      "roots": [
+        "transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 13.737801905
+    },
+    {
+      "roots": [
+        "transformers/module/module.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 12.116000627
+    },
+    {
+      "roots": [
+        "transformers/module/system.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.998331554
+    },
+    {
+      "roots": [
+        "transformers/namedEvaluation.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 12.04619099
+    },
+    {
+      "roots": [
+        "transformers/taggedTemplate.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 12.195222085
+    },
+    {
+      "roots": [
+        "transformers/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.731954147
+    },
+    {
+      "roots": [
+        "transformers/typeSerializer.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.849777458
+    },
+    {
+      "roots": [
+        "transformers/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.577956944
+    },
+    {
+      "roots": [
+        "tsbuild.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.126227918
+    },
+    {
+      "roots": [
+        "tsbuildPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.83606056
+    },
+    {
+      "roots": [
+        "types.ts"
+      ],
+      "kind": "NotYet",
+      "where": "diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 3.320849099
+    },
+    {
+      "roots": [
+        "utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 10.848296651
+    },
+    {
+      "roots": [
+        "utilitiesPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 10.70298489
+    },
+    {
+      "roots": [
+        "visitorPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 11.65920945
+    },
+    {
+      "roots": [
+        "watch.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 10.952415189
+    },
+    {
+      "roots": [
+        "watchPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 10.558789933
+    },
+    {
+      "roots": [
+        "watchUtilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "seconds": 10.506522014
+    }
+  ],
+  "head": [
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 39.504954248
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "_namespaces/ts.performance.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 29.619731906
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "_namespaces/ts.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 39.519057209
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 49.779854749
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "builder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 17.135562079
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "builderPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 14.526598144
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "builderState.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 24.59751441
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "builderStatePublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 23.226365698
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "checker.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 21.366137514
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "commandLineParser.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 25.744652392
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "core.ts"
+      ],
+      "kind": "NotYet",
+      "where": "performanceCore.ts:29:15",
+      "reason": "the host binding performance in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 22.076541861
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.067082184
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 6.476357282
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 8.362577755
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "emitter.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 21.274986442
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "executeCommandLine.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 22.049304984
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "expressionToTypeNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 23.188192246
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/baseNodeFactory.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 16.279071547
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/emitHelpers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 19.535557547
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/emitNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 17.915482984
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/nodeChildren.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 19.971785015000002
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/nodeConverters.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 18.80423598
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/nodeFactory.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 17.716509956
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/nodeTests.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 19.398069279
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/parenthesizerRules.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 18.596464571
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 24.188823254
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "factory/utilitiesPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 24.254224819
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "hostErrors.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.083296898
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "moduleNameResolver.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 25.862990162
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "moduleSpecifiers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 24.815674523
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "parser.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 25.910488108
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "path.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 28.054355499
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "performance.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 238.612348053
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "performanceCore.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.913894678
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "program.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 14.356441039
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "programDiagnostics.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 21.257866197
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "resolutionCache.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.860976772
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "scanner.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.70501342
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "semver.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.244158107
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "sourcemap.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.288685015
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "symbolWalker.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 27.502825312
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "sys.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 25.532728257
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "tracing.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 25.438111238
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformer.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 27.744180631
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/classFields.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 31.596697017
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/classThis.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 29.122709979
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/declarations/diagnostics.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 27.242021418
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/declarations.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.297355246
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/destructuring.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.890035256
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2015.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 17.715034928
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2016.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.102937462
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2017.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.968015768
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2018.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.219000901
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2019.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.090756227
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2020.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.108661482
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/es2021.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.548043479
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/esDecorators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.649732818
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/esnext.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 11.785411623
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/generators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.918989116
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/jsx.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.572307291
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/legacyDecorators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 11.810873878
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 13.369472868999999
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.366204867
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/module/module.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.879697162
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/module/system.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.782356222
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/namedEvaluation.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.948448735
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/taggedTemplate.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 11.471813727
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/ts.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 11.6890426
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/typeSerializer.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 11.130179166
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "transformers/utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 10.511333952
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "tsbuild.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 9.973840014
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "tsbuildPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 10.961695964
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "types.ts"
+      ],
+      "kind": "NotYet",
+      "where": "diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 4.280122452
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 9.766612673000001
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "utilitiesPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 9.852851703
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "visitorPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 10.083979952
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "watch.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 10.698603912
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "watchPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 10.396114475
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "watchUtilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "core.ts:2599:15",
+      "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+      "seconds": 12.046356353
+    }
+  ]
+}

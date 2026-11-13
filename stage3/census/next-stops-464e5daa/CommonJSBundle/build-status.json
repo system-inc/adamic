@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/next-stops-464e5daa-census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 1,
+  "seconds": 0.03249293900000794,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
