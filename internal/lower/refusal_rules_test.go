@@ -56,6 +56,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// recordDeclaredDeleteRefusal judges only a record entry's delete, which deleteRefusal let by.
 		"1350 recordDeclaredDeleteRefusal",
 		"1400 syntaxRefusal",
+		// functionExpandoRefusal judges an assignment that declares a function's expando member before the
+		// cast and relation rules and the field store's NotYet meet it: an expando is refused for good (#4g1avf7).
+		"1450 functionExpandoRefusal",
 		"1500 jsonSchemaCallRefusal",
 		"1600 typedArrayUnsupported",
 		"1700 predicateArgumentsRefusal",
