@@ -215,13 +215,27 @@ func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *chec
 	return id, nil
 }
 
+// untaggedStructuralWalk is prepareUntaggedStructuralRead's state across one walk: the types it has
+// seen, and how deep a growing generic is open on its path (typeNesting).
+type untaggedStructuralWalk struct {
+	seen    map[*checker.Type]bool
+	nesting typeNesting
+}
+
 // Prepare nested callable obligations using lane 5's existing descriptor builder.
-// Only represented fixed scalar signatures are certified; errors stay lazy.
-func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, seen map[*checker.Type]bool) {
-	if target == nil || seen[target] {
+// Only represented fixed scalar signatures are certified; errors stay lazy. A type this walk can't see
+// to the end of, a generic that deepens itself (#k031ey0), is left unprepared, so a callable member
+// past it stays Unsupported and its read stops.
+func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, walk *untaggedStructuralWalk) {
+	if target == nil || walk.seen[target] {
 		return
 	}
-	seen[target] = true
+	walk.seen[target] = true
+	ok, leave := walk.nesting.enter(target)
+	defer leave()
+	if !ok {
+		return
+	}
 	if l.callableViewContract(target) {
 		if l.untaggedCallableShape(target) {
 			if id, err := l.prepareUntaggedCallableMember(node, target); err == nil {
@@ -232,19 +246,19 @@ func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
-			l.prepareUntaggedStructuralRead(node, member, seen)
+			l.prepareUntaggedStructuralRead(node, member, walk)
 		}
 		return
 	}
 	if element := l.untaggedArrayElement(target); element != nil {
-		l.prepareUntaggedStructuralRead(node, element, seen)
+		l.prepareUntaggedStructuralRead(node, element, walk)
 		return
 	}
 	if target.Flags()&checker.TypeFlagsObject == 0 {
 		return
 	}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
-		l.prepareUntaggedStructuralRead(node, l.checker.GetTypeOfSymbol(field), seen)
+		l.prepareUntaggedStructuralRead(node, l.checker.GetTypeOfSymbol(field), walk)
 	}
 }
 
