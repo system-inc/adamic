@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/census/latent/overlaytext",
+    "./stage3/census/moduleformat",
+    "-count=1"
+  ],
+  "exit_code": 0,
+  "seconds": 0.8409219720000465,
+  "stopping_reason": null
+}

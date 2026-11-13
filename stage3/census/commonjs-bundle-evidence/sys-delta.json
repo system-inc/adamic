@@ -1,0 +1,980 @@
+{
+  "gone": [
+    {
+      "kind": "Boundary",
+      "where": "sys.ts:1494:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "Boundary",
+      "where": "sys.ts:1724:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:121",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:121: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:35",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:92",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:92: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1724:41",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    }
+  ],
+  "new": [],
+  "unique_by_kind": {
+    "main": {
+      "Refused": 26,
+      "Boundary": 72,
+      "NotYet": 59
+    },
+    "head": {
+      "Refused": 26,
+      "Boundary": 70,
+      "NotYet": 55
+    }
+  },
+  "getNodeSystem": {
+    "main": {
+      "units": [
+        {
+          "pass_ledger": [
+            {
+              "name": "checkOverloadResults",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "forwarderValues",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishClassCalls",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishAccessors",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishToPrimitive",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkIterableViews",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "exceptions",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkLibrarySpreads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkAccessorSpreads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkRecordGuardedReads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkDynamicKeyedGetters",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkGeneratorRoads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "flow.NormalizeAsync",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "asyncEntrySource",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "findCycles",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkBoundArguments",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewOptionalWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewCopies",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewWidenedReads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkHostMemberWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "asyncPayloadFailures",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkPromiseConsumption",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewLogicalWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "programRegion",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "applyProgramMetadata",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "ownershipQuery",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "readiness",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "borrow",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "counters",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "voidDiscards",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkInspectorDoomedContracts",
+              "status": "not_reached_lowering_stop"
+            }
+          ],
+          "measurement": "measured on a checker-rejected program",
+          "where": "sys.ts:1475:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 65107,
+          "body_end": 85438,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getNodeSystem",
+          "parent": "sys.ts:1469:1",
+          "top": "sys.ts:1469:1"
+        }
+      ],
+      "findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "sys.ts:1494:35",
+          "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+          "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "sys.ts:1494:92",
+          "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+          "text": "sys.ts:1494:92: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "sys.ts:1494:121",
+          "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+          "text": "sys.ts:1494:121: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1534:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "sys.ts:1534:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1535:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "sys.ts:1535:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "sys.ts:1590:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "sys.ts:1590:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1612:22",
+          "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+          "text": "sys.ts:1612:22: Adamic 0.1 refuses a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1614:77",
+          "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+          "text": "sys.ts:1614:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1724:41",
+          "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+          "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1724:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet",
+          "start": 76337,
+          "end": 76480
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1818:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1818:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+          "start": 80810,
+          "end": 80865
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "sys.ts:1869:17",
+          "reason": "sort without a comparator",
+          "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1869:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+          "start": 82785,
+          "end": 82816
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "sys.ts:1870:17",
+          "reason": "sort without a comparator",
+          "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1870:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+          "start": 82816,
+          "end": 82853
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1494:35",
+          "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+          "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1494:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet",
+          "start": 65820,
+          "end": 66314
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:57:1",
+          "reason": "a function without a body",
+          "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1498:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet",
+          "start": 66468,
+          "end": 67527
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1519:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1546:25",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68618,
+          "end": 68673
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1551:29",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68787,
+          "end": 68916
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1549:56",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68785,
+          "end": 68943
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1549:25",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68729,
+          "end": 68943
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1545:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68420,
+          "end": 68966
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1542:65",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68418,
+          "end": 68985
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1542:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68353,
+          "end": 68985
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1590:191",
+          "reason": "process.recordreplay as a value (use its supported process operation directly)",
+          "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1519:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+          "start": 67527,
+          "end": 71759
+        }
+      ]
+    },
+    "head": {
+      "units": [
+        {
+          "pass_ledger": [
+            {
+              "name": "checkOverloadResults",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "forwarderValues",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishClassCalls",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishAccessors",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "finishToPrimitive",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkIterableViews",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "exceptions",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkLibrarySpreads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkAccessorSpreads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkRecordGuardedReads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkDynamicKeyedGetters",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkGeneratorRoads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "flow.NormalizeAsync",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "asyncEntrySource",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "findCycles",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkBoundArguments",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewOptionalWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewCopies",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewWidenedReads",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkHostMemberWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "asyncPayloadFailures",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkPromiseConsumption",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkViewLogicalWrites",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "programRegion",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "applyProgramMetadata",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "ownershipQuery",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "readiness",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "borrow",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "counters",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "voidDiscards",
+              "status": "not_reached_lowering_stop"
+            },
+            {
+              "name": "checkInspectorDoomedContracts",
+              "status": "not_reached_lowering_stop"
+            }
+          ],
+          "measurement": "measured on a checker-rejected program",
+          "where": "sys.ts:1475:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 65107,
+          "body_end": 85438,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getNodeSystem",
+          "parent": "sys.ts:1469:1",
+          "top": "sys.ts:1469:1"
+        }
+      ],
+      "findings": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1534:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "sys.ts:1534:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1535:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "sys.ts:1535:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "where": "sys.ts:1590:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "text": "sys.ts:1590:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1612:22",
+          "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+          "text": "sys.ts:1612:22: Adamic 0.1 refuses a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "sys.ts:1614:77",
+          "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+          "text": "sys.ts:1614:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1818:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1818:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+          "start": 80810,
+          "end": 80865
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "sys.ts:1869:17",
+          "reason": "sort without a comparator",
+          "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1869:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+          "start": 82785,
+          "end": 82816
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "sys.ts:1870:17",
+          "reason": "sort without a comparator",
+          "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1870:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+          "start": 82816,
+          "end": 82853
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:57:1",
+          "reason": "a function without a body",
+          "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1498:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet",
+          "start": 66468,
+          "end": 67527
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1519:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1546:25",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68618,
+          "end": 68673
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1551:29",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68787,
+          "end": 68916
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1549:56",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68785,
+          "end": 68943
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1549:25",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68729,
+          "end": 68943
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1545:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68420,
+          "end": 68966
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1542:65",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68418,
+          "end": 68985
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1542:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+          "start": 68353,
+          "end": 68985
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:1590:191",
+          "reason": "process.recordreplay as a value (use its supported process operation directly)",
+          "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:1475:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "sys.ts:1519:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+          "start": 67527,
+          "end": 71759
+        }
+      ]
+    }
+  }
+}

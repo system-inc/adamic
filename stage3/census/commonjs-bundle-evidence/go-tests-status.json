@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/census/latent/...",
+    "./stage3/census/moduleformat",
+    "./stage3/census/tool",
+    "./internal/lower",
+    "-count=1"
+  ],
+  "exit_code": 1,
+  "seconds": 0.015844365999981846,
+  "stopping_reason": null
+}

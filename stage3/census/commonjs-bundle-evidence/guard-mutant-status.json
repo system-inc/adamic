@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay=/workspace/scratch/995spev/guard-mutant-overlay.json",
+    "./stage3/census/latent/overlaytext",
+    "-count=1"
+  ],
+  "exit_code": 1,
+  "seconds": 2.257386354999994,
+  "stopping_reason": null
+}

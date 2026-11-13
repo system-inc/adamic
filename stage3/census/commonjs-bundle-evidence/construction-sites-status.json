@@ -1,0 +1,23 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "&lowering\\{|lower.Lower\\(|LowerWithOptions",
+    "stage3/",
+    "-g",
+    "*.go",
+    "-g",
+    "*.txt",
+    "-g",
+    "*.py",
+    "-g",
+    "!**/data/**",
+    "-g",
+    "!**/evidence/**",
+    "-g",
+    "!**/runs/**",
+    "-g",
+    "!**/logs/**"
+  ],
+  "exit_code": 0
+}

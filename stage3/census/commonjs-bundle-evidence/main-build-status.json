@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-o",
+    "/workspace/scratch/995spev/main-census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 424.3838281480001,
+  "stopping_reason": null
+}

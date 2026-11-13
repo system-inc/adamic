@@ -1,0 +1,30 @@
+{
+  "main": "fb2b54da12a02e1550b9f5bf046d3314c77bf657",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "tsc_shim": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "cpus": 5,
+  "cpu_max": "400000 100000",
+  "memory_max": "17179869184",
+  "baseline_module_format": "EcmaScript (implicit main default)",
+  "head_module_format": "CommonJSBundle",
+  "source_tree": "/workspace/scratch/995spev/adapted",
+  "baseline_dependency": "main/cohere symlinks the identical pinned dependency at /workspace/adamic/cohere; builds use -buildvcs=false",
+  "environment": {
+    "CENSUS_MODULE_FORMAT": null,
+    "ADAMIC_PROGRAM_REGION": null,
+    "ADAMIC_OWNERSHIP_QUERY": null,
+    "LATENT_FULL": null,
+    "LATENT_SPECULATIVE": null
+  },
+  "head": "2934a22d8341476aaf07925518187422de89e138",
+  "binaries": {
+    "main-census": "bcda6a68034d3030f50f352d837f195f5778c9a30a64ffeedc19624bce2fe339",
+    "main-latent": "de9be36297998fe891d35077c35c070443fb6bec5e19e2a5255af21e45a7e54a",
+    "head-census": "acd6fb0846a3c0bdfe3cf08b0f43851136991fc913955c7bdf8210dbf9ed4e48",
+    "head-latent": "2124480993dddc585e8a596f26691e8732b6a824f04d29f913bfc2478c795122",
+    "head-entry": "3f373d5d7d06c00e91f2596df52012541c186dd460f278fc50e67f131454d678"
+  },
+  "recipe_ref": "origin/typescript/next-stops-f44b5c27-2",
+  "recipe_commit": "3dc2a59dede1bff6eef557cb987f6ea0a3e6a462"
+}

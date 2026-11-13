@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/995spev/head-overlay/overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestLatent",
+    "-count=1"
+  ],
+  "exit_code": 1,
+  "seconds": 4.054725139000084,
+  "stopping_reason": null
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/995spev/main-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/995spev/main-latent",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 100.15439036600003,
+  "stopping_reason": null
+}

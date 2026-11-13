@@ -1,0 +1,2704 @@
+{
+  "roots": 79,
+  "moved": [
+    {
+      "root": "_namespaces/ts.moduleSpecifiers.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 37.968946822
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 39.504954248
+      }
+    },
+    {
+      "root": "_namespaces/ts.performance.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 34.40582853
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "_namespaces/ts.performance.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 29.619731906
+      }
+    },
+    {
+      "root": "_namespaces/ts.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 35.60853273
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "_namespaces/ts.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 39.519057209
+      }
+    },
+    {
+      "root": "binder.ts",
+      "before": {
+        "roots": [
+          "binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 38.903987502
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "binder.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 49.779854749
+      }
+    },
+    {
+      "root": "builder.ts",
+      "before": {
+        "roots": [
+          "builder.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 16.014752931
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "builder.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 17.135562079
+      }
+    },
+    {
+      "root": "builderPublic.ts",
+      "before": {
+        "roots": [
+          "builderPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 18.013419399
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "builderPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 14.526598144
+      }
+    },
+    {
+      "root": "builderState.ts",
+      "before": {
+        "roots": [
+          "builderState.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 26.299705045
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "builderState.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 24.59751441
+      }
+    },
+    {
+      "root": "builderStatePublic.ts",
+      "before": {
+        "roots": [
+          "builderStatePublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.333410317
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "builderStatePublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 23.226365698
+      }
+    },
+    {
+      "root": "checker.ts",
+      "before": {
+        "roots": [
+          "checker.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.439727816
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "checker.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 21.366137514
+      }
+    },
+    {
+      "root": "commandLineParser.ts",
+      "before": {
+        "roots": [
+          "commandLineParser.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 24.610652941
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "commandLineParser.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 25.744652392
+      }
+    },
+    {
+      "root": "core.ts",
+      "before": {
+        "roots": [
+          "core.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 21.088947439
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "core.ts"
+        ],
+        "kind": "NotYet",
+        "where": "performanceCore.ts:29:15",
+        "reason": "the host binding performance in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 22.076541861
+      }
+    },
+    {
+      "root": "emitter.ts",
+      "before": {
+        "roots": [
+          "emitter.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.941090964
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "emitter.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 21.274986442
+      }
+    },
+    {
+      "root": "executeCommandLine.ts",
+      "before": {
+        "roots": [
+          "executeCommandLine.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 21.587657626
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "executeCommandLine.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 22.049304984
+      }
+    },
+    {
+      "root": "expressionToTypeNode.ts",
+      "before": {
+        "roots": [
+          "expressionToTypeNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 19.967607062
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "expressionToTypeNode.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 23.188192246
+      }
+    },
+    {
+      "root": "factory/baseNodeFactory.ts",
+      "before": {
+        "roots": [
+          "factory/baseNodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 20.868825623
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/baseNodeFactory.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 16.279071547
+      }
+    },
+    {
+      "root": "factory/emitHelpers.ts",
+      "before": {
+        "roots": [
+          "factory/emitHelpers.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 20.558071557
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/emitHelpers.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 19.535557547
+      }
+    },
+    {
+      "root": "factory/emitNode.ts",
+      "before": {
+        "roots": [
+          "factory/emitNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 18.025601995
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/emitNode.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 17.915482984
+      }
+    },
+    {
+      "root": "factory/nodeChildren.ts",
+      "before": {
+        "roots": [
+          "factory/nodeChildren.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 21.293813767
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/nodeChildren.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 19.971785015000002
+      }
+    },
+    {
+      "root": "factory/nodeConverters.ts",
+      "before": {
+        "roots": [
+          "factory/nodeConverters.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 18.096813393
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/nodeConverters.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 18.80423598
+      }
+    },
+    {
+      "root": "factory/nodeFactory.ts",
+      "before": {
+        "roots": [
+          "factory/nodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 20.20626084
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/nodeFactory.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 17.716509956
+      }
+    },
+    {
+      "root": "factory/nodeTests.ts",
+      "before": {
+        "roots": [
+          "factory/nodeTests.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.826233585
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/nodeTests.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 19.398069279
+      }
+    },
+    {
+      "root": "factory/parenthesizerRules.ts",
+      "before": {
+        "roots": [
+          "factory/parenthesizerRules.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 23.301543871
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/parenthesizerRules.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 18.596464571
+      }
+    },
+    {
+      "root": "factory/utilities.ts",
+      "before": {
+        "roots": [
+          "factory/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 26.464930175
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/utilities.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 24.188823254
+      }
+    },
+    {
+      "root": "factory/utilitiesPublic.ts",
+      "before": {
+        "roots": [
+          "factory/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 28.322916359
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "factory/utilitiesPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 24.254224819
+      }
+    },
+    {
+      "root": "moduleNameResolver.ts",
+      "before": {
+        "roots": [
+          "moduleNameResolver.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 31.941095562
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "moduleNameResolver.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 25.862990162
+      }
+    },
+    {
+      "root": "moduleSpecifiers.ts",
+      "before": {
+        "roots": [
+          "moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 29.588116594
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "moduleSpecifiers.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 24.815674523
+      }
+    },
+    {
+      "root": "parser.ts",
+      "before": {
+        "roots": [
+          "parser.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 239.523403019
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "parser.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 25.910488108
+      }
+    },
+    {
+      "root": "path.ts",
+      "before": {
+        "roots": [
+          "path.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 15.687272416
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "path.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 28.054355499
+      }
+    },
+    {
+      "root": "performance.ts",
+      "before": {
+        "roots": [
+          "performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.923519912
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "performance.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 238.612348053
+      }
+    },
+    {
+      "root": "performanceCore.ts",
+      "before": {
+        "roots": [
+          "performanceCore.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 19.215628523
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "performanceCore.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.913894678
+      }
+    },
+    {
+      "root": "program.ts",
+      "before": {
+        "roots": [
+          "program.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.586369494
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "program.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 14.356441039
+      }
+    },
+    {
+      "root": "programDiagnostics.ts",
+      "before": {
+        "roots": [
+          "programDiagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.2077051
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "programDiagnostics.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 21.257866197
+      }
+    },
+    {
+      "root": "resolutionCache.ts",
+      "before": {
+        "roots": [
+          "resolutionCache.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.151885459
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "resolutionCache.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.860976772
+      }
+    },
+    {
+      "root": "scanner.ts",
+      "before": {
+        "roots": [
+          "scanner.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.600167006
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "scanner.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.70501342
+      }
+    },
+    {
+      "root": "semver.ts",
+      "before": {
+        "roots": [
+          "semver.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.692885609
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "semver.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.244158107
+      }
+    },
+    {
+      "root": "sourcemap.ts",
+      "before": {
+        "roots": [
+          "sourcemap.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.536550021
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "sourcemap.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.288685015
+      }
+    },
+    {
+      "root": "symbolWalker.ts",
+      "before": {
+        "roots": [
+          "symbolWalker.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 32.49427976
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "symbolWalker.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 27.502825312
+      }
+    },
+    {
+      "root": "sys.ts",
+      "before": {
+        "roots": [
+          "sys.ts"
+        ],
+        "kind": "Refused",
+        "where": "scanner.ts:469:12",
+        "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+        "fix": "call it in an arrow that keeps the object: (value) => sourceFile.getPositionOfLineAndCharacter(value) (unbound-method)",
+        "seconds": 27.807390129
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "sys.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 25.532728257
+      }
+    },
+    {
+      "root": "tracing.ts",
+      "before": {
+        "roots": [
+          "tracing.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.286433821
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "tracing.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 25.438111238
+      }
+    },
+    {
+      "root": "transformer.ts",
+      "before": {
+        "roots": [
+          "transformer.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 29.045981663
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformer.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 27.744180631
+      }
+    },
+    {
+      "root": "transformers/classFields.ts",
+      "before": {
+        "roots": [
+          "transformers/classFields.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 25.887586772
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/classFields.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 31.596697017
+      }
+    },
+    {
+      "root": "transformers/classThis.ts",
+      "before": {
+        "roots": [
+          "transformers/classThis.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 27.578812113
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/classThis.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 29.122709979
+      }
+    },
+    {
+      "root": "transformers/declarations/diagnostics.ts",
+      "before": {
+        "roots": [
+          "transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 238.011955198
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 27.242021418
+      }
+    },
+    {
+      "root": "transformers/declarations.ts",
+      "before": {
+        "roots": [
+          "transformers/declarations.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 15.116685848
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/declarations.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.297355246
+      }
+    },
+    {
+      "root": "transformers/destructuring.ts",
+      "before": {
+        "roots": [
+          "transformers/destructuring.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.53995541
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/destructuring.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.890035256
+      }
+    },
+    {
+      "root": "transformers/es2015.ts",
+      "before": {
+        "roots": [
+          "transformers/es2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 18.624273488
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2015.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 17.715034928
+      }
+    },
+    {
+      "root": "transformers/es2016.ts",
+      "before": {
+        "roots": [
+          "transformers/es2016.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.851013812
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2016.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.102937462
+      }
+    },
+    {
+      "root": "transformers/es2017.ts",
+      "before": {
+        "roots": [
+          "transformers/es2017.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 12.777261352
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2017.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.968015768
+      }
+    },
+    {
+      "root": "transformers/es2018.ts",
+      "before": {
+        "roots": [
+          "transformers/es2018.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.848376617
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2018.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.219000901
+      }
+    },
+    {
+      "root": "transformers/es2019.ts",
+      "before": {
+        "roots": [
+          "transformers/es2019.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.705482642
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2019.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.090756227
+      }
+    },
+    {
+      "root": "transformers/es2020.ts",
+      "before": {
+        "roots": [
+          "transformers/es2020.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.783886498
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2020.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.108661482
+      }
+    },
+    {
+      "root": "transformers/es2021.ts",
+      "before": {
+        "roots": [
+          "transformers/es2021.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.074389485
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/es2021.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.548043479
+      }
+    },
+    {
+      "root": "transformers/esDecorators.ts",
+      "before": {
+        "roots": [
+          "transformers/esDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.391497922
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/esDecorators.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.649732818
+      }
+    },
+    {
+      "root": "transformers/esnext.ts",
+      "before": {
+        "roots": [
+          "transformers/esnext.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.843927235
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/esnext.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 11.785411623
+      }
+    },
+    {
+      "root": "transformers/generators.ts",
+      "before": {
+        "roots": [
+          "transformers/generators.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.434005218
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/generators.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.918989116
+      }
+    },
+    {
+      "root": "transformers/jsx.ts",
+      "before": {
+        "roots": [
+          "transformers/jsx.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 12.579542525
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/jsx.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.572307291
+      }
+    },
+    {
+      "root": "transformers/legacyDecorators.ts",
+      "before": {
+        "roots": [
+          "transformers/legacyDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.216127847
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/legacyDecorators.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 11.810873878
+      }
+    },
+    {
+      "root": "transformers/module/esnextAnd2015.ts",
+      "before": {
+        "roots": [
+          "transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 14.447671464999999
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 13.369472868999999
+      }
+    },
+    {
+      "root": "transformers/module/impliedNodeFormatDependent.ts",
+      "before": {
+        "roots": [
+          "transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 13.737801905
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.366204867
+      }
+    },
+    {
+      "root": "transformers/module/module.ts",
+      "before": {
+        "roots": [
+          "transformers/module/module.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 12.116000627
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/module/module.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.879697162
+      }
+    },
+    {
+      "root": "transformers/module/system.ts",
+      "before": {
+        "roots": [
+          "transformers/module/system.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.998331554
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/module/system.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.782356222
+      }
+    },
+    {
+      "root": "transformers/namedEvaluation.ts",
+      "before": {
+        "roots": [
+          "transformers/namedEvaluation.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 12.04619099
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/namedEvaluation.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.948448735
+      }
+    },
+    {
+      "root": "transformers/taggedTemplate.ts",
+      "before": {
+        "roots": [
+          "transformers/taggedTemplate.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 12.195222085
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/taggedTemplate.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 11.471813727
+      }
+    },
+    {
+      "root": "transformers/ts.ts",
+      "before": {
+        "roots": [
+          "transformers/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.731954147
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/ts.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 11.6890426
+      }
+    },
+    {
+      "root": "transformers/typeSerializer.ts",
+      "before": {
+        "roots": [
+          "transformers/typeSerializer.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.849777458
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/typeSerializer.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 11.130179166
+      }
+    },
+    {
+      "root": "transformers/utilities.ts",
+      "before": {
+        "roots": [
+          "transformers/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.577956944
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "transformers/utilities.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 10.511333952
+      }
+    },
+    {
+      "root": "tsbuild.ts",
+      "before": {
+        "roots": [
+          "tsbuild.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.126227918
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "tsbuild.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 9.973840014
+      }
+    },
+    {
+      "root": "tsbuildPublic.ts",
+      "before": {
+        "roots": [
+          "tsbuildPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.83606056
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "tsbuildPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 10.961695964
+      }
+    },
+    {
+      "root": "utilities.ts",
+      "before": {
+        "roots": [
+          "utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 10.848296651
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "utilities.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 9.766612673000001
+      }
+    },
+    {
+      "root": "utilitiesPublic.ts",
+      "before": {
+        "roots": [
+          "utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 10.70298489
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "utilitiesPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 9.852851703
+      }
+    },
+    {
+      "root": "visitorPublic.ts",
+      "before": {
+        "roots": [
+          "visitorPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 11.65920945
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "visitorPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 10.083979952
+      }
+    },
+    {
+      "root": "watch.ts",
+      "before": {
+        "roots": [
+          "watch.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 10.952415189
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "watch.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 10.698603912
+      }
+    },
+    {
+      "root": "watchPublic.ts",
+      "before": {
+        "roots": [
+          "watchPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 10.558789933
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "watchPublic.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 10.396114475
+      }
+    },
+    {
+      "root": "watchUtilities.ts",
+      "before": {
+        "roots": [
+          "watchUtilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "sys.ts:57:1",
+        "reason": "an ambient function declaration",
+        "fix": "define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "seconds": 10.506522014
+      },
+      "after": {
+        "module_format": "CommonJSBundle",
+        "roots": [
+          "watchUtilities.ts"
+        ],
+        "kind": "NotYet",
+        "where": "core.ts:2599:15",
+        "reason": "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),",
+        "seconds": 12.046356353
+      }
+    }
+  ],
+  "sys_gone": [
+    {
+      "kind": "Boundary",
+      "where": "sys.ts:1494:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "Boundary",
+      "where": "sys.ts:1724:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:121",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:121: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:35",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1494:92",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1494:92: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "sys.ts:1724:41",
+      "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+      "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+    }
+  ],
+  "sys_new": [],
+  "sys_totals": {
+    "main": 157,
+    "head": 151
+  },
+  "getNodeSystem": {
+    "main": [
+      {
+        "pass_ledger": [
+          {
+            "name": "checkOverloadResults",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "forwarderValues",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishClassCalls",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishAccessors",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishToPrimitive",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkIterableViews",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "exceptions",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkLibrarySpreads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkAccessorSpreads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkRecordGuardedReads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkDynamicKeyedGetters",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkGeneratorRoads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "flow.NormalizeAsync",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "asyncEntrySource",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "findCycles",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkBoundArguments",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewOptionalWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewCopies",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewWidenedReads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkHostMemberWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "asyncPayloadFailures",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkPromiseConsumption",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewLogicalWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "programRegion",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "applyProgramMetadata",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "ownershipQuery",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "readiness",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "borrow",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "counters",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "voidDiscards",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkInspectorDoomedContracts",
+            "status": "not_reached_lowering_stop"
+          }
+        ],
+        "measurement": "measured on a checker-rejected program",
+        "where": "sys.ts:1475:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 65107,
+        "body_end": 85438,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getNodeSystem",
+        "parent": "sys.ts:1469:1",
+        "top": "sys.ts:1469:1"
+      }
+    ],
+    "head": [
+      {
+        "pass_ledger": [
+          {
+            "name": "checkOverloadResults",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "forwarderValues",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishClassCalls",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishAccessors",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "finishToPrimitive",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkIterableViews",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "exceptions",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkLibrarySpreads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkAccessorSpreads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkRecordGuardedReads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkDynamicKeyedGetters",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkGeneratorRoads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "flow.NormalizeAsync",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "asyncEntrySource",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "findCycles",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkBoundArguments",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewOptionalWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewCopies",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewWidenedReads",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkHostMemberWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "asyncPayloadFailures",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkPromiseConsumption",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkViewLogicalWrites",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "programRegion",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "applyProgramMetadata",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "ownershipQuery",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "readiness",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "borrow",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "counters",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "voidDiscards",
+            "status": "not_reached_lowering_stop"
+          },
+          {
+            "name": "checkInspectorDoomedContracts",
+            "status": "not_reached_lowering_stop"
+          }
+        ],
+        "measurement": "measured on a checker-rejected program",
+        "where": "sys.ts:1475:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 65107,
+        "body_end": 85438,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getNodeSystem",
+        "parent": "sys.ts:1469:1",
+        "top": "sys.ts:1469:1"
+      }
+    ]
+  },
+  "getNodeSystem_findings": {
+    "main": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "sys.ts:1494:35",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "sys.ts:1494:92",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:92: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "sys.ts:1494:121",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:121: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1534:13",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1534:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1535:13",
+        "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1535:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "sys.ts:1590:192",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "text": "sys.ts:1590:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1612:22",
+        "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+        "text": "sys.ts:1612:22: Adamic 0.1 refuses a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1614:77",
+        "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+        "text": "sys.ts:1614:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1724:41",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1724:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1724:41: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet",
+        "start": 76337,
+        "end": 76480
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1818:24",
+        "reason": "reading byteOrderMarkIndicator",
+        "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1818:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+        "start": 80810,
+        "end": 80865
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "sys.ts:1869:17",
+        "reason": "sort without a comparator",
+        "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1869:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+        "start": 82785,
+        "end": 82816
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "sys.ts:1870:17",
+        "reason": "sort without a comparator",
+        "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1870:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+        "start": 82816,
+        "end": 82853
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1494:35",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1494:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet",
+        "start": 65820,
+        "end": 66314
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:57:1",
+        "reason": "a function without a body",
+        "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1498:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet",
+        "start": 66468,
+        "end": 67527
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1519:15",
+        "reason": "a function value that captures the variable its own initializer declares",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1546:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68618,
+        "end": 68673
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1551:29",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68787,
+        "end": 68916
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1549:56",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68785,
+        "end": 68943
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1549:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68729,
+        "end": 68943
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1545:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68420,
+        "end": 68966
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1542:65",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68418,
+        "end": 68985
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1542:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68353,
+        "end": 68985
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1590:191",
+        "reason": "process.recordreplay as a value (use its supported process operation directly)",
+        "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1519:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+        "start": 67527,
+        "end": 71759
+      }
+    ],
+    "head": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1534:13",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1534:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1535:13",
+        "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1535:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "sys.ts:1590:192",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "text": "sys.ts:1590:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1612:22",
+        "reason": "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read",
+        "text": "sys.ts:1612:22: Adamic 0.1 refuses a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "sys.ts:1614:77",
+        "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+        "text": "sys.ts:1614:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1818:24",
+        "reason": "reading byteOrderMarkIndicator",
+        "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1818:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1818:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+        "start": 80810,
+        "end": 80865
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "sys.ts:1869:17",
+        "reason": "sort without a comparator",
+        "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1869:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1869:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+        "start": 82785,
+        "end": 82816
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "sys.ts:1870:17",
+        "reason": "sort without a comparator",
+        "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1870:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1870:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+        "start": 82816,
+        "end": 82853
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:57:1",
+        "reason": "a function without a body",
+        "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1498:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:57:1: stage 0 can't lower a function without a body yet",
+        "start": 66468,
+        "end": 67527
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1519:15",
+        "reason": "a function value that captures the variable its own initializer declares",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1546:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68618,
+        "end": 68673
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1551:29",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68787,
+        "end": 68916
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1549:56",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68785,
+        "end": 68943
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1549:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68729,
+        "end": 68943
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1545:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68420,
+        "end": 68966
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1542:65",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68418,
+        "end": 68985
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1542:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1519:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+        "start": 68353,
+        "end": 68985
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "sys.ts:1590:191",
+        "reason": "process.recordreplay as a value (use its supported process operation directly)",
+        "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "sys.ts:1475:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "sys.ts:1519:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1590:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+        "start": 67527,
+        "end": 71759
+      }
+    ]
+  },
+  "reads1494": {
+    "main": [
+      {
+        "kind": "Boundary",
+        "where": "sys.ts:1494:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1494:121",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:121: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1494:35",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:35: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1494:92",
+        "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+        "text": "sys.ts:1494:92: stage 0 can't lower node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started) yet"
+      }
+    ],
+    "head": []
+  }
+}

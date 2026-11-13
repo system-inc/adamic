@@ -1,0 +1,10 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "bash cloud/submodule-cache.sh restore \"$PWD\" || true; git submodule update --init --recursive --depth 1 --filter=blob:none"
+  ],
+  "exit_code": 0,
+  "seconds": 143.769878785,
+  "stopping_reason": null
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "ls-remote",
+    "--heads",
+    "origin",
+    "refs/heads/typescript/census-commonjs-bundle"
+  ],
+  "exit_code": 0,
+  "seconds": 0.5660060210002484,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

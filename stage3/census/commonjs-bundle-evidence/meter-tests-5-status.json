@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/meter",
+    "-p",
+    "*_test.py"
+  ],
+  "exit_code": 0,
+  "seconds": 51.68503680699996,
+  "stopping_reason": null
+}

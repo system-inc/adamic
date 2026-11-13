@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/void-widening/make-scan.py",
+    "/workspace/adamic",
+    "/workspace/scratch/995spev/head-overlay/overlay.json",
+    "/workspace/scratch/995spev/void-overlay"
+  ],
+  "exit_code": 0,
+  "seconds": 0.12576365600000372,
+  "stopping_reason": null
+}

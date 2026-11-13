@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "-count=1",
+    "-timeout=24m"
+  ],
+  "exit_code": 1,
+  "seconds": 1241.5824353880002,
+  "stopping_reason": null
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "^(TestProgramRegionCensusMembership|TestProduct_ProgramRegionCensusPairwise|TestProduct_ProgramRegionCensusIndexed|TestCycleFinderCensusEquality|TestProduct_CycleScanningCensus)$",
+    "-count=1",
+    "-timeout=24m"
+  ],
+  "exit_code": 0,
+  "seconds": 32.73588522599994,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

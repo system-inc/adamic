@@ -1,0 +1,32 @@
+1469: export let sys: System = (() => {
+1470:     // NodeJS detects "\uFEFF" at the start of the string and *replaces* it with the actual
+1471:     // byte order mark from the specified encoding. Using any other byte order mark does
+1472:     // not actually work.
+1473:     const byteOrderMarkIndicator = "\uFEFF";
+1474:
+1475:     function getNodeSystem(): System {
+1476:         const nativePattern = /^native |^\([^)]+\)$|^(?:internal[\\/]|[\w\s]+(?:\.js)?$)/;
+1477:         let activeSession: import("inspector").Session | "stopping" | undefined;
+1478:         let profilePath = "./profile.cpuprofile";
+1479:
+1480:         const isMacOs = process.platform === "darwin";
+1481:         const isLinuxOrMacOs = process.platform === "linux" || isMacOs;
+1482:
+1483:         const statSyncOptions = { throwIfNoEntry: false } as const;
+1484:
+1485:         const platform: string = _os.platform();
+1486:         const useCaseSensitiveFileNames = isFileSystemCaseSensitive();
+1487:         const fsRealpath = !!_fs.realpathSync.native ? process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;
+1488:
+1489:         // If our filename is "sys.js", then we are executing unbundled on the raw tsc output.
+1490:         // In that case, simulate a faked path in the directory where a bundle would normally
+1491:         // appear (e.g. the directory containing lib.*.d.ts files).
+1492:         //
+1493:         // Note that if we ever emit as files like cjs/mjs, this check will be wrong.
+1494:         const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+1495:
+1496:         const fsSupportsRecursiveFsWatch = process.platform === "win32" || isMacOs;
+1497:         const getCurrentDirectory = memoize(() => process.cwd());
+1498:         const { watchFile, watchDirectory } = createSystemWatchFunctions({
+1499:             pollingWatchFileWorker: fsWatchFileWorker,
+1500:             getModifiedTime,
