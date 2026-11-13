@@ -2,6 +2,7 @@
 package lower
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -128,7 +129,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 		}
 		if selection == nil {
 			func() {
