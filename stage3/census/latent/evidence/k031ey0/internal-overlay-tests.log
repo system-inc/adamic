@@ -1,0 +1,14 @@
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/cycles_equality_test.go:247:11: undefined: lowerCheckedWithCycleTypes
+internal/lower/generators_cycles_test.go:31:19: undefined: lowerChecked
+internal/lower/generators_in_place_test.go:58:18: undefined: lowerChecked
+internal/lower/graph_view_guard_test.go:83:18: undefined: lowerChecked
+internal/lower/program_discovery_test.go:20:16: undefined: lowerChecked
+internal/lower/program_discovery_test.go:24:17: undefined: lowerChecked
+internal/lower/program_discovery_test.go:36:16: undefined: lowerChecked
+internal/lower/program_region_host_witness_test.go:30:20: undefined: lowerChecked
+internal/lower/program_region_host_witness_test.go:49:16: undefined: lowerChecked
+internal/lower/program_region_tsc_node_test.go:27:20: undefined: lowerChecked
+internal/lower/program_region_tsc_node_test.go:27:20: too many errors
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+FAIL

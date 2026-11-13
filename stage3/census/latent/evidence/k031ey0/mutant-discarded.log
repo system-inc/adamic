@@ -1,0 +1,9 @@
+=== RUN   TestLatentPrepassErrorsAreRecorded
+=== PAUSE TestLatentPrepassErrorsAreRecorded
+=== CONT  TestLatentPrepassErrorsAreRecorded
+    prepasses_test.go:273: ../../../stage3/census/latent/units.go.txt: production prepass collectViewedElements error discarded at ../../../stage3/census/latent/units.go.txt:156:66
+--- FAIL: TestLatentPrepassErrorsAreRecorded (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent	0.175s
+FAIL
+discarded: guard child exit 1

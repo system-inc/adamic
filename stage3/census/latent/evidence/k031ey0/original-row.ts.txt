@@ -1,0 +1,7 @@
+interface Grow<T> { readonly value?: T; readonly next?: Grow<Grow<T>> }
+interface N { readonly kind: number; readonly grow?: Grow<number> }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function isId(n: N): n is Id { return n.kind === 1; }
+const id: Id = { kind: 1, text: "a" };
+const n: N = id;
+if (isId(n)) { console.log(n.text); }

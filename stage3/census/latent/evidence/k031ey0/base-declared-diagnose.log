@@ -1,0 +1,389 @@
+SIGQUIT: quit
+PC=0x48c441 m=0 sigcode=0
+
+goroutine 0 gp=0x1e72ac0 m=0 mp=0x1e73f40 [idle]:
+runtime.futex(0x1e74098, 0x80, 0x0, 0x0, 0x0, 0x0)
+	/workspace/adamic-tools/go/src/runtime/sys_linux_amd64.s:575 +0x21 fp=0x7ffcc52ca808 sp=0x7ffcc52ca800 pc=0x48c441
+runtime.futexsleep(0x1e73f40?, 0xc52ca880?, 0x45d908?)
+	/workspace/adamic-tools/go/src/runtime/os_linux.go:73 +0x30 fp=0x7ffcc52ca858 sp=0x7ffcc52ca808 pc=0x449f90
+runtime.notesleep(0x1e74098)
+	/workspace/adamic-tools/go/src/runtime/lock_futex.go:47 +0x87 fp=0x7ffcc52ca890 sp=0x7ffcc52ca858 pc=0x41efe7
+runtime.mPark(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:1985
+runtime.stopm()
+	/workspace/adamic-tools/go/src/runtime/proc.go:3023 +0x8c fp=0x7ffcc52ca8c0 sp=0x7ffcc52ca890 pc=0x45496c
+runtime.findRunnable()
+	/workspace/adamic-tools/go/src/runtime/proc.go:3811 +0xeb7 fp=0x7ffcc52caa90 sp=0x7ffcc52ca8c0 pc=0x4564f7
+runtime.schedule()
+	/workspace/adamic-tools/go/src/runtime/proc.go:4179 +0xb1 fp=0x7ffcc52caad0 sp=0x7ffcc52caa90 pc=0x457611
+runtime.goschedImpl(0x39a509ee41e0, 0x1)
+	/workspace/adamic-tools/go/src/runtime/proc.go:4360 +0x1dc fp=0x7ffcc52cab28 sp=0x7ffcc52caad0 pc=0x457c9c
+runtime.gopreempt_m(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:4377
+runtime.newstack()
+	/workspace/adamic-tools/go/src/runtime/stack.go:1174 +0x3fa fp=0x7ffcc52cac58 sp=0x7ffcc52cab28 pc=0x4670fa
+runtime.morestack()
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:650 +0x7b fp=0x7ffcc52cac60 sp=0x7ffcc52cac58 pc=0x488f3b
+
+goroutine 1 gp=0x39a509ee41e0 m=nil [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/printer.(*textWriter).updateLineCountAndPosFor(0x39a53759b340, {0x13cce70, 0x1})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/textwriter.go:97 +0x17a fp=0x39a52e8bd2b0 sp=0x39a52e8bd2a8 pc=0x73193a
+github.com/microsoft/TypeScript/tsc/internal/printer.(*textWriter).writeText(0x39a53759b340, {0x13cce70, 0x1})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/textwriter.go:139 +0x27e fp=0x39a52e8bd310 sp=0x39a52e8bd2b0 pc=0x731bde
+github.com/microsoft/TypeScript/tsc/internal/printer.(*textWriter).Write(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/textwriter.go:147
+github.com/microsoft/TypeScript/tsc/internal/printer.(*textWriter).WritePunctuation(0x39a50a39c5c0?, {0x13cce70?, 0x39a52e8bd3b0?})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/textwriter.go:199 +0x25 fp=0x39a52e8bd338 sp=0x39a52e8bd310 pc=0x732225
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).writePunctuation(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:330
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListRange(0x39a5377c81c0, 0x1ded070, 0x39a537793a08, 0x39a5377b4488, 0xd210, 0x39a509f80008?, 0x0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4766 +0x124 fp=0x39a52e8bd3c0 sp=0x39a52e8bd338 pc=0x725864
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitList(0x39a5377c81c0, 0x1ded070, 0x39a537793a08, 0x39a5377b4488, 0xd210)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4731 +0x90 fp=0x39a52e8bd408 sp=0x39a52e8bd3c0 pc=0x7256f0
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArguments(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1908
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeReference(0x39a5377c81c0, 0x39a537793a08)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1914 +0x65 fp=0x39a52e8bd450 sp=0x39a52e8bd408 pc=0x712725
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNode(0x39a5377c81c0, 0x39a537793a08, 0xa7716e0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2324 +0x1e5 fp=0x39a52e8bd4a8 sp=0x39a52e8bd450 pc=0x715485
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodePreservingExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2288
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodeOutsideExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2282
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArgument(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1901
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeParameterDeclarationNode(0x39a5377c81c0, 0x39a52e8bd540?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1469 +0x51 fp=0x39a52e8bd4d8 sp=0x39a52e8bd4a8 pc=0x70f311
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListItems(0x39a5377c81c0, 0x1ded070, 0x39a537793a48, {0x39a53779c808, 0x1, 0x0?}, 0xd210, 0x0, {0xffffffff, 0xffffffff})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4987 +0x5d9 fp=0x39a52e8bd560 sp=0x39a52e8bd4d8 pc=0x726759
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListRange(0x39a5377c81c0, 0x1ded070, 0x39a537793a48, 0x39a5377b44a8, 0xd210, 0x1?, 0x0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4786 +0x3ac fp=0x39a52e8bd5e8 sp=0x39a52e8bd560 pc=0x725aec
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitList(0x39a5377c81c0, 0x1ded070, 0x39a537793a48, 0x39a5377b44a8, 0xd210)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4731 +0x90 fp=0x39a52e8bd630 sp=0x39a52e8bd5e8 pc=0x7256f0
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArguments(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1908
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeReference(0x39a5377c81c0, 0x39a537793a48)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1914 +0x65 fp=0x39a52e8bd678 sp=0x39a52e8bd630 pc=0x712725
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNode(0x39a5377c81c0, 0x39a537793a48, 0xa7716e0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2324 +0x1e5 fp=0x39a52e8bd6d0 sp=0x39a52e8bd678 pc=0x715485
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodePreservingExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2288
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodeOutsideExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2282
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArgument(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1901
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeParameterDeclarationNode(0x39a5377c81c0, 0x39a52e8bd768?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1469 +0x51 fp=0x39a52e8bd700 sp=0x39a52e8bd6d0 pc=0x70f311
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListItems(0x39a5377c81c0, 0x1ded070, 0x39a537793a88, {0x39a53779c800, 0x1, 0x0?}, 0xd210, 0x0, {0xffffffff, 0xffffffff})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4987 +0x5d9 fp=0x39a52e8bd788 sp=0x39a52e8bd700 pc=0x726759
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListRange(0x39a5377c81c0, 0x1ded070, 0x39a537793a88, 0x39a5377b44c8, 0xd210, 0x39a5377d6320?, 0x0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4786 +0x3ac fp=0x39a52e8bd810 sp=0x39a52e8bd788 pc=0x725aec
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitList(0x39a5377c81c0, 0x1ded070, 0x39a537793a88, 0x39a5377b44c8, 0xd210)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4731 +0x90 fp=0x39a52e8bd858 sp=0x39a52e8bd810 pc=0x7256f0
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArguments(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1908
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeReference(0x39a5377c81c0, 0x39a537793a88)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1914 +0x65 fp=0x39a52e8bd8a0 sp=0x39a52e8bd858 pc=0x712725
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNode(0x39a5377c81c0, 0x39a537793a88, 0xa7716e0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2324 +0x1e5 fp=0x39a52e8bd8f8 sp=0x39a52e8bd8a0 pc=0x715485
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodePreservingExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2288
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodeOutsideExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2282
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArgument(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1901
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeParameterDeclarationNode(0x39a5377c81c0, 0x39a52e8bd990?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1469 +0x51 fp=0x39a52e8bd928 sp=0x39a52e8bd8f8 pc=0x70f311
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListItems(0x39a5377c81c0, 0x1ded070, 0x39a537793ac8, {0x39a53779c7f8, 0x1, 0x0?}, 0xd210, 0x0, {0xffffffff, 0xffffffff})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4987 +0x5d9 fp=0x39a52e8bd9b0 sp=0x39a52e8bd928 pc=0x726759
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListRange(0x39a5377c81c0, 0x1ded070, 0x39a537793ac8, 0x39a5377b44e8, 0xd210, 0x1c3ba48?, 0x0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4786 +0x3ac fp=0x39a52e8bda38 sp=0x39a52e8bd9b0 pc=0x725aec
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitList(0x39a5377c81c0, 0x1ded070, 0x39a537793ac8, 0x39a5377b44e8, 0xd210)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4731 +0x90 fp=0x39a52e8bda80 sp=0x39a52e8bda38 pc=0x7256f0
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArguments(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1908
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeReference(0x39a5377c81c0, 0x39a537793ac8)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1914 +0x65 fp=0x39a52e8bdac8 sp=0x39a52e8bda80 pc=0x712725
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNode(0x39a5377c81c0, 0x39a537793ac8, 0xa7716e0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2324 +0x1e5 fp=0x39a52e8bdb20 sp=0x39a52e8bdac8 pc=0x715485
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodePreservingExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2288
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNodeOutsideExtends(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2282
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArgument(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1901
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeParameterDeclarationNode(0x39a5377c81c0, 0x39a52e8bdbb8?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1469 +0x51 fp=0x39a52e8bdb50 sp=0x39a52e8bdb20 pc=0x70f311
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListItems(0x39a5377c81c0, 0x1ded070, 0x39a537793b08, {0x39a53779c7f0, 0x1, 0x0?}, 0xd210, 0x0, {0xffffffff, 0xffffffff})
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4987 +0x5d9 fp=0x39a52e8bdbd8 sp=0x39a52e8bdb50 pc=0x726759
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitListRange(0x39a5377c81c0, 0x1ded070, 0x39a537793b08, 0x39a5377b4508, 0xd210, 0x39a50a918a80?, 0x0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4786 +0x3ac fp=0x39a52e8bdc60 sp=0x39a52e8bdbd8 pc=0x725aec
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitList(0x39a5377c81c0, 0x1ded070, 0x39a537793b08, 0x39a5377b4508, 0xd210)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:4731 +0x90 fp=0x39a52e8bdca8 sp=0x39a52e8bdc60 pc=0x7256f0
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeArguments(...)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1908
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeReference(0x39a5377c81c0, 0x39a537793b08)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:1914 +0x65 fp=0x39a52e8bdcf0 sp=0x39a52e8bdca8 pc=0x712725
+github.com/microsoft/TypeScript/tsc/internal/printer.(*Printer).emitTypeNode(0x39a5377c81c0, 0x39a537793b08, 0xa7716e0?)
+	/workspace/scratch/k031ey0-base/cohere/TypeScript/tsc/internal/printer/printer.go:2324 +0x1e5 fp=0x39a52e8bdd48 sp=0x39a52e8bdcf0 pc=0x715485
+...17467 frames elided...
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb4fa60 sp=0x39a52fb4f600 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb4fec0 sp=0x39a52fb4fa60 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb50320 sp=0x39a52fb4fec0 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb50780 sp=0x39a52fb50320 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb50be0 sp=0x39a52fb50780 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb51040 sp=0x39a52fb50be0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb514a0 sp=0x39a52fb51040 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb51900 sp=0x39a52fb514a0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb51d60 sp=0x39a52fb51900 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb521c0 sp=0x39a52fb51d60 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb52620 sp=0x39a52fb521c0 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb52a80 sp=0x39a52fb52620 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb52ee0 sp=0x39a52fb52a80 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb53340 sp=0x39a52fb52ee0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb537a0 sp=0x39a52fb53340 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb53c00 sp=0x39a52fb537a0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb54060 sp=0x39a52fb53c00 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb544c0 sp=0x39a52fb54060 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb54920 sp=0x39a52fb544c0 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb54d80 sp=0x39a52fb54920 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb551e0 sp=0x39a52fb54d80 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb55640 sp=0x39a52fb551e0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb55aa0 sp=0x39a52fb55640 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb55f00 sp=0x39a52fb55aa0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb56360 sp=0x39a52fb55f00 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb567c0 sp=0x39a52fb56360 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb56c20 sp=0x39a52fb567c0 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec31?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb57080 sp=0x39a52fb56c20 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x0?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb574e0 sp=0x39a52fb57080 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0x39a50a02ec76?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:217 +0x11b6 fp=0x39a52fb57940 sp=0x39a52fb574e0 pc=0xbdb516
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema.func2(0xba6d12?)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:309 +0xd3d fp=0x39a52fb57da0 sp=0x39a52fb57940 pc=0xbdb09d
+github.com/system-inc/adamic/internal/lower.(*lowering).jsonDecodeSchema(0x39a50aac3508, 0x39a50a5cc380, 0x39a50a933200, 0x2, 0x39a50aab7f30)
+	/workspace/scratch/k031ey0-base/internal/lower/library_json_decode.go:322 +0x1a8 fp=0x39a52fb57f08 sp=0x39a52fb57da0 pc=0xa8dde8
+github.com/system-inc/adamic/internal/lower.(*lowering).boundarySchema(0x39a50aac3508, 0x39a50a5cc380, 0x39a50a933200)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:454 +0x85 fp=0x39a52fb57f58 sp=0x39a52fb57f08 pc=0xa21205
+github.com/system-inc/adamic/internal/lower.(*lowering).latentMainSignatureRaw(0x39a50aac3508, 0x0, 0x39a50a045600, 0xffffffffffffffff)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:183 +0x105f fp=0x39a52fb585e0 sp=0x39a52fb57f58 pc=0xa1d49f
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSignatureReturnRaw(...)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:486
+github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecSignatureReturn(0x39a50aac3508, 0x0, 0x39a50a045600, 0xffffffffffffffff, 0x0)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_speculative.go:150 +0x168 fp=0x39a52fb58670 sp=0x39a52fb585e0 pc=0xa653e8
+github.com/system-inc/adamic/internal/lower.(*lowering).signatureReturn(...)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:490
+github.com/system-inc/adamic/internal/lower.(*lowering).signature(...)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:482
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x39a50aac3508, 0x0, 0x39a50a045600, 0xffffffffffffffff)
+	/workspace/scratch/k031ey0-base/internal/lower/functions.go:60 +0x2c5 fp=0x39a52fb58798 sp=0x39a52fb58670 pc=0xa1c0e5
+github.com/system-inc/adamic/internal/lower.latentFullSelected.func7(0x39a50a77a270?, 0x39a52fb58d08, 0x39a50a334d80, 0x39a50a045600, 0x39a50aab8e80, 0x39a50a929808, {0x39a50a045600, {0x0, 0x0}, {0x39a509f11100, ...}, ...})
+	/workspace/scratch/k031ey0-base/internal/lower/latent_units.go:234 +0x689 fp=0x39a52fb58c28 sp=0x39a52fb58798 pc=0xbd7da9
+github.com/system-inc/adamic/internal/lower.latentFullSelected({0x1de1ca0, 0x1e95520}, 0x39a50a334d80, 0x39a52fb599e0, 0x0)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_units.go:245 +0xd68 fp=0x39a52fb59230 sp=0x39a52fb58c28 pc=0xa7a5c8
+github.com/system-inc/adamic/internal/lower.latentFull(...)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_units.go:111
+github.com/system-inc/adamic/internal/lower.latentRun({0x1de1ca0, 0x1e95520}, 0x39a50a334d80, 0x39a50aa779e0)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_hook.go:378 +0xed fp=0x39a52fb597c0 sp=0x39a52fb59230 pc=0xa5d1ed
+github.com/system-inc/adamic/internal/lower.LatentWithRelationChecks({0x1de1ca0, 0x1e95520}, 0x39a50a334d80, 0x0?, 0x39a52fb59ca8)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_hook.go:353 +0x357 fp=0x39a52fb59ab0 sp=0x39a52fb597c0 pc=0xa5cbd7
+github.com/system-inc/adamic/internal/lower.Latent({0x1de1ca0, 0x1e95520}, 0x39a50a334d80, 0x39a50aa77ca8)
+	/workspace/scratch/k031ey0-base/internal/lower/latent_hook.go:324 +0xab fp=0x39a52fb59bb8 sp=0x39a52fb59ab0 pc=0xa5c78b
+main.main.func2(0xc29001?)
+	/workspace/scratch/k031ey0-base/stage3/census/latent/tool/main.go:58 +0x7d fp=0x39a52fb59cc8 sp=0x39a52fb59bb8 pc=0xc0653d
+main.writeLatentStream(0x39a50a079400, 0x39a50a2075f0, 0x39a50a81b750, 0x39a50aa77e70)
+	/workspace/scratch/k031ey0-base/stage3/census/latent/tool/main.go:78 +0x133 fp=0x39a52fb59dc8 sp=0x39a52fb59cc8 pc=0xc06173
+main.main()
+	/workspace/scratch/k031ey0-base/stage3/census/latent/tool/main.go:57 +0x576 fp=0x39a52fb59eb8 sp=0x39a52fb59dc8 pc=0xc05f96
+runtime.main()
+	/workspace/adamic-tools/go/src/runtime/proc.go:302 +0x427 fp=0x39a52fb59fe0 sp=0x39a52fb59eb8 pc=0x44fee7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a52fb59fe8 sp=0x39a52fb59fe0 pc=0x48a901
+
+goroutine 2 gp=0x39a509ee4d20 m=nil [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f38fa8 sp=0x39a509f38f88 pc=0x48484a
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.forcegchelper()
+	/workspace/adamic-tools/go/src/runtime/proc.go:387 +0xb3 fp=0x39a509f38fe0 sp=0x39a509f38fa8 pc=0x4501b3
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f38fe8 sp=0x39a509f38fe0 pc=0x48a901
+created by runtime.init.7 in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:375 +0x1a
+
+goroutine 18 gp=0x39a509f843c0 m=nil [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f34788 sp=0x39a509f34768 pc=0x48484a
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.bgsweep(0x39a509f62000)
+	/workspace/adamic-tools/go/src/runtime/mgcsweep.go:324 +0x151 fp=0x39a509f347c8 sp=0x39a509f34788 pc=0x43b751
+runtime.gcenable.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x17 fp=0x39a509f347e0 sp=0x39a509f347c8 pc=0x47be57
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f347e8 sp=0x39a509f347e0 pc=0x48a901
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:214 +0x66
+
+goroutine 19 gp=0x39a509f845a0 m=nil [GC scavenge wait]:
+runtime.gopark(0x10000?, 0x13cc848?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f34f78 sp=0x39a509f34f58 pc=0x48484a
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*scavengerState).park(0x1e725e0)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:425 +0x49 fp=0x39a509f34fa8 sp=0x39a509f34f78 pc=0x439269
+runtime.bgscavenge(0x39a509f62000)
+	/workspace/adamic-tools/go/src/runtime/mgcscavenge.go:658 +0x59 fp=0x39a509f34fc8 sp=0x39a509f34fa8 pc=0x4397d9
+runtime.gcenable.gowrap2()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0x17 fp=0x39a509f34fe0 sp=0x39a509f34fc8 pc=0x47be17
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f34fe8 sp=0x39a509f34fe0 pc=0x48a901
+created by runtime.gcenable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:215 +0xa5
+
+goroutine 20 gp=0x39a509f84780 m=nil [GOMAXPROCS updater (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f38788 sp=0x39a509f38768 pc=0x48484a
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.updateMaxProcsGoroutine()
+	/workspace/adamic-tools/go/src/runtime/proc.go:7146 +0xe7 fp=0x39a509f387e0 sp=0x39a509f38788 pc=0x45d5c7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f387e8 sp=0x39a509f387e0 pc=0x48a901
+created by runtime.defaultGOMAXPROCSUpdateEnable in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/proc.go:7134 +0x37
+
+goroutine 21 gp=0x39a509f84d20 m=nil [finalizer wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f35620 sp=0x39a509f35600 pc=0x48484a
+runtime.runFinalizers()
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:210 +0x107 fp=0x39a509f357e0 sp=0x39a509f35620 pc=0x42c9c7
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f357e8 sp=0x39a509f357e0 pc=0x48a901
+created by runtime.createfing in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mfinal.go:172 +0x3d
+
+goroutine 22 gp=0x39a509f850e0 m=nil [cleanup wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f35f68 sp=0x39a509f35f48 pc=0x48484a
+runtime.goparkunlock(...)
+	/workspace/adamic-tools/go/src/runtime/proc.go:480
+runtime.(*cleanupQueue).dequeue(0x1e728a0)
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:522 +0xd3 fp=0x39a509f35fa0 sp=0x39a509f35f68 pc=0x4296f3
+runtime.runCleanups()
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:718 +0x45 fp=0x39a509f35fe0 sp=0x39a509f35fa0 pc=0x429d65
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f35fe8 sp=0x39a509f35fe0 pc=0x48a901
+created by runtime.(*cleanupQueue).createGs in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mcleanup.go:672 +0xa5
+
+goroutine 23 gp=0x39a50a308960 m=nil [GC worker (idle)]:
+runtime.gopark(0x1e96840?, 0x1?, 0xfa?, 0x7f?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f36740 sp=0x39a509f36720 pc=0x48484a
+runtime.gcBgMarkWorker(0x39a509f9a700)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x39a509f367c8 sp=0x39a509f36740 pc=0x42fc0b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x39a509f367e0 sp=0x39a509f367c8 pc=0x47c357
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f367e8 sp=0x39a509f367e0 pc=0x48a901
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 24 gp=0x39a50a308b40 m=nil [GC worker (idle)]:
+runtime.gopark(0xeb5e6c4fc8?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f36f40 sp=0x39a509f36f20 pc=0x48484a
+runtime.gcBgMarkWorker(0x39a509f9a700)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x39a509f36fc8 sp=0x39a509f36f40 pc=0x42fc0b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x39a509f36fe0 sp=0x39a509f36fc8 pc=0x47c357
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f36fe8 sp=0x39a509f36fe0 pc=0x48a901
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 25 gp=0x39a50a308d20 m=nil [GC worker (idle)]:
+runtime.gopark(0xeb6271f940?, 0x3?, 0x81?, 0xe1?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f37740 sp=0x39a509f37720 pc=0x48484a
+runtime.gcBgMarkWorker(0x39a509f9a700)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x39a509f377c8 sp=0x39a509f37740 pc=0x42fc0b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x39a509f377e0 sp=0x39a509f377c8 pc=0x47c357
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f377e8 sp=0x39a509f377e0 pc=0x48a901
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 26 gp=0x39a50a308f00 m=nil [GC worker (idle)]:
+runtime.gopark(0xeb624ecd2b?, 0x3?, 0x71?, 0x8f?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a509f37f40 sp=0x39a509f37f20 pc=0x48484a
+runtime.gcBgMarkWorker(0x39a509f9a700)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x39a509f37fc8 sp=0x39a509f37f40 pc=0x42fc0b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x39a509f37fe0 sp=0x39a509f37fc8 pc=0x47c357
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a509f37fe8 sp=0x39a509f37fe0 pc=0x48a901
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+goroutine 27 gp=0x39a50a3090e0 m=nil [GC worker (idle)]:
+runtime.gopark(0x1e96840?, 0x1?, 0xb9?, 0x15?, 0x0?)
+	/workspace/adamic-tools/go/src/runtime/proc.go:474 +0xca fp=0x39a50a324740 sp=0x39a50a324720 pc=0x48484a
+runtime.gcBgMarkWorker(0x39a509f9a700)
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1807 +0xeb fp=0x39a50a3247c8 sp=0x39a50a324740 pc=0x42fc0b
+runtime.gcBgMarkStartWorkers.gowrap1()
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0x17 fp=0x39a50a3247e0 sp=0x39a50a3247c8 pc=0x47c357
+runtime.goexit({})
+	/workspace/adamic-tools/go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x39a50a3247e8 sp=0x39a50a3247e0 pc=0x48a901
+created by runtime.gcBgMarkStartWorkers in goroutine 1
+	/workspace/adamic-tools/go/src/runtime/mgc.go:1711 +0xfc
+
+rax    0xca
+rbx    0x0
+rcx    0x48c443
+rdx    0x0
+rdi    0x1e74098
+rsi    0x80
+rbp    0x7ffcc52ca848
+rsp    0x7ffcc52ca800
+r8     0x0
+r9     0x0
+r10    0x0
+r11    0x286
+r12    0x1
+r13    0x4
+r14    0x1e72ac0
+r15    0x0
+rip    0x48c441
+rflags 0x286
+cs     0x33
+fs     0x0
+gs     0x0

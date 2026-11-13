@@ -1,0 +1,340 @@
+=== RUN   TestLatentPassLedgerMatchesMainTailPb47
+=== PAUSE TestLatentPassLedgerMatchesMainTailPb47
+=== RUN   TestLatentPassLedgerDroppedStepMutantPb47
+=== PAUSE TestLatentPassLedgerDroppedStepMutantPb47
+=== RUN   TestLatentPassLedgerOnlyRecordsOmissionsPb47
+=== PAUSE TestLatentPassLedgerOnlyRecordsOmissionsPb47
+=== RUN   TestLatentPassLedgerNestedCallDriftPb47
+=== PAUSE TestLatentPassLedgerNestedCallDriftPb47
+=== RUN   TestLatentPrepassesAddedProductionMutantSygfnmc
+=== PAUSE TestLatentPrepassesAddedProductionMutantSygfnmc
+=== RUN   TestLatentPrepassesDiscardedMutant
+=== PAUSE TestLatentPrepassesDiscardedMutant
+=== RUN   TestLatentPrepassesOmissionMutantSygfnmc
+=== PAUSE TestLatentPrepassesOmissionMutantSygfnmc
+=== RUN   TestLatentCensusPrepassesTrackProductionSygfnmc
+=== PAUSE TestLatentCensusPrepassesTrackProductionSygfnmc
+=== RUN   TestLatentPrepassErrorsAreRecorded
+=== PAUSE TestLatentPrepassErrorsAreRecorded
+=== RUN   TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== PAUSE TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== RUN   TestLatentDeferredDriverHooksZb0q0zd
+=== PAUSE TestLatentDeferredDriverHooksZb0q0zd
+=== RUN   TestLatentScopedTailEntryFindingLoom03dg
+=== PAUSE TestLatentScopedTailEntryFindingLoom03dg
+=== CONT  TestLatentPassLedgerMatchesMainTailPb47
+--- PASS: TestLatentPassLedgerMatchesMainTailPb47 (0.00s)
+=== CONT  TestLatentScopedTailEntryFindingLoom03dg
+=== CONT  TestLatentPrepassesOmissionMutantSygfnmc
+=== CONT  TestLatentPassLedgerNestedCallDriftPb47
+=== CONT  TestLatentPrepassesDiscardedMutant
+=== CONT  TestLatentPassLedgerOnlyRecordsOmissionsPb47
+--- PASS: TestLatentPassLedgerOnlyRecordsOmissionsPb47 (0.00s)
+=== CONT  TestLatentPrepassesAddedProductionMutantSygfnmc
+=== NAME  TestLatentPrepassesOmissionMutantSygfnmc
+    prepasses_omission_mutant_test.go:20: guard red as required: stage3/census/latent/lower.go.txt: production prepass noteOmittedOptionals missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames])
+--- PASS: TestLatentPrepassesOmissionMutantSygfnmc (0.03s)
+=== CONT  TestLatentPassLedgerDroppedStepMutantPb47
+--- PASS: TestLatentPassLedgerNestedCallDriftPb47 (0.03s)
+=== CONT  TestLatentPrepassErrorsAreRecorded
+--- PASS: TestLatentPassLedgerDroppedStepMutantPb47 (0.01s)
+=== CONT  TestLatentDeferredDriverHooksZb0q0zd
+--- PASS: TestLatentDeferredDriverHooksZb0q0zd (0.00s)
+=== CONT  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+=== NAME  TestLatentPrepassesAddedProductionMutantSygfnmc
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/speculative.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/units.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/predicates/tools/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+--- PASS: TestLatentPrepassesAddedProductionMutantSygfnmc (0.11s)
+=== CONT  TestLatentCensusPrepassesTrackProductionSygfnmc
+--- PASS: TestLatentCensusPrepassesTrackProductionSygfnmc (0.10s)
+--- PASS: TestLatentScopedTailEntryFindingLoom03dg (0.29s)
+=== NAME  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+    deferred_census_test.go:107: ordinary=false unit=&{PassLedger:[{Name:checkOverloadResults Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:forwarderValues Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishClassCalls Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishAccessors Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishToPrimitive Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkIterableViews Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:exceptions Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkLibrarySpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkAccessorSpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkRecordGuardedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkDynamicKeyedGetters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkGeneratorRoads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:flow.NormalizeAsync Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncEntrySource Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:findCycles Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkBoundArguments Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewOptionalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewCopies Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewWidenedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkHostMemberWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncPayloadFailures Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkPromiseConsumption Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewLogicalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:programRegion Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:applyProgramMetadata Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:ownershipQuery Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:readiness Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:borrow Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:counters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:voidDiscards Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkInspectorDoomedContracts Status:not_reached_lowering_stop Reason: WallSeconds:0}] Measurement:measured on a checker-rejected program Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:2:1 Kind:KindFunctionDeclaration BodyStart:127 BodyEnd:166 RelationOverflow:<nil> Instantiated:false InstantiatedBy:[] Status:attempted CheckerDiagnostics:[] Name:callWrittenAny Parent: Top: Depth:0} findings=[{Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:1:1 Phase:deferred_scan Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:1:58 Reason:a member typed any ([]) related to string at the assertion site Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:1:58: stage 0 can't lower a member typed any ([]) related to string at the assertion site yet Start:0 End:0} {Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:2:1 Phase:deferred Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:1:58 Reason:a member typed any ([]) related to string at the assertion site Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/001/main.ts:1:58: stage 0 can't lower a member typed any ([]) related to string at the assertion site yet Start:0 End:0}]
+    deferred_census_test.go:107: ordinary=true unit=&{PassLedger:[{Name:checkOverloadResults Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:forwarderValues Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishClassCalls Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishAccessors Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishToPrimitive Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkIterableViews Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:exceptions Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkLibrarySpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkAccessorSpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkRecordGuardedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkDynamicKeyedGetters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkGeneratorRoads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:flow.NormalizeAsync Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncEntrySource Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:findCycles Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkBoundArguments Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewOptionalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewCopies Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewWidenedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkHostMemberWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncPayloadFailures Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkPromiseConsumption Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewLogicalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:programRegion Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:applyProgramMetadata Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:ownershipQuery Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:readiness Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:borrow Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:counters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:voidDiscards Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkInspectorDoomedContracts Status:not_reached_lowering_stop Reason: WallSeconds:0}] Measurement:measured on a checker-rejected program Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:2:1 Kind:KindFunctionDeclaration BodyStart:208 BodyEnd:247 RelationOverflow:<nil> Instantiated:false InstantiatedBy:[] Status:attempted CheckerDiagnostics:[] Name:callWrittenAny Parent: Top: Depth:0} findings=[{Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:1:1 Phase:refusal_scan Kind:Refused Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:1:128 Reason:delete Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:1:128: Adamic 0.1 refuses delete; fixed objects cannot lose fields; use a record or Map Start:0 End:0} {Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:2:1 Phase:lowering Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:1:128 Reason:a DeleteExpression as a statement Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/002/main.ts:1:128: stage 0 can't lower a DeleteExpression as a statement yet Start:0 End:0}]
+--- PASS: TestLatentPrepassErrorsAreRecorded (0.80s)
+=== NAME  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+    deferred_census_test.go:107: ordinary=false unit=&{PassLedger:[{Name:checkOverloadResults Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:forwarderValues Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishClassCalls Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishAccessors Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishToPrimitive Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkIterableViews Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:exceptions Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkLibrarySpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkAccessorSpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkRecordGuardedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkDynamicKeyedGetters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkGeneratorRoads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:flow.NormalizeAsync Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncEntrySource Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:findCycles Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkBoundArguments Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewOptionalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewCopies Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewWidenedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkHostMemberWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncPayloadFailures Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkPromiseConsumption Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewLogicalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:programRegion Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:applyProgramMetadata Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:ownershipQuery Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:readiness Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:borrow Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:counters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:voidDiscards Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkInspectorDoomedContracts Status:not_reached_lowering_stop Reason: WallSeconds:0}] Measurement:measured on a checker-rejected program Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:1 Kind:KindFunctionDeclaration BodyStart:44 BodyEnd:75 RelationOverflow:<nil> Instantiated:false InstantiatedBy:[] Status:attempted CheckerDiagnostics:[] Name:writtenAny Parent: Top: Depth:0} findings=[{Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:1 Phase:deferred_scan Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:55 Reason:a member typed any ([]) related to string at the assertion site Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:55: stage 0 can't lower a member typed any ([]) related to string at the assertion site yet Start:0 End:0} {Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:1 Phase:deferred Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:55 Reason:a member typed any ([]) related to string at the assertion site Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/003/main.ts:1:55: stage 0 can't lower a member typed any ([]) related to string at the assertion site yet Start:0 End:0}]
+=== NAME  TestLatentPrepassesDiscardedMutant
+    prepasses_discarded_mutant_test.go:24: guard red as required: stage3/census/latent/units.go.txt: production prepass collectViewedElements error discarded at stage3/census/latent/units.go.txt:156:66
+--- PASS: TestLatentPrepassesDiscardedMutant (0.87s)
+=== NAME  TestLatentWrittenAnyDeferredCensusStopsZb0q0zd
+    deferred_census_test.go:107: ordinary=true unit=&{PassLedger:[{Name:checkOverloadResults Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:forwarderValues Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishClassCalls Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishAccessors Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:finishToPrimitive Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkIterableViews Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:exceptions Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkLibrarySpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkAccessorSpreads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkRecordGuardedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkDynamicKeyedGetters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkGeneratorRoads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:flow.NormalizeAsync Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncEntrySource Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:findCycles Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkBoundArguments Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewOptionalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewCopies Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewWidenedReads Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkHostMemberWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:asyncPayloadFailures Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkPromiseConsumption Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkViewLogicalWrites Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:programRegion Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:applyProgramMetadata Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:ownershipQuery Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:readiness Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:borrow Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:counters Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:voidDiscards Status:not_reached_lowering_stop Reason: WallSeconds:0} {Name:checkInspectorDoomedContracts Status:not_reached_lowering_stop Reason: WallSeconds:0}] Measurement:measured on a checker-rejected program Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:1 Kind:KindFunctionDeclaration BodyStart:44 BodyEnd:156 RelationOverflow:<nil> Instantiated:false InstantiatedBy:[] Status:attempted CheckerDiagnostics:[] Name:writtenAny Parent: Top: Depth:0} findings=[{Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:1 Phase:refusal_scan Kind:Refused Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:125 Reason:delete Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:125: Adamic 0.1 refuses delete; fixed objects cannot lose fields; use a record or Map Start:0 End:0} {Pass: PieceAtom: SiteWhere: SiteKind: SiteStart:0 SiteEnd:0 RootKind: Depth:0 BoundaryWhere: Measurement:measured on a checker-rejected program Unit:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:1 Phase:lowering Kind:NotYet Where:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:125 Reason:a DeleteExpression as a statement Text:/tmp/TestLatentWrittenAnyDeferredCensusStopsZb0q0zd3872110042/004/main.ts:1:125: stage 0 can't lower a DeleteExpression as a statement yet Start:0 End:0}]
+--- PASS: TestLatentWrittenAnyDeferredCensusStopsZb0q0zd (1.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent	1.145s
+=== RUN   TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+=== PAUSE TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+=== RUN   TestImportCleanKeepsMainLowerImports
+=== PAUSE TestImportCleanKeepsMainLowerImports
+=== CONT  TestImportCleanDropsOnlyTheImportsARewriteLeftUnused
+--- PASS: TestImportCleanDropsOnlyTheImportsARewriteLeftUnused (0.00s)
+=== CONT  TestImportCleanKeepsMainLowerImports
+--- PASS: TestImportCleanKeepsMainLowerImports (3.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/importclean	3.001s
+=== RUN   TestMakeOverlayTextEditsHoldOnMainLower
+=== PAUSE TestMakeOverlayTextEditsHoldOnMainLower
+=== RUN   TestMakeOverlayTextEditsNameAReshape
+=== PAUSE TestMakeOverlayTextEditsNameAReshape
+=== RUN   TestLatentCarryFactsReplayBodiesMatchMain
+=== PAUSE TestLatentCarryFactsReplayBodiesMatchMain
+=== RUN   TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+=== PAUSE TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+=== RUN   TestLatentRelationOverflowHooksAndProductionWording
+=== PAUSE TestLatentRelationOverflowHooksAndProductionWording
+=== CONT  TestMakeOverlayTextEditsHoldOnMainLower
+--- PASS: TestMakeOverlayTextEditsHoldOnMainLower (0.00s)
+=== CONT  TestLatentRelationOverflowHooksAndProductionWording
+--- PASS: TestLatentRelationOverflowHooksAndProductionWording (0.00s)
+=== CONT  TestLatentDeferredProbeSnapshotBoundaryHcxsh1k
+--- PASS: TestLatentDeferredProbeSnapshotBoundaryHcxsh1k (0.00s)
+=== CONT  TestLatentCarryFactsReplayBodiesMatchMain
+=== CONT  TestMakeOverlayTextEditsNameAReshape
+--- PASS: TestMakeOverlayTextEditsNameAReshape (0.00s)
+--- PASS: TestLatentCarryFactsReplayBodiesMatchMain (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/overlaytext	0.019s
+=== RUN   TestFullOwnerGuardRequiresFunctionDeclaration
+=== PAUSE TestFullOwnerGuardRequiresFunctionDeclaration
+=== RUN   TestRewriteAcceptsTwoOuterRefusalReturns
+=== PAUSE TestRewriteAcceptsTwoOuterRefusalReturns
+=== RUN   TestCompiler41231d51Shape
+=== PAUSE TestCompiler41231d51Shape
+=== RUN   TestMissingFunctionMutantFailsLoudly
+=== PAUSE TestMissingFunctionMutantFailsLoudly
+=== RUN   TestChangedVisitorMutantFailsLoudly
+=== PAUSE TestChangedVisitorMutantFailsLoudly
+=== RUN   TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== PAUSE TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== RUN   TestProduct_RefusalRewriteBehaviorProbe
+=== PAUSE TestProduct_RefusalRewriteBehaviorProbe
+=== RUN   TestModulePreflightShapes
+=== PAUSE TestModulePreflightShapes
+=== RUN   TestUnsupportedPreflightReturns
+=== PAUSE TestUnsupportedPreflightReturns
+=== RUN   TestCompilerSlice3Shape
+=== PAUSE TestCompilerSlice3Shape
+=== RUN   TestRefusalRewriteReadsMainRefusals
+=== PAUSE TestRefusalRewriteReadsMainRefusals
+=== CONT  TestFullOwnerGuardRequiresFunctionDeclaration
+--- PASS: TestFullOwnerGuardRequiresFunctionDeclaration (0.00s)
+=== CONT  TestRefusalRewriteReadsMainRefusals
+=== CONT  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+=== CONT  TestMissingFunctionMutantFailsLoudly
+--- PASS: TestMissingFunctionMutantFailsLoudly (0.00s)
+=== CONT  TestChangedVisitorMutantFailsLoudly
+--- PASS: TestChangedVisitorMutantFailsLoudly (0.00s)
+=== CONT  TestCompiler41231d51Shape
+=== CONT  TestUnsupportedPreflightReturns
+--- PASS: TestUnsupportedPreflightReturns (0.00s)
+=== CONT  TestCompilerSlice3Shape
+=== CONT  TestRewriteAcceptsTwoOuterRefusalReturns
+--- PASS: TestRefusalRewriteReadsMainRefusals (0.05s)
+=== CONT  TestModulePreflightShapes
+--- PASS: TestModulePreflightShapes (0.00s)
+=== CONT  TestProduct_RefusalRewriteBehaviorProbe
+--- PASS: TestRewriteAcceptsTwoOuterRefusalReturns (0.04s)
+--- PASS: TestCompilerSlice3Shape (0.04s)
+--- PASS: TestCompiler41231d51Shape (0.06s)
+=== NAME  TestVisitorsCollectContinueAndSkipDiagnosedBodies
+    rewrite_test.go:92: build refusalrewrite_behavior_probe 33e0cee2747d hit 0.55
+=== NAME  TestProduct_RefusalRewriteBehaviorProbe
+    rewrite_test.go:264: build refusalrewrite_behavior_probe 33e0cee2747d hit 0.55
+--- PASS: TestProduct_RefusalRewriteBehaviorProbe (0.59s)
+--- PASS: TestVisitorsCollectContinueAndSkipDiagnosedBodies (0.65s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	0.675s
+?   	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/replay/worker	[no test files]
+=== RUN   TestLatentStatecopySortedMapProgramMembership
+=== PAUSE TestLatentStatecopySortedMapProgramMembership
+=== RUN   TestLatentStatecopyCoversEveryLoweringStateField
+=== PAUSE TestLatentStatecopyCoversEveryLoweringStateField
+=== RUN   TestLatentStatecopySharesSourceIdentities
+=== PAUSE TestLatentStatecopySharesSourceIdentities
+=== RUN   TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== PAUSE TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+=== RUN   TestLatentStatecopyNamesEveryPrivateIRField
+=== PAUSE TestLatentStatecopyNamesEveryPrivateIRField
+=== RUN   TestLatentCarryFactsAuditedFields
+=== PAUSE TestLatentCarryFactsAuditedFields
+=== RUN   TestLatentCarryFactsIgnoresUncarriedFields
+=== PAUSE TestLatentCarryFactsIgnoresUncarriedFields
+=== RUN   TestLatentSpeculativePrivateIRFields
+=== PAUSE TestLatentSpeculativePrivateIRFields
+=== RUN   TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== PAUSE TestLatentSpeculativeRefusesUnnamedExportedIRField
+=== RUN   TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== PAUSE TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+=== RUN   TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== PAUSE TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== RUN   TestLatentStatecopyFixedArrayByValue
+=== PAUSE TestLatentStatecopyFixedArrayByValue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== PAUSE TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== RUN   TestLatentScopedOptionalReceiverCallCopyPolicy
+=== PAUSE TestLatentScopedOptionalReceiverCallCopyPolicy
+=== RUN   TestInspectorDoomedMarkersStaySnapshotOwned
+=== PAUSE TestInspectorDoomedMarkersStaySnapshotOwned
+=== RUN   TestUnknownMutableContainerFailsLoudly
+=== PAUSE TestUnknownMutableContainerFailsLoudly
+=== RUN   TestUnknownForeignPointerFailsLoudly
+=== PAUSE TestUnknownForeignPointerFailsLoudly
+=== RUN   TestProduct_Statecopy
+=== PAUSE TestProduct_Statecopy
+=== RUN   TestPublishedCopyModeIsPrivate
+    publication_unix_test.go:37: build go_build_./stage3/census/latent/statecopy_statecopy 7cd2ecb1b16b hit 1.35
+--- PASS: TestPublishedCopyModeIsPrivate (2.82s)
+=== CONT  TestLatentStatecopySortedMapProgramMembership
+--- PASS: TestLatentStatecopySortedMapProgramMembership (0.00s)
+=== CONT  TestProduct_Statecopy
+    main_test.go:81: build go_build_./stage3/census/latent/statecopy_statecopy 7cd2ecb1b16b hit 0.00
+--- PASS: TestProduct_Statecopy (0.00s)
+=== CONT  TestUnknownForeignPointerFailsLoudly
+    main_test.go:59: build go_build_./stage3/census/latent/statecopy_statecopy 7cd2ecb1b16b hit 0.00
+=== CONT  TestLatentStatecopyRefusesFixedArrayNeedingCopy
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse
+=== RUN   TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue
+--- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entryfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/entrytrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/map[int]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]intfalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/[]inttrue (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuefalse (0.00s)
+    --- PASS: TestLatentStatecopyRefusesFixedArrayNeedingCopy/ir.Valuetrue (0.00s)
+=== CONT  TestUnknownMutableContainerFailsLoudly
+    main_test.go:28: build go_build_./stage3/census/latent/statecopy_statecopy 7cd2ecb1b16b hit 0.00
+=== CONT  TestLatentSpeculativeEveryIRFieldPolicyIsCurrent
+=== CONT  TestLatentStatecopyFixedArrayByValue
+--- PASS: TestLatentStatecopyFixedArrayByValue (0.00s)
+=== CONT  TestInspectorDoomedMarkersStaySnapshotOwned
+=== CONT  TestLatentSpeculativeRefusesUnnamedExportedIRField
+--- PASS: TestLatentSpeculativeRefusesUnnamedExportedIRField (0.00s)
+=== CONT  TestLatentSpeculativeBoundaryPolicyRequiredAtBuild
+--- PASS: TestUnknownForeignPointerFailsLoudly (0.01s)
+=== CONT  TestLatentSpeculativePrivateIRFields
+--- PASS: TestUnknownMutableContainerFailsLoudly (0.01s)
+=== CONT  TestLatentScopedOptionalReceiverCallCopyPolicy
+--- PASS: TestLatentSpeculativeBoundaryPolicyRequiredAtBuild (0.41s)
+=== CONT  TestLatentStatecopyNamesEveryPrivateIRField
+--- PASS: TestInspectorDoomedMarkersStaySnapshotOwned (0.53s)
+=== CONT  TestLatentCarryFactsIgnoresUncarriedFields
+--- PASS: TestLatentSpeculativeEveryIRFieldPolicyIsCurrent (0.73s)
+=== CONT  TestLatentCarryFactsAuditedFields
+--- PASS: TestLatentScopedOptionalReceiverCallCopyPolicy (0.76s)
+=== CONT  TestLatentStatecopySharesSourceIdentities
+--- PASS: TestLatentStatecopySharesSourceIdentities (0.15s)
+=== CONT  TestLatentStatecopyRefusesAnUnnamedPrivateIRField
+--- PASS: TestLatentStatecopyRefusesAnUnnamedPrivateIRField (0.00s)
+=== CONT  TestLatentStatecopyCoversEveryLoweringStateField
+--- PASS: TestLatentStatecopyNamesEveryPrivateIRField (0.55s)
+--- PASS: TestLatentCarryFactsIgnoresUncarriedFields (0.47s)
+--- PASS: TestLatentCarryFactsAuditedFields (0.34s)
+--- PASS: TestLatentStatecopyCoversEveryLoweringStateField (0.15s)
+--- PASS: TestLatentSpeculativePrivateIRFields (1.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statecopy	4.854s
+=== RUN   TestMissingStatementFailsWithMethodName
+=== PAUSE TestMissingStatementFailsWithMethodName
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== RUN   TestStatementRewriteRefusesOtherSignatures
+=== PAUSE TestStatementRewriteRefusesOtherSignatures
+=== RUN   TestStatementRewriteReadsMainStatements
+=== PAUSE TestStatementRewriteReadsMainStatements
+=== RUN   TestProduct_Statementrewrite
+=== PAUSE TestProduct_Statementrewrite
+=== CONT  TestMissingStatementFailsWithMethodName
+=== CONT  TestStatementRewriteReadsMainStatements
+=== CONT  TestProduct_Statementrewrite
+=== CONT  TestStatementRewriteRefusesOtherSignatures
+=== RUN   TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== RUN   TestStatementRewriteRefusesOtherSignatures/one_result
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/one_result
+=== RUN   TestStatementRewriteRefusesOtherSignatures/another_type
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/another_type
+=== RUN   TestStatementRewriteRefusesOtherSignatures/two_parameters
+=== PAUSE TestStatementRewriteRefusesOtherSignatures/two_parameters
+=== CONT  TestStatementRewriteRefusesOtherSignatures/another_parameter
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+=== RUN   TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+=== PAUSE TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+=== NAME  TestProduct_Statementrewrite
+    main_test.go:136: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 1.15
+--- PASS: TestProduct_Statementrewrite (2.80s)
+=== CONT  TestStatementRewriteRefusesOtherSignatures/another_type
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 0.00
+=== CONT  TestStatementRewriteRefusesOtherSignatures/one_result
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 0.00
+=== CONT  TestStatementRewriteAcceptsNamedAndUnnamedResults/named
+    main_test.go:77: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 0.00
+=== CONT  TestStatementRewriteRefusesOtherSignatures/two_parameters
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 0.00
+=== NAME  TestStatementRewriteRefusesOtherSignatures/another_parameter
+    main_test.go:102: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 1.35
+=== NAME  TestMissingStatementFailsWithMethodName
+    main_test.go:25: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 1.37
+--- PASS: TestStatementRewriteRefusesOtherSignatures (0.00s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/another_type (0.04s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/one_result (0.02s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/two_parameters (0.01s)
+    --- PASS: TestStatementRewriteRefusesOtherSignatures/another_parameter (3.03s)
+=== NAME  TestStatementRewriteReadsMainStatements
+    main_test.go:122: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 1.37
+--- PASS: TestMissingStatementFailsWithMethodName (3.03s)
+--- PASS: TestStatementRewriteReadsMainStatements (3.04s)
+=== NAME  TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed
+    main_test.go:77: build go_build_./stage3/census/latent/statementrewrite_statementrewrite 2998332cd517 hit 1.38
+--- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults (0.00s)
+    --- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults/named (0.03s)
+    --- PASS: TestStatementRewriteAcceptsNamedAndUnnamedResults/unnamed (3.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/statementrewrite	3.133s
+=== RUN   TestLatentUnitTimerWritesSeparateSequentialRecords
+=== PAUSE TestLatentUnitTimerWritesSeparateSequentialRecords
+=== CONT  TestLatentUnitTimerWritesSeparateSequentialRecords
+--- PASS: TestLatentUnitTimerWritesSeparateSequentialRecords (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/timing	0.003s
+=== RUN   TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+=== PAUSE TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+=== RUN   TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset
+=== PAUSE TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset
+=== RUN   TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer
+=== PAUSE TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer
+=== RUN   TestLatentStreamCompletesWithRelationTrailerAfterFiles
+=== PAUSE TestLatentStreamCompletesWithRelationTrailerAfterFiles
+=== CONT  TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+=== CONT  TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset
+--- PASS: TestLatentCensusEndpointOverflowMarksAllAttemptsAndExplainsOnset (0.00s)
+=== CONT  TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer
+=== CONT  TestLatentStreamCompletesWithRelationTrailerAfterFiles
+--- PASS: TestLatentStreamCutoffRetainsHeaderWithoutEndAnswer (0.00s)
+--- PASS: TestLatentStreamCompletesWithRelationTrailerAfterFiles (0.00s)
+=== NAME  TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt
+    relation_overflow_test.go:111: per_unit=false planted mark census JSONL:
+        {"status":"measurement"}
+        {"measurement":"measured on a checker-rejected program","file":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a","declarations":[{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:7","name":" total","kind":"KindVariableDeclaration","start":5,"end":27},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:3:1","name":" generic","kind":"KindFunctionDeclaration","start":56,"end":107},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:3:21","name":"value","kind":"KindParameter","start":77,"end":85}],"units":[{"pass_ledger":[{"name":"checkOverloadResults","status":"not_run_scoped"},{"name":"forwarderValues","status":"not_run_scoped"},{"name":"finishClassCalls","status":"not_run_scoped"},{"name":"finishAccessors","status":"not_run_scoped"},{"name":"finishToPrimitive","status":"not_run_scoped"},{"name":"checkIterableViews","status":"not_run_scoped"},{"name":"exceptions","status":"not_run_scoped"},{"name":"checkLibrarySpreads","status":"not_run_scoped"},{"name":"checkAccessorSpreads","status":"not_run_scoped"},{"name":"checkRecordGuardedReads","status":"not_run_scoped"},{"name":"checkDynamicKeyedGetters","status":"not_run_scoped"},{"name":"checkGeneratorRoads","status":"not_run_scoped"},{"name":"flow.NormalizeAsync","status":"not_run_scoped"},{"name":"asyncEntrySource","status":"not_run_scoped"},{"name":"findCycles","status":"not_run_whole_program"},{"name":"checkBoundArguments","status":"not_run_scoped"},{"name":"checkViewOptionalWrites","status":"not_run_scoped"},{"name":"checkViewCopies","status":"not_run_scoped"},{"name":"checkViewWidenedReads","status":"not_run_scoped"},{"name":"checkHostMemberWrites","status":"not_run_scoped"},{"name":"asyncPayloadFailures","status":"not_run_scoped"},{"name":"checkPromiseConsumption","status":"not_run_scoped"},{"name":"checkViewLogicalWrites","status":"not_run_scoped"},{"name":"programRegion","status":"not_run_whole_program"},{"name":"applyProgramMetadata","status":"not_run_whole_program"},{"name":"ownershipQuery","status":"not_run_whole_program"},{"name":"readiness","status":"not_run_scoped"},{"name":"borrow","status":"not_run_scoped"},{"name":"counters","status":"not_run_scoped"},{"name":"voidDiscards","status":"not_run_scoped"},{"name":"checkInspectorDoomedContracts","status":"not_run_scoped"}],"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:1","kind":"KindVariableStatement","instantiated":false,"status":"attempted","checker_diagnostics":[]},{"pass_ledger":[{"name":"checkOverloadResults","status":"not_run_scoped"},{"name":"forwarderValues","status":"not_run_scoped"},{"name":"finishClassCalls","status":"not_run_scoped"},{"name":"finishAccessors","status":"not_run_scoped"},{"name":"finishToPrimitive","status":"not_run_scoped"},{"name":"checkIterableViews","status":"not_run_scoped"},{"name":"exceptions","status":"not_run_scoped"},{"name":"checkLibrarySpreads","status":"not_run_scoped"},{"name":"checkAccessorSpreads","status":"not_run_scoped"},{"name":"checkRecordGuardedReads","status":"not_run_scoped"},{"name":"checkDynamicKeyedGetters","status":"not_run_scoped"},{"name":"checkGeneratorRoads","status":"not_run_scoped"},{"name":"flow.NormalizeAsync","status":"not_run_scoped"},{"name":"asyncEntrySource","status":"not_run_scoped"},{"name":"findCycles","status":"not_run_whole_program"},{"name":"checkBoundArguments","status":"not_run_scoped"},{"name":"checkViewOptionalWrites","status":"not_run_scoped"},{"name":"checkViewCopies","status":"not_run_scoped"},{"name":"checkViewWidenedReads","status":"not_run_scoped"},{"name":"checkHostMemberWrites","status":"not_run_scoped"},{"name":"asyncPayloadFailures","status":"not_run_scoped"},{"name":"checkPromiseConsumption","status":"not_run_scoped"},{"name":"checkViewLogicalWrites","status":"not_run_scoped"},{"name":"programRegion","status":"not_run_whole_program"},{"name":"applyProgramMetadata","status":"not_run_whole_program"},{"name":"ownershipQuery","status":"not_run_whole_program"},{"name":"readiness","status":"not_run_scoped"},{"name":"borrow","status":"not_run_scoped"},{"name":"counters","status":"not_run_scoped"},{"name":"voidDiscards","status":"not_run_scoped"},{"name":"checkInspectorDoomedContracts","status":"not_run_scoped"}],"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:2:1","kind":"KindExpressionStatement","instantiated":false,"status":"attempted","checker_diagnostics":[]},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:3:1","kind":"KindFunctionDeclaration","body_start":89,"body_end":107,"instantiated":false,"status":"deferred_generic_instantiation","checker_diagnostics":[],"name":"generic"}],"findings":[{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:1","phase":"relation_overflow","kind":"NotYet","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:1","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"},{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:2:1","phase":"relation_overflow","kind":"NotYet","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:2:1","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:2:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"}]}
+        {"findings":[{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"program","phase":"relation_overflow","kind":"NotYet","where":"program","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"program: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"}],"measurement":"measured on a checker-rejected program","relation_overflow":{"per_unit":false,"after_load":"a type relation the checker marked as overflowed, whose diagnostic it dropped","end":"a type relation the checker marked as overflowed, whose diagnostic it dropped","first_affected_unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/001/main.a:1:1","attribution":"overflow present after load; every attempted unit was lowered under an overflowed checker","cache_sizes":{"assignable":231,"comparable":0,"enum":0,"flaggedPairs":1,"identity":0,"strictSubtype":4,"subtype":0,"ts2859":0}},"status":"relation_report"}
+    relation_overflow_test.go:111: per_unit=true planted mark census JSONL:
+        {"status":"measurement"}
+        {"measurement":"measured on a checker-rejected program","file":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a","declarations":[{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:7","name":" total","kind":"KindVariableDeclaration","start":5,"end":27},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:3:1","name":" generic","kind":"KindFunctionDeclaration","start":56,"end":107},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:3:21","name":"value","kind":"KindParameter","start":77,"end":85}],"units":[{"pass_ledger":[{"name":"checkOverloadResults","status":"not_run_scoped"},{"name":"forwarderValues","status":"not_run_scoped"},{"name":"finishClassCalls","status":"not_run_scoped"},{"name":"finishAccessors","status":"not_run_scoped"},{"name":"finishToPrimitive","status":"not_run_scoped"},{"name":"checkIterableViews","status":"not_run_scoped"},{"name":"exceptions","status":"not_run_scoped"},{"name":"checkLibrarySpreads","status":"not_run_scoped"},{"name":"checkAccessorSpreads","status":"not_run_scoped"},{"name":"checkRecordGuardedReads","status":"not_run_scoped"},{"name":"checkDynamicKeyedGetters","status":"not_run_scoped"},{"name":"checkGeneratorRoads","status":"not_run_scoped"},{"name":"flow.NormalizeAsync","status":"not_run_scoped"},{"name":"asyncEntrySource","status":"not_run_scoped"},{"name":"findCycles","status":"not_run_whole_program"},{"name":"checkBoundArguments","status":"not_run_scoped"},{"name":"checkViewOptionalWrites","status":"not_run_scoped"},{"name":"checkViewCopies","status":"not_run_scoped"},{"name":"checkViewWidenedReads","status":"not_run_scoped"},{"name":"checkHostMemberWrites","status":"not_run_scoped"},{"name":"asyncPayloadFailures","status":"not_run_scoped"},{"name":"checkPromiseConsumption","status":"not_run_scoped"},{"name":"checkViewLogicalWrites","status":"not_run_scoped"},{"name":"programRegion","status":"not_run_whole_program"},{"name":"applyProgramMetadata","status":"not_run_whole_program"},{"name":"ownershipQuery","status":"not_run_whole_program"},{"name":"readiness","status":"not_run_scoped"},{"name":"borrow","status":"not_run_scoped"},{"name":"counters","status":"not_run_scoped"},{"name":"voidDiscards","status":"not_run_scoped"},{"name":"checkInspectorDoomedContracts","status":"not_run_scoped"}],"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:1","kind":"KindVariableStatement","relation_overflow":"a type relation the checker marked as overflowed, whose diagnostic it dropped","instantiated":false,"status":"attempted","checker_diagnostics":[]},{"pass_ledger":[{"name":"checkOverloadResults","status":"not_run_scoped"},{"name":"forwarderValues","status":"not_run_scoped"},{"name":"finishClassCalls","status":"not_run_scoped"},{"name":"finishAccessors","status":"not_run_scoped"},{"name":"finishToPrimitive","status":"not_run_scoped"},{"name":"checkIterableViews","status":"not_run_scoped"},{"name":"exceptions","status":"not_run_scoped"},{"name":"checkLibrarySpreads","status":"not_run_scoped"},{"name":"checkAccessorSpreads","status":"not_run_scoped"},{"name":"checkRecordGuardedReads","status":"not_run_scoped"},{"name":"checkDynamicKeyedGetters","status":"not_run_scoped"},{"name":"checkGeneratorRoads","status":"not_run_scoped"},{"name":"flow.NormalizeAsync","status":"not_run_scoped"},{"name":"asyncEntrySource","status":"not_run_scoped"},{"name":"findCycles","status":"not_run_whole_program"},{"name":"checkBoundArguments","status":"not_run_scoped"},{"name":"checkViewOptionalWrites","status":"not_run_scoped"},{"name":"checkViewCopies","status":"not_run_scoped"},{"name":"checkViewWidenedReads","status":"not_run_scoped"},{"name":"checkHostMemberWrites","status":"not_run_scoped"},{"name":"asyncPayloadFailures","status":"not_run_scoped"},{"name":"checkPromiseConsumption","status":"not_run_scoped"},{"name":"checkViewLogicalWrites","status":"not_run_scoped"},{"name":"programRegion","status":"not_run_whole_program"},{"name":"applyProgramMetadata","status":"not_run_whole_program"},{"name":"ownershipQuery","status":"not_run_whole_program"},{"name":"readiness","status":"not_run_scoped"},{"name":"borrow","status":"not_run_scoped"},{"name":"counters","status":"not_run_scoped"},{"name":"voidDiscards","status":"not_run_scoped"},{"name":"checkInspectorDoomedContracts","status":"not_run_scoped"}],"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:2:1","kind":"KindExpressionStatement","relation_overflow":"a type relation the checker marked as overflowed, whose diagnostic it dropped","instantiated":false,"status":"attempted","checker_diagnostics":[]},{"measurement":"measured on a checker-rejected program","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:3:1","kind":"KindFunctionDeclaration","body_start":89,"body_end":107,"instantiated":false,"status":"deferred_generic_instantiation","checker_diagnostics":[],"name":"generic"}],"findings":[{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:1","phase":"relation_overflow","kind":"NotYet","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:1","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"},{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:2:1","phase":"relation_overflow","kind":"NotYet","where":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:2:1","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:2:1: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"}]}
+        {"findings":[{"root_kind":"","depth":0,"measurement":"measured on a checker-rejected program","unit":"program","phase":"relation_overflow","kind":"NotYet","where":"program","reason":"a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped)","text":"program: stage 0 can't lower a type relation the checker gave up on as too complex, whose answer lowering read (a type relation the checker marked as overflowed, whose diagnostic it dropped) yet"}],"measurement":"measured on a checker-rejected program","relation_overflow":{"per_unit":true,"after_load":"a type relation the checker marked as overflowed, whose diagnostic it dropped","end":"a type relation the checker marked as overflowed, whose diagnostic it dropped","first_affected_unit":"/tmp/TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt1742390866/002/main.a:1:1","attribution":"per attempted unit, checked after lowering; includes the unit that first exposes overflow","cache_sizes":{"assignable":231,"comparable":0,"enum":0,"flaggedPairs":1,"identity":0,"strictSubtype":4,"subtype":0,"ts2859":0}},"status":"relation_report"}
+--- PASS: TestLatentCensusOverflowMarkReachesProgramAndEveryAttempt (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/tool	0.332s

@@ -1,0 +1,9 @@
+=== RUN   TestLatentCensusPrepassesTrackProductionSygfnmc
+=== PAUSE TestLatentCensusPrepassesTrackProductionSygfnmc
+=== CONT  TestLatentCensusPrepassesTrackProductionSygfnmc
+    prepasses_test.go:173: stage3/census/latent/lower.go.txt: production prepass noteOmittedOptionals missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames])
+--- FAIL: TestLatentCensusPrepassesTrackProductionSygfnmc (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent	0.005s
+FAIL
+omission: guard child exit 1

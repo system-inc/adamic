@@ -1,0 +1,12 @@
+=== RUN   TestLatentCensusPrepassesTrackProductionSygfnmc
+=== PAUSE TestLatentCensusPrepassesTrackProductionSygfnmc
+=== CONT  TestLatentCensusPrepassesTrackProductionSygfnmc
+    prepasses_test.go:173: stage3/census/latent/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_test.go:173: stage3/census/latent/speculative.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_test.go:173: stage3/census/latent/units.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_test.go:173: stage3/census/predicates/tools/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+--- FAIL: TestLatentCensusPrepassesTrackProductionSygfnmc (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent	0.005s
+FAIL
+added: guard child exit 1

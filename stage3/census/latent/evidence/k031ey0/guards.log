@@ -1,0 +1,51 @@
+=== RUN   TestLatentPassLedgerMatchesMainTailPb47
+=== PAUSE TestLatentPassLedgerMatchesMainTailPb47
+=== RUN   TestLatentPassLedgerDroppedStepMutantPb47
+=== PAUSE TestLatentPassLedgerDroppedStepMutantPb47
+=== RUN   TestLatentPassLedgerOnlyRecordsOmissionsPb47
+=== PAUSE TestLatentPassLedgerOnlyRecordsOmissionsPb47
+=== RUN   TestLatentPassLedgerNestedCallDriftPb47
+=== PAUSE TestLatentPassLedgerNestedCallDriftPb47
+=== RUN   TestLatentPrepassesAddedProductionMutantSygfnmc
+=== PAUSE TestLatentPrepassesAddedProductionMutantSygfnmc
+=== RUN   TestLatentPrepassesDiscardedMutant
+=== PAUSE TestLatentPrepassesDiscardedMutant
+=== RUN   TestLatentPrepassesOmissionMutantSygfnmc
+=== PAUSE TestLatentPrepassesOmissionMutantSygfnmc
+=== RUN   TestLatentCensusPrepassesTrackProductionSygfnmc
+=== PAUSE TestLatentCensusPrepassesTrackProductionSygfnmc
+=== RUN   TestLatentPrepassErrorsAreRecorded
+=== PAUSE TestLatentPrepassErrorsAreRecorded
+=== RUN   TestLatentDeferredDriverHooksZb0q0zd
+=== PAUSE TestLatentDeferredDriverHooksZb0q0zd
+=== CONT  TestLatentPassLedgerMatchesMainTailPb47
+--- PASS: TestLatentPassLedgerMatchesMainTailPb47 (0.00s)
+=== CONT  TestLatentDeferredDriverHooksZb0q0zd
+--- PASS: TestLatentDeferredDriverHooksZb0q0zd (0.00s)
+=== CONT  TestLatentPrepassErrorsAreRecorded
+=== CONT  TestLatentPrepassesAddedProductionMutantSygfnmc
+=== CONT  TestLatentPassLedgerOnlyRecordsOmissionsPb47
+--- PASS: TestLatentPassLedgerOnlyRecordsOmissionsPb47 (0.00s)
+=== CONT  TestLatentPassLedgerNestedCallDriftPb47
+--- PASS: TestLatentPassLedgerNestedCallDriftPb47 (0.00s)
+=== CONT  TestLatentPassLedgerDroppedStepMutantPb47
+=== CONT  TestLatentPrepassesOmissionMutantSygfnmc
+=== CONT  TestLatentPrepassesDiscardedMutant
+=== NAME  TestLatentPrepassesAddedProductionMutantSygfnmc
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/predicates/tools/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/lower.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/speculative.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+    prepasses_added_mutant_test.go:27: guard red as required: stage3/census/latent/units.go.txt: production prepass fakeCensusPrepass missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames noteOmittedOptionals])
+--- PASS: TestLatentPrepassesAddedProductionMutantSygfnmc (0.01s)
+=== CONT  TestLatentCensusPrepassesTrackProductionSygfnmc
+--- PASS: TestLatentPassLedgerDroppedStepMutantPb47 (0.02s)
+=== NAME  TestLatentPrepassesOmissionMutantSygfnmc
+    prepasses_omission_mutant_test.go:20: guard red as required: stage3/census/latent/lower.go.txt: production prepass noteOmittedOptionals missing or out of order (calls [collectViewedElements noteInheritance noteAccessorNames])
+--- PASS: TestLatentPrepassesOmissionMutantSygfnmc (0.01s)
+--- PASS: TestLatentCensusPrepassesTrackProductionSygfnmc (0.02s)
+=== NAME  TestLatentPrepassesDiscardedMutant
+    prepasses_discarded_mutant_test.go:24: guard red as required: stage3/census/latent/units.go.txt: production prepass collectViewedElements error discarded at stage3/census/latent/units.go.txt:156:66
+--- PASS: TestLatentPrepassesDiscardedMutant (0.28s)
+--- PASS: TestLatentPrepassErrorsAreRecorded (0.31s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent	0.314s
