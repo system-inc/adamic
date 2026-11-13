@@ -1,9 +1,11 @@
 package lower
 
 import (
+	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"os"
 	"reflect"
 	"strings"
 )
@@ -98,6 +100,13 @@ type viewElementKey struct {
 // instantiated where it lowers, past what the pre-pass can see, so it sets every.
 func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 	key := l.elementKey
+	viewedTrip := ""
+	if os.Getenv("ADAMIC_VIEWED_ELEMENTS_LOG") != "" && key != nil {
+		entered := key.every
+		defer func() {
+			fmt.Fprintf(os.Stderr, "viewed-elements: build=%s every-on-entry=%v every=%v viewed=%d trip=%q\n", "main", entered, key.every, len(key.viewed), viewedTrip)
+		}()
+	}
 	if key == nil || key.every {
 		return
 	}
