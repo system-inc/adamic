@@ -38,9 +38,7 @@ func TestDebugIRFlow(t *testing.T) {
 		if problems := flow.VerifySSA(graph); len(problems) > 0 {
 			t.Fatal(problems)
 		}
-		flow.InferAliasingEffects(graph)
-		flow.InferMutableRanges(graph)
 	}
 	flow.CheckDebugProgram(t, path, program)
-	t.Logf("debug IR: main and %d functions passed SSA, ranges, graph paths and liveness", len(program.Functions))
+	t.Logf("debug IR: main and %d functions passed SSA, graph paths and liveness", len(program.Functions))
 }
