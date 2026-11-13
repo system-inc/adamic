@@ -1122,6 +1122,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"System\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"System\",\"createSHA256Hash\"]#0",
       "before": "[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"createSHA256Hash\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"createSHA256Hash\"],[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"createSHA256Hash\"]]],[\"UndefinedKeyword\"]]]"
@@ -1130,6 +1135,11 @@
       "declaration": "member:[\"ts\",\"System\",\"exit\"]#0",
       "before": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"VoidKeyword\"]]",
       "after": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"System\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"UnknownKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"TaggedTemplateExpression\",\"typeArguments\"]#0",
@@ -1282,9 +1292,19 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"WatchHost\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"WatchHost\",\"preferNonRecursiveWatch\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"preferNonRecursiveWatch\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"preferNonRecursiveWatch\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchHost\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"UnknownKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"WatchOptions\",\"fallbackPolling\"]#0",
@@ -1310,6 +1330,16 @@
       "declaration": "member:[\"ts\",\"server\",\"PluginModule\",\"onConfigurationChanged\"]#0",
       "before": "[\"MethodSignature\",[\"Identifier\",\"onConfigurationChanged\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"config\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
       "after": "[\"MethodSignature\",[\"Identifier\",\"onConfigurationChanged\"],[\"QuestionToken\"],[\"Parameter\",[\"Identifier\",\"config\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"ServerHost\",\"clearTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"clearTimeout\"],[\"Parameter\",[\"Identifier\",\"timeoutId\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"server\",\"ServerHost\",\"setTimeout\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"DotDotDotToken\"],[\"Identifier\",\"args\"],[\"ArrayType\",[\"AnyKeyword\"]]],[\"AnyKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"setTimeout\"],[\"Parameter\",[\"Identifier\",\"callback\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"VoidKeyword\"]]],[\"Parameter\",[\"Identifier\",\"ms\"],[\"NumberKeyword\"]],[\"Parameter\",[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnknownKeyword\"]],[\"UnknownKeyword\"]]"
     },
     {
       "declaration": "member:[\"ts\",\"server\",\"protocol\",\"ConfigurePluginRequestArguments\",\"configuration\"]#0",
@@ -3482,6 +3512,56 @@
       "line": 6987
     },
     {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 1 {\"path\":[\"System\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "System",
+        "setTimeout"
+      ],
+      "line": 8491
+    },
+    {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 2 {\"path\":[\"System\",\"clearTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"clearTimeout?(timeoutId: any): void;\",\"after\":\"clearTimeout?(timeoutId: unknown): void;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "System",
+        "clearTimeout"
+      ],
+      "line": 8492
+    },
+    {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 3 {\"path\":[\"WatchHost\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "WatchHost",
+        "setTimeout"
+      ],
+      "line": 9814
+    },
+    {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 4 {\"path\":[\"WatchHost\",\"clearTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"clearTimeout?(timeoutId: any): void;\",\"after\":\"clearTimeout?(timeoutId: unknown): void;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "WatchHost",
+        "clearTimeout"
+      ],
+      "line": 9816
+    },
+    {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 5 {\"path\":[\"server\",\"ServerHost\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "server",
+        "ServerHost",
+        "setTimeout"
+      ],
+      "line": 2718
+    },
+    {
+      "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 6 {\"path\":[\"server\",\"ServerHost\",\"clearTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"clearTimeout(timeoutId: any): void;\",\"after\":\"clearTimeout(timeoutId: unknown): void;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
+      "path": [
+        "server",
+        "ServerHost",
+        "clearTimeout"
+      ],
+      "line": 2719
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3602,6 +3682,10 @@
     {
       "file": "stage3/adapt/99-correctness-axolotl-c/api-sanctions.json",
       "sha256": "00373a533e7b6436402c35f67d6b7148a7ade064b453cc5cb40950b743156432"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/api-sanctions.json",
+      "sha256": "abd191d026f96adb68cc23122087d3218a30bc3621f6d60c559cfe350c2780c2"
     }
   ],
   "baseline_diffs": [
@@ -3667,6 +3751,17 @@
     "         };\n",
     "         /** @deprecated Use {@link ModuleImportResult} instead. */\n",
     "         type RequireResult = ModuleImportResult;\n",
+    "@@ -2715,8 +2712,8 @@\n",
+    "             watchFile(path: string, callback: FileWatcherCallback, pollingInterval?: number, options?: WatchOptions): FileWatcher;\n",
+    "             watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;\n",
+    "             preferNonRecursiveWatch?: boolean;\n",
+    "-            setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "-            clearTimeout(timeoutId: any): void;\n",
+    "+            setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\n",
+    "+            clearTimeout(timeoutId: unknown): void;\n",
+    "             setImmediate(callback: (...args: any[]) => void, ...args: any[]): any;\n",
+    "             clearImmediate(timeoutId: any): void;\n",
+    "             gc?(): void;\n",
     "@@ -2842,12 +2839,12 @@\n",
     "             languageServiceHost: LanguageServiceHost;\n",
     "             serverHost: ServerHost;\n",
@@ -4912,7 +5007,7 @@
     "         readonly allowTextChangesInNewFiles?: boolean;\n",
     "         readonly providePrefixAndSuffixTextForRename?: boolean;\n",
     "         readonly includePackageJsonAutoImports?: \"auto\" | \"on\" | \"off\";\n",
-    "@@ -8484,9 +8482,9 @@\n",
+    "@@ -8484,12 +8482,12 @@\n",
     "          */\n",
     "         createHash?(data: string): string;\n",
     "         /** This must be cryptographically secure. Only implement this method using `crypto.createHash(\"sha256\")`. */\n",
@@ -4922,8 +5017,13 @@
     "-        exit(exitCode?: number): void;\n",
     "+        exit(exitCode?: number): number | undefined;\n",
     "         realpath?(path: string): string;\n",
-    "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
-    "         clearTimeout?(timeoutId: any): void;\n",
+    "-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "-        clearTimeout?(timeoutId: any): void;\n",
+    "+        setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\n",
+    "+        clearTimeout?(timeoutId: unknown): void;\n",
+    "         clearScreen?(): void;\n",
+    "         base64decode?(input: string): string;\n",
+    "         base64encode?(input: string): string;\n",
     "@@ -8519,7 +8517,7 @@\n",
     "     function isIdentifierStart(ch: number, languageVersion: ScriptTarget | undefined): boolean;\n",
     "     function isIdentifierPart(ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant): boolean;\n",
@@ -5044,11 +5144,16 @@
     "         host?: CompilerHost;\n",
     "         createProgram?: CreateProgram<T>;\n",
     "     }\n",
-    "@@ -9814,7 +9816,7 @@\n",
-    "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "@@ -9811,10 +9813,10 @@\n",
+    "         /** Used to watch resolved module's failed lookup locations, config file specs, type roots where auto type reference directives are added */\n",
+    "         watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;\n",
+    "         /** If provided, will be used to set delayed compilation, so that multiple changes in short span are compiled together */\n",
+    "-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "+        setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\n",
     "         /** If provided, will be used to reset existing delayed compilation */\n",
-    "         clearTimeout?(timeoutId: any): void;\n",
+    "-        clearTimeout?(timeoutId: any): void;\n",
     "-        preferNonRecursiveWatch?: boolean;\n",
+    "+        clearTimeout?(timeoutId: unknown): void;\n",
     "+        preferNonRecursiveWatch?: boolean | undefined;\n",
     "     }\n",
     "     interface ProgramHost<T extends BuilderProgram> {\n",
