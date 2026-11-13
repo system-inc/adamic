@@ -1,0 +1,12 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "bash",
+    "-c",
+    "cd /workspace/scratch/next-stops-516c3ded-parent && go build -overlay /workspace/scratch/next-stops-516c3ded-latent-parent/overlay.json -o /workspace/scratch/next-stops-516c3ded-latent-parent-census ./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 323.25741316099993,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

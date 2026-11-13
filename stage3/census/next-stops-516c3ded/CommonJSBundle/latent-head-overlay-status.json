@@ -1,0 +1,13 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/next-stops-516c3ded",
+    "/workspace/scratch/next-stops-516c3ded-latent-head"
+  ],
+  "exit_code": 0,
+  "seconds": 14.522615221000024,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

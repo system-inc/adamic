@@ -1,0 +1,16 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/next-stops-516c3ded-latent-head/overlay.json",
+    "-o",
+    "/workspace/scratch/next-stops-516c3ded-latent-head-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 219.329709912,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

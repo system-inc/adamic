@@ -1,0 +1,44 @@
+{
+  "parent": "751879544ea6e627e67c91d6ab3c4ba595be6356",
+  "head": "516c3dedf370293d4e4f8f78ab4628d391aed5e4",
+  "input": "/workspace/scratch/next-stops-516c3ded-adapted/src/compiler/sys.ts",
+  "mode": "full",
+  "scan_only_fallback": false,
+  "checker_rejected": {
+    "parent": false,
+    "head": false
+  },
+  "counts": {
+    "parent": 279,
+    "head": 278,
+    "unchanged": 278,
+    "gone": 1,
+    "new": 0,
+    "changed": 0
+  },
+  "phases": {
+    "parent": {
+      "refusal_scan": 19,
+      "lowering": 260
+    },
+    "head": {
+      "refusal_scan": 18,
+      "lowering": 260
+    }
+  },
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "refusal_scan",
+      "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+      "root_kind": "",
+      "text": "/workspace/scratch/next-stops-516c3ded-adapted/src/compiler/sys.ts:160:35: Adamic 0.1 refuses optional property Low in Partial<Levels> absent from structural source {}, which can hide fields; declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+      "unit": "/workspace/scratch/next-stops-516c3ded-adapted/src/compiler/sys.ts:157:9",
+      "where": "/workspace/scratch/next-stops-516c3ded-adapted/src/compiler/sys.ts:160:35"
+    }
+  ],
+  "new": [],
+  "changed": []
+}
