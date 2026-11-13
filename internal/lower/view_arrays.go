@@ -96,20 +96,37 @@ type viewElementKey struct {
 // .a and .ts alike, and collects the element type of every array its target can hold, through
 // the edges viewContract builds contracts along. A target that names a type parameter is
 // instantiated where it lowers, past what the pre-pass can see, so it sets every.
-func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
+//
+// It's also where a view of a type that instantiates itself deeper at each step stops (#k031ey0): a
+// growing generic never repeats a type, so every structural walk over a view's target whose only stop is
+// a set of types seen runs on it without end (collectViewedElements, prepareUntaggedStructuralRead and
+// viewContract each did). This walk sees every view target before any other walk does, so where
+// typeNesting says it can't see to the end, the program stops here, at that view, and no later walk
+// meets the type. So it walks whether or not the key wants it, and records into the key only when one is
+// asked for and isn't already every.
+func (l *lowering) collectViewedElements(modules []*ast.SourceFile) error {
 	key := l.elementKey
 	if key == nil || key.every {
-		return
+		key = &viewElementKey{} // walked for the stop alone; what it collects is dropped
 	}
 	key.viewed = map[*checker.Type]bool{}
 	key.related = map[*checker.Type]bool{}
 	seen := map[*checker.Type]bool{}
+	var nesting typeNesting
+	var site *ast.Node
+	var stop error
 	var hold func(target *checker.Type, arm bool)
 	hold = func(target *checker.Type, arm bool) {
-		if target == nil || seen[target] {
+		if target == nil || seen[target] || stop != nil {
 			return
 		}
 		seen[target] = true
+		ok, leave := nesting.enter(target)
+		defer leave()
+		if !ok {
+			stop = l.notYet(site, "a view of a type that reaches "+l.checker.TypeToString(target)+", which instantiates itself deeper at each step, so no walk over it ends")
+			return
+		}
 		switch {
 		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
 			for _, member := range target.Types() {
@@ -156,31 +173,34 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 			}
 		}
 	}
-	view := func(target *checker.Type) {
+	view := func(node *ast.Node, target *checker.Type) {
 		if target == nil {
 			return
 		}
 		if l.mentionsTypeParameter(target, map[*checker.Type]bool{}) {
 			key.every = true
-			return
 		}
+		site = node
 		hold(target, false)
 	}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		switch node.Kind {
 		case ast.KindAsExpression, ast.KindTypeAssertionExpression:
-			view(l.checker.GetTypeAtLocation(node))
+			view(node, l.checker.GetTypeAtLocation(node))
 		case ast.KindTypePredicate:
 			if written := node.AsTypePredicateNode().Type; written != nil {
-				view(l.checker.GetTypeAtLocation(written))
+				view(node, l.checker.GetTypeAtLocation(written))
 			}
 		}
-		return node.ForEachChild(visit)
+		return stop != nil || node.ForEachChild(visit)
 	}
 	for _, module := range modules {
-		module.AsNode().ForEachChild(visit)
+		if module.AsNode().ForEachChild(visit) {
+			break
+		}
 	}
+	return stop
 }
 
 // elementKeyed is whether a read of element is checked. Comparable is assignable either way: a
