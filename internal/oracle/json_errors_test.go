@@ -38,7 +38,24 @@ func TestJSONErrorsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, name := range jsonErrorAgrees {
 		for backend := 0; backend < 5; backend++ {
-			t.Run(name+"/"+[]string{"sanitized", "release", "javascript", "wasm32", "counted"}[backend], func(t *testing.T) { t.Parallel(); fixtureAgreesOnBackend(t, jsonErrorRoot+name+".a", backend) })
+			t.Run(name+"/"+[]string{"sanitized", "release", "javascript", "wasm32", "counted"}[backend], func(t *testing.T) {
+				t.Parallel()
+				fixture := jsonErrorRoot + name + ".a"
+				// A wasm32 target refusal (watch.a's fs.watch) is held to its row in wasiRefusedFixtures, as
+				// the wasm32 families hold it, so a fixture that starts building fails here too.
+				if _, refused := wasiRefusedFixtures[fixture]; refused && backend == 3 {
+					if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+						t.Skip("set ADAMIC_ORACLE_WASI=1")
+					}
+					program, err := lowered(t, filepath.Join(repository, fixture))
+					if err != nil {
+						t.Fatal(err)
+					}
+					assertWASIRefusal(t, fixture, buildWASI(t, native.C(program), filepath.Join(t.TempDir(), "program.wasm")), wasiRefusedFixtures)
+					return
+				}
+				fixtureAgreesOnBackend(t, fixture, backend)
+			})
 		}
 	}
 }
