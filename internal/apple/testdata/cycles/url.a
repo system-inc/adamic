@@ -1,0 +1,20 @@
+// A delegate that holds a Url: a leaf, which holds only strings, numbers, data and other URLs, so it
+// can't reach back to the window.
+// want: accepted
+
+import type { Url } from 'apple/foundation/url';
+import type { Window } from 'apple/appkit/window';
+import type { WindowDelegate } from 'apple/appkit/window-delegate';
+
+class Keeper implements WindowDelegate {
+	readonly home: Url;
+	constructor(home: Url) {
+		this.home = home;
+	}
+	windowShouldClose(sender: Window): boolean {
+		return sender.title.length > 0;
+	}
+}
+export function attach(window: Window, home: Url): void {
+	window.delegate = new Keeper(home);
+}
