@@ -139,6 +139,9 @@ func (e *emitter) timerInvoke(call ir.NodeFSFile) string {
 	} else {
 		adapter.line("(void)%s;", invoked)
 	}
+	// What packing the call made, a rest tail for a target that collects one above all (setTimeout's
+	// own value, #995spev), is the thunk's, let go of once the call is done.
+	adapter.end()
 	adapter.releaseScopes(0)
 	name, exists := e.sharedDeclaration("adamic_timer_invoke", adapter.out.String())
 	if !exists {

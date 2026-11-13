@@ -85,7 +85,146 @@ func TestNodeTimersStayLoud(t *testing.T) {
 		"const handle = setTimeout(() => {}, 1); const cleared = clearTimeout(handle);":                                   "node:timers.clearTimeout used as a value; call it as a statement",
 		"clearTimeout({ _onTimeout: 1 });":                                                                                "node:timers.clearTimeout of an object with an _onTimeout property, which Node unenrolls",
 		"class Holder { get _onTimeout(): number { return 1; } } const held: unknown = new Holder(); clearTimeout(held);": "node:timers.clearTimeout of a value that may be an object with an _onTimeout method or accessor, which Node reads",
-		"const read = setTimeout;":                                                                                        "observing a callable namespace object",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, "import 'node:timers';\n"+source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
+				t.Fatalf("want NotYet %q, got %v", want, err)
+			}
+		})
+	}
+}
+
+// tsc's getNodeSystem (sys.ts:1499) shape, through required methods and through System's optional
+// ones: each timer read as a value is one closure per program, held by a global, so a second literal,
+// a view of its own and an identity comparison read the same one, and the program runs the loop for
+// the setTimeout inside it. clearTimeout's body is its direct call. setTimeout's takes a rest it never
+// reads and the count, so it's on the counted convention, stops on more than three arguments, and
+// otherwise calls setTimeout with the label or, handed none, without.
+func TestNodeTimerValuesAreOneClosureEach(t *testing.T) {
+	t.Parallel()
+	for name, methods := range map[string]string{
+		"required": `setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+    clearTimeout(timeoutId: unknown): void;`,
+		"optional": `setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+    clearTimeout?(timeoutId: unknown): void;`,
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSource(t, `import 'node:timers';
+interface Host {
+    `+methods+`
+}
+type SetTimeoutView = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
+const host: Host = { setTimeout, clearTimeout };
+const again: Host = { setTimeout, clearTimeout };
+const view: SetTimeoutView = setTimeout;
+console.log(String(view === setTimeout) + ' ' + String(clearTimeout === clearTimeout) + ' ' + String([host, again].length));`)
+			if err != nil {
+				t.Fatal(err)
+			}
+			roles := map[string]int{}
+			for _, function := range program.Functions {
+				roles[function.Source.Role]++
+			}
+			if roles["host_set_timeout"] != 1 || roles["host_clear_timeout"] != 1 {
+				t.Fatalf("want one closure for each timer, got %v", roles)
+			}
+			operations, extras := timerOperations(program)
+			if operations["set_timeout"] != 2 || operations["clear_timeout"] != 1 {
+				t.Fatalf("want setTimeout's body to call it with the label and without, and clearTimeout's to call it, got %v", operations)
+			}
+			if len(extras) != 2 || len(extras[0]) != 0 || len(extras[1]) != 1 || extras[1][0] != ir.Union {
+				t.Fatalf("want the label handed over as a union where one was given, got %v", extras)
+			}
+			for index, function := range program.Functions {
+				if function.Source.Role != "host_set_timeout" {
+					continue
+				}
+				if function.RestElement == 0 || function.ArgumentsCount == 0 || !program.PackedCountNeeded(index) {
+					t.Fatalf("want setTimeout's value on the counted convention with its count, got rest %v, count %d", function.RestElement, function.ArgumentsCount)
+				}
+				stops := 0
+				walk(function.Body, func(node any) bool {
+					if stop, ok := node.(ir.Panic); ok {
+						if message, ok := stop.Message.(ir.StringConstant); ok && program.Strings[message.Index] == ir.HostForwardStop {
+							stops++
+						}
+					}
+					return true
+				})
+				if stops != 1 {
+					t.Fatalf("want setTimeout's value to stop once on more arguments than it forwards, got %d", stops)
+				}
+			}
+			if !program.HasPromises() {
+				t.Fatal("a setTimeout value must run the loop without an explicit Promise")
+			}
+		})
+	}
+}
+
+// A timer's value is admitted only where its slot sees it exactly as its view (Adamic's ruling (c) on
+// #995spev, Nov 13), an optional method's undefined aside; any other slot, and none, is NotYet naming
+// what it saw. An optional callback is refused before it, at the relation, by 0.1's rule for a
+// method's parameters. Mutant: nodeTimerView admitting a required label, and that row goes red.
+func TestNodeTimerValuesNeedTheirView(t *testing.T) {
+	t.Parallel()
+	const setView = "node:timers.setTimeout value needs exactly (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown, not "
+	const clearView = "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not "
+	for source, want := range map[string]string{
+		// System's slot as rulings.md:314 had it before the ruling.
+		"interface Host { setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown; }\nconst host: Host = { setTimeout };": setView,
+		// The two-parameter slot of head 2's first brief.
+		"interface Host { setTimeout(callback: () => void, ms: number): unknown; }\nconst host: Host = { setTimeout };":                                        setView,
+		"const required: (callback: (label?: unknown) => void, ms: number, label: unknown) => unknown = setTimeout;":                                           setView,
+		"const labelled: (callback: (label?: unknown) => void, ms: number, label?: string) => unknown = setTimeout;":                                           setView,
+		"const taking: (callback: (label: unknown) => void, ms: number, label?: unknown) => unknown = setTimeout;":                                             setView,
+		"const wide: (callback: (label?: unknown) => void, ms: number, label?: unknown, extra?: unknown) => unknown = setTimeout;":                             setView,
+		"interface Host { setTimeout(callback: (label?: unknown) => void, ms?: number, label?: unknown): unknown; }\nconst host: Host = { setTimeout };":       setView,
+		"interface Host { setTimeout(callback: (...names: unknown[]) => void, ms: number, label?: unknown): unknown; }\nconst host: Host = { setTimeout };":    setView,
+		"interface Host { setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): NodeJS.Timeout; }\nconst host: Host = { setTimeout };": setView,
+		"const read = setTimeout;":   setView + "typeof setTimeout with no slot",
+		"const read = clearTimeout;": clearView + "(timeout: unknown) => void with no slot",
+		"interface Host { clearTimeout(timeoutId: NodeJS.Timeout): void; }\nconst host: Host = { clearTimeout };":                                                   clearView,
+		"class Holder { get _onTimeout(): number { return 1; } }\ninterface Host { clearTimeout(timeoutId: unknown): void; }\nconst host: Host = { clearTimeout };": "node:timers.clearTimeout value where the program declares an _onTimeout method or accessor, which Node reads",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, "import 'node:timers';\n"+source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
+				t.Fatalf("want NotYet %q, got %v", want, err)
+			}
+		})
+	}
+}
+
+// An optional callback in setTimeout's slot is refused by 0.1 before the value's view is judged, since
+// tsc relates a method's parameters both ways.
+func TestNodeTimerValueOptionalCallbackIsRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "import 'node:timers';\ninterface Host { setTimeout(callback?: () => void, ms?: number): unknown; }\nconst host: Host = { setTimeout };")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "a function taking () => void seen as one taking (() => void) | undefined") {
+		t.Fatalf("want 0.1's refusal of the optional callback, got %v", err)
+	}
+}
+
+// setTimeout's value through a view whose parameters are a rest tuple, and a bind of it, are not yet
+// at compile time, whatever they'd pass: a tuple is held as an object where the value reads its
+// parameters, and a bind can't hand on the count the value stops by. Neither runs, so neither can
+// drop what a fourth argument would hand Node's callback (Language's pins on #995spev, Nov 13).
+func TestNodeTimerValueViewsNotYet(t *testing.T) {
+	t.Parallel()
+	const ruled = "type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;\nconst ruled: Ruled = setTimeout;\n"
+	for source, want := range map[string]string{
+		ruled + "type Spread = (...values: [callback: (label?: unknown) => void, ms: number, label: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'tuple');":                                                   "a tuple is held as an object",
+		ruled + "type Spread = (...values: [callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'L', 'X');":                  "a tuple is held as an object",
+		ruled + "const bound = ruled.bind(undefined, (x?: unknown) => console.log(String(x)));\nbound(1, 'bound');":                                                                                                                       "bind of a function that observes its argument count or collects rest arguments",
+		ruled + "type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;\nconst four: Four = ruled;\nconst bound = four.bind(undefined, () => {});\nbound(1, 'L', 'X');": "bind of a function that observes its argument count or collects rest arguments",
 	} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()

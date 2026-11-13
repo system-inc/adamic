@@ -1,0 +1,14 @@
+// setTimeout's value widened to a view of four parameters and called with all four: Node's
+// setTimeout hands the callback both, and the value forwards three, so it stops at its entry, before
+// anything is scheduled, on both backends (Adamic's ruling on #995spev, Nov 13, lifted by #8q1pjsp).
+import 'node:timers';
+
+type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
+type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;
+
+const ruled: Ruled = setTimeout;
+const callback = (label?: unknown, extra?: unknown): void => console.log(`fired ${String(label)} ${String(extra)}`);
+console.log('before');
+const four: Four = ruled;
+four(callback, 1, 'L', 'X');
+console.log('after');

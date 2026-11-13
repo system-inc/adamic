@@ -24,6 +24,12 @@ type NodeFSFile struct {
 
 func (call NodeFSFile) Type() Type { return call.Of }
 
+// HostForwardStop is the whole run-time NotYet, keyless, setTimeout's value stops in when it's called
+// with more arguments than its callback, delay and label (Adamic's ruling on #995spev, Nov 13 05:48Z),
+// which Node's variadic setTimeout would hand the callback. Lowering's closure checks its count at its
+// entry on both backends; #8q1pjsp lifts it.
+const HostForwardStop = "a host function called with more arguments than it forwards isn't built yet"
+
 // RetainsListener reports whether the host keeps a function value it's handed past the call and
 // calls it later from the loop: the scheduler must run, and what the listener reaches escapes.
 func (call NodeFSFile) RetainsListener() bool {

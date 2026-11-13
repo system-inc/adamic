@@ -1,0 +1,25 @@
+// setTimeout's value seen through views a program may widen it to, each passing the label as a
+// string where the value's own slot holds an unknown: assigned to one, passed as an argument of one
+// and held in an array of them. Each hands the callback the label as Node's setTimeout does: a caller
+// through a string view writes the string where the value reads an unknown (Language's question on
+// #995spev, Nov 13). A view through a rest parameter's tuple and a bind of the value are not yet, at
+// compile time (library_node_timers_test.go's TestNodeTimerValueViewsNotYet).
+import 'node:timers';
+
+type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
+type Labelled = (callback: (label?: unknown) => void, ms: number, label: string) => unknown;
+
+const ruled: Ruled = setTimeout;
+const labelled: Labelled = ruled;
+labelled((x?: unknown) => console.log(`labelled ${String(x)}`), 1, 'view');
+
+function run(set: Labelled, ms: number): void {
+    set((x?: unknown) => console.log(`argument ${String(x)}`), ms, 'passed');
+}
+run(ruled, 2);
+
+const held: Labelled[] = [ruled];
+for (const set of held) {
+    set((x?: unknown) => console.log(`element ${String(x)}`), 3, 'stored');
+}
+console.log('scheduled');
