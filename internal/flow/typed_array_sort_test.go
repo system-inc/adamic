@@ -1,9 +1,6 @@
 package flow
 
-import (
-	"github.com/system-inc/adamic/internal/ir"
-	"testing"
-)
+import "testing"
 
 func TestFlowTypedArraySortUint8(t *testing.T) {
 	t.Parallel()

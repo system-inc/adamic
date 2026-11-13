@@ -75,9 +75,9 @@ func TestEverySwitchOverGeneratorNextNamesIteratorNext(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// The emitters, fresh, split, flow's effects and throws, lowering's proofs and the closed defaults'
+	// The emitters, fresh, split, flow's throws, lowering's proofs and the closed defaults'
 	// own cases: fewer means the walk no longer finds the compiler.
-	if switches < 14 {
+	if switches < 12 {
 		t.Fatalf("found %d switches with a case for GeneratorNext: the walk no longer finds the compiler's", switches)
 	}
 }
