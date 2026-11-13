@@ -7,7 +7,7 @@
       "lifting_task": "#xf4n18n",
       "stderr": "adamic: panic: an Error property Node sets and the native Error lacks isn't read yet (reading 'stack')\n"
     },
-    "5b60d577718b4fdb702b5adb3f3c2dc904aab008b96c59d1b5d94bc05424bbfc": {
+    "57f21dfdb2d6f8bbc3f6284226b3667ccbf1541edc7c383e107bd6074278f47c": {
       "path": "internal/oracle/testdata/reflect_get/stop_hasownproperty_host.a",
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
@@ -85,7 +85,7 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'code')\n"
     },
-    "f4e34758a984c46e7c79a0dddac9ad3d52221b5854487090dce61843047d2963": {
+    "ab83683be49bda1afb05d6131a3e67d94c0b3ebd3a58a36d8ba564aeb9046942": {
       "path": "internal/oracle/testdata/reflect_get/stop_in_host_internal.a",
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
@@ -109,7 +109,7 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'isFile')\n"
     },
-    "3f72fc3049e03a2e953d2b02d90768dcd1f549709a3a5dc9e5345f90006c1fae": {
+    "6cac291dd336a97ce2e305836c78022d1b4a95388a455cb1bbcdf2180f054daa": {
       "path": "internal/oracle/testdata/reflect_get/stop_keys_host.a",
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
