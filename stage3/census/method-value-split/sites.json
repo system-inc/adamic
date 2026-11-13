@@ -1,1 +1,4539 @@
-[]
+[
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1709,
+    "column": 5,
+    "method": "getBuildInfo",
+    "owner": "Program",
+    "accessRole": "write",
+    "sourceLine": "    newProgram.getBuildInfo = () => getBuildInfo(toBuilderProgramStateWithDefinedProgram(state));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1718,
+    "column": 5,
+    "method": "hasChangedEmitSignature",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.hasChangedEmitSignature = () => !!state.hasChangedEmitSignature;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1719,
+    "column": 5,
+    "method": "getAllDependencies",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.getAllDependencies = sourceFile =>",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1725,
+    "column": 5,
+    "method": "getSemanticDiagnostics",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.getSemanticDiagnostics = getSemanticDiagnostics;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1726,
+    "column": 5,
+    "method": "getDeclarationDiagnostics",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.getDeclarationDiagnostics = getDeclarationDiagnostics;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1727,
+    "column": 5,
+    "method": "emit",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.emit = emit;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1728,
+    "column": 5,
+    "method": "releaseProgram",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "    builderProgram.releaseProgram = () => releaseCache(state);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1731,
+    "column": 9,
+    "method": "getSemanticDiagnosticsOfNextAffectedFile",
+    "owner": "SemanticDiagnosticsBuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "        (builderProgram as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1734,
+    "column": 9,
+    "method": "getSemanticDiagnosticsOfNextAffectedFile",
+    "owner": "SemanticDiagnosticsBuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile = getSemanticDiagnosticsOfNextAffectedFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1735,
+    "column": 9,
+    "method": "emitNextAffectedFile",
+    "owner": "EmitAndSemanticDiagnosticsBuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "        (builderProgram as EmitAndSemanticDiagnosticsBuilderProgram).emitNextAffectedFile = emitNextAffectedFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1736,
+    "column": 9,
+    "method": "emitBuildInfo",
+    "owner": "BuilderProgram",
+    "accessRole": "write",
+    "sourceLine": "        builderProgram.emitBuildInfo = emitBuildInfo;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6440,
+    "column": 29,
+    "method": "reportLikelyUnsafeImportRequiredError",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                        if (context.tracker.reportLikelyUnsafeImportRequiredError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "context.tracker",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "context.tracker",
+        "sameReceiver": true,
+        "line": 6441
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6773,
+    "column": 38,
+    "method": "throwIfCancellationRequested",
+    "owner": "CancellationToken",
+    "accessRole": "read",
+    "sourceLine": "            if (cancellationToken && cancellationToken.throwIfCancellationRequested) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "cancellationToken",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "cancellationToken",
+        "sameReceiver": true,
+        "line": 6774
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6877,
+    "column": 25,
+    "method": "reportInaccessibleUniqueSymbolError",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                    if (context.tracker.reportInaccessibleUniqueSymbolError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "context.tracker",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "context.tracker",
+        "sameReceiver": true,
+        "line": 6878
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 6913,
+    "column": 21,
+    "method": "reportInaccessibleThisError",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                    context.tracker.reportInaccessibleThisError?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 7017,
+    "column": 53,
+    "method": "createTemplateMiddle",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                            (i < types.length - 1 ? factory.createTemplateMiddle : factory.createTemplateTail)(texts[i + 1]!),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 7017,
+    "column": 84,
+    "method": "createTemplateTail",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                            (i < types.length - 1 ? factory.createTemplateMiddle : factory.createTemplateTail)(texts[i + 1]!),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 7096,
+    "column": 29,
+    "method": "reportCyclicStructureError",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                            context.tracker?.reportCyclicStructureError?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 7687,
+    "column": 138,
+    "method": "reportPrivateInBaseOfClassExpression",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                        if (getDeclarationModifierFlagsFromSymbol(propertySymbol) & (ModifierFlags.Private | ModifierFlags.Protected) && context.tracker.reportPrivateInBaseOfClassExpression) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "context.tracker",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "context.tracker",
+        "sameReceiver": true,
+        "line": 7688
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 7690,
+    "column": 74,
+    "method": "reportPrivateInBaseOfClassExpression",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                        if (isPrivateIdentifierSymbol(propertySymbol) && context.tracker.reportPrivateInBaseOfClassExpression) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "context.tracker",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "context.tracker",
+        "sameReceiver": true,
+        "line": 7691
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8074,
+    "column": 38,
+    "method": "throwIfCancellationRequested",
+    "owner": "CancellationToken",
+    "accessRole": "read",
+    "sourceLine": "            if (cancellationToken && cancellationToken.throwIfCancellationRequested) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "cancellationToken",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "cancellationToken",
+        "sameReceiver": true,
+        "line": 8075
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8391,
+    "column": 223,
+    "method": "cloneNode",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            const modifiers = !(context.flags & NodeBuilderFlags.OmitParameterModifiers) && preserveModifierFlags && parameterDeclaration && canHaveModifiers(parameterDeclaration) ? map(getModifiers(parameterDeclaration), factory.cloneNode) : undefined;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8722,
+    "column": 29,
+    "method": "reportLikelyUnsafeImportRequiredError",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                        if (context.tracker.reportLikelyUnsafeImportRequiredError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "context.tracker",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "context.tracker",
+        "sameReceiver": true,
+        "line": 8723
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9350,
+    "column": 95,
+    "method": "createPropertyDeclaration",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            const serializePropertySymbolForClass = makeSerializePropertySymbol<ClassElement>(factory.createPropertyDeclaration, SyntaxKind.MethodDeclaration, /*useAccessors*/ true);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9389,
+    "column": 30,
+    "method": "trackSymbol",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "                    else if (oldcontext.tracker.inner?.trackSymbol) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "oldcontext.tracker.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "oldcontext.tracker.inner",
+        "sameReceiver": true,
+        "line": 9390
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10069,
+    "column": 33,
+    "method": "reportNonlocalAugmentation",
+    "owner": "SymbolTrackerImpl",
+    "accessRole": "read",
+    "sourceLine": "                                context.tracker?.reportNonlocalAugmentation?.(containingFile, symbol, s);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51522,
+    "column": 26,
+    "method": "trackSymbol",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "                    if (!tracker.trackSymbol) return;",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "tracker",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54282,
+    "column": 37,
+    "method": "getCommonSourceDirectory",
+    "owner": "Program",
+    "accessRole": "read",
+    "sourceLine": "        getCommonSourceDirectory: !!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => \"\",",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "(host as Program)",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "(host as Program)",
+        "sameReceiver": true,
+        "line": 54282
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54285,
+    "column": 40,
+    "method": "getPackageJsonInfoCache",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "        getPackageJsonInfoCache: () => host.getPackageJsonInfoCache?.(),",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54365,
+    "column": 33,
+    "method": "trackSymbol",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        this.canTrackSymbol = !!this.inner?.trackSymbol;",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54369,
+    "column": 13,
+    "method": "trackSymbol",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.trackSymbol && !this.disableTrackSymbol) {",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 2,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54370
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54381,
+    "column": 13,
+    "method": "reportInaccessibleThisError",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportInaccessibleThisError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54383
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54388,
+    "column": 13,
+    "method": "reportPrivateInBaseOfClassExpression",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportPrivateInBaseOfClassExpression) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54390
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54395,
+    "column": 13,
+    "method": "reportInaccessibleUniqueSymbolError",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportInaccessibleUniqueSymbolError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54397
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54402,
+    "column": 13,
+    "method": "reportCyclicStructureError",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportCyclicStructureError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54404
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54409,
+    "column": 13,
+    "method": "reportLikelyUnsafeImportRequiredError",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportLikelyUnsafeImportRequiredError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54411
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54416,
+    "column": 13,
+    "method": "reportTruncationError",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportTruncationError) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54418
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54423,
+    "column": 13,
+    "method": "reportNonlocalAugmentation",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportNonlocalAugmentation) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54425
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54430,
+    "column": 13,
+    "method": "reportNonSerializableProperty",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportNonSerializableProperty) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54432
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54441,
+    "column": 13,
+    "method": "reportInferenceFallback",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        if (this.inner?.reportInferenceFallback && !this.context.suppressReportInferenceFallback) {",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "this.inner",
+    "guardedBranchCount": 2,
+    "guardedCalls": [
+      {
+        "receiver": "this.inner",
+        "sameReceiver": true,
+        "line": 54443
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54448,
+    "column": 16,
+    "method": "pushErrorFallbackNode",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        return this.inner?.pushErrorFallbackNode?.(node);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 54452,
+    "column": 16,
+    "method": "popErrorFallbackNode",
+    "owner": "SymbolTracker",
+    "accessRole": "read",
+    "sourceLine": "        return this.inner?.popErrorFallbackNode?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1264,
+    "column": 24,
+    "method": "hasOwnProperty",
+    "owner": "Object",
+    "accessRole": "read",
+    "sourceLine": "const hasOwnProperty = Object.prototype.hasOwnProperty;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 2103,
+    "column": 26,
+    "method": "compare",
+    "owner": "Collator",
+    "accessRole": "read",
+    "sourceLine": "        const comparer = new Intl.Collator(locale, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/debug.ts",
+    "line": 178,
+    "column": 13,
+    "method": "captureStackTrace",
+    "owner": "ErrorConstructor",
+    "accessRole": "read",
+    "sourceLine": "        if (Error.captureStackTrace) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "Error",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "Error",
+        "sameReceiver": true,
+        "line": 179
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 864,
+    "column": 28,
+    "method": "hasGlobalName",
+    "owner": "EmitResolver",
+    "accessRole": "read",
+    "sourceLine": "            hasGlobalName: resolver.hasGlobalName,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 867,
+    "column": 25,
+    "method": "emitNodeWithNotification",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "            onEmitNode: transform.emitNodeWithNotification,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 868,
+    "column": 40,
+    "method": "isEmitNotificationEnabled",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "            isEmitNotificationEnabled: transform.isEmitNotificationEnabled!,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 869,
+    "column": 29,
+    "method": "substituteNode",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "            substituteNode: transform.substituteNode,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 940,
+    "column": 32,
+    "method": "hasGlobalName",
+    "owner": "EmitResolver",
+    "accessRole": "read",
+    "sourceLine": "                hasGlobalName: resolver.hasGlobalName,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 943,
+    "column": 29,
+    "method": "emitNodeWithNotification",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "                onEmitNode: declarationTransform.emitNodeWithNotification,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 944,
+    "column": 44,
+    "method": "isEmitNotificationEnabled",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "                isEmitNotificationEnabled: declarationTransform.isEmitNotificationEnabled!,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 945,
+    "column": 33,
+    "method": "substituteNode",
+    "owner": "TransformationResult",
+    "accessRole": "read",
+    "sourceLine": "                substituteNode: declarationTransform.substituteNode,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 1123,
+    "column": 25,
+    "method": "getCanonicalFileName",
+    "owner": "EmitHost",
+    "accessRole": "read",
+    "sourceLine": "                        host.getCanonicalFileName,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 1278,
+    "column": 40,
+    "method": "parenthesizeLeadingTypeArgument",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        select: index => index === 0 ? parenthesizer.parenthesizeLeadingTypeArgument : undefined,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2196,
+    "column": 41,
+    "method": "parenthesizeExpressionOfComputedPropertyName",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeExpressionOfComputedPropertyName);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2233,
+    "column": 199,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitInitializer(node.initializer, node.type ? node.type.end : node.questionToken ? node.questionToken.end : node.name ? node.name.end : node.modifiers ? node.modifiers.end : node.pos, node, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2238,
+    "column": 46,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(decorator.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2414,
+    "column": 32,
+    "method": "parenthesizeNonArrayTypeOfPostfixType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emit(node.elementType, parenthesizer.parenthesizeNonArrayTypeOfPostfixType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2427,
+    "column": 74,
+    "method": "parenthesizeElementTypeOfTupleType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitList(node, node.elements, flags | ListFormat.NoSpaceIfEmpty, parenthesizer.parenthesizeElementTypeOfTupleType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2441,
+    "column": 25,
+    "method": "parenthesizeTypeOfOptionalType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emit(node.type, parenthesizer.parenthesizeTypeOfOptionalType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2446,
+    "column": 70,
+    "method": "parenthesizeConstituentTypeOfUnionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitList(node, node.types, ListFormat.UnionTypeConstituents, parenthesizer.parenthesizeConstituentTypeOfUnionType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2450,
+    "column": 77,
+    "method": "parenthesizeConstituentTypeOfIntersectionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitList(node, node.types, ListFormat.IntersectionTypeConstituents, parenthesizer.parenthesizeConstituentTypeOfIntersectionType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2454,
+    "column": 30,
+    "method": "parenthesizeCheckTypeOfConditionalType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emit(node.checkType, parenthesizer.parenthesizeCheckTypeOfConditionalType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2458,
+    "column": 32,
+    "method": "parenthesizeExtendsTypeOfConditionalType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emit(node.extendsType, parenthesizer.parenthesizeExtendsTypeOfConditionalType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2490,
+    "column": 13,
+    "method": "parenthesizeOperandOfReadonlyTypeOperator",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "            parenthesizer.parenthesizeOperandOfReadonlyTypeOperator :",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2491,
+    "column": 13,
+    "method": "parenthesizeOperandOfTypeOperator",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "            parenthesizer.parenthesizeOperandOfTypeOperator;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2496,
+    "column": 31,
+    "method": "parenthesizeNonArrayTypeOfPostfixType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emit(node.objectType, parenthesizer.parenthesizeNonArrayTypeOfPostfixType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2605,
+    "column": 64,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitInitializer(node.initializer, node.name.end, node, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2615,
+    "column": 103,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpressionList(node, elements, ListFormat.ArrayLiteralExpressionElements | preferNewLine, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2639,
+    "column": 41,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2690,
+    "column": 41,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2705,
+    "column": 41,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2711,
+    "column": 86,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpressionList(node, node.arguments, ListFormat.CallExpressionArguments, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2717,
+    "column": 41,
+    "method": "parenthesizeExpressionOfNew",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeExpressionOfNew);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2719,
+    "column": 85,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpressionList(node, node.arguments, ListFormat.NewExpressionArguments, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2730,
+    "column": 34,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.tag, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2743,
+    "column": 41,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2779,
+    "column": 39,
+    "method": "parenthesizeConciseBodyOfArrowFunction",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "            emitExpression(node.body, parenthesizer.parenthesizeConciseBodyOfArrowFunction);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2786,
+    "column": 41,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2792,
+    "column": 41,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2798,
+    "column": 41,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2804,
+    "column": 41,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2812,
+    "column": 38,
+    "method": "parenthesizeOperandOfPrefixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.operand, parenthesizer.parenthesizeOperandOfPrefixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2835,
+    "column": 38,
+    "method": "parenthesizeOperandOfPostfixUnary",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.operand, parenthesizer.parenthesizeOperandOfPostfixUnary);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2952,
+    "column": 40,
+    "method": "parenthesizeConditionOfConditionalExpression",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.condition, parenthesizer.parenthesizeConditionOfConditionalExpression);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2956,
+    "column": 39,
+    "method": "parenthesizeBranchOfConditionalExpression",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.whenTrue, parenthesizer.parenthesizeBranchOfConditionalExpression);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2962,
+    "column": 40,
+    "method": "parenthesizeBranchOfConditionalExpression",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.whenFalse, parenthesizer.parenthesizeBranchOfConditionalExpression);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2979,
+    "column": 41,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 2988,
+    "column": 41,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3003,
+    "column": 41,
+    "method": "parenthesizeLeftSideOfAccess",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeLeftSideOfAccess);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3065,
+    "column": 41,
+    "method": "parenthesizeExpressionOfExpressionStatement",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeExpressionOfExpressionStatement);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3406,
+    "column": 119,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitInitializer(node.initializer, node.type?.end ?? node.name.emitNode?.typeNode?.end ?? node.name.end, node, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3748,
+    "column": 17,
+    "method": "parenthesizeExpressionOfExportDefault",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "                parenthesizer.parenthesizeExpressionOfExportDefault,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 3997,
+    "column": 41,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(node.expression, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 4068,
+    "column": 37,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitExpression(initializer, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 4077,
+    "column": 62,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "            emitExpression(node.objectAssignmentInitializer, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 4084,
+    "column": 45,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "            emitExpression(node.expression, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 4094,
+    "column": 64,
+    "method": "parenthesizeExpressionForDisallowedComma",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        emitInitializer(node.initializer, node.name.end, node, parenthesizer.parenthesizeExpressionForDisallowedComma);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "line": 4911,
+    "column": 13,
+    "method": "nonEscapingWrite",
+    "owner": "EmitTextWriter",
+    "accessRole": "read",
+    "sourceLine": "        if (writer!.nonEscapingWrite) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "writer!",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "writer!",
+        "sameReceiver": true,
+        "line": 4912
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 166,
+    "column": 14,
+    "method": "writeOutputIsTTY",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    return !!sys.writeOutputIsTTY && sys.writeOutputIsTTY();",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "sys",
+        "sameReceiver": true,
+        "line": 166
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 265,
+    "column": 27,
+    "method": "getWidthOfTerminal",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    const terminalWidth = sys.getWidthOfTerminal?.() ?? 0;",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 534,
+    "column": 27,
+    "method": "getWidthOfTerminal",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    const terminalWidth = sys.getWidthOfTerminal?.() ?? 0;",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 763,
+    "column": 48,
+    "method": "enableCPUProfiler",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        if (buildOptions.generateCpuProfile && system.enableCPUProfiler) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 764
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 787,
+    "column": 51,
+    "method": "enableCPUProfiler",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (commandLine.options.generateCpuProfile && system.enableCPUProfiler) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 788
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 801,
+    "column": 10,
+    "method": "watchFile",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!sys.watchFile || !sys.watchDirectory) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 801,
+    "column": 28,
+    "method": "watchDirectory",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!sys.watchFile || !sys.watchDirectory) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 848,
+    "column": 10,
+    "method": "getModifiedTime",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!sys.getModifiedTime || !sys.setModifiedTime || (buildOptions.clean && !sys.deleteFile)) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 2,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 848,
+    "column": 34,
+    "method": "setModifiedTime",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!sys.getModifiedTime || !sys.setModifiedTime || (buildOptions.clean && !sys.deleteFile)) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 848,
+    "column": 81,
+    "method": "deleteFile",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!sys.getModifiedTime || !sys.setModifiedTime || (buildOptions.clean && !sys.deleteFile)) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 865,
+    "column": 37,
+    "method": "onWatchStatusChange",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        const onWatchStatusChange = buildHost.onWatchStatusChange;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 867,
+    "column": 9,
+    "method": "onWatchStatusChange",
+    "owner": "WatchHost",
+    "accessRole": "write",
+    "sourceLine": "        buildHost.onWatchStatusChange = (d, newLine, options, errorCount) => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 975,
+    "column": 5,
+    "method": "afterProgramEmitAndDiagnostics",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "write",
+    "sourceLine": "    buildHost.afterProgramEmitAndDiagnostics = program => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 999,
+    "column": 35,
+    "method": "afterProgramCreate",
+    "owner": "WatchCompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const emitFilesUsingBuilder = watchCompilerHost.afterProgramCreate!; // TODO: GH#18217",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 1000,
+    "column": 5,
+    "method": "afterProgramCreate",
+    "owner": "WatchCompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    watchCompilerHost.afterProgramCreate = builderProgram => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 1170,
+    "column": 28,
+    "method": "getMemoryUsage",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        const memoryUsed = sys.getMemoryUsage ? sys.getMemoryUsage() : -1;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "sys",
+        "sameReceiver": true,
+        "line": 1170
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2560,
+    "column": 79,
+    "method": "parenthesizeConstituentTypesOfUnionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        return createUnionOrIntersectionTypeNode(SyntaxKind.UnionType, types, parenthesizerRules().parenthesizeConstituentTypesOfUnionType) as UnionTypeNode;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2565,
+    "column": 63,
+    "method": "parenthesizeConstituentTypesOfUnionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        return updateUnionOrIntersectionTypeNode(node, types, parenthesizerRules().parenthesizeConstituentTypesOfUnionType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2570,
+    "column": 86,
+    "method": "parenthesizeConstituentTypesOfIntersectionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        return createUnionOrIntersectionTypeNode(SyntaxKind.IntersectionType, types, parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType) as IntersectionTypeNode;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 2575,
+    "column": 63,
+    "method": "parenthesizeConstituentTypesOfIntersectionType",
+    "owner": "ParenthesizerRules",
+    "accessRole": "read",
+    "sourceLine": "        return updateUnionOrIntersectionTypeNode(node, types, parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6756,
+    "column": 39,
+    "method": "createComma",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            : reduceLeft(expressions, factory.createComma)!;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 488,
+    "column": 14,
+    "method": "getCurrentDirectory",
+    "owner": "GetEffectiveTypeRootsHost",
+    "accessRole": "read",
+    "sourceLine": "    else if (host.getCurrentDirectory) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 489
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 1356,
+    "column": 5,
+    "method": "getOrCreateCacheForModuleName",
+    "owner": "NonRelativeModuleNameResolutionCache",
+    "accessRole": "write",
+    "sourceLine": "    result.getOrCreateCacheForModuleName = (nonRelativeName, mode, redirectedReference) => result.getOrCreateCacheForNonRelativeName(nonRelativeName, mode, redirectedReference);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2331,
+    "column": 77,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "                const finalPath = getNormalizedAbsolutePath(resolvedTarget, state.host.getCurrentDirectory?.());",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2582,
+    "column": 64,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const directoryPath = getNormalizedAbsolutePath(directory, state.host.getCurrentDirectory?.());",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2663,
+    "column": 64,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const directoryPath = getNormalizedAbsolutePath(directory, state.host.getCurrentDirectory?.());",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2870,
+    "column": 52,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "            return getNormalizedAbsolutePath(path, state.host.getCurrentDirectory?.());",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2898,
+    "column": 112,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "                    const commonDir = toAbsolutePath(getCommonSourceDirectory(state.compilerOptions, () => [], state.host.getCurrentDirectory?.() || \"\", getCanonicalFileName));",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2924,
+    "column": 155,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "                    const commonDir = toAbsolutePath(getCommonSourceDirectory(state.compilerOptions, () => [requestingFile, toAbsolutePath(packagePath)], state.host.getCurrentDirectory?.() || \"\", getCanonicalFileName));",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2974,
+    "column": 71,
+    "method": "getCurrentDirectory",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "                const currentDir = state.compilerOptions.configFile ? state.host.getCurrentDirectory?.() || \"\" : commonSourceDirGuess;",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 3056,
+    "column": 25,
+    "method": "getGlobalTypingsCacheLocation",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const globalCache = host?.getGlobalTypingsCacheLocation?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 571,
+    "column": 61,
+    "method": "useCaseSensitiveFileNames",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const getCanonicalFileName = createGetCanonicalFileName(host.useCaseSensitiveFileNames ? host.useCaseSensitiveFileNames() : true);",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 571
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 810,
+    "column": 19,
+    "method": "getModuleResolutionCache",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const cache = host.getModuleResolutionCache?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 1150,
+    "column": 31,
+    "method": "getPackageJsonInfoCache",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const cachedPackageJson = host.getPackageJsonInfoCache?.()?.getPackageJsonInfo(packageJsonPath);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 1187,
+    "column": 10,
+    "method": "fileExists",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    if (!host.fileExists || !host.readFile) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 1254,
+    "column": 35,
+    "method": "getPackageJsonInfoCache",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "        const cachedPackageJson = host.getPackageJsonInfoCache?.()?.getPackageJsonInfo(packageJsonPath);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 1346,
+    "column": 10,
+    "method": "fileExists",
+    "owner": "ModuleSpecifierResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    if (!host.fileExists) return;",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 4840,
+    "column": 99,
+    "method": "createIntersectionTypeNode",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "        return parseUnionOrIntersectionType(SyntaxKind.AmpersandToken, parseTypeOperatorOrHigher, factory.createIntersectionTypeNode);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 4844,
+    "column": 97,
+    "method": "createUnionTypeNode",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "        return parseUnionOrIntersectionType(SyntaxKind.BarToken, parseIntersectionTypeOrHigher, factory.createUnionTypeNode);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9117,
+    "column": 53,
+    "method": "createJSDocClassTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocClassTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9120,
+    "column": 53,
+    "method": "createJSDocPublicTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocPublicTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9123,
+    "column": 53,
+    "method": "createJSDocPrivateTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocPrivateTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9126,
+    "column": 53,
+    "method": "createJSDocProtectedTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocProtectedTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9129,
+    "column": 53,
+    "method": "createJSDocReadonlyTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocReadonlyTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9132,
+    "column": 53,
+    "method": "createJSDocOverrideTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocOverrideTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9136,
+    "column": 53,
+    "method": "createJSDocDeprecatedTag",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                        tag = parseSimpleTag(start, factory.createJSDocDeprecatedTag, tagName, margin, indentText);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9322,
+    "column": 54,
+    "method": "createJSDocLink",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                const create = linkType === \"link\" ? factory.createJSDocLink",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9323,
+    "column": 49,
+    "method": "createJSDocLinkCode",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                    : linkType === \"linkcode\" ? factory.createJSDocLinkCode",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 9324,
+    "column": 23,
+    "method": "createJSDocLinkPlain",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                    : factory.createJSDocLinkPlain;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/performance.ts",
+    "line": 189,
+    "column": 54,
+    "method": "cpuProfilingEnabled",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "            if (perfHooks.shouldWriteNativeEvents || system?.cpuProfilingEnabled?.() || system?.debugMode) {",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 73,
+    "column": 62,
+    "method": "now",
+    "owner": "PerformanceTime",
+    "accessRole": "read",
+    "sourceLine": "    if (typeof performance.timeOrigin === \"number\" && typeof performance.now === \"function\") {",
+    "class": "presence",
+    "presenceForm": "typeof comparison",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "performance",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 79,
+    "column": 16,
+    "method": "mark",
+    "owner": "Performance",
+    "accessRole": "read",
+    "sourceLine": "        typeof performance.mark === \"function\" &&",
+    "class": "presence",
+    "presenceForm": "typeof comparison",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "performance",
+    "guardedBranchCount": 4,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 80,
+    "column": 16,
+    "method": "measure",
+    "owner": "Performance",
+    "accessRole": "read",
+    "sourceLine": "        typeof performance.measure === \"function\" &&",
+    "class": "presence",
+    "presenceForm": "typeof comparison",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "performance",
+    "guardedBranchCount": 3,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 81,
+    "column": 16,
+    "method": "clearMarks",
+    "owner": "Performance",
+    "accessRole": "read",
+    "sourceLine": "        typeof performance.clearMarks === \"function\" &&",
+    "class": "presence",
+    "presenceForm": "typeof comparison",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "performance",
+    "guardedBranchCount": 2,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 82,
+    "column": 16,
+    "method": "clearMeasures",
+    "owner": "Performance",
+    "accessRole": "read",
+    "sourceLine": "        typeof performance.clearMeasures === \"function\"",
+    "class": "presence",
+    "presenceForm": "typeof comparison",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "performance",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 103,
+    "column": 100,
+    "method": "now",
+    "owner": "DateConstructor",
+    "accessRole": "read",
+    "sourceLine": "export const timestamp: () => number = nativePerformanceTime ? () => nativePerformanceTime.now() : Date.now;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 460,
+    "column": 46,
+    "method": "directoryExists",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        if ((compilerHost.directoryExists || system.directoryExists)(directoryPath)) {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 472,
+    "column": 22,
+    "method": "realpath",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    const realpath = system.realpath && ((path: string) => system.realpath!(path));",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 472
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 479,
+    "column": 54,
+    "method": "createDirectory",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "            path => (compilerHost.createDirectory || system.createDirectory)(path),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 490,
+    "column": 41,
+    "method": "getEnvironmentVariable",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        getEnvironmentVariable: name => system.getEnvironmentVariable ? system.getEnvironmentVariable(name) : \"\",",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 490
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 495,
+    "column": 21,
+    "method": "createHash",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        createHash: system.createHash?.bind(system),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 526,
+    "column": 30,
+    "method": "readFile",
+    "owner": "CompilerHostLikeForCache",
+    "accessRole": "read",
+    "sourceLine": "    const originalReadFile = host.readFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 527,
+    "column": 32,
+    "method": "fileExists",
+    "owner": "CompilerHostLikeForCache",
+    "accessRole": "read",
+    "sourceLine": "    const originalFileExists = host.fileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 547,
+    "column": 5,
+    "method": "readFile",
+    "owner": "CompilerHostLikeForCache",
+    "accessRole": "write",
+    "sourceLine": "    host.readFile = fileName => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 574,
+    "column": 5,
+    "method": "fileExists",
+    "owner": "CompilerHostLikeForCache",
+    "accessRole": "write",
+    "sourceLine": "    host.fileExists = fileName => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1603,
+    "column": 39,
+    "method": "hasInvalidatedResolutions",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const hasInvalidatedResolutions = host.hasInvalidatedResolutions || returnFalse;",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": true,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1684,
+    "column": 42,
+    "method": "hasInvalidatedLibResolutions",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const hasInvalidatedLibResolutions = host.hasInvalidatedLibResolutions || returnFalse;",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": true,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1735,
+    "column": 22,
+    "method": "readFile",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const readFile = host.readFile.bind(host) as typeof host.readFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1835,
+    "column": 23,
+    "method": "onReleaseOldSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    if (oldProgram && host.onReleaseOldSourceFile) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 1844
+      },
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 1850
+      }
+    ],
+    "guardedCallCount": 2,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1847,
+    "column": 14,
+    "method": "getParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!host.getParsedCommandLine) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1857,
+    "column": 23,
+    "method": "onReleaseParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    if (oldProgram && host.onReleaseParsedCommandLine) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 1865
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 1957,
+    "column": 40,
+    "method": "getGlobalTypingsCacheLocation",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "        getGlobalTypingsCacheLocation: host.getGlobalTypingsCacheLocation?.bind(host),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2393,
+    "column": 33,
+    "method": "getSourceFileByPath",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "            let newSourceFile = host.getSourceFileByPath",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 2394
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2602,
+    "column": 39,
+    "method": "getCommonSourceDirectory",
+    "owner": "Program",
+    "accessRole": "read",
+    "sourceLine": "            getCommonSourceDirectory: program.getCommonSourceDirectory,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2603,
+    "column": 33,
+    "method": "getCompilerOptions",
+    "owner": "ScriptReferenceHost",
+    "accessRole": "read",
+    "sourceLine": "            getCompilerOptions: program.getCompilerOptions,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2605,
+    "column": 28,
+    "method": "getSourceFile",
+    "owner": "ScriptReferenceHost",
+    "accessRole": "read",
+    "sourceLine": "            getSourceFile: program.getSourceFile,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2606,
+    "column": 34,
+    "method": "getSourceFileByPath",
+    "owner": "ScriptReferenceHost",
+    "accessRole": "read",
+    "sourceLine": "            getSourceFileByPath: program.getSourceFileByPath,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2607,
+    "column": 29,
+    "method": "getSourceFiles",
+    "owner": "Program",
+    "accessRole": "read",
+    "sourceLine": "            getSourceFiles: program.getSourceFiles,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2629,
+    "column": 33,
+    "method": "getBuildInfo",
+    "owner": "Program",
+    "accessRole": "read",
+    "sourceLine": "            getBuildInfo: () => program.getBuildInfo?.(),",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2632,
+    "column": 36,
+    "method": "getFileIncludeReasons",
+    "owner": "Program",
+    "accessRole": "read",
+    "sourceLine": "            getFileIncludeReasons: program.getFileIncludeReasons,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4015,
+    "column": 13,
+    "method": "getParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        if (host.getParsedCommandLine) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 4016
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4799,
+    "column": 13,
+    "method": "getSymlinkCache",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        if (host.getSymlinkCache) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 4800
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4894,
+    "column": 32,
+    "method": "fileExists",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    const originalFileExists = host.compilerHost.fileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4901,
+    "column": 5,
+    "method": "fileExists",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "write",
+    "sourceLine": "    host.compilerHost.fileExists = fileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4956,
+    "column": 9,
+    "method": "fileExists",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "write",
+    "sourceLine": "        host.compilerHost.fileExists = originalFileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 5121,
+    "column": 16,
+    "method": "trace",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        trace: host.trace ? s => host.trace!(s) : undefined,",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 5121
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 506,
+    "column": 12,
+    "method": "getCompilerHost",
+    "owner": "MinimalResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "    return resolutionHost.getCompilerHost?.() || resolutionHost;",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 544,
+    "column": 10,
+    "method": "getGlobalTypingsCacheLocation",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "read",
+    "sourceLine": "    if (!resolutionHost.getGlobalTypingsCacheLocation) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "resolutionHost",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 554,
+    "column": 32,
+    "method": "globalCacheResolutionModuleName",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(resolutionHost.globalCacheResolutionModuleName)(moduleName),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 898,
+    "column": 21,
+    "method": "onDiscoveredSymlink",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "                if (resolutionHost.onDiscoveredSymlink && resolutionIsSymlink(resolution)) {",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "resolutionHost",
+    "guardedBranchCount": 2,
+    "guardedCalls": [
+      {
+        "receiver": "resolutionHost",
+        "sameReceiver": true,
+        "line": 899
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 902,
+    "column": 59,
+    "method": "skipWatchingFailedLookups",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "                if (resolution !== existingResolution && !resolutionHost.skipWatchingFailedLookups?.(path)) {",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 954,
+    "column": 26,
+    "method": "skipWatchingFailedLookups",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "                    if (!resolutionHost.skipWatchingFailedLookups?.(path)) {",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1084,
+    "column": 22,
+    "method": "beforeResolveSingleModuleNameWithoutWatching",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "        const data = resolutionHost.beforeResolveSingleModuleNameWithoutWatching?.(moduleResolutionCache);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1094,
+    "column": 9,
+    "method": "afterResolveSingleModuleNameWithoutWatching",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "        resolutionHost.afterResolveSingleModuleNameWithoutWatching?.(moduleResolutionCache, moduleName, containingFile, result, data);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1443,
+    "column": 18,
+    "method": "skipWatchingFailedLookups",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "            if (!resolutionHost.skipWatchingFailedLookups?.(filePath)) {",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1679,
+    "column": 33,
+    "method": "skipWatchingTypeRoots",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!isRootWatchable || resolutionHost.skipWatchingTypeRoots?.()) {",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 469,
+    "column": 12,
+    "method": "getPositionOfLineAndCharacter",
+    "owner": "SourceFileLike",
+    "accessRole": "read",
+    "sourceLine": "    return sourceFile.getPositionOfLineAndCharacter ?",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sourceFile",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "sourceFile",
+        "sameReceiver": true,
+        "line": 470
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/scanner.ts",
+    "line": 4068,
+    "column": 66,
+    "method": "fromCodePoint",
+    "owner": "StringConstructor",
+    "accessRole": "read",
+    "sourceLine": "const utf16EncodeAsStringWorker: (codePoint: number) => string = String.fromCodePoint ? codePoint => String.fromCodePoint(codePoint) : utf16EncodeAsStringFallback;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "String",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "String",
+        "sameReceiver": true,
+        "line": 4068
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 88,
+    "column": 116,
+    "method": "getCanonicalFileName",
+    "owner": "EmitHost",
+    "accessRole": "read",
+    "sourceLine": "        const source = getRelativePathToDirectoryOrUrl(sourcesDirectoryPath, fileName, host.getCurrentDirectory(), host.getCanonicalFileName, /*isAbsolutePathAnUrl*/ true);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 318,
+    "column": 25,
+    "method": "fromCharCode",
+    "owner": "StringConstructor",
+    "accessRole": "read",
+    "sourceLine": "            mappings += String.fromCharCode.apply(undefined, mappingCharCodes);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 745,
+    "column": 21,
+    "method": "log",
+    "owner": "DocumentPositionMapperHost",
+    "accessRole": "read",
+    "sourceLine": "                if (host.log) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 746
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 139,
+    "column": 10,
+    "method": "getEnvironmentVariable",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    if (!system.getEnvironmentVariable) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1405,
+    "column": 31,
+    "method": "writeFile",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    const originalWriteFile = sys.writeFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1406,
+    "column": 5,
+    "method": "writeFile",
+    "owner": "System",
+    "accessRole": "write",
+    "sourceLine": "    sys.writeFile = (path, data, writeBom) =>",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1985,
+    "column": 12,
+    "method": "getEnvironmentVariable",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "if (sys && sys.getEnvironmentVariable) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "sys",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "sys",
+        "sameReceiver": true,
+        "line": 1988
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2028,
+    "column": 73,
+    "method": "createExpressionStatement",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "                    addRange(pendingStatements, map(pendingExpressions, factory.createExpressionStatement));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/declarations.ts",
+    "line": 595,
+    "column": 21,
+    "method": "getCanonicalFileName",
+    "owner": "EmitHost",
+    "accessRole": "read",
+    "sourceLine": "                    host.getCanonicalFileName,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 607,
+    "column": 63,
+    "method": "convertToArrayAssignmentElement",
+    "owner": "NodeConverters",
+    "accessRole": "read",
+    "sourceLine": "    return factory.createArrayLiteralExpression(map(elements, factory.converters.convertToArrayAssignmentElement));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 617,
+    "column": 64,
+    "method": "convertToObjectAssignmentElement",
+    "owner": "NodeConverters",
+    "accessRole": "read",
+    "sourceLine": "    return factory.createObjectLiteralExpression(map(elements, factory.converters.convertToObjectAssignmentElement));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2950,
+    "column": 88,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            : factory.restoreEnclosingLabel(visitNode(statement, visitor, isStatement, factory.liftToBlock) ?? setTextRange(factory.createEmptyStatement(), statement), node, convertedLoopState && resetLabel);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2998,
+    "column": 80,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(visitNode(node.statement, visitor, isStatement, factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 3099,
+    "column": 79,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            const statement = visitNode(node.statement, visitor, isStatement, factory.liftToBlock);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 3479,
+    "column": 151,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            const clone = convertIterationStatementCore(node, initializerFunction, Debug.checkDefined(visitNode(node.statement, visitor, isStatement, factory.liftToBlock)));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 3780,
+    "column": 75,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "        const statement = visitNode(node.statement, visitor, isStatement, factory.liftToBlock);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/es2018.ts",
+    "line": 477,
+    "column": 93,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            return factory.restoreEnclosingLabel(visitNode(statement, visitor, isStatement, factory.liftToBlock), node);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 1729,
+    "column": 242,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            node = factory.updateForInStatement(node, initializer.declarations[0]!.name as Identifier, Debug.checkDefined(visitNode(node.expression, visitor, isExpression)), Debug.checkDefined(visitNode(node.statement, visitor, isStatement, factory.liftToBlock)));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 1015,
+    "column": 75,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.statement, topLevelNestedVisitor, isStatement, factory.liftToBlock) ?? setTextRange(factory.createEmptyStatement(), node.statement),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 1028,
+    "column": 94,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(visitNode(node.statement, topLevelNestedVisitor, isStatement, factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 1041,
+    "column": 79,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.thenStatement, topLevelNestedVisitor, isStatement, factory.liftToBlock) ?? factory.createBlock([]),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 1042,
+    "column": 79,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.elseStatement, topLevelNestedVisitor, isStatement, factory.liftToBlock),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "line": 1422,
+    "column": 75,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.statement, topLevelNestedVisitor, isStatement, factory.liftToBlock) ?? factory.createExpressionStatement(factory.createIdentifier(\"\")),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "line": 1435,
+    "column": 94,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(visitNode(node.statement, topLevelNestedVisitor, isStatement, factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "line": 1448,
+    "column": 79,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.thenStatement, topLevelNestedVisitor, isStatement, factory.liftToBlock) ?? factory.createBlock([]),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "line": 1449,
+    "column": 79,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            visitNode(node.elseStatement, topLevelNestedVisitor, isStatement, factory.liftToBlock),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 427,
+    "column": 119,
+    "method": "toKey",
+    "owner": "IdentifierNameMap",
+    "accessRole": "read",
+    "sourceLine": "                return formatGeneratedName(/*privateName*/ false, autoGenerate.prefix, baseName, autoGenerate.suffix, IdentifierNameMap.toKey);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 431,
+    "column": 119,
+    "method": "toKey",
+    "owner": "IdentifierNameMap",
+    "accessRole": "read",
+    "sourceLine": "                return formatGeneratedName(/*privateName*/ false, autoGenerate.prefix, baseName, autoGenerate.suffix, IdentifierNameMap.toKey);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 296,
+    "column": 5,
+    "method": "getModifiedTime",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "write",
+    "sourceLine": "    host.getModifiedTime = system.getModifiedTime ? path => system.getModifiedTime!(path) : returnUndefined;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 296,
+    "column": 28,
+    "method": "getModifiedTime",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    host.getModifiedTime = system.getModifiedTime ? path => system.getModifiedTime!(path) : returnUndefined;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 296
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 297,
+    "column": 5,
+    "method": "setModifiedTime",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "write",
+    "sourceLine": "    host.setModifiedTime = system.setModifiedTime ? (path, date) => system.setModifiedTime!(path, date) : noop;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 297,
+    "column": 28,
+    "method": "setModifiedTime",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    host.setModifiedTime = system.setModifiedTime ? (path, date) => system.setModifiedTime!(path, date) : noop;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 297
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 298,
+    "column": 5,
+    "method": "deleteFile",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "write",
+    "sourceLine": "    host.deleteFile = system.deleteFile ? path => system.deleteFile!(path) : noop;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 298,
+    "column": 23,
+    "method": "deleteFile",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    host.deleteFile = system.deleteFile ? path => system.deleteFile!(path) : noop;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 298
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 301,
+    "column": 16,
+    "method": "now",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    host.now = system.now?.bind(system); // For testing",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 436,
+    "column": 5,
+    "method": "getParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getParsedCommandLine = fileName => parseConfigFile(state, fileName as ResolvedConfigFileName, toResolvedConfigFilePath(state, fileName as ResolvedConfigFileName));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 437,
+    "column": 46,
+    "method": "resolveModuleNameLiterals",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveModuleNameLiterals = host.resolveModuleNameLiterals?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 438,
+    "column": 60,
+    "method": "resolveTypeReferenceDirectiveReferences",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveTypeReferenceDirectiveReferences = host.resolveTypeReferenceDirectiveReferences?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 439,
+    "column": 35,
+    "method": "resolveLibrary",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveLibrary = host.resolveLibrary?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 440,
+    "column": 39,
+    "method": "resolveModuleNames",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveModuleNames = host.resolveModuleNames?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 441,
+    "column": 51,
+    "method": "resolveTypeReferenceDirectives",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveTypeReferenceDirectives = host.resolveTypeReferenceDirectives?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 442,
+    "column": 45,
+    "method": "getModuleResolutionCache",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.getModuleResolutionCache = host.getModuleResolutionCache?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 445,
+    "column": 97,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        moduleResolutionCache = createModuleResolutionCache(compilerHost.getCurrentDirectory(), compilerHost.getCanonicalFileName);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 462,
+    "column": 13,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "            compilerHost.getCanonicalFileName,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 481,
+    "column": 98,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        libraryResolutionCache = createModuleResolutionCache(compilerHost.getCurrentDirectory(), compilerHost.getCanonicalFileName, /*options*/ undefined, moduleResolutionCache?.getPackageJsonInfoCache());",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 491,
+    "column": 5,
+    "method": "getBuildInfo",
+    "owner": "CompilerHost | ReadBuildProgramHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getBuildInfo = (fileName, configFilePath) => getBuildInfo(state, fileName, toResolvedConfigFilePath(state, configFilePath as ResolvedConfigFileName), /*modifiedTime*/ undefined);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 499,
+    "column": 16,
+    "method": "trace",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        write: host.trace?.bind(host),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 555,
+    "column": 74,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    return ts_toPath(fileName, state.compilerHost.getCurrentDirectory(), state.compilerHost.getCanonicalFileName);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 588,
+    "column": 9,
+    "method": "getParsedCommandLine",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "read",
+    "sourceLine": "    if (host.getParsedCommandLine) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 589
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 748,
+    "column": 35,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const originalGetSourceFile = compilerHost.getSourceFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 764,
+    "column": 5,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getSourceFile = getSourceFileWithCache!;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 782,
+    "column": 5,
+    "method": "readFile",
+    "owner": "ProgramHost",
+    "accessRole": "write",
+    "sourceLine": "    host.readFile = cache.originalReadFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 783,
+    "column": 5,
+    "method": "fileExists",
+    "owner": "ProgramHost",
+    "accessRole": "write",
+    "sourceLine": "    host.fileExists = cache.originalFileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 787,
+    "column": 5,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getSourceFile = cache.originalGetSourceFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 991,
+    "column": 22,
+    "method": "getSemanticDiagnosticsOfNextAffectedFile",
+    "owner": "SemanticDiagnosticsBuilderProgram",
+    "accessRole": "read",
+    "sourceLine": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "(program as any as SemanticDiagnosticsBuilderProgram)",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "(program as any as SemanticDiagnosticsBuilderProgram)",
+        "sameReceiver": true,
+        "line": 992
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1099,
+    "column": 48,
+    "method": "hasChangedEmitSignature",
+    "owner": "BuilderProgram",
+    "accessRole": "read",
+    "sourceLine": "                    const isChangedSignature = program!.hasChangedEmitSignature?.();",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1143,
+    "column": 23,
+    "method": "hasChangedEmitSignature",
+    "owner": "BuilderProgram",
+    "accessRole": "read",
+    "sourceLine": "        buildResult = program.hasChangedEmitSignature?.() ? BuildResultFlags.None : BuildResultFlags.DeclarationOutputUnchanged;",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1362,
+    "column": 13,
+    "method": "afterProgramEmitAndDiagnostics",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "read",
+    "sourceLine": "        if (state.host.afterProgramEmitAndDiagnostics) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "state.host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "state.host",
+        "sameReceiver": true,
+        "line": 1363
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 2040,
+    "column": 9,
+    "method": "getParsedCommandLine",
+    "owner": "SolutionBuilderHostBase",
+    "accessRole": "read",
+    "sourceLine": "    if (state.host.getParsedCommandLine && updateLevel === ProgramUpdateLevel.RootNamesAndUpdate) {",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "state.host",
+    "guardedBranchCount": 2,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 2061,
+    "column": 10,
+    "method": "setTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "    if (!hostWithWatch.setTimeout || !hostWithWatch.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "hostWithWatch",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 2061,
+    "column": 39,
+    "method": "clearTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "    if (!hostWithWatch.setTimeout || !hostWithWatch.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "hostWithWatch",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 2292,
+    "column": 82,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    return convertToRelativePath(path, state.compilerHost.getCurrentDirectory(), state.compilerHost.getCanonicalFileName);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 2300,
+    "column": 5,
+    "method": "onWatchStatusChange",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "    state.hostWithWatch.onWatchStatusChange?.(createCompilerDiagnostic(message, ...args), state.host.getNewLine(), state.baseCompilerOptions);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6482,
+    "column": 12,
+    "method": "useCaseSensitiveFileNames",
+    "owner": "<type literal>",
+    "accessRole": "read",
+    "sourceLine": "    return host.useCaseSensitiveFileNames ? host.useCaseSensitiveFileNames() : false;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 6482
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6609,
+    "column": 75,
+    "method": "getCurrentDirectory",
+    "owner": "<type literal>",
+    "accessRole": "read",
+    "sourceLine": "    return options.baseUrl ?? Debug.checkDefined(options.pathsBasePath || host.getCurrentDirectory?.(), \"Encountered 'paths' without a 'baseUrl', config file, or host 'getCurrentDirectory'.\");",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 7740,
+    "column": 17,
+    "method": "base64encode",
+    "owner": "<type literal>",
+    "accessRole": "read",
+    "sourceLine": "    if (host && host.base64encode) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 7741
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 7748,
+    "column": 17,
+    "method": "base64decode",
+    "owner": "<type literal>",
+    "accessRole": "read",
+    "sourceLine": "    if (host && host.base64decode) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 7749
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8223,
+    "column": 44,
+    "method": "get",
+    "owner": "Map",
+    "accessRole": "read",
+    "sourceLine": "            onExistingValue(existingValue, (newMap as Map<K, U>).get?.(key)!, key);",
+    "class": "optional-call"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 11194,
+    "column": 92,
+    "method": "replace",
+    "owner": "String",
+    "accessRole": "read",
+    "sourceLine": "const stringReplace: (this: string, searchValue: string, replaceValue: string) => string = String.prototype.replace;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 545,
+    "column": 61,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "    const updated = nodeVisitor(body, visitor, isStatement, context.factory.liftToBlock);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 1301,
+    "column": 86,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(nodeVisitor(node.thenStatement, visitor, isStatement, context.factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 1302,
+    "column": 67,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            nodeVisitor(node.elseStatement, visitor, isStatement, context.factory.liftToBlock),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 1376,
+    "column": 82,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(nodeVisitor(node.statement, visitor, isStatement, context.factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 1392,
+    "column": 82,
+    "method": "liftToBlock",
+    "owner": "NodeFactory",
+    "accessRole": "read",
+    "sourceLine": "            Debug.checkDefined(nodeVisitor(node.statement, visitor, isStatement, context.factory.liftToBlock)),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 147,
+    "column": 9,
+    "method": "clearScreen",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        system.clearScreen &&",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 5,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 153
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 177,
+    "column": 13,
+    "method": "now",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    return !system.now ?",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "system",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "system",
+        "sameReceiver": true,
+        "line": 184
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 676,
+    "column": 20,
+    "method": "watchFile",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        watchFile: system.watchFile?.bind(system) || returnNoopFileWatcher,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 677,
+    "column": 25,
+    "method": "watchDirectory",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        watchDirectory: system.watchDirectory?.bind(system) || returnNoopFileWatcher,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 678,
+    "column": 21,
+    "method": "setTimeout",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        setTimeout: system.setTimeout?.bind(system) || noop,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 679,
+    "column": 23,
+    "method": "clearTimeout",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        clearTimeout: system.clearTimeout?.bind(system) || noop,",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 745,
+    "column": 27,
+    "method": "trace",
+    "owner": "<type literal>",
+    "accessRole": "read",
+    "sourceLine": "    const watchLogLevel = host.trace ? options.extendedDiagnostics ? WatchLogLevel.Verbose : options.diagnostics ? WatchLogLevel.TriggerOnly : WatchLogLevel.None : WatchLogLevel.None;",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 760,
+    "column": 32,
+    "method": "getDefaultLibLocation",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        getDefaultLibLocation: host.getDefaultLibLocation?.bind(host),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 773,
+    "column": 16,
+    "method": "trace",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        trace: host.trace?.bind(host),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 779,
+    "column": 24,
+    "method": "readDirectory",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        readDirectory: host.readDirectory?.bind(host),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 827,
+    "column": 35,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const originalGetSourceFile = compilerHost.getSourceFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 828,
+    "column": 5,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getSourceFile = (...args) => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 855,
+    "column": 19,
+    "method": "realpath",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        realpath: system.realpath?.bind(system),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 856,
+    "column": 33,
+    "method": "getEnvironmentVariable",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        getEnvironmentVariable: system.getEnvironmentVariable?.bind(system),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 860,
+    "column": 21,
+    "method": "createHash",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        createHash: system.createHash?.bind(system),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 863,
+    "column": 14,
+    "method": "now",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "        now: system.now?.bind(system),",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 874,
+    "column": 5,
+    "method": "afterProgramCreate",
+    "owner": "WatchCompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    result.afterProgramCreate = builderProgram => {",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 996,
+    "column": 9,
+    "method": "afterProgramEmitAndDiagnostics",
+    "owner": "IncrementalCompilationOptions",
+    "accessRole": "read",
+    "sourceLine": "    if (input.afterProgramEmitAndDiagnostics) input.afterProgramEmitAndDiagnostics(builderProgram);",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "input",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "input",
+        "sameReceiver": true,
+        "line": 996
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 109,
+    "column": 9,
+    "method": "getBuildInfo",
+    "owner": "ReadBuildProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    if (host.getBuildInfo) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 111
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 124,
+    "column": 23,
+    "method": "createHash",
+    "owner": "System",
+    "accessRole": "read",
+    "sourceLine": "    host.createHash = system.createHash?.bind(system);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 127,
+    "column": 101,
+    "method": "getCanonicalFileName",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    changeCompilerHostLikeToUseCache(host, fileName => toPath(fileName, host.getCurrentDirectory(), host.getCanonicalFileName));",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 495,
+    "column": 30,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    const getNewSourceFile = compilerHost.getSourceFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 496,
+    "column": 5,
+    "method": "getSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getSourceFile = (fileName, ...args) => getVersionedSourceFileByPath(fileName, toPath(fileName), ...args);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 497,
+    "column": 5,
+    "method": "getSourceFileByPath",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getSourceFileByPath = getVersionedSourceFileByPath;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 498,
+    "column": 5,
+    "method": "getNewLine",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getNewLine = () => newLine;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 499,
+    "column": 5,
+    "method": "fileExists",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.fileExists = fileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 500,
+    "column": 5,
+    "method": "onReleaseOldSourceFile",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.onReleaseOldSourceFile = onReleaseOldSourceFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 501,
+    "column": 5,
+    "method": "onReleaseParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.onReleaseParsedCommandLine = onReleaseParsedCommandLine;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 503,
+    "column": 5,
+    "method": "toPath",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.toPath = toPath;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 504,
+    "column": 5,
+    "method": "getCompilationSettings",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getCompilationSettings = () => compilerOptions!;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 505,
+    "column": 56,
+    "method": "useSourceOfProjectReferenceRedirect",
+    "owner": "WatchCompilerHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.useSourceOfProjectReferenceRedirect = host.useSourceOfProjectReferenceRedirect?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 507,
+    "column": 5,
+    "method": "watchDirectoryOfFailedLookupLocation",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.watchDirectoryOfFailedLookupLocation = (dir, cb, flags) => watchDirectory(dir, cb, flags, watchOptions, WatchType.FailedLookupLocations);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 508,
+    "column": 5,
+    "method": "watchAffectingFileLocation",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.watchAffectingFileLocation = (file, cb) => watchFile(file, cb, PollingInterval.High, watchOptions, WatchType.AffectingFileLocation);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 509,
+    "column": 5,
+    "method": "watchTypeRootsDirectory",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.watchTypeRootsDirectory = (dir, cb, flags) => watchDirectory(dir, cb, flags, watchOptions, WatchType.TypeRoots);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 510,
+    "column": 5,
+    "method": "getCachedDirectoryStructureHost",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getCachedDirectoryStructureHost = () => cachedDirectoryStructureHost;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 511,
+    "column": 5,
+    "method": "scheduleInvalidateResolutionsOfFailedLookupLocations",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.scheduleInvalidateResolutionsOfFailedLookupLocations = scheduleInvalidateResolutionsOfFailedLookupLocations;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 512,
+    "column": 5,
+    "method": "onInvalidatedResolution",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.onInvalidatedResolution = scheduleProgramUpdate;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 513,
+    "column": 5,
+    "method": "onChangedAutomaticTypeDirectiveNames",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.onChangedAutomaticTypeDirectiveNames = scheduleProgramUpdate;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 514,
+    "column": 5,
+    "method": "fileIsOpen",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.fileIsOpen = returnFalse;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 515,
+    "column": 5,
+    "method": "getCurrentProgram",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getCurrentProgram = getCurrentProgram;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 516,
+    "column": 5,
+    "method": "writeLog",
+    "owner": "ResolutionCacheHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.writeLog = writeLog;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 517,
+    "column": 5,
+    "method": "getParsedCommandLine",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "    compilerHost.getParsedCommandLine = getParsedCommandLine;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 528,
+    "column": 46,
+    "method": "resolveModuleNameLiterals",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveModuleNameLiterals = host.resolveModuleNameLiterals?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 529,
+    "column": 39,
+    "method": "resolveModuleNames",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveModuleNames = host.resolveModuleNames?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 531,
+    "column": 50,
+    "method": "resolveModuleNameLiterals",
+    "owner": "ResolutionCache",
+    "accessRole": "read",
+    "sourceLine": "        compilerHost.resolveModuleNameLiterals = resolutionCache.resolveModuleNameLiterals.bind(resolutionCache);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 533,
+    "column": 60,
+    "method": "resolveTypeReferenceDirectiveReferences",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveTypeReferenceDirectiveReferences = host.resolveTypeReferenceDirectiveReferences?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 534,
+    "column": 51,
+    "method": "resolveTypeReferenceDirectives",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveTypeReferenceDirectives = host.resolveTypeReferenceDirectives?.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 536,
+    "column": 64,
+    "method": "resolveTypeReferenceDirectiveReferences",
+    "owner": "ResolutionCache",
+    "accessRole": "read",
+    "sourceLine": "        compilerHost.resolveTypeReferenceDirectiveReferences = resolutionCache.resolveTypeReferenceDirectiveReferences.bind(resolutionCache);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 538,
+    "column": 36,
+    "method": "resolveLibrary",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.resolveLibrary = !host.resolveLibrary ?",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 539,
+    "column": 9,
+    "method": "resolveLibrary",
+    "owner": "ResolutionCache",
+    "accessRole": "read",
+    "sourceLine": "        resolutionCache.resolveLibrary.bind(resolutionCache) :",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 540,
+    "column": 9,
+    "method": "resolveLibrary",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        host.resolveLibrary.bind(host);",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 541,
+    "column": 45,
+    "method": "resolveModuleNameLiterals",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.getModuleResolutionCache = host.resolveModuleNameLiterals || host.resolveModuleNames ?",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 2,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 541,
+    "column": 79,
+    "method": "resolveModuleNames",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    compilerHost.getModuleResolutionCache = host.resolveModuleNameLiterals || host.resolveModuleNames ?",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 542,
+    "column": 9,
+    "method": "getModuleResolutionCache",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        host.getModuleResolutionCache?.bind(host) :",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 544,
+    "column": 38,
+    "method": "resolveModuleNameLiterals",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    const userProvidedResolution = !!host.resolveModuleNameLiterals || !!host.resolveTypeReferenceDirectiveReferences ||",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 3,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 544,
+    "column": 74,
+    "method": "resolveTypeReferenceDirectiveReferences",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    const userProvidedResolution = !!host.resolveModuleNameLiterals || !!host.resolveTypeReferenceDirectiveReferences ||",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 2,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 545,
+    "column": 11,
+    "method": "resolveModuleNames",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        !!host.resolveModuleNames || !!host.resolveTypeReferenceDirectives;",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 545,
+    "column": 40,
+    "method": "resolveTypeReferenceDirectives",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        !!host.resolveModuleNames || !!host.resolveTypeReferenceDirectives;",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 548,
+    "column": 9,
+    "method": "hasInvalidatedResolutions",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        host.hasInvalidatedResolutions?.bind(host) || returnTrue :",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 550,
+    "column": 44,
+    "method": "resolveLibrary",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "    const customHasInvalidLibResolutions = host.resolveLibrary ?",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 551,
+    "column": 9,
+    "method": "hasInvalidatedLibResolutions",
+    "owner": "ProgramHost",
+    "accessRole": "read",
+    "sourceLine": "        host.hasInvalidatedLibResolutions?.bind(host) || returnTrue :",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 654,
+    "column": 13,
+    "method": "afterProgramCreate",
+    "owner": "WatchCompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        if (host.afterProgramCreate && program !== builderProgram) {",
+    "class": "presence",
+    "presenceForm": "logical left",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 2,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 655
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 658,
+    "column": 9,
+    "method": "readFile",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "write",
+    "sourceLine": "        compilerHost.readFile = originalReadFile;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 659,
+    "column": 9,
+    "method": "fileExists",
+    "owner": "ModuleResolutionHost",
+    "accessRole": "write",
+    "sourceLine": "        compilerHost.fileExists = originalFileExists;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 692,
+    "column": 9,
+    "method": "hasInvalidatedResolutions",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "        compilerHost.hasInvalidatedResolutions = hasInvalidatedResolutions;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 693,
+    "column": 9,
+    "method": "hasInvalidatedLibResolutions",
+    "owner": "CompilerHost",
+    "accessRole": "write",
+    "sourceLine": "        compilerHost.hasInvalidatedLibResolutions = hasInvalidatedLibResolutions;",
+    "class": "escapes"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 845,
+    "column": 13,
+    "method": "onWatchStatusChange",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        if (host.onWatchStatusChange) {",
+    "class": "presence",
+    "presenceForm": "if condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 846
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 862,
+    "column": 14,
+    "method": "setTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!host.setTimeout || !host.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 862,
+    "column": 34,
+    "method": "clearTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!host.setTimeout || !host.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 888,
+    "column": 14,
+    "method": "setTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!host.setTimeout || !host.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 888,
+    "column": 34,
+    "method": "clearTimeout",
+    "owner": "WatchHost",
+    "accessRole": "read",
+    "sourceLine": "        if (!host.setTimeout || !host.clearTimeout) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 1002,
+    "column": 110,
+    "method": "getParsedCommandLine",
+    "owner": "WatchCompilerHost",
+    "accessRole": "read",
+    "sourceLine": "            if (config.parsedCommandLine && config.updateLevel === ProgramUpdateLevel.RootNamesAndUpdate && !host.getParsedCommandLine) {",
+    "class": "presence",
+    "presenceForm": "!",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 0,
+    "guardedCalls": [],
+    "guardedCallCount": 0,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": false
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "line": 1018,
+    "column": 35,
+    "method": "getParsedCommandLine",
+    "owner": "WatchCompilerHost",
+    "accessRole": "read",
+    "sourceLine": "        const parsedCommandLine = host.getParsedCommandLine ?",
+    "class": "presence",
+    "presenceForm": "conditional condition",
+    "logicalOrMayForwardMethodValue": false,
+    "receiver": "host",
+    "guardedBranchCount": 1,
+    "guardedCalls": [
+      {
+        "receiver": "host",
+        "sameReceiver": true,
+        "line": 1019
+      }
+    ],
+    "guardedCallCount": 1,
+    "everyGuardedCallSameReceiver": true,
+    "hasGuardedCall": true
+  },
+  {
+    "file": "src/compiler/watchUtilities.ts",
+    "line": 735,
+    "column": 140,
+    "method": "getCurrentDirectory",
+    "owner": "WatchFactoryHost",
+    "accessRole": "read",
+    "sourceLine": "        ) => !matchesExclude(file, key === \"watchFile\" ? options?.excludeFiles : options?.excludeDirectories, useCaseSensitiveFileNames(), host.getCurrentDirectory?.() || \"\") ?",
+    "class": "optional-call"
+  }
+]

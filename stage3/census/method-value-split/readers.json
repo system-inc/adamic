@@ -1,0 +1,59 @@
+{
+  "readers": [
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 469,
+      "column": 12,
+      "method": "getPositionOfLineAndCharacter",
+      "owner": "SourceFileLike",
+      "accessRole": "read",
+      "sourceLine": "    return sourceFile.getPositionOfLineAndCharacter ?",
+      "class": "presence",
+      "receiver": "sourceFile",
+      "sourceFileLike": true,
+      "declarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "owner": "SourceFileLike"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 470,
+      "column": 9,
+      "method": "getPositionOfLineAndCharacter",
+      "owner": "SourceFileLike",
+      "accessRole": "read",
+      "sourceLine": "        sourceFile.getPositionOfLineAndCharacter(line, character, allowEdits) :",
+      "class": "direct-call",
+      "receiver": "sourceFile",
+      "sourceFileLike": true,
+      "declarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "owner": "SourceFileLike"
+        }
+      ]
+    },
+    {
+      "file": "src/services/formatting/smartIndenter.ts",
+      "line": 594,
+      "column": 27,
+      "method": "getPositionOfLineAndCharacter",
+      "owner": "SourceFile",
+      "accessRole": "read",
+      "sourceLine": "        const lineStart = sourceFile.getPositionOfLineAndCharacter(lineAndCharacter.line, 0);",
+      "class": "direct-call",
+      "receiver": "sourceFile",
+      "sourceFileLike": false,
+      "declarations": [
+        {
+          "file": "src/services/types.ts",
+          "owner": "SourceFile"
+        }
+      ]
+    }
+  ],
+  "uncovered": []
+}
