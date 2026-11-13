@@ -91,6 +91,26 @@ type viewElementKey struct {
 	misses  []string
 }
 
+// viewedElementNesting is how many ever-newer types of one recursion identity may be open on
+// collectViewedElements' path before the walk counts it as growing without end.
+const viewedElementNesting = 5
+
+// viewedRecursionIdentity is what tsc's isDeeplyNestedType calls a type's recursion identity: a
+// reference's generic target, or an object type's symbol, which an instantiated anonymous type shares
+// with every other instantiation of it, or nil.
+func viewedRecursionIdentity(proven *checker.Type) any {
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
+		return proven.Target()
+	}
+	if symbol := proven.Symbol(); symbol != nil {
+		return symbol
+	}
+	return nil
+}
+
 // collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
 // (a speculation's result is a cast too), so it reads every one in every module the program loads,
 // .a and .ts alike, and collects the element type of every array its target can hold, through
@@ -104,12 +124,35 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 	key.viewed = map[*checker.Type]bool{}
 	key.related = map[*checker.Type]bool{}
 	seen := map[*checker.Type]bool{}
+	// A generic that instantiates itself deeper at each step (Grow<T> { next?: Grow<Grow<T>> }, or
+	// G<T> { next?: G<T[]> }) is a new type at every level, so seen never stops the walk, and it ran until
+	// Go's stack overflowed (#k031ey0). Counted as tsc's isDeeplyNestedType counts: types open on the
+	// walk's path that share a recursion identity (a reference's target, else an object type's symbol),
+	// each made later than the one before, so with a higher id, since a deeper instantiation is created
+	// after the one it grows from. Past viewedElementNesting of them the walk can't see to its end, so
+	// every read is checked, the pre-pass's answer wherever it can't decide (Optimizer's should on #k031ey0).
+	type nesting struct {
+		count  int
+		lastID int
+	}
+	open := map[any]nesting{}
 	var hold func(target *checker.Type, arm bool)
 	hold = func(target *checker.Type, arm bool) {
-		if target == nil || seen[target] {
+		if target == nil || seen[target] || key.every {
 			return
 		}
 		seen[target] = true
+		if identity := viewedRecursionIdentity(target); identity != nil {
+			before := open[identity]
+			if int(target.Id()) > before.lastID {
+				if before.count >= viewedElementNesting {
+					key.every = true
+					return
+				}
+				open[identity] = nesting{count: before.count + 1, lastID: int(target.Id())}
+				defer func() { open[identity] = before }()
+			}
+		}
 		switch {
 		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
 			for _, member := range target.Types() {
