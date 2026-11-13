@@ -22,7 +22,7 @@ for (const file of [...new Set(rules.map(r => r.file))]) {
         const newline = expected.includes("\r\n") ? "\r\n" : "\n";
         const a = rule.before.replace(/\r?\n/g,newline), b = rule.after.replace(/\r?\n/g,newline);
         assert.equal(expected.split(a).length,2,"one original owner " + rule.id);
-        expected = expected.replace(a,b);
+        expected = expected.replace(rule.after === "" ? a + newline : a,b);
     }
     assert.equal(after,expected,"only reviewed family edits " + file);
     const a = emit(before,file), b = emit(after,file);
