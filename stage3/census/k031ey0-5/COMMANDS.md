@@ -51,3 +51,8 @@ Continuation, per user instruction (groups of at most 10, each pushed before the
 python3 /workspace/scratch/k031ey0-5/evidence/measure.py range 61 70
 # Commit and push this group before starting range 71 79.
 ```
+
+```bash
+python3 /workspace/scratch/k031ey0-5/evidence/measure.py range 71 79
+# Commit and push this group before either latent pass.
+```

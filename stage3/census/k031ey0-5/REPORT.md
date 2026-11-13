@@ -8,8 +8,8 @@ Parent: `f44b5c272a39bcbd7cd2fb278939ac1c1832ce2e`. Head: `e64bc123c51fc33313368
 
 | Side | Completed roots | First observations (s) | Duplicate observations (s) | All measured child wall (s) |
 |---|---:|---:|---:|---:|
-| parent | 70/79 | 910.922355 | 884.116997 | 1801.353397 |
-| head | 70/79 | 906.438314 | 896.716106 | 1811.890959 |
+| parent | 79/79 | 1020.133749 | 988.566959 | 2015.806160 |
+| head | 79/79 | 1015.804640 | 1005.022321 | 2030.314151 |
 
 Changed first stops among completed pairs: **0**. First stop compares kind, location, exact reason and diagnostics. All duplicate observations agree in every non-timing field.
 
@@ -22,34 +22,16 @@ Entry latent census: **not run on either side**. No latent unit counts, whole-pa
 
 The first-observation seconds are the census tool’s load+Lower elapsed time. Child wall includes both observations and process overhead; totals exclude builds and adaptation. This is a single alternating measurement, with no statistical performance claim.
 
-parent: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [2.01220703125, 4.4755859375, 3.11669921875]; end load [1.97216796875, 1.40576171875, 1.28173828125]; sampled 1-minute range 0.25–2.01. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
+parent: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [2.01220703125, 4.4755859375, 3.11669921875]; end load [1.07763671875, 1.23974609375, 1.24853515625]; sampled 1-minute range 0.25–2.01. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
 
-head: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [1.93701171875, 4.259765625, 3.080078125]; end load [1.88916015625, 1.435546875, 1.2939453125]; sampled 1-minute range 0.51–1.97. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
+head: box `d312b35f425b`; 5 available CPUs; cpu.max `400000 100000` (4 CPU quota). Start load [1.93701171875, 4.259765625, 3.080078125]; end load [1.36669921875, 1.2822265625, 1.26171875]; sampled 1-minute range 0.51–1.97. Load triples are 1/5/15-minute averages. Every child’s before/after loads and UTC timestamps are in its status JSON.
 
 Roots run sequentially, parent then head, in groups of at most 20; no measured children overlap. Each child has a 1780-second bound. All completed children exited 0. The initial checkpoint completed roots 1–60 in groups of 20. Continuation uses groups 61–70 and 71–79, pushed separately before proceeding. Both latent passes are not yet started.
 
 ## Unrun
 
-parent: 9 ordinary roots:
-- 71: `src/compiler/tsbuild.ts`
-- 72: `src/compiler/tsbuildPublic.ts`
-- 73: `src/compiler/types.ts`
-- 74: `src/compiler/utilities.ts`
-- 75: `src/compiler/utilitiesPublic.ts`
-- 76: `src/compiler/visitorPublic.ts`
-- 77: `src/compiler/watch.ts`
-- 78: `src/compiler/watchPublic.ts`
-- 79: `src/compiler/watchUtilities.ts`
-head: 9 ordinary roots:
-- 71: `src/compiler/tsbuild.ts`
-- 72: `src/compiler/tsbuildPublic.ts`
-- 73: `src/compiler/types.ts`
-- 74: `src/compiler/utilities.ts`
-- 75: `src/compiler/utilitiesPublic.ts`
-- 76: `src/compiler/visitorPublic.ts`
-- 77: `src/compiler/watch.ts`
-- 78: `src/compiler/watchPublic.ts`
-- 79: `src/compiler/watchUtilities.ts`
+parent: 0 ordinary roots:
+head: 0 ordinary roots:
 
 Both parent and head entry latent censuses remain unrun, including LATENT_TIMES, latentPrepassTimer output and stderr seam observation.
 
@@ -127,5 +109,14 @@ Both parent and head entry latent censuses remain unrun, including LATENT_TIMES,
 | 68: `transformers/ts.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.094377 | 13.424622 | 25.664326 | 25.953942 |
 | 69: `transformers/typeSerializer.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.970567 | 13.155709 | 26.668251 | 26.578187 |
 | 70: `transformers/utilities.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.201269 | 13.016134 | 26.416910 | 26.752903 |
+| 71: `tsbuild.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 15.356068 | 12.610989 | 28.334091 | 25.002737 |
+| 72: `tsbuildPublic.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.660396 | 13.242846 | 25.210579 | 26.087534 |
+| 73: `types.ts` | NotYet diagnosticInformationMap.generated.ts:13:45 reading an enum before its runtime initialization; move the call after the enum declaration | NotYet diagnosticInformationMap.generated.ts:13:45 reading an enum before its runtime initialization; move the call after the enum declaration | 3.298155 | 3.267093 | 6.201956 | 6.373004 |
+| 74: `utilities.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.482000 | 13.012620 | 26.323946 | 26.537722 |
+| 75: `utilitiesPublic.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.003786 | 13.426927 | 25.963678 | 27.923376 |
+| 76: `visitorPublic.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 13.026230 | 12.952924 | 25.447627 | 26.198430 |
+| 77: `watch.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.849701 | 12.588529 | 25.497573 | 25.821669 |
+| 78: `watchPublic.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.860484 | 13.198048 | 25.771202 | 25.995420 |
+| 79: `watchUtilities.ts` | Refused sys.ts:57:1 an ambient function declaration | Refused sys.ts:57:1 an ambient function declaration | 12.674575 | 15.066349 | 25.702111 | 28.483301 |
 
 Raw JSONL observations, stderr logs and command/exit/load status JSON are adjacent to this report. Setup logs are under `preparation/`. See [COMMANDS.md](COMMANDS.md) and executable [measure.py](measure.py). `analyze.py` is saved for the later full run; this checkpoint report is produced by `partial-report.py`.
