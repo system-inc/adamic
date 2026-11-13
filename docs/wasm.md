@@ -294,6 +294,9 @@ their imports: a listed fixture that stops importing `path_*`, `fd_read`,
 | `internal/oracle/testdata/unknown_narrowing_host.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, proc_exit` |
 | `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
+| `internal/oracle/testdata/json_errors/path_code.a` (a coded path validation error, raised before the link is made) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, path_symlink, proc_exit` |
+| `internal/oracle/testdata/json_errors/realpath.a` (a missing path's realpath error, by both walks) | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, path_readlink, proc_exit` |
+| `internal/oracle/testdata/json_errors/watch.a` | `fs.watch` target refusal, asserted through `wasiRefusedFixtures` |
 
 The differential command test uses the same expected witness as
 `internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
