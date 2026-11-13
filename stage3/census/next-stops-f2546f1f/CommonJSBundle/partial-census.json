@@ -320,5 +320,115 @@
     "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
     "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
     "seconds": 19.822617631
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/parser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 19.632354659
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/path.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 20.119361776
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 19.253520087
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/performanceCore.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 17.831876434
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/program.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 18.045713306
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 17.979251254
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 18.379738797999998
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/scanner.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 16.701426335
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/semver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 17.772487029
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sourcemap.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.736256548
   }
 ]
