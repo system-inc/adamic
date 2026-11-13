@@ -212,3 +212,27 @@ func TestNodeTimerValueOptionalCallbackIsRefused(t *testing.T) {
 		t.Fatalf("want 0.1's refusal of the optional callback, got %v", err)
 	}
 }
+
+// setTimeout's value through a view whose parameters are a rest tuple, and a bind of it, are not yet
+// at compile time, whatever they'd pass: a tuple is held as an object where the value reads its
+// parameters, and a bind can't hand on the count the value stops by. Neither runs, so neither can
+// drop what a fourth argument would hand Node's callback (Language's pins on #995spev, Nov 13).
+func TestNodeTimerValueViewsNotYet(t *testing.T) {
+	t.Parallel()
+	const ruled = "type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;\nconst ruled: Ruled = setTimeout;\n"
+	for source, want := range map[string]string{
+		ruled + "type Spread = (...values: [callback: (label?: unknown) => void, ms: number, label: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'tuple');":                                                   "a tuple is held as an object",
+		ruled + "type Spread = (...values: [callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'L', 'X');":                  "a tuple is held as an object",
+		ruled + "const bound = ruled.bind(undefined, (x?: unknown) => console.log(String(x)));\nbound(1, 'bound');":                                                                                                                       "bind of a function that observes its argument count or collects rest arguments",
+		ruled + "type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;\nconst four: Four = ruled;\nconst bound = four.bind(undefined, () => {});\nbound(1, 'L', 'X');": "bind of a function that observes its argument count or collects rest arguments",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, "import 'node:timers';\n"+source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
+				t.Fatalf("want NotYet %q, got %v", want, err)
+			}
+		})
+	}
+}

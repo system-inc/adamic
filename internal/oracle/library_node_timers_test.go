@@ -96,13 +96,14 @@ func TestClearTimeoutHeldAsUnionCancels(t *testing.T) {
 
 // Each stop_extra_ program hands setTimeout's value a fourth argument through a view of four
 // parameters, which Node's setTimeout would forward to the callback and the value can't: assigned,
-// passed as an argument, held in an array, seen through a rest tuple and bound. Each stops at the
+// passed as an argument and held in an array. A rest tuple's view and a bind are not yet at compile
+// time, before anything runs (internal/lower's TestNodeTimerValueViewsNotYet). Each stops at the
 // value's entry in its one run-time NotYet, alike natively, released and on the JavaScript backend,
 // after what Node printed first (Adamic's ruling on #995spev, Nov 13 05:48Z). Mutant: the count check
 // dropped from the value's body, and each prints what Node doesn't.
 func TestTimerValueExtraArgumentsStop(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"stop_extra_assignment.a", "stop_extra_argument.a", "stop_extra_array.a", "stop_extra_rest.a", "stop_extra_bind.a"} {
+	for _, name := range []string{"stop_extra_assignment.a", "stop_extra_argument.a", "stop_extra_array.a"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + ir.HostForwardStop + "\n"), exitCode: 70}
