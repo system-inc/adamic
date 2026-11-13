@@ -43,6 +43,7 @@ var tsprinterCompilerInputs = []string{
 	"cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers",
 	"cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath",
 	"cohere/TypeScript/tsc/internal/vfs", "cohere/go.mod", "cohere/go.sum", "cohere/unicode_properties",
+	"cohere/static_single_assignment",
 }
 
 // mutantNativeRecipe are this package's files whose code makes a mutant native: the port the mutations plant into, the
