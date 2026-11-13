@@ -50,8 +50,7 @@ bytes and mtimes. LF and CRLF are retained. Unrelated source is accepted.
 
 Earlier owners are amended in place:
 
-- 41 retains both ambient declarations and gives them the concrete optional-label
-  contract. Their deletion remains a separate stacked change.
+- 41 now deletes both ambient declarations atomically under road 5.
 - 93 owns the two concrete setTimeout/clearTimeout forwarding pairs inside
   getNodeSystem. Its after pin and the crypto adapter's before/after pins change.
 - 99-wasm-crypto-import retains its crypto edit, with amended whole-owner pins
@@ -66,3 +65,33 @@ fits. The lane manifest, runtime hash and sanction count move together.
 
 calls.json gives every original call and its replacement, keyed by main's adapted
 coordinates. PROOF.md describes the checks and separate evidence destination.
+
+## Premises a reader can re-check
+
+Node calls a timer callback with the Timeout object as `this`. The firing arrow
+now calls `callback(t1, ...)` with `this` undefined. This is sound only because
+none of the callbacks scheduled through these 10 calls reads dynamic `this`:
+the six function declarations, the two static methods (which take self
+explicitly), and the two arrows (whose `this` is lexical). The count at
+`typescript/timer-slot-count-995spev` (`a3a5bb70`) shows it. If upstream changes
+one of those callbacks, re-check this.
+
+The unused optional parameter added to watchPublic's two callback declarations
+(`_timeoutType?: string`) changes each function's `.length` from 0 to 1. Nothing
+in tsc reads a callback's `length`. Re-check this if that changes.
+
+## Road 5: global cancellation parameter
+
+Adamic, task 995spev, Nov 13 07:51:37Z: 41 deletes the ambient timer pair;
+93's getNodeSystem cancellation forwarders use
+`clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => clearTimeout(timeoutId)`.
+The scheduling forwarders and System's `unknown` method slot stay unchanged.
+Stock tsc's acceptance rests on method-parameter bivariance at the System slot;
+Adamic's relation is exact because its existing global provider accepts `unknown`.
+A property-style slot (`clearTimeout?: (timeoutId: unknown) => void`) would fail
+TS2322 in the lane. Re-check this premise if the slot declaration changes.
+
+Evidence and commands are on `typescript/timer-ambient-delete-evidence-2`, under
+`stage3/census/timer-ambient-delete-2/`, including both 79-root checks, the
+restored-ambient and property-slot mutants, the Node cancellation witness,
+full apply and replay, 398 shards, and the full-mode census pair.

@@ -84,16 +84,20 @@
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
-    "after": "declare function setTimeout(handler: (label?: unknown) => void, timeout: number, label?: unknown): unknown;",
-    "reason": "Only getNodeSystem captures this ambient Node global. The callback parameters are not inspected by this owner. Node returns its Timeout object."
+    "after": "",
+    "reason": "Adamic task 995spev, Nov 13 07:51:37Z road 5: delete the paired ambient declarations; 93 forwards global clearTimeout with Parameters<typeof clearTimeout>[0].",
+    "deleteGroup": "node-global-timer-heads",
+    "declaration": "setTimeout"
   },
   {
     "id": 14,
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function clearTimeout(handle: any): void;",
-    "after": "declare function clearTimeout(handle: unknown): void;",
-    "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
+    "after": "",
+    "reason": "Adamic task 995spev, Nov 13 07:51:37Z road 5: delete the paired ambient declarations; 93 forwards global clearTimeout with Parameters<typeof clearTimeout>[0].",
+    "deleteGroup": "node-global-timer-heads",
+    "declaration": "clearTimeout"
   },
   {
     "id": 15,

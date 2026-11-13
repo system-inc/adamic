@@ -128,3 +128,13 @@ getfunctionname-home.json in this directory. Full paired replay and the
 original-home apply outcome are recorded by
 99-correctness-core-getfunctionname-move. This is a replay-recognition
 amendment, with no new emitted JavaScript edit in this earlier adaptation.
+
+## Road 5 ambient timer deletion
+
+Adamic task 995spev, Nov 13 07:51:37Z: rules 13 and 14 delete both complete
+ambient timer declaration lines as one group. Both absent is a zero-write
+replay; half-applied, drifted, duplicate or moved declarations refuse before
+any write. timer-heads-check.cjs is also run by the adapter on planned sys.ts
+and rejects restored declarations. 93 supplies the global cancellation
+parameter through `Parameters<typeof clearTimeout>[0]`; no ambient head or cast
+is introduced. See the timer-closures README and evidence-2 branch for proof.
