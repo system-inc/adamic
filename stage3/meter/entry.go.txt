@@ -2,6 +2,7 @@
 package main
 
 import (
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -50,7 +51,7 @@ func main() {
 	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") == "" {
 		panic("entry census requires LATENT_ASSERT_NO_OUTPUT")
 	}
-	output, failure := lower.Lower(context.Background(), program)
+	output, failure := lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
 	if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
 		panic("measurement returned usable IR")
 	}
@@ -69,7 +70,7 @@ func main() {
 		diagnostics = []string{}
 	}
 	if len(diagnostics) != 0 && os.Getenv("LATENT_FULL") != "1" {
-		if err := encoder.Encode(map[string]any{"roots": paths, "status": "blocked", "checker_rejected": true,
+		if err := encoder.Encode(map[string]any{"module_format": moduleformat.Name(), "roots": paths, "status": "blocked", "checker_rejected": true,
 			"diagnostics": diagnostics}); err != nil {
 			panic(err)
 		}
@@ -88,7 +89,7 @@ func main() {
 	for i := range diagnosticSites {
 		diagnosticSites[i].Measurement = entryMeasurement
 	}
-	if err := encoder.Encode(map[string]any{"roots": paths, "status": "measurement", "latent_mode": map[bool]string{true: "full", false: "first-error"}[os.Getenv("LATENT_FULL") == "1"], "checker_rejected": len(diagnostics) > 0,
+	if err := encoder.Encode(map[string]any{"module_format": moduleformat.Name(), "roots": paths, "status": "measurement", "latent_mode": map[bool]string{true: "full", false: "first-error"}[os.Getenv("LATENT_FULL") == "1"], "checker_rejected": len(diagnostics) > 0,
 		"measurement": entryMeasurement, "diagnostics": diagnostics, "sources": sources, "diagnostic_sites": diagnosticSites}); err != nil {
 		panic(err)
 	}
@@ -110,7 +111,7 @@ func main() {
 		}
 		fmt.Fprintln(os.Stderr, record.File, len(record.Findings), entryMeasurement)
 	})
-	data, err := json.Marshal(map[string]any{"measurement": entryMeasurement, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
+	data, err := json.Marshal(map[string]any{"module_format": moduleformat.Name(), "measurement": entryMeasurement, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
 	if err != nil {
 		panic(err)
 	}
