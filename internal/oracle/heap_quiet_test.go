@@ -25,7 +25,8 @@ import (
 //     span, and nothing goes back (Adamic's condition 2).
 //   - "deadline": a 100 ms timer armed after a burst fires as late as the same timer with no burst,
 //     within 5 ms, since the wait's remainder runs to the loop's own deadline.
-//   - "parked workers": parallelMap's workers build and drop values, park, and give theirs back.
+//   - "parked workers": parallelMap's workers build and drop values, park, and give theirs back while
+//     the main thread spins, so no quiet point of the main thread's can be what gave them back.
 //
 // Mutants, each red here: no quiet span in host_default_wait (burst then wait); the remainder waited
 // as the full timeout again after the span (deadline, 10 ms late); a release as a chunk empties, at
@@ -113,7 +114,7 @@ setTimeout(() => {
 `,
 }
 
-const heapQuietWorkers = `import 'node:timers';
+const heapQuietWorkers = `import { performance } from 'node:perf_hooks';
 import { parallelMap } from 'adamic';
 interface Item {
 	readonly value: number;
@@ -136,9 +137,14 @@ let sum = 0;
 for (const each of totals) {
 	sum = (sum + each) % 1000003;
 }
-setTimeout(() => {
-	console.log(` + "`sum ${sum}`" + `);
-}, 300);
+// The main thread spins rather than waits, so it never reaches a quiet point of its own: only the
+// parked workers can give their chunks back meanwhile.
+const start = performance.now();
+let spins = 0;
+while (performance.now() - start < 300) {
+	spins += 1;
+}
+console.log(` + "`sum ${sum} spun ${spins > 0}`" + `);
 `
 
 func TestHeapQuietPoints(t *testing.T) {
@@ -241,6 +247,9 @@ func TestHeapQuietPoints(t *testing.T) {
 	})
 	t.Run("parked workers", func(t *testing.T) {
 		t.Parallel()
+		if goruntime.NumCPU() < 2 {
+			t.Skip("with one processor the main thread runs every range, and no worker holds anything to give back")
+		}
 		program, path := build(t, "parked workers", ".a", heapQuietWorkers)
 		counted := execute(t, binary(t, program, true))
 		agrees(t, path, counted)
