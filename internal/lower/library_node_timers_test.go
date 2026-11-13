@@ -97,34 +97,46 @@ func TestNodeTimersStayLoud(t *testing.T) {
 	}
 }
 
-// tsc's getNodeSystem (sys.ts:1499) shape: each timer read as a value is one closure per program,
-// whose body is the timer's direct call, held by a global, so a second literal and an identity
-// comparison read the same one, and the program runs the loop for the setTimeout inside it.
+// tsc's getNodeSystem (sys.ts:1499) shape, through required methods and through System's optional
+// ones: each timer read as a value is one closure per program, whose body is the timer's direct call,
+// held by a global, so a second literal, a view of its own and an identity comparison read the same
+// one, and the program runs the loop for the setTimeout inside it.
 func TestNodeTimerValuesAreOneClosureEach(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `import 'node:timers';
+	for name, methods := range map[string]string{
+		"required": `setTimeout(callback: () => void, ms: number): unknown;
+    clearTimeout(timeoutId: unknown): void;`,
+		"optional": `setTimeout?(callback: () => void, ms: number): unknown;
+    clearTimeout?(timeoutId: unknown): void;`,
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSource(t, `import 'node:timers';
 interface Host {
-    setTimeout(callback: () => void, ms: number): unknown;
-    clearTimeout(timeoutId: unknown): void;
+    `+methods+`
 }
+type SetTimeoutView = (callback: () => void, ms: number) => unknown;
 const host: Host = { setTimeout, clearTimeout };
 const again: Host = { setTimeout, clearTimeout };
-console.log(String(host.setTimeout === setTimeout), String(again.clearTimeout === clearTimeout));`)
-	if err != nil {
-		t.Fatal(err)
-	}
-	roles := map[string]int{}
-	for _, function := range program.Functions {
-		roles[function.Source.Role]++
-	}
-	if roles["host_set_timeout"] != 1 || roles["host_clear_timeout"] != 1 {
-		t.Fatalf("want one closure for each timer, got %v", roles)
-	}
-	if operations, _ := timerOperations(program); operations["set_timeout"] != 1 || operations["clear_timeout"] != 1 {
-		t.Fatalf("want each closure's body to be its timer's call, got %v", operations)
-	}
-	if !program.HasPromises() {
-		t.Fatal("a setTimeout value must run the loop without an explicit Promise")
+const view: SetTimeoutView = setTimeout;
+console.log(String(view === setTimeout), String(clearTimeout === clearTimeout), String([host, again].length));`)
+			if err != nil {
+				t.Fatal(err)
+			}
+			roles := map[string]int{}
+			for _, function := range program.Functions {
+				roles[function.Source.Role]++
+			}
+			if roles["host_set_timeout"] != 1 || roles["host_clear_timeout"] != 1 {
+				t.Fatalf("want one closure for each timer, got %v", roles)
+			}
+			if operations, _ := timerOperations(program); operations["set_timeout"] != 1 || operations["clear_timeout"] != 1 {
+				t.Fatalf("want each closure's body to be its timer's call, got %v", operations)
+			}
+			if !program.HasPromises() {
+				t.Fatal("a setTimeout value must run the loop without an explicit Promise")
+			}
+		})
 	}
 }
 
@@ -138,7 +150,7 @@ func TestNodeTimerValuesNeedTheirView(t *testing.T) {
 	for source, want := range map[string]string{
 		// System's slot as rulings.md:314 had it before the ruling.
 		"interface Host { setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown; }\nconst host: Host = { setTimeout };": setView,
-		"const wide: (callback: (label: string) => void, ms: number, label: string) => unknown = setTimeout;":                                                                setView,
+		"const wide: (callback: () => void, ms: number, label: string) => unknown = setTimeout;":                                                                             setView,
 		"interface Host { setTimeout(callback?: () => void, ms?: number): unknown; }\nconst host: Host = { setTimeout };":                                                    setView,
 		"interface Host { setTimeout(callback: (...names: string[]) => void, ms: number): unknown; }\nconst host: Host = { setTimeout };":                                    setView,
 		"interface Host { setTimeout(callback: () => void, ms: number): NodeJS.Timeout; }\nconst host: Host = { setTimeout };":                                               setView,

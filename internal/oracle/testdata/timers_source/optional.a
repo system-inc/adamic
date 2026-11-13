@@ -1,27 +1,15 @@
-// value_read.a through System's own spelling: optional methods (sys.ts declares setTimeout? and
-// clearTimeout?), so the slot sees each value with undefined beside it, and each call asserts the
-// method is there.
+// System's own spelling of the slots (sys.ts declares setTimeout? and clearTimeout?): optional
+// methods, so each slot sees its value with undefined beside it. The values are stored there and the
+// object lives to the end, as tsc's sys does. A call through an optional method isn't built yet: the
+// non-null assertion is refused, and a call through ?. is the next wall (#995spev, Nov 13).
 import 'node:timers';
 
 interface Host {
     setTimeout?(callback: () => void, ms: number): unknown;
     clearTimeout?(timeoutId: unknown): void;
+    newLine: string;
 }
 
-const host: Host = { setTimeout, clearTimeout };
-
-function schedule(label: string, count: number, ms: number): unknown {
-    const names: string[] = [];
-    for (let index = 0; index < count; index++) {
-        names.push(`${label}${String(index)}.ts`);
-    }
-    return host.setTimeout!(() => {
-        console.log(`${label} fired ${names.join(',')}`);
-    }, ms);
-}
-
-schedule('first', 2, 2);
-const cleared = schedule('cleared', 1, 1);
-schedule('second', 3, 4);
-host.clearTimeout!(cleared);
-console.log(`same ${String(host.setTimeout === setTimeout)} ${String(host.clearTimeout === clearTimeout)}`);
+const host: Host = { setTimeout, clearTimeout, newLine: '\n' };
+const held: Host[] = [host, { setTimeout, clearTimeout, newLine: '\r\n' }];
+console.log(`held ${String(held.length)} ${String(held[1].newLine.length)}`);

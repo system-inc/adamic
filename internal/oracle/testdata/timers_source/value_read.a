@@ -1,13 +1,17 @@
 // tsc's getNodeSystem (sys.ts:1499) reads the global timers as values into System's slots, which
 // Adamic ruled concrete (#995spev, Nov 13). Three timers go through the slot, each callback a closure
-// over what schedule built, and one is cleared through clearTimeout's slot before it's due. What the
-// slot holds is the global itself, one function per program, as on Node.
+// over what schedule built, and one is cleared through clearTimeout's slot before it's due. A global
+// read as a value is one function per program, as on Node: setTimeout read again into a view of its
+// own is the same one. clearTimeout has no such view, since its declared parameter takes less than
+// unknown, which only a method's slot admits.
 import 'node:timers';
 
 interface Host {
     setTimeout(callback: () => void, ms: number): unknown;
     clearTimeout(timeoutId: unknown): void;
 }
+
+type SetTimeoutView = (callback: () => void, ms: number) => unknown;
 
 const host: Host = { setTimeout, clearTimeout };
 
@@ -25,4 +29,5 @@ schedule('first', 2, 2);
 const cleared = schedule('cleared', 1, 1);
 schedule('second', 3, 4);
 host.clearTimeout(cleared);
-console.log(`same ${String(host.setTimeout === setTimeout)} ${String(host.clearTimeout === clearTimeout)}`);
+const setView: SetTimeoutView = setTimeout;
+console.log(`same ${String(setView === setTimeout)}`);
