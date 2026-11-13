@@ -23,6 +23,7 @@
 #if defined(__linux__)
 #include <sys/sysmacros.h>
 #endif
+#include "node_errno.h"
 #include "node_fs_wasi.h"
 
 static const char *const error_fields[] = {"name", "message", "code"};
@@ -134,7 +135,7 @@ static void node_system_error(int error, const char *operation, const char *path
             fprintf(stderr, "adamic: compiler bug: node_system_error can't fill slot %s of its shape\n", name);
             abort();
         }
-        if (number) { thrown->slots[index].number = -(double)error; }
+        if (number) { thrown->slots[index].number = adamic_node_errno(error); }
         else if (encoded) { thrown->slots[index].reference = node_system_error_path(value, given); }
         else { thrown->slots[index].reference = text(value); }
     }
