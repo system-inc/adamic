@@ -61,6 +61,22 @@ First-error mode, LATENT_ASSERT_NO_OUTPUT=1; LATENT_TIMES and LATENT_PREPASS_TIM
 
 ```json
 {
-  "state": "unrun"
+  "state": "running snapshot",
+  "status": null,
+  "files_emitted": 0,
+  "units_emitted": 0,
+  "findings_emitted": 0,
+  "new_reason_findings": [],
+  "new_reason_units": [],
+  "unit_timers": 1090,
+  "latest_unit_timer": {
+    "file": "/workspace/scratch/k031ey0-5/adapted/src/compiler/sys.ts",
+    "where": "/workspace/scratch/k031ey0-5/adapted/src/compiler/sys.ts:1975:1",
+    "wall_seconds": 0.159874094,
+    "cpu_seconds": 0.16033699999996998
+  },
+  "prepass_calls": 1090,
+  "prepass_seconds": 34.429085193,
+  "stderr_prepass_errors": {}
 }
 ```

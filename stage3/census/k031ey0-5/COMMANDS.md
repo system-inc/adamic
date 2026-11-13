@@ -62,3 +62,9 @@ Executed parent latent pass:
 python3 /workspace/scratch/k031ey0-5/evidence/measure.py latent parent
 ```
 Child reached the 1780-second elapsed bound, received SIGTERM, and exited -15; wrapper exited 143. No pass was rerun or extended beyond the bound.
+
+Executed head latent pass:
+```bash
+python3 /workspace/scratch/k031ey0-5/evidence/measure.py latent head
+```
+An intermediate running snapshot was pushed before the environment’s two-hour mark; the child was not interrupted for that snapshot. Its final status, when available, supersedes the snapshot.

@@ -16,7 +16,7 @@ Changed first stops among completed pairs: **0**. First stop compares kind, loca
 parent: **0** roots stop first on `a view of a type that reaches ...`.
 head: **0** roots stop first on `a view of a type that reaches ...`.
 
-Entry latent: parent reached the 1780-second process bound; head is not yet run. See [LATENT.md](LATENT.md) for status and partial timing totals. Parent findings were buffered and were not emitted; no negative unit-stop claim is made.
+Entry latent: parent reached the 1780-second process bound; head is running (intermediate timing snapshot only). See [LATENT.md](LATENT.md) for status and partial timing totals. Parent findings were buffered and were not emitted; no negative unit-stop claim is made.
 
 ## Timing and load
 
@@ -33,7 +33,7 @@ Roots run sequentially, parent then head, in groups of at most 20; no measured c
 parent: 0 ordinary roots:
 head: 0 ordinary roots:
 
-Head entry latent remains unrun. Parent stopped at its elapsed bound; timing output is preserved in [LATENT.md](LATENT.md).
+Head entry latent is running; the snapshot is not a completed pass. Parent stopped at its elapsed bound; timing output is preserved in [LATENT.md](LATENT.md).
 
 ## Per-root stops and seconds
 
