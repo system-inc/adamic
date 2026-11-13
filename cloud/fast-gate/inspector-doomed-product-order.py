@@ -6,7 +6,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[2]
 path = root / 'cloud/fast-gate/product-order.json'
 order = json.loads(path.read_text())
-for mode in ('AnyRequire', 'Let', 'Receiver', 'ReadDrop', 'Fallthrough', 'ValueHook'):
+for mode in ('AnyRequire', 'Let', 'Receiver', 'ReadDrop', 'Fallthrough', 'ValueHook', 'Gate'):
     order['waits']['internal/lower TestProduct_InspectorDoomed' + mode + 'Mutant'] = []
 for mode in ('AnyLet', 'WriteScan', 'FlowGate', 'DeclaredType', 'FifthWrite', 'DerivedWrite'):
     order['waits']['internal/lower TestProduct_InspectorLet' + mode + 'Mutant'] = []
