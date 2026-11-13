@@ -1,0 +1,18 @@
+{
+  "main": "0aba99914be812ef7a0676c5ddd93024cefc81b5",
+  "adapted": "f37253b347c4f7e7bc223ed05fe04edb8cef0cd4",
+  "originalAdaptation": "108e464716912d16359d542d65f830360c7283d6",
+  "identicalAdaptationTree": "4c729608a4684ad14f0c11720123c24c83348fb2",
+  "binary": "/workspace/scratch/timer-latent-tip",
+  "binarySha256": "f405ebaef45c8d41b0a114a3841267c873ca30584c56a94ae6dbe525965779b0",
+  "sources": {
+    "before": {
+      "watchPublic.ts": "4cfe3d1f8188532b4ad11cf15a2db9c78d82f222a6d1bd324e732af131e3d8a7",
+      "tsbuildPublic.ts": "4b4e90e3cca4e1c5d3e130db62b77cf354aa311edc94798cc44c16d8132c4ed3"
+    },
+    "after": {
+      "watchPublic.ts": "b54b0dd7d9de0ff9ffce55ececa2406190c8d9191d44f3bdfd90396617e58f74",
+      "tsbuildPublic.ts": "3920d22f6114f9bc45c33953742cdb3d3f91ae3cbf2d5d60fe055249e7d59aaf"
+    }
+  }
+}

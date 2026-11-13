@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/scratch/timer-latent-tip",
+    "/workspace/scratch/timer-after-tip/src/compiler",
+    "/workspace/scratch/timer-evidence-3/stage3/census/timer-closures-extra/after-watchPublic.jsonl"
+  ],
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "3GiB"
+  },
+  "child_exit": 0,
+  "timed_out": false,
+  "seconds": 21.536674076000054
+}

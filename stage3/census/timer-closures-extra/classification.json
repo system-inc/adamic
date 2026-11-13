@@ -1,0 +1,108 @@
+{
+  "newFindings": [],
+  "categories": {
+    "IIFE invoked in place": 0,
+    "destructured setTimeout": 0,
+    "Function.call(timerHost, ...)": 0,
+    "new _timeoutType? parameter": 0,
+    "older site now reached": 0
+  },
+  "genericOwnerCoverage": {
+    "before-watchPublic.ts": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:414:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:414:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:418:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:418:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:419:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 19700,
+        "body_end": 61486,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-main-tip-final/src/compiler/watchPublic.ts:419:1"
+      }
+    ],
+    "before-tsbuildPublic.ts": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-main-tip-final/src/compiler/tsbuildPublic.ts:2059:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92610,
+        "body_end": 93039,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "scheduleBuildInvalidatedProject",
+        "top": "/workspace/scratch/timer-main-tip-final/src/compiler/tsbuildPublic.ts:2059:1"
+      }
+    ],
+    "after-watchPublic.ts": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:414:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:414:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:418:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:418:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:419:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 19710,
+        "body_end": 62070,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createWatchProgram",
+        "top": "/workspace/scratch/timer-after-tip/src/compiler/watchPublic.ts:419:1"
+      }
+    ],
+    "after-tsbuildPublic.ts": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/timer-after-tip/src/compiler/tsbuildPublic.ts:2059:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92610,
+        "body_end": 93325,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "scheduleBuildInvalidatedProject",
+        "top": "/workspace/scratch/timer-after-tip/src/compiler/tsbuildPublic.ts:2059:1"
+      }
+    ]
+  }
+}
