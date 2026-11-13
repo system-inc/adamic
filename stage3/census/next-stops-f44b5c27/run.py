@@ -28,20 +28,4 @@ def run(name,args,limit=1780):
     if rc: raise SystemExit(rc if rc>0 else 128-rc)
     return status
 if __name__=='__main__':
-    if sys.argv[1]=='groups':
-        roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79,len(roots)
-        (out/'roots.json').write_text(json.dumps(list(map(str,roots)),indent=2)+'\n')
-        for begin in ([20*(int(sys.argv[2])-1)] if len(sys.argv)>2 else range(0,79,20)):
-            group=begin//20+1;rows=[]
-            with (out/f'group-{group}.jsonl').open('wb') as stream:
-                for index,root in enumerate(roots[begin:begin+20],start=begin+1):
-                    dest=scratch/'next-stops-f44b5c27-root.jsonl'
-                    run(f'root-{index:02}',[str(scratch/'next-stops-f44b5c27-census'),str(root),str(dest)])
-                    data=dest.read_bytes();observations=[json.loads(line) for line in data.splitlines()]
-                    assert len(observations)==2
-                    assert {k:v for k,v in observations[0].items() if k!='seconds'}=={k:v for k,v in observations[1].items() if k!='seconds'}
-                    stream.write(data);stream.flush();rows.append(observations[0])
-                    (out/f'group-{group}-rows.json').write_text(json.dumps(rows,indent=2)+'\n')
-                    print(f'group {group}: {index-begin}/{len(roots[begin:begin+20])} {root.name} {rows[-1]["kind"]}',flush=True)
-            print('group '+str(group)+' complete',flush=True)
-    else:run(sys.argv[1],sys.argv[2:])
+    run(sys.argv[1],sys.argv[2:])
