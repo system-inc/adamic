@@ -27,7 +27,11 @@ import (
 //     its own inherits on Node (Lower's must on shape 1);
 //  2. lowering didn't leave the read as exactly one such field read: finishAccessors made it a
 //     dispatcher's call because a getter of that name may own the receiver, or the read was lowered
-//     twice, as a generic instance's is, or never kept;
+//     twice, as a generic instance's is, or never kept, or another road lowered it, since the refusal
+//     pass records every read it lets through, not only the ones object.go's property reaches. A
+//     dispatcher's fallback read has no ViewWhere (#4gpbn7w), so it isn't counted as the read; were it
+//     to keep one, its receiver is the dispatcher's parameter, which reaches the getter's class, and 4
+//     stops it;
 //  3. the receiver's reach is unknown: a closure's or an exported function's parameter, a for-of or
 //     catch binding, a Map's value, a host value, anything the allocation graph doesn't follow;
 //  4. some allocation it may reach isn't an object literal, or is a class instance (whose method is on
@@ -46,6 +50,14 @@ type optionalPresenceRead struct {
 	node  *ast.Node
 	where string
 	name  string
+}
+
+// recordOptionalPresenceRead notes node, a presence test optionalMemberPresenceTest accepts, for
+// checkOptionalMemberPresence. The refusal pass calls it where it lets the read through
+// (methodValueStop), so the record is as wide as the exemption; a read recorded twice is judged once.
+func (l *lowering) recordOptionalPresenceRead(node *ast.Node) {
+	access := node.AsPropertyAccessExpression()
+	l.optionalPresenceReads = append(l.optionalPresenceReads, optionalPresenceRead{node: node, where: l.program.Where(node), name: l.fieldName(access.Name())})
 }
 
 // optionalPresenceKey finds a recorded read's ir.Property again: its ViewWhere and its Name.

@@ -272,6 +272,12 @@ func init() { refusalRules.register(2900, "methodValueRefusal", (*lowering).meth
 
 // methodValueStop is methodValueRefusal's stop for node, the refusal of a method read as a value or nil.
 func (l *lowering) methodValueStop(node *ast.Node) error {
+	// A presence test of an optional member is recorded where it's let through, so every one of them
+	// meets checkOptionalMemberPresence whichever road lowers it; a road that doesn't leave it as one
+	// field read stops there (Compiler's must on shape 1).
+	if l.optionalMemberPresenceTest(node) {
+		l.recordOptionalPresenceRead(node)
+	}
 	if l.directBindMethodRead(node) {
 		return nil
 	}
