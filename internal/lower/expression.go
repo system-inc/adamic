@@ -620,6 +620,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.nodeRealpathValue(node); known {
 		return value, err
 	}
+	if value, known, err := l.nodeTimerValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
 	}
