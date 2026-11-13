@@ -69,14 +69,11 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 	if parent == nil {
 		return "as a value"
 	}
-	switch parent.Kind {
-	case ast.KindExpressionStatement, ast.KindVoidExpression:
+	if discarded(site) {
 		return ""
+	}
+	switch parent.Kind {
 	case ast.KindForStatement:
-		statement := parent.AsForStatement()
-		if statement.Initializer == site || statement.Incrementor == site {
-			return ""
-		}
 		return "as a loop condition"
 	case ast.KindPropertyAccessExpression:
 		access := parent.AsPropertyAccessExpression()
@@ -101,9 +98,6 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 		case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
 			return "" // Identity reads no element.
 		case ast.KindCommaToken:
-			if binary.Left == site {
-				return ""
-			}
 			return l.voidContainerFlows(parent)
 		case ast.KindAmpersandAmpersandToken, ast.KindBarBarToken, ast.KindQuestionQuestionToken:
 			if binary.Right == site {
@@ -172,6 +166,28 @@ func (l *lowering) voidContainerUse(node *ast.Node, source *checker.Type) string
 		return "as typeof's operand"
 	}
 	return "as a value"
+}
+
+// discarded is whether the value site stands for (parentheses already climbed) is thrown away where it
+// stands: an expression statement, void's operand, a for statement's initializer or incrementor, or a
+// comma's left operand. The void-container classifier takes a discard as a move, and the promise
+// discard rule (promise_into_void.go) refuses a promise thrown away there, so both read one list.
+func discarded(site *ast.Node) bool {
+	parent := site.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindExpressionStatement, ast.KindVoidExpression:
+		return true
+	case ast.KindForStatement:
+		statement := parent.AsForStatement()
+		return statement.Initializer == site || statement.Incrementor == site
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		return binary.OperatorToken.Kind == ast.KindCommaToken && binary.Left == site
+	}
+	return false
 }
 
 // voidContainerMember judges a member read off a container: a field or an accessor is a read of that
