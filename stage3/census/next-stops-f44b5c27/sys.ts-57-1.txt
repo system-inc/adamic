@@ -1,0 +1,7 @@
+import * as _os from "node:os";
+import * as _crypto from "node:crypto";
+
+declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;
+declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;
+
+/**
