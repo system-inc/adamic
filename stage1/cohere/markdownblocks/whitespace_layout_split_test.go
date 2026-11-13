@@ -631,6 +631,7 @@ func whitespaceLayoutPolicyMutant(t *testing.T, ctx context.Context, cases strin
 var loweringCompilerInputs = []string{
 	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
 	"cohere/go.mod", "cohere/go.sum", "cohere/unicode_properties",
+	"cohere/static_single_assignment",
 }
 
 func whitespaceLayoutBuildFiles() []string {
