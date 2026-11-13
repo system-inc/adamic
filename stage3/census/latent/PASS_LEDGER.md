@@ -3,7 +3,8 @@
 This change records omissions only. It does not call any post-lowering pass.
 The one ordered definition is `pass_ledger.go.txt`; `pass_ledger.go` constructs
 owned metadata entries from it. The 30-step audit inventory now has a 31st
-production step: `checkInspectorDoomedContracts`, after `voidDiscards`.
+production step: `checkInspectorDoomedContracts`, after `voidDiscards`. A 32nd,
+`checkFlowLiveness`, follows it (#p2n17c4 H3).
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative
