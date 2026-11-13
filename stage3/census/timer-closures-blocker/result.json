@@ -1,0 +1,15 @@
+{
+  "case": "timer-label-baseline",
+  "sourceTree": "/workspace/scratch/timer-main",
+  "extraction": "Complete real poller and Callbacks class, real TestServerHost.setTimeout method; minimal host clock and file stat only. No callback firing is needed to observe the difference.",
+  "ownerHashes": {
+    "poller": "1c3f5c520588ec9d2bee51db225ee3fe3d23c74bd6ff3f1155b6fc0cef85a69f",
+    "callbacks": "0171e3949b68281c33943b76a46253b853a01ea97916c8e264165fc60b706f4b",
+    "timer": "1413292764f247e2b92389eb98045e424e365395e908618b707c5a98549a4b68"
+  },
+  "beforeCall": "pollingIntervalQueue(pollingInterval).pollScheduled = host.setTimeout(pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue, pollingInterval, pollingInterval === PollingInterval.Low ? \"pollLowPollingIntervalQueue\" : \"pollPollingIntervalQueue\", pollingIntervalQueue(pollingInterval));",
+  "afterCall": "const scheduledQueue = pollingIntervalQueue(pollingInterval);\n        const timer = host.setTimeout;\n        const callback = pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue;\n        const ms = pollingInterval;\n        const timeoutType = pollingInterval === PollingInterval.Low ? \"pollLowPollingIntervalQueue\" : \"pollPollingIntervalQueue\";\n        const queue = pollingIntervalQueue(pollingInterval);\n        scheduledQueue.pollScheduled = timer.call(host, () => callback(timeoutType, queue), ms);",
+  "original": "Timeout callback:: count: 1\r\n1: pollLowPollingIntervalQueue",
+  "adapted": "Timeout callback:: count: 1\r\n1: undefined",
+  "byteIdentical": false
+}
