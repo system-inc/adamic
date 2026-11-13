@@ -1,0 +1,5 @@
+// Spec: Expandos, `delete`, `Object.defineProperty`, prototype mutation
+// Expect: refused an expando: adding loud to function greet after it's made
+function greet(): string { return 'hi'; }
+greet.loud = true;
+console.log(String(greet.loud));
