@@ -152,6 +152,14 @@ static inline size_t adamic_reference_count(const adamic_heap *heap) {
 void adamic_share(void *value);
 void adamic_heap_thread_end(void);
 void adamic_heap_end(void);
+// A thread is quiet once a wait of its own has sat ADAMIC_HEAP_QUIET_MS with nothing to do: then its
+// spare chunks past the cap go back to the kernel (heap.c, #vea9pph). adamic_heap_quiet_pending says
+// whether it may hold any, so a single-threaded wait with nothing to give back never wakes early.
+#ifndef ADAMIC_HEAP_QUIET_MS
+#define ADAMIC_HEAP_QUIET_MS 10
+#endif
+bool adamic_heap_quiet_pending(void);
+void adamic_heap_quiet(void);
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
 void *adamic_retain_slow(void *value);
