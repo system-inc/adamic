@@ -225,9 +225,13 @@ rows compute the verdict.
 
 There are two guards against hiding another program in this class. An admitted program with the parsed key always gets a native probe, even when
 both compilers already admit it and even under a sampling budget. Head's exit
-5 without its parsed import key fails as `platform-stop-without-apple`. A head
-platform row fails as `moved-into-darwin` when its file exists at base and an
-`apple/` import is already reachable there. A new file, or an existing file
+5 without its parsed import key fails as `platform-stop-without-apple`. A row
+moves into darwin only from a judged base: its base file already reaches
+`apple/`, and its base compile or matching base native build did not
+platform-stop. When head stops natively, only a row whose base file already
+reaches `apple/` gets one extra base native build, recorded as
+`base_native_compile`; if that build also platform-stops, the row stays
+`darwin` instead of failing as `moved-into-darwin`. A new file, or an existing file
 whose import key changes from false at base to true at head, may enter. A
 program leaving the platform stop is judged normally.
 
