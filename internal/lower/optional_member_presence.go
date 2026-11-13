@@ -142,7 +142,7 @@ func (l *lowering) checkOptionalMemberPresence() error {
 	for _, function := range numbered.Functions {
 		walk(function.Body, inspect)
 	}
-	graph := newAllocationFlowGraph(&numbered)
+	graph := l.flowGraph(&numbered)
 	judged := map[optionalPresenceKey]bool{}
 	for _, read := range l.optionalPresenceReads {
 		key := optionalPresenceKey{where: read.where, name: read.name}
