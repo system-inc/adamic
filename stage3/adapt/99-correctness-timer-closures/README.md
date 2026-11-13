@@ -66,3 +66,17 @@ fits. The lane manifest, runtime hash and sanction count move together.
 
 calls.json gives every original call and its replacement, keyed by main's adapted
 coordinates. PROOF.md describes the checks and separate evidence destination.
+
+## Premises a reader can re-check
+
+Node calls a timer callback with the Timeout object as `this`. The firing arrow
+now calls `callback(t1, ...)` with `this` undefined. This is sound only because
+none of the callbacks scheduled through these 10 calls reads dynamic `this`:
+the six function declarations, the two static methods (which take self
+explicitly), and the two arrows (whose `this` is lexical). The count at
+`typescript/timer-slot-count-995spev` (`a3a5bb70`) shows it. If upstream changes
+one of those callbacks, re-check this.
+
+The unused optional parameter added to watchPublic's two callback declarations
+(`_timeoutType?: string`) changes each function's `.length` from 0 to 1. Nothing
+in tsc reads a callback's `length`. Re-check this if that changes.
