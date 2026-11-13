@@ -1,0 +1,64 @@
+{
+  "before": 230,
+  "after": 226,
+  "retained": 226,
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1487:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/sys.ts:1537:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1608:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+      "start": 68347,
+      "end": 72773,
+      "unitOwner": "module",
+      "findingOwner": "sys.getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1487:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:1520:84",
+      "reason": "node:timers.clearTimeout used as a value; call it as a statement",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1520:84: stage 0 can't lower node:timers.clearTimeout used as a value; call it as a statement yet",
+      "unitOwner": "module",
+      "findingOwner": "sys.getNodeSystem.{ watchFile, watchDirectory }"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1493:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/sys.ts:1537:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1608:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+      "start": 68347,
+      "end": 72773,
+      "unitOwner": "sys.getNodeSystem",
+      "findingOwner": "sys.getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1493:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:1520:84",
+      "reason": "node:timers.clearTimeout used as a value; call it as a statement",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1520:84: stage 0 can't lower node:timers.clearTimeout used as a value; call it as a statement yet",
+      "unitOwner": "sys.getNodeSystem",
+      "findingOwner": "sys.getNodeSystem.{ watchFile, watchDirectory }"
+    }
+  ],
+  "new": []
+}

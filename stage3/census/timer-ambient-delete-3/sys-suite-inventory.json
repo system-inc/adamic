@@ -1,0 +1,102 @@
+{
+  "method": "Explicit sys suite names from the pinned shard plan; this does not claim an exact source-read dependency trace.",
+  "named_sys_suite_shards": [
+    {
+      "name": "stage3-lane-symlink-case-00",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-01",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-02",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-03",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-04",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-05",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-06",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-07",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-08",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-09",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-10",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-11",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-12",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-13",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-14",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    },
+    {
+      "name": "stage3-lane-symlink-case-15",
+      "tasks": [
+        "unittests:: sys:: symlinkWatching::"
+      ]
+    }
+  ],
+  "rerun_scope": "The full 398-shard manifest is a conservative superset."
+}

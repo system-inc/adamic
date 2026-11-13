@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "stage3/census/timer-ambient-delete-3/check-census.cjs",
+    "/workspace/scratch/timer-road5-after",
+    "/workspace/scratch/timer-ambient-delete-3-after",
+    "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete-3/prior-expression-census.jsonl",
+    "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete-3/census-after.jsonl",
+    "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete-3/census-block-fix-delta.json"
+  ],
+  "cwd": "/workspace/timer-closures-evidence",
+  "child_exit": 0,
+  "seconds": 0.5148595819996444
+}
