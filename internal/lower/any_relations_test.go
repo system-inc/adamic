@@ -60,7 +60,7 @@ const w = { kind: 9, pos: 1, text: 5 }; console.log(String(isWord(w))); show(w);
 		{"library result stored first", `interface Visible { readonly visible: number; }
 function show(view: Visible): void { const e = Object.entries(view); const t: [string, number][] = e; console.log(String(t.length)); }
 show({ visible: 1 });`, "a member typed any ([][1]) related to number at the initializer site"},
-		// A value that is itself any is the expression rule's NotYet, before any relation (Compiler's probe
+		// A value that is itself any is the expression rule's Refused, before any relation (Compiler's probe
 		// on dab38125): a local typed any, and a function returning any.
 		{"local typed any", `const x: any = 5; const s: string = x; console.log(String(s.length));`, "a value of type any"},
 		{"function returning any", `function f(): any { return 5; } const s: string = f(); console.log(String(s.length));`, "a function returning any"},
@@ -73,7 +73,12 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) re
 			t.Parallel()
 			_, err := lowerTypeScriptAssertionSource(t, anyRelationPrelude+probe.source)
 			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
+			var refused *Refused
+			kind := errors.As(err, &pending)
+			if probe.name == "local typed any" {
+				kind = errors.As(err, &refused)
+			}
+			if !kind || !strings.Contains(err.Error(), probe.want) {
 				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})

@@ -50,6 +50,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+		return 0, l.refuseAnyValue(node)
+	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 }
 
@@ -265,6 +268,9 @@ func (l *lowering) mayHoldNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.neverExpression(node); err != nil {
+		return nil, err
+	}
 	l.inspectorRecordBuiltUse(node)
 	if binding := &l.optionalReceiverBinding; binding.receiver == node && binding.call == l.optionalReceiverCall {
 		binding.uses++
