@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/scratch/k031ey0-5/head-census",
+    "/workspace/scratch/k031ey0-5/adapted/src/compiler/transformers/es2017.ts",
+    "/workspace/scratch/k031ey0-5/evidence/head-root-52.jsonl"
+  ],
+  "exit_code": 0,
+  "seconds": 26.846586229999957,
+  "stopping_reason": null,
+  "before": {
+    "utc": "2026-11-13T09:57:23.703394+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.1513671875,
+      1.34228515625,
+      1.427734375
+    ],
+    "cpu_max": "400000 100000"
+  },
+  "after": {
+    "utc": "2026-11-13T09:57:50.550034+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.54150390625,
+      1.41162109375,
+      1.4482421875
+    ],
+    "cpu_max": "400000 100000"
+  }
+}

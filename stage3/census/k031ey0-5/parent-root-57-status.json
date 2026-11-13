@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/scratch/k031ey0-5/parent-census",
+    "/workspace/scratch/k031ey0-5/adapted/src/compiler/transformers/esDecorators.ts",
+    "/workspace/scratch/k031ey0-5/evidence/parent-root-57.jsonl"
+  ],
+  "exit_code": 0,
+  "seconds": 27.170446320999872,
+  "stopping_reason": null,
+  "before": {
+    "utc": "2026-11-13T10:01:29.298809+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.48095703125,
+      1.35205078125,
+      1.40185546875
+    ],
+    "cpu_max": "400000 100000"
+  },
+  "after": {
+    "utc": "2026-11-13T10:01:56.469257+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.31591796875,
+      1.32275390625,
+      1.3896484375
+    ],
+    "cpu_max": "400000 100000"
+  }
+}

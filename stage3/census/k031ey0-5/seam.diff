@@ -1,0 +1,39 @@
+diff --git a/stage3/census/latent/lower.go.txt b/stage3/census/latent/lower.go.txt
+index e33b7e20b..05bb9dbc8 100644
+--- a/stage3/census/latent/lower.go.txt
++++ b/stage3/census/latent/lower.go.txt
+@@ -400,7 +400,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
+ 						return
+ 					}
+ 				}
+-				func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
++				func() { defer latentPrepassTimer("collectViewedElements")(); if err := l.collectViewedElements(modules); err != nil { fmt.Fprintf(os.Stderr, "prepass collectViewedElements error: %s\n", err) } }()
+ 				func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
+ 				func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
+ 				if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
+diff --git a/stage3/census/latent/speculative.go.txt b/stage3/census/latent/speculative.go.txt
+index 4a3a141bb..f4c78e5de 100644
+--- a/stage3/census/latent/speculative.go.txt
++++ b/stage3/census/latent/speculative.go.txt
+@@ -335,7 +335,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
+ 			l.latentSpecFailure(file.AsNode(), orderErr)
+ 		}
+ 		if orderErr == nil {
+-			func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
++			func() { defer latentPrepassTimer("collectViewedElements")(); if err := l.collectViewedElements(modules); err != nil { fmt.Fprintf(os.Stderr, "prepass collectViewedElements error: %s\n", err) } }()
+ 			func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
+ 			func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
+ 			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
+diff --git a/stage3/census/latent/units.go.txt b/stage3/census/latent/units.go.txt
+index ae9e1e166..6fc2dc747 100644
+--- a/stage3/census/latent/units.go.txt
++++ b/stage3/census/latent/units.go.txt
+@@ -151,7 +151,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
+ 			latentRecord(orderErr)
+ 		}
+ 		if orderErr == nil {
+-			func() { defer latentPrepassTimer("collectViewedElements")(); base.collectViewedElements(modules) }()
++			func() { defer latentPrepassTimer("collectViewedElements")(); if err := base.collectViewedElements(modules); err != nil { fmt.Fprintf(os.Stderr, "prepass collectViewedElements error: %s\n", err) } }()
+ 			func() { defer latentPrepassTimer("noteInheritance")(); base.noteInheritance(modules) }()
+ 			func() { defer latentPrepassTimer("noteAccessorNames")(); base.noteAccessorNames(modules) }()
+ 			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); base.noteOmittedOptionals(modules) }() }

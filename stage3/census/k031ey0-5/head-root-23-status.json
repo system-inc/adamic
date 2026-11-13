@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/scratch/k031ey0-5/head-census",
+    "/workspace/scratch/k031ey0-5/adapted/src/compiler/factory/nodeFactory.ts",
+    "/workspace/scratch/k031ey0-5/evidence/head-root-23.jsonl"
+  ],
+  "exit_code": 0,
+  "seconds": 25.945434171999977,
+  "stopping_reason": null,
+  "before": {
+    "utc": "2026-11-13T09:31:44.644834+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.3740234375,
+      1.39013671875,
+      1.82373046875
+    ],
+    "cpu_max": "400000 100000"
+  },
+  "after": {
+    "utc": "2026-11-13T09:32:10.590284+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.24560546875,
+      1.357421875,
+      1.80078125
+    ],
+    "cpu_max": "400000 100000"
+  }
+}

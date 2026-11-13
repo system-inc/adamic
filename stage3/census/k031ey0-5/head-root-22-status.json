@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/scratch/k031ey0-5/head-census",
+    "/workspace/scratch/k031ey0-5/adapted/src/compiler/factory/nodeConverters.ts",
+    "/workspace/scratch/k031ey0-5/evidence/head-root-22.jsonl"
+  ],
+  "exit_code": 0,
+  "seconds": 26.259227584999962,
+  "stopping_reason": null,
+  "before": {
+    "utc": "2026-11-13T09:30:50.159720+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.306640625,
+      1.3798828125,
+      1.849609375
+    ],
+    "cpu_max": "400000 100000"
+  },
+  "after": {
+    "utc": "2026-11-13T09:31:16.419009+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.5859375,
+      1.42578125,
+      1.84765625
+    ],
+    "cpu_max": "400000 100000"
+  }
+}

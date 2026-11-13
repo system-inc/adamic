@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/scratch/k031ey0-5/parent-census",
+    "/workspace/scratch/k031ey0-5/adapted/src/compiler/factory/parenthesizerRules.ts",
+    "/workspace/scratch/k031ey0-5/evidence/parent-root-25.jsonl"
+  ],
+  "exit_code": 0,
+  "seconds": 26.59174059299994,
+  "stopping_reason": null,
+  "before": {
+    "utc": "2026-11-13T09:33:02.777622+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.40771484375,
+      1.37451171875,
+      1.77978515625
+    ],
+    "cpu_max": "400000 100000"
+  },
+  "after": {
+    "utc": "2026-11-13T09:33:29.369367+00:00",
+    "hostname": "d312b35f425b",
+    "cpus": 5,
+    "load": [
+      1.26806640625,
+      1.34326171875,
+      1.7578125
+    ],
+    "cpu_max": "400000 100000"
+  }
+}
