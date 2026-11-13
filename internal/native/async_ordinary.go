@@ -165,6 +165,7 @@ func (e *emitter) asyncMain() {
 		return
 	}
 	e.line("adamic_async_promise *root = %s();", e.functionName(e.program.AsyncEntry-1))
+	e.line("root->handled = true;")
 	e.line("adamic_async_run();")
 	e.line("if (root->rejected) { adamic_thrown = root->value.reference; adamic_uncaught(); }")
 	e.line("adamic_release(root);")

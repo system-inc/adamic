@@ -1,0 +1,8 @@
+// Rejections keep settlement order and only the first is reported (#r7tcjjq).
+async function fails(message: string) {
+	await Promise.resolve();
+	throw new Error(message);
+}
+const run: (message: string) => void = fails;
+run('first');
+run('second');

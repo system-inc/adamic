@@ -1,0 +1,10 @@
+// Await handles the inner promise; propagation rejects the dropped outer one (#r7tcjjq).
+async function inner() {
+	await Promise.resolve();
+	throw new Error('chained');
+}
+async function outer() {
+	await inner();
+}
+const run: () => void = outer;
+run();
