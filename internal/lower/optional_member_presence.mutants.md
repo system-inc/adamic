@@ -142,3 +142,17 @@ New: `	if false && node.Name().Text() == "setBlocking" && l.stdoutHandleOrigin(n
 Run: `go test ./internal/lower -run '^TestNodeProcessHandleSetBlockingCallAndTestLower$' -count=1 -v`
 Red: its `if` and `not` rows stop as a presence test whose receiver may hold a value the program didn't build
 (untracked source ir.ProcessCall), where the host's rule lowers them.
+
+## M14. The record made where object.go's property reaches it, not where the refusal pass lets it through
+
+File: internal/lower/refusals.go, methodValueStop, and internal/lower/iteration_origin.go, erasedLiteralMethod.
+Old (refusals.go): `		l.recordOptionalPresenceRead(node)`
+New (refusals.go): `		_ = node`
+Old (iteration_origin.go): `		// refusal pass recorded it already (methodValueStop), for every road that lowers it.`
+New (iteration_origin.go): `		l.recordOptionalPresenceRead(node)`
+Run: `go test ./internal/lower -run '^(TestOptionalMemberPresenceRoadsStopOverAClassInstance|TestOptionalMemberPresenceLowers|TestOptionalMemberPresenceStops)$' -count=1 -v`
+Red: any row of TestOptionalMemberPresenceRoadsStopOverAClassInstance that a road other than object.go's property
+lowers is admitted unjudged. If every row still stops, each of those roads stops before lowering it today, and the
+record at the exemption is a defense, as #4gpbn7w's fix was: the rows hold the stop, and this mutant has no witness
+yet. TestOptionalMemberPresenceLowers and TestOptionalMemberPresenceStops stay green either way (Lower's pin: the
+record taken out of erasedLiteralMethod moves nothing that passes through it).
