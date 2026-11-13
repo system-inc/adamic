@@ -218,3 +218,36 @@ func TestOptionalMemberPresenceThroughACastKeepsItsOwnStop(t *testing.T) {
 		})
 	}
 }
+
+// Every road a presence test can be lowered by meets the check, since the refusal pass records each read
+// it lets through (methodValueStop), not only those object.go's property reaches (Compiler's must and
+// Lower's should on shape 1). Over a class instance, whose method lives on its prototype, Node finds m
+// and native's own-slot read wouldn't, so each road must stop, whatever stops it first: an optional chain
+// under typeof and under a condition, a parenthesized receiver, a !, and a member whose type is a union of
+// two function types. Mutant M14 (the record moved back into erasedLiteralMethod alone) is the witness
+// for any of these that lowers by another road; a row that stops earlier on every road is a defense, as
+// the mutants file says.
+func TestOptionalMemberPresenceRoadsStopOverAClassInstance(t *testing.T) {
+	t.Parallel()
+	const class = "class C implements H {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n"
+	for _, probe := range []struct{ name, source string }{
+		{"typeof through ?.", optionalPresenceDeclared("m?(): number;") + class + "function probe(h: H | undefined): string {\n\treturn typeof h?.m;\n}\nconsole.log(probe(new C()));\n"},
+		{"a condition through ?.", optionalPresenceDeclared("m?(): number;") + class + "function probe(h: H | undefined): string {\n\tif (h?.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';\n}\nconsole.log(probe(new C()));\n"},
+		{"a parenthesized receiver", optionalPresenceDeclared("m?(): number;") + class + "function probe(h: H): string {\n\treturn (h).m ? 'has' : 'none';\n}\nconsole.log(probe(new C()));\n"},
+		{"a !", optionalPresenceDeclared("m?(): number;") + class + "function probe(h: H): string {\n\treturn !h.m ? 'none' : 'has';\n}\nconsole.log(probe(new C()));\n"},
+		{"a union of two function types", optionalPresenceDeclared("readonly m?: (() => number) | ((x: number) => number);") + "class D {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\nfunction probe(h: H): string {\n\treturn h.m ? 'has' : 'none';\n}\nconsole.log(probe(new D()));\n"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var notYet *NotYet
+				var refused *Refused
+				if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+					t.Fatalf("got %v, want it stopped: Node finds a class's prototype method where native reads own slots", err)
+				}
+				t.Logf("stops: %v", err)
+			})
+		}
+	}
+}
