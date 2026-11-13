@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/stage3/census/moduleformat"
 	"os"
 	"path/filepath"
 	"sort"
@@ -17,21 +18,22 @@ import (
 )
 
 type run struct {
-	Roots       []string `json:"roots"`
-	Diagnostics []string `json:"diagnostics,omitempty"`
-	Kind        string   `json:"kind"`
-	Where       string   `json:"where,omitempty"`
-	Reason      string   `json:"reason,omitempty"`
-	Fix         string   `json:"fix,omitempty"`
-	Seconds     float64  `json:"seconds"`
+	ModuleFormat string   `json:"module_format"`
+	Roots        []string `json:"roots"`
+	Diagnostics  []string `json:"diagnostics,omitempty"`
+	Kind         string   `json:"kind"`
+	Where        string   `json:"where,omitempty"`
+	Reason       string   `json:"reason,omitempty"`
+	Fix          string   `json:"fix,omitempty"`
+	Seconds      float64  `json:"seconds"`
 }
 
 func inspect(paths []string) run {
 	started := time.Now()
-	result := run{Roots: paths}
+	result := run{Roots: paths, ModuleFormat: moduleformat.Name()}
 	program, err := load.Load(paths)
 	if err == nil {
-		_, err = lower.Lower(context.Background(), program)
+		_, err = lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
 		result.Kind = "accepted"
 	}
 	if err != nil {
