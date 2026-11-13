@@ -161,3 +161,22 @@ Measured on Home at 8c082703 (J-6e61jk0, mutant applied as above, exit 0): every
 the five roads reaches object.go's property and stops at the class arm, so M14 has no witness today and the
 record at the exemption is a defense. TestOptionalMemberPresenceRoadsStopOverAClassInstance pins each road at
 that stop, so a road that starts lowering elsewhere turns its row red.
+
+## M15. The note finishAccessors takes of a dispatched presence read dropped
+
+File: internal/lower/class_accessors.go, finishAccessors' ir.Property case.
+Old: `					if expression.Absent && expression.Of == ir.Closure && expression.ViewWhere != "" {`
+New: `					if false && expression.Absent && expression.Of == ir.Closure && expression.ViewWhere != "" {`
+Run: `go test ./internal/lower -run '^TestOptionalMemberPresenceThroughAGetterDispatcher$' -count=1 -v` and
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestAccessorDispatchAbsentAgreesWithNode$' -count=1 -v`.
+Red: the lowering rows, and internal/oracle's accessor_dispatch_absent presence.a and presence.ts, stop as a
+presence test lowering didn't leave as one field read.
+
+## M16. A getter-owning class passes whether or not the dispatcher calls its getter
+
+File: internal/lower/optional_member_presence.go, judgePresenceReceiver.
+Old: `		case literal.Class != 0 && (owners == nil || !owners.owners[site][read.name] || l.classChainHasMethod(literal.Class, read.name)):`
+New: `		case literal.Class != 0 && owners == nil:`
+Run: `go test ./internal/lower -run '^TestOptionalMemberPresenceThroughAGetterDispatcher$' -count=1 -v`
+Red: `a class's getter and a class's method` lowers, though C's method lives on its prototype, where native's
+fallback reads an own slot.
