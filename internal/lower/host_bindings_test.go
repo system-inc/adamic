@@ -235,13 +235,14 @@ func TestHostBindingRequireIsAbsent(t *testing.T) {
 // bundle build as they do in the ES build: onProfilerEvent Absent, and process and performance routed
 // through their models (Compiler's read of #00qn5az's seam with #yewmv46: the routed rows are judged at
 // the declaration before any read is routed). Every program lowers in the default ES build. Mutants (l)
-// and (o), internal/oracle/testdata/host_bindings/mutants.md: hostBindingStopIn's format test dropped, or
-// its columns test, and the bundle build lowers require as Absent.
+// and (s), internal/oracle/testdata/host_bindings/mutants.md: hostBindingStopIn's format test dropped,
+// and the bundle build lowers require as Absent, or its equality test, and require stops for its columns
+// instead of naming both answers.
 func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, file, source, imports, want string }{
 		{"core.ts's require", "core.ts", "declare const require: unknown;\nexport function isNodeLikeSystem(): boolean {\n\treturn typeof require !== \"undefined\";\n}\n", "",
-			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" and its columns don't give that (#93w9rtz), yet"},
+			"core.ts:1:15: stage 0 can't lower the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"undefined\" as an ES module (#93w9rtz), yet"},
 		{"performance.ts's onProfilerEvent", "performance.ts", profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n", "", ""},
 		// The routed rows' model exports are node:process's and node:perf_hooks', which the program has to load
 		// (processModules).
@@ -280,12 +281,13 @@ func TestHostBindingRowsStopInACommonJSBundle(t *testing.T) {
 }
 
 // The bundle's judgment of one row, by the row alone (#93w9rtz): a row with no CommonJS answer stops,
-// measured in ES module mode only, whatever its columns; a row whose columns don't give its CommonJS
-// answer stops naming that answer, in either direction; a row whose columns give it lowers as it does in
-// the ES build, whose judgment never reads the CommonJS answer. Every table row is measured today, so the
-// unmeasured case is a table row with its answer taken out. Mutant (n), internal/oracle/testdata/
-// host_bindings/mutants.md: hostBindingStopIn's unmeasured test dropped, and the unmeasured process row
-// lowers in the bundle.
+// measured in ES module mode only, whatever its columns; a row whose two answers differ stops naming
+// both, in either direction and when both are defined (Platforms' must: object as a module, function as
+// a script); a row whose answers agree but whose columns don't give them stops naming the answer; and a
+// row whose columns give it lowers as it does in the ES build, whose judgment never reads the CommonJS
+// answer. Every table row is measured today, so these are table rows with an answer changed. Mutants (n),
+// (o) and (s), internal/oracle/testdata/host_bindings/mutants.md: hostBindingStopIn's unmeasured test,
+// columns test or equality test dropped, and that row lowers in the bundle.
 func TestHostBindingStopInJudgesTheCommonJSAnswer(t *testing.T) {
 	t.Parallel()
 	rows, err := load.HostBindings()
@@ -304,9 +306,14 @@ func TestHostBindingStopInJudgesTheCommonJSAnswer(t *testing.T) {
 	if process.Node.CommonJS != "object" || require.Node.CommonJS != "function" {
 		t.Fatalf("the table's core.ts rows answer %q and %q as CommonJS scripts, want \"object\" and \"function\"", process.Node.CommonJS, require.Node.CommonJS)
 	}
-	unmeasured, absentAnswer := process, process
+	unmeasured, absentAnswer, otherDefined, unclaimed := process, process, process, process
 	unmeasured.Node.CommonJS = ""
 	absentAnswer.Node.CommonJS = "undefined"
+	// Both answers defined and different: the model was held to "object", and the bundle's Node says
+	// "function" (Platforms' must on #93w9rtz).
+	otherDefined.Node.CommonJS = "function"
+	// Both answers "undefined", agreeing, and the columns Provided: only the columns test stops it.
+	unclaimed.Node.TypeOf, unclaimed.Node.CommonJS = "undefined", "undefined"
 	bundle, es := &lowering{moduleFormat: ModuleFormatCommonJSBundle}, &lowering{}
 	for _, probe := range []struct {
 		name  string
@@ -316,9 +323,11 @@ func TestHostBindingStopInJudgesTheCommonJSAnswer(t *testing.T) {
 	}{
 		{"unmeasured, bundle", bundle, unmeasured, "the host binding process in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"},
 		{"unmeasured, ES", es, unmeasured, ""},
-		{"Absent columns, function", bundle, require, "the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" and its columns don't give that (#93w9rtz),"},
+		{"Absent columns, function", bundle, require, "the host binding require in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"undefined\" as an ES module (#93w9rtz),"},
 		{"Absent columns, function, ES", es, require, ""},
-		{"Provided columns, undefined", bundle, absentAnswer, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"undefined\" and its columns don't give that (#93w9rtz),"},
+		{"Provided columns, undefined", bundle, absentAnswer, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"undefined\" as a CommonJS script and \"object\" as an ES module (#93w9rtz),"},
+		{"Provided columns, object then function", bundle, otherDefined, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"function\" as a CommonJS script and \"object\" as an ES module (#93w9rtz),"},
+		{"Provided columns, undefined in both", bundle, unclaimed, "the host binding process in a build declared one CommonJS bundle, where Node's typeof is \"undefined\" and its columns don't give that (#93w9rtz),"},
 		{"Provided columns, object", bundle, process, ""},
 	} {
 		if got := probe.judge.hostBindingStopIn(probe.row); got != probe.want {

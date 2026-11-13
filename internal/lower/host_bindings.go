@@ -383,13 +383,18 @@ func hostBindingRowStop(row load.HostBinding) string {
 // answer is measured as the oracle runs every program, an ES module, so it says nothing of a build that
 // declares one CommonJS bundle (ModuleFormatCommonJSBundle), where Node may answer otherwise: typeof
 // require is "function" there, and folding core.ts's require Absent would make isNodeLikeSystem silently
-// false. Such a build judges a row by its CommonJS answer alone (#93w9rtz): a row with none recorded
-// stops, measured in ES module mode only (#redxes2; WebAssembly's must on #00qn5az), and so does a row
-// whose columns don't give its CommonJS answer, at its declaration and at every use, with nothing folded.
+// false. Such a build judges a row by its CommonJS answer (#93w9rtz): a row with none recorded stops,
+// measured in ES module mode only (#redxes2; WebAssembly's must on #00qn5az). So does a row whose two
+// answers differ, even both defined, since its model was built and held to the ES answer (Platforms'
+// must on #93w9rtz), and so does a row whose columns don't give its CommonJS answer, each at its
+// declaration and at every use, with nothing folded.
 func (l *lowering) hostBindingStopIn(row load.HostBinding) string {
 	if l.moduleFormat == ModuleFormatCommonJSBundle {
 		if row.Node.CommonJS == "" {
 			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, its row measured in ES module mode only (#redxes2),"
+		}
+		if row.Node.CommonJS != row.Node.TypeOf {
+			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, where Node's typeof is \"" + row.Node.CommonJS + "\" as a CommonJS script and \"" + row.Node.TypeOf + "\" as an ES module (#93w9rtz),"
 		}
 		if !hostBindingColumnsGive(row, row.Node.CommonJS) {
 			return "the host binding " + row.Name + " in a build declared one CommonJS bundle, where Node's typeof is \"" + row.Node.CommonJS + "\" and its columns don't give that (#93w9rtz),"
