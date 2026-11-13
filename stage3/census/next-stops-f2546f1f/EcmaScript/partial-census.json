@@ -540,5 +540,115 @@
     "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
     "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
     "seconds": 15.974426808
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 20.516397498
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 21.156478551
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 22.305855545
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 18.334566661
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 17.895254735
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 18.580080644
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 20.177654785
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 19.968312832
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 20.947314508
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-f2546f1f-adapted/src/compiler/sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "fix": "declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "seconds": 15.139635621
   }
 ]
