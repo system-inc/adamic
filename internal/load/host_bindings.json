@@ -7,9 +7,10 @@
       "type": "((eventName: string) => void) | undefined"
     },
     "node": {
-      "version": "v24.21.0",
+      "version": "v24.19.0",
       "module": "ES",
-      "typeof": "undefined"
+      "typeof": "undefined",
+      "commonjs": "undefined"
     },
     "native": {
       "answer": "Absent"
@@ -35,9 +36,10 @@
       "type": "{ nextTick?: unknown; browser?: unknown; } | undefined"
     },
     "node": {
-      "version": "v24.21.0",
+      "version": "v24.19.0",
       "module": "ES",
-      "typeof": "object"
+      "typeof": "object",
+      "commonjs": "object"
     },
     "native": {
       "answer": "Provided"
@@ -63,9 +65,10 @@
       "type": "{ readonly pid: number }"
     },
     "node": {
-      "version": "v24.21.0",
+      "version": "v24.19.0",
       "module": "ES",
-      "typeof": "object"
+      "typeof": "object",
+      "commonjs": "object"
     },
     "native": {
       "answer": "Provided"
@@ -91,9 +94,10 @@
       "type": "unknown"
     },
     "node": {
-      "version": "v24.21.0",
+      "version": "v24.19.0",
       "module": "ES",
-      "typeof": "undefined"
+      "typeof": "undefined",
+      "commonjs": "function"
     },
     "native": {
       "answer": "Absent"
@@ -119,9 +123,10 @@
       "type": "Performance | undefined"
     },
     "node": {
-      "version": "v24.21.0",
+      "version": "v24.19.0",
       "module": "ES",
-      "typeof": "object"
+      "typeof": "object",
+      "commonjs": "object"
     },
     "native": {
       "answer": "Provided"

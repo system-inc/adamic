@@ -20,9 +20,14 @@ import (
 // has in core.ts and tracing.ts, has a program for each. Node, running it as oracle/node.mjs runs every
 // program, an ES module, must print the row's recorded answer; a column saying Absent where Node prints
 // anything else fails, and so does a column saying Provided where Node prints "undefined", unless the
-// row names a ruled divergence (ruledBackendDivergences). A row whose columns are cleared lowers, and each backend
-// must print Node's answer; a Pending row stops as not yet, naming itself, and never prints. Mutant (d),
-// testdata/host_bindings/mutants.md: process folded Absent goes red here.
+// row names a ruled divergence (ruledBackendDivergences). Every row names the Node it was measured on, and
+// that has to be the Node the test runs, cloud/setup.sh's pin, or the rows are held to a Node they don't
+// name (Workers' should on #93w9rtz, Adamic's yes). A recorded CommonJS answer is held the same
+// way, to Node running the probe as a CommonJS script (onNodeCommonJS), the mode a bundle build answers
+// for (#93w9rtz). A row whose columns are cleared lowers, and each backend must print Node's answer; a
+// Pending row stops as not yet, naming itself, and never prints. Mutants (d) and (p),
+// testdata/host_bindings/mutants.md: process folded Absent goes red here, and so does a CommonJS answer
+// flipped.
 func TestHostBindingsHeldToNode(t *testing.T) {
 	t.Parallel()
 	rows, err := load.HostBindings()
@@ -52,6 +57,15 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 	for _, row := range rows {
 		declared = append(declared, row.Name+"/"+row.Declaration.File)
 	}
+	version := onNodeCommonJS(t, "process.version")
+	if version.exitCode != 0 {
+		t.Fatalf("Node's version: exit %d, stderr %q", version.exitCode, version.stderr)
+	}
+	for _, row := range rows {
+		if string(version.stdout) != row.Node.Version+"\n" {
+			t.Errorf("%s in %s: the row names Node %s, and this test runs %s", row.Name, row.Declaration.File, row.Node.Version, strings.TrimSpace(string(version.stdout)))
+		}
+	}
 	slices.Sort(programs)
 	slices.Sort(declared)
 	if !slices.Equal(programs, declared) {
@@ -68,6 +82,12 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 			node := onNode(t, path)
 			if node.exitCode != 0 || string(node.stdout) != row.Node.TypeOf+"\n" {
 				t.Fatalf("Node: exit %d, stdout %q, stderr %q, want the row's typeof %q", node.exitCode, node.stdout, node.stderr, row.Node.TypeOf)
+			}
+			if row.Node.CommonJS != "" {
+				script := onNodeCommonJS(t, "typeof "+row.Name)
+				if script.exitCode != 0 || string(script.stdout) != row.Node.CommonJS+"\n" {
+					t.Fatalf("Node, as a CommonJS script: exit %d, stdout %q, stderr %q, want the row's CommonJS typeof %q", script.exitCode, script.stdout, script.stderr, row.Node.CommonJS)
+				}
 			}
 			divergence := false
 			for _, ruled := range ruledBackendDivergences {
@@ -102,6 +122,29 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 			}
 			generatorAgrees(t, relative)
 		})
+	}
+}
+
+// onNodeCommonJS is Node running console.log(<expression>) as a CommonJS script, node probe.cjs, the mode
+// tsc's bundle _tsc.js runs in. A row's probe is its declaration and its typeof; the declaration is a
+// type alone, which stripping a .ts file's types erases, so the script is the probe's JavaScript.
+func onNodeCommonJS(t *testing.T, expression string) run {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "probe.cjs")
+	if err := os.WriteFile(path, []byte("console.log("+expression+");\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return execute(t, "node", path)
+}
+
+// onNodeCommonJS runs a CommonJS script, not a module: the module wrapper's names are defined there, and
+// none is in the ES module the oracle runs (#93w9rtz). Without this, a helper that ran an ES module would
+// hold every row's CommonJS answer to its ES one and pass.
+func TestNodeCommonJSProbeIsAScript(t *testing.T) {
+	t.Parallel()
+	script := onNodeCommonJS(t, "typeof require, typeof module, typeof exports, typeof __filename")
+	if script.exitCode != 0 || string(script.stdout) != "function object object string\n" {
+		t.Fatalf("Node, as a CommonJS script: exit %d, stdout %q, stderr %q, want the module wrapper's names", script.exitCode, script.stdout, script.stderr)
 	}
 }
 
