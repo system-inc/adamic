@@ -127,8 +127,8 @@ func TestOptionalMemberPresenceStops(t *testing.T) {
 		// refusal, which runs before lowering and would stop the row before the check it pins could.
 		readonly bool
 	}{
-		{"a class's getter", ".a", "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false, true},
-		{"a literal's getter", ".a", optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", getter, notLeft, false, false},
+		{"a class's getter", ".a", "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", getter, "", false, true},
+		{"a literal's getter", ".a", optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", getter, "", false, false},
 		{"a class instance", ".a", "class C {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new C()));\nconsole.log(probe({ n: 2 }));\n", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot", false, true},
 		{"a spread", ".a", optionalPresenceProbe + "const base: H = { n: 1, m: (): number => 1 };\nconsole.log(probe({ ...base }));\n", "a presence test of optional member m whose receiver may be an object a spread made", "a presence test of optional member m whose receiver may be an object a spread made", false, false},
 		{"an arrow's parameter", ".a", "const probe = (h: H): string => (h.m ? 'has' : 'none');\n" + optionalPresenceCalls, unknown, unknown, false, false},
@@ -247,6 +247,45 @@ func TestOptionalMemberPresenceRoadsStopOverAClassInstance(t *testing.T) {
 				const classArm = "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot"
 				if !errors.As(err, &notYet) && !errors.As(err, &refused) || !strings.Contains(err.Error(), classArm) {
 					t.Fatalf("got %v, want it stopped saying %q: Node finds a class's prototype method where native reads own slots", err, classArm)
+				}
+			})
+		}
+	}
+}
+
+// A field-form presence test finishAccessors made a dispatcher's call (#4gpbn7w's road) is judged by what
+// the dispatcher does with each object that may reach it, by the reach and owners it was dispatched on: a
+// class instance whose getter of the name the dispatcher calls reads the same on both backends, as a plain
+// literal does through the fallback, so each of these lowers, while a spread's copy, an arrow's parameter
+// and a class whose method of the name lives on its prototype still stop (Compiler's and Lower's ruling on
+// shape 1's red against internal/oracle's accessor_dispatch_absent). The method form never dispatches: a
+// getter of its name stops it first (eepPropertyPresence). Mutant M15 drops the note finishAccessors
+// takes, and every lowering row stops as a read lowering didn't leave as one field read.
+func TestOptionalMemberPresenceThroughAGetterDispatcher(t *testing.T) {
+	t.Parallel()
+	const getterClass = "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 7;\n\t}\n}\n"
+	const methodClass = "class C {\n\treadonly n = 2;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n"
+	declared := optionalPresenceDeclared("readonly m?: () => number;")
+	for _, probe := range []struct{ name, source, want string }{
+		{"a class's getter and a literal", declared + getterClass + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\nconsole.log(probe({ n: 3, m: (): number => 1 }));\n", ""},
+		{"a literal's getter and a literal", declared + optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", ""},
+		{"a class's getter and a spread", declared + getterClass + optionalPresenceProbe + "const base: H = { n: 1 };\nconsole.log(probe(new G()));\nconsole.log(probe({ ...base }));\n", "a presence test of optional member m whose receiver may be an object a spread made"},
+		{"a class's getter through an arrow's parameter", declared + getterClass + "const probe = (h: H): string => (h.m ? 'has' : 'none');\nconsole.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", "a presence test of optional member m whose receiver may hold a value the program didn't build as a plain object literal"},
+		{"a class's getter and a class's method", declared + getterClass + methodClass + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe(new C()));\n", "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				if probe.want == "" {
+					if err != nil {
+						t.Fatalf("want it to lower through the dispatcher, got %v", err)
+					}
+					return
+				}
+				var notYet *NotYet
+				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
+					t.Fatalf("got %v, want a not yet saying %q", err, probe.want)
 				}
 			})
 		}

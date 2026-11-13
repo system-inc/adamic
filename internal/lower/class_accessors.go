@@ -303,6 +303,7 @@ func (l *lowering) finishAccessors() error {
 		return nil
 	}
 	reach := l.newAccessorReach(l.result)
+	l.presenceAccessorReach = reach
 	if err := l.refuseReachedContractGetters(reach, names); err != nil {
 		return err
 	}
@@ -436,6 +437,17 @@ func (l *lowering) finishAccessors() error {
 					if expression.View != "" && l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
 						failure = &NotYet{Where: expression.ViewWhere, What: "a checked view read whose receiver may own an accessor of the same name"}
 						return value
+					}
+					// A presence read of an optional member (#p2n17c4 shape 1) loses the ViewWhere its check finds
+					// it by when the dispatcher's fallback takes it, so the note is taken here, from the read and
+					// the receiver lowering made, and checkOptionalMemberPresence judges what the dispatcher does
+					// with each object that may reach it.
+					if expression.Absent && expression.Of == ir.Closure && expression.ViewWhere != "" {
+						if l.dispatchedPresenceReads == nil {
+							l.dispatchedPresenceReads = map[optionalPresenceKey][]ir.Expression{}
+						}
+						key := optionalPresenceKey{where: expression.ViewWhere, name: expression.Name}
+						l.dispatchedPresenceReads[key] = append(l.dispatchedPresenceReads[key], original.(ir.Property).Object)
 					}
 					index := dispatch(expression.Name, expression.Of, false, 0, expression, ir.SetProperty{})
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
