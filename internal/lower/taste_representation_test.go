@@ -21,7 +21,7 @@ func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 			var notYet *NotYet
 			var refused *Refused
 			kind := errors.As(err, &notYet)
-			if probe.name == "enum prototype" {
+			if probe.name == "enum prototype" || probe.reason == "a value of type any" {
 				kind = errors.As(err, &refused)
 			}
 			if !kind || !strings.Contains(err.Error(), probe.reason) {

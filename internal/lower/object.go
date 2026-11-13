@@ -203,6 +203,9 @@ func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, er
 		}
 		return valueType, nil
 	}
+	if declared.Flags()&checker.TypeFlagsAny != 0 {
+		return 0, l.refuseAnyValue(node)
+	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(declared))
 }
 
