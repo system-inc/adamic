@@ -25,7 +25,6 @@ var wasiRefusedFixtures = map[string]string{
 	"internal/oracle/testdata/host_watch/self_close.a":           "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch/self_delete.a":          "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch/tsc_shape.a":            "wasm32-wasi refuses fs.watch: wasi preview1 has no file system event provider; use a native Node host target",
-	"internal/oracle/testdata/host_watch/two_events.a":           "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch/unlink.a":               "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch/unref.a":                "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch/unwatch_file_pending.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",

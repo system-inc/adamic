@@ -85,6 +85,11 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"3090 assignmentPatternValueGap",
 		"3100 stringWideningRefusal",
 		"3200 refuseVoidWidening",
+		// refusePromiseIntoVoid is :355 at the relation: a promise-returning function seen as a void-returning
+		// one (#8j8ecw0).
+		"3210 refusePromiseIntoVoid",
+		// refusePromiseDiscard is :355 at a discard whose type holds a promise inside (#8j8ecw0, (b)).
+		"3220 refusePromiseDiscard",
 		"3250 refuseVoidRead",
 		"3260 refuseVoidContainerRead",
 		// refuseAnyRelation records its NotYet and lets the walk go on, so a NotYet here can lose to

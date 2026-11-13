@@ -68,6 +68,11 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
 				return
 			}
+			// The three hidden thenables are refused, as TestNativeAgreesWithNode holds them (#8j8ecw0).
+			if !fixture.lowers && promiseIntoVoidFixture(fixture.path) {
+				assertPromiseIntoVoidRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

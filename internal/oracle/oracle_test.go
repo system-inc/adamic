@@ -825,6 +825,10 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
 				return
 			}
+			if !fixture.lowers && promiseIntoVoidFixture(fixture.path) {
+				assertPromiseIntoVoidRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

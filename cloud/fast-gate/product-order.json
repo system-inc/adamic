@@ -2706,11 +2706,6 @@
     "internal/oracle TestProduct_FSWatchMutantSwapped": [],
     "internal/oracle TestProduct_FSWatchMutantBasename": [],
     "internal/oracle TestProduct_FSWatchMutantCloseKeepsSource": [],
-    "internal/oracle TestProduct_FSWatchTwoEvents": [
-      "internal/oracle TestProduct_NativeRuntimesSanitized0",
-      "internal/oracle TestProduct_NativeRuntimesSanitized1",
-      "internal/oracle TestProduct_NativeRuntimesSanitized2"
-    ],
     "internal/oracle TestProduct_FSWatchViewOtherEvent": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0",
       "internal/oracle TestProduct_NativeRuntimesSanitized1",
@@ -2721,7 +2716,6 @@
       "internal/oracle TestProduct_NativeRuntimesSanitized1",
       "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ],
-    "internal/oracle TestProduct_FSWatchMutantDrainOncePerRead": [],
     "internal/oracle TestProduct_FSWatchMutantViewNameCheck": [],
     "internal/oracle TestProduct_FSWatchClosePending": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0",
