@@ -13,6 +13,13 @@ assert [r['roots'][0] for r in rows]==expected
 assert sum(g['count'] for g in json.loads((out/'grouped-first-stops.json').read_text()))==79
 for g in json.loads((out/'grouped-first-stops.json').read_text()):assert g['phase'] and g['owner']
 manifest=json.loads((base/'adapted-source-manifest.json').read_text());assert all(hashlib.sha256((tree/n).read_bytes()).hexdigest()==h for n,h in manifest.items())
+assert manifest==json.loads((base/'adapted-source-before-remaining.json').read_text())
+binary=json.loads((base/'binaries.json').read_text())['ordinary'];assert hashlib.sha256(Path(binary['path']).read_bytes()).hexdigest()==binary['sha256']
+assert all(r['module_format']==os.environ['CENSUS_MODULE_FORMAT'] for r in rows)
+comparisons=json.loads((out/'comparison.json').read_text());baseline=json.loads((out/'baseline.json').read_text())
+for row,c in zip(rows,comparisons):
+ root=row['roots'][0].split('/src/compiler/')[-1];after=[row.get('where','-').split('/src/compiler/')[-1],row['kind'],row.get('reason','-')]
+ assert c['root']==root and c['before']==baseline[root] and c['after']==after and c['unchanged']==(c['before']==after)
 sha=json.loads((base/'provenance.json').read_text())['sha']
 assert all(n.startswith('stage3/census/next-stops-464e5daa/') for n in subprocess.check_output(['git','diff',sha,'--name-only'],text=True).splitlines())
 assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_000_000]

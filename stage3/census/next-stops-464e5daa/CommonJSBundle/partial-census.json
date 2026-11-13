@@ -760,5 +760,103 @@
     "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
     "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
     "seconds": 22.520211653
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/tsbuild.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 35.464495113
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 32.153437898
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/types.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 7.190385294
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 34.356520661
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 28.949792238
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/visitorPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 25.39030905
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/watch.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 26.769958076
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/watchPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 40.444062161
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/watchUtilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 41.357644498
   }
 ]
