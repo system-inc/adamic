@@ -1,0 +1,36 @@
+--- main/api/typescript.d.ts
++++ adapted/api/typescript.d.ts
+@@ -2712,8 +2712,8 @@
+             watchFile(path: string, callback: FileWatcherCallback, pollingInterval?: number, options?: WatchOptions): FileWatcher;
+             watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;
+             preferNonRecursiveWatch?: boolean;
+-            setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+-            clearTimeout(timeoutId: any): void;
++            setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
++            clearTimeout(timeoutId: unknown): void;
+             setImmediate(callback: (...args: any[]) => void, ...args: any[]): any;
+             clearImmediate(timeoutId: any): void;
+             gc?(): void;
+@@ -8542,8 +8542,8 @@
+         getMemoryUsage?(): number;
+         exit(exitCode?: number): number | undefined;
+         realpath?(path: string): string;
+-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+-        clearTimeout?(timeoutId: any): void;
++        setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
++        clearTimeout?(timeoutId: unknown): void;
+         clearScreen?(): void;
+         base64decode?(input: string): string;
+         base64encode?(input: string): string;
+@@ -9869,9 +9869,9 @@
+         /** Used to watch resolved module's failed lookup locations, config file specs, type roots where auto type reference directives are added */
+         watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;
+         /** If provided, will be used to set delayed compilation, so that multiple changes in short span are compiled together */
+-        setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
++        setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+         /** If provided, will be used to reset existing delayed compilation */
+-        clearTimeout?(timeoutId: any): void;
++        clearTimeout?(timeoutId: unknown): void;
+         preferNonRecursiveWatch?: boolean | undefined;
+     }
+     interface ProgramHost<T extends BuilderProgram> {

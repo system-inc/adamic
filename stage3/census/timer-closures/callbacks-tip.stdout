@@ -1,0 +1,166 @@
+{
+  "sites": 10,
+  "dynamicThisReads": 0,
+  "argumentsReads": 0,
+  "rows": [
+    {
+      "site": "compiler/sys.ts:384",
+      "expression": "pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "pollLowPollingIntervalQueue",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        // Always poll complete list of changedFilesInLastPoll\n        pollQueue(changedFilesInLastPoll, PollingInterval.Low, /*pollIndex*/ 0, changedFilesInLastPoll.length);\n\n        // Finally do the actual polling of the queue\n        pollPollingIntervalQueue(_timeoutType, queue);\n        // Schedule poll if there are files in changedFilesInLastPoll but no files in the actual queue\n        // as pollPollingIntervalQueue wont schedule for next poll\n        if (!queue.pollScheduled && changedFilesInLastPoll.length) {\n            scheduleNextPoll(PollingInterval.Low);\n        }\n    }"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "name": "pollPollingIntervalQueue",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);\n        // Set the next polling index and timeout\n        if (queue.length) {\n            scheduleNextPoll(queue.pollingInterval);\n        }\n        else {\n            Debug.assert(queue.pollIndex === 0);\n            queue.pollScheduled = false;\n        }\n    }"
+        }
+      ]
+    },
+    {
+      "site": "compiler/sys.ts:497",
+      "expression": "pollQueue",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "pollQueue",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        pollScheduled = undefined;\n        pollIndex = pollWatchedFileQueue(host, watchedFiles, pollIndex, pollingChunkSize[PollingInterval.Low]);\n        scheduleNextPoll();\n    }"
+        }
+      ]
+    },
+    {
+      "site": "compiler/sys.ts:777",
+      "expression": "onTimerToUpdateChildWatches",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "onTimerToUpdateChildWatches",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        timerToUpdateChildWatches = undefined;\n        sysLog(`sysLog:: onTimerToUpdateChildWatches:: ${cacheToUpdateChildWatches.size}`);\n        const start = timestamp();\n        const invokeMap = new Map<Path, string[]>();\n\n        while (!timerToUpdateChildWatches && cacheToUpdateChildWatches.size) {\n            const result = cacheToUpdateChildWatches.entries().next();\n            Debug.assert(!result.done);\n            const { value: [dirPath, { dirName, options, fileNames }] } = result;\n            cacheToUpdateChildWatches.delete(dirPath);\n            // Because the child refresh is fresh, we would need to invalidate whole root directory being watched\n            // to ensure that all the changes are reflected at this time\n            const hasChanges = updateChildWatches(dirName, dirPath, options);\n            if (!cache.get(dirPath)?.targetWatcher) invokeCallbacks(dirName, dirPath, invokeMap, hasChanges ? undefined : fileNames);\n        }\n\n        sysLog(`sysLog:: invokingWatchers:: Elapsed:: ${timestamp() - start}ms:: ${cacheToUpdateChildWatches.size}`);\n        callbackCache.forEach((callbacks, rootDirName) => {\n            const existing = invokeMap.get(rootDirName);\n            if (existing) {\n                callbacks.forEach(({ callback, dirName }) => {\n                    if (isArray(existing)) {\n                        existing.forEach(callback);\n                    }\n                    else {\n                        callback(dirName);\n                    }\n                });\n            }\n        });\n\n        const elapsed = timestamp() - start;\n        sysLog(`sysLog:: Elapsed:: ${elapsed}ms:: onTimerToUpdateChildWatches:: ${cacheToUpdateChildWatches.size} ${timerToUpdateChildWatches}`);\n    }"
+        }
+      ]
+    },
+    {
+      "site": "compiler/watchPublic.ts:867",
+      "expression": "invalidateResolutionsOfFailedLookup",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "invalidateResolutionsOfFailedLookup",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        timerToInvalidateFailedLookupResolutions = undefined;\n        if (resolutionCache.invalidateResolutionsOfFailedLookupLocations()) {\n            scheduleProgramUpdate();\n        }\n    }"
+        }
+      ]
+    },
+    {
+      "site": "compiler/watchPublic.ts:889",
+      "expression": "updateProgramWithWatchStatus",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "updateProgramWithWatchStatus",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        timerToUpdateProgram = undefined;\n        reportFileChangeDetectedOnCreateProgram = true;\n        updateProgram();\n    }"
+        }
+      ]
+    },
+    {
+      "site": "compiler/tsbuildPublic.ts:2067",
+      "expression": "buildNextInvalidatedProject",
+      "callbacks": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "buildNextInvalidatedProject",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n    performance.mark(\"SolutionBuilder::beforeBuild\");\n    const buildOrder = buildNextInvalidatedProjectWorker(state, changeDetected);\n    performance.mark(\"SolutionBuilder::afterBuild\");\n    performance.measure(\"SolutionBuilder::Build\", \"SolutionBuilder::beforeBuild\", \"SolutionBuilder::afterBuild\");\n    if (buildOrder) reportErrorSummary(state, buildOrder);\n}"
+        }
+      ]
+    },
+    {
+      "site": "server/utilities.ts:30",
+      "expression": "ThrottledOperations.run",
+      "callbacks": [
+        {
+          "kind": "MethodDeclaration",
+          "name": "run",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        self.pendingTimeouts.delete(operationId);\n        if (self.logger) {\n            self.logger.info(`Running: ${operationId}`);\n        }\n        cb();\n    }"
+        }
+      ]
+    },
+    {
+      "site": "server/utilities.ts:63",
+      "expression": "GcTimer.run",
+      "callbacks": [
+        {
+          "kind": "MethodDeclaration",
+          "name": "run",
+          "thisReads": 0,
+          "lexicalThis": false,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n        self.timerId = undefined;\n\n        const log = self.logger.hasLevel(LogLevel.requestTime);\n        const before = log && self.host.getMemoryUsage!(); // TODO: GH#18217\n\n        self.host.gc!(); // TODO: GH#18217\n        if (log) {\n            const after = self.host.getMemoryUsage!(); // TODO: GH#18217\n            self.logger.perftrc(`GC::before ${before}, after ${after}`);\n        }\n    }"
+        }
+      ]
+    },
+    {
+      "site": "server/session.ts:406",
+      "expression": "() => {\n                    this.timerHandle = undefined;\n                    this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);\n                }",
+      "callbacks": [
+        {
+          "kind": "ArrowFunction",
+          "name": "(arrow)",
+          "thisReads": 4,
+          "lexicalThis": true,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n                    this.timerHandle = undefined;\n                    this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);\n                }"
+        }
+      ]
+    },
+    {
+      "site": "server/typingInstallerAdapter.ts:242",
+      "expression": "() => {\n                if (this.logger.hasLevel(LogLevel.verbose)) {\n                    this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);\n                }\n                this.installer.send(request);\n            }",
+      "callbacks": [
+        {
+          "kind": "ArrowFunction",
+          "name": "(arrow)",
+          "thisReads": 3,
+          "lexicalThis": true,
+          "dynamicThisReads": 0,
+          "argumentsReads": 0,
+          "body": "{\n                if (this.logger.hasLevel(LogLevel.verbose)) {\n                    this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);\n                }\n                this.installer.send(request);\n            }"
+        }
+      ]
+    }
+  ]
+}

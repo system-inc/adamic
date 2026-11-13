@@ -1,0 +1,6 @@
+{
+  "case": "timer-label-baseline",
+  "before": "Timeout callback:: count: 1\r\n1: pollLowPollingIntervalQueue",
+  "after": "Timeout callback:: count: 1\r\n1: pollLowPollingIntervalQueue",
+  "byteIdentical": true
+}

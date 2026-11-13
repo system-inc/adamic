@@ -1,0 +1,16 @@
+
+> typescript@6.0.3 build:tests
+> hereby tests --lkg
+
+Using /workspace/scratch/timer-after-tip/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 109ms
+Finished generate-diagnostics in 110ms
+Starting bundle-tests
+Starting build-tests
+Finished bundle-tests in 1.2s
+Finished build-tests in 7.5s
+Completed tests in 7.6s

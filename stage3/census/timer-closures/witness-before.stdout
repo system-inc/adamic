@@ -1,0 +1,26 @@
+{
+  "poller": {
+    "pending": "Timeout callback:: count: 1\r\n1: pollLowPollingIntervalQueue",
+    "visited": [
+      "/probe.ts"
+    ]
+  },
+  "request": {
+    "pending": "Timeout callback:: count: 1\r\n1: before::discover",
+    "reads": [
+      "before",
+      "after"
+    ],
+    "sent": [
+      "{\"projectName\":\"after\",\"kind\":\"discover\"}"
+    ]
+  },
+  "watchHost": {
+    "pending": "Timeout callback:: count: 1\r\n1: timerToUpdateProgram",
+    "events": [
+      "Scheduling update",
+      "updated"
+    ],
+    "reportFileChangeDetectedOnCreateProgram": true
+  }
+}

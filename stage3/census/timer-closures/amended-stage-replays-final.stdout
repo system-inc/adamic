@@ -1,0 +1,94 @@
+[
+  {
+    "stage": "41-explicit-any-remaining",
+    "child_exit": 0,
+    "sourceFiles": 745,
+    "bytesAndMtimesPreserved": true,
+    "result": {
+      "adaptation": 41,
+      "sites": 0
+    }
+  },
+  {
+    "stage": "93-builtin-imports",
+    "child_exit": 0,
+    "sourceFiles": 746,
+    "bytesAndMtimesPreserved": true,
+    "result": {
+      "files": 0,
+      "javascriptChanging": true,
+      "sites": [
+        {
+          "local": "_fs",
+          "module": "node:fs",
+          "qualifiedUses": 19,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_path",
+          "module": "node:path",
+          "qualifiedUses": 6,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        },
+        {
+          "local": "_os",
+          "module": "node:os",
+          "qualifiedUses": 2,
+          "bareUses": 0,
+          "otherDeclarations": 0,
+          "allUsesResolveToBinding": true
+        }
+      ],
+      "qualifiedUses": 27,
+      "qualifiedUseLines": 22
+    }
+  },
+  {
+    "stage": "99-correctness-axolotl-x",
+    "child_exit": 0,
+    "sourceFiles": 747,
+    "bytesAndMtimesPreserved": true,
+    "result": {
+      "files": 0,
+      "rewrites": 0,
+      "left": 0,
+      "javascriptChanging": true
+    }
+  },
+  {
+    "stage": "99-wasm-crypto-import",
+    "child_exit": 0,
+    "sourceFiles": 747,
+    "bytesAndMtimesPreserved": true,
+    "result": {
+      "files": 0,
+      "javascriptChanging": true,
+      "before": {
+        "binding": "namespace import",
+        "references": 1,
+        "roles": [
+          "qualified receiver"
+        ],
+        "allUsesResolveToBinding": true,
+        "otherDeclarations": 0,
+        "qualifiedUses": 1,
+        "bareNamespaceUses": 0
+      },
+      "after": {
+        "binding": "namespace import",
+        "references": 1,
+        "roles": [
+          "qualified receiver"
+        ],
+        "allUsesResolveToBinding": true,
+        "otherDeclarations": 0,
+        "qualifiedUses": 1,
+        "bareNamespaceUses": 0
+      }
+    }
+  }
+]

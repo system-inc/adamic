@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/workspace/adamic-tools/bin/node",
+    "/workspace/adamic/stage3/adapt/99-correctness-timer-closures/witness.cjs",
+    "/workspace/scratch/timer-after",
+    "poller"
+  ],
+  "cwd": "/workspace/adamic",
+  "child_exit": 1,
+  "seconds": 0.3653821370003243
+}

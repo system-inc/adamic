@@ -1,0 +1,23 @@
+{
+  "sourceFiles": 732,
+  "changed": [
+    "src/compiler/sys.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/watchPublic.ts",
+    "src/harness/harnessLanguageService.ts",
+    "src/server/session.ts",
+    "src/server/types.ts",
+    "src/server/typingInstallerAdapter.ts",
+    "src/server/utilities.ts",
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+  ],
+  "newWholeOwners": 13,
+  "amendedWholeOwners": [
+    "createWatchProgram",
+    "getNodeSystem"
+  ],
+  "retainedAmbientDeclarations": 2,
+  "forwardingPairs": 2,
+  "allTenCallsMatchInventory": true,
+  "noUnownedSourceEdits": true
+}

@@ -1,0 +1,181 @@
+FFFFFFFFFFFFFFFFFFFFFF
+======================================================================
+FAIL: test_api_sanction_ambiguous_owner (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_ambiguous_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_ambiguous_path_without_line_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_ambiguous_path_without_line_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_applied_and_guard_accepts (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_applied_and_guard_accepts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_before_mismatch_names_row (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_before_mismatch_names_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_duplicate_claim (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_duplicate_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_function_return_applied_and_guard_accepts (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_function_return_applied_and_guard_accepts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_hard_coded_claim (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_hard_coded_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_insert_applied_and_guard_accepts (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_applied_and_guard_accepts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_insert_existing_name_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_existing_name_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_insert_invalid_fields_are_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_invalid_fields_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_insert_non_declaration_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_non_declaration_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_insert_undo_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_undo_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_invalid_replace_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_invalid_replace_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_line_applied_and_guard_accepts (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_line_applied_and_guard_accepts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_member_applied_and_guard_accepts (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_applied_and_guard_accepts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_member_before_requires_full_text (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_before_requires_full_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_member_undo_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_member_undo_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_missing_owner (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_missing_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_non_integer_line_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_non_integer_line_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_overloaded_function_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_overloaded_function_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_undo_is_rejected (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_undo_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+======================================================================
+FAIL: test_api_sanction_wrong_line_names_path_and_line (test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_wrong_line_names_path_and_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_generate_api.py", line 22, in setUp
+    self.fail('ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, '
+AssertionError: ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.006s
+
+FAILED (failures=22)

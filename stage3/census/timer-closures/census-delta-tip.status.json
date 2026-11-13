@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/timer-evidence-2/stage3/census/timer-closures/check-census.cjs",
+    "/workspace/scratch/timer-main-tip-final",
+    "/workspace/scratch/timer-after-tip",
+    "/workspace/scratch/timer-census-before-tip.jsonl",
+    "/workspace/scratch/timer-census-after-tip.jsonl",
+    "/workspace/scratch/timer-evidence-2/stage3/census/timer-closures/census-delta-tip.json"
+  ],
+  "cwd": "/workspace/adamic",
+  "child_exit": 0,
+  "seconds": 0.6376135549999162
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "stage3/lane",
+    "-p",
+    "test_c*.py"
+  ],
+  "cwd": "/workspace/adamic",
+  "child_exit": 0,
+  "seconds": 28.880983086000015
+}

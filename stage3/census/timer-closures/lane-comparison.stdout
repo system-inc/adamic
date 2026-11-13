@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "units": 398,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "everyShardCountMatchesMain": true,
+  "everyTestIdentityAndStatusMatchesMain": true,
+  "allNonApiBaselinesByteIdentical": true,
+  "apiChangesExactlySixSanctionedMembers": true,
+  "maximumSeconds": {
+    "main": 13.948476158000176,
+    "adapted": 13.219384680000076
+  }
+}

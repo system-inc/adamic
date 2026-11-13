@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/timer-evidence-2/stage3/census/timer-closures/replay-stages.py", line 21, in <module>
+    assert result.get('files',0)==0 and result.get('sites',0)==0,(stage,result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('93-builtin-imports', {'files': 0, 'javascriptChanging': True, 'sites': [{'local': '_fs', 'module': 'node:fs', 'qualifiedUses': 19, 'bareUses': 0, 'otherDeclarations': 0, 'allUsesResolveToBinding': True}, {'local': '_path', 'module': 'node:path', 'qualifiedUses': 6, 'bareUses': 0, 'otherDeclarations': 0, 'allUsesResolveToBinding': True}, {'local': '_os', 'module': 'node:os', 'qualifiedUses': 2, 'bareUses': 0, 'otherDeclarations': 0, 'allUsesResolveToBinding': True}], 'qualifiedUses': 27, 'qualifiedUseLines': 22})

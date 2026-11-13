@@ -1,0 +1,4795 @@
+{
+  "status": "pass",
+  "units": 398,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "everyShardCountMatchesMain": true,
+  "everyTestIdentityAndStatusMatchesMain": true,
+  "allNonApiBaselinesByteIdentical": true,
+  "apiChangesExactlySixSanctionedMembers": true,
+  "maximumSeconds": {
+    "main": 13.948476158000176,
+    "adapted": 13.219384680000076
+  },
+  "shards": [
+    {
+      "name": "stage3-lane-async-function-cases-00",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.562558408999848,
+      "adaptedSeconds": 8.68450737699959,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-async-function-cases-01",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.840919189000033,
+      "adaptedSeconds": 8.362677799000267,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-async-function-cases-02",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.176550132000102,
+      "adaptedSeconds": 8.83988998599989,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-00",
+      "counts": {
+        "pass": 30,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.5104478369999015,
+      "adaptedSeconds": 9.712547193999853,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-01",
+      "counts": {
+        "pass": 30,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.804861916999926,
+      "adaptedSeconds": 7.894187461000001,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-02",
+      "counts": {
+        "pass": 28,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.241860277999876,
+      "adaptedSeconds": 8.013394720000178,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-byte-comparisons",
+      "counts": {
+        "pass": 30,
+        "fail": 1,
+        "skip": 0
+      },
+      "mainSeconds": 5.471266878999813,
+      "adaptedSeconds": 4.495299056000022,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-00",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.591611677000401,
+      "adaptedSeconds": 7.1657547599998,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-01",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.361318179000136,
+      "adaptedSeconds": 6.765782917999786,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-02",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.443173180000031,
+      "adaptedSeconds": 6.437888720000046,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-000",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.39575138400005,
+      "adaptedSeconds": 10.73134873500021,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-001",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.218929033000222,
+      "adaptedSeconds": 5.124095056999977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-002",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.220825684999909,
+      "adaptedSeconds": 4.604299432000062,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-003",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.350063401999705,
+      "adaptedSeconds": 8.20109516499997,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-004",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.454772482999942,
+      "adaptedSeconds": 5.371479319000173,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-005",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.053284756999801,
+      "adaptedSeconds": 5.113540789000126,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-006",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.532064434999938,
+      "adaptedSeconds": 9.10719544199992,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-007",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.646130954,
+      "adaptedSeconds": 6.2044206069999746,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-008",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.6173660939998626,
+      "adaptedSeconds": 3.515208910000183,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-009",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.270221562000188,
+      "adaptedSeconds": 3.740420152000297,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-010",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.730849381000098,
+      "adaptedSeconds": 4.31792908899979,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-011",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.093131408999852,
+      "adaptedSeconds": 4.2237380509996,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-012",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.559632716000124,
+      "adaptedSeconds": 5.867963701999997,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-013",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.995467840999936,
+      "adaptedSeconds": 5.939144591000058,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-014",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.53781410900001,
+      "adaptedSeconds": 5.925268027000129,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-015",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.024478440999701,
+      "adaptedSeconds": 5.0396209580003415,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-016",
+      "counts": {
+        "pass": 33,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.4741161280003325,
+      "adaptedSeconds": 7.595623324999906,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-017",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.48231692499985,
+      "adaptedSeconds": 4.0223408619999645,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-018",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 2.8892921820001902,
+      "adaptedSeconds": 3.5692522909998843,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-019",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.207928267999705,
+      "adaptedSeconds": 3.149598705000244,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-020",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.712888692999968,
+      "adaptedSeconds": 5.887684859000274,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-021",
+      "counts": {
+        "pass": 122,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.502575340000021,
+      "adaptedSeconds": 7.2071213320000425,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-022",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.5202178779995847,
+      "adaptedSeconds": 3.849871742000232,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-023",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 2.9126502650001385,
+      "adaptedSeconds": 2.6799865510001837,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-024",
+      "counts": {
+        "pass": 92,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.735372433999601,
+      "adaptedSeconds": 4.750728135999907,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-025",
+      "counts": {
+        "pass": 48,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.219769085999815,
+      "adaptedSeconds": 3.845385695999994,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-026",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.269061177999902,
+      "adaptedSeconds": 4.201254799999788,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-027",
+      "counts": {
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.083231796999826,
+      "adaptedSeconds": 4.4485454890000256,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-028",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 2.6580093560000932,
+      "adaptedSeconds": 2.3950255579998156,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-029",
+      "counts": {
+        "pass": 77,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.808335328999874,
+      "adaptedSeconds": 6.185645830999874,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-030",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.784857342000123,
+      "adaptedSeconds": 3.847387097000137,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-031",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.878125785000066,
+      "adaptedSeconds": 5.720900540999992,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-032",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.806083214999944,
+      "adaptedSeconds": 4.27973116899966,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-033",
+      "counts": {
+        "pass": 50,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.183528481999929,
+      "adaptedSeconds": 5.399936363000052,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-034",
+      "counts": {
+        "pass": 189,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.907219423999777,
+      "adaptedSeconds": 5.409468076999929,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-035",
+      "counts": {
+        "pass": 269,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.779715475000103,
+      "adaptedSeconds": 5.03504007499987,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-036",
+      "counts": {
+        "pass": 216,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.806218737000108,
+      "adaptedSeconds": 6.2497829859999,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-037",
+      "counts": {
+        "pass": 188,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.955684248000125,
+      "adaptedSeconds": 6.671627195999918,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-038",
+      "counts": {
+        "pass": 150,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.944353719999981,
+      "adaptedSeconds": 4.824758445000043,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-039",
+      "counts": {
+        "pass": 177,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.368011175999982,
+      "adaptedSeconds": 5.122598288000063,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-040",
+      "counts": {
+        "pass": 358,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.513030091000019,
+      "adaptedSeconds": 8.08000201699997,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-041",
+      "counts": {
+        "pass": 236,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.964129979000063,
+      "adaptedSeconds": 7.1596318359997895,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-042",
+      "counts": {
+        "pass": 215,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.935739682000076,
+      "adaptedSeconds": 6.8136411469999985,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-043",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.22055064299957,
+      "adaptedSeconds": 7.097768612999971,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-044",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.285930741999891,
+      "adaptedSeconds": 6.7729642970002715,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-045",
+      "counts": {
+        "pass": 216,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.928945955000017,
+      "adaptedSeconds": 7.4456621919998724,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-046",
+      "counts": {
+        "pass": 210,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.976496618000056,
+      "adaptedSeconds": 6.026357422000274,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-047",
+      "counts": {
+        "pass": 237,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.035000070000024,
+      "adaptedSeconds": 6.571410773000025,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-048",
+      "counts": {
+        "pass": 236,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.039395928999966,
+      "adaptedSeconds": 8.559882191999804,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-049",
+      "counts": {
+        "pass": 229,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.519536442000117,
+      "adaptedSeconds": 7.80515052499959,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-050",
+      "counts": {
+        "pass": 255,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.085162363999643,
+      "adaptedSeconds": 5.07970203900004,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-051",
+      "counts": {
+        "pass": 244,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.178067730999828,
+      "adaptedSeconds": 6.0887281159998565,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-052",
+      "counts": {
+        "pass": 253,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.343266491999657,
+      "adaptedSeconds": 7.277093653000065,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-053",
+      "counts": {
+        "pass": 285,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.612852105000002,
+      "adaptedSeconds": 8.992030915000214,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-054",
+      "counts": {
+        "pass": 255,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.551694920000045,
+      "adaptedSeconds": 7.9499800980001964,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-055",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.793763327000306,
+      "adaptedSeconds": 8.602044795999973,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-056",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.057027387999824,
+      "adaptedSeconds": 9.537978202999966,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-057",
+      "counts": {
+        "pass": 260,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.647533869000199,
+      "adaptedSeconds": 8.088838187999954,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-058",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.493108647000099,
+      "adaptedSeconds": 6.802059759999793,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-059",
+      "counts": {
+        "pass": 269,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.339770322999811,
+      "adaptedSeconds": 8.684944463999727,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-060",
+      "counts": {
+        "pass": 275,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.090541792999829,
+      "adaptedSeconds": 7.913942266000049,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-061",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.780555987999833,
+      "adaptedSeconds": 7.621661221000068,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-062",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.568155622999711,
+      "adaptedSeconds": 7.608735226000135,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-063",
+      "counts": {
+        "pass": 272,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.058446827999887,
+      "adaptedSeconds": 8.290392632000021,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-064",
+      "counts": {
+        "pass": 390,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.660508266999841,
+      "adaptedSeconds": 11.417186366999886,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-065",
+      "counts": {
+        "pass": 293,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.217542697000226,
+      "adaptedSeconds": 10.212160227000368,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-066",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.194661592000102,
+      "adaptedSeconds": 10.07846624099966,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-067",
+      "counts": {
+        "pass": 284,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.710701121000056,
+      "adaptedSeconds": 7.519071647000146,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-068",
+      "counts": {
+        "pass": 355,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.606488506999995,
+      "adaptedSeconds": 9.657046843999979,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-069",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.28517951799995,
+      "adaptedSeconds": 10.113590168999963,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-070",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.085278022000239,
+      "adaptedSeconds": 9.155838668000342,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-071",
+      "counts": {
+        "pass": 295,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.393955639999604,
+      "adaptedSeconds": 8.79497184999991,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-072",
+      "counts": {
+        "pass": 386,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.515423894999913,
+      "adaptedSeconds": 9.164172620000045,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-073",
+      "counts": {
+        "pass": 251,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.213495265999882,
+      "adaptedSeconds": 8.699243169000056,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-074",
+      "counts": {
+        "pass": 276,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.988359455000136,
+      "adaptedSeconds": 8.683218821000082,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-075",
+      "counts": {
+        "pass": 264,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.934495362000234,
+      "adaptedSeconds": 7.854723375000049,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-076",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.401630236000074,
+      "adaptedSeconds": 7.477076099999977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-077",
+      "counts": {
+        "pass": 294,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.299118758000077,
+      "adaptedSeconds": 8.394849305999742,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-078",
+      "counts": {
+        "pass": 330,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.148728781000045,
+      "adaptedSeconds": 6.343559958000242,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-079",
+      "counts": {
+        "pass": 275,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.812295206999806,
+      "adaptedSeconds": 7.658437310999943,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-080",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.679244729999937,
+      "adaptedSeconds": 10.29999663999979,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-081",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.901812219000021,
+      "adaptedSeconds": 7.5354188319997775,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-082",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.38864981900042,
+      "adaptedSeconds": 10.116186508999817,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-083",
+      "counts": {
+        "pass": 324,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.704333440000028,
+      "adaptedSeconds": 10.024100632999762,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-084",
+      "counts": {
+        "pass": 400,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.459976169999663,
+      "adaptedSeconds": 10.890803903000233,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-085",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.80643137800007,
+      "adaptedSeconds": 8.438401325000086,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-086",
+      "counts": {
+        "pass": 322,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.848606990000007,
+      "adaptedSeconds": 10.937877048000246,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-087",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.930658117999883,
+      "adaptedSeconds": 10.860411531999944,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-088",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.720414406000145,
+      "adaptedSeconds": 9.383000239000012,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-089",
+      "counts": {
+        "pass": 298,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.900640321000083,
+      "adaptedSeconds": 8.344369590000042,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-090",
+      "counts": {
+        "pass": 306,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.096600481000223,
+      "adaptedSeconds": 8.726679328000046,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-091",
+      "counts": {
+        "pass": 297,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.399316410999745,
+      "adaptedSeconds": 10.5609477160001,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-092",
+      "counts": {
+        "pass": 373,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.02373623199992,
+      "adaptedSeconds": 12.291265615000157,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-093",
+      "counts": {
+        "pass": 985,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.216630497000097,
+      "adaptedSeconds": 13.05181796800025,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-094",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.048708057000113,
+      "adaptedSeconds": 9.662855822999973,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-095",
+      "counts": {
+        "pass": 260,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.948476158000176,
+      "adaptedSeconds": 11.996204813999611,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-096",
+      "counts": {
+        "pass": 312,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.473463566999726,
+      "adaptedSeconds": 13.219384680000076,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-097",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.218807190999996,
+      "adaptedSeconds": 10.96308034699996,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-098",
+      "counts": {
+        "pass": 330,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.128014597999936,
+      "adaptedSeconds": 13.00815670899965,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-099",
+      "counts": {
+        "pass": 307,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.351462604000062,
+      "adaptedSeconds": 10.911786871000004,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-100",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.755804672000068,
+      "adaptedSeconds": 10.388182689999667,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-101",
+      "counts": {
+        "pass": 287,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.523332280999966,
+      "adaptedSeconds": 10.058437122999749,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-102",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.96564033300001,
+      "adaptedSeconds": 12.197210969000025,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-103",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.684246499999972,
+      "adaptedSeconds": 10.445165799999813,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-104",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.966732368000066,
+      "adaptedSeconds": 11.033595332999994,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-105",
+      "counts": {
+        "pass": 288,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.041276086999915,
+      "adaptedSeconds": 10.462657041000057,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-106",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.56810081399999,
+      "adaptedSeconds": 8.756489471999885,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-107",
+      "counts": {
+        "pass": 306,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.776152077000006,
+      "adaptedSeconds": 7.7973562040001525,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-108",
+      "counts": {
+        "pass": 297,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.675008176000119,
+      "adaptedSeconds": 9.653159246000087,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-109",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.100569388999702,
+      "adaptedSeconds": 8.79344442899992,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-110",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.014597317999687,
+      "adaptedSeconds": 6.677221433999875,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-111",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.931242445999942,
+      "adaptedSeconds": 6.85887510900011,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-112",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.496307518999856,
+      "adaptedSeconds": 8.400660233000053,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-113",
+      "counts": {
+        "pass": 316,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.71832148600015,
+      "adaptedSeconds": 8.405257834000167,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-114",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.059940013999949,
+      "adaptedSeconds": 8.26614437599983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-115",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.167478640999889,
+      "adaptedSeconds": 8.190231656999913,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-116",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.566646346000198,
+      "adaptedSeconds": 8.935253755999838,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-117",
+      "counts": {
+        "pass": 458,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.878088363000188,
+      "adaptedSeconds": 8.707596658000057,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-118",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.235527604999788,
+      "adaptedSeconds": 9.493058640000072,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-119",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.817826501000127,
+      "adaptedSeconds": 12.257822330000181,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-120",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.688847082999928,
+      "adaptedSeconds": 10.274452600999666,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-121",
+      "counts": {
+        "pass": 372,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.09826420699983,
+      "adaptedSeconds": 10.092431380000107,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-122",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.838817163000385,
+      "adaptedSeconds": 7.496599380000134,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-123",
+      "counts": {
+        "pass": 437,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.35424433099979,
+      "adaptedSeconds": 8.293438860000151,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-124",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.191306645999703,
+      "adaptedSeconds": 7.818657081999845,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-125",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.807786318000126,
+      "adaptedSeconds": 9.252787688000353,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-126",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.75160354899981,
+      "adaptedSeconds": 9.065197757999613,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-127",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.50024223499986,
+      "adaptedSeconds": 9.646569074000126,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-128",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.529019037000126,
+      "adaptedSeconds": 9.524549186000058,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-129",
+      "counts": {
+        "pass": 309,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.32035807300008,
+      "adaptedSeconds": 6.745419507999941,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-130",
+      "counts": {
+        "pass": 350,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.886615875000189,
+      "adaptedSeconds": 9.08234297900026,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-131",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.559125043000222,
+      "adaptedSeconds": 8.560310812000353,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-132",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.364280280999992,
+      "adaptedSeconds": 9.268196022000211,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-133",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.765038543000173,
+      "adaptedSeconds": 9.074294770000051,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-134",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.748285881000356,
+      "adaptedSeconds": 10.382742205999875,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-135",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.813198311000178,
+      "adaptedSeconds": 8.593359650000366,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-136",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.758774076999998,
+      "adaptedSeconds": 8.54453140700025,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-137",
+      "counts": {
+        "pass": 292,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.148151464999955,
+      "adaptedSeconds": 8.494192117000239,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-138",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.384776716000033,
+      "adaptedSeconds": 7.9252921649999735,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-139",
+      "counts": {
+        "pass": 276,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.776415182999699,
+      "adaptedSeconds": 8.901338062000377,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-140",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.02594574900013,
+      "adaptedSeconds": 8.01610521900011,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-141",
+      "counts": {
+        "pass": 329,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.262039043999721,
+      "adaptedSeconds": 9.18764408099969,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-142",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.406174454000393,
+      "adaptedSeconds": 9.147091715999977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-143",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.405455905000053,
+      "adaptedSeconds": 7.114810813999611,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-144",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.24795268600019,
+      "adaptedSeconds": 8.530719308999778,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-145",
+      "counts": {
+        "pass": 453,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.539889184000003,
+      "adaptedSeconds": 9.116986677000114,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-146",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.547846145999756,
+      "adaptedSeconds": 8.778043057000104,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-147",
+      "counts": {
+        "pass": 371,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.124078462999933,
+      "adaptedSeconds": 9.230631232999713,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-148",
+      "counts": {
+        "pass": 365,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.439332722000017,
+      "adaptedSeconds": 9.743537708000076,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-149",
+      "counts": {
+        "pass": 309,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.282152720999875,
+      "adaptedSeconds": 10.164890586999718,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-150",
+      "counts": {
+        "pass": 316,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.722624228999848,
+      "adaptedSeconds": 7.4278802789999645,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-151",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.409158681000008,
+      "adaptedSeconds": 7.723651514999801,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-152",
+      "counts": {
+        "pass": 402,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.08292665099998,
+      "adaptedSeconds": 8.300236218999999,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-153",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.626523330000055,
+      "adaptedSeconds": 7.395103503999962,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-154",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.423379804000433,
+      "adaptedSeconds": 8.79263805499977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-155",
+      "counts": {
+        "pass": 322,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.456623712999772,
+      "adaptedSeconds": 7.749771221000174,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-156",
+      "counts": {
+        "pass": 308,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.857227907999913,
+      "adaptedSeconds": 6.89970810099976,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-157",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.81187957999964,
+      "adaptedSeconds": 7.848927218999961,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-158",
+      "counts": {
+        "pass": 339,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.547476924999955,
+      "adaptedSeconds": 7.599353226999938,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-159",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.339322326000001,
+      "adaptedSeconds": 7.996154794999711,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-160",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.082677950999823,
+      "adaptedSeconds": 8.35183667399997,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-161",
+      "counts": {
+        "pass": 373,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.008417544000167,
+      "adaptedSeconds": 8.872081157999673,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-162",
+      "counts": {
+        "pass": 344,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.982295617999625,
+      "adaptedSeconds": 8.775267562999943,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-163",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.720424332999755,
+      "adaptedSeconds": 9.096781503999864,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-164",
+      "counts": {
+        "pass": 275,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.42156718599972,
+      "adaptedSeconds": 9.061269710000033,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-165",
+      "counts": {
+        "pass": 279,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.229437537999729,
+      "adaptedSeconds": 7.287073273999795,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-166",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.130050171000221,
+      "adaptedSeconds": 8.936975665999853,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-167",
+      "counts": {
+        "pass": 324,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.842823839000175,
+      "adaptedSeconds": 6.995807415999934,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-168",
+      "counts": {
+        "pass": 322,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.127871940000205,
+      "adaptedSeconds": 7.738319806000163,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-169",
+      "counts": {
+        "pass": 268,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.284835145000216,
+      "adaptedSeconds": 7.940808626000035,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-170",
+      "counts": {
+        "pass": 322,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.098146558999815,
+      "adaptedSeconds": 4.572966570000062,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-171",
+      "counts": {
+        "pass": 262,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.498292197999945,
+      "adaptedSeconds": 4.629225786999996,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-172",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.425123313999848,
+      "adaptedSeconds": 7.339204095999776,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-173",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.232358605000172,
+      "adaptedSeconds": 7.556613832000039,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-174",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.503930675999982,
+      "adaptedSeconds": 7.074622105999879,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-175",
+      "counts": {
+        "pass": 308,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.670944758000132,
+      "adaptedSeconds": 6.570690972000193,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-176",
+      "counts": {
+        "pass": 351,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.590315262999866,
+      "adaptedSeconds": 6.668007725999814,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-177",
+      "counts": {
+        "pass": 364,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.516465783000058,
+      "adaptedSeconds": 7.46149055099977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-178",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.976139234000129,
+      "adaptedSeconds": 7.893006074999903,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-179",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.487153169000067,
+      "adaptedSeconds": 7.488234055999783,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-180",
+      "counts": {
+        "pass": 382,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.438883403000091,
+      "adaptedSeconds": 7.04905591700026,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-181",
+      "counts": {
+        "pass": 341,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.934458206000272,
+      "adaptedSeconds": 7.632075170999997,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-182",
+      "counts": {
+        "pass": 347,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.79519706300016,
+      "adaptedSeconds": 8.287397718000193,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-183",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.341475853000247,
+      "adaptedSeconds": 7.7243891620000795,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-184",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.677597158000026,
+      "adaptedSeconds": 7.561328083999797,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-185",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.803812999000002,
+      "adaptedSeconds": 5.949470812000072,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-186",
+      "counts": {
+        "pass": 369,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.454323409000153,
+      "adaptedSeconds": 6.287232360999951,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-187",
+      "counts": {
+        "pass": 402,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.822750709000047,
+      "adaptedSeconds": 6.932033616999888,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-188",
+      "counts": {
+        "pass": 347,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.886967998999808,
+      "adaptedSeconds": 7.349614722000297,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-189",
+      "counts": {
+        "pass": 320,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.767334484000003,
+      "adaptedSeconds": 8.012405469999976,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-190",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.480859427999803,
+      "adaptedSeconds": 6.513996854000197,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-191",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.418203044000165,
+      "adaptedSeconds": 5.755723246999878,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-192",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.760465743000168,
+      "adaptedSeconds": 6.788752059000217,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-193",
+      "counts": {
+        "pass": 357,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.26529583699994,
+      "adaptedSeconds": 6.192668376999791,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-194",
+      "counts": {
+        "pass": 373,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.9195789460000015,
+      "adaptedSeconds": 7.1124503410001125,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-195",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.254628765999769,
+      "adaptedSeconds": 6.92668778999996,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-196",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.271067392000077,
+      "adaptedSeconds": 7.071826798000075,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-197",
+      "counts": {
+        "pass": 292,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.668725974000154,
+      "adaptedSeconds": 6.728671215999839,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-198",
+      "counts": {
+        "pass": 284,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.573902567999994,
+      "adaptedSeconds": 6.450154769000164,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-199",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.693704619000073,
+      "adaptedSeconds": 7.069554041999709,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-200",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.3545439479999,
+      "adaptedSeconds": 7.37817852399985,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-201",
+      "counts": {
+        "pass": 344,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.593324295000002,
+      "adaptedSeconds": 6.298301977000392,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-202",
+      "counts": {
+        "pass": 293,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.13426326400031,
+      "adaptedSeconds": 6.88357002299972,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-203",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.677745505000075,
+      "adaptedSeconds": 7.2522015069998815,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-204",
+      "counts": {
+        "pass": 342,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.711378130999947,
+      "adaptedSeconds": 6.39256807899983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-205",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.965189454999745,
+      "adaptedSeconds": 6.829701576999923,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-206",
+      "counts": {
+        "pass": 295,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.630942022999989,
+      "adaptedSeconds": 6.553744497000025,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-207",
+      "counts": {
+        "pass": 351,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.718956428000183,
+      "adaptedSeconds": 6.740009349000047,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-208",
+      "counts": {
+        "pass": 330,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.312453622000248,
+      "adaptedSeconds": 7.250147083000229,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-209",
+      "counts": {
+        "pass": 475,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.75081645299997,
+      "adaptedSeconds": 7.175934526999754,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-210",
+      "counts": {
+        "pass": 366,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.291826730000139,
+      "adaptedSeconds": 6.06609676700009,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-211",
+      "counts": {
+        "pass": 303,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.248108400000092,
+      "adaptedSeconds": 6.679557428999942,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-212",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.346348892000151,
+      "adaptedSeconds": 6.521358408999731,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-213",
+      "counts": {
+        "pass": 329,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.7354083840000385,
+      "adaptedSeconds": 6.83870700999978,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-214",
+      "counts": {
+        "pass": 343,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.691123680000146,
+      "adaptedSeconds": 6.951759047999985,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-215",
+      "counts": {
+        "pass": 424,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.85749094799985,
+      "adaptedSeconds": 7.377877629000068,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-216",
+      "counts": {
+        "pass": 335,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.02022090499986,
+      "adaptedSeconds": 7.8405630130000645,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-217",
+      "counts": {
+        "pass": 423,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.23183952799991,
+      "adaptedSeconds": 6.978063182999904,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-218",
+      "counts": {
+        "pass": 303,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.128668254999866,
+      "adaptedSeconds": 7.849062137000146,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-219",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.541877656999986,
+      "adaptedSeconds": 7.742004516000179,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-220",
+      "counts": {
+        "pass": 361,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.345642595999834,
+      "adaptedSeconds": 9.903401777999989,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-221",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.926174285999878,
+      "adaptedSeconds": 8.38426005500014,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-222",
+      "counts": {
+        "pass": 430,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.886493691999931,
+      "adaptedSeconds": 9.21712057800005,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-223",
+      "counts": {
+        "pass": 386,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.766579247999744,
+      "adaptedSeconds": 9.816369277999911,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-224",
+      "counts": {
+        "pass": 391,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.868112229999952,
+      "adaptedSeconds": 12.23217668199959,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-225",
+      "counts": {
+        "pass": 355,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.596609573000023,
+      "adaptedSeconds": 11.939859614999932,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-226",
+      "counts": {
+        "pass": 312,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.322957323000082,
+      "adaptedSeconds": 9.299589941999784,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-227",
+      "counts": {
+        "pass": 394,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.752731155999754,
+      "adaptedSeconds": 10.595079732000158,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-228",
+      "counts": {
+        "pass": 366,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.372183051999855,
+      "adaptedSeconds": 11.539341761000287,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-229",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.408613371000229,
+      "adaptedSeconds": 11.725562485999944,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-230",
+      "counts": {
+        "pass": 444,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.063504199999898,
+      "adaptedSeconds": 7.366466571000274,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-231",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.70947109699955,
+      "adaptedSeconds": 5.635988222999913,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-232",
+      "counts": {
+        "pass": 381,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.462184872999842,
+      "adaptedSeconds": 8.267709062999984,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-233",
+      "counts": {
+        "pass": 423,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.51746437499969,
+      "adaptedSeconds": 9.923087242999827,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-234",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.993047279000166,
+      "adaptedSeconds": 8.717129424999712,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-235",
+      "counts": {
+        "pass": 344,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.190781626999978,
+      "adaptedSeconds": 8.152886992999811,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-236",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.807195960000172,
+      "adaptedSeconds": 7.996645176000129,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-237",
+      "counts": {
+        "pass": 357,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.409498861999964,
+      "adaptedSeconds": 8.649933074000273,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-238",
+      "counts": {
+        "pass": 399,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.8636364570002115,
+      "adaptedSeconds": 9.173961565999889,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-239",
+      "counts": {
+        "pass": 364,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.516565024999636,
+      "adaptedSeconds": 7.741509254999983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-240",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.251704600999801,
+      "adaptedSeconds": 7.2733959629999845,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-241",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.997041479000018,
+      "adaptedSeconds": 7.6975041649998275,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-242",
+      "counts": {
+        "pass": 329,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.29912926299994,
+      "adaptedSeconds": 6.966008985999906,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-243",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.415357906999816,
+      "adaptedSeconds": 8.714221465999799,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-244",
+      "counts": {
+        "pass": 384,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.379234562999955,
+      "adaptedSeconds": 7.762383659000079,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-245",
+      "counts": {
+        "pass": 336,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 11.741408646999844,
+      "adaptedSeconds": 8.218138861999705,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-246",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.323203647000355,
+      "adaptedSeconds": 9.412992100999872,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-247",
+      "counts": {
+        "pass": 412,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.494031069999892,
+      "adaptedSeconds": 10.810522664000018,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-248",
+      "counts": {
+        "pass": 331,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.411080385999867,
+      "adaptedSeconds": 10.638071498000045,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-249",
+      "counts": {
+        "pass": 316,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.207925977999821,
+      "adaptedSeconds": 10.226207765000254,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-250",
+      "counts": {
+        "pass": 412,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.24254430000019,
+      "adaptedSeconds": 8.685578653999983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-251",
+      "counts": {
+        "pass": 361,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.474019401000078,
+      "adaptedSeconds": 8.952141748000031,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-252",
+      "counts": {
+        "pass": 277,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.167770462000135,
+      "adaptedSeconds": 8.098598375000165,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-253",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.458512508999775,
+      "adaptedSeconds": 7.556458938000105,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-254",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.188154183999814,
+      "adaptedSeconds": 8.714157108999643,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-255",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.40413702800015,
+      "adaptedSeconds": 9.396199356000125,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-256",
+      "counts": {
+        "pass": 392,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.108971024999846,
+      "adaptedSeconds": 9.310094935000052,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-257",
+      "counts": {
+        "pass": 402,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.644552868000119,
+      "adaptedSeconds": 9.747898811999676,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-258",
+      "counts": {
+        "pass": 365,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.383550714000194,
+      "adaptedSeconds": 9.687245560000065,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-259",
+      "counts": {
+        "pass": 324,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.155232682000133,
+      "adaptedSeconds": 10.31149309600005,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-260",
+      "counts": {
+        "pass": 359,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.395679385000221,
+      "adaptedSeconds": 10.385121632999926,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-261",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.000132918999952,
+      "adaptedSeconds": 10.382381225000245,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-262",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.47550473299998,
+      "adaptedSeconds": 9.241803177999827,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-263",
+      "counts": {
+        "pass": 296,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.127774187999876,
+      "adaptedSeconds": 8.004940557000282,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-264",
+      "counts": {
+        "pass": 398,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.05076037300023,
+      "adaptedSeconds": 9.793017684999995,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-265",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.009748122000019,
+      "adaptedSeconds": 9.706115297999986,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-266",
+      "counts": {
+        "pass": 344,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.088715622000109,
+      "adaptedSeconds": 8.584643018999941,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-267",
+      "counts": {
+        "pass": 358,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.260842159999811,
+      "adaptedSeconds": 8.208931528999983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-268",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.558184826999877,
+      "adaptedSeconds": 10.062725871000112,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-269",
+      "counts": {
+        "pass": 970,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.387485262000155,
+      "adaptedSeconds": 9.459799915000076,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-270",
+      "counts": {
+        "pass": 343,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.39734475000023,
+      "adaptedSeconds": 8.027309083000091,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-271",
+      "counts": {
+        "pass": 302,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.60105252700032,
+      "adaptedSeconds": 7.489255057999799,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-272",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.1201048490002,
+      "adaptedSeconds": 9.224193553000077,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-273",
+      "counts": {
+        "pass": 347,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 13.301662932,
+      "adaptedSeconds": 11.793397826999808,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-274",
+      "counts": {
+        "pass": 1315,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 12.89626780000026,
+      "adaptedSeconds": 12.873767173000033,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-275",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.244456545000048,
+      "adaptedSeconds": 10.617060175999995,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-276",
+      "counts": {
+        "pass": 355,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.249080012999912,
+      "adaptedSeconds": 8.88701378299993,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-277",
+      "counts": {
+        "pass": 407,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.547361711000121,
+      "adaptedSeconds": 12.610186443999737,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-278",
+      "counts": {
+        "pass": 366,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.679907444000037,
+      "adaptedSeconds": 10.632190770999841,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-279",
+      "counts": {
+        "pass": 350,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.803365501000371,
+      "adaptedSeconds": 9.631566943000053,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-280",
+      "counts": {
+        "pass": 316,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.973335751999912,
+      "adaptedSeconds": 9.508397865000006,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-281",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.713743395000165,
+      "adaptedSeconds": 9.898509654999998,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-282",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.722751997999694,
+      "adaptedSeconds": 9.085867545999918,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-283",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.509621140000036,
+      "adaptedSeconds": 9.393363358999977,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-284",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.39486346600006,
+      "adaptedSeconds": 8.066935072999968,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-285",
+      "counts": {
+        "pass": 377,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.2555528899997626,
+      "adaptedSeconds": 9.135219905000213,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-286",
+      "counts": {
+        "pass": 308,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.679729465000037,
+      "adaptedSeconds": 9.39565811400007,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-287",
+      "counts": {
+        "pass": 343,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.720473627000047,
+      "adaptedSeconds": 8.086267542999849,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-288",
+      "counts": {
+        "pass": 357,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.885553974000231,
+      "adaptedSeconds": 8.090120265000223,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-289",
+      "counts": {
+        "pass": 270,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.265598989999944,
+      "adaptedSeconds": 7.385769426000024,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-290",
+      "counts": {
+        "pass": 329,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.276698929999839,
+      "adaptedSeconds": 8.572220950999963,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-291",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.474218834000112,
+      "adaptedSeconds": 8.952654961000007,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-292",
+      "counts": {
+        "pass": 319,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.753440908999892,
+      "adaptedSeconds": 8.367891381999925,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-293",
+      "counts": {
+        "pass": 292,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.50144733399975,
+      "adaptedSeconds": 8.115528807999908,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-294",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.6798145380003,
+      "adaptedSeconds": 8.192929875999653,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-295",
+      "counts": {
+        "pass": 395,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.93413700300016,
+      "adaptedSeconds": 9.144347557999936,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-296",
+      "counts": {
+        "pass": 279,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.150882037999963,
+      "adaptedSeconds": 9.788968743000169,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-297",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.223450639999555,
+      "adaptedSeconds": 8.791493340000216,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-298",
+      "counts": {
+        "pass": 351,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.91169808199993,
+      "adaptedSeconds": 9.63834120499996,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-299",
+      "counts": {
+        "pass": 385,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.990808286000174,
+      "adaptedSeconds": 8.108856087000277,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-300",
+      "counts": {
+        "pass": 302,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.81881243099997,
+      "adaptedSeconds": 9.135737756999788,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-301",
+      "counts": {
+        "pass": 319,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.10001733099989,
+      "adaptedSeconds": 8.014426331000323,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-302",
+      "counts": {
+        "pass": 293,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.255091672999697,
+      "adaptedSeconds": 8.090946670999983,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-303",
+      "counts": {
+        "pass": 363,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 10.328072531999624,
+      "adaptedSeconds": 9.012391797999953,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-304",
+      "counts": {
+        "pass": 530,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.709980772000108,
+      "adaptedSeconds": 8.534432774999914,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-305",
+      "counts": {
+        "pass": 298,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.556186930999957,
+      "adaptedSeconds": 8.568460507000054,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-306",
+      "counts": {
+        "pass": 290,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.937339823000002,
+      "adaptedSeconds": 8.029286152000168,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-307",
+      "counts": {
+        "pass": 319,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.76959576399986,
+      "adaptedSeconds": 9.507054523000079,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-308",
+      "counts": {
+        "pass": 320,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.380805362000046,
+      "adaptedSeconds": 9.694759293000061,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-309",
+      "counts": {
+        "pass": 368,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.437077668000256,
+      "adaptedSeconds": 8.990421162000075,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-310",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.98977747500021,
+      "adaptedSeconds": 9.187689343999864,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-311",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.296865697999692,
+      "adaptedSeconds": 8.366201861000263,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-312",
+      "counts": {
+        "pass": 325,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.979796589000216,
+      "adaptedSeconds": 9.056524083000113,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-313",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.343257140999867,
+      "adaptedSeconds": 8.56229886400024,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-314",
+      "counts": {
+        "pass": 424,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.333925337999972,
+      "adaptedSeconds": 9.962820076000298,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-315",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.847267253000155,
+      "adaptedSeconds": 8.748822106999796,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-316",
+      "counts": {
+        "pass": 342,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.164702499000214,
+      "adaptedSeconds": 8.607763262999924,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-317",
+      "counts": {
+        "pass": 397,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.306991357999777,
+      "adaptedSeconds": 8.133718831999886,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-318",
+      "counts": {
+        "pass": 368,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.418111818999932,
+      "adaptedSeconds": 7.558760498000083,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-319",
+      "counts": {
+        "pass": 367,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.768984081000326,
+      "adaptedSeconds": 8.352041485999962,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-320",
+      "counts": {
+        "pass": 341,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.977721302999726,
+      "adaptedSeconds": 8.012512902999788,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-321",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.226261488000091,
+      "adaptedSeconds": 8.967704239999875,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-322",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.218897794999975,
+      "adaptedSeconds": 8.349959842999851,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-323",
+      "counts": {
+        "pass": 365,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.147309954999855,
+      "adaptedSeconds": 8.373775338000087,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-324",
+      "counts": {
+        "pass": 335,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.452963462999833,
+      "adaptedSeconds": 9.800406701000156,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-325",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.42371388399988,
+      "adaptedSeconds": 8.008896196000023,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-326",
+      "counts": {
+        "pass": 383,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.72547279499986,
+      "adaptedSeconds": 8.664155098000265,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-327",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.48505474700005,
+      "adaptedSeconds": 8.686749270000291,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-328",
+      "counts": {
+        "pass": 334,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.712722201999895,
+      "adaptedSeconds": 7.829709885999819,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-329",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.732531814999675,
+      "adaptedSeconds": 8.142835951000052,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-330",
+      "counts": {
+        "pass": 347,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.70192757299992,
+      "adaptedSeconds": 8.731886355999904,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-331",
+      "counts": {
+        "pass": 415,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.823471924999922,
+      "adaptedSeconds": 8.44261507300007,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-332",
+      "counts": {
+        "pass": 341,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.055551714000103,
+      "adaptedSeconds": 8.30576186899998,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-333",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.919901460999881,
+      "adaptedSeconds": 8.213220000000092,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-334",
+      "counts": {
+        "pass": 342,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.614280716999929,
+      "adaptedSeconds": 7.9347752769999715,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-335",
+      "counts": {
+        "pass": 333,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.378354294000019,
+      "adaptedSeconds": 7.884765179000169,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-336",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.61506058499981,
+      "adaptedSeconds": 9.391834773000028,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-337",
+      "counts": {
+        "pass": 354,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.989892224999949,
+      "adaptedSeconds": 8.981451342999662,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-338",
+      "counts": {
+        "pass": 475,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 9.126019056999667,
+      "adaptedSeconds": 8.496611247000146,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-339",
+      "counts": {
+        "pass": 357,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.890273292000074,
+      "adaptedSeconds": 7.642331059999833,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-340",
+      "counts": {
+        "pass": 333,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.5117308089998,
+      "adaptedSeconds": 8.318533317999936,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-341",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.07666854800027,
+      "adaptedSeconds": 8.561964587000148,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-342",
+      "counts": {
+        "pass": 348,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 8.420013480999842,
+      "adaptedSeconds": 8.362073642999803,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-343",
+      "counts": {
+        "pass": 359,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.667908633000025,
+      "adaptedSeconds": 8.700597202000154,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-344",
+      "counts": {
+        "pass": 377,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.528714517000026,
+      "adaptedSeconds": 7.790924456000084,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-345",
+      "counts": {
+        "pass": 325,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.60689861200035,
+      "adaptedSeconds": 7.5298264679995555,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-346",
+      "counts": {
+        "pass": 353,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.407636034999996,
+      "adaptedSeconds": 7.971640398999625,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-file-347",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 6.435991873999683,
+      "adaptedSeconds": 8.065341223999894,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-00",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.7385102779999215,
+      "adaptedSeconds": 5.8699635929997385,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-01",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.523537634999684,
+      "adaptedSeconds": 5.19995898299976,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-02",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.561374915000215,
+      "adaptedSeconds": 4.511581067999941,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-03",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.365555544000017,
+      "adaptedSeconds": 4.555063248999886,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-04",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.42184060999989,
+      "adaptedSeconds": 4.3865785799998775,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-05",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.013697191000119,
+      "adaptedSeconds": 4.746195402000012,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-06",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.134168091999982,
+      "adaptedSeconds": 4.799559143999886,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-07",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.585389061999649,
+      "adaptedSeconds": 4.689351761000125,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-08",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.5181455840001945,
+      "adaptedSeconds": 4.306356554999638,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-09",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.7943646190001346,
+      "adaptedSeconds": 4.455039163000038,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-10",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.095832139000322,
+      "adaptedSeconds": 4.648600278999766,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-11",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.516793449000033,
+      "adaptedSeconds": 4.912404860999686,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-12",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.460412013000223,
+      "adaptedSeconds": 4.585946636999779,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-13",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.6608646939998835,
+      "adaptedSeconds": 4.560477494000224,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-14",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.873146858999917,
+      "adaptedSeconds": 4.74872913199988,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-15",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.234724381999968,
+      "adaptedSeconds": 4.985788406000211,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-16",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.635562051999841,
+      "adaptedSeconds": 5.516722926000057,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-17",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.958279797999694,
+      "adaptedSeconds": 4.862812971000039,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-18",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.935866479000197,
+      "adaptedSeconds": 4.830143754000346,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-19",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.4621404230001644,
+      "adaptedSeconds": 4.654731856000126,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-20",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.260528697000154,
+      "adaptedSeconds": 5.157175276000089,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-21",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.5266859049997947,
+      "adaptedSeconds": 4.951133235999805,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-22",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.6324274910002714,
+      "adaptedSeconds": 4.981241634000071,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-23",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 4.0520643089998885,
+      "adaptedSeconds": 4.95904851899968,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-00",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.8711576000000605,
+      "adaptedSeconds": 8.78088638500003,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-01",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 2.6947016429999167,
+      "adaptedSeconds": 4.521293126000273,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-02",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 2.8867196470000636,
+      "adaptedSeconds": 3.140535357000317,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-03",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.832199409000168,
+      "adaptedSeconds": 3.7426849769999535,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-04",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.927932819000034,
+      "adaptedSeconds": 8.04302557200026,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-05",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.019708316000106,
+      "adaptedSeconds": 7.281865848000052,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-06",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.590638967999894,
+      "adaptedSeconds": 6.0687475649997396,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-07",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 5.573689015999662,
+      "adaptedSeconds": 5.569754426000145,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-08",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.263485276999745,
+      "adaptedSeconds": 6.879357996999715,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-09",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.276178651999999,
+      "adaptedSeconds": 7.167173312000159,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-10",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.740314018999925,
+      "adaptedSeconds": 7.119318015999852,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-11",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.40773819900005,
+      "adaptedSeconds": 7.3083410999997795,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-12",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 7.192770586000279,
+      "adaptedSeconds": 7.075883448000241,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-13",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.0736449460000586,
+      "adaptedSeconds": 3.834863625000253,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-14",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.4060265069997513,
+      "adaptedSeconds": 2.907457913000144,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    },
+    {
+      "name": "stage3-lane-symlink-case-15",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "mainSeconds": 3.9834756430000198,
+      "adaptedSeconds": 3.09973354199974,
+      "testIdentityAndStatusEqual": true,
+      "nonApiBaselinesByteIdentical": true
+    }
+  ]
+}
