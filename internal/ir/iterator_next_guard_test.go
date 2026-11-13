@@ -15,7 +15,7 @@ import (
 // IteratorNext too: a proof, an effect, a throw edge, an emitter. This is the second line behind the
 // closed defaults (ir.Inert): a switch that gave GeneratorNext a case of its own did so because the
 // default was wrong for a step, and it is wrong for IteratorNext for the same reason. Mutant: the
-// IteratorNext case dropped from any one of them, such as internal/flow/infer.go's callsBack, and
+// IteratorNext case dropped from any one of them, such as internal/lower/readiness.go's call list, and
 // this names its file and line.
 func TestEverySwitchOverGeneratorNextNamesIteratorNext(t *testing.T) {
 	t.Parallel()

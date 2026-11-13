@@ -1,13 +1,5 @@
 [
   {
-    "path": "internal/flow/effects.go",
-    "kind": "lift",
-    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go",
-    "decision": "delete",
-    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
-    "retiring_task": "#2kb2kje"
-  },
-  {
     "path": "internal/flow/flow.go",
     "kind": "lift",
     "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/high_level_intermediate_representation.go",
@@ -19,14 +11,6 @@
     "path": "internal/flow/graph.go",
     "kind": "lift",
     "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/graph.go",
-    "decision": "delete",
-    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
-    "retiring_task": "#2kb2kje"
-  },
-  {
-    "path": "internal/flow/ranges.go",
-    "kind": "lift",
-    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ranges.go",
     "decision": "delete",
     "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
     "retiring_task": "#2kb2kje"
