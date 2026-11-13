@@ -135,6 +135,9 @@ func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) 
 // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
+	if err := l.neverExpression(expression); err != nil {
+		return nil, err
+	}
 	l.inspectorRecordBuiltUse(expression)
 	if value, handled, err := l.inspectorDoomedValue(expression); handled {
 		if err != nil {
