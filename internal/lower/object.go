@@ -1997,6 +1997,9 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.nodeProcessValue(property.Name()); known {
 		return value, err
 	}
+	if value, known, err := l.nodeTimerValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)

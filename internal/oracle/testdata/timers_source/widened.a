@@ -1,0 +1,13 @@
+// The open hole on #995spev, pinned: setTimeout's value is a closure of two parameters standing in
+// for Node's variadic setTimeout, and Adamic admits widening a function value to a view with more
+// parameters, as it does a program function's. Node's setTimeout forwards the extra argument to the
+// callback, and the closure drops it, so Node prints extra e where both backends print extra
+// undefined, with no stop. TestTimerValueWideningIsOpen holds both sides until a guard closes it.
+import 'node:timers';
+
+type Narrow = (callback: () => void, ms: number) => unknown;
+type Wide = (callback: (extra?: string) => void, ms: number, extra: string) => unknown;
+
+const narrow: Narrow = setTimeout;
+const wide: Wide = narrow;
+wide((extra?: string) => console.log(`extra ${String(extra)}`), 1, 'e');
