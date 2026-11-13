@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 
 /* What no program can reach yet: a rename, the error path, which Node takes only when libuv fails
@@ -125,8 +126,18 @@ int main(int argc, char **argv) {
     }
     adamic_release(error);
     if (strcmp(mode, "drain") == 0) {
-        /* Created before the loop runs, so their three IN_CREATE events are one read. */
+        /* Created before the loop runs, so their three IN_CREATE events are one read. The descriptor
+         * says so before the loop starts: each event is a 16-byte header and its name padded to 16, so
+         * the three hold 96 bytes, which the dispatch's 4096-byte buffer takes in its first read. A
+         * split would read short here, and both tests name it (Runtime's should on #cbj1hpd). */
         touch("a"); touch("b"); touch("end");
+        char link[64] = {0};
+        char proc[64];
+        snprintf(proc, sizeof proc, "/proc/self/fd/%d", predicted);
+        assert(readlink(proc, link, sizeof link - 1) > 0 && strcmp(link, "anon_inode:inotify") == 0);
+        int pending = 0;
+        assert(ioctl(predicted, FIONREAD, &pending) == 0);
+        printf("pending %d\n", pending);
     } else if (strcmp(mode, "error") == 0 || strcmp(mode, "error-uncaught") == 0) {
         char link[64] = {0};
         char proc[64];
