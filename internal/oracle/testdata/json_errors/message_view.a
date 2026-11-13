@@ -1,0 +1,5 @@
+// A view write keeps a constructed message non-enumerable (#z4a9p9e).
+const e = new Error('x');
+const v: { message: string } = e;
+v.message = 'y';
+console.log(JSON.stringify(e) ?? '<undefined>');
