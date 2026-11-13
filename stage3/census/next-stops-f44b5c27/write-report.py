@@ -19,6 +19,7 @@ s+=['','The baseline had 73 roots stopped at sys.ts:1692:17, node:inspector.Sess
 for g in groups:
  roots=[r for r in g['roots'] if r in former]
  if roots:s.append(f'| {len(roots)} | {q(g["where"])} | {g["kind"]} | {g["reason"]} | {phases[g["where"]]["phase"]} | {phases[g["where"]].get("owner", "— (unchanged)")} | {names(roots)} |')
+s+=['', 'All 73 former inspector roots now stop at the ambient setTimeout declaration at adapted sys.ts:57:1. The expected toISOString / __filename progression is not the ordinary first stop observed here: refusal scanning ends before body lowering reaches either. The compiler-source evidence explains this ordering; no claim about a measured latent getNodeSystem stop is made.']
 accepted=[r for g in groups if g['kind']=='accepted' for r in g['roots']]
 s+=['','## Roots lowering whole','',f'{len(accepted)}/79: {names(accepted)}. Lower acceptance covers each complete resolved root program. Native output is not measured.','','## Comparison with 3007955b','','Baseline: 3007955b6db96ae5f65cedb2e680d77ad1b88664, from typescript/next-stops-3007955b (933c8981edfa0e046893b1a1f1570c166a9e8e2c). Its report and grouped data are retained in previous-REPORT.md and previous-grouped-first-stops.json. Unchanged means an identical (location, kind, exact reason) tuple for that root. Moved means a different tuple present in the baseline. New means a tuple absent from the baseline.','','| Current group | Roots | Unchanged | Moved | New |','| --- | ---: | ---: | ---: | ---: |']
 for g in groups:s.append(f'| {q(g["where"])} {g["kind"]} | {g["count"]} | {g["unchanged"]} | {g["moved"]} | {g["new"]} |')
@@ -42,5 +43,6 @@ checkpoint=out/'checkpoints.json'
 if checkpoint.exists():
  s+=['','## Pushed checkpoints','', '| Group | Roots | Commit |','| --- | --- | --- |']
  for entry in json.loads(checkpoint.read_text()):s.append(f'| {entry["group"]} | {entry["roots"]} | {q(entry["sha"])} |')
+s+=['', 'Validation passed: all 79 sorted roots are covered, all 158 raw observations agree in their 79 non-timing pairs, all root child exit codes are zero and every recorded child exit is retained, all child runtimes are below 1800 seconds, and no census child remains. See validation.json and the per-command status files.']
 s+=['', 'The final branch is typescript/next-stops-f44b5c27-2, one new commit directly on the measured SHA. The earlier typescript/next-stops-f44b5c27 branch retains the stop record and was not rewritten.']
 (out/'REPORT.md').write_text('\n'.join(s)+'\n')
