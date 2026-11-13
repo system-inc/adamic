@@ -1,7 +1,7 @@
 """Detach only the bounded outer runner so a tool reconnect cannot orphan its group."""
 import json,os,subprocess,sys
 from pathlib import Path
-base=Path(__file__).resolve().parent;repo=base.parents[2];mode=os.environ['CENSUS_MODULE_FORMAT']
+base=Path(__file__).resolve().parent;repo=base.parents[2];mode=os.environ['CENSUS_MODULE_FORMAT'];(base/mode).mkdir(exist_ok=True)
 first,last=map(int,sys.argv[1:]);name=f'group-{first}-{last}'
 assert not (base/mode/(name+'-status.json')).exists()
 args=[sys.executable,str(base/'run.py'),name,sys.executable,str(base/'group.py'),str(first),str(last)]
