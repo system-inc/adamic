@@ -302,6 +302,13 @@ static void give_local(void *slot, chunk *each) {
 	}
 }
 
+#if SPARE_RETURN
+// heap_threads is the count of threads that have used the heap. The quiet point reads it here, never
+// in take's own words: heap_remote_scan_test.go's mutants rewrite take's gate by its exact text, so
+// that text has to stay the only one in this file.
+static size_t heap_threads(void) { return atomic_load_explicit(&thread_count, memory_order_relaxed); }
+#endif
+
 // adamic_heap_quiet_pending says whether this thread may hold chunks to give back: spares past the cap,
 // or, once a second heap thread exists, frees other threads queued on its chunks, which only it drains
 // and which could empty a chunk it would otherwise keep until it next allocates. So in a program with
@@ -311,7 +318,7 @@ static void give_local(void *slot, chunk *each) {
 bool adamic_heap_quiet_pending(void) {
 #if SPARE_RETURN
 	if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) { return true; }
-	return owned_chunks != NULL && atomic_load_explicit(&thread_count, memory_order_relaxed) > 1;
+	return owned_chunks != NULL && heap_threads() > 1;
 #else
 	return false;
 #endif
@@ -323,7 +330,7 @@ bool adamic_heap_quiet_pending(void) {
 // nothing to do (async_host_impl.h, parallel.c).
 void adamic_heap_quiet(void) {
 #if SPARE_RETURN
-	if (atomic_load_explicit(&thread_count, memory_order_relaxed) > 1) {
+	if (heap_threads() > 1) {
 		for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	}
 	size_t kept = 0;
