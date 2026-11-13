@@ -22,6 +22,6 @@ body-lowering NotYet count and does not make the unit whole-program measured.
 real first-error census and checks that the body remains attempted while the
 finding names the tail pass. It runs automatically in the overlay package suite.
 
-`RootOrderTests.test_artifact_tail_stop_preserves_body_count_loom03dg` holds the
-same separation for root-order artifact body counts and retains its tail stop
-as separate entry evidence.
+`RootOrderTests.test_artifact_tail_stop_withholds_lowering_loom03dg` holds the
+same separation for root-order artifacts: a tail stop keeps the root from
+lowering and stays as separate entry evidence (#sx8wdg7).
