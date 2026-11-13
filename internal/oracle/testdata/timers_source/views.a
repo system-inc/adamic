@@ -1,0 +1,31 @@
+// setTimeout's value seen through views a program may widen it to, each passing the label as a
+// string where the value's own slot holds an unknown: assigned to one, passed as an argument of one,
+// held in an array of them, seen through a rest parameter's tuple, and bound to its callback. Each
+// hands the callback the label as Node's setTimeout does: a caller through a string view writes the
+// string where the value reads an unknown (Language's question on #995spev, Nov 13).
+import 'node:timers';
+
+type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
+type Labelled = (callback: (label?: unknown) => void, ms: number, label: string) => unknown;
+type Spread = (...values: [callback: (label?: unknown) => void, ms: number, label: string]) => unknown;
+
+const ruled: Ruled = setTimeout;
+const labelled: Labelled = ruled;
+labelled((x?: unknown) => console.log(`labelled ${String(x)}`), 1, 'view');
+
+function run(set: Labelled, ms: number): void {
+    set((x?: unknown) => console.log(`argument ${String(x)}`), ms, 'passed');
+}
+run(ruled, 2);
+
+const held: Labelled[] = [ruled];
+for (const set of held) {
+    set((x?: unknown) => console.log(`element ${String(x)}`), 3, 'stored');
+}
+
+const spread: Spread = ruled;
+spread((x?: unknown) => console.log(`spread ${String(x)}`), 4, 'tuple');
+
+const bound = ruled.bind(undefined, (x?: unknown) => console.log(`bound ${String(x)}`));
+bound(5, 'bound');
+console.log('scheduled');

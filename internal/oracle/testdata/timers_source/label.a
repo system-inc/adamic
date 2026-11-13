@@ -1,0 +1,26 @@
+// tsc's sys.ts:377 hands its callback a label through setTimeout's slot, which Adamic ruled to take
+// one (ruling (c) on #995spev, Nov 13), and the value forwards it as Node's setTimeout does: a callback
+// that takes it reads it, whatever it holds, one handed none reads undefined, and one handed undefined
+// reads it too. tsc's own shape closes over what it needs and passes the label beside it.
+import 'node:timers';
+
+interface Host {
+    setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+    clearTimeout(timeoutId: unknown): void;
+}
+
+const host: Host = { setTimeout, clearTimeout };
+
+function poll(kind: string, names: string[]): void {
+    console.log(`poll ${kind} ${names.join(',')}`);
+}
+
+host.setTimeout((x?: unknown) => console.log(`label ${String(x)}`), 1, 'L');
+host.setTimeout((x?: unknown) => console.log(`omitted ${String(x)}`), 2);
+host.setTimeout((x?: unknown) => console.log(`undefined ${String(x)}`), 3, undefined);
+const kind = 'pollPollingIntervalQueue';
+const names = ['a.ts', 'b.ts'];
+host.setTimeout(() => poll(kind, names), 4, kind);
+host.setTimeout((x?: unknown) => console.log(`number ${String(x)}`), 5, 42);
+host.setTimeout((x?: unknown) => console.log(`object ${typeof x}`), 6, { names });
+console.log('scheduled');

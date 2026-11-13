@@ -63,6 +63,9 @@ var wasiRefusedFixtures = map[string]string{
 	"internal/oracle/testdata/timers_source/fresh_start.a":          "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
 	"internal/oracle/testdata/timers_source/value_read.a":           "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
 	"internal/oracle/testdata/timers_source/optional.a":             "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/label.a":                "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/views.a":                "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/program_widened.a":      "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
 
 	programHost14Path: "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/closure_convention_host24.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",

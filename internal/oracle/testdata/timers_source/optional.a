@@ -5,7 +5,7 @@
 import 'node:timers';
 
 interface Host {
-    setTimeout?(callback: () => void, ms: number): unknown;
+    setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
     clearTimeout?(timeoutId: unknown): void;
     newLine: string;
 }
