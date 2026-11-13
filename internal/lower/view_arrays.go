@@ -91,6 +91,10 @@ type viewElementKey struct {
 	misses  []string
 }
 
+// viewedElementNesting is how many times one generic target may be open on collectViewedElements' path
+// before the walk counts it as growing without end, as tsc's isDeeplyNestedType counts three.
+const viewedElementNesting = 5
+
 // collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
 // (a speculation's result is a cast too), so it reads every one in every module the program loads,
 // .a and .ts alike, and collects the element type of every array its target can hold, through
@@ -104,12 +108,26 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 	key.viewed = map[*checker.Type]bool{}
 	key.related = map[*checker.Type]bool{}
 	seen := map[*checker.Type]bool{}
+	// A generic that instantiates itself deeper at each step (interface Grow<T> { next?: Grow<Grow<T>> })
+	// is a new type at every level, so seen never stops the walk, and it ran until Go's stack overflowed
+	// (#k031ey0). Counted as tsc's isDeeplyNestedType counts: the same generic target open on the walk's
+	// path more than viewedElementNesting times means the walk can't see to the end, so every read is
+	// checked, the pre-pass's answer wherever it can't decide.
+	open := map[*checker.Type]int{}
 	var hold func(target *checker.Type, arm bool)
 	hold = func(target *checker.Type, arm bool) {
-		if target == nil || seen[target] {
+		if target == nil || seen[target] || key.every {
 			return
 		}
 		seen[target] = true
+		if generic := target.Target(); target.Flags()&checker.TypeFlagsObject != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 && generic != nil {
+			if open[generic] >= viewedElementNesting {
+				key.every = true
+				return
+			}
+			open[generic]++
+			defer func() { open[generic]-- }()
+		}
 		switch {
 		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
 			for _, member := range target.Types() {
