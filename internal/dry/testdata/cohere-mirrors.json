@@ -1,13 +1,5 @@
 [
   {
-    "path": "internal/flow/effects.go",
-    "kind": "lift",
-    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go",
-    "decision": "delete",
-    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
-    "retiring_task": "#2kb2kje"
-  },
-  {
     "path": "internal/flow/flow.go",
     "kind": "lift",
     "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/high_level_intermediate_representation.go",
@@ -22,14 +14,6 @@
     "decision": "delete",
     "reason": "TestGraphOracle's reference: today's graph passes held beside cohere's static_single_assignment passes, so the swap is judged against what it replaced; it goes once flow's single-assignment layer also runs on cohere.",
     "retiring_task": "#5jxpf6r"
-  },
-  {
-    "path": "internal/flow/ranges.go",
-    "kind": "lift",
-    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ranges.go",
-    "decision": "delete",
-    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
-    "retiring_task": "#2kb2kje"
   },
   {
     "path": "internal/flow/ssa.go",

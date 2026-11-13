@@ -15,7 +15,7 @@ import (
 // IteratorNext too: a proof, an effect, a throw edge, an emitter. This is the second line behind the
 // closed defaults (ir.Inert): a switch that gave GeneratorNext a case of its own did so because the
 // default was wrong for a step, and it is wrong for IteratorNext for the same reason. Mutant: the
-// IteratorNext case dropped from any one of them, such as internal/flow/infer.go's callsBack, and
+// IteratorNext case dropped from any one of them, such as internal/lower/readiness.go's call list, and
 // this names its file and line.
 func TestEverySwitchOverGeneratorNextNamesIteratorNext(t *testing.T) {
 	t.Parallel()
@@ -75,9 +75,9 @@ func TestEverySwitchOverGeneratorNextNamesIteratorNext(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// The emitters, fresh, split, flow's effects and throws, lowering's proofs and the closed defaults'
+	// The emitters, fresh, split, flow's throws, lowering's proofs and the closed defaults'
 	// own cases: fewer means the walk no longer finds the compiler.
-	if switches < 14 {
+	if switches < 12 {
 		t.Fatalf("found %d switches with a case for GeneratorNext: the walk no longer finds the compiler's", switches)
 	}
 }
