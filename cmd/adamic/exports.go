@@ -202,7 +202,7 @@ func compileExportsWith(path string, names []string, entryFunctions bool, format
 	program, err := lower.LowerWithOptions(context.Background(), checked, loweringOptions(false, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
-		return nil, nil, 1
+		return nil, nil, compilerErrorExit(err)
 	}
 	for i := range exports {
 		found := -1
