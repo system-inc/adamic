@@ -14,7 +14,7 @@ import (
 )
 
 // A field read through a structural type can reach a class's getter at run time (#1w5bve2's
-// getter_order.ts), and flow treats an ir.Property as running no code (internal/flow/infer.go). That
+// getter_order.ts), and the passes after lowering treat an ir.Property as running no code. That
 // holds because finishAccessors (class_accessors.go) rewrites every read of a name any class declares
 // as an accessor into a call of that name's dispatcher, before flow, reuse, regions and emit see the
 // IR (#gm8tx0n, Memory's read, Oct 30). So a getter's effects are a call's effects there. Each fixture

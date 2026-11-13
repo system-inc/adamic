@@ -16,7 +16,7 @@ import (
 )
 
 var flowProgramChecks = []func(*testing.T, string){
-	checkSingleAssignmentProgram, checkMutationRangesProgram, checkGraphPathsProgram, checkLivenessProgram,
+	checkSingleAssignmentProgram, checkGraphPathsProgram, checkLivenessProgram,
 }
 
 func checkAllFlowProgram(t *testing.T, path string) {
@@ -65,11 +65,11 @@ func functionName(function any) string {
 func TestFlowCorpusUnitsCoverEveryProgram(t *testing.T) {
 	t.Parallel()
 	expected := programs(t)
-	if len(flowCorpusTests) != 4 || len(flowProgramChecks) != 4 {
+	if len(flowCorpusTests) != 3 || len(flowProgramChecks) != 3 {
 		t.Fatalf("corpus count: %d paths, %d expected, %d families, %d checks", len(flowCorpusPaths), len(expected), len(flowCorpusTests), len(flowProgramChecks))
 	}
-	families := []string{"SingleAssignment", "MutationRanges", "GraphPaths", "Liveness"}
-	checks := []string{"checkSingleAssignmentProgram", "checkMutationRangesProgram", "checkGraphPathsProgram", "checkLivenessProgram"}
+	families := []string{"SingleAssignment", "GraphPaths", "Liveness"}
+	checks := []string{"checkSingleAssignmentProgram", "checkGraphPathsProgram", "checkLivenessProgram"}
 	live := map[string]bool{}
 	for _, path := range expected {
 		live[filepath.ToSlash(path)] = true
@@ -101,7 +101,7 @@ func TestFlowCorpusUnitsCoverEveryProgram(t *testing.T) {
 			t.Fatalf("check %d: %s, want %s", index, got, checks[index])
 		}
 	}
-	t.Logf("%d programs, %d analysis pieces, %d selectable units", len(expected), len(expected)*4, len(units))
+	t.Logf("%d programs, %d analysis pieces, %d selectable units", len(expected), len(expected)*3, len(units))
 }
 
 func TestFlowCorpusSetupIsShared(t *testing.T) {
