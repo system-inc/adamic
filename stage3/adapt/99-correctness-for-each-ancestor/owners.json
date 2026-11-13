@@ -1,0 +1,12 @@
+[
+  {
+    "file": "path.ts",
+    "owner": "forEachAncestorDirectory",
+    "beforeDeclarations": 3,
+    "afterDeclarations": 2,
+    "before": "//// Path Traversal\n\n/**\n * Calls `callback` on `directory` and every ancestor directory it has, returning the first defined result.\n *\n * @internal\n */\nexport function forEachAncestorDirectory<T>(directory: Path, callback: (directory: Path) => T | undefined): T | undefined;\n/** @internal */\nexport function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined;\n/** @internal */\nexport function forEachAncestorDirectory<T, P extends string>(directory: P, callback: (directory: P) => T | undefined): T | undefined {\n    while (true) {\n        const result = callback(directory);\n        if (result !== undefined) {\n            return result;\n        }\n\n        const parentPath = getDirectoryPath(directory) as P;\n        if (parentPath === directory) {\n            return undefined;\n        }\n\n        directory = parentPath;\n    }\n}",
+    "after": "//// Path Traversal\n\n/**\n * Calls `callback` on `directory` and every ancestor directory it has, returning the first defined result.\n *\n * @internal\n */\n/** @internal */\nexport function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined;\n/** @internal */\nexport function forEachAncestorDirectory<T>(directory: string, callback: (directory: string) => T | undefined): T | undefined {\n    while (true) {\n        const result = callback(directory);\n        if (result !== undefined) {\n            return result;\n        }\n\n        const parentPath = getDirectoryPath(directory);\n        if (parentPath === directory) {\n            return undefined;\n        }\n\n        directory = parentPath;\n    }\n}",
+    "ownerBeforeSha256": "42feaa190c7747e4922e56aa0156a259775504db25d94b74366c374d5cfadb27",
+    "ownerAfterSha256": "a1b22366de92c257b151433866ce86afb7aa5b5a72628d2777b0e9b4e9a33372"
+  }
+]
