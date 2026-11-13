@@ -156,3 +156,8 @@ lowers is admitted unjudged. If every row still stops, each of those roads stops
 record at the exemption is a defense, as #4gpbn7w's fix was: the rows hold the stop, and this mutant has no witness
 yet. TestOptionalMemberPresenceLowers and TestOptionalMemberPresenceStops stay green either way (Lower's pin: the
 record taken out of erasedLiteralMethod moves nothing that passes through it).
+
+Measured on Home at 8c082703 (J-6e61jk0, mutant applied as above, exit 0): every row stays green. Each of
+the five roads reaches object.go's property and stops at the class arm, so M14 has no witness today and the
+record at the exemption is a defense. TestOptionalMemberPresenceRoadsStopOverAClassInstance pins each road at
+that stop, so a road that starts lowering elsewhere turns its row red.
