@@ -106,11 +106,13 @@ for label in main; do
     mkdir -p "$run/$label/tsc"
     # Only main is measured; area is a compatibility label for these same records.
     "$binaries/census" "$entry" "$run/$label/tsc/census.jsonl" > "$run/$label/tsc/census.log" 2>&1
+    # Both latent passes run the scoped post-lowering tail on each unit's snapshot (LATENT_TAIL, #hcxsh1k): body
+    # findings stay byte-identical, and tail stops are counted on their own line, never in the body totals.
     # The entry pass is timed by unit too, so a slow day names its units (#20pb346: Nov 6 ran 1 h 41 m and the run held
     # no per-unit time for it).
-    LATENT_TIMES="$run/$label/tsc/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
+    LATENT_TIMES="$run/$label/tsc/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
     "$binaries/census" "$scratch/$label-adapted/src/compiler" "$run/$label/census.jsonl" > "$run/$label/census.log" 2>&1
-    LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
+    LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
 done
 # Copy all raw streams and preparation logs before reporting and gzip. Paths in
 # the copied streams still name main-adapted, so both labels use that tree.
