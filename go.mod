@@ -31,6 +31,7 @@ replace (
 )
 
 require (
+	github.com/system-inc/cohere/static_single_assignment v0.0.0
 	github.com/system-inc/cohere v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/ast v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/bundled v0.0.0
