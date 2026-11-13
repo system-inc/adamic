@@ -237,12 +237,17 @@ static chunk *new_chunk(size_t class) {
 
 static void drain_remote(chunk *each);
 
+// heap_threaded says whether a second heap thread has ever existed, so remote frees can be waiting on
+// this thread's chunks. take and the quiet point both ask it here, in one place, because
+// heap_remote_scan_test.go's mutants rewrite this line by its text to pin what a remote scan is for.
+static bool heap_threaded(void) { return atomic_load_explicit(&thread_count, memory_order_relaxed) > 1; }
+
 static void *take(size_t class, uint32_t *number) {
 	// A serial heap cannot receive remote frees. The identity count is monotonic:
 	// once a second heap thread exists, all later allocations keep draining.
 	// A first concurrent free may arrive after this check, just as after a drain;
 	// a later allocation or thread cleanup will collect it.
-	if (atomic_load_explicit(&thread_count, memory_order_relaxed) > 1) {
+	if (heap_threaded()) {
 		// Full chunks may have remote frees waiting without being on a giving list.
 		if (giving[class] == NULL) {
 			for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) {
@@ -302,13 +307,6 @@ static void give_local(void *slot, chunk *each) {
 	}
 }
 
-#if SPARE_RETURN
-// heap_threads is the count of threads that have used the heap. The quiet point reads it here, never
-// in take's own words: heap_remote_scan_test.go's mutants rewrite take's gate by its exact text, so
-// that text has to stay the only one in this file.
-static size_t heap_threads(void) { return atomic_load_explicit(&thread_count, memory_order_relaxed); }
-#endif
-
 // adamic_heap_quiet_pending says whether this thread may hold chunks to give back: spares past the cap,
 // or, once a second heap thread exists, frees other threads queued on its chunks, which only it drains
 // and which could empty a chunk it would otherwise keep until it next allocates. So in a program with
@@ -318,7 +316,7 @@ static size_t heap_threads(void) { return atomic_load_explicit(&thread_count, me
 bool adamic_heap_quiet_pending(void) {
 #if SPARE_RETURN
 	if (spare_count * CHUNK > ADAMIC_HEAP_SPARE_CAP) { return true; }
-	return owned_chunks != NULL && heap_threads() > 1;
+	return owned_chunks != NULL && heap_threaded();
 #else
 	return false;
 #endif
@@ -330,7 +328,7 @@ bool adamic_heap_quiet_pending(void) {
 // nothing to do (async_host_impl.h, parallel.c).
 void adamic_heap_quiet(void) {
 #if SPARE_RETURN
-	if (heap_threads() > 1) {
+	if (heap_threaded()) {
 		for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	}
 	size_t kept = 0;
