@@ -141,3 +141,24 @@ func TestNeverRefusalMutantsAreCaught(t *testing.T) {
 		})
 	}
 }
+
+// These spellings stop before the Never property-write rule. Keep their existing
+// representation gaps distinct from a refused non-tuple array .length write.
+func TestNeverArrayLengthUnsupportedTargetsStayNotYet(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, probe := range []struct{ name, source, what string }{
+			{"element_length", `const xs: number[] = [1, 2]; xs["length"] = 1;`, "an array index that isn't a number"},
+			{"destructure_length", `const xs: number[] = [1, 2]; [xs.length] = [1];`, "assigning to a PropertyAccessExpression in a destructuring assignment"},
+		} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var notYet *NotYet
+				if !errors.As(err, &notYet) || notYet.What != probe.what {
+					t.Fatalf("unsupported length target must keep NotYet %q: %v", probe.what, err)
+				}
+			})
+		}
+	}
+}

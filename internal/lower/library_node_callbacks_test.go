@@ -71,11 +71,13 @@ func TestNodeHostCallbackParameterViews(t *testing.T) {
 			var notYet *NotYet
 			var refused *Refused
 			kind := errors.As(err, &notYet)
+			wantKind := "NotYet"
 			if probe.name == "any" {
+				wantKind = "Refused"
 				kind = errors.As(err, &refused)
 			}
 			if !kind || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want the pinned stop %q, got %v", probe.want, err)
+				t.Fatalf("want %s with %q, got %v", wantKind, probe.want, err)
 			}
 		})
 	}

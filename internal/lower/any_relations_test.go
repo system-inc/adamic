@@ -75,11 +75,13 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) re
 			var pending *NotYet
 			var refused *Refused
 			kind := errors.As(err, &pending)
+			wantKind := "NotYet"
 			if probe.name == "local typed any" {
+				wantKind = "Refused"
 				kind = errors.As(err, &refused)
 			}
 			if !kind || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+				t.Fatalf("want %s with %q, got %v", wantKind, probe.want, err)
 			}
 		})
 	}
