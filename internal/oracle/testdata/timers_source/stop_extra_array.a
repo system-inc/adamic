@@ -1,0 +1,14 @@
+// stop_extra_assignment.a's fourth argument through an element of an array of the four-parameter view.
+import 'node:timers';
+
+type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
+type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;
+
+const ruled: Ruled = setTimeout;
+const callback = (label?: unknown, extra?: unknown): void => console.log(`fired ${String(label)} ${String(extra)}`);
+console.log('before');
+const held: Four[] = [ruled];
+for (const set of held) {
+    set(callback, 1, 'L', 'X');
+}
+console.log('after');

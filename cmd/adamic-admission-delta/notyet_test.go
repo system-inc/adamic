@@ -464,3 +464,37 @@ func TestRuntimeNotYetNeverAWitness(t *testing.T) {
 		t.Fatal("program listed in both lists", o)
 	}
 }
+
+// setTimeout's value called with more arguments than it forwards stops in a keyless form of its own
+// (Adamic's ruling on #995spev, Nov 13 05:48Z, lifted by #8q1pjsp), said whole with none of the
+// arguments, since an entry is matched with ==, and it reads under #995spev alone. internal/ir's
+// HostForwardStop says these words. Mutant: its line dropped from runtimeNotYetKeyless, and the ruled
+// message is refused.
+func TestRuntimeNotYetHostForwardForm(t *testing.T) {
+	t.Parallel()
+	source, stop, list := runtimeNotYetFixture(t)
+	path := filepath.Join(t.TempDir(), "stops.json")
+	read := func(stderr, ruling string) error {
+		keyless := stop
+		keyless.Stderr, keyless.RulingTask, keyless.LiftingTask = stderr, ruling, "#8q1pjsp"
+		writeRuntimeNotYetList(t, path, runtimeNotYetStopList{Comment: list.Comment, Stops: map[string]runtimeNotYetStop{contentHash(source): keyless}})
+		_, err := readRuntimeNotYetStops(path)
+		return err
+	}
+	ruled := "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
+	if err := read(ruled, "#995spev"); err != nil {
+		t.Errorf("the ruled message refused: %v", err)
+	}
+	for name, stderr := range map[string]string{
+		"its count":       "adamic: panic: a host function called with more arguments than it forwards isn't built yet (4 arguments)\n",
+		"no newline":      "adamic: panic: a host function called with more arguments than it forwards isn't built yet",
+		"no panic prefix": "a host function called with more arguments than it forwards isn't built yet\n",
+	} {
+		if err := read(stderr, "#995spev"); err == nil {
+			t.Errorf("%s accepted: %q", name, stderr)
+		}
+	}
+	if err := read(ruled, "#0sps03r"); err == nil {
+		t.Error("the message under another ruling accepted")
+	}
+}

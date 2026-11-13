@@ -1,0 +1,15 @@
+// System's own spelling of the slots (sys.ts declares setTimeout? and clearTimeout?): optional
+// methods, so each slot sees its value with undefined beside it. The values are stored there and the
+// object lives to the end, as tsc's sys does. A call through an optional method isn't built yet: the
+// non-null assertion is refused, and a call through ?. is the next wall (#995spev, Nov 13).
+import 'node:timers';
+
+interface Host {
+    setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+    clearTimeout?(timeoutId: unknown): void;
+    newLine: string;
+}
+
+const host: Host = { setTimeout, clearTimeout, newLine: '\n' };
+const held: Host[] = [host, { setTimeout, clearTimeout, newLine: '\r\n' }];
+console.log(`held ${String(held.length)} ${String(host.newLine.length)}`);
