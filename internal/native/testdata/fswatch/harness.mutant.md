@@ -25,6 +25,17 @@ Command after products: go test ./internal/native -count=1 -run 'TestFSWatch' -v
 | The error path calls its listeners and leaves the watcher open | error | TestFSWatchErrorClosesTheWatcher | its own 3 s deadline, the listener called every turn |
 | An extra inotify instance per watcher inserted at the live header's shared descriptor open, held to process exit | cap | TestFSWatchSharedDescriptorCapMatchesNode | exit 17; `watch failure code=EMFILE message=EMFILE: too many open files, watch '<fixture-path>'` |
 | watch_error_shape without syscall | add-error | TestFSWatchAddErrorCarriesNodeKeys | the keys line without syscall, then the read of syscall by name stopping the run |
+| The per-event job drain dropped in fs_watcher_dispatch, the loop's checkpoint after the source phase the only one | drain | TestFSWatchDrainsJobsPerEvent | stdout: `rename a, rename b, rename end, job, job` where the control reads `rename a, job, rename b, job, rename end` |
+
+The drain mode is the per-event checkpoint's witness (#cbj1hpd). It creates a, b and end in the
+watched directory before the loop runs, so their three IN_CREATE events are one read, and the listener
+queues a job (an awaited settled promise, as the readiness-source harness makes one) on a and on b.
+Node takes a microtask checkpoint after each event's listener, so each job prints before the next
+event's line. No program can queue that job from a listener: an async listener in a void slot is a
+floating task, refused for good (#8j8ecw0), so two_events.a pins that refusal and witnesses no drain.
+TestFSWatchMutantDrainDropped builds the mutant through timerMutant's private runtime copy, its
+anchor the checkpoint and its comment together so fs_watch_fail's own drain is untouched, and requires
+the mutant's order exactly. TestProduct_FSWatchHarnessMutantDrainDropped is its build.
 
 The edit, in node_fs_watch_impl.h's fs_watcher_fail, is fs_watcher_close(watcher) replaced by a
 comment. The error bit then comes back every turn, as sources.h says it does until the owner
