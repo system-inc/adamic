@@ -56,3 +56,9 @@ python3 /workspace/scratch/k031ey0-5/evidence/measure.py range 61 70
 python3 /workspace/scratch/k031ey0-5/evidence/measure.py range 71 79
 # Commit and push this group before either latent pass.
 ```
+
+Executed parent latent pass:
+```bash
+python3 /workspace/scratch/k031ey0-5/evidence/measure.py latent parent
+```
+Child reached the 1780-second elapsed bound, received SIGTERM, and exited -15; wrapper exited 143. No pass was rerun or extended beyond the bound.
