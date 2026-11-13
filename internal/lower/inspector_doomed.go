@@ -8,6 +8,36 @@ import (
 	"strings"
 )
 
+// This is a per-program fact, not an admission proof. Inspect the checker's whole
+// resolved graph once: Files lists only named roots. Filter the literal before
+// the ordinary require-form check so unrelated calls need no member lookup.
+// A let's require comes only from a doomed-binding write rooted at a const
+// require call this scan accepts; outside-arm-only writes leave require nil,
+// which inspectorDoomedUse drops.
+func (l *lowering) inspectorProgramHasRequire() bool {
+	if !l.inspectorRequireKnown {
+		// A partial analysis without a program cannot establish absence.
+		if l.program == nil {
+			return true
+		}
+		l.inspectorRequireKnown = true
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindCallExpression && nodeInspectorRequireThrows(node) && l.nodeCommonJSRequireRoot(node) == node {
+				return true
+			}
+			return node.ForEachChild(visit)
+		}
+		for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+			if !file.IsDeclarationFile && file.AsNode().ForEachChild(visit) {
+				l.inspectorRequirePresent = true
+				break
+			}
+		}
+	}
+	return l.inspectorRequirePresent
+}
+
 // A const roots at the throwing require. A function-local let also qualifies
 // when every write is either rooted there or typed undefined or a string literal.
 // The second result records let provenance through const aliases as well.
@@ -212,6 +242,9 @@ func inspectorContractNode(node *ast.Node) *ast.Node {
 // Only a lowering entry records an obligation. The same helper is used by the
 // trap and by direct member/call/builtin roads that could bypass it.
 func (l *lowering) inspectorRecordBuiltUse(node *ast.Node) (root, require *ast.Node) {
+	if !l.inspectorProgramHasRequire() {
+		return nil, nil
+	}
 	node = inspectorContractNode(node)
 	root, require = l.inspectorDoomedUse(node)
 	if root == nil {
@@ -229,6 +262,9 @@ func (l *lowering) inspectorRecordBuiltUse(node *ast.Node) (root, require *ast.N
 // Every admitted expression goes through this constructor. Its ordinary read
 // may refuse, or throw the caught TDZ ReferenceError, before the terminal Panic.
 func (l *lowering) inspectorDoomedValue(node *ast.Node) (ir.Expression, bool, error) {
+	if !l.inspectorProgramHasRequire() {
+		return nil, false, nil
+	}
 	node = inspectorContractNode(node)
 	root, require := l.inspectorRecordBuiltUse(node)
 	if root == nil {

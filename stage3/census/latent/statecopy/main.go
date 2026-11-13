@@ -61,6 +61,8 @@ const (
 )
 
 var loweringFieldPolicies = map[string]loweringFieldPolicy{
+	"inspectorRequireKnown":     programFact,
+	"inspectorRequirePresent":   programFact,
 	"inspectorSkippedContracts": speculativeState, // Map and paired IR indices roll back together.
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.

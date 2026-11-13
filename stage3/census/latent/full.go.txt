@@ -43,6 +43,7 @@ func (l *lowering) latentUseProgramFacts(facts **latentProgramFacts) {
 	if *facts == nil {
 		probe := l.latentSnapshot()
 		probe.entriesProgramHasRecords()
+		probe.inspectorProgramHasRequire()
 		captured := latentCaptureProgramFacts(probe)
 		*facts = &captured
 	}
