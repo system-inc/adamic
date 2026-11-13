@@ -73,3 +73,19 @@ Expected: view_body_throw.a goes red with `function N: the call ended at bbM, wh
 consumer's throw closes `numbers` at the yield inside its loop, and the yield's next block runs the loop's update, so
 nothing but the allowance lets the call end there. trace_in_place.a and trace_named.a stay green: each yield is the
 body's last statement, and its next block reaches the return through blocks that run nothing.
+
+## Runs
+
+All three were run through Loom's door at dc1addf1, each applied alone and then put back:
+
+- M1: red (J-e7mgmjp on Pupa, and alone on the two reproducers as J-bamghtg). trace_in_place.a gives walk's
+  `a point of function 0 ran inside a call of function 2` and then checkLivenessProgram's
+  `index out of range [12] with length 3`, the failure #7wn0t67 reported. trace_named.a and view_body_throw.a
+  give walk's `a point of function 1 ran inside a call of function 0`. The panic ends the test binary, so a run of
+  all six programs lists only the subtests that failed before it.
+- M2: red (J-e7mgmjp). All six programs fail with `park bypassed a suspension terminal`.
+- M3: red (J-e7mgmjp). view_body_throw.a fails with `function 0: the call ended at bb3, which doesn't lead to a
+  return`.
+
+Unmutated (J-fskrpqs on Lunatic): vet, TestFlowGeneratorsTraced, TestAsyncTraceRejectsWrongSuspensionEdge,
+internal/javascript whole and TestGeneratorsAgreeWithNode all green.
