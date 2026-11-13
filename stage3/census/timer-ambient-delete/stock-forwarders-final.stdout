@@ -1,0 +1,58 @@
+{
+  "version": "6.0.3",
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/timer-ambient-delete/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "globals": {
+    "setTimeout": {
+      "type": "typeof setTimeout",
+      "signatures": [
+        "<TArgs extends any[]>(callback: (...args: TArgs) => void, delay?: number | undefined, ...args: MakeVoidParameterOptional<TArgs>): Timeout"
+      ],
+      "declarations": [
+        {
+          "file": "/workspace/timer-ambient-delete/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "text": "function setTimeout<TArgs extends any[]>(\n        callback: (...args: TArgs) => void,\n        delay?: number,\n        ...args: MakeVoidParameterOptional<TArgs>\n    ): NodeJS.Timeout;"
+        },
+        {
+          "file": "/workspace/timer-ambient-delete/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "text": "namespace setTimeout {\n        import __promisify__ = promises.setTimeout;\n        export { __promisify__ };\n    }"
+        }
+      ]
+    },
+    "clearTimeout": {
+      "type": "(timeout: string | number | Timeout | undefined) => void",
+      "signatures": [
+        "(timeout: string | number | Timeout | undefined): void"
+      ],
+      "declarations": [
+        {
+          "file": "/workspace/timer-ambient-delete/internal/load/node_types/node_modules/@types/node/web-globals/timers.d.ts",
+          "text": "function clearTimeout(timeout: NodeJS.Timeout | string | number | undefined): void;"
+        }
+      ]
+    }
+  },
+  "diagnostics": [
+    {
+      "code": 2345,
+      "file": "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts",
+      "line": 4,
+      "column": 62,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string | number | Timeout | undefined'."
+    }
+  ]
+}

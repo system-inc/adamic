@@ -1,0 +1,8 @@
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:2:14: variable forwarders: { setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown; clearTimeout: (timeoutId: unknown) => void; }
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:3:18: parameter callback: (label?: unknown) => void
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:3:29: parameter label: unknown
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:3:55: parameter ms: number
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:3:67: parameter label: unknown
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:4:20: parameter timeoutId: unknown
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:6:14: variable globalSetTimeout: typeof setTimeout
+/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete/forwarders.ts:7:14: variable globalClearTimeout: (timeout: unknown) => void

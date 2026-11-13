@@ -1,0 +1,11 @@
+--- f37253b3/src/compiler/sys.ts
++++ ambient-pair-deleted/src/compiler/sys.ts
+@@ -54,8 +54,6 @@
+ import * as _os from "node:os";
+ import * as _crypto from "node:crypto";
+ 
+-declare function setTimeout(handler: (label?: unknown) => void, timeout: number, label?: unknown): unknown;
+-declare function clearTimeout(handle: unknown): void;
+ 
+ /**
+  * djb2 hashing algorithm

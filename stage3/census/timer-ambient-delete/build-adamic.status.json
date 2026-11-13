@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/workspace/adamic-tools/go/bin/go",
+    "build",
+    "-o",
+    "/workspace/scratch/timer-ambient-adamic",
+    "./cmd/adamic"
+  ],
+  "child_exit": 0,
+  "seconds": 153.676090971
+}
