@@ -196,6 +196,54 @@ These comparisons are mandatory under a budget. A path schedules coverage only;
 it never grants an exemption. This prevents an already-admitted repair from
 escaping Node agreement merely because it is no longer a new admission.
 
+## Darwin programs
+
+The darwin class (#an8zcp1, Language and Adamic) is unjudged here. Apple's
+framework programs belong to the darwin witnesses on a Mac, rather than Node.
+The class needs two independent keys: the delta's own TypeScript parse finds a
+module specifier beginning `apple/`, and head's lowering compile or native build
+exits `toolchain.PlatformMissingExitCode` (5). The compiler reserves that exit
+for the typed `toolchain.PlatformMissing` error; diagnostic words grant nothing.
+Nothing on main raises that error yet; Apple's slice supplies its platform stops.
+
+The parser reads Git blobs at the revision being judged, including every local
+module reached through relative imports and re-exports. It recognizes ordinary,
+type-only and side-effect imports, exports from a module, and literal dynamic
+imports, including those inside functions. Comments, unrelated strings and a
+computed module name give no key. Base's modules come from base, head's from
+head, never the invoking working tree. Local module cycles terminate. Syntax diagnostics do not add a third key: the
+parser still reads import nodes it recovers, and the darwin witnesses judge the
+whole platform row.
+
+A row with both keys is `darwin`, wholly void for that row: its observations
+remain exactly as they happened, including Node, JavaScript and native results
+when the stop is in the native build. `agree` is null; none of those outcomes is
+judged, and the row is neither passed nor failed. A compile stop has no runtime
+observations. Darwin rows do not make the run void or fail it, and are excluded
+from `admitted` and Node-agreement counts. An old ruled stop at that unjudged path is not judged stale either. The other
+rows compute the verdict.
+
+There are two guards against hiding another program in this class. An admitted program with the parsed key always gets a native probe, even when
+both compilers already admit it and even under a sampling budget. Head's exit
+5 without its parsed import key fails as `platform-stop-without-apple`. A head
+platform row fails as `moved-into-darwin` when its file exists at base and an
+`apple/` import is already reachable there. A new file, or an existing file
+whose import key changes from false at base to true at head, may enter. A
+program leaving the platform stop is judged normally.
+
+Every report includes `darwin_count` and `darwin_paths`, including zero and an
+empty list. Every darwin row stays in `programs`, with class `darwin` and
+`void_reason: "darwin: unjudged here; judged by the darwin witnesses"`. Raw
+compile and runtime observations stay on that row. Each run prints:
+
+```text
+darwin: N (unjudged here; judged by the darwin witnesses)
+```
+
+This records the missing judgment without letting a missing SDK masquerade as
+an unrecognized program diagnostic, or an unavailable native tool as agreement.
+The darwin witnesses supply that judgment; this gate never invents it.
+
 ## Run-time NotYet stops
 
 A run-time NotYet (#zhgxzjg, Adamic, Nov 2) is a third thing, neither an
