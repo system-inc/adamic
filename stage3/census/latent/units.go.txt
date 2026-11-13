@@ -144,6 +144,8 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		// Registration is prepared once per file, then deep-copied per attempted unit.
 		base := fresh()
 		var orderErr error
+		errorPhase := "registration"
+		boundaryReason := "module ordering failed; unit not lowered"
 		if modules == nil {
 			modules, orderErr = base.latentPrepassModules()
 		}
@@ -152,7 +154,15 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 			latentRecord(orderErr)
 		}
 		if orderErr == nil {
-			func() { defer latentPrepassTimer("collectViewedElements")(); base.collectViewedElements(modules) }()
+			func() { defer latentPrepassTimer("collectViewedElements")(); orderErr = base.collectViewedElements(modules) }()
+			if orderErr != nil {
+				errorPhase = "prepass"
+				boundaryReason = "lowering prepass failed; unit not lowered"
+				latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), errorPhase
+				latentRecord(orderErr)
+			}
+		}
+		if orderErr == nil {
 			func() { defer latentPrepassTimer("noteInheritance")(); base.noteInheritance(modules) }()
 			func() { defer latentPrepassTimer("noteAccessorNames")(); base.noteAccessorNames(modules) }()
 			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); base.noteOmittedOptionals(modules) }() }
@@ -205,8 +215,9 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 					}
 				}()
 				if orderErr != nil {
+					latentFindingPhase = errorPhase
 					latentRecord(orderErr)
-					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "module ordering failed; unit not lowered", Text: orderErr.Error(), Start: node.Pos(), End: node.End()})
+					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: boundaryReason, Text: orderErr.Error(), Start: node.Pos(), End: node.End()})
 					return
 				}
 				l := base.latentSnapshot()

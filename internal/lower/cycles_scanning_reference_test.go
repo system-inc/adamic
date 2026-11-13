@@ -1705,7 +1705,9 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 		return nil, err
 	}
 	// As lowerWithElementKey does, before any view is made or any element read lowers.
-	lowering.collectViewedElements(modules)
+	if err := lowering.collectViewedElements(modules); err != nil {
+		return nil, err
+	}
 	lowering.noteInheritance(modules)
 	if err := lowering.enumInitialization(modules); err != nil {
 		return nil, err

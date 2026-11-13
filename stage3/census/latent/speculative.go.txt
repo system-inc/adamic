@@ -328,6 +328,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		latentProgressPhase("registration")
 		var orderErr error
+		errorPhase := "registration"
 		if modules == nil {
 			modules, orderErr = l.latentPrepassModules()
 		}
@@ -336,7 +337,14 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			l.latentSpecFailure(file.AsNode(), orderErr)
 		}
 		if orderErr == nil {
-			func() { defer latentPrepassTimer("collectViewedElements")(); l.collectViewedElements(modules) }()
+			func() { defer latentPrepassTimer("collectViewedElements")(); orderErr = l.collectViewedElements(modules) }()
+			if orderErr != nil {
+				errorPhase = "prepass"
+				latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), errorPhase
+				l.latentSpecFailure(file.AsNode(), orderErr)
+			}
+		}
+		if orderErr == nil {
 			func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
 			func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
 			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
@@ -353,6 +361,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 				unit.Name = node.Name().Text()
 			}
 			if orderErr != nil {
+				latentFindingPhase = errorPhase
 				l.latentSpecFailure(node, orderErr)
 			} else {
 				copy := l.latentSnapshot()
