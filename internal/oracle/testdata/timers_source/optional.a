@@ -12,4 +12,4 @@ interface Host {
 
 const host: Host = { setTimeout, clearTimeout, newLine: '\n' };
 const held: Host[] = [host, { setTimeout, clearTimeout, newLine: '\r\n' }];
-console.log(`held ${String(held.length)} ${String(held[1].newLine.length)}`);
+console.log(`held ${String(held.length)} ${String(host.newLine.length)}`);
