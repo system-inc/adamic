@@ -49,8 +49,14 @@ A box with no npm fails, naming both roads: why npm wasn't found, and why the
 laid install wasn't used (absent, a different `package-lock.json`, a checkout
 that pins none, or `digest <actual> is not the pin <pinned>`).
 
-No house box has npm, so a proof job runs the tool from its own worktree, where
-Loom lays the pinned `stage3/api/node_modules`:
+No house box has npm, so the tool needs a worktree that already holds the pinned
+`stage3/api/node_modules`, one `stage3/apply.py --packages-digest` reads as
+`stage3/api/node_modules.sha256` before any correction. The old `ahra loom proof`
+laid one in every proof (#th1nzka). A door job (`ahra loom job --kind proof`)
+lays neither that install nor the submodules, so on a house box it fails at
+provisioning until the door lays them (#08j5ptg for submodules; the install is
+named to Jobs on #jobs, Nov 13). A copy of an install corrected in place reads as
+a different digest and is refused, as it should be. Where the install is laid:
 
 ```sh
 cd <proof job worktree>
