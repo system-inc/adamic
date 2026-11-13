@@ -7,7 +7,7 @@
   "sys.ts:57:1": {
     "phase": "refusal_scan",
     "owner": "internal/lower/ambient.go: (*lowering).ambientRefusal (code method)",
-    "evidence": "No exact reason in owners.json. lower.go:139-143 runs refuse for each module before declareModule and moduleStatements. refusals.go:63 runs mergedFieldRulings first; once the former inspector stop no longer returns there, refusals.go:103-108 visits registered per-node rules. ambient.go:62 ambientRefusal identifies an ambient function at :80-81, returns Refused at :92 and registers rule 2200 at :95. This source is the ambient setTimeout declaration, so ordinary refusal scanning stops before getNodeSystem body lowering. This does not measure its latent next lowering stop."
+    "evidence": "No exact reason in owners.json. lower.go:139-143 runs refuse for each module before declareModule and moduleStatements. refusals.go:63 runs mergedFieldRulings first; once the former inspector stop no longer returns there, refusals.go:103-108 visits registered per-node rules. ambient.go:62 ambientRefusal identifies an ambient function at :80-81, returns Refused at :91 and registers rule 2200 at :94. This source is the ambient setTimeout declaration, so ordinary refusal scanning stops before getNodeSystem body lowering. This does not measure its latent next lowering stop."
   },
   "path.ts:1105:28": {
     "phase": "refusal_scan",
