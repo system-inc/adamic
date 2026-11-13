@@ -14,7 +14,10 @@
 /* What no program can reach yet: a rename, the error path, which Node takes only when libuv fails
  * reading its descriptor, and the keys of the error a watch that can't start throws. The error modes
  * put a pipe whose writer is gone where the watcher's inotify descriptor was, so the next wait records
- * POLLHUP on its source. */
+ * POLLHUP on its source. The drain mode holds the job checkpoint after each event's listener: a job
+ * one event's listener queues runs before the next event's listener, though every event came in one
+ * read (#cbj1hpd). No program can queue that job from a listener, since an async listener in a void
+ * slot is a floating task, refused for good (#8j8ecw0). */
 static const char *mode;
 static char directory[4096];
 static adamic_object *watcher;
@@ -23,10 +26,26 @@ static void path(char *out, size_t size, const char *name) {
     assert((size_t)snprintf(out, size, "%s/%s", directory, name) < size);
 }
 static void print(const adamic_string *text) { printf("%.*s", (int)text->length, text->bytes); }
+static void empty_children(adamic_async_frame *frame, void (*drop)(void *)) { (void)frame; (void)drop; }
+static void resume(adamic_async_frame *frame, adamic_value value, bool rejected) {
+    (void)frame; (void)value; assert(!rejected);
+    puts("job");
+}
+/* A job as an awaited settled promise makes one: its reaction waits in the job queue for the next
+ * checkpoint. */
+static void job(void) {
+    adamic_async_promise *promise = adamic_async_new();
+    adamic_async_settle(promise, (adamic_value){.number = 0}, false, false);
+    adamic_async_frame *frame = adamic_allocate(sizeof *frame, adamic_kind_async_frame);
+    *frame = (adamic_async_frame){.heap = frame->heap, .children = empty_children, .resume = resume};
+    adamic_async_await(frame, promise);
+    adamic_release(frame); adamic_release(promise);
+}
 static adamic_value changed(adamic_closure *self, adamic_value *arguments) {
     (void)self;
     adamic_string *type = arguments[0].reference, *name = arguments[1].reference;
     print(type); putchar(' '); print(name); putchar('\n');
+    if (strcmp(mode, "drain") == 0 && !(name->length == 3 && memcmp(name->bytes, "end", 3) == 0)) job();
     if (name->length == 3 && memcmp(name->bytes, "end", 3) == 0) {
         /* As a compiled call does, hold the method across the call that frees its watcher. */
         adamic_closure *close = adamic_retain(watcher->slots[0].reference);
@@ -105,7 +124,10 @@ int main(int argc, char **argv) {
         adamic_release(same);
     }
     adamic_release(error);
-    if (strcmp(mode, "error") == 0 || strcmp(mode, "error-uncaught") == 0) {
+    if (strcmp(mode, "drain") == 0) {
+        /* Created before the loop runs, so their three IN_CREATE events are one read. */
+        touch("a"); touch("b"); touch("end");
+    } else if (strcmp(mode, "error") == 0 || strcmp(mode, "error-uncaught") == 0) {
         char link[64] = {0};
         char proc[64];
         snprintf(proc, sizeof proc, "/proc/self/fd/%d", predicted);
@@ -126,6 +148,8 @@ int main(int argc, char **argv) {
     puts("done");
     char file[4200];
     path(file, sizeof file, "c.txt"); (void)unlink(file);
+    path(file, sizeof file, "a"); (void)unlink(file);
+    path(file, sizeof file, "b"); (void)unlink(file);
     path(file, sizeof file, "end"); (void)unlink(file);
     assert(rmdir(directory) == 0);
     return 0;
