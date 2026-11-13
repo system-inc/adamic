@@ -105,8 +105,13 @@ func TestFSWatchErrorClosesTheWatcher(t *testing.T) {
 // Node takes a microtask checkpoint after each event's listener, so a job one listener queues runs
 // before the next event's listener, though the three events came in one read (#cbj1hpd). This is the
 // drain's witness: no program can queue a job from a listener, since an async listener in a void slot is
-// refused for good (#8j8ecw0), so two_events.a pins that refusal and holds no drain.
-const fsWatchDrained = "rename a\njob\nrename b\njob\nrename end\ndone\n"
+// refused for good (#8j8ecw0), so two_events.a pins that refusal and holds no drain. Both orders mean
+// what they say only if the three events are one read, so the harness first prints the bytes waiting on
+// the descriptor: 96 is all three, and a split names itself.
+const (
+	fsWatchDrainPending = "pending 96\n"
+	fsWatchDrained      = fsWatchDrainPending + "rename a\njob\nrename b\njob\nrename end\ndone\n"
+)
 
 func TestFSWatchDrainsJobsPerEvent(t *testing.T) {
 	t.Parallel()
@@ -128,7 +133,7 @@ func TestFSWatchDrainsJobsPerEvent(t *testing.T) {
 func TestFSWatchMutantDrainDropped(t *testing.T) {
 	t.Parallel()
 	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-drain-dropped", native.Options{Release: true}), "drain")
-	if expired || got.ExitCode != 0 || string(got.Stdout) != "rename a\nrename b\nrename end\njob\njob\ndone\n" {
+	if expired || got.ExitCode != 0 || string(got.Stdout) != fsWatchDrainPending+"rename a\nrename b\nrename end\njob\njob\ndone\n" {
 		t.Fatalf("the mutant must run both jobs after every listener: expired %t, %+v", expired, got)
 	}
 	t.Log("TestFSWatchDrainsJobsPerEvent goes red with the per-event job drain dropped")
