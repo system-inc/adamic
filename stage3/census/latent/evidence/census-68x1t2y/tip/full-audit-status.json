@@ -1,0 +1,12 @@
+{
+  "phase": "full-audit",
+  "command": [
+    "python3",
+    "stage3/census/latent/full_audit.py",
+    "/tmp/census-68x1t2y/latent-tip",
+    "/tmp/census-68x1t2y/results/tip/full-audit"
+  ],
+  "cwd": "/tmp/census-68x1t2y/tip",
+  "exit_code": 1,
+  "wall_seconds": 0.294
+}
