@@ -172,11 +172,16 @@ Run: `go test ./internal/lower -run '^TestOptionalMemberPresenceThroughAGetterDi
 Red: the lowering rows, and internal/oracle's accessor_dispatch_absent presence.a and presence.ts, stop as a
 presence test lowering didn't leave as one field read.
 
-## M16. A getter-owning class passes whether or not the dispatcher calls its getter
+## M16. A class instance passes the dispatched road whatever owns its m
 
 File: internal/lower/optional_member_presence.go, judgePresenceReceiver.
-Old: `		case literal.Class != 0 && (owners == nil || !owners.owners[site][read.name] || l.classChainHasMethod(literal.Class, read.name)):`
-New: `		case literal.Class != 0 && owners == nil:`
+Old: `		case site.class != 0 && (!site.getterOwned || l.classChainHasMethod(site.class, read.name)):`
+New: `		case site.class != 0 && false:`
 Run: `go test ./internal/lower -run '^TestOptionalMemberPresenceThroughAGetterDispatcher$' -count=1 -v`
-Red: `a class's getter and a class's method` lowers, though C's method lives on its prototype, where native's
-fallback reads an own slot.
+Red: `a class's getter and a class's method` lowers: C owns no getter, so the dispatcher reads its own slot,
+which holds no m, while Node finds C's prototype method. Either condition alone stops C (it owns no
+getter, and its chain holds a method m), so dropping one of them is an equivalent mutant on this row: the
+getter-owned test is the conservative one (a class with neither a getter nor a method of the name would
+agree, and stops), and a getter owner whose chain also holds a method of the name is the checker's
+refusal (TS2423/TS2425, TestOptionalMemberPresenceMethodOverAGetterIsTheCheckersRefusal), so the method
+test has no program of its own to witness it.

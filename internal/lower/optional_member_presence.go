@@ -155,20 +155,25 @@ func (l *lowering) checkOptionalMemberPresence() error {
 		if l.objectPrototypeName(read.name) {
 			return l.notYet(read.node, tested+", a name Object.prototype holds too, which Node finds on an object without its own where native reads own slots alone")
 		}
-		dispatched := l.dispatchedPresenceReads[key]
+		var dispatched []presenceReach
+		for _, note := range l.dispatchedPresenceReads {
+			if note.where == key.where && note.name == key.name {
+				dispatched = append(dispatched, note.receiver)
+			}
+		}
 		switch {
 		case len(found[key]) == 1 && len(dispatched) == 0:
-			if err := l.judgePresenceReceiver(read, tested, graph, graph.ReachingAllocations(found[key][0].Object), nil); err != nil {
+			if err := l.judgePresenceReceiver(read, tested, presenceReachOf(graph, graph.ReachingAllocations(found[key][0].Object), nil, read.name)); err != nil {
 				return err
 			}
-		case len(found[key]) == 0 && len(dispatched) > 0 && l.presenceAccessorReach != nil:
+		case len(found[key]) == 0 && len(dispatched) > 0:
 			// finishAccessors made the read a dispatcher's call (#4gpbn7w's road): it calls a getter of the
 			// name on an object whose class owns one, and otherwise reads the slot as the read did. So each
-			// receiver is judged by the graph and owners that dispatch was decided by, where a class instance
-			// passes only when the dispatcher calls its getter (Compiler's and Lower's ruling on shape 1).
-			reach := l.presenceAccessorReach
+			// receiver is judged by what finishAccessors read of it from the graph and owners that dispatch
+			// was decided by, where a class instance passes only when the dispatcher calls its getter
+			// (Compiler's and Lower's ruling on shape 1).
 			for _, receiver := range dispatched {
-				if err := l.judgePresenceReceiver(read, tested, reach.graph, reach.graph.ReachingAllocations(receiver), reach); err != nil {
+				if err := l.judgePresenceReceiver(read, tested, receiver); err != nil {
 					return err
 				}
 			}
@@ -179,25 +184,61 @@ func (l *lowering) checkOptionalMemberPresence() error {
 	return nil
 }
 
-// judgePresenceReceiver stops a presence read unless every allocation reaching its receiver (reach, in
-// graph's numbering) reads the same on both backends: a plain object literal, or, for a read a
-// dispatcher took (owners non-nil), a class instance whose getter of the name the dispatcher calls and
-// whose class chain holds no method of that name, which Node would find on the prototype first.
-func (l *lowering) judgePresenceReceiver(read optionalPresenceRead, tested string, graph *allocationFlowGraph, reach ir.AllocationSet, owners *accessorReach) error {
-	if reach.Unknown {
-		return l.notYet(read.node, tested+" whose receiver may hold a value the program didn't build as a plain object literal ("+strings.Join(reach.Reasons, "; ")+")")
+// dispatchedPresenceRead is a presence read finishAccessors made a dispatcher's call: the key the read
+// had, and what its receiver may hold.
+type dispatchedPresenceRead struct {
+	where, name string
+	receiver    presenceReach
+}
+
+// presenceReach is what a presence read's receiver may hold, read from an allocation graph: unknown, with
+// why, or each allocation it may reach.
+type presenceReach struct {
+	unknown bool
+	reasons []string
+	sites   []presenceSite
+}
+
+// presenceSite is one allocation a receiver may reach: whether it's an object literal, its class, whether
+// a spread made it or it's record storage, and whether it owns an accessor of the read's name, which
+// finishAccessors' dispatcher calls the getter of.
+type presenceSite struct {
+	literal, spread, record, getterOwned bool
+	class                                int
+}
+
+// presenceReachOf reads allocations, in graph's numbering, as a presenceReach; owners, when a dispatcher
+// took the read, is the accessor owners it was decided by.
+func presenceReachOf(graph *allocationFlowGraph, allocations ir.AllocationSet, owners map[int]map[string]bool, name string) presenceReach {
+	reach := presenceReach{unknown: allocations.Unknown, reasons: allocations.Reasons}
+	if allocations.Unknown {
+		return reach
 	}
 	records := graph.projectionIndex().records
-	for _, site := range reach.Sites {
+	for _, site := range allocations.Sites {
 		literal, isLiteral := records[site]
+		reach.sites = append(reach.sites, presenceSite{literal: isLiteral, class: literal.Class, spread: literal.Spread != nil, record: literal.Record, getterOwned: owners[site][name]})
+	}
+	return reach
+}
+
+// judgePresenceReceiver stops a presence read unless every allocation its receiver may reach reads the
+// same on both backends: a plain object literal, or, for a read a dispatcher took, a class instance whose
+// getter of the name the dispatcher calls and whose class chain holds no method of that name, which Node
+// would find on the prototype first.
+func (l *lowering) judgePresenceReceiver(read optionalPresenceRead, tested string, reach presenceReach) error {
+	if reach.unknown {
+		return l.notYet(read.node, tested+" whose receiver may hold a value the program didn't build as a plain object literal ("+strings.Join(reach.reasons, "; ")+")")
+	}
+	for _, site := range reach.sites {
 		switch {
-		case !isLiteral:
+		case !site.literal:
 			return l.notYet(read.node, tested+" whose receiver may be an allocation that isn't an object literal")
-		case literal.Class != 0 && (owners == nil || !owners.owners[site][read.name] || l.classChainHasMethod(literal.Class, read.name)):
+		case site.class != 0 && (!site.getterOwned || l.classChainHasMethod(site.class, read.name)):
 			return l.notYet(read.node, tested+" whose receiver may be a class instance, whose method lives on its prototype, not an own slot")
-		case literal.Spread != nil:
+		case site.spread:
 			return l.notYet(read.node, tested+" whose receiver may be an object a spread made")
-		case literal.Record:
+		case site.record:
 			return l.notYet(read.node, tested+" whose receiver may be record storage")
 		}
 	}
