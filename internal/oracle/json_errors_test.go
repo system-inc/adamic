@@ -1,16 +1,22 @@
 package oracle
 
 import (
+	"bytes"
+	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 // Swapping realpath key order or dropping its entry reds realpath/sanitized, realpath/release and realpath/counted.
-var jsonErrorAgrees = []string{"plain", "library_type", "watch", "realpath", "process_code", "path_code"}
-var jsonErrorWrites = []string{"direct", "view", "logical"}
+// Stopping on an ordinary message byte reds the message write rows.
+var jsonErrorAgrees = []string{"plain", "library_type", "watch", "realpath", "process_code", "path_code", "message_direct", "message_view", "message_logical", "message_coded"}
+var jsonErrorWrites = []string{"direct", "view", "logical", "message_absent"}
 
 const jsonErrorRoot = "internal/oracle/testdata/json_errors/"
-const jsonErrorWritten = "adamic: panic: NotYet: JSON.stringify an Error whose name or message was written after construction\n"
+const jsonErrorWritten = "adamic: panic: " + ir.JSONErrorWriteStop + "\n"
 
 func init() {
 	for _, name := range jsonErrorAgrees {
@@ -37,8 +43,9 @@ func TestJSONErrorsAgreeWithNode(t *testing.T) {
 	}
 }
 
-// Native stops after a program write; JavaScript must print Node's newly enumerable name.
-// Skipping the sentinel check reds all three native rows; dropping the logical byte write reds logical only.
+// Both backends stop on a newly enumerable name or absent message, after Node's first bytes.
+// Dropping the JavaScript check reds its four rows. Dropping either native check reds its rows:
+// name reds direct, view and logical; #message reds message_absent.
 func TestJSONErrorsWrittenAfterConstruction(t *testing.T) {
 	t.Parallel()
 	for _, name := range jsonErrorWrites {
@@ -53,27 +60,46 @@ func TestJSONErrorsWrittenAfterConstruction(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
-			want := run{stdout: []byte("{\"name\":\"Changed\"}\n")}
-			if difference := disagreement(want, truth); difference != "" {
-				t.Fatalf("Node: %s: exit %d stdout %q stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr)
+			text := "{\"name\":\"Changed\"}\n"
+			if name == "message_absent" {
+				text = "{\"message\":\"y\"}\n"
 			}
-			t.Run("javascript", func(t *testing.T) {
-				got := onJavaScriptBackend(t, program)
-				if difference := disagreement(truth, got); difference != "" {
-					t.Fatalf("%s: exit %d stdout %q stderr %q", difference, got.exitCode, got.stdout, got.stderr)
-				}
-			})
-			for _, backend := range []string{"sanitized", "release"} {
+			if why := disagreement(run{stdout: []byte(text)}, truth); why != "" {
+				t.Fatalf("Node: %s: exit %d stdout %q stderr %q", why, truth.exitCode, truth.stdout, truth.stderr)
+			}
+			for _, backend := range []string{"sanitized", "release", "javascript", "counted", "wasm32"} {
 				t.Run(backend, func(t *testing.T) {
 					var got run
-					if backend == "sanitized" {
+					switch backend {
+					case "sanitized":
 						got, _ = natively(t, program)
-					} else {
+					case "release":
 						got = released(t, program)
+					case "javascript":
+						got = onJavaScriptBackend(t, program)
+					case "counted":
+						binary := filepath.Join(t.TempDir(), "counted")
+						if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+							t.Fatal(err)
+						}
+						got = execute(t, binary)
+						// The counter's diagnostic footer is instrumentation, not the program's stderr.
+						if !countsLine.Match(got.stderr) {
+							t.Fatalf("counted stop has no counts: %q", got.stderr)
+						}
+						got.stderr = countsLine.ReplaceAll(got.stderr, nil)
+					case "wasm32":
+						if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+							t.Skip("wasm oracle is not enabled")
+						}
+						got = onWASI(t, native.C(program))
 					}
 					want := run{stderr: []byte(jsonErrorWritten), exitCode: 70}
-					if difference := disagreement(want, got); difference != "" {
-						t.Fatalf("%s: exit %d stdout %q stderr %q", difference, got.exitCode, got.stdout, got.stderr)
+					if why := disagreement(want, got); why != "" {
+						t.Fatalf("%s: exit %d stdout %q stderr %q", why, got.exitCode, got.stdout, got.stderr)
+					}
+					if !bytes.HasPrefix(truth.stdout, got.stdout) || len(truth.stdout) == len(got.stdout) {
+						t.Fatal("stop stdout is not Node's strict first bytes")
 					}
 				})
 			}

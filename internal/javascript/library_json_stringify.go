@@ -1,9 +1,12 @@
 package javascript
 
+import "github.com/system-inc/adamic/internal/ir"
+
 // Normalize only after all three arguments have been evaluated. Copying an array earlier would
 // hide mutations made by the space argument. A closure's C-like backend wrapper is represented as
 // an actual function for JSON, which omits it from objects and writes null in arrays.
 const jsonStringifyRuntime = `const adamicJSONValue = (value) => {
+ if (value instanceof Error && (Object.prototype.propertyIsEnumerable.call(value, 'name') || Object.prototype.propertyIsEnumerable.call(value, 'message'))) panic("` + ir.JSONErrorWriteStop + `");
  if (value instanceof AdamicClosure) return () => undefined;
  if (Array.isArray(value)) return value.map(adamicJSONValue);
  if (value !== null && typeof value === 'object' && !(value instanceof Map) && !(value instanceof Set)) {
