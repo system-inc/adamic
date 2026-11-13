@@ -1,10 +1,16 @@
 {
   "adaptation_sha": "108e464716912d16359d542d65f830360c7283d6",
   "base": "0aba99914be812ef7a0676c5ddd93024cefc81b5",
+  "lane_processes_running": false,
   "lanes": {
     "refreshed-adapted": {
       "passed": 398,
       "total": 398,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
       "unrun_or_unpassed": [],
       "latest_attempts": [
         {
@@ -7728,116 +7734,17 @@
           "attempt": "2-way-360"
         }
       ],
-      "archive_sha256": "7a10d6a1f37b4abd2fb9323b283d033e2125c06feea5cd5beb6ef4d797b3d83d"
+      "archive_sha256": "37d116939f6b09f590b37d2ac1c6c26f36fb8c21e56608252bb2dc09d8f2b0d9"
     },
     "refreshed-main": {
-      "passed": 256,
+      "passed": 360,
       "total": 398,
+      "counts": {
+        "pass": 106101,
+        "fail": 1,
+        "skip": 0
+      },
       "unrun_or_unpassed": [
-        "stage3-lane-file-246",
-        "stage3-lane-file-247",
-        "stage3-lane-file-248",
-        "stage3-lane-file-249",
-        "stage3-lane-file-250",
-        "stage3-lane-file-251",
-        "stage3-lane-file-252",
-        "stage3-lane-file-253",
-        "stage3-lane-file-254",
-        "stage3-lane-file-255",
-        "stage3-lane-file-256",
-        "stage3-lane-file-257",
-        "stage3-lane-file-258",
-        "stage3-lane-file-259",
-        "stage3-lane-file-260",
-        "stage3-lane-file-261",
-        "stage3-lane-file-262",
-        "stage3-lane-file-263",
-        "stage3-lane-file-264",
-        "stage3-lane-file-265",
-        "stage3-lane-file-266",
-        "stage3-lane-file-267",
-        "stage3-lane-file-268",
-        "stage3-lane-file-269",
-        "stage3-lane-file-270",
-        "stage3-lane-file-271",
-        "stage3-lane-file-272",
-        "stage3-lane-file-273",
-        "stage3-lane-file-274",
-        "stage3-lane-file-275",
-        "stage3-lane-file-276",
-        "stage3-lane-file-277",
-        "stage3-lane-file-278",
-        "stage3-lane-file-279",
-        "stage3-lane-file-280",
-        "stage3-lane-file-281",
-        "stage3-lane-file-282",
-        "stage3-lane-file-283",
-        "stage3-lane-file-284",
-        "stage3-lane-file-285",
-        "stage3-lane-file-286",
-        "stage3-lane-file-287",
-        "stage3-lane-file-288",
-        "stage3-lane-file-289",
-        "stage3-lane-file-290",
-        "stage3-lane-file-291",
-        "stage3-lane-file-292",
-        "stage3-lane-file-293",
-        "stage3-lane-file-294",
-        "stage3-lane-file-295",
-        "stage3-lane-file-296",
-        "stage3-lane-file-297",
-        "stage3-lane-file-298",
-        "stage3-lane-file-299",
-        "stage3-lane-file-300",
-        "stage3-lane-file-301",
-        "stage3-lane-file-302",
-        "stage3-lane-file-303",
-        "stage3-lane-file-304",
-        "stage3-lane-file-305",
-        "stage3-lane-file-306",
-        "stage3-lane-file-307",
-        "stage3-lane-file-308",
-        "stage3-lane-file-309",
-        "stage3-lane-file-310",
-        "stage3-lane-file-311",
-        "stage3-lane-file-312",
-        "stage3-lane-file-313",
-        "stage3-lane-file-314",
-        "stage3-lane-file-315",
-        "stage3-lane-file-316",
-        "stage3-lane-file-317",
-        "stage3-lane-file-318",
-        "stage3-lane-file-319",
-        "stage3-lane-file-320",
-        "stage3-lane-file-321",
-        "stage3-lane-file-322",
-        "stage3-lane-file-323",
-        "stage3-lane-file-324",
-        "stage3-lane-file-325",
-        "stage3-lane-file-326",
-        "stage3-lane-file-327",
-        "stage3-lane-file-328",
-        "stage3-lane-file-329",
-        "stage3-lane-file-330",
-        "stage3-lane-file-331",
-        "stage3-lane-file-332",
-        "stage3-lane-file-333",
-        "stage3-lane-file-334",
-        "stage3-lane-file-335",
-        "stage3-lane-file-336",
-        "stage3-lane-file-337",
-        "stage3-lane-file-338",
-        "stage3-lane-file-339",
-        "stage3-lane-file-340",
-        "stage3-lane-file-341",
-        "stage3-lane-file-342",
-        "stage3-lane-file-343",
-        "stage3-lane-file-344",
-        "stage3-lane-file-345",
-        "stage3-lane-file-346",
-        "stage3-lane-file-347",
-        "stage3-lane-project-reference-cases-00",
-        "stage3-lane-project-reference-cases-01",
         "stage3-lane-project-reference-cases-02",
         "stage3-lane-project-reference-cases-03",
         "stage3-lane-project-reference-cases-04",
@@ -12937,9 +12844,2097 @@
           },
           "errors": [],
           "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-246",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-246",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.630740074999267,
+          "status": "pass",
+          "counts": {
+            "pass": 338,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-248",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-248",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.832363211000484,
+          "status": "pass",
+          "counts": {
+            "pass": 331,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-247",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-247",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 8.062960254000245,
+          "status": "pass",
+          "counts": {
+            "pass": 412,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-249",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-249",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 8.233139578999726,
+          "status": "pass",
+          "counts": {
+            "pass": 316,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-251",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-251",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.157619011999486,
+          "status": "pass",
+          "counts": {
+            "pass": 361,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-250",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-250",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 8.180260750000343,
+          "status": "pass",
+          "counts": {
+            "pass": 412,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-252",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-252",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.347777707000205,
+          "status": "pass",
+          "counts": {
+            "pass": 277,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-253",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-253",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.247584218000156,
+          "status": "pass",
+          "counts": {
+            "pass": 314,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-255",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-255",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.131139088999589,
+          "status": "pass",
+          "counts": {
+            "pass": 340,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-254",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-254",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.819323706999967,
+          "status": "pass",
+          "counts": {
+            "pass": 299,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-256",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-256",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.441039218999322,
+          "status": "pass",
+          "counts": {
+            "pass": 392,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-257",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-257",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.9320932059999905,
+          "status": "pass",
+          "counts": {
+            "pass": 402,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-259",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-259",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.359079471999394,
+          "status": "pass",
+          "counts": {
+            "pass": 324,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-258",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-258",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.868636861000596,
+          "status": "pass",
+          "counts": {
+            "pass": 365,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-260",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-260",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.881424176999644,
+          "status": "pass",
+          "counts": {
+            "pass": 359,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-261",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-261",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.263399774999925,
+          "status": "pass",
+          "counts": {
+            "pass": 328,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-262",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-262",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.41710484899977,
+          "status": "pass",
+          "counts": {
+            "pass": 340,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-263",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-263",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.651028270000097,
+          "status": "pass",
+          "counts": {
+            "pass": 296,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-264",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-264",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.402146114000061,
+          "status": "pass",
+          "counts": {
+            "pass": 398,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-265",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-265",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.1606543569996575,
+          "status": "pass",
+          "counts": {
+            "pass": 376,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-266",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-266",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.009386523000103,
+          "status": "pass",
+          "counts": {
+            "pass": 344,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-267",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-267",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.891108279000036,
+          "status": "pass",
+          "counts": {
+            "pass": 358,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-268",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-268",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.268760250000014,
+          "status": "pass",
+          "counts": {
+            "pass": 376,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-269",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-269",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.3637095759995645,
+          "status": "pass",
+          "counts": {
+            "pass": 970,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-271",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-271",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.435316207000142,
+          "status": "pass",
+          "counts": {
+            "pass": 302,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-270",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-270",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.6908266729997194,
+          "status": "pass",
+          "counts": {
+            "pass": 343,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-272",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-272",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.50113381600022,
+          "status": "pass",
+          "counts": {
+            "pass": 323,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-273",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-273",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.8666460040003585,
+          "status": "pass",
+          "counts": {
+            "pass": 347,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-275",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-275",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.518687014000534,
+          "status": "pass",
+          "counts": {
+            "pass": 326,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-274",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-274",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.9622299799993925,
+          "status": "pass",
+          "counts": {
+            "pass": 1315,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-276",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-276",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.696057674000258,
+          "status": "pass",
+          "counts": {
+            "pass": 355,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-277",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-277",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.8529136919996745,
+          "status": "pass",
+          "counts": {
+            "pass": 407,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-278",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-278",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.231356723999852,
+          "status": "pass",
+          "counts": {
+            "pass": 366,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-279",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-279",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.293016080000598,
+          "status": "pass",
+          "counts": {
+            "pass": 350,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-280",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-280",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.2682957779998105,
+          "status": "pass",
+          "counts": {
+            "pass": 316,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-281",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-281",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.356141367999953,
+          "status": "pass",
+          "counts": {
+            "pass": 326,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-283",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-283",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.910914485999456,
+          "status": "pass",
+          "counts": {
+            "pass": 338,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-282",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-282",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.44746701799977,
+          "status": "pass",
+          "counts": {
+            "pass": 301,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-284",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-284",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.003811394000877,
+          "status": "pass",
+          "counts": {
+            "pass": 327,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-285",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-285",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.909039571999529,
+          "status": "pass",
+          "counts": {
+            "pass": 377,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-286",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-286",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.086260977000165,
+          "status": "pass",
+          "counts": {
+            "pass": 308,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-288",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-288",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.3630034589996285,
+          "status": "pass",
+          "counts": {
+            "pass": 357,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-287",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-287",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.705382938000184,
+          "status": "pass",
+          "counts": {
+            "pass": 343,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-289",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-289",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.478280719000395,
+          "status": "pass",
+          "counts": {
+            "pass": 270,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-240"
+        },
+        {
+          "name": "stage3-lane-file-291",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-291",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 5.716815607000171,
+          "status": "pass",
+          "counts": {
+            "pass": 376,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-290",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-290",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.078984701000081,
+          "status": "pass",
+          "counts": {
+            "pass": 329,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-292",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-292",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.286675463999927,
+          "status": "pass",
+          "counts": {
+            "pass": 319,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-293",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-293",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.822413737999341,
+          "status": "pass",
+          "counts": {
+            "pass": 292,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-294",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-294",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.589283415999489,
+          "status": "pass",
+          "counts": {
+            "pass": 281,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-295",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-295",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.292059239000082,
+          "status": "pass",
+          "counts": {
+            "pass": 395,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-296",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-296",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.478676131000611,
+          "status": "pass",
+          "counts": {
+            "pass": 279,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-297",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-297",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.2987525369999275,
+          "status": "pass",
+          "counts": {
+            "pass": 317,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-299",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-299",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.631740773999809,
+          "status": "pass",
+          "counts": {
+            "pass": 385,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-298",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-298",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.701021148999644,
+          "status": "pass",
+          "counts": {
+            "pass": 351,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-300",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-300",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.607368887999655,
+          "status": "pass",
+          "counts": {
+            "pass": 302,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-301",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-301",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.585768491999261,
+          "status": "pass",
+          "counts": {
+            "pass": 319,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-302",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-302",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.532867580999664,
+          "status": "pass",
+          "counts": {
+            "pass": 293,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-304",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-304",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.261113217999991,
+          "status": "pass",
+          "counts": {
+            "pass": 530,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-303",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-303",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.874224472999231,
+          "status": "pass",
+          "counts": {
+            "pass": 363,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-305",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-305",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.535932888999923,
+          "status": "pass",
+          "counts": {
+            "pass": 298,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-306",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-306",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.382133948999581,
+          "status": "pass",
+          "counts": {
+            "pass": 290,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-307",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-307",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.72062670699961,
+          "status": "pass",
+          "counts": {
+            "pass": 319,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-308",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-308",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.747676230000252,
+          "status": "pass",
+          "counts": {
+            "pass": 320,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-309",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-309",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.611481190000632,
+          "status": "pass",
+          "counts": {
+            "pass": 368,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-310",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-310",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.18163362299947,
+          "status": "pass",
+          "counts": {
+            "pass": 299,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-311",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-311",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.54320493799969,
+          "status": "pass",
+          "counts": {
+            "pass": 281,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-313",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-313",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.400473033999333,
+          "status": "pass",
+          "counts": {
+            "pass": 338,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-312",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-312",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.833151372999964,
+          "status": "pass",
+          "counts": {
+            "pass": 325,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-314",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-314",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.676921070999924,
+          "status": "pass",
+          "counts": {
+            "pass": 424,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-315",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-315",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.883214870999836,
+          "status": "pass",
+          "counts": {
+            "pass": 332,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-317",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-317",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.648218452000037,
+          "status": "pass",
+          "counts": {
+            "pass": 397,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-316",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-316",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.629915921000247,
+          "status": "pass",
+          "counts": {
+            "pass": 342,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-318",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-318",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.145066201999725,
+          "status": "pass",
+          "counts": {
+            "pass": 368,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-320",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-320",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.704630358999566,
+          "status": "pass",
+          "counts": {
+            "pass": 341,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-319",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-319",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.378690205999192,
+          "status": "pass",
+          "counts": {
+            "pass": 367,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-321",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-321",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.810321117000058,
+          "status": "pass",
+          "counts": {
+            "pass": 332,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-322",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-322",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.947919156000353,
+          "status": "pass",
+          "counts": {
+            "pass": 340,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-323",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-323",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.261806817999968,
+          "status": "pass",
+          "counts": {
+            "pass": 365,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-324",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-324",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.952710935000141,
+          "status": "pass",
+          "counts": {
+            "pass": 335,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-325",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-325",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.789882215000034,
+          "status": "pass",
+          "counts": {
+            "pass": 376,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-326",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-326",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.131483954000032,
+          "status": "pass",
+          "counts": {
+            "pass": 383,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-329",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-329",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.080614437999429,
+          "status": "pass",
+          "counts": {
+            "pass": 301,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-328",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-328",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.696236540000427,
+          "status": "pass",
+          "counts": {
+            "pass": 334,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-327",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-327",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.839827652999702,
+          "status": "pass",
+          "counts": {
+            "pass": 311,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-330",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-330",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.477527775999988,
+          "status": "pass",
+          "counts": {
+            "pass": 347,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-333",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-333",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.014602482000555,
+          "status": "pass",
+          "counts": {
+            "pass": 318,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-332",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-332",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.592940128000009,
+          "status": "pass",
+          "counts": {
+            "pass": 341,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-331",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-331",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.048544283999945,
+          "status": "pass",
+          "counts": {
+            "pass": 415,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-334",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-334",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.502416196000013,
+          "status": "pass",
+          "counts": {
+            "pass": 342,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-335",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-335",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.525976476999858,
+          "status": "pass",
+          "counts": {
+            "pass": 333,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-337",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-337",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.288457165000182,
+          "status": "pass",
+          "counts": {
+            "pass": 354,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-336",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-336",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.469077002000631,
+          "status": "pass",
+          "counts": {
+            "pass": 318,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-338",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-338",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.376054406000549,
+          "status": "pass",
+          "counts": {
+            "pass": 475,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-339",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-339",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.149865030000001,
+          "status": "pass",
+          "counts": {
+            "pass": 357,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-340",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-340",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.595062235000114,
+          "status": "pass",
+          "counts": {
+            "pass": 333,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-341",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-341",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.39815660000022,
+          "status": "pass",
+          "counts": {
+            "pass": 337,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-342",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-342",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.299727343000086,
+          "status": "pass",
+          "counts": {
+            "pass": 348,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-343",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-343",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.906127236999964,
+          "status": "pass",
+          "counts": {
+            "pass": 359,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-344",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-344",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.145551763000185,
+          "status": "pass",
+          "counts": {
+            "pass": 377,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-345",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-345",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.175930471999891,
+          "status": "pass",
+          "counts": {
+            "pass": 325,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-346",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-346",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 7.081574115000876,
+          "status": "pass",
+          "counts": {
+            "pass": 353,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-project-reference-cases-00",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-project-reference-cases-00",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 5.585383704000378,
+          "status": "pass",
+          "counts": {
+            "pass": 11,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-file-347",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-file-347",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 6.346316299999671,
+          "status": "pass",
+          "counts": {
+            "pass": 352,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
+        },
+        {
+          "name": "stage3-lane-project-reference-cases-01",
+          "command": [
+            "python3",
+            "stage3/lane/shard.py",
+            "stage3-lane-project-reference-cases-01",
+            "$STAGE3_RESULTS"
+          ],
+          "concurrency": 4,
+          "exit": 0,
+          "seconds": 4.4645632780002416,
+          "status": "pass",
+          "counts": {
+            "pass": 13,
+            "fail": 0,
+            "skip": 0
+          },
+          "errors": [],
+          "attempt": "4-way-300"
         }
       ],
-      "archive_sha256": "19638de01293f2ac8b7802ed59beef997e9a7b843c7bbb304f97d37e0cfdfa9b"
+      "archive_sha256": "e2c240eb4cd0968af5e5bda8cab2afa662f340439bf07bd8a0cb954acf46f964"
     }
-  }
+  },
+  "required_witnesses_remaining": [],
+  "required_mutants_remaining": [],
+  "required_census_remaining": [],
+  "remaining_checks": [
+    "38 refreshed-main lane shards listed below",
+    "Complete refreshed before/after aggregate comparison",
+    "Refreshed replay of each older amended stage was not rerun; earlier-base amended-stage replays passed"
+  ]
 }
