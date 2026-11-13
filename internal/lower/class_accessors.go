@@ -319,12 +319,30 @@ func (l *lowering) finishAccessors() error {
 	}
 	dispatchers := map[string]int{}
 	var failure error
-	dispatch := func(name string, of ir.Type, setter bool, site int, nullish ir.Type) int {
+	// A dispatcher's fallback, for an object that owns no accessor of the name, is the read or write it
+	// replaced, with only its receiver (and the written value) taken from the dispatcher's parameters, so
+	// every flag lowering put on it holds there too: Absent's optional own field, Readiness, Class, Method,
+	// NotRecord, a write's Record, Define, Unset and Nullish. Rebuilt bare, a presence read of an absent
+	// optional field ran off a plain literal's allocation (#4gpbn7w), as a write's dropped Nullish had
+	// printed the wrong JSON (#ckxcnr6). The key is that whole template, so two reads or writes that
+	// differ in any flag never share a dispatcher.
+	dispatch := func(name string, of ir.Type, setter bool, site int, read ir.Property, write ir.SetProperty) int {
 		kind := "get:"
 		if setter {
 			kind = "set:"
 		}
-		key := fmt.Sprintf("%s%s:%d:%d:%d", kind, name, of, site, nullish)
+		read.Object = nil
+		write.Object, write.Value = nil, nil
+		// A checked view read never reaches a dispatcher (the not yet at the read stops every read whose
+		// View is set), so the
+		// template's view fields say nothing here, and ViewWhere names the source's path: the
+		// emitter names a helper from its whole body (functionKey), so a path in the fallback made the
+		// dispatcher's C differ by the directory it was lowered from (#4gpbn7w's red on
+		// TestNativeAgreementLeanBuildIsBuildsBytes).
+		read.ViewContract, read.ViewTypeID, read.ViewReceiverTypeID, read.ViewWhere, read.ViewOrdinary = 0, 0, 0, "", false
+		read.View, read.ViewType, read.ViewAllowed = "", "", nil
+		write.ViewReceiverTypeID = 0
+		key := fmt.Sprintf("%s%s:%d:%d:%#v:%#v", kind, name, of, site, read, write)
 		if index, exists := dispatchers[key]; exists {
 			return index
 		}
@@ -370,9 +388,13 @@ func (l *lowering) finishAccessors() error {
 			function.Parameters = append(function.Parameters, incoming)
 			value := ir.Read{Local: incoming, Of: of}
 			call.Arguments = append(call.Arguments, value)
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{ir.SetProperty{Object: object, Name: name, Value: value, Nullish: nullish, Site: site}}}}
+			fallback := write
+			fallback.Object, fallback.Value = object, value
+			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Evaluate{Value: call}}, Else: []ir.Statement{fallback}}}
 		} else {
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: ir.Property{Object: object, Name: name, Of: of}}}
+			fallback := read
+			fallback.Object = object
+			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: fallback}}
 		}
 		l.result.Functions = append(l.result.Functions, function)
 		return index
@@ -405,12 +427,19 @@ func (l *lowering) finishAccessors() error {
 						return value
 					}
 					// The dispatcher's fallback is an unchecked load, so a checked read can't go
-					// through it: refuse at the read rather than drop its check (#c7w6j0y).
-					if expression.View != "" && l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
-						failure = &NotYet{Where: expression.ViewWhere, What: "a checked view read whose receiver may own an accessor of the same name"}
+					// through it: refuse at the read rather than drop its check (#c7w6j0y). Both
+					// emitters check a read whose View is set, whatever CheckedField says, and a
+					// predicate's argument.kind or a speculation's result field sets View with no
+					// receiver type, so View alone decides (Compiler's must on #4gpbn7w's -3).
+					if expression.View != "" {
+						where := expression.ViewWhere
+						if where == "" {
+							where = l.result.Source
+						}
+						failure = &NotYet{Where: where, What: "a checked view read whose receiver may own an accessor of the same name"}
 						return value
 					}
-					index := dispatch(expression.Name, expression.Of, false, 0, 0)
+					index := dispatch(expression.Name, expression.Of, false, 0, expression, ir.SetProperty{})
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
@@ -421,7 +450,7 @@ func (l *lowering) finishAccessors() error {
 						failure = &NotYet{Where: l.writeSiteWhere(expression.Site), What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
 						return value
 					}
-					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site, expression.Nullish)
+					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site, ir.Property{}, expression)
 					node = ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{expression.Object, expression.Value}}}
 				}
 			}
