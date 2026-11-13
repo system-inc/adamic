@@ -61,8 +61,8 @@ func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
 	if l.optionalMemberPresenceTest(node) {
 		// A presence test reads the slot and never calls what it holds, so the scan's literal arm, a
 		// calling convention, doesn't apply, and checkOptionalMemberPresence judges what the receiver
-		// may hold in place of its class arm, by reach rather than by every fitting allocation.
-		l.optionalPresenceReads = append(l.optionalPresenceReads, optionalPresenceRead{node: node, where: l.program.Where(node), name: l.fieldName(access.Name())})
+		// may hold in place of its class arm, by reach rather than by every fitting allocation. The
+		// refusal pass recorded it already (methodValueStop), for every road that lowers it.
 		return nil
 	}
 	return l.erasedMethodField(node, l.checker.GetTypeAtLocation(access.Expression), access.Name().Text())
