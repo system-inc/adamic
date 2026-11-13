@@ -80,6 +80,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"2890 boundObservation",
 		"2900 methodValueRefusal",
 		"3000 classOverrideRefusal",
+		// assignmentPatternValueGap stops a destructuring assignment used as a value before the widening
+		// and optional rules judge its value, since a pattern is no handle (#7n03qzg).
+		"3090 assignmentPatternValueGap",
 		"3100 stringWideningRefusal",
 		"3200 refuseVoidWidening",
 		"3250 refuseVoidRead",

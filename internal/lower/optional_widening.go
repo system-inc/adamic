@@ -13,6 +13,9 @@ import (
 type optionalWidening struct {
 	property       string
 	source, target *checker.Type
+	// handle is an assignment handle's failed relation, which can be a conflicting
+	// declared field rather than an absent optional field.
+	handle error
 	// unstored names the library interface when source declares property only as a lib-declared member
 	// the runtime shape lacks (libraryUnstoredMember): a view naming it reads it absent natively where Node
 	// reads its value. That's a gap in what the runtime builds, so it's NotYet, not the hiding rule's
@@ -240,6 +243,11 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// The literal's fields, spreads and elements are checked separately at their own sites.
 		return nil
+	case ast.KindBinaryExpression:
+		if node.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+			// Assignment publishes its value through every target handle, so it is no longer fresh.
+			return l.optionalAssignmentValue(node, target)
+		}
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
@@ -361,6 +369,9 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 
 // optionalWideningRefusal is the hiding rule's refusal of found at node.
 func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWidening) error {
+	if found.handle != nil {
+		return found.handle
+	}
 	if found.unstored != "" {
 		// Diagnostics' words on #sn788gx, one template for every runtime shape the census adds.
 		return l.notYet(node, "a view naming "+found.property+", which lib declares on "+found.unstored+" but the runtime's "+found.unstored+" doesn't hold (leave "+found.property+" out of the view's type)")
