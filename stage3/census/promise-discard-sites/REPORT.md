@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript's compiler
 
-**0 new-reason sites observed** across 10/79 attempted files. This is a completed census only when all 79 files have status `ran`.
+**0 new-reason sites observed** across 19/79 attempted files. This is a completed census only when all 79 files have status `ran`.
 
 
 ## Control
@@ -35,16 +35,16 @@ Head `e4b65199b13da9dcce678ffe93e0f06fe11bb2e5`; TypeScript `050880ce59e30b356b6
 | builderStatePublic.ts | ran | 0 | 38.806 | False | 0 | 0 |
 | checker.ts | timed_out | -9 | 1500.312 | True | None | None |
 | commandLineParser.ts | ran | 0 | 272.421 | False | 367 | 215 |
-| core.ts | not run | | | | unknown | unknown |
-| corePublic.ts | not run | | | | unknown | unknown |
-| debug.ts | not run | | | | unknown | unknown |
-| diagnosticInformationMap.generated.ts | not run | | | | unknown | unknown |
+| core.ts | ran | 0 | 77.278 | False | 14 | 7 |
+| corePublic.ts | ran | 0 | 32.716 | False | 0 | 0 |
+| debug.ts | ran | 0 | 84.415 | False | 10 | 5 |
+| diagnosticInformationMap.generated.ts | ran | 0 | 33.865 | False | 0 | 0 |
 | emitter.ts | not run | | | | unknown | unknown |
-| executeCommandLine.ts | not run | | | | unknown | unknown |
-| expressionToTypeNode.ts | not run | | | | unknown | unknown |
-| factory/baseNodeFactory.ts | not run | | | | unknown | unknown |
-| factory/emitHelpers.ts | not run | | | | unknown | unknown |
-| factory/emitNode.ts | not run | | | | unknown | unknown |
+| executeCommandLine.ts | ran | 0 | 192.473 | False | 365 | 187 |
+| expressionToTypeNode.ts | ran | 0 | 198.716 | False | 183 | 97 |
+| factory/baseNodeFactory.ts | ran | 0 | 37.64 | False | 10 | 5 |
+| factory/emitHelpers.ts | ran | 0 | 73.803 | False | 47 | 26 |
+| factory/emitNode.ts | ran | 0 | 37.801 | False | 26 | 17 |
 | factory/nodeChildren.ts | not run | | | | unknown | unknown |
 | factory/nodeConverters.ts | not run | | | | unknown | unknown |
 | factory/nodeFactory.ts | not run | | | | unknown | unknown |

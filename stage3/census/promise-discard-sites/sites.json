@@ -173,6 +173,166 @@
       "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
       "raw_sha256": "12f918e44f57fda1e1f3f196cbf188ebed456e1f8be44b02163b300d10bcd44f",
       "parse_error": null
+    },
+    {
+      "file": "core.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 77.278,
+      "timeout": false,
+      "total_findings": 14,
+      "observed_findings": 14,
+      "compiler_findings": 7,
+      "kinds": {
+        "NotYet": 7,
+        "Boundary": 7
+      },
+      "new_reason_findings": [],
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b",
+      "raw_sha256": "4cc06ebd5afbceb56a14f47a6c6cac2175512f2f705bdc462745410930f1fd2c",
+      "parse_error": null
+    },
+    {
+      "file": "corePublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.716,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7",
+      "raw_sha256": "5740d0a2d44d77a4ce1df4cac943f5f6e01392aa1d88697ff2bc571633bb1f12",
+      "parse_error": null
+    },
+    {
+      "file": "debug.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 84.415,
+      "timeout": false,
+      "total_findings": 10,
+      "observed_findings": 10,
+      "compiler_findings": 5,
+      "kinds": {
+        "NotYet": 5,
+        "Boundary": 5
+      },
+      "new_reason_findings": [],
+      "sha256": "08d94ea6111c6a4ec61b2f56189702ed262bdcaaea037e8aba87ef9c87a6d22a",
+      "raw_sha256": "f6db6363a614e8f8e97be9f786e2709875ed646aafffeebfd0bf2807fcd51796",
+      "parse_error": null
+    },
+    {
+      "file": "diagnosticInformationMap.generated.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 33.865,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+      "raw_sha256": "6a899cd6998d60dea44e6dbd9482333f6e7d34538cb17398a9db68e37b398f39",
+      "parse_error": null
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 192.473,
+      "timeout": false,
+      "total_findings": 365,
+      "observed_findings": 365,
+      "compiler_findings": 187,
+      "kinds": {
+        "Refused": 55,
+        "NotYet": 132,
+        "Boundary": 178
+      },
+      "new_reason_findings": [],
+      "sha256": "279c6c1fc40e45025b07244c0b3ce84b6e28a1cc901ac9d789fae0911aed67fb",
+      "raw_sha256": "137d047dc89c430492b141f4692abf1312e2938b261b0910f04587b5bba8c473",
+      "parse_error": null
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 198.716,
+      "timeout": false,
+      "total_findings": 183,
+      "observed_findings": 183,
+      "compiler_findings": 97,
+      "kinds": {
+        "Refused": 39,
+        "NotYet": 58,
+        "Boundary": 86
+      },
+      "new_reason_findings": [],
+      "sha256": "501917c5a675172b9f0605af0a98a0c6b71f8890cb404ea851f23d28bfba2f61",
+      "raw_sha256": "234f9fedbedf9349e86ef852154107c7a89d21b191d3cdb812c016fdcece2943",
+      "parse_error": null
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 37.64,
+      "timeout": false,
+      "total_findings": 10,
+      "observed_findings": 10,
+      "compiler_findings": 5,
+      "kinds": {
+        "NotYet": 5,
+        "Boundary": 5
+      },
+      "new_reason_findings": [],
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+      "raw_sha256": "c2fe745c93715c8ab26181f1d1edba76da68a9344c7180d01e57f8ee59d5511f",
+      "parse_error": null
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 73.803,
+      "timeout": false,
+      "total_findings": 47,
+      "observed_findings": 47,
+      "compiler_findings": 26,
+      "kinds": {
+        "Refused": 9,
+        "Boundary": 21,
+        "NotYet": 17
+      },
+      "new_reason_findings": [],
+      "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+      "raw_sha256": "e9369276045914e868659193f27f580580cbe892208637c34aefbee34e405cd3",
+      "parse_error": null
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 37.801,
+      "timeout": false,
+      "total_findings": 26,
+      "observed_findings": 26,
+      "compiler_findings": 17,
+      "kinds": {
+        "Refused": 10,
+        "NotYet": 7,
+        "Boundary": 9
+      },
+      "new_reason_findings": [],
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+      "raw_sha256": "38a6746749832db032f245f619241bb8c73ffb7e1b4b0d60f36c551c1dd352fc",
+      "parse_error": null
     }
   ],
   "new_reason_sites": [],
@@ -213,8 +373,15 @@
     "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
   },
   "coverage": {
-    "ran": 9,
+    "ran": 18,
     "timed_out": 1
   },
-  "expected_files": 79
+  "expected_files": 79,
+  "interruptions": [
+    {
+      "file": "emitter.ts",
+      "status": "interrupted",
+      "reason": "Environment restart killed the timeout supervisor; orphan process group killed before resuming. Original run has no reliable final exit/time record."
+    }
+  ]
 }
