@@ -108,5 +108,110 @@
     "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
     "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
     "seconds": 21.624923507
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 30.093380527
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.095927089
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 11.30931904
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 10.728923249
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 25.832524118
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 25.860682048
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 28.632117285
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 28.195348446
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 30.891539857
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-464e5daa-adapted/src/compiler/sys.ts:142:81",
+    "reason": "a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace",
+    "fix": "keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "seconds": 26.363427527
   }
 ]
