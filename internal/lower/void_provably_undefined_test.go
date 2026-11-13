@@ -25,23 +25,33 @@ func TestVoidProvablyUndefinedWidens(t *testing.T) {
 }
 
 // A body that could return a value or a thenable stays refused: Node would keep the value, or follow a
-// thenable's then and take its rejecting branch.
+// thenable's then and take its rejecting branch. A thenable is now refused first where it's made, since
+// a promise-like value seen as void names no promise (promise_into_void.go, #8j8ecw0), so its rows take
+// either rule's refusal; the value rows hold the void-widening rule's own pin.
 func TestVoidCouldReturnStaysRefused(t *testing.T) {
 	t.Parallel()
 	lying := `const make: () => void = () => ({ then: (ok: (v: unknown) => void, no: (e: unknown) => void): void => { no("lied"); } });
+async function done(): Promise<void> {}
+`
+	counting := `const make: () => void = () => 42;
 async function done(): Promise<void> {}
 `
 	for _, probe := range []struct{ name, source string }{
 		{"concise call", lying + `await done().then(() => make()).catch(() => { console.log("rejected"); });`},
 		{"function value", lying + `await done().then(make).catch(() => { console.log("rejected"); });`},
 		{"block returning a call", lying + `await done().then(() => { return make(); }).catch(() => { console.log("rejected"); });`},
+		{"concise call of a value", counting + `await done().then(() => make()).catch(() => { console.log("rejected"); });`},
+		{"function value of a value", counting + `await done().then(make).catch(() => { console.log("rejected"); });`},
+		{"block returning a call of a value", counting + `await done().then(() => { return make(); }).catch(() => { console.log("rejected"); });`},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
 				_, err := lowerVoidProbe(t, extension, probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-void-widening") && !strings.Contains(refused.Fix, "adamic/no-void-read") {
+				voidRule := errors.As(err, &refused) && (strings.Contains(refused.Fix, "adamic/no-void-widening") || strings.Contains(refused.Fix, "adamic/no-void-read"))
+				promiseRule := refused != nil && strings.HasPrefix(refused.What, "an unawaited async task: a ") && strings.Contains(probe.source, "then: (ok")
+				if !voidRule && !promiseRule {
 					t.Fatalf("want it refused as a void function seen wider, got %v", err)
 				}
 			})
