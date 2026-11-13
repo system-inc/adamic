@@ -56,9 +56,10 @@ func intentionalExit(run Run) bool {
 	if len(tail) == 0 {
 		return true
 	}
-	// Graph counters are a second, fixed runtime record, never arbitrary diagnostics.
-	graph := regexp.MustCompile(`^adamic: graph counts: regions \d+ merges \d+\n`)
-	tail = graph.ReplaceAll(tail, nil)
+	// Graph counters and the heap's released chunks (#vea9pph) are fixed runtime records, never
+	// arbitrary diagnostics.
+	records := regexp.MustCompile(`^(adamic: graph counts: regions \d+ merges \d+\n)?(adamic: heap counts: released \d+\n)?`)
+	tail = records.ReplaceAll(tail, nil)
 	location := CountsLine.FindIndex(tail)
 	return location != nil && location[0] == 0 && location[1] == len(tail)
 }
