@@ -104,12 +104,22 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 	key.viewed = map[*checker.Type]bool{}
 	key.related = map[*checker.Type]bool{}
 	seen := map[*checker.Type]bool{}
+	// A generic that instantiates itself deeper at each step never repeats a type, so seen alone never
+	// stops the walk (#k031ey0). Past typeNesting's bound it can't see to the end, so every read is
+	// checked, the pre-pass's answer wherever it can't decide.
+	var nesting typeNesting
 	var hold func(target *checker.Type, arm bool)
 	hold = func(target *checker.Type, arm bool) {
-		if target == nil || seen[target] {
+		if target == nil || seen[target] || key.every {
 			return
 		}
 		seen[target] = true
+		ok, leave := nesting.enter(target)
+		defer leave()
+		if !ok {
+			key.every = true
+			return
+		}
 		switch {
 		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
 			for _, member := range target.Types() {

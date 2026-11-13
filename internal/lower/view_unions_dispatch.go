@@ -12,7 +12,7 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	if of, known := l.representation(target); known && of == ir.Closure {
 		return l.prepareUntaggedCallableUnionRead(node, target)
 	}
-	l.prepareUntaggedStructuralRead(node, target, map[*checker.Type]bool{})
+	l.prepareUntaggedStructuralRead(node, target, &untaggedStructuralWalk{seen: map[*checker.Type]bool{}})
 	id, err := internMixedUnionViewContract(l, node, target, build)
 	if err != nil {
 		return 0, err
