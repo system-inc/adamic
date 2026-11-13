@@ -1,0 +1,10 @@
+// A coded error keeps its code after a constructed message write (#z4a9p9e).
+import * as process from 'node:process';
+try {
+	process.exit(NaN);
+} catch (error) {
+	if (error instanceof Error) {
+		error.message = 'y';
+		console.log(JSON.stringify(error) ?? '<undefined>');
+	}
+}

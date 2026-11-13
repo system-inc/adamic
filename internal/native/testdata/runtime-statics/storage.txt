@@ -434,6 +434,8 @@
 # program code, so none starts inside another on a thread.
 `json_objects.c:described:1`
 `runtime-file:json_objects.c`
+# The shared Error write stop is a macro with no mutable storage.
+`runtime-file:json_error_stop.h`
 # Directory-host strings are immortal literals; slot caches use the atomic cache protocol.
 # Lexical path adapters own no mutable static storage.
 `node_fs_directory.c:arrow:1`

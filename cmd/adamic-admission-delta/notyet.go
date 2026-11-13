@@ -8,6 +8,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // runtimeNotYetStop is a run-time NotYet (#zhgxzjg, Adamic, Nov 2): an honest stop where a key or a
@@ -72,7 +74,10 @@ const (
 // object that isn't a timer but holds a truthy _onTimeout, which Node would unenroll, reads no key
 // either (Adamic, #995spev, Nov 7). Only these exact words qualify, matched against the whole stderr:
 // a new message needs Adamic's ruling and its line here.
+// An Error's newly enumerable name or absent message stops whole too, with no key read or
+// conversion (Adamic, Nov 13, #z4a9p9e); #ejcaz75 lifts the stop.
 var runtimeNotYetKeyless = map[string]string{
+	ir.JSONErrorWriteStop: "#z4a9p9e",
 	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
 	"Intl.Collator's compare isn't built yet":             "#zjndrx5",
 	"Intl.Collator with a defined locale isn't built yet": "#zjndrx5",

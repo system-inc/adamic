@@ -5,6 +5,7 @@
 // Node's order, and each slot read by its own representation byte, as union.c's dynamic_slot reads
 // one. Whatever it can't tell, it stops at, by name, rather than guess.
 #include "json_stringify.h"
+#include "json_error_stop.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -101,14 +102,18 @@ static const adamic_json_schema *describe_object(const adamic_object *object) {
 	if (shape->methods == &adamic_host_methods) stop("NotYet: JSON.stringify a runtime library value (a Date, a Stats or another whose own fields aren't Node's)");
 	const adamic_error_json *error = NULL;
 	if (adamic_error_is(object)) {
-		error = adamic_error_json_lookup(shape);
-		if (error == NULL) stop("NotYet: JSON.stringify an Error whose own keys aren't recorded");
+		// An inherited empty message is held as #message by absent_message_shape; writing it
+		// creates an enumerable own property on Node. A constructed message is named message
+		// and stays own and non-enumerable after a write. Only name and #message need their
+		// construction bytes intact; the ordinary message byte does not decide this stop.
 		for (size_t index = 0; index < shape->count; index++) {
 			const char *name = shape->names[index];
-			if ((strcmp(name, "name") == 0 || strcmp(name, "message") == 0 || strcmp(name, "#message") == 0) &&
+			if ((strcmp(name, "name") == 0 || strcmp(name, "#message") == 0) &&
 				adamic_object_field_types(object)[index] != adamic_error_unwritten)
-				stop("NotYet: JSON.stringify an Error whose name or message was written after construction");
+				stop(ADAMIC_JSON_ERROR_WRITE_STOP);
 		}
+		error = adamic_error_json_lookup(shape);
+		if (error == NULL) stop("NotYet: JSON.stringify an Error whose own keys aren't recorded");
 	}
 	if (object->class != NULL && object->class->is_static) stop("NotYet: JSON.stringify a class itself");
 	if (shape->methods != NULL && named("toJSON", shape->methods->names, shape->methods->count)) stop("NotYet: JSON.stringify an object whose class has a toJSON method");
