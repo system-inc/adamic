@@ -1,0 +1,659 @@
+{
+  "processFiles": 27,
+  "summary": {
+    "configurationCalls": 9,
+    "enumPropertyWrites": 0,
+    "tableBindingAssignments": 18,
+    "classAReads": 21163,
+    "classAReadsAfterAnyWrite": 21163,
+    "classAReadsAfterEnumWrite": 0,
+    "classASitesExecuted": 35
+  },
+  "events": {
+    "read:src/compiler/sys.ts:127:PollingInterval.Low": {
+      "count": 18,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:128:PollingInterval.Medium": {
+      "count": 18,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:129:PollingInterval.High": {
+      "count": 18,
+      "values": {}
+    },
+    "call:setCustomPollingValues": {
+      "count": 9,
+      "values": {
+        "1": 9
+      }
+    },
+    "write:pollingChunkSize": {
+      "count": 9,
+      "values": {
+        "{\"250\":32,\"500\":64,\"2000\":256}": 9
+      }
+    },
+    "write:unchangedPollThresholds": {
+      "count": 9,
+      "values": {
+        "{\"250\":32,\"500\":64,\"2000\":256}": 9
+      }
+    },
+    "read:src/server/editorServices.ts:2436:PollingInterval.High": {
+      "count": 1982,
+      "values": {}
+    },
+    "read:src/server/editorServices.ts:3533:PollingInterval.Medium": {
+      "count": 6448,
+      "values": {}
+    },
+    "read:src/server/editorServices.ts:2571:PollingInterval.High": {
+      "count": 3449,
+      "values": {}
+    },
+    "read:src/server/project.ts:856:PollingInterval.High": {
+      "count": 1204,
+      "values": {}
+    },
+    "read:src/server/editorServices.ts:5666:PollingInterval.Low": {
+      "count": 148,
+      "values": {}
+    },
+    "read:src/server/editorServices.ts:3059:PollingInterval.High": {
+      "count": 26,
+      "values": {}
+    },
+    "read:src/server/project.ts:1901:PollingInterval.High": {
+      "count": 45,
+      "values": {}
+    },
+    "read:src/server/project.ts:1855:PollingInterval.Medium": {
+      "count": 47,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:1134:PollingInterval.Medium": {
+      "count": 4555,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:1163:PollingInterval.Medium": {
+      "count": 4,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:1186:PollingInterval.Medium": {
+      "count": 230,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:261:PollingInterval.Low": {
+      "count": 3,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:262:PollingInterval.Medium": {
+      "count": 3,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:263:PollingInterval.High": {
+      "count": 3,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:1170:PollingInterval.Medium": {
+      "count": 4,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:356:PollingInterval.Low": {
+      "count": 561,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:358:PollingInterval.Medium": {
+      "count": 352,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:385:PollingInterval.Low": {
+      "count": 267,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:387:PollingInterval.Low": {
+      "count": 267,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:372:PollingInterval.Low": {
+      "count": 3,
+      "values": {}
+    },
+    "read:src/server/project.ts:1576:PollingInterval.High": {
+      "count": 20,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:787:PollingInterval.Low": {
+      "count": 1600,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:1219:PollingInterval.High": {
+      "count": 43,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:1200:PollingInterval.High": {
+      "count": 10,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:489:PollingInterval.High": {
+      "count": 365,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:508:PollingInterval.High": {
+      "count": 290,
+      "values": {}
+    },
+    "read:src/compiler/tsbuildPublic.ts:2128:PollingInterval.High": {
+      "count": 182,
+      "values": {}
+    },
+    "read:src/compiler/tsbuildPublic.ts:2199:PollingInterval.Low": {
+      "count": 288,
+      "values": {}
+    },
+    "read:src/compiler/tsbuildPublic.ts:2220:PollingInterval.High": {
+      "count": 98,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:1096:PollingInterval.Medium": {
+      "count": 15,
+      "values": {}
+    },
+    "read:src/server/editorServices.ts:3894:PollingInterval.High": {
+      "count": 28,
+      "values": {}
+    },
+    "read:src/testRunner/unittests/tscWatch/watchEnvironment.ts:44:ts.PollingInterval.Medium": {
+      "count": 1,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:308:PollingInterval.Low": {
+      "count": 98,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:346:PollingInterval.High": {
+      "count": 5,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:349:PollingInterval.Low": {
+      "count": 5,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:349:PollingInterval.Medium": {
+      "count": 3,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:349:PollingInterval.High": {
+      "count": 2,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:360:PollingInterval.High": {
+      "count": 200,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:315:PollingInterval.Low": {
+      "count": 33,
+      "values": {}
+    },
+    "read:src/testRunner/unittests/tscWatch/watchEnvironment.ts:72:ts.PollingInterval.Medium": {
+      "count": 1,
+      "values": {}
+    },
+    "read:src/testRunner/unittests/tscWatch/watchEnvironment.ts:73:ts.PollingInterval.Low": {
+      "count": 1,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:344:PollingInterval.Low": {
+      "count": 1,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:507:PollingInterval.High": {
+      "count": 8,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:497:PollingInterval.Low": {
+      "count": 7,
+      "values": {}
+    },
+    "read:src/compiler/sys.ts:461:PollingInterval.Medium": {
+      "count": 4,
+      "values": {}
+    },
+    "read:src/compiler/watchPublic.ts:774:PollingInterval.Low": {
+      "count": 6,
+      "values": {}
+    },
+    "read:src/compiler/tsbuildPublic.ts:2146:PollingInterval.High": {
+      "count": 13,
+      "values": {}
+    }
+  },
+  "environment": {
+    "TSC_WATCH_POLLINGINTERVAL_LOW": {
+      "": 9
+    },
+    "TSC_WATCH_POLLINGINTERVAL_MEDIUM": {
+      "": 9
+    },
+    "TSC_WATCH_POLLINGINTERVAL_HIGH": {
+      "": 9
+    },
+    "TSC_WATCH_POLLINGCHUNKSIZE_LOW": {
+      "": 9
+    },
+    "TSC_WATCH_POLLINGCHUNKSIZE_MEDIUM": {
+      "": 9
+    },
+    "TSC_WATCH_POLLINGCHUNKSIZE_HIGH": {
+      "": 9
+    },
+    "TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS_LOW": {
+      "": 9
+    },
+    "TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS_MEDIUM": {
+      "": 9
+    },
+    "TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS_HIGH": {
+      "": 9
+    }
+  },
+  "classAReaders": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 261,
+      "expression": "PollingInterval.Low",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3,
+      "afterAnyWrite": 3,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 262,
+      "expression": "PollingInterval.Medium",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3,
+      "afterAnyWrite": 3,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 263,
+      "expression": "PollingInterval.High",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3,
+      "afterAnyWrite": 3,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 315,
+      "expression": "PollingInterval.Low",
+      "function": "pollLowPollingIntervalQueue",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 33,
+      "afterAnyWrite": 33,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 344,
+      "expression": "PollingInterval.Low",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 1,
+      "afterAnyWrite": 1,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 349,
+      "expression": "PollingInterval.Medium",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3,
+      "afterAnyWrite": 3,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 349,
+      "expression": "PollingInterval.High",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 2,
+      "afterAnyWrite": 2,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 372,
+      "expression": "PollingInterval.Low",
+      "function": "addChangedFileToLowPollingIntervalQueue",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3,
+      "afterAnyWrite": 3,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 461,
+      "expression": "PollingInterval.Medium",
+      "function": "createDirectoryWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 4,
+      "afterAnyWrite": 4,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 507,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 8,
+      "afterAnyWrite": 8,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1052,
+      "expression": "PollingInterval.Low",
+      "function": "watchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 0,
+      "afterAnyWrite": 0,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1134,
+      "expression": "PollingInterval.Medium",
+      "function": "watchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 4555,
+      "afterAnyWrite": 4555,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1163,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 4,
+      "afterAnyWrite": 4,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1170,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 4,
+      "afterAnyWrite": 4,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1186,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 230,
+      "afterAnyWrite": 230,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 489,
+      "expression": "PollingInterval.High",
+      "function": "createWatchProgram",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 365,
+      "afterAnyWrite": 365,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 508,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 290,
+      "afterAnyWrite": 290,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 774,
+      "expression": "PollingInterval.Low",
+      "function": "getVersionedSourceFileByPath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 6,
+      "afterAnyWrite": 6,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 787,
+      "expression": "PollingInterval.Low",
+      "function": "getVersionedSourceFileByPath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 1600,
+      "afterAnyWrite": 1600,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1096,
+      "expression": "PollingInterval.Medium",
+      "function": "watchMissingFilePath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 15,
+      "afterAnyWrite": 15,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1200,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 10,
+      "afterAnyWrite": 10,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1219,
+      "expression": "PollingInterval.High",
+      "function": "watchReferencedProject",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 43,
+      "afterAnyWrite": 43,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2128,
+      "expression": "PollingInterval.High",
+      "function": "watchConfigFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 182,
+      "afterAnyWrite": 182,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2146,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 13,
+      "afterAnyWrite": 13,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2199,
+      "expression": "PollingInterval.Low",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 288,
+      "afterAnyWrite": 288,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2220,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 98,
+      "afterAnyWrite": 98,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 856,
+      "expression": "PollingInterval.High",
+      "function": "watchAffectingFileLocation",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 1204,
+      "afterAnyWrite": 1204,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1576,
+      "expression": "PollingInterval.High",
+      "function": "createProjectWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 20,
+      "afterAnyWrite": 20,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1855,
+      "expression": "PollingInterval.Medium",
+      "function": "addMissingFileWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 47,
+      "afterAnyWrite": 47,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1901,
+      "expression": "PollingInterval.High",
+      "function": "createGeneratedFileWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 45,
+      "afterAnyWrite": 45,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 2436,
+      "expression": "PollingInterval.High",
+      "function": "createConfigFileWatcherForParsedConfig",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 1982,
+      "afterAnyWrite": 1982,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 2571,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 3449,
+      "afterAnyWrite": 3449,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3059,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 26,
+      "afterAnyWrite": 26,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3533,
+      "expression": "PollingInterval.Medium",
+      "function": "watchClosedScriptInfo",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 6448,
+      "afterAnyWrite": 6448,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3894,
+      "expression": "PollingInterval.High",
+      "function": "addMissingSourceMapFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 28,
+      "afterAnyWrite": 28,
+      "afterEnumWrite": 0
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 5666,
+      "expression": "PollingInterval.Low",
+      "function": "watchPackageJsonFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals.",
+      "runtimeReads": 148,
+      "afterAnyWrite": 148,
+      "afterEnumWrite": 0
+    }
+  ]
+}

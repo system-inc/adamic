@@ -1,0 +1,2746 @@
+{
+  "typescript": "6.0.3",
+  "root": "/workspace/baobab-adapted",
+  "sourceFiles": 712,
+  "rounds": 2,
+  "converged": true,
+  "counts": {
+    "reads": 51,
+    "writes": 1,
+    "classes": {
+      "a": 36,
+      "b": 15,
+      "c": 0
+    }
+  },
+  "writes": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 176,
+      "expression": "levels[level] = customLevels![level] || levels[level]",
+      "enum": "PollingInterval",
+      "path": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 142,
+          "expression": "PollingInterval"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 142,
+          "expression": "setCustomLevels(\"TSC_WATCH_POLLINGINTERVAL\", PollingInterval)"
+        }
+      ],
+      "function": "setLevel"
+    }
+  ],
+  "enumObjectArguments": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 142,
+      "expression": "PollingInterval",
+      "callee": "setCustomLevels",
+      "argument": 1,
+      "enums": [
+        "PollingInterval"
+      ]
+    },
+    {
+      "file": "src/harness/client.ts",
+      "line": 654,
+      "expression": "DiagnosticCategory",
+      "callee": "Object.keys",
+      "argument": 0,
+      "enums": [
+        "DiagnosticCategory"
+      ]
+    }
+  ],
+  "enumObjectNonMemberUses": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 142,
+      "expression": "PollingInterval",
+      "parentKind": "CallExpression",
+      "parent": "setCustomLevels(\"TSC_WATCH_POLLINGINTERVAL\", PollingInterval)"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3527,
+      "expression": "FileIncludeKind",
+      "parentKind": "AsExpression",
+      "parent": "FileIncludeKind as Record<number, string>"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 2640,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "line": 348,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "line": 348,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "line": 365,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/extractType.ts",
+      "line": 365,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "line": 179,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "line": 179,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "line": 194,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/refactors/convertParamsToDestructuredObject.ts",
+      "line": 195,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyExport.ts",
+      "line": 82,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/convertToTypeOnlyExport.ts",
+      "line": 83,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/returnValueCorrect.ts",
+      "line": 262,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/returnValueCorrect.ts",
+      "line": 263,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingMember.ts",
+      "line": 664,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingMember.ts",
+      "line": 665,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingParam.ts",
+      "line": 250,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingParam.ts",
+      "line": 251,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 173,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 174,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 180,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 181,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/services/organizeImports.ts",
+      "line": 187,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/harness/client.ts",
+      "line": 654,
+      "expression": "DiagnosticCategory",
+      "parentKind": "CallExpression",
+      "parent": "Object.keys(DiagnosticCategory)"
+    },
+    {
+      "file": "src/harness/client.ts",
+      "line": 654,
+      "expression": "DiagnosticCategory",
+      "parentKind": "AsExpression",
+      "parent": "DiagnosticCategory as any"
+    },
+    {
+      "file": "src/harness/compilerImpl.ts",
+      "line": 285,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/harness/compilerImpl.ts",
+      "line": 291,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "line": 1486,
+      "expression": "ForegroundColorEscapeSequences",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ForegroundColorEscapeSequences"
+    },
+    {
+      "file": "src/harness/incrementalUtils.ts",
+      "line": 467,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/harness/incrementalUtils.ts",
+      "line": 643,
+      "expression": "ProjectKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.ProjectKind"
+    },
+    {
+      "file": "src/harness/tsserverLogger.ts",
+      "line": 71,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/harness/tsserverLogger.ts",
+      "line": 81,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "line": 663,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "line": 691,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/harness/fourslashInterfaceImpl.ts",
+      "line": 318,
+      "expression": "IndentStyle",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.IndentStyle"
+    },
+    {
+      "file": "src/harness/fourslashInterfaceImpl.ts",
+      "line": 1063,
+      "expression": "CompletionSource",
+      "parentKind": "ImportEqualsDeclaration",
+      "parent": "export import CompletionSource = ts.Completions.CompletionSource;"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 748,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 3029,
+      "expression": "IndentStyle",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.IndentStyle"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 3037,
+      "expression": "IndentStyle",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.IndentStyle"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 41,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 76,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 77,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 79,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 81,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 83,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 85,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 219,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 229,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 430,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 431,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 459,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/config/commandLineParsing.ts",
+      "line": 175,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/config/commandLineParsing.ts",
+      "line": 176,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/customTransforms.ts",
+      "line": 100,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/customTransforms.ts",
+      "line": 210,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/awaitUsingDeclarations.ts",
+      "line": 1448,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 19,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 34,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 51,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 70,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 87,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 102,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 119,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/updateExpressionInModule.ts",
+      "line": 138,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/usingDeclarations.ts",
+      "line": 1567,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/usingDeclarations.ts",
+      "line": 1597,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/evaluation/usingDeclarations.ts",
+      "line": 1627,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 341,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 369,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 389,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 536,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 547,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 558,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 569,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 581,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 593,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 609,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 625,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 637,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 656,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 656,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 695,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 723,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 757,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 805,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 848,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 879,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 911,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/moduleResolution.ts",
+      "line": 933,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/programApi.ts",
+      "line": 138,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "line": 98,
+      "expression": "SignatureInfo",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.SignatureInfo"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "line": 101,
+      "expression": "SignatureInfo",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.SignatureInfo"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "line": 104,
+      "expression": "SignatureInfo",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.SignatureInfo"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "line": 523,
+      "expression": "ExitStatus",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ExitStatus"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "line": 54,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "line": 104,
+      "expression": "FileWatcherEventKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.FileWatcherEventKind"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "line": 106,
+      "expression": "FileWatcherEventKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.FileWatcherEventKind"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "line": 271,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsserver.ts",
+      "line": 276,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 123,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 193,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 196,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 202,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 205,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 211,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 214,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 354,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 416,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 465,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 618,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 703,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/cancellableLanguageServiceOperations.ts",
+      "line": 35,
+      "expression": "IndentStyle",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.IndentStyle"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 29,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 32,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 35,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 38,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 41,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 44,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 47,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 50,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 74,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 74,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 75,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/colorization.ts",
+      "line": 75,
+      "expression": "TokenClass",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.TokenClass"
+    },
+    {
+      "file": "src/testRunner/unittests/services/documentRegistry.ts",
+      "line": 16,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/documentRegistry.ts",
+      "line": 37,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 98,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 102,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 106,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 110,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 114,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 118,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 138,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 142,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 146,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 150,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 154,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 158,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 162,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 166,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 174,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 178,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 182,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 190,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 200,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 204,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 208,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 212,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 216,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 220,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 224,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 228,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 232,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 236,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 240,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 244,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 248,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 252,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 256,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 260,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 272,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 280,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 286,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 294,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 298,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 302,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/patternMatcher.ts",
+      "line": 310,
+      "expression": "PatternMatchKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PatternMatchKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 145,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 148,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 151,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 151,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 171,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 174,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 177,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 177,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 254,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 257,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 260,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 260,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 263,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 263,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 279,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 282,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 285,
+      "expression": "LeadingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.LeadingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/textChanges.ts",
+      "line": 285,
+      "expression": "TrailingTriviaOption",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.textChanges.TrailingTriviaOption"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 107,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 116,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 122,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 127,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 132,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 137,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 141,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 146,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 150,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 160,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 170,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 180,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 202,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 224,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 250,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 255,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 354,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 359,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 550,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 551,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 572,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 573,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 583,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 588,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 614,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 623,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 633,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 642,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 648,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 653,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 668,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/services/transpile.ts",
+      "line": 680,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 55,
+      "expression": "FileWatcherEventKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.FileWatcherEventKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 701,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 714,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 727,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 784,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 791,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/sys/symlinkWatching.ts",
+      "line": 799,
+      "expression": "WatchFileKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.WatchFileKind"
+    },
+    {
+      "file": "src/testRunner/unittests/transform.ts",
+      "line": 330,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/transform.ts",
+      "line": 332,
+      "expression": "ModuleDetectionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleDetectionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/transform.ts",
+      "line": 602,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+      "line": 105,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+      "line": 221,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+      "line": 222,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/commandLine.ts",
+      "line": 300,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/fileDelete.ts",
+      "line": 58,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/fileDelete.ts",
+      "line": 58,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/fileDelete.ts",
+      "line": 83,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsbuild/sample.ts",
+      "line": 367,
+      "expression": "UpToDateStatusType",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.UpToDateStatusType"
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/incremental.ts",
+      "line": 491,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "line": 160,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "line": 170,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "line": 204,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1437,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1442,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1447,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1452,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1457,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/programUpdates.ts",
+      "line": 1462,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/resolutionCache.ts",
+      "line": 35,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/resolutionCache.ts",
+      "line": 123,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/resolutionCache.ts",
+      "line": 183,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchApi.ts",
+      "line": 503,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 44,
+      "expression": "PollingInterval",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PollingInterval"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 72,
+      "expression": "PollingInterval",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PollingInterval"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 73,
+      "expression": "PollingInterval",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.PollingInterval"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/auxiliaryProject.ts",
+      "line": 58,
+      "expression": "ProjectKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.ProjectKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/configuredProjects.ts",
+      "line": 454,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/configuredProjects.ts",
+      "line": 466,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 80,
+      "expression": "DiagnosticCategory",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.DiagnosticCategory"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 376,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 382,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 731,
+      "expression": "ProgramUpdateLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ProgramUpdateLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 737,
+      "expression": "ProgramUpdateLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ProgramUpdateLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/externalProjects.ts",
+      "line": 750,
+      "expression": "ProgramUpdateLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ProgramUpdateLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getEditsForFileRename.ts",
+      "line": 34,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/getEditsForFileRename.ts",
+      "line": 48,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/inferredProjects.ts",
+      "line": 77,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/partialSemanticServer.ts",
+      "line": 44,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/partialSemanticServer.ts",
+      "line": 106,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/partialSemanticServer.ts",
+      "line": 171,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/partialSemanticServer.ts",
+      "line": 213,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/plugins.ts",
+      "line": 286,
+      "expression": "ProjectKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.ProjectKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/plugins.ts",
+      "line": 287,
+      "expression": "ProgramUpdateLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ProgramUpdateLevel"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projects.ts",
+      "line": 173,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projects.ts",
+      "line": 207,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projects.ts",
+      "line": 228,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/resolutionCache.ts",
+      "line": 735,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/resolutionCache.ts",
+      "line": 736,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "line": 170,
+      "expression": "IndentStyle",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.IndentStyle"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "line": 190,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "line": 194,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/syntacticServer.ts",
+      "line": 42,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/syntacticServer.ts",
+      "line": 153,
+      "expression": "LanguageServiceMode",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LanguageServiceMode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 328,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 358,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 385,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 418,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 481,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 553,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 627,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 636,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 658,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 670,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 691,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 700,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 724,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 733,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 740,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 764,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 772,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 780,
+      "expression": "ModuleResolutionKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleResolutionKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 2517,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/typingsInstaller.ts",
+      "line": 2540,
+      "expression": "ModuleKind",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.ModuleKind"
+    },
+    {
+      "file": "src/tsserver/common.ts",
+      "line": 7,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/common.ts",
+      "line": 9,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 62,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 144,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 147,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 150,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 165,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 203,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 204,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 205,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 206,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 207,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 208,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 223,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 228,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 233,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 239,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 247,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 423,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 530,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 571,
+      "expression": "LogLevel",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.LogLevel"
+    },
+    {
+      "file": "src/tsserver/server.ts",
+      "line": 35,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/server.ts",
+      "line": 36,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    },
+    {
+      "file": "src/tsserver/server.ts",
+      "line": 37,
+      "expression": "Msg",
+      "parentKind": "PropertyAccessExpression",
+      "parent": "ts.server.Msg"
+    }
+  ],
+  "reads": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 127,
+      "expression": "PollingInterval.Low",
+      "function": "createPollingIntervalBasedLevels",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 128,
+      "expression": "PollingInterval.Medium",
+      "function": "createPollingIntervalBasedLevels",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 129,
+      "expression": "PollingInterval.High",
+      "function": "createPollingIntervalBasedLevels",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 261,
+      "expression": "PollingInterval.Low",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 262,
+      "expression": "PollingInterval.Medium",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 263,
+      "expression": "PollingInterval.High",
+      "function": "createDynamicPriorityPollingWatchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 308,
+      "expression": "PollingInterval.Low",
+      "function": "pollLowPollingIntervalQueue",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 315,
+      "expression": "PollingInterval.Low",
+      "function": "pollLowPollingIntervalQueue",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 344,
+      "expression": "PollingInterval.Low",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 346,
+      "expression": "PollingInterval.High",
+      "function": "onWatchFileStat",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 349,
+      "expression": "PollingInterval.Low",
+      "function": "onWatchFileStat",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 349,
+      "expression": "PollingInterval.Medium",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 349,
+      "expression": "PollingInterval.High",
+      "function": "onWatchFileStat",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 356,
+      "expression": "PollingInterval.Low",
+      "function": "pollingIntervalQueue",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 358,
+      "expression": "PollingInterval.Medium",
+      "function": "pollingIntervalQueue",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 360,
+      "expression": "PollingInterval.High",
+      "function": "pollingIntervalQueue",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 372,
+      "expression": "PollingInterval.Low",
+      "function": "addChangedFileToLowPollingIntervalQueue",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 385,
+      "expression": "PollingInterval.Low",
+      "function": "<anonymous>",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 387,
+      "expression": "PollingInterval.Low",
+      "function": "<anonymous>",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 461,
+      "expression": "PollingInterval.Medium",
+      "function": "createDirectoryWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 497,
+      "expression": "PollingInterval.Low",
+      "function": "pollQueue",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 507,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1052,
+      "expression": "PollingInterval.Low",
+      "function": "watchFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1134,
+      "expression": "PollingInterval.Medium",
+      "function": "watchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1163,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1170,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1186,
+      "expression": "PollingInterval.Medium",
+      "function": "nonRecursiveWatchDirectory",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 489,
+      "expression": "PollingInterval.High",
+      "function": "createWatchProgram",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 508,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 774,
+      "expression": "PollingInterval.Low",
+      "function": "getVersionedSourceFileByPath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 787,
+      "expression": "PollingInterval.Low",
+      "function": "getVersionedSourceFileByPath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1096,
+      "expression": "PollingInterval.Medium",
+      "function": "watchMissingFilePath",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1200,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1219,
+      "expression": "PollingInterval.High",
+      "function": "watchReferencedProject",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2128,
+      "expression": "PollingInterval.High",
+      "function": "watchConfigFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2146,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2199,
+      "expression": "PollingInterval.Low",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2220,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 856,
+      "expression": "PollingInterval.High",
+      "function": "watchAffectingFileLocation",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1576,
+      "expression": "PollingInterval.High",
+      "function": "createProjectWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1855,
+      "expression": "PollingInterval.Medium",
+      "function": "addMissingFileWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/project.ts",
+      "line": 1901,
+      "expression": "PollingInterval.High",
+      "function": "createGeneratedFileWatcher",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 2436,
+      "expression": "PollingInterval.High",
+      "function": "createConfigFileWatcherForParsedConfig",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 2571,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3059,
+      "expression": "PollingInterval.High",
+      "function": "<anonymous>",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3533,
+      "expression": "PollingInterval.Medium",
+      "function": "watchClosedScriptInfo",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3894,
+      "expression": "PollingInterval.High",
+      "function": "addMissingSourceMapFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 5666,
+      "expression": "PollingInterval.Low",
+      "function": "watchPackageJsonFile",
+      "class": "a",
+      "why": "Value flows into a watch interval, or a table keyed by the configured numeric intervals."
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 44,
+      "expression": "ts.PollingInterval.Medium",
+      "function": "<anonymous>",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 72,
+      "expression": "ts.PollingInterval.Medium",
+      "function": "<anonymous>",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/watchEnvironment.ts",
+      "line": 73,
+      "expression": "ts.PollingInterval.Low",
+      "function": "<anonymous>",
+      "class": "b",
+      "why": "Names a level in a comparison, switch, transition, or table key. Existing code compares configured numeric identities; changing to fixed identities requires a consistent boundary."
+    }
+  ]
+}

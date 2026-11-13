@@ -1,0 +1,11 @@
+{
+  "command": [
+    "stage3/oracle/run.sh",
+    "/workspace/baobab-counted",
+    "/workspace/baobab/stage3/census/polling-interval-count/oracle",
+    "--limit-seconds",
+    "1500"
+  ],
+  "child_exit": 1,
+  "seconds": 47.031
+}

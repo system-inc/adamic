@@ -1,0 +1,31 @@
+{
+  "tree": "/workspace/baobab-counted",
+  "nproc": 5,
+  "workers": 8,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 14.389
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 1,
+      "seconds": 32.512
+    }
+  },
+  "status": "fail",
+  "wall_seconds": 46.911
+}

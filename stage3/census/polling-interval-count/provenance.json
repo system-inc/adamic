@@ -1,0 +1,23 @@
+{
+  "base": "464e5daa23a60588f5aaa656e95d93af05d582c3",
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript": "6.0.3",
+  "node": "v24.19.0",
+  "product_key": "45628f1f2d52124cc2cb80f3dd695a05e4797d95b1a2ce39e7a534c83e6bfda2",
+  "apply_exit": 0,
+  "apply_command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/baobab-pin timeout 1700 stage3/apply.sh /workspace/baobab-adapted",
+  "sha256": {
+    "pin/src/compiler/sys.ts": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "pin/src/compiler/tsbuildPublic.ts": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "pin/src/compiler/watchPublic.ts": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "pin/src/server/editorServices.ts": "51c8e600542a9957fc2f7b47e05c42b541317bcb61967fdc939002ecf83a38bb",
+    "pin/src/server/project.ts": "6c0eba3df466557cd46699daf9a667dade130725dddffaf9868638207a036a76",
+    "pin/src/testRunner/unittests/tscWatch/watchEnvironment.ts": "52bb4aeb77684916fb07d32ef1df64c192d940484d9d221199d90350cc74f57b",
+    "adapted/src/compiler/sys.ts": "b4ec0d24b1ba6601978bf57005b98a07b35d126cd523174c583ca7e6dd259669",
+    "adapted/src/compiler/tsbuildPublic.ts": "3920d22f6114f9bc45c33953742cdb3d3f91ae3cbf2d5d60fe055249e7d59aaf",
+    "adapted/src/compiler/watchPublic.ts": "b54b0dd7d9de0ff9ffce55ececa2406190c8d9191d44f3bdfd90396617e58f74",
+    "adapted/src/server/editorServices.ts": "6c5144ccd4f7d19214bcb058e5153331448d54a4f275cae878c4c60bb55e9bfe",
+    "adapted/src/server/project.ts": "223972a603439242cd62b1b585c7288cd2166669266b1404145a9b061ff42a7e",
+    "adapted/src/testRunner/unittests/tscWatch/watchEnvironment.ts": "52bb4aeb77684916fb07d32ef1df64c192d940484d9d221199d90350cc74f57b"
+  }
+}
