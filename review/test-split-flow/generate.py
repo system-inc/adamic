@@ -12,6 +12,9 @@ root = Path(__file__).resolve().parents[2]
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
             'internal/load/testdata/0.1/compile/07_modules/main.ts', 'internal/oracle/testdata/*.a',
             'internal/oracle/testdata/*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
+# flow's programs() globs the generator fixtures' subdirectories after these; fresh's doesn't.
+flow_patterns = patterns + ['internal/oracle/testdata/generators/*.a', 'internal/oracle/testdata/generators_several/*.a',
+                            'internal/oracle/testdata/iterable_views/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
 # Read the explicit lists from the corpus owner so generation follows main's exclusions.
@@ -59,7 +62,7 @@ for package in ['flow', 'fresh']:
             continue
         owned.update(re.findall(package + r'CorpusPaths = append\(' + package + r'CorpusPaths, "([^"]+)"\)', owner.read_text()))
     paths = []
-    for pattern in patterns:
+    for pattern in (flow_patterns if package == 'flow' else patterns):
         for path in sorted(glob.glob(str(root / pattern))):
             source = Path(path)
             # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
