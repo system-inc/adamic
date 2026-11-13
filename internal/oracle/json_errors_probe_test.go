@@ -10,6 +10,7 @@ import (
 // The ruled guard needs every other own-enumerability road closed too. Both backends use this
 // lowering pass; an admitted road here needs a new representation proof before either may run it.
 func TestJSONErrorEnumerableRoadsRefuse(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, body, stdout, refusal string }{
 		{"define_name", "Object.defineProperty(e, 'name', {value: 'X', enumerable: true});", "{\"name\":\"X\"}\n", "Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores"},
 		{"define_message", "Object.defineProperty(e, 'message', {value: 'y', enumerable: true});", "{\"message\":\"y\"}\n", "Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores"},
