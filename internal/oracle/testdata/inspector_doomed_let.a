@@ -1,0 +1,24 @@
+import 'node:process';
+import type { Session } from 'inspector';
+function run(): string {
+ let activeSession: Session | "stopping" | undefined;
+ function enable(): void {
+  const inspector: typeof import('inspector') = require('inspector');
+  const session = new inspector.Session();
+  activeSession = session;
+ }
+ function disable(): string {
+  if (activeSession && activeSession !== "stopping") {
+   const s = activeSession;
+   activeSession.post('Profiler.stop', () => {
+    activeSession = undefined;
+    s.disconnect();
+   });
+   activeSession = "stopping";
+   return 'stopped';
+  }
+  return 'disabled';
+ }
+ return disable();
+}
+console.log(run());
