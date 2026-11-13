@@ -3,6 +3,7 @@ package oracle
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -15,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -24,7 +26,7 @@ import (
 // both runtimes read the same inotify queue, and each hears from one watcher, since Node doesn't
 // define the order across watchers in one turn. The rename row of Node's measured table is the C
 // harness's (internal/native/fswatch_test.go): no program can rename yet.
-var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "two_events", "close_pending", "unwatch_file_pending"}
+var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "close_pending", "unwatch_file_pending"}
 
 func init() {
 	for _, name := range fsWatchFixtures {
@@ -56,7 +58,6 @@ var fsWatchMutations = []fsWatchMutation{
 	{"change-rename-swapped", "create", "node_fs_watch_impl.h", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
 	{"self-basename-dropped", "write", "node_fs_watch_impl.h", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
 	{"close-keeps-source", "self_close", "node_fs_watch_impl.h", "    if (fs_watchers == NULL) fs_watch_stop(); else fs_watch_reference();\n", "    /* mutant: the last close leaves the shared source registered */\n    if (fs_watchers != NULL) fs_watch_reference();\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
-	{"event-drain-dropped", "two_events", "node_fs_watch_impl.h", "                adamic_source_drain_jobs();\n", "                /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
 	{"view-name-check-dropped", "view_other_event", "node_fs_watch_impl.h", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
 	// Pending closes (#7s8hgd5): close_pending keeps the shared descriptor open,
 	// so its mutation drops the logical watcher close, not the source close.
@@ -301,19 +302,27 @@ func TestFSWatchMutantCloseKeepsSource(t *testing.T) {
 	t.Parallel()
 	fsWatchMutant(t, "close-keeps-source")
 }
-func TestFSWatchMutantDrainsOncePerRead(t *testing.T) {
-	t.Parallel()
-	fsWatchMutant(t, "event-drain-dropped")
-}
 func TestFSWatchMutantViewSkipsTheNameCheck(t *testing.T) {
 	t.Parallel()
 	fsWatchMutant(t, "view-name-check-dropped")
 }
 
-// Two events in one read, each listener's microtask between them (Runtime's must on #j71fn59).
-func TestFSWatchTwoEventsMatchesNode(t *testing.T) {
+// two_events.a held each listener's microtask between two events in one read (Runtime's must on #j71fn59)
+// through an async listener, and an async listener in fs.watch's void slot is :355's floating task,
+// refused for good (#8j8ecw0). So it's the refusal pin now, Node's order still its witness. The per-event
+// drain it held to Node, and the event-drain-dropped mutant, move to Memory's runtime unit test (#cbj1hpd),
+// since no program that lowers can schedule a microtask from a listener yet.
+func TestFSWatchTwoEventsIsRefused(t *testing.T) {
 	t.Parallel()
-	fsWatchAgreement(t, "two_events")
+	path := fsWatchPath(t, "two_events")
+	if observed := onNode(t, path); observed.exitCode != 0 || string(observed.stdout) != "a\nmicro\nb\nmicro\n" {
+		t.Fatalf("Node witness: %+v", observed)
+	}
+	_, err := lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "an unawaited async task: a ") || !strings.HasSuffix(refused.Where, "two_events.a:7:57") {
+		t.Fatalf("want the promise-into-void refusal at two_events.a:7:57, got %v", err)
+	}
 }
 
 // Workers' program (#7s8hgd5): closing the only persistent watcher leaves a pending close, so the
@@ -405,10 +414,6 @@ func TestProduct_FSWatchMutantCloseKeepsSource(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "self_close", "close-keeps-source")
 }
-func TestProduct_FSWatchTwoEvents(t *testing.T) {
-	t.Parallel()
-	fsWatchProduct(t, "two_events", "control")
-}
 func TestProduct_FSWatchViewOtherEvent(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "view_other_event", "control")
@@ -416,10 +421,6 @@ func TestProduct_FSWatchViewOtherEvent(t *testing.T) {
 func TestProduct_FSWatchViewAfterClose(t *testing.T) {
 	t.Parallel()
 	fsWatchProduct(t, "view_after_close", "control")
-}
-func TestProduct_FSWatchMutantDrainOncePerRead(t *testing.T) {
-	t.Parallel()
-	fsWatchProduct(t, "two_events", "event-drain-dropped")
 }
 func TestProduct_FSWatchMutantViewNameCheck(t *testing.T) {
 	t.Parallel()

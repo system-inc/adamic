@@ -29,9 +29,9 @@ var asyncReviewCases = []struct{ path, output, reason, location string }{
 	{"accepted/recursion.a", "2:1:leaf|caught:recursive\n", "", ""},
 	{"accepted/snapshot_reference.a", "before1right\n", "", ""},
 	{"refused/unawaited_rejection.a", "done\n", "a promise not awaited in the same function", "unawaited_rejection.a:5:"},
-	{"refused/hidden_await.a", "number\n", "await of a non-primitive structurally typed value", "hidden_await.a:4:"},
-	{"refused/hidden_resolve.a", "number\n", "Promise.resolve of a non-primitive structurally typed value", "hidden_resolve.a:4:"},
-	{"refused/hidden_return.a", "number\n", "async return of a non-primitive structurally typed value", "hidden_return.a:4:"},
+	{"refused/hidden_await.a", "number\n", "an unawaited async task: a { value: number; then(", "hidden_await.a:3:25"},
+	{"refused/hidden_resolve.a", "number\n", "an unawaited async task: a { value: number; then(", "hidden_resolve.a:3:25"},
+	{"refused/hidden_return.a", "number\n", "an unawaited async task: a { value: number; then(", "hidden_return.a:3:25"},
 	{"refused/modules/main.a", "a1\nb\na2\n", "top-level await outside the entry module", "suspended.a:2:"},
 	{"refused/maybe_boolean_and.a", "undefined\n", "await inside maybe-boolean logical operands", "maybe_boolean_and.a:3:"},
 	// Its task makes strings outside a try, each of which can throw past V8's longest string
@@ -70,8 +70,18 @@ func asyncReview(t *testing.T, name string) {
 		}
 		program, err := lowered(t, path)
 		if each.reason != "" {
+			// A stop is a NotYet, or a Refused where a rule refuses the program first: the three hidden
+			// thenables are refused where the thenable is first seen as a type that names no promise
+			// (promise_into_void.go, #8j8ecw0), before the await, resolve or return reads it.
+			where := ""
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), each.reason) || !strings.Contains(notYet.Where, each.location) {
+			var refused *lower.Refused
+			if errors.As(err, &notYet) {
+				where = notYet.Where
+			} else if errors.As(err, &refused) {
+				where = refused.Where
+			}
+			if where == "" || !strings.Contains(err.Error(), each.reason) || !strings.Contains(where, each.location) {
 				t.Fatalf("want located refusal %q at %s: %v", each.reason, each.location, err)
 			}
 			t.Logf("Node stdout %q, stderr %q, exit %d; %v", source.stdout, source.stderr, source.exitCode, err)
@@ -253,4 +263,24 @@ func TestAsyncReviewHiddenMutated(t *testing.T) {
 func TestAsyncReviewComputedThen(t *testing.T) {
 	t.Parallel()
 	asyncReview(t, "refused/computed_then.a")
+}
+
+// promiseIntoVoidFixture is whether a fixture that doesn't lower stops at the promise-into-void refusal
+// rather than a NotYet: the three hidden thenables, refused where the thenable is first seen as a type that
+// names no promise (#8j8ecw0).
+func promiseIntoVoidFixture(path string) bool {
+	switch path {
+	case "internal/oracle/testdata/async_review/refused/hidden_await.a", "internal/oracle/testdata/async_review/refused/hidden_resolve.a", "internal/oracle/testdata/async_review/refused/hidden_return.a":
+		return true
+	}
+	return false
+}
+
+// assertPromiseIntoVoidRefusal requires the promise-into-void refusal, located.
+func assertPromiseIntoVoidRefusal(t *testing.T, err error) {
+	t.Helper()
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.Where == "" || !strings.HasPrefix(refused.What, "an unawaited async task: a ") {
+		t.Fatalf("want the promise-into-void refusal, got %v", err)
+	}
 }

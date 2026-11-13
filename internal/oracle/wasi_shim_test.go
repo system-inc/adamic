@@ -113,6 +113,11 @@ func runWASIShimShard(t *testing.T, shard int) {
 				}
 				return
 			}
+			// The three hidden thenables are refused, as TestNativeAgreesWithNode holds them (#8j8ecw0).
+			if !fixture.lowers && promiseIntoVoidFixture(fixture.path) {
+				assertPromiseIntoVoidRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var refusal *lower.NotYet
 				if !errors.As(err, &refusal) {

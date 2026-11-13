@@ -206,6 +206,12 @@ func runWasmtimeAgreesShard(t *testing.T, shard int) {
 			// TestNativeAgreesWithNode and TestWASIAgreesWithNode hold it, and the refusal's own words are its
 			// registering test's to pin, where that test pins them. A skip would only hide it from the skip census
 			// (#p3rd3vn).
+			// The three hidden thenables are refused, as TestNativeAgreesWithNode holds them (#8j8ecw0).
+			if !fixture.lowers && promiseIntoVoidFixture(fixture.path) {
+				assertPromiseIntoVoidRefusal(t, err)
+				boundary = true
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
