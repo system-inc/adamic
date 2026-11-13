@@ -96,6 +96,13 @@ func TestFlowCorpusUnitsCoverEveryProgram(t *testing.T) {
 			units[want] = true
 		}
 	}
+	// Every program the corpus holds has units, not just every unit a program: a stale generated file
+	// once missed 65 programs while each path it listed was live (#5yp9d6s).
+	for _, path := range expected {
+		if !seen[filepath.ToSlash(path)] {
+			t.Fatalf("corpus coverage: %q has no flow unit; rerun python3 review/test-split-flow/generate.py", filepath.ToSlash(path))
+		}
+	}
 	for index, check := range flowProgramChecks {
 		if got := functionName(check); got != checks[index] {
 			t.Fatalf("check %d: %s, want %s", index, got, checks[index])
