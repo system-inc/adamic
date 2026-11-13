@@ -1,0 +1,1630 @@
+{
+  "status": "stopped",
+  "reason": "Actual in-place full replay exits 1 at inherited declined site core.ts:992:21; untouched main check reproduces it. No addRange amendment made. Full shard proof and merge not completed.",
+  "codeCommit": "14b54262fc72c73bd515e10fd0d0fa6dade9bf2a",
+  "parent": "6286add0122cb4fb0126384bfd6f5799b7a4fb0d",
+  "sourceFilesChanged": [
+    "stage3/adapt/30-indexed-reads/README.md",
+    "stage3/adapt/30-indexed-reads/require-mutant.cjs",
+    "stage3/adapt/30-indexed-reads/whole-files.cjs",
+    "stage3/adapt/30-indexed-reads/whole-sites.json",
+    "stage3/adapt/32-indexed-reads-program/record-tables-measure-plan.json",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "internalUntouched": true,
+  "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1",
+  "checks": [
+    {
+      "check": "full apply: untouched main, candidate, final artifact, cache replay",
+      "exits": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "check": "30-after snapshot replay",
+      "exit": 0,
+      "edits": 0
+    },
+    {
+      "check": "30-after check, require mutant, restored check",
+      "childExits": [
+        0,
+        1,
+        0
+      ],
+      "wrapperExit": 0
+    },
+    {
+      "check": "stock tsc 6.0.3 before/after",
+      "exits": [
+        0,
+        0
+      ],
+      "roots": 79,
+      "diagnostics": [
+        0,
+        0
+      ]
+    },
+    {
+      "check": "adamic types before/after",
+      "exits": [
+        0,
+        0
+      ],
+      "roots": 79,
+      "diagnostics": [
+        0,
+        0
+      ]
+    },
+    {
+      "check": "emitted JS",
+      "exit": 0,
+      "adaptedTsFiles": 117,
+      "emittingTsFiles": 116,
+      "modules": [
+        "ESNext",
+        "CommonJS"
+      ],
+      "byteIdentical": true
+    },
+    {
+      "check": "cached replay source identity; exact process preservation; no require; untouched internal",
+      "exit": 0
+    },
+    {
+      "check": "sanctioned API regeneration/compare; shard plan/manifest regeneration",
+      "exits": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "check": "lane preparation",
+      "exit": 0
+    },
+    {
+      "check": "whole lane",
+      "exit": 0,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "oracleChildExit": 1,
+      "seconds": 384.112
+    },
+    {
+      "check": "bundle censuses and comparison",
+      "wrapperExits": [
+        0,
+        0,
+        0
+      ],
+      "roots": 79,
+      "childExits": [
+        0,
+        1
+      ],
+      "changedRoots": [],
+      "processFirstStops": 73,
+      "processLocation": "core.ts:2599:15"
+    },
+    {
+      "check": "final composed 30 check; unchanged-main control; actual in-place full replay",
+      "exits": [
+        1,
+        1,
+        1
+      ],
+      "message": "declined site changed: core.ts:992:21"
+    },
+    {
+      "check": "project-reference shard batch",
+      "exit": 0,
+      "units": 24
+    },
+    {
+      "check": "shard collectors stopped",
+      "exits": [
+        143,
+        143
+      ],
+      "reason": "bounded-batch reschedule, then reproduced replay blocker"
+    },
+    {
+      "check": "completed unique shard units",
+      "completed": 102,
+      "total": 398,
+      "childExits": [
+        0
+      ],
+      "maximumSeconds": 27.150361930000145,
+      "merge": "not run"
+    },
+    {
+      "check": "git diff --check; push dry-run",
+      "exits": [
+        0,
+        0
+      ]
+    },
+    {
+      "check": "evidence archive integrity",
+      "exit": 0,
+      "entries": 1262,
+      "sha256": "90b95857c4d01cdd74d3605743f1d44e447969d94b71c3e5fb0ab55cd04b18c6"
+    }
+  ],
+  "priorAttempts": [
+    {
+      "check": "initial snapshot hash assertion",
+      "pythonExit": 1,
+      "shellExit": 0,
+      "reason": "stored hashes use CRLF, not LF; corrected amendment exit 0"
+    },
+    {
+      "check": "stock without host typings",
+      "exit": 1,
+      "reason": "corrected with locked Node typings"
+    },
+    {
+      "check": "literal tsc before ignoreConfig",
+      "exits": [
+        1,
+        1
+      ],
+      "reason": "TS5112; corrected CLI exits 0 on both trees"
+    },
+    {
+      "check": "VCS-stamped worktree build",
+      "exit": 1,
+      "reason": "linked submodule; -buildvcs=false exact-source build exits 0"
+    },
+    {
+      "check": "duplicate fetch",
+      "exit": 124,
+      "reason": "original fetch completed 0"
+    },
+    {
+      "check": "superseded old-main census collector",
+      "exit": 143,
+      "reason": "replaced by complete refreshed-main censuses"
+    }
+  ],
+  "completedShards": [
+    {
+      "name": "stage3-lane-async-function-cases-00",
+      "seconds": 21.401239481000175,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3f25f42a3b005b3383fd20bc2599fb9b3258915c5db58942578ee096f66a06fb",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-async-function-cases-01",
+      "seconds": 21.395556511999985,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e4a309811aed2f65ea1f6d8f38002d460f6df885357aee36879d000d00d14723",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-async-function-cases-02",
+      "seconds": 17.806644215999768,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "776ba0bb369923ce144a6a5908e742548279111d2ff6f7691c2f18f96507b421",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-00",
+      "seconds": 18.15072348900003,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 30,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "64e3fa1d39330f8e1b95c4f52f7b80a6a393ac996743bdd9af8bafd2131b9172",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-01",
+      "seconds": 17.737980321000123,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 30,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b60b259346bfc585644b213e2af4b4e326ac9d6caee81f04fe18d6901721f575",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-build-no-emit-cases-02",
+      "seconds": 18.124623822000103,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 28,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f8239a212dca90e2c3aa2cf24411d25669f3206db8472775d449a27c75f161ff",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-byte-comparisons",
+      "seconds": 15.584251683000275,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 30,
+        "fail": 1,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ae4765108ef8f66a1b80be33a2bfa7a0b815e19a66f3ffd5f24cd99ae5b6b75e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-00",
+      "seconds": 17.161609886000406,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "20956dc64785d6a1642fdfcaf10532c6baf79b18727c91d2341e91fb9103341d",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-01",
+      "seconds": 17.153565541999797,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "20530796ddb727a8275d37d121852f05562dcc6ff663c1a072917bdb71fa0844",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-compiler-no-emit-cases-02",
+      "seconds": 17.55821450800022,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 26,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3904e3d8bace7705ee8de1ddffc1db54238525784cea4633adfeb589fd9ca860",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-000",
+      "seconds": 22.92373736799982,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "d367a6b0c6c7c872b4bbd48ee666d62b56a060f7361438eb1e4591576e192d88",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-001",
+      "seconds": 18.034599366999828,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "9be7866417d576bb69d4aabd1fc03b447e5705febc74e22f8712048af7fd8ae0",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-002",
+      "seconds": 17.233034668000073,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "0c50ccec79bc8df18493d233036f5fc5337cafc2de58d53081331c0c486c019b",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-003",
+      "seconds": 20.623326366999663,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "c68a34593a039344786d45ba798baf5cc337b246dea502043f43a54d01aa0897",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-004",
+      "seconds": 16.80385564700009,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "007c74ea2ef5c3d5cd26f4dd44974875cf9487adbb85e00f23733ce4cd08bb77",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-005",
+      "seconds": 16.459230134000336,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "5248335eea4b9be4a69faa7871a5e6e811d00018ca63e6f47eb1e0d11d82ef45",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-006",
+      "seconds": 20.196864164999624,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "bf90ba4784a2122bd38f6e9a16858893bd158765db5b9d08a5398683ecb4ecb0",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-007",
+      "seconds": 17.72561982199977,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "cba8391659c8f74bbaad3f42c25e1be7819a97982ae3f4d9c4458023e975fa93",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-008",
+      "seconds": 15.586977957999807,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "cf2753a59fa2359c8cb7debca40380ab3f7459a87846deef429f14bca8536bf4",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-009",
+      "seconds": 16.535085971999706,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a3f5093b93b1fe8bcf160b583b001206fcef243acce31582239ddd6743a99e5c",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-010",
+      "seconds": 15.72730644100011,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "1c22da4a38ab2e585cd72cb37c7cae09b1f284dc88fa8edb5b97035f685a269e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-011",
+      "seconds": 15.948734089000027,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "df7d30406ed6a9bfa618d3a35bb8e1fb3fc27b4a736f2ae0ece8d8cfbf45cd27",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-012",
+      "seconds": 17.889510169999994,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2dbd69a5129b897c1f5089312fe9f9a9b63fc053955d5cb95e8a4f018224dd4b",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-013",
+      "seconds": 17.351517688000058,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "795d8b21cc6c2d2c82592433e313fcecb180b8cf7eb7f48fdc4ba14c2fc1a87d",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-014",
+      "seconds": 17.947637999000108,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "4b2b98579c3350ab5495ecca9d5227a8665e39222b91abc2d79460dbd989e1b0",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-015",
+      "seconds": 16.666244608999932,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b894bc4b70c6b62a38ebeb675742827c33910bf51022e4ff629bb3d5510081d9",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-016",
+      "seconds": 20.375267131000328,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 33,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "31a5933c5e27ee936a68d26a4ad21bf7fdb84e8328c201f430b26dfdb2dfcaf2",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-017",
+      "seconds": 18.1986379519999,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "0b44c192f277d7a636641fc1af751d30b2e0848c7665707ba20c923fd6850238",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-018",
+      "seconds": 16.805210611999883,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "5264080266f3ad9417a916844348ef849b0022c4562a61df0424fb1cef4b4889",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-019",
+      "seconds": 16.35010779700042,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e5bc2bdabbb65e64d62f0547b777b434a0034b58d590a6cd7ef2b45560781278",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-020",
+      "seconds": 18.41066885600003,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "fd0596967c209fc57ff48da82caae39b2bd5ab12df107629d05bbacdefd69f45",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-021",
+      "seconds": 19.258417897000072,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 122,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b85e277eae8bbbe6b86e10dfa9e89dfabc0049dfc4b3f4e8a647c3097ed34a05",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-022",
+      "seconds": 16.420738874999643,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "9806d4c894f75f38d0efe25cf20b8dbff65ea19a97fcd2c9952ab253d7c1e8b3",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-023",
+      "seconds": 15.606643523000002,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "6f6fb980b08941e2a865d96226779441a45de2639e0fb8b434d84852ffca1aea",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-024",
+      "seconds": 16.864001573999758,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 92,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "d69aa1b26a1161df9d4bba1bdaa1c367458be0b8b860a7164fb927f54d711f05",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-025",
+      "seconds": 15.54734859700011,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 48,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "940cd9226ffed0c90139e32e718f56bc62c98f0dbbc29eec762dfb376101ea3b",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-026",
+      "seconds": 15.554145056999914,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "5976a9119ad72165a6a8c1cd833258668d9cdf87090ab781d6bac59100bf295c",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-027",
+      "seconds": 15.93349107999984,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f099405c870766693005799bc2cbbe9bfdaf1c981f4e5fc6ef82317545ced112",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-028",
+      "seconds": 14.423935615000119,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "301e472a092f48fa8fd0f41bd86e9b12fb569c2c335375882822254468a31b13",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-029",
+      "seconds": 16.94258260000015,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 77,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b01caf6ea3824b418446a439b8a5802fa97c5702f185a611d8a0dd49b40eebde",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-030",
+      "seconds": 15.202132962000178,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "c7eb80774dcb609051495620c6ddc5d3c62041ac6a363f8c4006385d6d1664d0",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-031",
+      "seconds": 16.542755487999784,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "bc3a947b410346577324d81bad02b2e29e2e09344a22c52e8ee960d139c1a888",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-032",
+      "seconds": 14.957000907999827,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "8c352f1b0732ba49fe764b82116e374b19af75d4a81dc1f8847cfdaeb3834066",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-033",
+      "seconds": 16.987430139000026,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 50,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "cee4a80e8953ffa0cb8d7e4698fd8781ff65e8b15c5b0654357ff29dc9c6be93",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-034",
+      "seconds": 16.22302295999998,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 189,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2289597f981e5953896ad8edd735a657c7144f9882b1e41be2609ebb19cde919",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-035",
+      "seconds": 16.163286782999876,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 269,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "6bc3eeb37fadd9447dbb9752119470295f720cbaf7291ed5952575ca3417ee5e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-036",
+      "seconds": 19.50562097000011,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 216,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "96d0e8c930a991f18da52d98c94188d63292b3cae15e3fd95c32d9d086beb19a",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-037",
+      "seconds": 20.01550515300005,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 188,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b56c4663c4d99be56ad70f618fc2dfd6a01ed94f01b110f86eec01379750b18f",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-038",
+      "seconds": 17.71266606800009,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 150,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "7138c1eeb989e6c84845d209064bfde0c3b3959447bd5103df8f997c3aebfb5e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-039",
+      "seconds": 19.126654731000144,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 177,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "47b980d4f8cb4a1180dc5042b3ee3d5a6093c7be9794e15c0abe94ffb2868b0f",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-040",
+      "seconds": 21.66973167099968,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 358,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "4ce82d4a6d640352fc5bb999897bc9bf1dfc2a1367b57b88ed2b5f3180c0c750",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-041",
+      "seconds": 20.988637413000106,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 236,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "45a057b9b96a4547f7d8f3184c517fea892b540bdc7bc40ad6799a17508d87b2",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-042",
+      "seconds": 19.795555483000044,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 215,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "825094177114d81ec86033dea9f3c7627164ad7e648f95a92a13461b58da1294",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-043",
+      "seconds": 20.66650923599991,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e9e61737682420df06af5b3c6129bd5f18d400fd5dc8e5e96bf8184bc13191cc",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-044",
+      "seconds": 18.732333045999894,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "cdd4a526922f5578e1ad75c9a6da8f7a4af15f1102d59cae201b8dc15a0d0075",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-045",
+      "seconds": 19.315750102000038,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 216,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "1c7627065ed8c8004faabea4d8746d4ac36f389e57714b68490296087ec2a9e1",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-046",
+      "seconds": 17.768508738000037,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 210,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ca9f1a251aa5c3548d3d738bdd0805ab7bfe32085c3db98ca0d723055557765e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-047",
+      "seconds": 18.514726060000157,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 237,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "29d7783d3b381743069a356bbc5d1d1a4ac5ebca20088f706009a3331ae49908",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-048",
+      "seconds": 21.31290994200026,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 236,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "5b1c1079efc42d56a3ec6187950e8f522edfc4f42c80dcf9c2de85fc9db7c856",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-049",
+      "seconds": 20.580192670000088,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 229,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "906d9f7dda45ce52f80c0405329a198e0c19e9de1717ae581c648efd964e9a3d",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-050",
+      "seconds": 19.577229913999872,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 255,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "be58105806aec2fc3d5cd8ebe4d4fbf8d7ecd24270d5f243c093d5b9a41f4722",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-051",
+      "seconds": 18.68462143700026,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 244,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "8c053055eeffc7d0e4036ff3861518a98dfbf5600d12279ea70694c58790ddb1",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-052",
+      "seconds": 23.97273812200001,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 253,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ec5a35859751718ba523d6b9bc43dbce0811654e3b6a1b244dc614586bdac0b6",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-053",
+      "seconds": 23.998123374999977,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 285,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "65d0901bf7cfbefed3427af3025f566023e0885a10985e01da7924c05e2671bd",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-054",
+      "seconds": 27.150361930000145,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 255,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "fa7883efea8dc65e38acdad1401ed1ea5b4066f165088a8a03b0df86b6682aa5",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-055",
+      "seconds": 23.562833375000082,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e9f10864c285690056d2ec8480286e7bd92b7b6b708396448c4017ad42cac513",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-056",
+      "seconds": 25.244434199999887,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "25c42d6e107d697ecb4b9efb6091b3c34353f7c2d8fe5e698a414f916ef7cfcf",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-057",
+      "seconds": 25.920457149999947,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 260,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e4abbb90a57f253c5c98943063912f3991c8260cf48abeb6ca9b14878e721af7",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-058",
+      "seconds": 21.672683118999885,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "11cb28a15e97abe8ac9dfaa43e9598a89cccbaaf6652f8287b5c2db8e61c245a",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-059",
+      "seconds": 22.848560651999833,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 269,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ea9843d3dc9d612019d054d19097bd3e870043f624df15ecef864bb18ff2021a",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-060",
+      "seconds": 18.071433023999816,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 275,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "03596bcd41b1868f90003cc8c3607e9583280a2252390048994b53fb3fbe73eb",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-061",
+      "seconds": 18.349635148999823,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "12c8a5bb713b394731695418fd081262a1ae70b87ae50e615908b6ce166c2e3e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-062",
+      "seconds": 17.940805542000362,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 254,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "1f66a2a59d3d596799833faa7e4534c9c431159009742b5648ce9a4ef0852fb2",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-063",
+      "seconds": 18.90944082599981,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 272,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f085e9610d1a8f4cc3d302e8e1993c5694f49e04daab2dab952f812745d97c2c",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-064",
+      "seconds": 18.697833915000047,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 390,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e8b187b3b7c3402889dcb6172d1e170e38f659bc6483877171e8e9725c2d2c3c",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-065",
+      "seconds": 18.14942172300016,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 293,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "7ed22583cad9a5d881327057ca49b07a5c70d3322ac9d253b389cf0cd133476e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-066",
+      "seconds": 18.01979781199998,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "28c9a629d7eb011a49a80ac18a8dc0fbb2dead0cf0a6d5516e78d0f318255a52",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-file-067",
+      "seconds": 17.36345495600017,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 284,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "81676d97c6a0110724f863323dc53ebe03a5d98270551be5b9c4a092b53f7cfd",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-00",
+      "seconds": 15.490534668000237,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "6e6582ba736acd7ca3458df5272ed3417a4696188857dde5eec1431a1a7d2a68",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-01",
+      "seconds": 14.792465844000162,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "55f83413010ae84b7161d3344e88de39bf638c3182711c2fb29c8af0be25679f",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-02",
+      "seconds": 16.24480747100006,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "d5b37b6ad47db41c5d801f67f42a778b9d6937ef9c93017679888913c064a1b6",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-03",
+      "seconds": 16.4923065590001,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "02d6be54d25d9b3c43596e1844e65e11552c0bea68ddfcbf6fbc488aa6dd1945",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-04",
+      "seconds": 18.452440917999866,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "80f1658cf5c8c99879abc13ed422f32665b40d22bd282e202dd6618bd7b5b894",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-05",
+      "seconds": 18.855747619999875,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "bebc62719aae8dbd52331cc649bd8e0541a0fbc8b2abba0c9c1e9c7323cd6948",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-06",
+      "seconds": 16.511466438000298,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "8b3f12606e9c8d5d094a1414e975317bbae81d2a33dd3f9e853ff1ea4c34dcf8",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-07",
+      "seconds": 15.8281336809996,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e6eb43d93351b9631c05a32c676711646ce97bac6db3712680e57a04df59e61d",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-08",
+      "seconds": 16.024822975000006,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a9cf08b5e3e01a56cdfd8316a1ed78c26356c8f83ace24172da8a344ad229bbb",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-09",
+      "seconds": 15.57641940800022,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e056f975547e5a46110263eaa8c3726522bfac715f5b93e99caf996dd3718d99",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-10",
+      "seconds": 15.397559286999694,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2b3ad7169d3078ace2636a4924aec9a3df414da3bf1f59efeedd1b136ce92511",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-11",
+      "seconds": 14.862365044999933,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2ee69928f7cce03d316cd1f75b43fef4b86aecbc4240502bf3b90aff10a5249f",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-12",
+      "seconds": 16.006524378999984,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "de1ba2055d53d8f9ccbdf2ada4db96705eb7e876bc32c46fc8c2d057727c44f4",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-13",
+      "seconds": 15.606527975000063,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f4586032bb5e213bd4b06676d31285cddcab5bdc3f4bcc336b44e290b6e80961",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-14",
+      "seconds": 19.10754149200011,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "5c36fcc218032daa06f3c2a47de5a1d53c030b44e0d979be0ffb02025b7de249",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-15",
+      "seconds": 19.029456771999776,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "77d43fa2b8db445805541bc10047cc86aa2bcd3d72d31b751216a7bc27e286c2",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-16",
+      "seconds": 16.4500638049999,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "657f098025e115e0beb639854b2cc1b889769caa79c0fe75350a67386a623c6e",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-17",
+      "seconds": 16.505133125000157,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "7ff439db2a976b6370abb844234e68a1da6a50933506b914cb1092cee30215a4",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-18",
+      "seconds": 15.012586757999998,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "fd57c62f3ba11a431dcee830f44d8e90b86d97f5707d95670bb20132c0fda38b",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-19",
+      "seconds": 15.224665504999848,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f49adb914c139ca80f57b9cf0c31ba7070d41171fc125863da19c645530f378d",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-20",
+      "seconds": 15.36300190699967,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2bd052514883dd0ee8f9f19981fadb33b5d1865d1a209acfd2e2380c1c59b046",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-21",
+      "seconds": 15.540853413999685,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "27c4743b6f5797bb55d42b1a1035ec6f12136c6330d5283f2a9a20431fad2288",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-22",
+      "seconds": 15.2725920769999,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "8a4a82657419d701cb4cdc6b0bab2855e881ee139378a3af58a89b41114692de",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-23",
+      "seconds": 15.600544463999995,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "fd9f614f03bc622d30f04a9ed582dc8b441d533416373f7d8a8baf630b50eb5c",
+      "artifact": "f5c1cc5056310bb425aceaa79be9e8b1394ff62bc2e3ba220dc151f577abfee1"
+    }
+  ]
+}
