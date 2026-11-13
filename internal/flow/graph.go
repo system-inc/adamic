@@ -1,6 +1,6 @@
 // Graph maintenance: the passes Build runs to bring a freshly built function into the state every
-// other pass assumes. Lifted from cohere's graph.go (high_level_intermediate_representation at
-// 715ba94); what changed is said where it changed.
+// other pass assumes. The passes are cohere's own, static_single_assignment's ReversePostorder,
+// MarkPredecessors and MarkEvaluationOrder, run through cohereGraph (cohere_graph.go) by reference.
 //
 // Three invariants are established here and every consumer may rely on them:
 //
