@@ -48,6 +48,7 @@ func checkGraphPathsProgram(t *testing.T, path string) {
 		t.Errorf("Node ran no point at all: %q", run.events)
 	}
 	t.Logf("%d points walked, %d events", walked, len(run.events))
+	checkGraphOracleProgram(t, path)
 }
 
 // run is one program run on Node with every point marked.
