@@ -1,0 +1,2 @@
+declare function setTimeout(handler: (label?: unknown) => void, timeout: number, label?: unknown): unknown;
+declare function clearTimeout(handle: unknown): void;

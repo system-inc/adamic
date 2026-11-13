@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/scratch/timer-road5-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/timer-road5-latent",
+    "./stage3/census/latent/tool"
+  ],
+  "child_exit": 0,
+  "seconds": 25.11316936000003
+}

@@ -1,0 +1,143 @@
+{
+  "before": 236,
+  "after": 230,
+  "retained": 228,
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:57:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:57:1",
+      "reason": "an ambient function declaration",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:57:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "unitOwner": "setTimeout",
+      "findingOwner": "setTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:58:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:58:1",
+      "reason": "an ambient function declaration",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:58:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+      "unitOwner": "clearTimeout",
+      "findingOwner": "clearTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:57:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:57:1",
+      "reason": "a function without a body",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:57:1: stage 0 can't lower a function without a body yet",
+      "unitOwner": "setTimeout",
+      "findingOwner": "setTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:57:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/sys.ts:57:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:57:1: stage 0 can't lower a function without a body yet",
+      "start": 1304,
+      "end": 1415,
+      "unitOwner": "setTimeout",
+      "findingOwner": "setTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:58:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:58:1",
+      "reason": "a function without a body",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:58:1: stage 0 can't lower a function without a body yet",
+      "unitOwner": "clearTimeout",
+      "findingOwner": "clearTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:58:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/sys.ts:58:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:58:1: stage 0 can't lower a function without a body yet",
+      "start": 1415,
+      "end": 1470,
+      "unitOwner": "clearTimeout",
+      "findingOwner": "clearTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1489:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:57:1",
+      "reason": "a function without a body",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:57:1: stage 0 can't lower a function without a body yet",
+      "unitOwner": "module",
+      "findingOwner": "setTimeout"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1495:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:57:1",
+      "reason": "a function without a body",
+      "text": "/workspace/scratch/timer-road5-before/src/compiler/sys.ts:57:1: stage 0 can't lower a function without a body yet",
+      "unitOwner": "sys.getNodeSystem",
+      "findingOwner": "setTimeout"
+    }
+  ],
+  "new": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1487:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:1520:84",
+      "reason": "node:timers.clearTimeout used as a value; call it as a statement",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1520:84: stage 0 can't lower node:timers.clearTimeout used as a value; call it as a statement yet",
+      "unitOwner": "module",
+      "findingOwner": "sys.getNodeSystem.{ watchFile, watchDirectory }"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/sys.ts:1493:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/sys.ts:1520:84",
+      "reason": "node:timers.clearTimeout used as a value; call it as a statement",
+      "text": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:1520:84: stage 0 can't lower node:timers.clearTimeout used as a value; call it as a statement yet",
+      "unitOwner": "sys.getNodeSystem",
+      "findingOwner": "sys.getNodeSystem.{ watchFile, watchDirectory }"
+    }
+  ]
+}

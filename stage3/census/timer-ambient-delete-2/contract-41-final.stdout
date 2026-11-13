@@ -1,0 +1,74 @@
+[
+  {
+    "name": "LF",
+    "apply": 0,
+    "replay": 0,
+    "sites": 0,
+    "bytesAndMtimesUnchanged": true
+  },
+  {
+    "name": "LF half-pair",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: half-applied deletion group: node-global-timer-heads"
+  },
+  {
+    "name": "LF drift",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "LF duplicate",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "LF moved",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "restored-ambient-pair LF",
+    "exit": 1,
+    "diagnostic": "41 timer-head check: ambient timer declaration restored"
+  },
+  {
+    "name": "CRLF",
+    "apply": 0,
+    "replay": 0,
+    "sites": 0,
+    "bytesAndMtimesUnchanged": true
+  },
+  {
+    "name": "CRLF half-pair",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: half-applied deletion group: node-global-timer-heads"
+  },
+  {
+    "name": "CRLF drift",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "CRLF duplicate",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "CRLF moved",
+    "exit": 1,
+    "noWrites": true,
+    "diagnostic": "Error: changed or duplicate deletion owner: 13"
+  },
+  {
+    "name": "restored-ambient-pair CRLF",
+    "exit": 1,
+    "diagnostic": "41 timer-head check: ambient timer declaration restored"
+  }
+]

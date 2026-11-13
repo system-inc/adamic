@@ -1,0 +1,34 @@
+[
+  {
+    "stage": "41-explicit-any-remaining",
+    "child_exit": 0,
+    "source_files": 745,
+    "bytesAndMtimesUnchanged": true,
+    "stdout": "{\"adaptation\":41,\"sites\":0}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "93-builtin-imports",
+    "child_exit": 0,
+    "source_files": 746,
+    "bytesAndMtimesUnchanged": true,
+    "stdout": "{\n  \"files\": 0,\n  \"javascriptChanging\": true,\n  \"sites\": [\n    {\n      \"local\": \"_fs\",\n      \"module\": \"node:fs\",\n      \"qualifiedUses\": 19,\n      \"bareUses\": 0,\n      \"otherDeclarations\": 0,\n      \"allUsesResolveToBinding\": true\n    },\n    {\n      \"local\": \"_path\",\n      \"module\": \"node:path\",\n      \"qualifiedUses\": 6,\n      \"bareUses\": 0,\n      \"otherDeclarations\": 0,\n      \"allUsesResolveToBinding\": true\n    },\n    {\n      \"local\": \"_os\",\n      \"module\": \"node:os\",\n      \"qualifiedUses\": 2,\n      \"bareUses\": 0,\n      \"otherDeclarations\": 0,\n      \"allUsesResolveToBinding\": true\n    }\n  ],\n  \"qualifiedUses\": 27,\n  \"qualifiedUseLines\": 22\n}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "99-wasm-crypto-import",
+    "child_exit": 0,
+    "source_files": 747,
+    "bytesAndMtimesUnchanged": true,
+    "stdout": "{\n  \"files\": 0,\n  \"javascriptChanging\": true,\n  \"before\": {\n    \"binding\": \"namespace import\",\n    \"references\": 1,\n    \"roles\": [\n      \"qualified receiver\"\n    ],\n    \"allUsesResolveToBinding\": true,\n    \"otherDeclarations\": 0,\n    \"qualifiedUses\": 1,\n    \"bareNamespaceUses\": 0\n  },\n  \"after\": {\n    \"binding\": \"namespace import\",\n    \"references\": 1,\n    \"roles\": [\n      \"qualified receiver\"\n    ],\n    \"allUsesResolveToBinding\": true,\n    \"otherDeclarations\": 0,\n    \"qualifiedUses\": 1,\n    \"bareNamespaceUses\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "99-correctness-timer-closures",
+    "child_exit": 0,
+    "source_files": 747,
+    "bytesAndMtimesUnchanged": true,
+    "stdout": "{\n  \"files\": 0,\n  \"edits\": 0,\n  \"javascriptChanging\": true\n}\n",
+    "stderr": ""
+  }
+]

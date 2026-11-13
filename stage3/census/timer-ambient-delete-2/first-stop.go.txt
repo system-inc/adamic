@@ -1,0 +1,32 @@
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "sort"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main() {
+ root:=os.Args[1]
+ var paths []string
+ err:=filepath.WalkDir(root,func(path string,d os.DirEntry,err error)error{if err!=nil{return err};if !d.IsDir()&&filepath.Ext(path)==".ts"{paths=append(paths,path)};return nil})
+ if err!=nil{panic(err)}
+ sort.Strings(paths)
+ binder:=filepath.Join(root,"binder.ts")
+ ordered:=[]string{binder}
+ for _,p:=range paths {if p!=binder{ordered=append(ordered,p)}}
+ if len(ordered)!=79{panic(fmt.Sprintf("roots: %d",len(ordered)))}
+ checked,err:=load.Load(ordered)
+ if err!=nil{panic(err)}
+ p,err:=load.Load([]string{binder})
+ if err!=nil{panic(err)}
+ output,failure:=lower.Lower(context.Background(),p)
+ result:=map[string]any{"checked_roots":len(checked.Files()),"entry_roots":len(p.Files()),"first_root":p.FileName(p.Files()[0]),"checker_diagnostics":0,"has_ir":output!=nil}
+ if failure!=nil{result["first_stop"]=failure.Error();result["failure_type"]=fmt.Sprintf("%T",failure)}
+ json.NewEncoder(os.Stdout).Encode(result)
+ if failure!=nil{os.Exit(1)}
+}

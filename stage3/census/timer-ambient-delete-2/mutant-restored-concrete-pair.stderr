@@ -1,0 +1,24 @@
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: 41 timer-head check: ambient timer declaration restored
+    at visit (/workspace/timer-ambient-delete/stage3/adapt/41-explicit-any-remaining/timer-heads-check.cjs:6:9)
+    at visitNodes (/workspace/timer-ambient-delete/stage3/api/node_modules/typescript/lib/typescript.js:32559:22)
+    at forEachChildInSourceFile (/workspace/timer-ambient-delete/stage3/api/node_modules/typescript/lib/typescript.js:32772:12)
+    at Object.forEachChild (/workspace/timer-ambient-delete/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at visit (/workspace/timer-ambient-delete/stage3/adapt/41-explicit-any-remaining/timer-heads-check.cjs:8:12)
+    at check (/workspace/timer-ambient-delete/stage3/adapt/41-explicit-any-remaining/timer-heads-check.cjs:10:5)
+    at Object.<anonymous> (/workspace/timer-ambient-delete/stage3/adapt/41-explicit-any-remaining/timer-heads-check.cjs:16:5)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete-2/run-shards.py", line 48, in <module>
+    assert row['errors'] and all('timed out' in error for error in row['errors']),row
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'name': 'stage3-lane-async-function-cases-00', 'command': ['python3', 'stage3/lane/shard.py', 'stage3-lane-async-function-cases-00', '$STAGE3_RESULTS'], 'concurrency': 4, 'exit': 1, 'seconds': 0.2877660649999143, 'status': 'fail', 'counts': {}, 'errors': ["[Errno 17] File exists: '/workspace/timer-ambient-delete/stage3/typescript/node_modules' -> '/workspace/scratch/timer-road5-lane/stage3-lane-async-function-cases-00/adapted-tree/node_modules'"], 'attempt': '4-way-0'}

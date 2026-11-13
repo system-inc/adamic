@@ -1,0 +1,28 @@
+{
+  "base": "f37253b347c4f7e7bc223ed05fe04edb8cef0cd4",
+  "head": "2cfa44d66203f6ed8f59910371fbd519dd4df27d",
+  "all_required_proofs_complete": true,
+  "lane_shards": 398,
+  "lane_counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "lane_maximum_seconds": 13.868848537999838,
+  "census": {
+    "before": 236,
+    "after": 230,
+    "retained": 228
+  },
+  "gone_records": 8,
+  "new_records": 2,
+  "binder_first_stop": {
+    "checked_roots": 79,
+    "checker_diagnostics": 0,
+    "entry_roots": 1,
+    "failure_type": "*lower.Refused",
+    "first_root": "/workspace/scratch/timer-road5-after/src/compiler/binder.ts",
+    "first_stop": "/workspace/scratch/timer-road5-after/src/compiler/sys.ts:142:81: Adamic 0.1 refuses a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace; keep Low readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "has_ir": false
+  }
+}

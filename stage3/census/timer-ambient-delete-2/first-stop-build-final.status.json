@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/timer-closures-evidence/stage3/census/timer-ambient-delete-2/first-stop-overlay.json",
+    "-o",
+    "/workspace/scratch/timer-road5-first-stop",
+    "./stage3/census/road5-first-stop"
+  ],
+  "cwd": "/workspace/timer-ambient-delete",
+  "child_exit": 0,
+  "seconds": 19.244702796000183
+}

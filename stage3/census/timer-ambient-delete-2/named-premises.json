@@ -1,0 +1,22 @@
+{
+  "node_witness_stdout_identical": true,
+  "property_slot_stock_exit": 1,
+  "property_slot_diagnostics": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(timeoutId: Parameters<typeof clearTimeout>[0]) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeoutId' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+      "file": "src/compiler/sys.ts",
+      "line": 1520,
+      "column": 13
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(timeoutId: Parameters<typeof clearTimeout>[0]) => void' is not assignable to type '(timeoutId: unknown) => void'.\n  Types of parameters 'timeoutId' and 'timeoutId' are incompatible.\n    Type 'unknown' is not assignable to type 'string | number | Timeout | undefined'.",
+      "file": "src/compiler/sys.ts",
+      "line": 1618,
+      "column": 13
+    }
+  ]
+}
