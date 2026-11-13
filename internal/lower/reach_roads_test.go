@@ -525,7 +525,7 @@ func wantKnownClosureCalls(t *testing.T, program *ir.Program) {
 		if call, isCall := node.(ir.CallClosure); isCall {
 			calls++
 			if program.ClosureTargets(call).Unknown {
-				t.Errorf("a call through a function value in Main has Unknown targets: %#v", call.Closure)
+				t.Errorf("a call through a function value in Main has Unknown targets")
 			}
 		}
 		return true
