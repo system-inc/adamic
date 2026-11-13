@@ -224,9 +224,10 @@ func TestOptionalMemberPresenceThroughACastKeepsItsOwnStop(t *testing.T) {
 // Lower's should on shape 1). Over a class instance, whose method lives on its prototype, Node finds m
 // and native's own-slot read wouldn't, so each road must stop, whatever stops it first: an optional chain
 // under typeof and under a condition, a parenthesized receiver, a !, and a member whose type is a union of
-// two function types. Mutant M14 (the record moved back into erasedLiteralMethod alone) is the witness
-// for any of these that lowers by another road; a row that stops earlier on every road is a defense, as
-// the mutants file says.
+// two function types. Each reaches object.go's property today and stops at the check's class arm, which
+// is what the rows pin: M14 (the record moved back into erasedLiteralMethod alone) leaves every row green
+// on Home (J-6e61jk0), so the record at the exemption is a defense for a road that may come, as
+// #4gpbn7w's fix was, and a row that starts stopping elsewhere says so here.
 func TestOptionalMemberPresenceRoadsStopOverAClassInstance(t *testing.T) {
 	t.Parallel()
 	const class = "class C implements H {\n\treadonly n = 1;\n\tm(): number {\n\t\treturn this.n;\n\t}\n}\n"
@@ -243,10 +244,10 @@ func TestOptionalMemberPresenceRoadsStopOverAClassInstance(t *testing.T) {
 				_, err := lowerSourceAs(t, probe.source, extension)
 				var notYet *NotYet
 				var refused *Refused
-				if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-					t.Fatalf("got %v, want it stopped: Node finds a class's prototype method where native reads own slots", err)
+				const classArm = "a presence test of optional member m whose receiver may be a class instance, whose method lives on its prototype, not an own slot"
+				if !errors.As(err, &notYet) && !errors.As(err, &refused) || !strings.Contains(err.Error(), classArm) {
+					t.Fatalf("got %v, want it stopped saying %q: Node finds a class's prototype method where native reads own slots", err, classArm)
 				}
-				t.Logf("stops: %v", err)
 			})
 		}
 	}
