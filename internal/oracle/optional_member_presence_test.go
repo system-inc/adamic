@@ -13,7 +13,9 @@ import (
 // receiver (a literal's method reads this.n), on an arrow, a literal's method shorthand and a literal
 // without m, and through ?. on a receiver that's missing; written is the field form's slot written after
 // its literal is built, a function in and undefined back, which only a read that runs can follow (a write
-// to an optional method stays refused, so it has no method form). Node's own output is pinned, so a
+// to an optional method stays refused, so it has no method form); getter_subclass is the field form read
+// through finishAccessors' dispatcher, on a getter's owner, a subclass that inherits it and two literals.
+// Node's own output is pinned, so a
 // fixture that stopped exercising its rows shows here before it shows as an agreement. These aren't in
 // the oracle's fixtures list, so no counted row moves with them. Mutants:
 // lower/optional_member_presence.mutants.md.
@@ -28,6 +30,8 @@ func TestOptionalMemberPresenceAgreesWithNode(t *testing.T) {
 		{"field.ts", tested},
 		{"written.a", written},
 		{"written.ts", written},
+		{"getter_subclass.a", "has\nhas\nnone\nhas\n"},
+		{"getter_subclass.ts", "has\nhas\nnone\nhas\n"},
 	} {
 		t.Run(program.name, func(t *testing.T) {
 			t.Parallel()

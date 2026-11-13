@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // optionalPresenceForms are the two ways a program declares the optional member it tests for: a method
@@ -256,8 +257,9 @@ func TestOptionalMemberPresenceRoadsStopOverAClassInstance(t *testing.T) {
 // A field-form presence test finishAccessors made a dispatcher's call (#4gpbn7w's road) is judged by what
 // the dispatcher does with each object that may reach it, by the reach and owners it was dispatched on: a
 // class instance whose getter of the name the dispatcher calls reads the same on both backends, as a plain
-// literal does through the fallback, so each of these lowers, while a spread's copy, an arrow's parameter
-// and a class whose method of the name lives on its prototype still stop (Compiler's and Lower's ruling on
+// literal does through the fallback, so each of these lowers, a subclass of the getter's owner too, whose
+// getter adamic_accessor_find finds up the base chain as newAccessorReach's owners marks it, while a
+// spread's copy, an arrow's parameter and a class whose method of the name lives on its prototype still stop (Compiler's and Lower's ruling on
 // shape 1's red against internal/oracle's accessor_dispatch_absent). The method form never dispatches: a
 // getter of its name stops it first (eepPropertyPresence). Mutant M15 drops the note finishAccessors
 // takes, and every lowering row stops as a read lowering didn't leave as one field read.
@@ -268,6 +270,7 @@ func TestOptionalMemberPresenceThroughAGetterDispatcher(t *testing.T) {
 	declared := optionalPresenceDeclared("readonly m?: () => number;")
 	for _, probe := range []struct{ name, source, want string }{
 		{"a class's getter and a literal", declared + getterClass + optionalPresenceProbe + "console.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\nconsole.log(probe({ n: 3, m: (): number => 1 }));\n", ""},
+		{"a subclass of the getter's owner, reached alone", declared + getterClass + "class S extends G {\n\treadonly k = 4;\n}\n" + optionalPresenceProbe + "console.log(probe(new S()));\n", ""},
 		{"a literal's getter and a literal", declared + optionalPresenceProbe + "console.log(probe({ n: 1, get m(): () => number { return (): number => 1; } }));\nconsole.log(probe({ n: 2 }));\n", ""},
 		{"a class's getter and a spread", declared + getterClass + optionalPresenceProbe + "const base: H = { n: 1 };\nconsole.log(probe(new G()));\nconsole.log(probe({ ...base }));\n", "a presence test of optional member m whose receiver may be an object a spread made"},
 		{"a class's getter through an arrow's parameter", declared + getterClass + "const probe = (h: H): string => (h.m ? 'has' : 'none');\nconsole.log(probe(new G()));\nconsole.log(probe({ n: 2 }));\n", "a presence test of optional member m whose receiver may hold a value the program didn't build as a plain object literal"},
@@ -289,5 +292,18 @@ func TestOptionalMemberPresenceThroughAGetterDispatcher(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+// A subclass can't declare a method over its base's getter of the same name: the checker refuses the
+// program (TS2423/TS2425), so no presence read of it is ever judged, and classChainHasMethod's arm for a
+// getter beside a method on the chain guards a program the checker would have to let through first
+// (Lower's condition on 8057dfc4).
+func TestOptionalMemberPresenceMethodOverAGetterIsTheCheckersRefusal(t *testing.T) {
+	t.Parallel()
+	source := optionalPresenceDeclared("readonly m?: () => number;") + "class G {\n\treadonly n = 1;\n\tget m(): () => number {\n\t\treturn (): number => 7;\n\t}\n}\nclass B extends G {\n\tm(): number {\n\t\treturn 1;\n\t}\n}\n" + optionalPresenceProbe + "console.log(probe(new B()));\n"
+	_, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
+	if err == nil || !strings.Contains(err.Error(), "TS242") {
+		t.Fatalf("got %v, want the checker to refuse a method over a getter (TS2423 or TS2425)", err)
 	}
 }
