@@ -23,6 +23,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "findCycles", WholeProgram: true},
 	{Name: "checkBoundArguments"},
 	{Name: "checkViewOptionalWrites", Scoped: true},
+	// checkOptionalMemberPresence judges shape 1's presence reads by the whole program's allocation graph
+	// (#p2n17c4 shape 1): it reads the IR and rewrites nothing, so a body lowered on its own is recorded as
+	// not run.
+	{Name: "checkOptionalMemberPresence"},
 	{Name: "checkViewCopies"},
 	{Name: "checkViewWidenedReads"},
 	{Name: "checkHostMemberWrites", Scoped: true},
