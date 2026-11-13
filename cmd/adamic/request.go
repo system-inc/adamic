@@ -28,7 +28,7 @@ func compileWASI(path string, format lower.ModuleFormat) (*ir.Program, int, int)
 	lowered, err := lower.LowerWithOptions(context.Background(), program, loweringOptions(false, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
-		return nil, -1, 1
+		return nil, -1, compilerErrorExit(err)
 	}
 	handler := -1
 	if name != "" {

@@ -125,7 +125,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 	}
 	if err := native.ValidateOptions(options); err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
-		return 1
+		return compilerErrorExit(err)
 	}
 	var program *ir.Program
 	var code int
@@ -178,7 +178,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
-		return 1
+		return compilerErrorExit(err)
 	}
 	if abiPath != "" {
 		bytes, err := json.MarshalIndent(native.ABITable{Version: 1, Exports: exports}, "", "  ")

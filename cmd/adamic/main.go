@@ -50,7 +50,7 @@ func main() {
 
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
 // be compiled, 2 for a usage error, 4 when the compiler itself panicked. Usage asked for with --help is no error: it
-// goes to stdout and exits 0, as --version does.
+// goes to stdout and exits 0, as --version does. PlatformMissing alone exits 5.
 func run(arguments []string) (code int) {
 	defer reportCompilerBug(&code, os.Stderr)
 	// Explanation goes to stderr so C/JavaScript output remains usable.
@@ -211,8 +211,16 @@ func clangVersion() string {
 
 // check loads a program, printing why when it can't. A nil program comes with the exit code.
 func check(paths []string) (*load.Program, int) {
-	program, err := load.Load(paths)
+	return checkWithLoader(paths, load.Load)
+}
+
+func checkWithLoader(paths []string, loader func([]string) (*load.Program, error)) (*load.Program, int) {
+	program, err := loader(paths)
 	if err != nil {
+		if compilerErrorExit(err) == toolchain.PlatformMissingExitCode {
+			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+			return nil, compilerErrorExit(err)
+		}
 		var checkError *load.CheckError
 		if errors.As(err, &checkError) {
 			for _, diagnostic := range checkError.Diagnostics {
@@ -274,7 +282,7 @@ func compileLibrary(path string, tsgo, debug bool, format lower.ModuleFormat) (*
 	lowered, err := lower.LowerWithOptions(context.Background(), program, loweringOptions(debug, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
-		return nil, 1
+		return nil, compilerErrorExit(err)
 	}
 	return lowered, 0
 }
@@ -291,4 +299,14 @@ func relative(text string) string {
 		return text[len(prefix):]
 	}
 	return text
+}
+
+// compilerErrorExit reserves 5 for the typed platform stop, never an error's text
+// or a child process's exit code. Usage, machine and panic paths keep 2, 3 and 4.
+func compilerErrorExit(err error) int {
+	var missing *toolchain.PlatformMissing
+	if errors.As(err, &missing) {
+		return toolchain.PlatformMissingExitCode
+	}
+	return 1
 }

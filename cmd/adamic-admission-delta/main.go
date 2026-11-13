@@ -44,6 +44,8 @@ type manifest struct {
 	Corpora   []corpus `json:"corpora"`
 }
 type entry struct {
+	AppleImport    bool   `json:"apple_import"`
+	PlatformReason string `json:"platform_reason,omitempty"`
 	program
 	Corpus                 string       `json:"corpus"`
 	Class                  string       `json:"class"`
@@ -69,6 +71,8 @@ type entry struct {
 	Retried  bool     `json:"retried,omitempty"`
 }
 type report struct {
+	DarwinCount                 int                `json:"darwin_count"`
+	DarwinPaths                 []string           `json:"darwin_paths"`
 	NegativeWitnessCount        int                `json:"negative_witness_count"`
 	AcceptedWitnesses           int                `json:"accepted_witnesses"`
 	NodeAgreements              int                `json:"node_agreements"`
@@ -491,17 +495,39 @@ func run(args []string) error {
 	result.Phases["manifest_and_verification"] = time.Since(phaseStarted).Seconds()
 	phaseStarted = time.Now()
 	classifyPrograms(headTree, baseLower, headLower, result.Programs, *workers, *compileLimit)
+	judge := platformJudge{root: root, base: result.Base, head: result.Head, revisions: map[string]*revisionImports{}}
 	var voids []string
 	for index := range result.Programs {
 		record := &result.Programs[index]
+		stopped, err := judge.stop(record, record.Head)
+		if err != nil {
+			return err
+		}
+		if stopped {
+			if record.Class != "darwin" {
+				result.Verdict = "fail"
+			}
+			continue
+		}
+		if err := judge.leaving(record); err != nil {
+			return err
+		}
+		if record.Head.Exit == 0 && record.Head.Error == "" {
+			revision, err := judge.revision(result.Head)
+			if err != nil {
+				return err
+			}
+			record.AppleImport, err = revision.apple(record.Path)
+			if err != nil {
+				return err
+			}
+		}
 		if record.Class == "newly-accepted" {
 			result.Admitted++
 		}
 		if record.Class == "compiler-timeout" {
 			record.VoidReason = "compile timeout"
-			voids = append(voids, record.Path+": "+record.VoidReason)
-		} else if strings.HasPrefix(record.Class, "compiler-") {
-			result.Verdict = "fail"
+			// Aggregate after native probes: a later darwin stop voids the whole row.
 		}
 	}
 	result.Phases["classification"] = time.Since(phaseStarted).Seconds()
@@ -553,6 +579,9 @@ func run(args []string) error {
 		if err != nil {
 			return
 		}
+		if platformStopped(nativeCompile) {
+			return
+		}
 		first = timedOut(node, jsCompile, javascript, nativeCompile, native)
 		if len(first) == 0 {
 			return
@@ -587,6 +616,16 @@ func run(args []string) error {
 		record.JavaScript = &javascript
 		record.NativeCompile = &nativeCompile
 		record.Native = &native
+		stopped, err := judge.stop(record, nativeCompile)
+		if err != nil {
+			return err
+		}
+		if stopped {
+			if record.Class != "darwin" {
+				result.Verdict = "fail"
+			}
+			continue
+		}
 		data, e := os.ReadFile(source)
 		if e != nil {
 			return e
@@ -662,9 +701,15 @@ func run(args []string) error {
 	// A listed stop no program held is judged only in a run that holds every corpus. Its path holding other
 	// bytes at head is an edit, stale as an agreeing stop is; a path absent at head is a program not landed
 	// yet, said as pending.
+	darwinRows := map[string]bool{}
+	for _, record := range result.Programs {
+		if record.Class == "darwin" {
+			darwinRows[record.Path] = true
+		}
+	}
 	if result.CompleteCorpus {
 		for hash, stop := range runtimeStops.Stops {
-			if held[hash] {
+			if held[hash] || darwinRows[stop.Path] {
 				continue
 			}
 			source, e := os.ReadFile(filepath.Join(headTree, stop.Path))
@@ -680,6 +725,24 @@ func run(args []string) error {
 		sort.Strings(result.StaleRuntimeStops)
 		sort.Strings(result.PendingRuntimeStops)
 	}
+	result.Admitted = 0
+	result.DarwinPaths = []string{}
+	for _, record := range result.Programs {
+		if record.Class == "compiler-timeout" {
+			voids = append(voids, record.Path+": "+record.VoidReason)
+		} else if strings.HasPrefix(record.Class, "compiler-") {
+			result.Verdict = "fail"
+		}
+		if record.Class == "newly-accepted" {
+			result.Admitted++
+		}
+		if record.Class == "darwin" {
+			result.DarwinPaths = append(result.DarwinPaths, record.Path)
+		}
+	}
+	sort.Strings(result.DarwinPaths)
+	result.DarwinCount = len(result.DarwinPaths)
+	fmt.Fprintf(os.Stderr, "darwin: %d (unjudged here; judged by the darwin witnesses)\n", result.DarwinCount)
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
 	fmt.Fprintf(os.Stderr, "ruled backend divergences: %d\n", result.RuledBackendDivergences)
 	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried alone, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
@@ -751,12 +814,15 @@ func sample(programs []entry, seed []byte, seconds float64, limit time.Duration)
 	others := []int{}
 	for i, p := range programs {
 		related := p.NegativeRelated || p.NotYetRelated
-		if p.Class != "newly-accepted" && !(related && p.Head.Exit == 0 && p.Head.Error == "") {
+		if p.Class == "darwin" || p.Class == "moved-into-darwin" || p.Class == "platform-stop-without-apple" {
+			continue
+		}
+		if p.Class != "newly-accepted" && !((related || p.AppleImport) && p.Head.Exit == 0 && p.Head.Error == "") {
 			continue
 		}
 		if p.Corpus == "diff" {
 			diff = append(diff, i)
-		} else if p.Corpus == "witnesses" || related {
+		} else if p.Corpus == "witnesses" || related || p.AppleImport {
 			witnesses = append(witnesses, i)
 		} else {
 			others = append(others, i)
