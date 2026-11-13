@@ -7,7 +7,7 @@ The entire adaptation tree is identical to `108e46471`: tree
 The cached applied trees were verified against all 747 recorded source hashes
 before measuring. Both sides use the same measurement-only binary built from
 0aba99914; its exact SHA-256 is in provenance.json and its build metadata is in
-binary-build-info.txt. Compiler and census source inputs are unchanged between
+binary-build-info.txt. Adamic compiler and census implementation source inputs are unchanged between
 0aba99914 and f37253b3. No source adaptation was modified or pushed here.
 
 ## Counts

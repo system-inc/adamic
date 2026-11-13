@@ -8,7 +8,7 @@ FILES=['watchPublic.ts','tsbuildPublic.ts']
 repo='/workspace/adamic'
 def git(*args):return subprocess.check_output(['git','-C',repo,*args],text=True).strip()
 assert git('rev-parse','f37253b3^{tree}')==git('rev-parse','108e46471^{tree}')
-manifest=json.loads(pathlib.Path('/workspace/scratch/timer-evidence-2/stage3/census/timer-closures/source-sha256-tip.json').read_text())
+manifest=json.loads((D/'input-source-sha256.json').read_text())
 for label,tree in TREES.items():
  expected=manifest['main' if label=='before' else 'adapted']
  actual={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()}
