@@ -402,5 +402,73 @@
       "status": "interrupted",
       "reason": "Environment restart killed the timeout supervisor; orphan process group killed before resuming. Original run has no reliable final exit/time record."
     }
-  ]
+  ],
+  "checker_scan_only": {
+    "file": "checker.ts",
+    "status": "ran",
+    "exit": 0,
+    "seconds": 206.199,
+    "timeout": false,
+    "total_findings": 1473,
+    "observed_findings": 1473,
+    "compiler_findings": 1473,
+    "kinds": {
+      "Refused": 1440,
+      "NotYet": 33
+    },
+    "new_reason_findings": [],
+    "sha256": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+    "raw_sha256": "7d81898128cfc0cc7b271cc33abfc47658e1da935fea9f3f3af7af177abd6f1d",
+    "parse_error": null,
+    "mode": "scan only",
+    "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-checker.ts.jsonl",
+    "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-checker.ts.log"
+  },
+  "scan_control": {
+    "file": "control",
+    "status": "ran",
+    "exit": 0,
+    "seconds": 0.268,
+    "timeout": false,
+    "total_findings": 1,
+    "observed_findings": 1,
+    "compiler_findings": 1,
+    "kinds": {
+      "Refused": 1
+    },
+    "new_reason_findings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/promise-discard-sites-run/control.ts:2:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28",
+        "reason": "an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task",
+        "text": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28: Adamic 0.1 refuses an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task; await the task inside a function that returns void, or keep the Promise in the type it's seen as",
+        "file": "/workspace/scratch/promise-discard-sites-run/control.ts",
+        "line": 2,
+        "column": 28,
+        "rule": "3210 refusePromiseIntoVoid",
+        "named_type": "Promise<void>"
+      }
+    ],
+    "sha256": "ccd5cda162d1fb7889816f8b650c82bc0f8f445534337a729f1e3673022f8a4c",
+    "raw_sha256": "f2022a80036af03bdad499dec293a4843883568f04f06a1594004fa3b6daba3c",
+    "parse_error": null,
+    "mode": "scan only",
+    "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-control.jsonl",
+    "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-control.log",
+    "raw_output": "{\"checker_rejected\":false,\"diagnostic_sites\":[],\"diagnostics\":[],\"latent_mode\":\"scan only\",\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"status\":\"measurement\"}\n{\"measurement\":\"measured on a checker-rejected program\",\"file\":\"/workspace/scratch/promise-discard-sites-run/control.ts\",\"declarations\":[{\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:1:1\",\"name\":\" fails\",\"kind\":\"KindFunctionDeclaration\",\"start\":0,\"end\":40},{\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:7\",\"name\":\" run\",\"kind\":\"KindVariableDeclaration\",\"start\":46,\"end\":73}],\"units\":[],\"findings\":[{\"root_kind\":\"\",\"depth\":0,\"measurement\":\"measured on a checker-rejected program\",\"unit\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:1\",\"phase\":\"refusal_scan\",\"kind\":\"Refused\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:28\",\"reason\":\"an unawaited async task: a Promise\\u003cvoid\\u003e at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task\",\"text\":\"/workspace/scratch/promise-discard-sites-run/control.ts:2:28: Adamic 0.1 refuses an unawaited async task: a Promise\\u003cvoid\\u003e at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task; await the task inside a function that returns void, or keep the Promise in the type it's seen as\"}]}\n{\"findings\":[],\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"relation_overflow\":{\"per_unit\":false,\"after_load\":\"\",\"end\":\"\",\"attribution\":\"endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown\",\"cache_sizes\":{\"assignable\":231,\"comparable\":0,\"enum\":0,\"flaggedPairs\":0,\"identity\":0,\"strictSubtype\":4,\"subtype\":0,\"ts2859\":0}},\"status\":\"relation_report\"}\n",
+    "log": "/workspace/scratch/promise-discard-sites-run/control.ts 0 1 measured on a checker-rejected program\n"
+  },
+  "scan_only_memory_preflight": {
+    "source": "free -h observed before scan-wrapper build and invocation",
+    "free": "9.6 GiB",
+    "available": "15 GiB",
+    "total": "17 GiB",
+    "note": "Rounded preflight observation; subsequent batches record /proc/meminfo bytes immediately before launch."
+  },
+  "scan_control_validation": "The scan-only control exactly matches the original full control kind/where/reason/text and has zero lowering units."
 }

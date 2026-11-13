@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript's compiler
 
-**0 new-reason sites observed** across 20/79 attempted files. This is a completed census only when all 79 files have status `ran`.
+**0 new-reason sites observed** across 20/79 attempted files. Full coverage requires successful full runs; the checker scan-only follow-up measures its refusal scan separately.
 
 
 ## Control
@@ -33,7 +33,7 @@ Head `e4b65199b13da9dcce678ffe93e0f06fe11bb2e5`; TypeScript `050880ce59e30b356b6
 | builderPublic.ts | ran | 0 | 50.686 | False | 3 | 1 |
 | builderState.ts | ran | 0 | 127.299 | False | 37 | 18 |
 | builderStatePublic.ts | ran | 0 | 38.806 | False | 0 | 0 |
-| checker.ts | timed_out | -9 | 1500.312 | True | None | None |
+| checker.ts | scan only (ran) | 0 | 206.199 | False | 1473 | 1473 |
 | commandLineParser.ts | ran | 0 | 272.421 | False | 367 | 215 |
 | core.ts | ran | 0 | 77.278 | False | 14 | 7 |
 | corePublic.ts | ran | 0 | 32.716 | False | 0 | 0 |
@@ -110,3 +110,31 @@ Head `e4b65199b13da9dcce678ffe93e0f06fe11bb2e5`; TypeScript `050880ce59e30b356b6
 This is measurement on a checker-rejected program, not successful compilation. Full mode skips directly diagnosed bodies, independently attempts eligible nested declarations, and may stop at failed construct boundaries. It cannot establish absence inside skipped bodies or unexamined children. Timed-out or failed files have unknown totals. Findings deduplicate (kind, where, reason, text) across attempts; total findings include non-compiler events, while compiler findings count Refused and NotYet. No adaptation or production compiler source is changed.
 
 The JSON preserves full matching findings, control output, exit status, timing, coverage, source hashes, and raw stream hashes. Raw logs remain in scratch.
+
+## Checker refusal scan only
+
+Existing `latentScan` in `stage3/census/latent/lower.go.txt:519`, called before registration/lowering by `units.go.txt:141`, is invoked by the measurement-only wrapper `scan-only.go.txt`. It performs no body lowering. Status: ran; exit 0; 206.199 seconds; findings 1473; new-reason findings 0. The original 25-minute full timeout remains preserved in sites.json.
+
+Control for the scan-only binary:
+```json
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/promise-discard-sites-run/control.ts:2:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28",
+    "reason": "an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task",
+    "text": "/workspace/scratch/promise-discard-sites-run/control.ts:2:28: Adamic 0.1 refuses an unawaited async task: a Promise<void> at the initializer site through () seen as unknown, a type that names no Promise, so whoever holds it drops the task; await the task inside a function that returns void, or keep the Promise in the type it's seen as",
+    "file": "/workspace/scratch/promise-discard-sites-run/control.ts",
+    "line": 2,
+    "column": 28,
+    "rule": "3210 refusePromiseIntoVoid",
+    "named_type": "Promise<void>"
+  }
+]
+```
+
+Interruption: the environment restart terminated the original supervisor. The orphan emitter process group was killed, and results lacking durable exit/timing records were rerun. Pushed results were retained.
