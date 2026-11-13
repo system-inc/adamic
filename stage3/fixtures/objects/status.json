@@ -224,7 +224,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/19_identifier_multimap.a:87:33: Adamic 0.1 refuses a method read as a value (trackSymbol would lose its object, and this with it); call it in an arrow that keeps the object: (value) =\u003e its object.trackSymbol(value) (unbound-method)"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/19_identifier_multimap.a:181:56: Adamic 0.1 refuses a value of type SymbolTrackerImpl seen as SymbolTracker | undefined, whose method reportInaccessibleThisError becomes a writable field: a write of (() =\u003e void) | undefined would replace a method of type () =\u003e void; make reportInaccessibleThisError readonly in the type it's seen as (readonly reportInaccessibleThisError: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"}
   },
   {
     "file": "20_queue_optional_call.a",
