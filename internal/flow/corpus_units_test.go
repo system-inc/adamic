@@ -1307,6 +1307,88 @@ var flowCorpusPaths = []string{
 	"testdata/map_clear.a",
 	"testdata/mutations.a",
 	"testdata/throws.a",
+	"../oracle/testdata/generators/array_from.a",
+	"../oracle/testdata/generators/array_from_view.a",
+	"../oracle/testdata/generators/body_throw.a",
+	"../oracle/testdata/generators/break_map.a",
+	"../oracle/testdata/generators/builder_state_strings.a",
+	"../oracle/testdata/generators/complete.a",
+	"../oracle/testdata/generators/consumer_throw.a",
+	"../oracle/testdata/generators/declared_iterators.a",
+	"../oracle/testdata/generators/drop_start.a",
+	"../oracle/testdata/generators/early_return.a",
+	"../oracle/testdata/generators/elementwise_view.a",
+	"../oracle/testdata/generators/first_or_undefined.a",
+	"../oracle/testdata/generators/first_throw.a",
+	"../oracle/testdata/generators/generic.a",
+	"../oracle/testdata/generators/generic_map.a",
+	"../oracle/testdata/generators/generic_throw.a",
+	"../oracle/testdata/generators/in_place_capture.a",
+	"../oracle/testdata/generators/in_place_environment.a",
+	"../oracle/testdata/generators/in_place_forms.a",
+	"../oracle/testdata/generators/in_place_loop.a",
+	"../oracle/testdata/generators/labeled_exit.a",
+	"../oracle/testdata/generators/map_defined_iterator.a",
+	"../oracle/testdata/generators/map_iterator.a",
+	"../oracle/testdata/generators/map_iterator_entries.a",
+	"../oracle/testdata/generators/nested_callee_generic.a",
+	"../oracle/testdata/generators/nested_callee_grandchild.a",
+	"../oracle/testdata/generators/nested_callee_overloads.a",
+	"../oracle/testdata/generators/nested_callee_view.a",
+	"../oracle/testdata/generators/nested_carrier_temporary.a",
+	"../oracle/testdata/generators/nested_checker_shapes.a",
+	"../oracle/testdata/generators/nested_dead_zone.a",
+	"../oracle/testdata/generators/nested_early_break.a",
+	"../oracle/testdata/generators/nested_hoisted.a",
+	"../oracle/testdata/generators/nested_iterable.a",
+	"../oracle/testdata/generators/nested_live_capture.a",
+	"../oracle/testdata/generators/nested_stack_parent.a",
+	"../oracle/testdata/generators/new_map.a",
+	"../oracle/testdata/generators/new_map_entries.a",
+	"../oracle/testdata/generators/new_map_plain.a",
+	"../oracle/testdata/generators/new_map_throw.a",
+	"../oracle/testdata/generators/new_set.a",
+	"../oracle/testdata/generators/new_set_plain.a",
+	"../oracle/testdata/generators/nullish_view_tests.a",
+	"../oracle/testdata/generators/retained_param.a",
+	"../oracle/testdata/generators/return_from_loop.a",
+	"../oracle/testdata/generators/split.a",
+	"../oracle/testdata/generators/spread.a",
+	"../oracle/testdata/generators/stored_exits.a",
+	"../oracle/testdata/generators/stored_exits_finally.a",
+	"../oracle/testdata/generators/stored_for_of.a",
+	"../oracle/testdata/generators/stored_jsx_children.a",
+	"../oracle/testdata/generators/stored_later_throw.a",
+	"../oracle/testdata/generators/stored_untaken.a",
+	"../oracle/testdata/generators/trace_in_place.a",
+	"../oracle/testdata/generators/trace_named.a",
+	"../oracle/testdata/generators/uncaught.a",
+	"../oracle/testdata/generators/uncaught_from.a",
+	"../oracle/testdata/generators/uncaught_spread.a",
+	"../oracle/testdata/generators/unused_class.a",
+	"../oracle/testdata/generators/view_body_throw.a",
+	"../oracle/testdata/generators/view_counted_items.a",
+	"../oracle/testdata/generators/view_early_return.a",
+	"../oracle/testdata/generators/view_mixed.a",
+	"../oracle/testdata/generators/view_outer_loop.a",
+	"../oracle/testdata/generators/view_string_items.a",
+	"../oracle/testdata/generators/view_throw.a",
+	"../oracle/testdata/generators_several/elaborate_four.a",
+	"../oracle/testdata/generators_several/held_across_yield.a",
+	"../oracle/testdata/generators_several/second_throws.a",
+	"../oracle/testdata/iterable_views/hand_next.a",
+	"../oracle/testdata/iterable_views/hand_next_generator.a",
+	"../oracle/testdata/iterable_views/hand_next_generator_throw.a",
+	"../oracle/testdata/iterable_views/hand_next_maybe_string.a",
+	"../oracle/testdata/iterable_views/hand_next_mixed.a",
+	"../oracle/testdata/iterable_views/nullable_string_keys.a",
+	"../oracle/testdata/iterable_views/nullable_values.a",
+	"../oracle/testdata/iterable_views/view_delete.a",
+	"../oracle/testdata/iterable_views/view_entries.a",
+	"../oracle/testdata/iterable_views/view_live.a",
+	"../oracle/testdata/iterable_views/view_partial.a",
+	"../oracle/testdata/iterable_views/view_union.a",
+	"../oracle/testdata/iterable_views/view_values.a",
 }
 
 var flowCorpusTests = [][]func(*testing.T){
@@ -2614,6 +2696,88 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram_testdata_map_clear_a_c5269fc19107,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
 		TestFlowProgram_testdata_throws_a_11a3c391ed1b,
+		TestFlowProgram____oracle_testdata_generators_array_from_a_778fd10b6018,
+		TestFlowProgram____oracle_testdata_generators_array_from_view_a_9d02674d9dc3,
+		TestFlowProgram____oracle_testdata_generators_body_throw_a_3f2e98621814,
+		TestFlowProgram____oracle_testdata_generators_break_map_a_6d7901203525,
+		TestFlowProgram____oracle_testdata_generators_builder_state_strings_a_ad16643b41ee,
+		TestFlowProgram____oracle_testdata_generators_complete_a_eb6ec9864cdc,
+		TestFlowProgram____oracle_testdata_generators_consumer_throw_a_4ec1628ede77,
+		TestFlowProgram____oracle_testdata_generators_declared_iterators_a_ab4aa29d20de,
+		TestFlowProgram____oracle_testdata_generators_drop_start_a_93bbabf608d7,
+		TestFlowProgram____oracle_testdata_generators_early_return_a_7fc060546a2a,
+		TestFlowProgram____oracle_testdata_generators_elementwise_view_a_b020d023db56,
+		TestFlowProgram____oracle_testdata_generators_first_or_undefined_a_d3c69f8e73c1,
+		TestFlowProgram____oracle_testdata_generators_first_throw_a_ecda68dc1a7b,
+		TestFlowProgram____oracle_testdata_generators_generic_a_6c040a18b08c,
+		TestFlowProgram____oracle_testdata_generators_generic_map_a_8aad73a3e3b4,
+		TestFlowProgram____oracle_testdata_generators_generic_throw_a_2249f9033b37,
+		TestFlowProgram____oracle_testdata_generators_in_place_capture_a_c659c0280753,
+		TestFlowProgram____oracle_testdata_generators_in_place_environment_a_45d053e02b0b,
+		TestFlowProgram____oracle_testdata_generators_in_place_forms_a_e7f77fe12285,
+		TestFlowProgram____oracle_testdata_generators_in_place_loop_a_f67147c47923,
+		TestFlowProgram____oracle_testdata_generators_labeled_exit_a_c646d6983c5b,
+		TestFlowProgram____oracle_testdata_generators_map_defined_iterator_a_6fcb54197387,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_a_6c81b323ab1e,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_entries_a_fa0457716b91,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_generic_a_2044355bd6b6,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_grandchild_a_a4e0e7efd4c1,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_overloads_a_5390e5a3e0c2,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_view_a_f67922233982,
+		TestFlowProgram____oracle_testdata_generators_nested_carrier_temporary_a_aa1755ac930c,
+		TestFlowProgram____oracle_testdata_generators_nested_checker_shapes_a_84baac46d470,
+		TestFlowProgram____oracle_testdata_generators_nested_dead_zone_a_095ebd118444,
+		TestFlowProgram____oracle_testdata_generators_nested_early_break_a_77d1a850755c,
+		TestFlowProgram____oracle_testdata_generators_nested_hoisted_a_d744b4ddce11,
+		TestFlowProgram____oracle_testdata_generators_nested_iterable_a_226679e25070,
+		TestFlowProgram____oracle_testdata_generators_nested_live_capture_a_04c852ffabb6,
+		TestFlowProgram____oracle_testdata_generators_nested_stack_parent_a_fc929d2551f7,
+		TestFlowProgram____oracle_testdata_generators_new_map_a_89f8f54e7c7d,
+		TestFlowProgram____oracle_testdata_generators_new_map_entries_a_2be86f0b28dc,
+		TestFlowProgram____oracle_testdata_generators_new_map_plain_a_bf4568de89d5,
+		TestFlowProgram____oracle_testdata_generators_new_map_throw_a_a244a19e7783,
+		TestFlowProgram____oracle_testdata_generators_new_set_a_1987e366bacb,
+		TestFlowProgram____oracle_testdata_generators_new_set_plain_a_a411b400e245,
+		TestFlowProgram____oracle_testdata_generators_nullish_view_tests_a_5826ab9cb66d,
+		TestFlowProgram____oracle_testdata_generators_retained_param_a_6c909f29a384,
+		TestFlowProgram____oracle_testdata_generators_return_from_loop_a_ccdbdd30290a,
+		TestFlowProgram____oracle_testdata_generators_split_a_1c4aab692582,
+		TestFlowProgram____oracle_testdata_generators_spread_a_6e0adfba31d0,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_a_64744a6af8d7,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_finally_a_b8a11f920606,
+		TestFlowProgram____oracle_testdata_generators_stored_for_of_a_718f80fe701c,
+		TestFlowProgram____oracle_testdata_generators_stored_jsx_children_a_573068660f2d,
+		TestFlowProgram____oracle_testdata_generators_stored_later_throw_a_3af96605d77a,
+		TestFlowProgram____oracle_testdata_generators_stored_untaken_a_bd3491b0a722,
+		TestFlowProgram____oracle_testdata_generators_trace_in_place_a_479670f8d689,
+		TestFlowProgram____oracle_testdata_generators_trace_named_a_139e221edf27,
+		TestFlowProgram____oracle_testdata_generators_uncaught_a_d21dd07fe165,
+		TestFlowProgram____oracle_testdata_generators_uncaught_from_a_2e36d68c6327,
+		TestFlowProgram____oracle_testdata_generators_uncaught_spread_a_edd83284c559,
+		TestFlowProgram____oracle_testdata_generators_unused_class_a_50756ff41d6e,
+		TestFlowProgram____oracle_testdata_generators_view_body_throw_a_c9cd5ed033c4,
+		TestFlowProgram____oracle_testdata_generators_view_counted_items_a_7ee0b161406d,
+		TestFlowProgram____oracle_testdata_generators_view_early_return_a_5c4fb9408673,
+		TestFlowProgram____oracle_testdata_generators_view_mixed_a_deec8e3a56ea,
+		TestFlowProgram____oracle_testdata_generators_view_outer_loop_a_0244c9103549,
+		TestFlowProgram____oracle_testdata_generators_view_string_items_a_fdaf67c85ae6,
+		TestFlowProgram____oracle_testdata_generators_view_throw_a_5692a60f94a3,
+		TestFlowProgram____oracle_testdata_generators_several_elaborate_four_a_83f538eec0ef,
+		TestFlowProgram____oracle_testdata_generators_several_held_across_yield_a_321767638943,
+		TestFlowProgram____oracle_testdata_generators_several_second_throws_a_fea3f6bd0bfd,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_a_8000f9bca2a6,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_a_d4bed7d3b892,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_throw_a_b08b8155650e,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_maybe_string_a_5cae91a5e329,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_mixed_a_583f5e45953a,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_string_keys_a_a09bf99ad208,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_values_a_ccdcdb3a6496,
+		TestFlowProgram____oracle_testdata_iterable_views_view_delete_a_cae4b5d6a2cc,
+		TestFlowProgram____oracle_testdata_iterable_views_view_entries_a_225ea986194d,
+		TestFlowProgram____oracle_testdata_iterable_views_view_live_a_bb42f9262cf9,
+		TestFlowProgram____oracle_testdata_iterable_views_view_partial_a_0310f3bc5a88,
+		TestFlowProgram____oracle_testdata_iterable_views_view_union_a_0c7f504dde6c,
+		TestFlowProgram____oracle_testdata_iterable_views_view_values_a_07d51c59e81d,
 	},
 	{
 		TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f,
@@ -3919,6 +4083,88 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram_testdata_map_clear_a_c5269fc19107,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
 		TestFlowProgram_testdata_throws_a_11a3c391ed1b,
+		TestFlowProgram____oracle_testdata_generators_array_from_a_778fd10b6018,
+		TestFlowProgram____oracle_testdata_generators_array_from_view_a_9d02674d9dc3,
+		TestFlowProgram____oracle_testdata_generators_body_throw_a_3f2e98621814,
+		TestFlowProgram____oracle_testdata_generators_break_map_a_6d7901203525,
+		TestFlowProgram____oracle_testdata_generators_builder_state_strings_a_ad16643b41ee,
+		TestFlowProgram____oracle_testdata_generators_complete_a_eb6ec9864cdc,
+		TestFlowProgram____oracle_testdata_generators_consumer_throw_a_4ec1628ede77,
+		TestFlowProgram____oracle_testdata_generators_declared_iterators_a_ab4aa29d20de,
+		TestFlowProgram____oracle_testdata_generators_drop_start_a_93bbabf608d7,
+		TestFlowProgram____oracle_testdata_generators_early_return_a_7fc060546a2a,
+		TestFlowProgram____oracle_testdata_generators_elementwise_view_a_b020d023db56,
+		TestFlowProgram____oracle_testdata_generators_first_or_undefined_a_d3c69f8e73c1,
+		TestFlowProgram____oracle_testdata_generators_first_throw_a_ecda68dc1a7b,
+		TestFlowProgram____oracle_testdata_generators_generic_a_6c040a18b08c,
+		TestFlowProgram____oracle_testdata_generators_generic_map_a_8aad73a3e3b4,
+		TestFlowProgram____oracle_testdata_generators_generic_throw_a_2249f9033b37,
+		TestFlowProgram____oracle_testdata_generators_in_place_capture_a_c659c0280753,
+		TestFlowProgram____oracle_testdata_generators_in_place_environment_a_45d053e02b0b,
+		TestFlowProgram____oracle_testdata_generators_in_place_forms_a_e7f77fe12285,
+		TestFlowProgram____oracle_testdata_generators_in_place_loop_a_f67147c47923,
+		TestFlowProgram____oracle_testdata_generators_labeled_exit_a_c646d6983c5b,
+		TestFlowProgram____oracle_testdata_generators_map_defined_iterator_a_6fcb54197387,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_a_6c81b323ab1e,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_entries_a_fa0457716b91,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_generic_a_2044355bd6b6,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_grandchild_a_a4e0e7efd4c1,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_overloads_a_5390e5a3e0c2,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_view_a_f67922233982,
+		TestFlowProgram____oracle_testdata_generators_nested_carrier_temporary_a_aa1755ac930c,
+		TestFlowProgram____oracle_testdata_generators_nested_checker_shapes_a_84baac46d470,
+		TestFlowProgram____oracle_testdata_generators_nested_dead_zone_a_095ebd118444,
+		TestFlowProgram____oracle_testdata_generators_nested_early_break_a_77d1a850755c,
+		TestFlowProgram____oracle_testdata_generators_nested_hoisted_a_d744b4ddce11,
+		TestFlowProgram____oracle_testdata_generators_nested_iterable_a_226679e25070,
+		TestFlowProgram____oracle_testdata_generators_nested_live_capture_a_04c852ffabb6,
+		TestFlowProgram____oracle_testdata_generators_nested_stack_parent_a_fc929d2551f7,
+		TestFlowProgram____oracle_testdata_generators_new_map_a_89f8f54e7c7d,
+		TestFlowProgram____oracle_testdata_generators_new_map_entries_a_2be86f0b28dc,
+		TestFlowProgram____oracle_testdata_generators_new_map_plain_a_bf4568de89d5,
+		TestFlowProgram____oracle_testdata_generators_new_map_throw_a_a244a19e7783,
+		TestFlowProgram____oracle_testdata_generators_new_set_a_1987e366bacb,
+		TestFlowProgram____oracle_testdata_generators_new_set_plain_a_a411b400e245,
+		TestFlowProgram____oracle_testdata_generators_nullish_view_tests_a_5826ab9cb66d,
+		TestFlowProgram____oracle_testdata_generators_retained_param_a_6c909f29a384,
+		TestFlowProgram____oracle_testdata_generators_return_from_loop_a_ccdbdd30290a,
+		TestFlowProgram____oracle_testdata_generators_split_a_1c4aab692582,
+		TestFlowProgram____oracle_testdata_generators_spread_a_6e0adfba31d0,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_a_64744a6af8d7,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_finally_a_b8a11f920606,
+		TestFlowProgram____oracle_testdata_generators_stored_for_of_a_718f80fe701c,
+		TestFlowProgram____oracle_testdata_generators_stored_jsx_children_a_573068660f2d,
+		TestFlowProgram____oracle_testdata_generators_stored_later_throw_a_3af96605d77a,
+		TestFlowProgram____oracle_testdata_generators_stored_untaken_a_bd3491b0a722,
+		TestFlowProgram____oracle_testdata_generators_trace_in_place_a_479670f8d689,
+		TestFlowProgram____oracle_testdata_generators_trace_named_a_139e221edf27,
+		TestFlowProgram____oracle_testdata_generators_uncaught_a_d21dd07fe165,
+		TestFlowProgram____oracle_testdata_generators_uncaught_from_a_2e36d68c6327,
+		TestFlowProgram____oracle_testdata_generators_uncaught_spread_a_edd83284c559,
+		TestFlowProgram____oracle_testdata_generators_unused_class_a_50756ff41d6e,
+		TestFlowProgram____oracle_testdata_generators_view_body_throw_a_c9cd5ed033c4,
+		TestFlowProgram____oracle_testdata_generators_view_counted_items_a_7ee0b161406d,
+		TestFlowProgram____oracle_testdata_generators_view_early_return_a_5c4fb9408673,
+		TestFlowProgram____oracle_testdata_generators_view_mixed_a_deec8e3a56ea,
+		TestFlowProgram____oracle_testdata_generators_view_outer_loop_a_0244c9103549,
+		TestFlowProgram____oracle_testdata_generators_view_string_items_a_fdaf67c85ae6,
+		TestFlowProgram____oracle_testdata_generators_view_throw_a_5692a60f94a3,
+		TestFlowProgram____oracle_testdata_generators_several_elaborate_four_a_83f538eec0ef,
+		TestFlowProgram____oracle_testdata_generators_several_held_across_yield_a_321767638943,
+		TestFlowProgram____oracle_testdata_generators_several_second_throws_a_fea3f6bd0bfd,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_a_8000f9bca2a6,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_a_d4bed7d3b892,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_throw_a_b08b8155650e,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_maybe_string_a_5cae91a5e329,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_mixed_a_583f5e45953a,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_string_keys_a_a09bf99ad208,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_values_a_ccdcdb3a6496,
+		TestFlowProgram____oracle_testdata_iterable_views_view_delete_a_cae4b5d6a2cc,
+		TestFlowProgram____oracle_testdata_iterable_views_view_entries_a_225ea986194d,
+		TestFlowProgram____oracle_testdata_iterable_views_view_live_a_bb42f9262cf9,
+		TestFlowProgram____oracle_testdata_iterable_views_view_partial_a_0310f3bc5a88,
+		TestFlowProgram____oracle_testdata_iterable_views_view_union_a_0c7f504dde6c,
+		TestFlowProgram____oracle_testdata_iterable_views_view_values_a_07d51c59e81d,
 	},
 	{
 		TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f,
@@ -5224,6 +5470,88 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram_testdata_map_clear_a_c5269fc19107,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
 		TestFlowProgram_testdata_throws_a_11a3c391ed1b,
+		TestFlowProgram____oracle_testdata_generators_array_from_a_778fd10b6018,
+		TestFlowProgram____oracle_testdata_generators_array_from_view_a_9d02674d9dc3,
+		TestFlowProgram____oracle_testdata_generators_body_throw_a_3f2e98621814,
+		TestFlowProgram____oracle_testdata_generators_break_map_a_6d7901203525,
+		TestFlowProgram____oracle_testdata_generators_builder_state_strings_a_ad16643b41ee,
+		TestFlowProgram____oracle_testdata_generators_complete_a_eb6ec9864cdc,
+		TestFlowProgram____oracle_testdata_generators_consumer_throw_a_4ec1628ede77,
+		TestFlowProgram____oracle_testdata_generators_declared_iterators_a_ab4aa29d20de,
+		TestFlowProgram____oracle_testdata_generators_drop_start_a_93bbabf608d7,
+		TestFlowProgram____oracle_testdata_generators_early_return_a_7fc060546a2a,
+		TestFlowProgram____oracle_testdata_generators_elementwise_view_a_b020d023db56,
+		TestFlowProgram____oracle_testdata_generators_first_or_undefined_a_d3c69f8e73c1,
+		TestFlowProgram____oracle_testdata_generators_first_throw_a_ecda68dc1a7b,
+		TestFlowProgram____oracle_testdata_generators_generic_a_6c040a18b08c,
+		TestFlowProgram____oracle_testdata_generators_generic_map_a_8aad73a3e3b4,
+		TestFlowProgram____oracle_testdata_generators_generic_throw_a_2249f9033b37,
+		TestFlowProgram____oracle_testdata_generators_in_place_capture_a_c659c0280753,
+		TestFlowProgram____oracle_testdata_generators_in_place_environment_a_45d053e02b0b,
+		TestFlowProgram____oracle_testdata_generators_in_place_forms_a_e7f77fe12285,
+		TestFlowProgram____oracle_testdata_generators_in_place_loop_a_f67147c47923,
+		TestFlowProgram____oracle_testdata_generators_labeled_exit_a_c646d6983c5b,
+		TestFlowProgram____oracle_testdata_generators_map_defined_iterator_a_6fcb54197387,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_a_6c81b323ab1e,
+		TestFlowProgram____oracle_testdata_generators_map_iterator_entries_a_fa0457716b91,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_generic_a_2044355bd6b6,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_grandchild_a_a4e0e7efd4c1,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_overloads_a_5390e5a3e0c2,
+		TestFlowProgram____oracle_testdata_generators_nested_callee_view_a_f67922233982,
+		TestFlowProgram____oracle_testdata_generators_nested_carrier_temporary_a_aa1755ac930c,
+		TestFlowProgram____oracle_testdata_generators_nested_checker_shapes_a_84baac46d470,
+		TestFlowProgram____oracle_testdata_generators_nested_dead_zone_a_095ebd118444,
+		TestFlowProgram____oracle_testdata_generators_nested_early_break_a_77d1a850755c,
+		TestFlowProgram____oracle_testdata_generators_nested_hoisted_a_d744b4ddce11,
+		TestFlowProgram____oracle_testdata_generators_nested_iterable_a_226679e25070,
+		TestFlowProgram____oracle_testdata_generators_nested_live_capture_a_04c852ffabb6,
+		TestFlowProgram____oracle_testdata_generators_nested_stack_parent_a_fc929d2551f7,
+		TestFlowProgram____oracle_testdata_generators_new_map_a_89f8f54e7c7d,
+		TestFlowProgram____oracle_testdata_generators_new_map_entries_a_2be86f0b28dc,
+		TestFlowProgram____oracle_testdata_generators_new_map_plain_a_bf4568de89d5,
+		TestFlowProgram____oracle_testdata_generators_new_map_throw_a_a244a19e7783,
+		TestFlowProgram____oracle_testdata_generators_new_set_a_1987e366bacb,
+		TestFlowProgram____oracle_testdata_generators_new_set_plain_a_a411b400e245,
+		TestFlowProgram____oracle_testdata_generators_nullish_view_tests_a_5826ab9cb66d,
+		TestFlowProgram____oracle_testdata_generators_retained_param_a_6c909f29a384,
+		TestFlowProgram____oracle_testdata_generators_return_from_loop_a_ccdbdd30290a,
+		TestFlowProgram____oracle_testdata_generators_split_a_1c4aab692582,
+		TestFlowProgram____oracle_testdata_generators_spread_a_6e0adfba31d0,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_a_64744a6af8d7,
+		TestFlowProgram____oracle_testdata_generators_stored_exits_finally_a_b8a11f920606,
+		TestFlowProgram____oracle_testdata_generators_stored_for_of_a_718f80fe701c,
+		TestFlowProgram____oracle_testdata_generators_stored_jsx_children_a_573068660f2d,
+		TestFlowProgram____oracle_testdata_generators_stored_later_throw_a_3af96605d77a,
+		TestFlowProgram____oracle_testdata_generators_stored_untaken_a_bd3491b0a722,
+		TestFlowProgram____oracle_testdata_generators_trace_in_place_a_479670f8d689,
+		TestFlowProgram____oracle_testdata_generators_trace_named_a_139e221edf27,
+		TestFlowProgram____oracle_testdata_generators_uncaught_a_d21dd07fe165,
+		TestFlowProgram____oracle_testdata_generators_uncaught_from_a_2e36d68c6327,
+		TestFlowProgram____oracle_testdata_generators_uncaught_spread_a_edd83284c559,
+		TestFlowProgram____oracle_testdata_generators_unused_class_a_50756ff41d6e,
+		TestFlowProgram____oracle_testdata_generators_view_body_throw_a_c9cd5ed033c4,
+		TestFlowProgram____oracle_testdata_generators_view_counted_items_a_7ee0b161406d,
+		TestFlowProgram____oracle_testdata_generators_view_early_return_a_5c4fb9408673,
+		TestFlowProgram____oracle_testdata_generators_view_mixed_a_deec8e3a56ea,
+		TestFlowProgram____oracle_testdata_generators_view_outer_loop_a_0244c9103549,
+		TestFlowProgram____oracle_testdata_generators_view_string_items_a_fdaf67c85ae6,
+		TestFlowProgram____oracle_testdata_generators_view_throw_a_5692a60f94a3,
+		TestFlowProgram____oracle_testdata_generators_several_elaborate_four_a_83f538eec0ef,
+		TestFlowProgram____oracle_testdata_generators_several_held_across_yield_a_321767638943,
+		TestFlowProgram____oracle_testdata_generators_several_second_throws_a_fea3f6bd0bfd,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_a_8000f9bca2a6,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_a_d4bed7d3b892,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_throw_a_b08b8155650e,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_maybe_string_a_5cae91a5e329,
+		TestFlowProgram____oracle_testdata_iterable_views_hand_next_mixed_a_583f5e45953a,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_string_keys_a_a09bf99ad208,
+		TestFlowProgram____oracle_testdata_iterable_views_nullable_values_a_ccdcdb3a6496,
+		TestFlowProgram____oracle_testdata_iterable_views_view_delete_a_cae4b5d6a2cc,
+		TestFlowProgram____oracle_testdata_iterable_views_view_entries_a_225ea986194d,
+		TestFlowProgram____oracle_testdata_iterable_views_view_live_a_bb42f9262cf9,
+		TestFlowProgram____oracle_testdata_iterable_views_view_partial_a_0310f3bc5a88,
+		TestFlowProgram____oracle_testdata_iterable_views_view_union_a_0c7f504dde6c,
+		TestFlowProgram____oracle_testdata_iterable_views_view_values_a_07d51c59e81d,
 	},
 }
 
@@ -13043,6 +13371,498 @@ func TestFlowProgram_testdata_throws_a_11a3c391ed1b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[1302])
+}
+
+func TestFlowProgram____oracle_testdata_generators_array_from_a_778fd10b6018(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1303])
+}
+
+func TestFlowProgram____oracle_testdata_generators_array_from_view_a_9d02674d9dc3(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1304])
+}
+
+func TestFlowProgram____oracle_testdata_generators_body_throw_a_3f2e98621814(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1305])
+}
+
+func TestFlowProgram____oracle_testdata_generators_break_map_a_6d7901203525(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1306])
+}
+
+func TestFlowProgram____oracle_testdata_generators_builder_state_strings_a_ad16643b41ee(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1307])
+}
+
+func TestFlowProgram____oracle_testdata_generators_complete_a_eb6ec9864cdc(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1308])
+}
+
+func TestFlowProgram____oracle_testdata_generators_consumer_throw_a_4ec1628ede77(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1309])
+}
+
+func TestFlowProgram____oracle_testdata_generators_declared_iterators_a_ab4aa29d20de(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1310])
+}
+
+func TestFlowProgram____oracle_testdata_generators_drop_start_a_93bbabf608d7(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1311])
+}
+
+func TestFlowProgram____oracle_testdata_generators_early_return_a_7fc060546a2a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1312])
+}
+
+func TestFlowProgram____oracle_testdata_generators_elementwise_view_a_b020d023db56(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1313])
+}
+
+func TestFlowProgram____oracle_testdata_generators_first_or_undefined_a_d3c69f8e73c1(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1314])
+}
+
+func TestFlowProgram____oracle_testdata_generators_first_throw_a_ecda68dc1a7b(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1315])
+}
+
+func TestFlowProgram____oracle_testdata_generators_generic_a_6c040a18b08c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1316])
+}
+
+func TestFlowProgram____oracle_testdata_generators_generic_map_a_8aad73a3e3b4(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1317])
+}
+
+func TestFlowProgram____oracle_testdata_generators_generic_throw_a_2249f9033b37(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1318])
+}
+
+func TestFlowProgram____oracle_testdata_generators_in_place_capture_a_c659c0280753(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1319])
+}
+
+func TestFlowProgram____oracle_testdata_generators_in_place_environment_a_45d053e02b0b(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1320])
+}
+
+func TestFlowProgram____oracle_testdata_generators_in_place_forms_a_e7f77fe12285(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1321])
+}
+
+func TestFlowProgram____oracle_testdata_generators_in_place_loop_a_f67147c47923(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1322])
+}
+
+func TestFlowProgram____oracle_testdata_generators_labeled_exit_a_c646d6983c5b(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1323])
+}
+
+func TestFlowProgram____oracle_testdata_generators_map_defined_iterator_a_6fcb54197387(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1324])
+}
+
+func TestFlowProgram____oracle_testdata_generators_map_iterator_a_6c81b323ab1e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1325])
+}
+
+func TestFlowProgram____oracle_testdata_generators_map_iterator_entries_a_fa0457716b91(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1326])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_callee_generic_a_2044355bd6b6(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1327])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_callee_grandchild_a_a4e0e7efd4c1(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1328])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_callee_overloads_a_5390e5a3e0c2(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1329])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_callee_view_a_f67922233982(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1330])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_carrier_temporary_a_aa1755ac930c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1331])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_checker_shapes_a_84baac46d470(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1332])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_dead_zone_a_095ebd118444(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1333])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_early_break_a_77d1a850755c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1334])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_hoisted_a_d744b4ddce11(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1335])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_iterable_a_226679e25070(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1336])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_live_capture_a_04c852ffabb6(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1337])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nested_stack_parent_a_fc929d2551f7(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1338])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_map_a_89f8f54e7c7d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1339])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_map_entries_a_2be86f0b28dc(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1340])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_map_plain_a_bf4568de89d5(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1341])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_map_throw_a_a244a19e7783(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1342])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_set_a_1987e366bacb(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1343])
+}
+
+func TestFlowProgram____oracle_testdata_generators_new_set_plain_a_a411b400e245(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1344])
+}
+
+func TestFlowProgram____oracle_testdata_generators_nullish_view_tests_a_5826ab9cb66d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1345])
+}
+
+func TestFlowProgram____oracle_testdata_generators_retained_param_a_6c909f29a384(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1346])
+}
+
+func TestFlowProgram____oracle_testdata_generators_return_from_loop_a_ccdbdd30290a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1347])
+}
+
+func TestFlowProgram____oracle_testdata_generators_split_a_1c4aab692582(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1348])
+}
+
+func TestFlowProgram____oracle_testdata_generators_spread_a_6e0adfba31d0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1349])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_exits_a_64744a6af8d7(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1350])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_exits_finally_a_b8a11f920606(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1351])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_for_of_a_718f80fe701c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1352])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_jsx_children_a_573068660f2d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1353])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_later_throw_a_3af96605d77a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1354])
+}
+
+func TestFlowProgram____oracle_testdata_generators_stored_untaken_a_bd3491b0a722(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1355])
+}
+
+func TestFlowProgram____oracle_testdata_generators_trace_in_place_a_479670f8d689(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1356])
+}
+
+func TestFlowProgram____oracle_testdata_generators_trace_named_a_139e221edf27(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1357])
+}
+
+func TestFlowProgram____oracle_testdata_generators_uncaught_a_d21dd07fe165(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1358])
+}
+
+func TestFlowProgram____oracle_testdata_generators_uncaught_from_a_2e36d68c6327(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1359])
+}
+
+func TestFlowProgram____oracle_testdata_generators_uncaught_spread_a_edd83284c559(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1360])
+}
+
+func TestFlowProgram____oracle_testdata_generators_unused_class_a_50756ff41d6e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1361])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_body_throw_a_c9cd5ed033c4(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1362])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_counted_items_a_7ee0b161406d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1363])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_early_return_a_5c4fb9408673(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1364])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_mixed_a_deec8e3a56ea(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1365])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_outer_loop_a_0244c9103549(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1366])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_string_items_a_fdaf67c85ae6(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1367])
+}
+
+func TestFlowProgram____oracle_testdata_generators_view_throw_a_5692a60f94a3(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1368])
+}
+
+func TestFlowProgram____oracle_testdata_generators_several_elaborate_four_a_83f538eec0ef(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1369])
+}
+
+func TestFlowProgram____oracle_testdata_generators_several_held_across_yield_a_321767638943(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1370])
+}
+
+func TestFlowProgram____oracle_testdata_generators_several_second_throws_a_fea3f6bd0bfd(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1371])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_hand_next_a_8000f9bca2a6(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1372])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_a_d4bed7d3b892(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1373])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_hand_next_generator_throw_a_b08b8155650e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1374])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_hand_next_maybe_string_a_5cae91a5e329(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1375])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_hand_next_mixed_a_583f5e45953a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1376])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_nullable_string_keys_a_a09bf99ad208(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1377])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_nullable_values_a_ccdcdb3a6496(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1378])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_delete_a_cae4b5d6a2cc(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1379])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_entries_a_225ea986194d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1380])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_live_a_bb42f9262cf9(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1381])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_partial_a_0310f3bc5a88(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1382])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_union_a_0c7f504dde6c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1383])
+}
+
+func TestFlowProgram____oracle_testdata_iterable_views_view_values_a_07d51c59e81d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[1384])
 }
 
 func TestFlowGraphPaths____oracle_testdata_node_fs_directory_system_a_8c6f165bc3ed(t *testing.T) {

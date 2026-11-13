@@ -32,6 +32,11 @@ func programs(t *testing.T) []string {
 		"../oracle/testdata/*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
+		// The generator fixtures live in subdirectories the globs above don't reach. Every one lowers
+		// and runs on Node (internal/oracle's generatorAgrees), so a traced generator is checked here.
+		"../oracle/testdata/generators/*.a",
+		"../oracle/testdata/generators_several/*.a",
+		"../oracle/testdata/iterable_views/*.a",
 	} {
 		matches, err := filepath.Glob(pattern)
 		if err != nil {
