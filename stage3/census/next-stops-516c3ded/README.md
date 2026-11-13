@@ -31,3 +31,9 @@ comparison is incomplete if full output is unavailable.
 Only this directory is committed. Generated binaries and adapted trees stay
 in scratch; artifacts exceeding 20 MB are omitted and identified by sha256.
 Go source snapshots under this directory use `.go.txt` names.
+
+The environment reconnected during the original CommonJSBundle 11–20 group,
+removing its outer runner. Its children were terminated, its evidence was
+archived without a fabricated group exit, and the full group was repeated.
+`launch.py` starts only the bounded outer runner in a detached session to
+preserve its timeout/exit recording across tool reconnects.

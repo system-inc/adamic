@@ -40,7 +40,7 @@ def row(kind,before,after):
 for f in gone:row('gone',f,None)
 for f in added:row('new',None,f)
 for pair in changed:row('changed',pair['before'],pair['after'])
-s+=['','Adapted line 160, where full mode reaches the lowering gap:','','```typescript',(Path(prefix)/'sys.ts').read_text().splitlines()[159],'```','']
+s+=['','All 260 lowering findings are unchanged. Both commits record the NotYet at sys.ts:160:17: `stage 0 can\'t lower assigning an element of a value yet`, including its boundary records in three nested units. This gap is not newly introduced by the head. The ordinary census never reaches it because the refusal scan stops first at sys.ts:272:23.', '', 'Adapted line 160, where full mode reaches the lowering gap:','','```typescript',(Path(prefix)/'sys.ts').read_text().splitlines()[159],'```','']
 (base/'sys-comparison.md').write_text('\n'.join(s)+'\n')
 for name in ['head','parent']:
  p=Path('/workspace/scratch/next-stops-516c3ded-latent-'+name+'-census')

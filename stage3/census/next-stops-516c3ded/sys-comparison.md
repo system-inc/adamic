@@ -13,6 +13,8 @@ Every new, gone, or changed finding follows. Text is exact except that the commo
 | --- | --- | --- | --- | --- | --- |
 | gone | refusal_scan | Refused | sys.ts:157:9 | sys.ts:160:35: Adamic 0.1 refuses optional property Low in Partial<Levels> absent from structural source {}, which can hide fields; declare Low on the source type, or build a fresh object with known fields (adamic/no-optional-widening) | — |
 
+All 260 lowering findings are unchanged. Both commits record the NotYet at sys.ts:160:17: `stage 0 can't lower assigning an element of a value yet`, including its boundary records in three nested units. This gap is not newly introduced by the head. The ordinary census never reaches it because the refusal scan stops first at sys.ts:272:23.
+
 Adapted line 160, where full mode reaches the lowering gap:
 
 ```typescript

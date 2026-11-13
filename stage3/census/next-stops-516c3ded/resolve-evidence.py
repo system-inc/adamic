@@ -15,7 +15,7 @@ for g in groups:
  elif 'a method read as a value' in reason:
   phase='refusal_scan';emitter='internal/lower/refusals.go: (*lowering).methodValueStop (via methodValueRefusal)';source=['refusals.go','lower.go']
  elif reason == "a cast the runtime can't check":
-  phase='refusal_scan';emitter='internal/lower/cast_proof.go: (*lowering).castRefusal';source=['cast_proof.go','refusals.go','lower.go']
+  phase='refusal_scan';emitter='internal/lower/cast_proof.go: (*lowering).castProof (via castRefusal)';source=['cast_proof.go','refusals.go','lower.go']
  elif 'assigning an element of a value' in reason:
   phase='lowering';emitter='internal/lower/object.go: (*lowering).setIndex';source=['object.go']
  else:raise AssertionError(('unresolved emitter',g))
