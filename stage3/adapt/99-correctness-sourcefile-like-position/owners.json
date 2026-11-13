@@ -1,0 +1,12 @@
+[
+  {
+    "file": "types.ts",
+    "owner": "SourceFileLike",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export interface SourceFileLike {\n    readonly text: string;\n    /** @internal */\n    lineMap?: readonly number[] | undefined;\n    /** @internal */\n    getPositionOfLineAndCharacter?(line: number, character: number, allowEdits?: true): number;\n}",
+    "after": "export interface SourceFileLike {\n    readonly text: string;\n    /** @internal */\n    lineMap?: readonly number[] | undefined;\n    /** @internal */\n    getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;\n}",
+    "ownerBeforeSha256": "52c289ae8d54a5725835526c1ca7ceacda57fa9907b95463e134a1fc6b0633dc",
+    "ownerAfterSha256": "dc8128b409a1d48b071e8cb124dae724e449d27be52607e39922a4e084a88877"
+  }
+]
