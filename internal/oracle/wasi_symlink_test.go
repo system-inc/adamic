@@ -37,6 +37,7 @@ func wasiEmptySymlinkAgreesWithNode(t *testing.T, index int) {
 #include <time.h>
 #include <unistd.h>
 #include %q
+#include %q
 #ifdef SYMLINK_MUTANT
 #undef symlink
 #endif
@@ -49,17 +50,16 @@ int main(void) {
     adamic_object *thrown = adamic_thrown;
     adamic_string *code = thrown->slots[2].reference;
     adamic_string *message = thrown->slots[1].reference;
-    // WASI libc errno constants differ from Linux. Translate the two tested
-    // symbolic errors to Node/libuv's Linux error numbers for comparison.
-    int node_errno = error == ENOENT ? -2 : error == EINVAL ? -22 : 0;
-    printf("%%.*s\n%%d\n%%.*s -> 'adamic-empty-symlink-link'\n",
-           (int)code->length, code->bytes, node_errno,
+    // adamic_node_fs_raise's error has no errno slot, so the number is the runtime's own map,
+    // the one node_system_error fills errno with (node_errno.h, #z4a9p9e), never a translation here.
+    printf("%%.*s\n%%.0f\n%%.*s -> 'adamic-empty-symlink-link'\n",
+           (int)code->length, code->bytes, adamic_node_errno(error),
            (int)message->length, message->bytes);
     adamic_thrown = NULL;
     adamic_release(thrown);
     return 0;
 }
-`, filepath.Join(root, "internal/native/runtime/node_fs_wasi.h"))
+`, filepath.Join(root, "internal/native/runtime/node_errno.h"), filepath.Join(root, "internal/native/runtime/node_fs_wasi.h"))
 	if index < 2 {
 		for _, target := range []string{"", "wasm32-wasi"}[index : index+1] {
 			t.Run("control/"+target, func(t *testing.T) {
