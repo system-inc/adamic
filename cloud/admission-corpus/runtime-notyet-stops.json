@@ -300,6 +300,30 @@
       "ruling_task": "#995spev",
       "lifting_task": "#6a8w6bn",
       "stderr": "adamic: panic: clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined\n"
+    },
+    "8386322d4a4f3a47b42d3fc79f9d18f00043d773fdbd217ef21e25f83c0cdcb6": {
+      "path": "internal/oracle/testdata/json_errors/direct.a",
+      "ruling_task": "#z4a9p9e",
+      "lifting_task": "#ejcaz75",
+      "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
+    },
+    "6e925374e45ebba207b9fa94c47cd48e0ab9bb3a801aa6d9dc91485158f48276": {
+      "path": "internal/oracle/testdata/json_errors/view.a",
+      "ruling_task": "#z4a9p9e",
+      "lifting_task": "#ejcaz75",
+      "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
+    },
+    "927cb432c10119f5482fca5367ba690c10d9971e94a2db9d52affb28b331e70e": {
+      "path": "internal/oracle/testdata/json_errors/logical.a",
+      "ruling_task": "#z4a9p9e",
+      "lifting_task": "#ejcaz75",
+      "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
+    },
+    "5a1dc2af6354f05752af8481da2d076ca65940779dba03d1274c9779ee175757": {
+      "path": "internal/oracle/testdata/json_errors/message_absent.a",
+      "ruling_task": "#z4a9p9e",
+      "lifting_task": "#ejcaz75",
+      "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
     }
   }
 }
