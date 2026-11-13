@@ -25,7 +25,7 @@ func main() {
     if path := os.Getenv("METER_INVOCATIONS"); path != "" {
         stream, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil { panic(err) }
-        fmt.Fprintln(stream, root)
+        fmt.Fprintln(stream, root, "tail="+os.Getenv("LATENT_TAIL"))
         stream.Close()
     }
     if path := os.Getenv("LATENT_TIMES"); path != "" {
@@ -242,6 +242,12 @@ class CompilerSelectionTests(unittest.TestCase):
             self.assertEqual(tree['tsc_entry']['lowering_census']['per_reason'], {'NotYet: compiled with checkout': 1})
         self.assertTrue((run / 'build.log').exists())
         self.assertIn('Both measured with Adamic ' + self.checkout, (run / 'report.md').read_text())
+
+    def test_daily_runs_both_latent_passes_with_scoped_tail_sx8wdg7(self):
+        # The two latent passes take LATENT_TAIL=1 and the two checker censuses don't (#hcxsh1k).
+        self.measure()
+        tails = sorted(line.rsplit(' ', 1)[1] for line in (self.root / 'invocations.txt').read_text().splitlines())
+        self.assertEqual(tails, ['tail=', 'tail=', 'tail=1', 'tail=1'])
 
     def test_per_ref_builds_and_runs_each_pinned_compiler(self):
         run, result = self.measure('per-ref')
