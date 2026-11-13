@@ -1,0 +1,75 @@
+[
+  {
+    "where": "sys.ts:160:35",
+    "reason": "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields",
+    "phase": "refusal_scan",
+    "owner": "internal/lower/optional_widening.go: (*lowering).optionalWideningRefusal (via refuseOptionalWidening)",
+    "emitter": "internal/lower/optional_widening.go: (*lowering).optionalWideningRefusal (via refuseOptionalWidening)",
+    "source_files": [
+      "optional_widening.go",
+      "lower.go",
+      "refusals.go",
+      "refusal_rules.go"
+    ],
+    "adapted_excerpt": "157:         function setCustomLevel(level: keyof Levels) {\n158:             const customLevel = getLevel(baseVariable, level);\n159:             if (customLevel) {\n160:                 (customLevels || (customLevels = {}))[level] = Number(customLevel);\n161:             }\n162:         }\n163:     }"
+  },
+  {
+    "where": "-",
+    "reason": "-",
+    "phase": "accepted",
+    "owner": "lower.LowerWithOptions (accepted; no stop)",
+    "emitter": "lower.LowerWithOptions (accepted; no stop)",
+    "source_files": []
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "source_files": [
+      "namespaces.go",
+      "lower.go",
+      "modules.go"
+    ],
+    "adapted_excerpt": "290:     {\n291:         name: \"watchFile\",\n292:         type: new Map(Object.entries({\n293:             fixedpollinginterval: WatchFileKind.FixedPollingInterval,\n294:             prioritypollinginterval: WatchFileKind.PriorityPollingInterval,\n295:             dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,\n296:             fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "source_files": [
+      "namespaces.go",
+      "lower.go",
+      "modules.go"
+    ],
+    "adapted_excerpt": "10: /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/\n11: /** @internal */\n12: export const Diagnostics = {\n13:     Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,\n14:     Identifier_expected: diag(1003, DiagnosticCategory.Error, \"Identifier_expected_1003\", \"Identifier expected.\") as DiagnosticMessage,\n15:     _0_expected: diag(1005, DiagnosticCategory.Error, \"_0_expected_1005\", \"'{0}' expected.\") as DiagnosticMessage,\n16:     A_file_cannot_have_a_reference_to_itself: diag(1006, DiagnosticCategory.Error, \"A_file_cannot_have_a_reference_to_itself_1006\", \"A file cannot have a reference to itself.\") as DiagnosticMessage,"
+  },
+  {
+    "where": "scanner.ts:469:12",
+    "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+    "phase": "refusal_scan",
+    "owner": "internal/lower/refusals.go: (*lowering).methodValueStop (via methodValueRefusal)",
+    "emitter": "internal/lower/refusals.go: (*lowering).methodValueStop (via methodValueRefusal)",
+    "source_files": [
+      "refusals.go",
+      "lower.go"
+    ],
+    "adapted_excerpt": "466: /** @internal */\n467: export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number; // eslint-disable-line @typescript-eslint/unified-signatures\n468: export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number {\n469:     return sourceFile.getPositionOfLineAndCharacter ?\n470:         sourceFile.getPositionOfLineAndCharacter(line, character, allowEdits) :\n471:         computePositionOfLineAndCharacter(getLineStarts(sourceFile), line, character, sourceFile.text, allowEdits);\n472: }"
+  },
+  {
+    "where": "semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "source_files": [
+      "namespaces.go",
+      "lower.go",
+      "modules.go"
+    ],
+    "adapted_excerpt": "68:         const buildArray = build ? isArray(build) ? build : build.split(\".\") : emptyArray;\n69: \n70:         Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), \"Invalid argument: prerelease\");\n71:         Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");\n72: \n73:         this.major = major;\n74:         this.minor = minor;"
+  }
+]
