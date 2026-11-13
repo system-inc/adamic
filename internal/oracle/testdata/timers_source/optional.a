@@ -1,0 +1,27 @@
+// value_read.a through System's own spelling: optional methods (sys.ts declares setTimeout? and
+// clearTimeout?), so the slot sees each value with undefined beside it, and each call asserts the
+// method is there.
+import 'node:timers';
+
+interface Host {
+    setTimeout?(callback: () => void, ms: number): unknown;
+    clearTimeout?(timeoutId: unknown): void;
+}
+
+const host: Host = { setTimeout, clearTimeout };
+
+function schedule(label: string, count: number, ms: number): unknown {
+    const names: string[] = [];
+    for (let index = 0; index < count; index++) {
+        names.push(`${label}${String(index)}.ts`);
+    }
+    return host.setTimeout!(() => {
+        console.log(`${label} fired ${names.join(',')}`);
+    }, ms);
+}
+
+schedule('first', 2, 2);
+const cleared = schedule('cleared', 1, 1);
+schedule('second', 3, 4);
+host.clearTimeout!(cleared);
+console.log(`same ${String(host.setTimeout === setTimeout)} ${String(host.clearTimeout === clearTimeout)}`);

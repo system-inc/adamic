@@ -14,11 +14,12 @@ import (
 // range that don't warn. Their warning lines differ only in the process id, which disagreement's
 // timeoutWarningLine rule alone makes a token. list_order and fresh_start hold Node's timer order under
 // a busy loop: one duration's due timers before the next list's, and a start read at every setTimeout
-// (#a6yb7d1).
+// (#a6yb7d1). value_read and optional read the globals as values into System's concrete slots, as tsc's
+// getNodeSystem does (sys.ts:1499), through required methods and through optional ones.
 var timerSourceFixtures = []string{"forwarded", "fewer_parameters", "clear_then_set", "order", "callback_throw", "clear_kinds",
 	"delay_nan", "delay_negative", "delay_overflow", "delay_nan_twice", "delay_negative_twice", "delay_overflow_twice", "delay_kinds",
 	"delay_order_main", "delay_order_callback", "delay_order_job", "delay_computed",
-	"list_order", "fresh_start"}
+	"list_order", "fresh_start", "value_read", "optional"}
 
 func init() {
 	for _, name := range timerSourceFixtures {
@@ -86,6 +87,16 @@ func TestClearTimeoutForeignHandleStops(t *testing.T) {
 func TestClearTimeoutHeldAsUnionCancels(t *testing.T) {
 	t.Parallel()
 	timerSourceRun(t, timerSourcePath(t, "clear_held.a"), "cleared\nkept fired\n", run{stdout: []byte("cleared\nkept fired\n")})
+}
+
+// widened.a pins the hole open on #995spev: setTimeout's value, widened to a view with a third
+// parameter and called with an extra argument, which Node's setTimeout forwards to the callback and
+// the value's closure of two parameters drops, with no stop on either backend. A guard that closes it
+// (forwarding the extra arguments, or a stop at the closure's entry) turns this red, and its want
+// becomes Node's, or the stop's.
+func TestTimerValueWideningIsOpen(t *testing.T) {
+	t.Parallel()
+	timerSourceRun(t, timerSourcePath(t, "widened.a"), "extra e\n", run{stdout: []byte("extra undefined\n")})
 }
 
 // delay_kinds.a on Node prints what the rule was written from, Node v24's words: each warning's line,
