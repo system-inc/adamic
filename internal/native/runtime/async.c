@@ -187,6 +187,7 @@ static void check_unhandled(void) {
         pending *entry = unhandled_first;
         adamic_async_promise *promise = entry->promise;
         if (promise->rejected && !promise->handled) {
+            if (!promise->references) adamic_panic("compiler bug: an unhandled rejection whose reason is not a reference", 68);
             adamic_thrown = promise->value.reference;
             adamic_uncaught();
         }
