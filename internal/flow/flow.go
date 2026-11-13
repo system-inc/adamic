@@ -45,7 +45,7 @@ type IdentifierId uint32
 type EvaluationOrder uint32
 
 // DeclarationId names one variable across every value it takes: the IR's local index, plus one, so
-// that zero is never a variable. A temporary the effect inference mints (infer.go) has zero.
+// that zero is never a variable. A temporary with no variable of its own has zero.
 type DeclarationId uint32
 
 // Function is one IR function (or the program's top level) as a control-flow graph.
