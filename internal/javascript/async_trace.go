@@ -31,7 +31,9 @@ func (e *emitter) tracedAwait(at *ir.Statement, wait ir.Await, local int) {
 // the tracing activation back before the consumer goes on, and whatever comes back into the body
 // here reattaches it, a next() going on after the yield or a return() closing the generator, whose
 // finally then leaves through the function's own. The yield's point was marked before this, so it
-// is the body's last point before it parks.
+// is the body's last point before it parks. The yield is a statement, so a value next(x) sends in is
+// dropped: lowering refuses a yield's result as a value until #qk8rztp S5, and when S5 lifts that,
+// this has to carry the sent value out of the try (`const sent = yield v`).
 func (e *emitter) tracedYield(yield ir.Yield) {
 	value := e.temporary()
 	e.line("const %s = %s;", value, e.value(yield.Value))

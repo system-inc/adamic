@@ -936,6 +936,12 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.Await:
 		return "(await " + e.value(expression.Value) + ")"
 	case ir.Yield:
+		// A traced yield is a statement (tracedYield), its park and resume around it. Lowering makes a
+		// yield only as ir.Evaluate (generators.go yieldStatement), so one here under tracing is a new
+		// producer, said out loud rather than read as a trace that files the consumer under the generator.
+		if e.options.Suspend != nil {
+			panic("compiler bug: a yield outside statement position isn't traced (#7wn0t67)")
+		}
 		return "(yield " + e.value(expression.Value) + ")"
 	case ir.GeneratorNext:
 		return "adamicGeneratorNext(" + e.value(expression.Generator) + ")"
