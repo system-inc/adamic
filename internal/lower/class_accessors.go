@@ -303,7 +303,6 @@ func (l *lowering) finishAccessors() error {
 		return nil
 	}
 	reach := l.newAccessorReach(l.result)
-	l.presenceAccessorReach = reach
 	if err := l.refuseReachedContractGetters(reach, names); err != nil {
 		return err
 	}
@@ -443,11 +442,11 @@ func (l *lowering) finishAccessors() error {
 					// the receiver lowering made, and checkOptionalMemberPresence judges what the dispatcher does
 					// with each object that may reach it.
 					if expression.Absent && expression.Of == ir.Closure && expression.ViewWhere != "" {
-						if l.dispatchedPresenceReads == nil {
-							l.dispatchedPresenceReads = map[optionalPresenceKey][]ir.Expression{}
-						}
-						key := optionalPresenceKey{where: expression.ViewWhere, name: expression.Name}
-						l.dispatchedPresenceReads[key] = append(l.dispatchedPresenceReads[key], original.(ir.Property).Object)
+						l.dispatchedPresenceReads = append(l.dispatchedPresenceReads, dispatchedPresenceRead{
+							where:    expression.ViewWhere,
+							name:     expression.Name,
+							receiver: presenceReachOf(reach.graph, reach.graph.ReachingAllocations(original.(ir.Property).Object), reach.owners, expression.Name),
+						})
 					}
 					index := dispatch(expression.Name, expression.Of, false, 0, expression, ir.SetProperty{})
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
