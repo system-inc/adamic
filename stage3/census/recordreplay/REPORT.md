@@ -78,8 +78,11 @@ JavaScript bundle, including `_tsc.js` and `typescript.js`, is byte-identical;
 The requested next-stop scripts are retained verbatim under `next-stops/` and
 retargeted through environment paths. Their group scheduler is serial, and each
 root is observed twice by the unchanged ordinary tool. The census binaries have
-no backend and the latent binaries retain the no-output guards. All worktrees,
-temporary files, caches, upstream source and builds used for measurement are
-under `/workspace/scratch/recordreplay`. Upstream is v6.0.3 at
+no backend and the latent binaries retain the no-output guards. All worktrees, generated source, measurement outputs, upstream source and
+configured measurement/build caches are under `/workspace/scratch/recordreplay`.
+Setup deviation: the initial API `npm ci` ran before `npm_config_cache` was
+redirected and wrote to the default `/home/agent/.npm` cache. Subsequent installs
+and measurement commands use the scratch cache. The default cache was left
+untouched after discovery; no source checkout outside scratch was edited. Upstream is v6.0.3 at
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Neither requested branch was present
 before creation; all pushes are ordinary non-force pushes.

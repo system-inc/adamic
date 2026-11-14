@@ -6,5 +6,6 @@
   "loom": "never submit",
   "status": "setup; read gate pending",
   "serial_censuses": true,
-  "adaptation_inputs_identical": true
+  "adaptation_inputs_identical": true,
+  "setup_deviation": "Initial API npm ci used /home/agent/.npm before npm_config_cache was redirected; later installs and measurement/cache/temp writes use scratch."
 }
