@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
@@ -278,14 +279,14 @@ func strictWASIRuntime(t *testing.T) string {
 	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
 	inputs := buildcache.Inputs{
 		Name:      "strict-wasi-runtime",
-		Files:     []string{"internal/native/runtime", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.Tool(wasiCompiler(), "--target=wasm32-wasi", "--version")},
 	}
 	for _, variant := range variants {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))
 	}
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -22,7 +22,7 @@ call is the necessary hook; the list and its tests are kept outside the protecte
 Every emitted IR catch now checks instanceof RangeError and the exact V8 message
 Maximum call stack size exceeded before declaring the catch binding, marking catch
 entry or running its body. It calls the existing terminal panic function, using
-RangeError: Maximum call stack size exceeded from internal/native/runtime/stack.c.
+RangeError: Maximum call stack size exceeded from internal/native_runtime/c/stack.c.
 The pinned try_stack source catches on original Node, printing caught the overflow
 and after. Both Adamic backends stop terminally with exit 70 and empty stdout.
 Native emits `adamic: panic: RangeError: Maximum call stack size exceeded in depth`

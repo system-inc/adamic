@@ -64,7 +64,8 @@ func hostRun(t *testing.T, env []string, program string, args ...string) leakche
 func hostMutant(t *testing.T, file, before, after string) string {
 	t.Helper()
 	directory := t.TempDir()
-	entries, err := os.ReadDir("runtime")
+	// Reads: internal/native_runtime/c/*
+	entries, err := os.ReadDir("../native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +73,7 @@ func hostMutant(t *testing.T, file, before, after string) string {
 		if e.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("runtime", e.Name()))
+		data, err := os.ReadFile(filepath.Join("../native_runtime/c", e.Name()))
 		if err != nil {
 			t.Fatal(err)
 		}

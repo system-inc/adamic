@@ -18,7 +18,7 @@ out.mkdir(parents=True, exist_ok=True)
 threads_to_measure = [int(n) for n in args.threads.split(",")]
 for version, checkout in [("main", baseline), ("concurrency", root)]:
     subprocess.run(["go", "build", "-buildvcs=false", "-o", str(out / (version + ".compiler")), "./cmd/adamic"], cwd=checkout, check=True)
-flags=['clang','-std=c11','-O2','-pthread','-ffp-contract=off','-fno-optimize-sibling-calls','-I',str(root/'internal/native/runtime'),str(root/'internal/native/testdata/parallel/map.c')]+[str(f) for f in (root/'internal/native/runtime').glob('*.c')]+['-lm','-o',str(out/'map')]
+flags=['clang','-std=c11','-O2','-pthread','-ffp-contract=off','-fno-optimize-sibling-calls','-I',str(root/'internal/native_runtime/c'),str(root/'internal/native/testdata/parallel/map.c')]+[str(f) for f in (root/'internal/native_runtime/c').glob('*.c')]+['-lm','-o',str(out/'map')]
 subprocess.run(flags,check=True)
 for name in args.programs.split(","):
  for version in ['main','concurrency']:

@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func typedArraySortInputs(t *testing.T, kind string) (string, []byte) {
@@ -50,7 +52,7 @@ func typedArraySortMutation(t *testing.T, kind, before, after string) {
 	if control.exit != 0 || !bytes.Equal(control.stdout, expected) {
 		t.Fatalf("control differs from Node: %+v", control)
 	}
-	implementation, err := runtime.ReadFile("runtime/typed_array_sort.c")
+	implementation, err := native_runtime.Sources.ReadFile("c/typed_array_sort.c")
 	if err != nil {
 		t.Fatal(err)
 	}

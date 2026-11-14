@@ -1,7 +1,7 @@
 # Typed arrays: compiler claim
 
 Compiler owner: codex/typed-arrays. Runtime owns docs/typed-arrays.md and
-internal/native/runtime/adamic.h on codex/typed-arrays-runtime. This claim
+internal/native_runtime/c/adamic.h on codex/typed-arrays-runtime. This claim
 precedes implementation. Native emission waits for runtime's interface commit;
 its published names and signatures supersede the provisional names below.
 

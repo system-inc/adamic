@@ -80,7 +80,7 @@ func runtimeParserAcceptance(t *testing.T, wasi bool, mutateMessage ...bool) {
 	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
 		t.Fatal(err)
 	}
-	runtimeDirectory, _ := filepath.Abs("runtime")
+	runtimeDirectory, _ := filepath.Abs("../native_runtime/c")
 	binary := filepath.Join(directory, "check")
 	args := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-fno-omit-frame-pointer", "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_parser.c"), filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-o", binary}
 	compiler := "clang"

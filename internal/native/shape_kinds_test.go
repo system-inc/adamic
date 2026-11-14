@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -38,8 +39,8 @@ func TestShapeKindsDistinguishScalarLayouts(t *testing.T) {
 // one descriptor to change its kinds leaves its ownership bitmap intact. Neither
 // a second metadata table nor a mutant rejected by the C compiler proves this guard.
 var shapeProducers = []struct{ name, path string }{
-	{"CompiledRegExpOwner", "runtime/regexp_compile_ownership.c"},
-	{"JSONDecoder", "runtime/json_decode.c"},
+	{"CompiledRegExpOwner", "../native_runtime/c/regexp_compile_ownership.c"},
+	{"JSONDecoder", "../native_runtime/c/json_decode.c"},
 	{"PrototypeProbe", "prototype_contract_probe_test.go"},
 	{"ConcurrentShapeRegistry", "runtime_statics_parallel_test.go"},
 	{"JSONRecordProbe", "testdata/json-record-runtime/harness.c"},
@@ -47,14 +48,14 @@ var shapeProducers = []struct{ name, path string }{
 	{"TupleViewProbe", "fx7_view_runtime_test.go"},
 	{"JSONEncoderProbe", "../oracle/testdata/json_encoder_contract/runtime.c"},
 	{"AsyncFrameObjects", ""}, {"WASIRecords", ""},
-	{"NodeFSDirectory", "runtime/node_fs_directory.c"},
-	{"Directory", "runtime/directory.c"}, {"Input", "runtime/input.c"},
-	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"}, {"Timers", "runtime/timers_impl.h"},
-	{"Record", "runtime/record.c"}, {"RegExp", "runtime/regexp.c"},
-	{"TSGo", "runtime/tsgo.c"}, {"NodeProcess", "runtime/node_process.c"}, {"ProcessStatus", "runtime/process.c"},
-	{"NodeFS", "runtime/node_fs_file.c"}, {"NodeFSWatch", "runtime/node_fs_watch_impl.h"}, {"NodeCrypto", "runtime/node_crypto.c"},
-	{"Reflection", "runtime/library_object.c"}, {"Iterators", "runtime/map_set.c"},
-	{"Intl", "runtime/library_intl.c"},
+	{"NodeFSDirectory", "../native_runtime/c/node_fs_directory.c"},
+	{"Directory", "../native_runtime/c/directory.c"}, {"Input", "../native_runtime/c/input.c"},
+	{"Exceptions", "../native_runtime/c/exceptions.c"}, {"AsyncHost", "../native_runtime/c/async_host_impl.h"}, {"Timers", "../native_runtime/c/timers_impl.h"},
+	{"Record", "../native_runtime/c/record.c"}, {"RegExp", "../native_runtime/c/regexp.c"},
+	{"TSGo", "../native_runtime/c/tsgo.c"}, {"NodeProcess", "../native_runtime/c/node_process.c"}, {"ProcessStatus", "../native_runtime/c/process.c"},
+	{"NodeFS", "../native_runtime/c/node_fs_file.c"}, {"NodeFSWatch", "../native_runtime/c/node_fs_watch_impl.h"}, {"NodeCrypto", "../native_runtime/c/node_crypto.c"},
+	{"Reflection", "../native_runtime/c/library_object.c"}, {"Iterators", "../native_runtime/c/map_set.c"},
+	{"Intl", "../native_runtime/c/library_intl.c"},
 	{"CaptureGroups", ""}, {"Emitted", ""},
 	{"Graph", "graph_regions_test.go"}, {"GraphAdoption", "graph_concurrency_test.go"},
 	{"Region", "region_end_test.go"}, {"EnvironmentMixed", "environment_placement_runtime_test.go"}, {"Program", "testdata/program_region/core.c"},
@@ -224,7 +225,7 @@ func shapeProbeProduct(t *testing.T) string {
 	t.Helper()
 	var code strings.Builder
 	code.WriteString("#include \"adamic.h\"\n#include <string.h>\n_Static_assert(sizeof(adamic_field_kind)==1, \"one byte per slot\");\nint main(int argc,char **argv) {\nadamic_start(argc,argv);\nif(argc!=4) return 2;\nint index=atoi(argv[2]); int mutation=atoi(argv[3]);\n")
-	inputs := buildcache.Inputs{Name: "shape-kind-producers", Files: []string{"internal/native/runtime", "internal/native/shape_kinds_test.go", "internal/native/emit_objects.go", "internal/regexp/native.go"}}
+	inputs := buildcache.Inputs{Name: "shape-kind-producers", Files: []string{"internal/native_runtime/c", "internal/native/shape_kinds_test.go", "internal/native/emit_objects.go", "internal/regexp/native.go"}}
 	for _, producer := range shapeProducers {
 		if producer.path != "" {
 			inputs.Files = append(inputs.Files, filepath.ToSlash(filepath.Join("internal/native", producer.path)))
@@ -442,18 +443,18 @@ func TestShapeProducerInventory(t *testing.T) {
 	for _, producer := range shapeProducers {
 		known[producer.path] = true
 	}
-	entries, err := runtime.ReadDir("runtime")
+	entries, err := native_runtime.Sources.ReadDir("c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, entry := range entries {
-		path := "runtime/" + entry.Name()
-		data, err := runtime.ReadFile(path)
+		data, err := native_runtime.Sources.ReadFile("c/" + entry.Name())
 		if err != nil {
 			t.Fatal(err)
 		}
+		path := "../native_runtime/c/" + entry.Name()
 		hasShape := strings.Contains(string(data), "static const adamic_shape ") || strings.Contains(string(data), "(adamic_shape){")
-		if path == "runtime/regexp_compile_bytecode.c" || path == "runtime/regexp_compile_runtime.c" {
+		if path == "../native_runtime/c/regexp_compile_bytecode.c" || path == "../native_runtime/c/regexp_compile_runtime.c" {
 			// TestShapeKindsRuntimeCompiledGroups checks the actual dynamic descriptors.
 			continue
 		}
