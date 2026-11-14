@@ -1,0 +1,22 @@
+{
+  "baselineMatchesV1": true,
+  "changedSourceFiles": [
+    "src/compiler/program.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts"
+  ],
+  "sanctionedProofInputs": 29,
+  "moved": [],
+  "regenerationRequired": false,
+  "resolutionOriginalPinUnchanged": true,
+  "resolutionWitnessesUnchanged": {
+    "engine.cjs": true,
+    "mutant.cjs": true
+  },
+  "sourcePin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compilerToolHashes": {
+    "latent": "1dc7fe47ecde831c307ddcd87c6e3d0d58aff71c53ac2222718f6b0ab3fa1502",
+    "adamic": "fc615424e811f79367d6db1ab797eb830f117f32e14be46c1142cae818cb1b3b"
+  }
+}

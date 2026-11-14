@@ -1,0 +1,51 @@
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/scratch/diag-read-view-2/candidate-tree/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 69ms
+Finished shim-compile-cache-tsserver in 69ms
+Finished shim-compile-cache-typings-installer in 69ms
+Finished generate-types-map in 91ms
+Finished bundle-watch-guard in 98ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 485ms
+Starting localize
+> /workspace/adamic-tools/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 47ms
+Finished bundle-typings-installer in 432ms
+Finished lib in 1.1s
+Finished bundle-tsserver in 660ms
+Finished bundle-tsc in 4.6s
+Finished build-watch-guard in 5.4s
+Finished bundle-services in 5.1s
+Finished localize in 6.2s
+Finished build-tsc in 7.8s
+Finished build-services in 7.8s
+Finished build-tsserver in 7.8s
+Finished build-typings-installer in 7.8s
+Starting dts-services
+Finished dts-services in 1ms
+Starting lssl
+Starting dts-lssl
+Finished lssl in 8ms
+Finished dts-lssl in 12ms
+Completed local in 8.3s

@@ -1,0 +1,78 @@
+{
+  "classification": "changed: target type renamed, pre-existing refusal",
+  "acceptedSites": [
+    "src/compiler/utilities.ts:8808:39",
+    "src/compiler/utilities.ts:8808:44"
+  ],
+  "phase": "refusal_scan",
+  "kind": "Refused",
+  "userRuling": "A refusal that already stopped that unit on main, renamed by the retype, is not a regression. No other new or changed finding is accepted.",
+  "priorFullRecords": [
+    {
+      "mappedSite": [
+        "refusal_scan",
+        "Refused",
+        "src/compiler/utilities.ts:8808:39"
+      ],
+      "before": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8801:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:39",
+          "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+          "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:39: Adamic 0.1 refuses optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ],
+      "after": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8802:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:39",
+          "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+          "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:39: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    },
+    {
+      "mappedSite": [
+        "refusal_scan",
+        "Refused",
+        "src/compiler/utilities.ts:8808:44"
+      ],
+      "before": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8801:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:44",
+          "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+          "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:44: Adamic 0.1 refuses optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ],
+      "after": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8802:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:44",
+          "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+          "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:44: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+        }
+      ]
+    }
+  ]
+}
