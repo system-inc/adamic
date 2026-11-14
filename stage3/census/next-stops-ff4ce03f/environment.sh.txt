@@ -1,0 +1,14 @@
+export PATH="/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH"
+export GOTOOLCHAIN=auto
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/next-stops-ff4ce03f-typescript
+export GOCACHE=/workspace/scratch/next-stops-ff4ce03f-cache/go
+export GOMODCACHE=/workspace/scratch/next-stops-ff4ce03f-cache/mod
+export GOPATH=/workspace/scratch/next-stops-ff4ce03f-cache/gopath
+export GOTMPDIR=/workspace/scratch/next-stops-ff4ce03f-cache/tmp
+export TMPDIR=/workspace/scratch/next-stops-ff4ce03f-cache/tmp
+export XDG_CACHE_HOME=/workspace/scratch/next-stops-ff4ce03f-cache
+export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/next-stops-ff4ce03f-cache
+export STAGE3_CACHE=/workspace/scratch/next-stops-ff4ce03f-cache/stage3
+export npm_config_cache=/workspace/scratch/next-stops-ff4ce03f-npm-cache
+export PYTHONDONTWRITEBYTECODE=1
+export CENSUS_MODULE_FORMAT=CommonJSBundle
