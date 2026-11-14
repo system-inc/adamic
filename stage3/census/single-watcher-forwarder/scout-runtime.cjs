@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),ts=require('/workspace/scratch/scout-514-1280/stage3/api/node_modules/typescript');
+const out='/workspace/scratch/scout-514-1280/stage3/census/scout-514-1280';
+function trial(name,kind){
+ const text=fs.readFileSync(out+'/'+name+'/sys.js','utf8'),sf=ts.createSourceFile('sys.js',text,ts.ScriptTarget.ES2024,true,ts.ScriptKind.JS);
+ let helper,factory;
+ function visit(n){if(ts.isFunctionDeclaration(n)&&n.name?.text===(name==='a'?'createSingle'+(kind==='file'?'File':'Fs')+'WatcherPerName':'createSingleWatcherPerName'))helper=n.getText(sf);if(name==='c'&&ts.isCallExpression(n)&&n.expression.getText(sf)==='createSingleWatcherPerName'&&n.arguments[0].getText(sf)===(kind==='file'?'pollingWatches':'recursive ? fsWatchesRecursive : fsWatches'))factory=n.arguments[5].getText(sf);ts.forEachChild(n,visit)}visit(sf);
+ if(!helper)throw Error('no helper');const context={createGetCanonicalFileName:sensitive=>sensitive?s=>s:s=>s.toLowerCase(),orderedRemoveItem:(a,x)=>{const i=a.indexOf(x);if(i<0)return false;a.splice(i,1);return true},closeFileWatcherOf:x=>x.watcher.close()};vm.createContext(context);const helperName=name==='a'?'createSingle'+(kind==='file'?'File':'Fs')+'WatcherPerName':'createSingleWatcherPerName';vm.runInContext(helper+'\nthis.helper='+helperName+(factory?';this.factory='+factory:''),context);
+ const trace=[],cache=new Map();let forward,handle2,handle3;const stamp=new Date(123),event=kind==='file'?2:'rename',second=kind==='file'?2:'a.ts';let reentered=false;
+ const cb1=function(...args){trace.push(['one',args.length,args[0],args[1],args[2]===stamp,args[2]===undefined,this===undefined]);if(!reentered){reentered=true;handle2.close();handle3=register('A.ts',cb3);}};
+ const cb2=function(...args){trace.push(['two',args.length,args[0],args[1],args[2]===stamp,args[2]===undefined,this===undefined])};
+ const cb3=function(...args){trace.push(['three',args.length,args[0],args[1],args[2]===stamp,args[2]===undefined,this===undefined])};
+ function register(path,cb){return context.helper(cache,false,path,cb,f=>{trace.push(['create',f.length]);forward=f;f('early',second,stamp);return {close(){trace.push(['close'])}}},...(factory?[context.factory]:[]));}
+ const h1=register('A.ts',cb1);handle2=register('a.TS',cb2);const id=forward;forward(kind==='file'?'A.ts':event,second,stamp);trace.push(['identity',forward===id]);forward(kind==='file'?'A.ts':event,second);h1.close();handle3.close();trace.push(['cache',cache.size]);return trace;
+}
+const results={};for(const kind of ['file','fs']){results[kind]={};for(const name of ['base','a','c'])results[kind][name]=trial(name,kind);for(const name of ['a','c'])if(JSON.stringify(results[kind][name])!==JSON.stringify(results[kind].base))throw Error('mismatch '+name+' '+kind)}fs.writeFileSync(out+'/runtime-traces.json',JSON.stringify({description:'Isolated stock-emitted helpers: cache hit, early synchronous callback before insertion, snapshot dispatch under removal/addition, three forwarded arguments including explicit undefined, identity, length, close. No native output or full compiler runtime claimed.',results},null,2)+'\n');console.log('PASS: A and C match baseline traces for both callback types');
