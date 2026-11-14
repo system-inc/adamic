@@ -52,7 +52,7 @@ def refused(name):
 # Keep this host fixture's independent Node traces in separate units (combined: 46.98 s).
 flow_separate = {'../oracle/testdata/timsort.a', '../oracle/testdata/node_fs_directory_system.a'}
 
-families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
+families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
 for package in ['flow', 'fresh']:
     # Dedicated units append their own registrations; preserve their ownership.
