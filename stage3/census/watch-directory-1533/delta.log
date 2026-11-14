@@ -1,0 +1,78 @@
+{"contextual_new": 5, "contextual_gone": 1, "site_new": 5, "site_gone": 1, "changed": 0}
+mutant equality: True
+new [
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1202:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "<tree>/src/compiler/sys.ts:1210:9",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "<tree>/src/compiler/sys.ts:1215:82: stage 0 can't lower a boolean | undefined variable a function value captures yet",
+    "start": 52083,
+    "end": 52700
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1202:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "<tree>/src/compiler/sys.ts:1216:170",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "<tree>/src/compiler/sys.ts:1215:82: stage 0 can't lower a boolean | undefined variable a function value captures yet",
+    "start": 52583,
+    "end": 52617
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1202:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "<tree>/src/compiler/sys.ts:1216:204",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "<tree>/src/compiler/sys.ts:1216:208: stage 0 can't lower reading callbacks yet",
+    "start": 52617,
+    "end": 52685
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1202:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "<tree>/src/compiler/sys.ts:1215:82",
+    "reason": "a boolean | undefined variable a function value captures",
+    "text": "<tree>/src/compiler/sys.ts:1215:82: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1202:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "<tree>/src/compiler/sys.ts:1216:208",
+    "reason": "reading callbacks",
+    "text": "<tree>/src/compiler/sys.ts:1216:208: stage 0 can't lower reading callbacks yet"
+  }
+]
+gone [
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "<tree>/src/compiler/sys.ts:1473:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "<tree>/src/compiler/sys.ts:1533:13",
+    "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "text": "<tree>/src/compiler/sys.ts:1533:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+  }
+]

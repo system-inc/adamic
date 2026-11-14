@@ -1,0 +1,29 @@
+{
+  "decision": "STOP_NEW_CENSUS_FINDINGS",
+  "read_gate": "PASS",
+  "baseline_apply_exit": 0,
+  "census_exits": {
+    "main": 0,
+    "candidate": 0,
+    "mutant": 0
+  },
+  "new_NotYet": 2,
+  "new_Boundary": 3,
+  "gone_Refused": 1,
+  "changed": 0,
+  "1533_removed": true,
+  "1532_unchanged": true,
+  "restoring_mutant_exact_source": true,
+  "stock_roots": 79,
+  "stock_new_diagnostics": 0,
+  "adamic_types_exit": 0,
+  "javascript_non_declaration_files": 604,
+  "javascript_all_equal": true,
+  "candidate_adapter_contract": "NOT_RUN_STOP",
+  "candidate_apply": "NOT_RUN_STOP",
+  "declaration_comparison": "NOT_RUN_STOP",
+  "lane": "NOT_RUN_STOP",
+  "implementation_branch_created": false,
+  "ledger_changed": false,
+  "loom_submissions": 0
+}

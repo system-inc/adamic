@@ -1,0 +1,119 @@
+[
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1111,
+    "upstream_line": 1108,
+    "read": "recursive,",
+    "upstream_read": "recursive,",
+    "semantics": "pass to fsWatch",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1129,
+    "upstream_line": 1126,
+    "read": "return hostRecursiveDirectoryWatcher(directoryName, callback, recursive, options);",
+    "upstream_read": "return hostRecursiveDirectoryWatcher(directoryName, callback, recursive, options);",
+    "semantics": "pass to hostRecursiveDirectoryWatcher",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 621,
+    "upstream_line": 623,
+    "read": "recursive ?",
+    "upstream_read": "recursive ?",
+    "semantics": "truthiness branch",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 623,
+    "upstream_line": 625,
+    "read": "watchDirectory(dirName, callback, recursive, options);",
+    "upstream_read": "watchDirectory(dirName, callback, recursive, options);",
+    "semantics": "pass to nonRecursiveWatchDirectory",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1133,
+    "upstream_line": 1130,
+    "read": "Debug.assert(!recursive);",
+    "upstream_read": "Debug.assert(!recursive);",
+    "semantics": "!recursive assertion",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1163,
+    "upstream_line": 1160,
+    "read": "recursive,",
+    "upstream_read": "recursive,",
+    "semantics": "pass to fsWatch",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1211,
+    "upstream_line": 1207,
+    "read": "recursive ? fsWatchesRecursive : fsWatches,",
+    "upstream_read": "recursive ? fsWatchesRecursive : fsWatches,",
+    "semantics": "truthiness selects watcher map",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1215,
+    "upstream_line": 1211,
+    "read": "cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),",
+    "upstream_read": "cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),",
+    "semantics": "pass to fsWatchHandlingExistenceOnHost",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1269,
+    "upstream_line": 1264,
+    "read": "recursive,",
+    "upstream_read": "recursive,",
+    "semantics": "pass to worker or timestamp worker",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1367,
+    "upstream_line": 1362,
+    "read": "return fsWatchWorker(fileOrDirectory, recursive, (eventName, relativeFileName, currentModifiedTime) => {",
+    "upstream_read": "return fsWatchWorker(fileOrDirectory, recursive, (eventName, relativeFileName, currentModifiedTime) => {",
+    "semantics": "pass to worker",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "adapted_line": 1776,
+    "upstream_line": 1782,
+    "read": "{ persistent: true, recursive: !!recursive } : { persistent: true },",
+    "upstream_read": "{ persistent: true, recursive: !!recursive } : { persistent: true },",
+    "semantics": "!!recursive normalizes before Node",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "adapted_line": 889,
+    "upstream_line": 889,
+    "read": "recursive,",
+    "upstream_read": "recursive,",
+    "semantics": "pass to watchUtils.fsWatch",
+    "undefined_equals_false": true
+  },
+  {
+    "file": "src/harness/watchUtils.ts",
+    "adapted_line": 184,
+    "upstream_line": 182,
+    "read": "recursive ? fsWatchesRecursive : fsWatches,",
+    "upstream_read": "recursive ? fsWatchesRecursive : fsWatches,",
+    "semantics": "truthiness selects watcher map",
+    "undefined_equals_false": true
+  }
+]

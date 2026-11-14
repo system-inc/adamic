@@ -1,0 +1,14 @@
+Using /workspace/scratch/watch-directory-1533/TypeScript/Herebyfile.mjs to run dts
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 184ms
+Starting build-services
+Finished build-services in 26.5s
+Starting dts-services
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 3.7s
+Starting dts-lssl
+Finished dts-lssl in 10ms
+Completed dts in 30.4s

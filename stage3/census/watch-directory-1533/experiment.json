@@ -1,0 +1,17 @@
+{
+  "change": "widen the result alias and every reached recursive parameter contract, type-only",
+  "files": [
+    {
+      "file": "src/compiler/sys.ts",
+      "count": 9
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "count": 1
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "count": 2
+    }
+  ]
+}
