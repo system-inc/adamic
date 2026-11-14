@@ -403,3 +403,38 @@ func TestPinnedSubmoduleComesFromTheBoxsMirror(t *testing.T) {
 		t.Fatalf("a pin no mirror holds: %v, want it named with every place looked in", err)
 	}
 }
+
+// A mirror can hold the pin's commit and still not check it out: Home's shallow
+// ~/scratch/system_loom/modules/TypeScript.git clones empty (J-dmtb95y, J-v0705h4), where ~/loom-mirrors holds the pin
+// whole. That mirror is one more place looked, with why, and the next is tried. Here the first mirror has lost its
+// tree object, so its commit is there and its checkout fails. Mutant: build.go returning the failed checkout's error
+// instead of trying the next mirror, and the first checkout below fails.
+func TestPinnedSubmoduleSkipsAMirrorThatCannotCheckItOut(t *testing.T) {
+	t.Parallel()
+	broken, whole := t.TempDir(), t.TempDir()
+	sha := bareMirror(t, broken, "cohere")
+	if _, err := git(whole, "clone", "--quiet", "--bare", filepath.Join(broken, "cohere.git"), filepath.Join(whole, "cohere.git")); err != nil {
+		t.Fatalf("copying the mirror: %v", err)
+	}
+	tree, err := git(filepath.Join(broken, "cohere.git"), "rev-parse", sha+"^{tree}")
+	if err != nil {
+		t.Fatalf("reading the pin's tree: %v", err)
+	}
+	if err := os.Remove(filepath.Join(broken, "cohere.git", "objects", tree[:2], tree[2:])); err != nil {
+		t.Fatalf("the tree isn't a loose object in the mirror, so this can't break it: %v", err)
+	}
+	laid := t.TempDir()
+	target := filepath.Join(t.TempDir(), "cohere")
+	cleanup, err := checkoutPinnedFrom("cohere", sha, laid, target, []string{broken, whole})
+	if err != nil {
+		t.Fatalf("checking cohere out past the mirror that can't: %v", err)
+	}
+	defer cleanup()
+	if head, err := git(target, "rev-parse", "HEAD"); err != nil || head != sha {
+		t.Fatalf("the checkout is at %q (%v), want the pin %s", head, err, sha)
+	}
+	_, err = checkoutPinnedFrom("cohere", sha, laid, filepath.Join(t.TempDir(), "cohere"), []string{broken})
+	if err == nil || !strings.Contains(err.Error(), filepath.Join(broken, "cohere.git")+" (holds it, but didn't check it out: ") {
+		t.Fatalf("the broken mirror alone: %v, want it named as holding the pin and not checking it out", err)
+	}
+}
