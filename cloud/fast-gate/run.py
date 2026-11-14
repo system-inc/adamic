@@ -19,6 +19,8 @@ Package roots include test imports for commands that compile tests; paths are co
 Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
 A phase whose work reads the base tree beside the candidate's (catalog-apply) says so in inputs.readsBase, true.
 coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
+--darwin-paths-digest --tree <checkout> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin leg's record
+at that tip holds (cloud/fast-gate/darwin-legs/README.md).
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -346,6 +348,114 @@ def firstExecutor(rules, path):
     return next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
 
 
+# darwinLegsDirectory holds the recorded darwin legs, each a pool Mac's (Shackler's) go test ./internal/apple/... at one
+# tip, as <tip>.json. The gate reads it from the tools checkout, never the candidate's tree and never fetched, so a change
+# can't vouch for itself; records enter only through promote (darwin-legs/README.md).
+darwinLegsDirectory = "cloud/fast-gate/darwin-legs"
+lowercaseHex40 = re.compile(r"[0-9a-f]{40}")
+lowercaseHex64 = re.compile(r"[0-9a-f]{64}")
+# adamic's toolchain.PlatformMissingExitCode, which only the typed PlatformMissing stop exits with: a .a whose program
+# needs a platform this box can't provide, never a refusal of the program.
+platformMissingExit = 5
+
+
+def darwinPathsDigest(tree, commit, tools):
+    """What a darwin leg vouches for, as one sha256: over the sorted lines "<mode> <object> <path>\\n" of every entry of
+    commit's tree (git ls-tree -r) whose first rule in tools' executors.txt is darwin. The gate can't see a change's own
+    tip, since a candidate is rebased onto main with one parent, so it matches a record by this content instead: a main
+    that moved elsewhere keeps the digest, and one that moved inside the darwin paths changes it."""
+    rules = executorMap(tools)[0]
+    lines = []
+    for entry in git(tree, "ls-tree", "-r", "-z", "--full-tree", commit).split("\0"):
+        if not entry:
+            continue
+        described, path = entry.split("\t", 1)
+        mode, _, objectName = described.split(" ")
+        if firstExecutor(rules, path) == "darwin":
+            lines.append("%s %s %s\n" % (mode, objectName, path))
+    return hashlib.sha256("".join(sorted(lines)).encode()).hexdigest()
+
+
+def wholeNumber(value):
+    """Whether a JSON value is a whole number: json reads true as a bool, and a bool is an int to Python."""
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def darwinLegRefusal(name, record):
+    """Why the darwin leg record read from darwin-legs/<name> isn't green, or None when it is. Any field out of shape is
+    a reason, so a malformed record can never make the gate pass."""
+    if not isinstance(record, dict):
+        return "not a JSON object"
+    if not isinstance(record.get("tip"), str) or not lowercaseHex40.fullmatch(record["tip"]):
+        return "tip isn't 40 lowercase hex"
+    if name != record["tip"] + ".json":
+        return "tip %s isn't its file name" % record["tip"]
+    named = [key for key in ("claim", "job") if key in record]
+    if len(named) != 1:
+        return "names %s, not exactly one of claim and job" % (" and ".join(named) or "neither")
+    if not isinstance(record[named[0]], str) or not record[named[0]].strip():
+        return "%s isn't a non-empty string" % named[0]
+    if not isinstance(record.get("log"), dict) or not isinstance(record["log"].get("sha256"), str) \
+            or not lowercaseHex64.fullmatch(record["log"]["sha256"]):
+        return "log.sha256 isn't 64 lowercase hex"
+    if not wholeNumber(record.get("exit")) or record["exit"] != 0:
+        return "exit is %r, not 0" % (record.get("exit"),)
+    if not isinstance(record.get("counts"), dict):
+        return "counts isn't an object"
+    if not wholeNumber(record["counts"].get("failed")) or record["counts"]["failed"] != 0:
+        return "counts.failed is %r, not 0" % (record["counts"].get("failed"),)
+    if not wholeNumber(record["counts"].get("passed")) or record["counts"]["passed"] <= 0:
+        return "counts.passed is %r, not above 0" % (record["counts"].get("passed"),)
+    if not isinstance(record.get("darwinPaths"), str) or not lowercaseHex64.fullmatch(record["darwinPaths"]):
+        return "darwinPaths isn't 64 lowercase hex"
+    return None
+
+
+def darwinLegFor(tree, sha, tools):
+    """The recorded darwin leg sha's content passes on: (its record's file name, the record) for the first green record, in
+    file name order, whose darwinPaths is darwinPathsDigest's at sha, or (None, why), why naming what it looked for or the
+    first reason a record at that digest isn't green. A file that can't be read or parsed holds no digest to match."""
+    digest = darwinPathsDigest(tree, sha, tools)
+    directory = os.path.join(tools, darwinLegsDirectory)
+    names = sorted(name for name in os.listdir(directory) if name.endswith(".json")) if os.path.isdir(directory) else []
+    why = None
+    for name in names:
+        try:
+            with open(os.path.join(directory, name)) as handle:
+                record = json.load(handle)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(record, dict) or record.get("darwinPaths") != digest:
+            continue
+        refusal = darwinLegRefusal(name, record)
+        if refusal is None:
+            return name, record
+        why = why or "%s isn't green: %s" % (name, refusal)
+    return None, why or "no darwin leg recorded for darwinPaths %s" % digest
+
+
+def darwinLegSummary(name, record):
+    """What a gate's record keeps of the darwin leg it passed on: enough to find the leg's log and check its digest."""
+    summary = {"record": name, "tip": record["tip"], "host": record.get("host")}
+    for key in ("claim", "job"):
+        if key in record:
+            summary[key] = record[key]
+    summary.update({"log": record["log"]["sha256"], "darwinPaths": record["darwinPaths"]})
+    return summary
+
+
+def darwinPathsDigestMain():
+    """run.py --darwin-paths-digest --tree <checkout> --sha <tip> --tools <gate tools>: the darwinPaths a hand writes into
+    a darwin leg's record at that tip, the same digest the gate matches the candidate by."""
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--darwin-paths-digest", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--sha", required=True)
+    lister.add_argument("--tools", required=True)
+    arguments = lister.parse_args()
+    print(darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools))
+
+
 # goListFields are the fields of a go list record that its readers read, goPackages and goCommandInputs, and all go list
 # writes of one: asked by name, go list leaves out what nothing reads, staleness above all, which it works out against the
 # build cache for every package (about 0.7 s of adamic's package graph on Pupa at load 117, Oct 31). A reader that reads
@@ -568,9 +678,19 @@ def coverageInputs(tree, unit, full, change):
     from), by name and by content: none at a change of inert files alone, and none with no change to classify (--base
     for a fast gate, --sha for the whole). Their content keys them too because a compare lists the change's base and its
     tree from the same change, so the names alone are alike on both sides: an edit, an add or a delete of a path no rule
-    covers would leave the key where its base's was, plan nothing, and land with the red coverage owes it unrun."""
-    names = [] if change is None else coverageReduced(tree, change["tools"], coverageChanged(tree, change, full))
-    return {"packages": [], "paths": coverageGoStatePathspec + [":(literal)" + path for path in names], "names": names,
+    covers would leave the key where its base's was, plan nothing, and land with the red coverage owes it unrun. A change
+    that selects the darwin executor keys on every darwin path too, by the map's own globs (a git pathspec's * spans
+    directories as fnmatch's does): cover() passes darwin on the recorded leg whose darwinPaths digests all of them, so a
+    main that moved inside them, outside the change's own diff, must move the key."""
+    names, darwinGlobs = [], []
+    if change is not None:
+        changed = coverageChanged(tree, change, full)
+        names = coverageReduced(tree, change["tools"], changed)
+        rules = executorMap(change["tools"])[0]
+        # The same selection as cover(): a changed path whose first rule is darwin, or the map itself changed.
+        if "cloud/fast-gate/executors.txt" in changed or any(firstExecutor(rules, path) == "darwin" for path in changed):
+            darwinGlobs = [glob for name, glob in rules if name == "darwin"]
+    return {"packages": [], "paths": coverageGoStatePathspec + darwinGlobs + [":(literal)" + path for path in names], "names": names,
             "note": "coverage reads the tree's Go, module, driver and census state, and the changed paths it judges"}
 
 
@@ -821,6 +941,9 @@ RefusalExit = 3
 def main():
     if "--phase-unread" in sys.argv:
         phaseUnreadMain()
+        return
+    if "--darwin-paths-digest" in sys.argv:
+        darwinPathsDigestMain()
         return
     if "--list-units" in sys.argv:
         try:
@@ -1075,8 +1198,11 @@ class Gate:
         executors = self.cover(unowned, changed, pathSetChanged, record=recordCoverage)
         self.planned = planned
         if recordCoverage and "darwin" not in planned and "darwin" in self.exits:
-            del self.exits["darwin"]
-            self.exits["coverage"] = 1
+            # Coverage alone plans no darwin stage, so darwin's verdict is coverage's: a recorded leg it passed on leaves
+            # coverage green, and only one it couldn't find turns coverage red.
+            self.steps.pop("darwin", None)
+            if self.exits.pop("darwin") != 0:
+                self.exits["coverage"] = 1
         self.result["changed_files"] = changed
         self.result["unowned_files"] = unowned
         return changed, executors or set()
@@ -1190,7 +1316,11 @@ class Gate:
                     raise ValueError("catalog-apply has no work for this change")
                 self.catalogApply(patches)
         elif phase == "darwin":
-            self.fail("darwin", "needs darwin leg: go test ./internal/apple/... on Kirk's Mac")
+            # The paths cover() would name, the changed ones whose first rule is darwin, without the go list it needs.
+            rules = executorMap(self.arguments.tools)[0]
+            revision = "%s...%s" % (self.arguments.base, self.arguments.sha)
+            self.darwinLeg([path for path in self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n")
+                            if path and firstExecutor(rules, path) == "darwin"])
 
     def selectedUnits(self, phase, names):
         """The units of a phase this run takes: all of them, or the one --unit names (a catalog entry by its number).
@@ -1371,12 +1501,27 @@ class Gate:
             if path not in self.result.get("needs_darwin", []):
                 self.result.setdefault("needs_darwin", []).append(path)
         if "darwin" in executors:
-            # Never green on this box alone: the Mac's darwin leg is attached by integration.
+            # This box never builds for darwin: the leg ran on a pool Mac, and the gate passes on its record.
             self.planned.append("darwin")
-            self.exits["darwin"] = 1
-            self.fail("darwin", "needs darwin leg: go test ./internal/apple/... on Kirk's Mac, for %s" % ", ".join(self.result.get("needs_darwin", []) or ["the executor map's change"]))
-            return None
+            if not self.darwinLeg(self.result.get("needs_darwin", [])):
+                return None
         return executors
+
+    def darwinLeg(self, paths):
+        """The darwin executor's verdict for paths: green on the recorded leg whose darwinPaths matches the candidate's
+        (darwinLegFor), named in the record as darwin_leg, and red without one, saying what it looked for. Returns
+        whether it passed."""
+        self.steps["darwin"] = 0.0
+        name, leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+        if name is None:
+            self.exits["darwin"] = 1
+            self.fail("darwin", "needs a darwin leg on a pool Mac (Shackler), recorded in %s/<tip>.json at darwinPaths %s, for %s: %s" % (
+                darwinLegsDirectory, darwinPathsDigest(self.arguments.tree, self.arguments.sha, self.arguments.tools),
+                ", ".join(paths or ["the executor map's change"]), leg))
+            return False
+        self.exits["darwin"] = 0
+        self.result["darwin_leg"] = darwinLegSummary(name, leg)
+        return True
 
     def goList(self, pattern):
         listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
@@ -1419,13 +1564,17 @@ class Gate:
         """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
         types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
         passes, since nothing was refused. A file whose first line is "// a-check: refused <rule>" or
-        "// a-check: type error <code>" must fail exactly that way instead."""
+        "// a-check: type error <code>" must fail exactly that way instead. A darwin path stopped only because this box
+        has no darwin platform (the typed PlatformMissing stop) passes as "darwin leg" on the candidate's recorded leg
+        (darwinLegFor), whose pool Mac has the platform; any other outcome there is judged as anywhere else."""
         started = time.monotonic()
         adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic-acheck"
         if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
             self.exits["a-check"] = 1
             return
         results, failed = {}, []
+        # Read only when a path stops on the platform, so a check with no darwin path never reads the map or the legs.
+        rules, leg = None, None
         for path in paths:
             # A change that deletes a .a has nothing left to check there (views slice 1, Oct 8, deleted five).
             if not os.path.isfile(os.path.join(self.arguments.tree, path)):
@@ -1444,15 +1593,25 @@ class Gate:
                 outcome = "type error"
             else:
                 outcome = "failed"
+            row = {}
+            if outcome == "failed" and process.returncode == platformMissingExit and "darwin platform missing" in errors:
+                rules = executorMap(self.arguments.tools)[0] if rules is None else rules
+                if firstExecutor(rules, path) == "darwin":
+                    leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools) if leg is None else leg
+                    if leg[0] is not None:
+                        outcome, row = "darwin leg", {"darwin_leg": leg[0]}
             first = errors.strip().splitlines()[0] if errors.strip() else ""
-            if expect.startswith("refused"):
+            if outcome == "darwin leg":
+                # The program never reached the checker here; the recorded leg is its verdict, whatever its header expects.
+                ok = True
+            elif expect.startswith("refused"):
                 ok = outcome == "refused" and expect[len("refused"):].strip() in errors
             elif expect.startswith("type error"):
                 code = expect[len("type error"):].strip()
                 ok = outcome == "type error" and (not code or ("error " + code) in errors)
             else:
                 ok = outcome == "checked"
-            results[path] = {"outcome": outcome, "expected": expect or "checked", "first": first[:300]}
+            results[path] = dict({"outcome": outcome, "expected": expect or "checked", "first": first[:300]}, **row)
             if not ok:
                 failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
         self.result["a_check"] = results
