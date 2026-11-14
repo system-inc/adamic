@@ -8,8 +8,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/toolchain"
-
 	// The compiler's packages, linked so a change to anything they import selects this test wherever selection follows
 	// Go's import graph: a cohere bump that adds a package to the link set then fails here, not at the next full run.
 	_ "github.com/system-inc/adamic/internal/javascript"
@@ -33,38 +31,26 @@ func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there. Once
-	// for each system the gate builds on, cgo on as a native build has it, and the union taken: a package only one of
-	// them links (a build-constrained import) is still needed, wherever this test runs. On Oct 12 the two differ only
-	// outside the repository (linux links golang.org/x/sys/unix too), so the union guards a difference to come.
-	var listing []byte
-	for _, system := range []string{"linux", "darwin"} {
-		command := toolchain.CommandIn(root, "go", append([]string{"list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}"}, compiler...)...)
-		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
-		var stderr bytes.Buffer
-		command.Stderr = &stderr
-		output, err := command.Output()
-		if err != nil {
-			t.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
-		}
-		listing = append(listing, output...)
+	// Mutants run and restored: a link-only cohere import makes this exact-output
+	// guard red; generation settles all consumers without another hand-kept list.
+	table, _, err := Generate(root)
+	if err != nil {
+		t.Fatal(err)
 	}
-	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
-		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+	committed, err := os.ReadFile("compilerinputs_table.go")
+	if err != nil {
+		t.Fatal(err)
 	}
-	needed := map[string]bool{"go.work": true}
-	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
-		directory, goMod, _ := strings.Cut(line, "\t")
-		if relative, ok := inside(directory); ok {
-			needed[relative] = true
-		}
-		if relative, ok := inside(goMod); ok && goMod != "" {
-			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
-				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
-			}
-		}
+	if !bytes.Equal(committed, table) {
+		t.Fatal("compiler input table is stale; run go run ./internal/compilerinputs/generate")
+	}
+	linked, err := Derive(root, compiler)
+	if err != nil {
+		t.Fatal(err)
+	}
+	needed := map[string]bool{}
+	for _, input := range linked {
+		needed[input] = true
 	}
 	declared := Lowering()
 	if missing := gaps(declared, needed); len(missing) > 0 {
@@ -111,4 +97,35 @@ func gaps(declared []string, needed map[string]bool) []string {
 	}
 	sort.Strings(missing)
 	return missing
+}
+
+// Each consumer receives its own slice, including when roots are reordered.
+// Mutating one key's input list must never change another key's inputs.
+func TestGeneratedInputsAreCopies(t *testing.T) {
+	t.Parallel()
+	for _, projection := range []func() []string{Markdownblocks, Admission} {
+		first := projection()
+		original := first[0]
+		first[0] = "changed"
+		if projection()[0] != original {
+			t.Fatal("a caller changed a generated projection")
+		}
+	}
+	roots := []string{"./internal/native", "./internal/lower", "./internal/load"}
+	first, err := InputsFor(roots)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := first[0]
+	first[0] = "changed"
+	next, err := InputsFor([]string{"./internal/load", "./internal/lower", "./internal/native"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if next[0] != original {
+		t.Fatal("a caller changed a generated dependency set")
+	}
+	if _, err := InputsFor([]string{"./not-generated"}); err == nil {
+		t.Fatal("unknown roots borrowed another root set")
+	}
 }
