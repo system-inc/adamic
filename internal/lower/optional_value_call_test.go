@@ -32,8 +32,12 @@ func TestOptionalValueCallsAgree(t *testing.T) {
 		{"a local, void", optionalValueCallers + "function pick(present: boolean): ((n: number) => void) | undefined {\n\treturn present ? report : undefined;\n}\nconst absent = pick(false);\nabsent?.(arg(2));\nconst present = pick(true);\npresent?.(arg(3));\n" + optionalValueFinal, "report 3\ncalls 1 evaluated 1\n"},
 		{"a local returning a number", optionalValueCallers + "function twice(n: number): number {\n\tcalls += 1;\n\treturn n * 2;\n}\nfunction pick(present: boolean): ((n: number) => number) | undefined {\n\treturn present ? twice : undefined;\n}\nconst absent = pick(false);\nconst none: number | undefined = absent?.(arg(4));\nconsole.log(String(none));\nconst present = pick(true);\nconst some: number | undefined = present?.(arg(5));\nconsole.log(String(some));\n" + optionalValueFinal, "undefined\n10\ncalls 1 evaluated 1\n"},
 		{"a captured local, as emitter.ts's handlers", optionalValueCallers + "interface Handlers {\n\treadonly onBefore?: (n: number) => void;\n}\nfunction printer(handlers: Handlers): (n: number) => void {\n\tconst { onBefore } = handlers;\n\treturn (n: number): void => {\n\t\tonBefore?.(arg(n));\n\t};\n}\nprinter({})(6);\nprinter({ onBefore: report })(7);\n" + optionalValueFinal, "report 7\ncalls 1 evaluated 1\n"},
-		{"an argument writes the binding", optionalValueCallers + "let cb: ((n: number) => void) | undefined = report;\ncb?.((cb = undefined, arg(8)));\ncb?.(arg(9));\n" + optionalValueFinal, "report 8\ncalls 1 evaluated 1\n"},
-		{"a closure argument writes the binding", optionalValueCallers + "let cb: ((n: number) => void) | undefined = report;\nfunction clear(): number {\n\tcb = undefined;\n\treturn 10;\n}\ncb?.(clear());\ncb?.(arg(11));\n" + optionalValueFinal, "report 10\ncalls 1 evaluated 0\n"},
+		// Lower's read-once rows. An argument that writes the binding still calls the closure read before
+		// it, and the next call sees the write. clear() is a call, so the checker keeps cb's declared type
+		// at both calls; written inline as (cb = undefined, 1), tsc narrows cb to undefined and refuses it
+		// as not callable.
+		{"an argument writes the binding", optionalValueCallers + "let cb: ((n: number) => void) | undefined = report;\nfunction clear(n: number): number {\n\tcb = undefined;\n\treturn n;\n}\nfunction call(n: number): void {\n\tcb?.(clear(n));\n}\ncall(8);\ncall(9);\n" + optionalValueFinal, "report 8\ncalls 1 evaluated 0\n"},
+		{"a captured binding written by an argument", optionalValueCallers + "function make(): (n: number) => void {\n\tlet cb: ((n: number) => void) | undefined = report;\n\tconst clear = (n: number): number => {\n\t\tcb = undefined;\n\t\treturn arg(n);\n\t};\n\treturn (n: number): void => {\n\t\tcb?.(clear(n));\n\t};\n}\nconst run = make();\nrun(10);\nrun(11);\n" + optionalValueFinal, "report 10\ncalls 1 evaluated 1\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
