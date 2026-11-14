@@ -222,8 +222,8 @@ func TestNodeTimerValueViewsNotYet(t *testing.T) {
 	for source, want := range map[string]string{
 		ruled + "type Spread = (...values: [callback: (label?: unknown) => void, ms: number, label: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'tuple');":                                                   "a tuple is held as an object",
 		ruled + "type Spread = (...values: [callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string]) => unknown;\nconst spread: Spread = ruled;\nspread(() => {}, 1, 'L', 'X');":                  "a tuple is held as an object",
-		ruled + "const bound = ruled.bind(undefined, (x?: unknown) => console.log(String(x)));\nbound(1, 'bound');":                                                                                                                       "bind of a function that observes its argument count or collects rest arguments",
-		ruled + "type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;\nconst four: Four = ruled;\nconst bound = four.bind(undefined, () => {});\nbound(1, 'L', 'X');": "bind of a function that observes its argument count or collects rest arguments",
+		ruled + "const bound = ruled.bind(undefined, (x?: unknown) => console.log(String(x)));\nbound(1, 'bound');":                                                                                                                       "bind of a function that observes its argument count, collects rest arguments or declares more parameters than its bound type names",
+		ruled + "type Four = (callback: (label?: unknown, extra?: unknown) => void, ms: number, label: string, extra: string) => unknown;\nconst four: Four = ruled;\nconst bound = four.bind(undefined, () => {});\nbound(1, 'L', 'X');": "bind of a function that observes its argument count, collects rest arguments or declares more parameters than its bound type names",
 	} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()

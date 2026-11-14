@@ -356,8 +356,24 @@ func (l *lowering) boundKeyedLength(node *ast.Node) bool {
 
 func init() { refusalRules.register(2890, "boundObservation", (*lowering).boundObservation) }
 
+// declaresBeyond is whether candidate declares more parameters than a call passing passed arguments
+// fills: a value held as a narrower type, `(shape: Shape, index?: number) => boolean` held as
+// `(shape: Shape) => boolean`, is called with the type's arguments alone, while JavaScript hands it
+// every argument its caller passed (#04f5s0s, #jqf1drp). Parameters holds the declared parameters in
+// order (a destructured or defaulted one arrives as one incoming local), behind a method's leading
+// receiver, which Receiver marks and no argument fills, so it's left out of the count. The environment
+// is Environment, never Parameters. A lone this parameter is counted, which can only stop more.
+func declaresBeyond(candidate ir.Function, passed int) bool {
+	declared := len(candidate.Parameters)
+	if candidate.Receiver {
+		declared--
+	}
+	return declared > passed
+}
+
 // Until bound adapters forward an unbounded argument vector, fail closed when a
-// possible implementation observes its exact count or collects a rest tail.
+// possible implementation observes its exact count, collects a rest tail or
+// declares more parameters than the bound type names (declaresBeyond).
 func (l *lowering) checkBoundArguments() error {
 	for _, record := range l.closureRecords {
 		function := l.result.Functions[record.function]
@@ -373,8 +389,8 @@ func (l *lowering) checkBoundArguments() error {
 				}
 				for _, target := range candidates {
 					candidate := l.result.Functions[target]
-					if candidate.ReadsArguments || candidate.RestElement != 0 {
-						found = l.notYet(record.node, "bind of a function that observes its argument count or collects rest arguments")
+					if candidate.ReadsArguments || candidate.RestElement != 0 || declaresBeyond(candidate, len(call.Arguments)) {
+						found = l.notYet(record.node, "bind of a function that observes its argument count, collects rest arguments or declares more parameters than its bound type names")
 					}
 				}
 			}
