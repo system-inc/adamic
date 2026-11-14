@@ -13,6 +13,15 @@
       "exit": 0,
       "seconds": 5.202320002999841,
       "limit": 6000
+    },
+    "apply.result.json": {
+      "command": [
+        "/workspace/scratch/diag-read-view-3/repo/stage3/apply.sh",
+        "/workspace/scratch/diag-read-view-3/applied-tree"
+      ],
+      "exit": 0,
+      "seconds": 448.58492762400056,
+      "limit": 6000
     }
   }
 }
