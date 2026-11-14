@@ -1,0 +1,6 @@
+// Spec: a detached method's `this` is typed as the class and is `undefined` at runtime
+// Expect: lowers
+type P = { f: () => number };
+const p: P = { f: () => 1 };
+const { f } = p;
+console.log(String(f()));

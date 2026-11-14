@@ -1,0 +1,6 @@
+// Spec: a detached method's `this` is typed as the class and is `undefined` at runtime
+// Expect: refused if nothing that fills f reads this, declare it as a function-typed property
+interface H { f(): number }
+class C { x = 1; f(): number { return this.x; } }
+const h: H = new C();
+const { f } = h;
