@@ -1,0 +1,13 @@
+{
+  "adapted_sys_lines": {
+    "515": "                createForwarder(() => cache.get(path)?.callbacks.slice()),",
+    "594": "    getAccessibleSortedChildDirectories,",
+    "618": "    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames);",
+    "790": "            if (!cache.get(dirPath)?.targetWatcher) invokeCallbacks(dirName, dirPath, invokeMap, hasChanges ? undefined : fileNames);"
+  },
+  "order": "initialization preflight, then all module refusal scans, then declaration/body lowering",
+  "enum_never_ancestor": "1d3b46dc9e85f9c1a555fcae39f1c125c8a181f9",
+  "candidate_515_emitter": "internal/lower/expression.go:1925 optionalCall; optionalCallNotYet in optional_method_call.go:113",
+  "candidate_594_emitter": "internal/lower/collections.go:584 destructuredField, refusal at 597",
+  "new_stop_emitter": "internal/lower/invariance.go:1138 wideningRefusal, refusal at 1178"
+}
