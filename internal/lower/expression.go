@@ -419,7 +419,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			sameCallable = same
 		}
-		if l.restHiddenByView(fromSignatures[0], toSignatures[0]) {
+		if l.restHiddenByView(fromSignatures[0], toSignatures[0], to) {
 			return false
 		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
@@ -473,23 +473,23 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	return true
 }
 
-// restHiddenByView reports whether a function with a rest parameter, seen through to, would be seen
-// through a program view with no rest. Every fixed view can be widened by arity in the next view, (a:
-// string) => string seen as (a: string, b: number) => string, and that relation no longer shows the
-// rest, while the closure underneath still collects every argument raw (copyRest). So the rest is
-// judged only while the type still shows it, and a view that hides it is NotYet: Language's h1 to h3 on
-// #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function pointer.
-// A library view hides the rest too: a rest function handed to map's callback reached clang as C it
-// refuses, since the intrinsic adapter calls it with the view's slots (r19). A host function's own rest
-// (setTimeout's, declared in TypeScript's library, Node's types or the prelude) is exempt, since its
-// value is a host lowering's closure with its own layout, never a program closure copyRest packs.
-// Calling through the callee's own layout is #8q1pjsp's lift.
-func (l *lowering) restHiddenByView(from, to *checker.Signature) bool {
+// restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
+// signature to, would be seen through a view with no rest. Every fixed view can be widened by arity in
+// the next view, (a: string) => string seen as (a: string, b: number) => string, and that relation no
+// longer shows the rest, while the closure underneath still collects every argument raw (copyRest). So
+// the rest is judged only while the type still shows it, and a view that hides it is NotYet: Language's
+// h1 to h3 on #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function
+// pointer. A library view hides it too (a rest function handed to map's callback), and so does a host
+// function's own rest. The one road kept is #995spev's: setTimeout or clearTimeout read as a value into
+// its ruled view exactly (nodeTimerView), whose forwarder closure stops past the arguments it forwards
+// (ir.HostForwardStop), so a later widening stops loudly. Calling through the callee's own layout is
+// #8q1pjsp's lift.
+func (l *lowering) restHiddenByView(from, to *checker.Signature, viewed *checker.Type) bool {
 	if !from.HasRestParameter() || to.HasRestParameter() {
 		return false
 	}
 	if declaration := from.Declaration(); declaration != nil {
-		if file := ast.GetSourceFileOfNode(declaration); load.IsLibrary(file) || load.IsNodeLibrary(file) || load.IsPrelude(file) {
+		if name := nodeLibraryName(declaration.Symbol()); (name == nodeSetTimeoutName || name == nodeClearTimeoutName) && l.nodeTimerView(viewed, name) {
 			return false
 		}
 	}
@@ -1951,7 +1951,7 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 		}
-		if from, to := l.checker.GetSignaturesOfType(l.present(own), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.present(slot), checker.SignatureKindCall); len(from) > 0 && len(to) > 0 && l.restHiddenByView(from[0], to[0]) {
+		if from, to := l.checker.GetSignaturesOfType(l.present(own), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.present(slot), checker.SignatureKindCall); len(from) > 0 && len(to) > 0 && l.restHiddenByView(from[0], to[0], slot) {
 			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")

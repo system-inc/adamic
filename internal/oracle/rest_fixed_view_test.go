@@ -29,7 +29,8 @@ import (
 func TestRestThroughFixedView(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/rest_fixed_view"
-	// Each program's NotYet as line:col, or "" where it lowers and agrees.
+	// Each program's NotYet as line:col, "" where it lowers and agrees, or "loud" where it lowers and
+	// natively stops at run time, exit 70 with no sanitizer report.
 	stops := map[string]string{
 		"r1_unknown_rest":                    ":1:50",
 		"r2_union_rest":                      ":2:49",
@@ -57,9 +58,10 @@ func TestRestThroughFixedView(t *testing.T) {
 		// rest seen through a method with none (r20) is the same hidden rest, which reached the method
 		// through a mismatched function pointer on main. A library callback hides it too: a rest
 		// function handed to map's callback (r19, Language's union element covering map's three
-		// parameters) reached clang as C it refuses, so it stops at the argument. A host function's own
-		// rest (setTimeout's, r21) is exempt, since its value is a host lowering's closure, and seen
-		// through a narrower view and then widened it agrees.
+		// parameters) reached clang as C it refuses, so it stops at the argument. The one road kept is
+		// #995spev's: setTimeout read as a value into its ruled view exactly, whose forwarder stops past
+		// the three arguments it forwards, so the same value widened again (r21) lowers and stops loudly
+		// at run time, exit 70 with no sanitizer report, where Node runs it.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
@@ -67,7 +69,7 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r18_fixed_widened_control":       "",
 		"r19_library_callback_union_rest": ":2:28",
 		"r20_hidden_class_method":         ":2:42",
-		"r21_host_rest_widened":           "",
+		"r21_host_rest_widened":           "loud",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
@@ -95,6 +97,21 @@ func TestRestThroughFixedView(t *testing.T) {
 				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
 			program, err := lowered(t, absolute)
+			if stop == "loud" {
+				if err != nil {
+					t.Fatalf("Lower: %v", err)
+				}
+				sanitized, _ := natively(t, program)
+				for _, backend := range []struct {
+					name string
+					got  run
+				}{{"release", released(t, program)}, {"sanitized", sanitized}} {
+					if backend.got.exitCode != 70 || strings.Contains(string(backend.got.stderr), "runtime error") || strings.Contains(string(backend.got.stderr), "Sanitizer") {
+						t.Fatalf("%s: want a loud stop, exit 70 with no sanitizer report, got exit %d stderr %q", backend.name, backend.got.exitCode, backend.got.stderr)
+					}
+				}
+				return
+			}
 			if stop != "" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, entry.Name()+stop) {

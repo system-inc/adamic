@@ -22,7 +22,7 @@ func (l *lowering) sameWeakMethodSlots(from, to *checker.Type) bool {
 			// as a function's is: a class's join(...items) seen as { join(a: string) } and then as
 			// { join(a: string, b: number) } reached the method through a mismatched function pointer
 			// (restHiddenByView, #2t3h708).
-			if l.restHiddenByView(sourceSignature, viewedSignature) {
+			if l.restHiddenByView(sourceSignature, viewedSignature, to) {
 				return false
 			}
 			sourceParameters := sourceSignature.Parameters()
