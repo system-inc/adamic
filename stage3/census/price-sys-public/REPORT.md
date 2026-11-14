@@ -2,7 +2,7 @@
 
 | Site | Road | Target gone | New findings | Declaration diff lines | Calls added per lane run |
 |---|---|---|---|---|---|
-| 3 | site-local | Not measured | Not measured | Not measured | Not measured |
+| 3 | site-local (`bind`) | Yes | 0 | 0 | Counting pending |
 | 3 | declaration | Not measured | Not measured | Not measured | Not measured |
 | 10 | site-local | Not measured | Not measured | Not measured | Not measured |
 | 10 | declaration | Not measured | Not measured | Not measured | Not measured |
@@ -24,3 +24,9 @@ Baseline apply exited 0. Coordinates match the request: sys.ts:1385:31 and sys.t
 The full single-file CommonJSBundle census exited 0 in 350.052 seconds, using LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1 and LATENT_ONLY_FILE selecting the complete sys.ts. It reports zero checker diagnostics and checker_rejected:false. Its historical generic measurement label does not override that header. Both requested refusal sites are present. There are 185 raw finding events, 59 unique non-Boundary findings: 41 NotYet and 18 Refused. The control stream, timings, apply log, exact tsc config/result and source manifest are retained. This is a census, not successful native compilation.
 
 `READERS.md` lists the 35 resolved public-member references on the adapted baseline; the full 526-entry inventory includes homonyms and the harness/tests.
+
+## Site 3 local form
+
+Private candidate: `const originalWriteFile = sys.writeFile.bind(sys);`; the subsequent `.call(sys, ...)` remains unchanged. Its complete sys.ts census exits 0 (228.687 seconds): 58 unique findings, 41 NotYet and 17 Refused. Exactly the target refusal is gone; no finding is new or changed. Stock tsc over 79 roots exits 0. The one-line private candidate diff and full raw census are retained.
+
+The source captures writeFile once, immediately replaces sys.writeFile, and later invokes originalWriteFile.call(sys, ...). There is no identity comparison or other escape of originalWriteFile. A live-receiver arrow would look up the replacement and recurse. Bind captures the function and receiver at the original read point, creates a new function identity and performs a bind call then. The witness retains receiver-sensitive calls after a later replacement and confirms the identity difference and naive-arrow recursion. This is a measured candidate, not a proposed adaptation. The lane count and broader observation review remain pending.

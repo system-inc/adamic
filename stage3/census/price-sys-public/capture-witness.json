@@ -1,0 +1,41 @@
+{
+  "control": {
+    "events": [
+      [
+        true,
+        "sys",
+        "first",
+        "a",
+        false
+      ],
+      [
+        true,
+        "sys",
+        "second",
+        "b",
+        true
+      ]
+    ],
+    "capturedIdentityUnchanged": true
+  },
+  "bound": {
+    "events": [
+      [
+        true,
+        "sys",
+        "first",
+        "a",
+        false
+      ],
+      [
+        true,
+        "sys",
+        "second",
+        "b",
+        true
+      ]
+    ],
+    "capturedIdentityUnchanged": false
+  },
+  "naiveArrowRecurses": true
+}
