@@ -1,18 +1,18 @@
 package oracle
 
 import (
+	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 var unhandledRejectionFixtures = []struct {
 	name, stdout, message string
 }{
-	{"void_view", "", "rejected"},
-	{"chained", "", "chained"},
 	{"handled_later", "handled\n", ""},
-	{"timer", "timer\n", "timer rejection"},
-	{"two", "", "first"},
 }
 
 func unhandledRejectionPath(name string) string {
@@ -20,8 +20,8 @@ func unhandledRejectionPath(name string) string {
 }
 
 func init() {
-	// Keep the dedicated runtime-stop harness, as json_errors_named does, while
-	// registering the counted executions in the ordinary count family.
+	// Keep the handled-later agreement and its ordinary count record. The old
+	// void views are now exact refusal pins; the runtime backstop needs its own harness.
 	for _, fixture := range unhandledRejectionFixtures {
 		path := unhandledRejectionPath(fixture.name)
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) {
@@ -30,8 +30,8 @@ func init() {
 	}
 }
 
-// Skipping the checkpoint reds void_view and chained. Omitting await's handled
-// bit reds handled_later; omitting the queue's retain reds void_view under sanitizers.
+// Omitting await's handled bit reds
+// TestUnhandledRejectionAgreesWithNode/handled_later/sanitized.
 func TestUnhandledRejectionAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range unhandledRejectionFixtures {
@@ -76,6 +76,56 @@ func TestUnhandledRejectionAgreesWithNode(t *testing.T) {
 					}
 				})
 			}
+		})
+	}
+}
+
+var unhandledRejectionRefusals = []struct {
+	name, stdout, message, location string
+}{
+	{"void_view", "", "rejected", "unhandled_void_view.a:6:25"},
+	{"chained", "", "chained", "unhandled_chained.a:9:25"},
+	{"timer", "timer\n", "timer rejection", "unhandled_timer.a:7:25"},
+	{"two", "", "first", "unhandled_two.a:6:40"},
+}
+
+func unhandledRejectionRefusedPath(name string) string {
+	return "internal/oracle/testdata/async_review/refused/unhandled_" + name + ".a"
+}
+
+func init() {
+	for _, fixture := range unhandledRejectionRefusals {
+		fixtures = append(fixtures, struct {
+			path            string
+			lowers, checked bool
+		}{unhandledRejectionRefusedPath(fixture.name), false, false})
+	}
+}
+
+// Preserve the original source programs and Node's outputs after :355 refuses
+// their promise-returning function seen through a void view (#8j8ecw0).
+func TestUnhandledRejectionRefused(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range unhandledRejectionRefusals {
+		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, unhandledRejectionRefusedPath(fixture.name)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			want := run{stdout: []byte(fixture.stdout), stderr: []byte("adamic: panic: Error: " + fixture.message + "\n"), exitCode: 70}
+			if difference := disagreement(want, truth); difference != "" {
+				t.Fatalf("Node witness: %s: %+v", difference, truth)
+			}
+			_, err = lowered(t, path)
+			var refused *lower.Refused
+			const what = "an unawaited async task: a Promise<void> at the initializer site through () seen as void, a type that names no Promise, so whoever holds it drops the task"
+			const fix = "await the task inside a function that returns void, or keep the Promise in the type it's seen as"
+			if !errors.As(err, &refused) || refused.What != what || refused.Fix != fix || !strings.HasSuffix(refused.Where, fixture.location) {
+				t.Fatalf("want exact :355 refusal at %s: %v", fixture.location, err)
+			}
+			t.Log(err)
 		})
 	}
 }
