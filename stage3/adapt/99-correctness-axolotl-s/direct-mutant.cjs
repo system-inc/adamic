@@ -14,8 +14,8 @@ for(const name of ['filterMutate','clear']){
   const result=cp.spawnSync(binary,['c',file],{encoding:'utf8'});assert(!result.error);
   const log=file.replace(/\.ts$/,'.log');fs.writeFileSync(log,result.stdout+result.stderr);
   assert.equal(result.status,state==='splice'?0:1);
-  if(state==='length')assert.match(result.stderr,/stage 0 can't lower assigning a field of a value yet/);
-  cases.push({owner:name,state,file:path.basename(file),exit:result.status,classification:state==='splice'?'lowered':'NotYet',diagnostic:result.stderr.trim(),log:path.basename(log),sourceSha256:crypto.createHash('sha256').update(source).digest('hex')});
+  if(state==='length')assert.match(result.stderr,/Adamic 0\.1 refuses assigning a non-tuple array's length: array writes must preserve its existing indices/);
+  cases.push({owner:name,state,file:path.basename(file),exit:result.status,classification:state==='splice'?'lowered':'Refused',diagnostic:result.stderr.trim(),log:path.basename(log),sourceSha256:crypto.createHash('sha256').update(source).digest('hex')});
  }
 }
-console.log(JSON.stringify({status:'PASS',compiler:binary,compilerSha256:crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'),bodyScope:'Exact adapted bodies; filterMutate instantiated with number; clear parameter specialized to number[] to examine concrete storage. Each control changes only the truncation statement.',cases},null,2));
+console.log(JSON.stringify({status:'PASS',compiler:binary,compilerSha256:crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'),bodyScope:'Exact current adapted bodies, each instantiated with number[] at its call. Each control changes only the truncation statement.',cases},null,2));

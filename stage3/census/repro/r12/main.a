@@ -1,1 +1,2 @@
+// a-check: refused a value of type any: any has no proven type
 let value: any = 1; console.log(String(value));

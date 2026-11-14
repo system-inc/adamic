@@ -5,6 +5,6 @@ Source: `src/compiler/utilities.ts:8147` in TypeScript 6.0.3 (`050880ce59e30b356
 compareDataObjects keeps its complete body and original dynamic parameter annotations. Exercise equal and unequal numeric properties. The real any parameters are deliberate negative fixture input, not a proposed adaptation.
 
 Historical main census: **30** `a value of type any` sites (checker-rejected measurement).
-Current fixture: **NotYet**, `a value of type any`.
+Current fixture: **Refused**, `a value of type any: any has no proven type` at `main.a:4:36`. The historical census count above is unchanged.
 
 [main.a](main.a) runs through `oracle/node.mjs` and prints exactly [expected.stdout](expected.stdout), with empty stderr and exit 0. The shared status records the full diagnostic including its line and column.

@@ -2752,6 +2752,10 @@
     "internal/lower TestProduct_InspectorLetDerivedWriteMutant": [],
     "internal/lower TestProduct_InspectorDoomedGateMutant": [],
     "internal/native TestProduct_GCCRuntimeDate": [],
-    "internal/lower TestProduct_DateISOStringMethodMutant": []
+    "internal/lower TestProduct_DateISOStringMethodMutant": [],
+    "internal/lower TestProduct_NeverRefusalAnyMutant": [],
+    "internal/lower TestProduct_NeverRefusalEvalMutant": [],
+    "internal/lower TestProduct_NeverRefusalFunctionMutant": [],
+    "internal/lower TestProduct_NeverRefusalArrayMutant": []
   }
 }
