@@ -1,0 +1,5 @@
+command: ['rg', '-n', '\\bcreateSingleWatcherPerName\\b', '/workspace/scratch/single-watcher-after/src']
+exit: 0
+/workspace/scratch/single-watcher-after/src/compiler/sys.ts:498:function createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>(
+/workspace/scratch/single-watcher-after/src/compiler/sys.ts:1193:        return createSingleWatcherPerName(
+/workspace/scratch/single-watcher-after/src/compiler/sys.ts:1210:        return createSingleWatcherPerName(

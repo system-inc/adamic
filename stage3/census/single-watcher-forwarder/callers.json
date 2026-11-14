@@ -1,0 +1,40 @@
+{
+  "files": 712,
+  "callCount": 2,
+  "otherCalls": 0,
+  "identifierUses": 3,
+  "calls": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1193,
+      "column": 16,
+      "text": "createSingleWatcherPerName(\n            pollingWatches,\n            useCaseSensitiveFileNames,\n            fileName,\n            callback,\n            cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options),\n            (getCallbacks: () => FileWatcherCallback[] | undefined): FileWatcherCallback => (param1: string, param2: FileWatcherEventKind, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },\n        )"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1210,
+      "column": 16,
+      "text": "createSingleWatcherPerName(\n            recursive ? fsWatchesRecursive : fsWatches,\n            useCaseSensitiveFileNames,\n            fileOrDirectory,\n            callback,\n            cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),\n            (getCallbacks: () => FsWatchCallback[] | undefined): FsWatchCallback => (param1: \"rename\" | \"change\", param2: string | undefined | null, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },\n        )"
+    }
+  ],
+  "uses": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 498,
+      "column": 10,
+      "text": "function createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>(\n    cache: Map<string, SingleFileWatcher<T>>,\n    useCaseSensitiveFileNames: boolean,\n    name: string,\n    callback: T,\n    createWatcher: (callback: T) => FileWatcher,\n    createForwarder: (getCallbacks: () => T[] | undefined) => T,\n): FileWatcher {\n    const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);\n    const path = toCanonicalFileName(name);\n    const existing = cache.get(path);\n    if (existing) {\n        existing.callbacks.push(callback);\n    }\n    else {\n        cache.set(path, {\n            watcher: createWatcher(\n                createForwarder(() => cache.get(path)?.callbacks.slice()),\n            ),\n            callbacks: [callback],\n        });\n    }\n\n    return {\n        close: () => {\n            const watcher = cache.get(path);\n            // Watcher is not expected to be undefined, but if it is normally its because\n            // exception was thrown somewhere else and watch state is not what it should be\n            if (!watcher) return;\n            if (!orderedRemoveItem(watcher.callbacks, callback) || watcher.callbacks.length) return;\n            cache.delete(path);\n            closeFileWatcherOf(watcher);\n        },\n    };\n}"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1193,
+      "column": 16,
+      "text": "createSingleWatcherPerName(\n            pollingWatches,\n            useCaseSensitiveFileNames,\n            fileName,\n            callback,\n            cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options),\n            (getCallbacks: () => FileWatcherCallback[] | undefined): FileWatcherCallback => (param1: string, param2: FileWatcherEventKind, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },\n        )"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1210,
+      "column": 16,
+      "text": "createSingleWatcherPerName(\n            recursive ? fsWatchesRecursive : fsWatches,\n            useCaseSensitiveFileNames,\n            fileOrDirectory,\n            callback,\n            cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),\n            (getCallbacks: () => FsWatchCallback[] | undefined): FsWatchCallback => (param1: \"rename\" | \"change\", param2: string | undefined | null, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },\n        )"
+    }
+  ]
+}

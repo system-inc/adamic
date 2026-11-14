@@ -1,0 +1,10 @@
+export PATH="/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH"
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/single-watcher-typescript
+export NODE_PATH=/workspace/scratch/single-watcher-forwarder/stage3/api/node_modules
+export TMPDIR=/workspace/scratch/single-watcher-tmp
+export GOCACHE=/workspace/scratch/single-watcher-cache/go-build
+export GOPATH=/workspace/scratch/single-watcher-cache/go
+export npm_config_cache=/workspace/scratch/single-watcher-cache/npm
+export STAGE3_CACHE=/workspace/scratch/single-watcher-cache/stage3
+export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/single-watcher-cache
+export PYTHONDONTWRITEBYTECODE=1

@@ -1,0 +1,6 @@
+'use strict';
+const fs=require('fs'),path=require('path'),ts=require('typescript'),assert=require('assert/strict');
+const root=process.argv[2],out=process.argv[3],calls=[],uses=[];let files=0;
+function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const name=path.join(dir,e.name);if(e.isDirectory())walk(name);else if(/\.(?:tsx?|jsx?)$/.test(name)){files++;const text=fs.readFileSync(name,'utf8'),sf=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true);function visit(n){if(ts.isIdentifier(n)&&n.text==='createSingleWatcherPerName'){const pos=sf.getLineAndCharacterOfPosition(n.getStart(sf));const r={file:path.relative(root,name),line:pos.line+1,column:pos.character+1,text:n.parent.getText(sf)};uses.push(r);if(ts.isCallExpression(n.parent)&&n.parent.expression===n)calls.push(r);}ts.forEachChild(n,visit);}visit(sf);}}}
+walk(path.join(root,'src'));assert.equal(calls.length,2);assert.equal(uses.length,3);assert(calls.every(x=>x.file==='src/compiler/sys.ts'));
+fs.writeFileSync(out,JSON.stringify({files,callCount:calls.length,otherCalls:0,identifierUses:uses.length,calls,uses},null,2)+'\n');console.log(JSON.stringify({files,callCount:2,otherCalls:0,identifierUses:3}));

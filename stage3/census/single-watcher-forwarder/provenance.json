@@ -1,0 +1,20 @@
+{
+  "base": "10f8f6b4d0f7ce9d56f2558752eab3f095b6d9b2",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "binaries": {
+    "adamic": "ada96bf3c4f7298bbb69f431bca42a816bf66a61b8120e1fb491e499933395e7",
+    "latent": "7d1fe1920423cc8f65c0eda374b9f71534fd6c1335c321b5d00f42616a5d55aa"
+  },
+  "adapter": {
+    "stage3/adapt/99-correctness-single-watcher-forwarder/PROOF.md": "59171c8c43312fd9a4628e9aa780ce0afc9584d3dcf0a45ef47715107c5a8d1c",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/README.md": "5f43c53bed072ca04ea4004faf559df1e8334f9c600f70caf68fa99b6cefbef9",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/adapt.cjs": "182924f48d80071b358189319725d0173a66fa95a50100233859b4494a181da3",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/contract.cjs": "eee5722f2c635ecefde80f88c8d065a1fa45a8d189b5a5267210b18b6200963e",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json": "23e60c6eb976bd18fec7c53689802437dd3d8e33a6c632d3769eab76d564d830",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/resolved-sites.json": "290900230d47e451cc2b61c5357f83ea509038361edee8dae75de21f1ff931dd"
+  },
+  "submodules": [
+    " 5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)"
+  ]
+}

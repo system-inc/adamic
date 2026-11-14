@@ -7,7 +7,7 @@ function trial(root,kind){
  let factory=decl('createSystemWatchFunctions');
  const exposed='return {\n        watchFile,\n        watchDirectory,\n    };';assert(factory.includes(exposed));
  factory=factory.replace(exposed,'return {watchFile, watchDirectory, pollingWatchFile, fsWatch};');
- const context={Map,Date,createGetCanonicalFileName:sensitive=>sensitive?s=>s:s=>s.toLowerCase(),orderedRemoveItem:(a,x)=>{const i=a.indexOf(x);if(i<0)return false;a.splice(i,1);return true;},closeFileWatcherOf:x=>x.watcher.close()};
+ const context={Map,Date,FileSystemEntryKind:{File:0,Directory:1},createGetCanonicalFileName:sensitive=>sensitive?s=>s:s=>s.toLowerCase(),orderedRemoveItem:(a,x)=>{const i=a.indexOf(x);if(i<0)return false;a.splice(i,1);return true;},closeFileWatcherOf:x=>x.watcher.close()};
  vm.createContext(context);vm.runInContext(decl('createSingleWatcherPerName')+'\n'+factory+'\nthis.make=createSystemWatchFunctions',context);
  const trace=[],workers=[];let forward,h2,h3,entered=false;
  const stamp=new Date(123),arg1=kind==='polling'?'A.ts':'rename',arg2=kind==='polling'?2:'child.ts';

@@ -1,0 +1,20 @@
+{
+  "exit_code": 0,
+  "command": [
+    "python3",
+    "/workspace/scratch/single-watcher-evidence/run-command.py",
+    "census-base",
+    "timeout",
+    "--kill-after=10s",
+    "1800",
+    "/workspace/scratch/single-watcher-evidence/latent",
+    "/workspace/scratch/single-watcher-before/src/compiler",
+    "/workspace/scratch/single-watcher-evidence/base/latent.jsonl"
+  ],
+  "env": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/single-watcher-before/src/compiler/sys.ts",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  }
+}
