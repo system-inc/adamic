@@ -4,7 +4,7 @@
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "scratch": "/workspace/scratch/recordreplay",
   "loom": "never submit",
-  "status": "setup; read gate pending",
+  "status": "stopped incomplete after user interruption",
   "serial_censuses": true,
   "adaptation_inputs_identical": true,
   "setup_deviation": "Initial API npm ci used /home/agent/.npm before npm_config_cache was redirected; later installs and measurement/cache/temp writes use scratch."

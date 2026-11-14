@@ -1,0 +1,391 @@
+{
+  "completed_first_error_peak_rss_kib": 2527056,
+  "completed_ordinary_peak_rss_kib": 896268,
+  "completed_first_error_children": [
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-5/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-5-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 463.96189764799965,
+      "peak_rss_kib": 1520180
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-5/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-5-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 467.45173906700074,
+      "peak_rss_kib": 1508400
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-5/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-5-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 471.7644705490002,
+      "peak_rss_kib": 1529992
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-2/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-2-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 356.3800648289998,
+      "peak_rss_kib": 1367632
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-2/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-2-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 356.3120433869999,
+      "peak_rss_kib": 1387280
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-0/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-0-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 125.04824580199966,
+      "peak_rss_kib": 885228
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-0/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-0-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 127.62946291400021,
+      "peak_rss_kib": 882616
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-4/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-4-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 426.47402169199995,
+      "peak_rss_kib": 2441484
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-4/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-4-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 442.2803159949999,
+      "peak_rss_kib": 2527056
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-1/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-1-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 577.9881233730011,
+      "peak_rss_kib": 1929356
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-1/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-1-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 600.5760824490008,
+      "peak_rss_kib": 1871716
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-2/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-2-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 342.84867126000063,
+      "peak_rss_kib": 1351096
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-2/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-2-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 336.7266800590005,
+      "peak_rss_kib": 1345660
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-3/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-3-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 401.964526748,
+      "peak_rss_kib": 1815056
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-3/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-3-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 415.52055799499976,
+      "peak_rss_kib": 1685312
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-4/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-4-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 415.5754051219992,
+      "peak_rss_kib": 2384028
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-4/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-4-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 421.80715784099993,
+      "peak_rss_kib": 2450824
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-1/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/A-group-1-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 644.1577853109998,
+      "peak_rss_kib": 1884740
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-1/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 614.468876248,
+      "peak_rss_kib": 1922552
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-3/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-3-first-head.units.jsonl",
+      "exit": 0,
+      "seconds": 394.831386034999,
+      "peak_rss_kib": 1864520
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/candidate2/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/B-group-3/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "latent_times": "/workspace/scratch/recordreplay/B-group-3-first-base.units.jsonl",
+      "exit": 0,
+      "seconds": 386.6720329130003,
+      "peak_rss_kib": 1850576
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-head-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-0/head.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "exit": 0,
+      "seconds": 127.21655488000033,
+      "peak_rss_kib": 904272
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/first-entry-base-bin",
+        "/workspace/scratch/recordreplay/control/src/tsc/tsc.ts",
+        "/workspace/scratch/recordreplay/base/stage3/census/recordreplay/first-error/A-group-0/base.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 130.99208178499975,
+      "peak_rss_kib": 895632
+    }
+  ],
+  "completed_ordinary_children": [
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-01.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 32.91827977599996,
+      "peak_rss_kib": 896268
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-02.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 29.309151518000135,
+      "peak_rss_kib": 882048
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-03.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 28.1794743800001,
+      "peak_rss_kib": 880436
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/binder.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-04.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 30.71097794299999,
+      "peak_rss_kib": 889776
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/builder.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-05.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 29.75654517099997,
+      "peak_rss_kib": 886824
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/builderPublic.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-06.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 31.498340423999935,
+      "peak_rss_kib": 876388
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/builderState.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-07.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 30.380869734000044,
+      "peak_rss_kib": 884320
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-08.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 29.444750749999912,
+      "peak_rss_kib": 873520
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/checker.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-09.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 29.24112299699982,
+      "peak_rss_kib": 881448
+    },
+    {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-base",
+        "/workspace/scratch/recordreplay/control/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/recordreplay/ordinary-root-10.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/base",
+      "exit": 0,
+      "seconds": 30.8884950380002,
+      "peak_rss_kib": 891408
+    }
+  ]
+}

@@ -283,5 +283,7 @@
       "regressions": 0,
       "new_process_findings": []
     }
-  ]
+  ],
+  "complete": false,
+  "stopping_reason": "The user interrupted the wait. Orchestration sessions ended; the orphaned B-group-5 head census was stopped. No remaining census or push job is running."
 }

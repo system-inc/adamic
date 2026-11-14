@@ -2,12 +2,24 @@
 
 | Pair | 79-root first stops, both formats | Full sys.ts unit first stops |
 |---|---|---|
-| A: main 9c304036 against CLI 7ccad5b5 | Running; no complete paired table yet | None moved |
-| B: main 9c304036 against amendment e00ce47c6 | Pending | None moved |
+| A: main 9c304036 against CLI 7ccad5b5 | Incomplete: 10 main/CommonJSBundle controls; no complete pair | None moved |
+| B: main 9c304036 against amendment e00ce47c6 | Not started | None moved |
 
-This is an incomplete checkpoint. The paired 79-root tables are running serially;
-the all-tsc latent first-error pieces are running in six verified disjoint groups. No unmeasured result is
-claimed. Never submitted to Loom.
+This run is **stopped and incomplete** after the user interrupted the wait.
+All orchestration sessions ended, and the orphaned census child was stopped.
+No remaining census or push job is running. Never submitted to Loom.
+
+Completed: the amendment, both full sys.ts pairs, all six A all-unit pieces,
+and five of six B all-unit pieces. The eleven paired pieces have **zero moved
+unit first stops and zero new process findings**. A covers all **4,563 units**.
+The final B piece has a complete base stream and an explicitly partial head
+stream; it is not counted as a completed pair. `STOPPED.json` and
+`first-error/summary.json` record the stopping reason and partial evidence.
+
+The 79-root tables are incomplete: **10 of 632 required serial root children**
+finished, each observed twice. These are the first ten main/CommonJSBundle
+controls, all stopping at sys.ts:790:87's InvokeMap variance refusal. No complete
+paired root table is claimed. Lower's whole-request condition remains unverified.
 
 The read gate holds for the declaration-file form. The one-commit amendment is
 pushed to `typescript/recordreplay-amend-1` at `e00ce47c6`, directly on `7ccad5b5`.
@@ -91,3 +103,12 @@ The complete stock tsc entry is also checked with TypeScript 6.0.3 and pinned
 Node types: all 81 resolved implementation files are covered, with zero diagnostics
 for the control and both candidates and byte-identical JavaScript for all 81.
 See `gate/complete-entry-stock.json` and the complete diagnostic/hash records.
+
+Peak RSS for completed observations is retained per child. The accepted all-unit
+child maximum so far is 2527056 KiB; the first ten ordinary children peak at 896268 KiB.
+The interrupted head stream has no accepted peak measurement.
+
+To continue, measure the final B group as a fresh bounded pair, then resume the
+ordinary recipe using its existing complete root files. The historical
+`first-error.py` contains the old paused-scheduler PID and must not be rerun
+unmodified. Do not run the final audit until every required observation exists.

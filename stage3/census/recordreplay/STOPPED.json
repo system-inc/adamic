@@ -1,0 +1,32 @@
+{
+  "stopped_at_utc": "2026-11-14T21:09:42.188843+00:00",
+  "reason": "The user interrupted the wait. Orchestration sessions ended; the orphaned B-group-5 head census was stopped. No remaining census or push job is running.",
+  "amendment_complete": true,
+  "full_sys_pairs_complete": true,
+  "first_error_paired_pieces_complete": 11,
+  "first_error_paired_pieces_required": 12,
+  "ordinary_root_children_complete": 10,
+  "ordinary_root_children_required": 632,
+  "native_B_source_first_error_complete": false,
+  "pending_piece": {
+    "pair": "B",
+    "group": 5,
+    "artifacts": {
+      "base": {
+        "stream_complete": true,
+        "raw_bytes": 3759145,
+        "raw_sha256": "50292f7cfdc8879b7212b627049946ab9d68db32d888fe1ffa0bcfcab38ba85d",
+        "archive": "base.jsonl.gz"
+      },
+      "head": {
+        "stream_complete": false,
+        "raw_bytes": 6671,
+        "raw_sha256": "adbba8353a9ce1d0882a99adfb89d1743f7ca7b5916a5b763d05ed7ab85744c8",
+        "archive": "head.partial.jsonl.gz"
+      }
+    },
+    "head_peak_rss": "unavailable: wrapper ended during interruption; partial observation is not accepted"
+  },
+  "completed_piece_unit_moves": 0,
+  "completed_piece_new_process_findings": 0
+}
