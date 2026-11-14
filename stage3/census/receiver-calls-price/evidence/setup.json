@@ -1,0 +1,21 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "build": {
+    "exit": 0,
+    "peak_child_rss_kib": 2469172
+  },
+  "buildLog": {
+    "privatePath": "/workspace/scratch/receiver-apply.log",
+    "bytes": 843884,
+    "sha256": "7ffa1f16ca29e69bae8aeb72569ca2c10fb4dc939911e204562c5ec5bd637c7d"
+  },
+  "verification": {
+    "repeatedExit": 2,
+    "identicalPreflightJSON": true,
+    "compilerFilesHashed": 79,
+    "compilerSourceUnchanged": true,
+    "sourceManifestSha256": "b5604883e6b6f1786c94e65fcc8ae26f97f129c93240e13d90714b512f11ce5b"
+  },
+  "discarded": "exploratory preflight during incomplete adaptation; final run and repeat after completed build"
+}

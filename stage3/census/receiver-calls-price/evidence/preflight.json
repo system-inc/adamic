@@ -1,0 +1,1320 @@
+{
+  "roots": 79,
+  "sites": 19,
+  "status": "stopped",
+  "rewrittenUses": 0,
+  "linesChanged": 0,
+  "failures": [
+    {
+      "where": "src/compiler/transformers/classFields.ts:931:57",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1231:118",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1232:110",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1283:69",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1291:89",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1292:114",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1333:59",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1346:84",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1394:77",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(node.tag, hoistVariableDeclaration, languageVersion)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1588:73",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1606:89",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1782:53",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1880:57",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1984:103",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "ConditionalExpression",
+      "text": "requiresBlockScopedVar ? addBlockScopedVariable : hoistVariableDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2161:57",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:2995:51",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1984:78",
+      "member": "addBlockScopedVariable",
+      "reason": "local used other than as a direct callee",
+      "syntax": "ConditionalExpression",
+      "text": "requiresBlockScopedVar ? addBlockScopedVariable : hoistVariableDeclaration"
+    },
+    {
+      "where": "src/compiler/transformers/typeSerializer.ts:500:57",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/typeSerializer.ts:581:49",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1356:46",
+      "member": "getEmitHelperFactory",
+      "reason": "receiver is shadowed"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1379:46",
+      "member": "getEmitHelperFactory",
+      "reason": "receiver is shadowed"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1596:61",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1806:69",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1826:85",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1873:65",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1902:85",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1903:110",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2267:79",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:787:50",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:832:49",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:121:54",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:173:55",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:185:66",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:247:48",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2021.ts:60:44",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2021.ts:79:48",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2016.ts:67:63",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2016.ts:68:71",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2016.ts:86:63",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:3334:49",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4530:84",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4610:132",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:1227:84",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:1257:132",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:2093:49",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1167:59",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:1258:53",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:1717:59",
+      "member": "hoistVariableDeclaration",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "factory.createTempVariable(hoistVariableDeclaration)"
+    },
+    {
+      "where": "src/compiler/emitter.ts:5521:83",
+      "member": "hasGlobalName",
+      "reason": "local used other than as a direct callee",
+      "syntax": "CallExpression",
+      "text": "isFileLevelUniqueName(currentSourceFile, name, hasGlobalName)"
+    },
+    {
+      "where": "src/compiler/emitter.ts:1502:60",
+      "member": "isEmitNotificationEnabled",
+      "reason": "local used other than as a direct callee",
+      "syntax": "PrefixUnaryExpression",
+      "text": "!isEmitNotificationEnabled"
+    }
+  ],
+  "files": [
+    {
+      "file": "src/compiler/parser.ts",
+      "site": "src/compiler/parser.ts:1472:9",
+      "receiver": "factory",
+      "members": [
+        {
+          "member": "createNodeArray",
+          "local": "factoryCreateNodeArray",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createNumericLiteral",
+          "local": "factoryCreateNumericLiteral",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createStringLiteral",
+          "local": "factoryCreateStringLiteral",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createLiteralLikeNode",
+          "local": "factoryCreateLiteralLikeNode",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createIdentifier",
+          "local": "factoryCreateIdentifier",
+          "directCalls": 5,
+          "unsafe": []
+        },
+        {
+          "member": "createPrivateIdentifier",
+          "local": "factoryCreatePrivateIdentifier",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createToken",
+          "local": "factoryCreateToken",
+          "directCalls": 7,
+          "unsafe": []
+        },
+        {
+          "member": "createArrayLiteralExpression",
+          "local": "factoryCreateArrayLiteralExpression",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createObjectLiteralExpression",
+          "local": "factoryCreateObjectLiteralExpression",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createPropertyAccessExpression",
+          "local": "factoryCreatePropertyAccessExpression",
+          "directCalls": 4,
+          "unsafe": []
+        },
+        {
+          "member": "createPropertyAccessChain",
+          "local": "factoryCreatePropertyAccessChain",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createElementAccessExpression",
+          "local": "factoryCreateElementAccessExpression",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createElementAccessChain",
+          "local": "factoryCreateElementAccessChain",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createCallExpression",
+          "local": "factoryCreateCallExpression",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createCallChain",
+          "local": "factoryCreateCallChain",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createNewExpression",
+          "local": "factoryCreateNewExpression",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createParenthesizedExpression",
+          "local": "factoryCreateParenthesizedExpression",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createBlock",
+          "local": "factoryCreateBlock",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createVariableStatement",
+          "local": "factoryCreateVariableStatement",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createExpressionStatement",
+          "local": "factoryCreateExpressionStatement",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "createIfStatement",
+          "local": "factoryCreateIfStatement",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createWhileStatement",
+          "local": "factoryCreateWhileStatement",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createForStatement",
+          "local": "factoryCreateForStatement",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createForOfStatement",
+          "local": "factoryCreateForOfStatement",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createVariableDeclaration",
+          "local": "factoryCreateVariableDeclaration",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "createVariableDeclarationList",
+          "local": "factoryCreateVariableDeclarationList",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "site": "src/compiler/transformers/ts.ts:236:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 4,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 3,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "site": "src/compiler/transformers/classFields.ts:355:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 7,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 2,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/classFields.ts:931:57",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1231:118",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1232:110",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1283:69",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1291:89",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1292:114",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1333:59",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1346:84",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1394:77",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(node.tag, hoistVariableDeclaration, languageVersion)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1588:73",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1606:89",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1782:53",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1880:57",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:1984:103",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "ConditionalExpression",
+              "text": "requiresBlockScopedVar ? addBlockScopedVariable : hoistVariableDeclaration"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:2161:57",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/classFields.ts:2995:51",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration, /*reservedInNestedScopes*/ true)"
+            }
+          ]
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "addBlockScopedVariable",
+          "local": "addBlockScopedVariable",
+          "directCalls": 2,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/classFields.ts:1984:78",
+              "member": "addBlockScopedVariable",
+              "reason": "local used other than as a direct callee",
+              "syntax": "ConditionalExpression",
+              "text": "requiresBlockScopedVar ? addBlockScopedVariable : hoistVariableDeclaration"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "site": "src/compiler/transformers/typeSerializer.ts:133:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/typeSerializer.ts:500:57",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/typeSerializer.ts:581:49",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "site": "src/compiler/transformers/legacyDecorators.ts:89:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 3,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "site": "src/compiler/transformers/esDecorators.ts:296:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 11,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 1,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1596:61",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1806:69",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1826:85",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1873:65",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1902:85",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:1903:110",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "expandPreOrPostfixIncrementOrDecrementExpression(factory, node, expression, hoistVariableDeclaration, temp)"
+            },
+            {
+              "where": "src/compiler/transformers/esDecorators.ts:2267:79",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "site": "src/compiler/transformers/es2017.ts:120:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "site": "src/compiler/transformers/es2018.ts:155:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 9,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 2,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/es2018.ts:787:50",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2018.ts:832:49",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "site": "src/compiler/transformers/es2020.ts:43:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/es2020.ts:121:54",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2020.ts:173:55",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2020.ts:185:66",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2020.ts:247:48",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "site": "src/compiler/transformers/es2021.ts:26:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/es2021.ts:60:44",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2021.ts:79:48",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "site": "src/compiler/transformers/esnext.ts:77:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 3,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "site": "src/compiler/transformers/jsx.ts:99:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 1,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "site": "src/compiler/transformers/es2016.ts:22:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/es2016.ts:67:63",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2016.ts:68:71",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2016.ts:86:63",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "site": "src/compiler/transformers/es2015.ts:489:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 4,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 3,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 3,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 6,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 2,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/es2015.ts:3334:49",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2015.ts:4530:84",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/es2015.ts:4610:132",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "site": "src/compiler/transformers/generators.ts:337:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "hoistFunctionDeclaration",
+          "local": "hoistFunctionDeclaration",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 8,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/generators.ts:1227:84",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)"
+            },
+            {
+              "where": "src/compiler/transformers/generators.ts:1257:132",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/generators.ts:2093:49",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "site": "src/compiler/transformers/module/module.ts:192:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 9,
+          "unsafe": []
+        },
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 2,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/module/module.ts:1167:59",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            },
+            {
+              "where": "src/compiler/transformers/module/module.ts:1258:53",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "site": "src/compiler/transformers/module/system.ts:143:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "directCalls": 1,
+          "unsafe": []
+        },
+        {
+          "member": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "directCalls": 5,
+          "unsafe": [
+            {
+              "where": "src/compiler/transformers/module/system.ts:1717:59",
+              "member": "hoistVariableDeclaration",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "factory.createTempVariable(hoistVariableDeclaration)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "site": "src/compiler/transformers/module/esnextAnd2015.ts:68:11",
+      "receiver": "context",
+      "members": [
+        {
+          "member": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "directCalls": 2,
+          "unsafe": []
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "site": "src/compiler/emitter.ts:1215:9",
+      "receiver": "handlers",
+      "members": [
+        {
+          "member": "hasGlobalName",
+          "local": "hasGlobalName",
+          "directCalls": 0,
+          "unsafe": [
+            {
+              "where": "src/compiler/emitter.ts:5521:83",
+              "member": "hasGlobalName",
+              "reason": "local used other than as a direct callee",
+              "syntax": "CallExpression",
+              "text": "isFileLevelUniqueName(currentSourceFile, name, hasGlobalName)"
+            }
+          ]
+        },
+        {
+          "member": "isEmitNotificationEnabled",
+          "local": "isEmitNotificationEnabled",
+          "directCalls": 1,
+          "unsafe": [
+            {
+              "where": "src/compiler/emitter.ts:1502:60",
+              "member": "isEmitNotificationEnabled",
+              "reason": "local used other than as a direct callee",
+              "syntax": "PrefixUnaryExpression",
+              "text": "!isEmitNotificationEnabled"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

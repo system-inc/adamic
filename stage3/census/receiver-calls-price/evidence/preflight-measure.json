@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "stage3/census/receiver-calls-price/codemod.cjs",
+    "/workspace/scratch/receiver-baseline",
+    "/workspace/scratch/receiver-heat.json",
+    "stage3/census/receiver-calls-price/evidence/preflight.json"
+  ],
+  "cwd": "/workspace/scratch/receiver-calls-price",
+  "exit": 2,
+  "timeout": false,
+  "limit_seconds": null,
+  "wall_seconds": 6.055,
+  "peak_process_tree_rss_kib": 496888,
+  "sampling_interval_seconds": 0.2,
+  "samples": 31,
+  "max_descendant_rss_kib": 499944
+}
