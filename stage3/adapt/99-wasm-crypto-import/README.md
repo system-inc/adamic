@@ -288,3 +288,21 @@ oracle, fixture, meter, owners map or committed patch table is edited.
 The whole getNodeSystem before/after pins now include 93's concrete timer
 forwarding arrows. They forward the optional label and opaque unknown handle
 under Adamic's 05:48Z contract. This adapter's crypto transformation is unchanged.
+
+## Recordreplay inventory follow-up
+
+The current pre-99 tree has 747 source files, including
+`src/deprecatedCompat/controlFlowGraph.ts`; the amended tree has 748. Archived
+746-file proof records describe the older run and are retained as history.
+`proofs/check.cjs` now requires exactly the input inventory plus
+`src/recordreplay.d.ts`, checks the declaration's canonical bytes, hashes every
+source, and reverses the erased edits before checking crypto scope.
+`proofs/scoped.py` plans the two erased sys edits and declaration, compares the
+complete dynamic source map, and updates its two-file and mutation expectations.
+No foreign proof or production manifest was changed.
+
+The new `proofs/recordreplay/inventory-*.json` records are current observations.
+The complete source checker passes and rejects declaration/extra-file mutants.
+The scoped driver's actual planning/inventory segment passes; its historical
+full apply/build/lane pipeline was not rerun. Adapted source bytes are unchanged
+from the accepted read gate.
