@@ -1,0 +1,10 @@
+{
+  "file": "program.ts",
+  "limit_seconds": 600,
+  "observed_elapsed_seconds": 602,
+  "cpu_time": "00:13:21",
+  "rss_kib": 1739648,
+  "command": "/workspace/scratch/scout-ty5myjt/latent /workspace/scratch/scout-ty5myjt/adapted/src/compiler /workspace/scratch/scout-ty5myjt/results/baseline/program.ts.jsonl",
+  "action": "SIGTERM",
+  "reason": "full baseline census produced no complete file record within 600 seconds"
+}

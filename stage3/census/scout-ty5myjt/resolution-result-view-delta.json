@@ -1,0 +1,56 @@
+{
+  "candidate": "resolution-result-view",
+  "file": "resolutionCache.ts",
+  "before_raw": 221,
+  "after_raw": 217,
+  "before_unique": 133,
+  "after_unique": 129,
+  "new": [],
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1041:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1053:13",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1053:13: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1041:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1056:17",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1056:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1470:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1471:9",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1471:9: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:771:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:774:17",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:774:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    }
+  ],
+  "changed": []
+}

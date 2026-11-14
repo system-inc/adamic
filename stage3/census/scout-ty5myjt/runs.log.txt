@@ -1,0 +1,9 @@
+{"args": ["node", "/workspace/scratch/scout-ty5myjt/measure.cjs", "/workspace/scratch/scout-ty5myjt/adapted", "/workspace/scratch/scout-ty5myjt/results/baseline"], "status": 0, "seconds": 17.355895280838013}
+{"args": ["/workspace/scratch/scout-ty5myjt/latent", "/workspace/scratch/scout-ty5myjt/adapted/src/compiler", "/workspace/scratch/scout-ty5myjt/results/baseline/program.ts.jsonl"], "status": -15, "seconds": 602.4791855812073}
+Traceback (most recent call last):
+  File "/workspace/scratch/scout-ty5myjt/run.py", line 11, in <module>
+    run([str(root/'latent'),str(root/'adapted/src/compiler'),str(root/'results/baseline'/f'{f}.jsonl')],root/f'baseline-{f}.log',{'LATENT_ONLY_FILE':str(root/'adapted/src/compiler'/f)})
+  File "/workspace/scratch/scout-ty5myjt/run.py", line 8, in run
+    if p.returncode:raise RuntimeError(str(args))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ['/workspace/scratch/scout-ty5myjt/latent', '/workspace/scratch/scout-ty5myjt/adapted/src/compiler', '/workspace/scratch/scout-ty5myjt/results/baseline/program.ts.jsonl']

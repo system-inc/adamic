@@ -16,8 +16,9 @@ def compare(name,basepath,newpath,file):
   x=dict(x)
   def loc(m):
    line=int(m[2]);return 'src/compiler/'+file+':'+str(mapping.get(line,line) if after else line)+':'+m[3]
-  for field in ['where','text','unit']:
-   x[field]=re.sub(r'\S*/src/compiler/('+re.escape(file)+r'):(\d+):(\d+)',loc,x.get(field,''))
+  for field in ['where','text','unit','reason']:
+   x[field]=x.get(field,'').replace(str(root/name)+'/', '').replace(str(root/'adapted')+'/', '')
+   x[field]=re.sub(r'src/compiler/('+re.escape(file)+r'):(\d+):(\d+)',loc,x.get(field,''))
   return x
  def index(xs,after):
   result={}

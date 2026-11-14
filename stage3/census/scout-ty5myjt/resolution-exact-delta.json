@@ -1,0 +1,197 @@
+{
+  "candidate": "resolution-exact",
+  "file": "resolutionCache.ts",
+  "before_raw": 221,
+  "after_raw": 184,
+  "before_unique": 133,
+  "after_unique": 121,
+  "new": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "SkippedDependency",
+      "where": "src/compiler/resolutionCache.ts:1470:5",
+      "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+      "text": "latent census: skipped checker-diagnosed dependency at src/compiler/resolutionCache.ts:1470:5"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/resolutionCache.ts:579:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "latent census: skipped checker-diagnosed dependency at src/compiler/resolutionCache.ts:1470:5",
+      "start": 24104,
+      "end": 81796
+    }
+  ],
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:982:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1002:17",
+      "reason": "a value of type CompilerHost | ResolutionCacheHost seen as ModuleResolutionHost, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) | undefined would replace a method of type () => boolean",
+      "text": "src/compiler/resolutionCache.ts:1002:17: Adamic 0.1 refuses a value of type CompilerHost | ResolutionCacheHost seen as ModuleResolutionHost, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) | undefined would replace a method of type () => boolean; make useCaseSensitiveFileNames readonly in the type it's seen as (readonly useCaseSensitiveFileNames: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1041:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1053:13",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1053:13: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1041:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1056:17",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1056:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1470:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1471:42",
+      "reason": "a value of type Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>, which can write string where Path is read",
+      "text": "src/compiler/resolutionCache.ts:1471:42: Adamic 0.1 refuses a value of type Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>, which can write string where Path is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1470:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1471:9",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:1471:9: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:1470:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1472:42",
+      "reason": "a value of type Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>, which can write string where Path is read",
+      "text": "src/compiler/resolutionCache.ts:1472:42: Adamic 0.1 refuses a value of type Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>, which can write string where Path is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/resolutionCache.ts:1688:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/resolutionCache.ts:1688:13: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: mutateMap's U = void (read from the signature), read at src/compiler/utilities.ts:8253:32 as a destructured value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+      "start": 81216,
+      "end": 81480
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:1688:13",
+      "reason": "a generic instantiated at void whose body reads the value: mutateMap's U = void (read from the signature), read at src/compiler/utilities.ts:8253:32 as a destructured value",
+      "text": "src/compiler/resolutionCache.ts:1688:13: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: mutateMap's U = void (read from the signature), read at src/compiler/utilities.ts:8253:32 as a destructured value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/resolutionCache.ts:633:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/resolutionCache.ts:310:41: stage 0 can't lower a value of type Readonly<PathPathComponents<Path>> yet",
+      "start": 27207,
+      "end": 27281
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/resolutionCache.ts:642:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/resolutionCache.ts:654:9: stage 0 can't lower a generic function as a value yet",
+      "start": 27763,
+      "end": 29491
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:579:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/resolutionCache.ts:654:9",
+      "reason": "a generic function as a value",
+      "text": "src/compiler/resolutionCache.ts:654:9: stage 0 can't lower a generic function as a value yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:771:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:774:17",
+      "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+      "text": "src/compiler/resolutionCache.ts:774:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:982:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:990:16",
+      "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+      "text": "src/compiler/resolutionCache.ts:990:16: Adamic 0.1 refuses optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/resolutionCache.ts:982:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/resolutionCache.ts:997:27",
+      "reason": "optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+      "text": "src/compiler/resolutionCache.ts:997:27: Adamic 0.1 refuses optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+    }
+  ],
+  "changed": []
+}
