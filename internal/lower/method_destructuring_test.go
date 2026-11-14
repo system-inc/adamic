@@ -44,14 +44,15 @@ func TestMethodDestructuringFixesAgree(t *testing.T) {
 	}
 }
 
-// A function-typed view cannot make a receiver-dependent class method safe to
+// A function-typed view cannot make a receiver-dependent method safe to
 // detach. Keep this premise even if its present NotYet becomes a Refused.
-func TestClassMethodInFunctionPropertyDoesNotLower(t *testing.T) {
+func TestThisReadingMethodInFunctionPropertyDoesNotLower(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"declaration", "class C { x = 1; f(): number { return this.x; } }\nconst p: { f: () => number } = new C();\nconst { f } = p;\nconsole.log(String(f()));\n"},
 		{"parameter", "class C { x = 1; f(): number { return this.x; } }\nfunction g({ f }: { f: () => number }): number { return f(); }\nconsole.log(String(g(new C())));\n"},
 		{"read-across-call", "class C { x = 1; f(): number { return this.x; } }\nfunction h(p: { f: () => number }): number { const k = p.f; return k(); }\nconsole.log(String(h(new C())));\n"},
+		{"literal", "const lit = { x: 1, f(): number { return this.x; } };\nconst p: { f: () => number } = lit;\nconst { f } = p;\nconsole.log(String(f()));\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -60,7 +61,7 @@ func TestClassMethodInFunctionPropertyDoesNotLower(t *testing.T) {
 				var refused *Refused
 				var later *NotYet
 				if !errors.As(err, &refused) && !errors.As(err, &later) {
-					t.Fatalf("class method behind a function-typed property must stop, got %v", err)
+					t.Fatalf("this-reading method behind a function-typed property must stop, got %v", err)
 				}
 			})
 		}
