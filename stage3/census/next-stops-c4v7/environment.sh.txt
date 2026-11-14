@@ -10,3 +10,4 @@ export STAGE3_CACHE=/workspace/scratch/c4v7-census/cache/stage3
 export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/c4v7-census/TypeScript
 export PYTHONDONTWRITEBYTECODE=1
 export CENSUS_MODULE_FORMAT=CommonJSBundle
+export npm_config_cache=/workspace/scratch/c4v7-census/npm-cache
