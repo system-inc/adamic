@@ -113,9 +113,11 @@ console.log("never");
 	}
 }
 
-// A callback from another function's parameter could be an ambient predicate nothing checks, so the
-// overload's narrower result would be its lie: predicateArguments refuses it, as it refuses any
-// predicate argument whose body doesn't prove both branches.
+// A callback from another function's parameter proves nothing, since whatever its caller passed is behind
+// it, so the overload's narrower result would believe an answer nobody checked. In .ts it's passed as its
+// checked closure (#jqf1drp), which checks the parameter's own claim on each true answer, so an honest
+// caller agrees with Node; predicate_parameter_value_test.go in the oracle holds the lie. In .a
+// predicateArguments refuses it, naming the fix.
 func TestPredicateOverloadCallbackFromParameter(t *testing.T) {
 	t.Parallel()
 	source := predicateOverloadFind + `function firstCircle(shapes: Shape[], test: (x: Shape) => x is Circle): Circle | undefined {
@@ -125,10 +127,11 @@ const shapes: Shape[] = [{ kind: "square", side: 2 }, { kind: "circle", radius: 
 const circle = firstCircle(shapes, (x): x is Circle => x.kind === "circle");
 console.log(circle === undefined ? "none" : ` + "`radius ${circle.radius}`" + `);
 `
-	_, err := lowerSourceAs(t, source, ".ts")
+	lowersAndAgreesWithNodeAs(t, source, ".ts")
+	_, err := lowerSourceAs(t, source, ".a")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "an unproven predicate argument for parameter predicate") {
-		t.Fatalf("want predicateArguments' refusal of the parameter passed as find's callback, got %v", err)
+	if !errors.As(err, &refused) || refused.What != `an unproven predicate argument for parameter predicate (argument "test"): a parameter carries no proof of its claim` || !strings.HasPrefix(refused.Fix, "prove it with a named predicate") {
+		t.Fatalf("want predicateArguments' refusal of the parameter passed as find's callback in .a, naming the fix, got %v", err)
 	}
 }
 
