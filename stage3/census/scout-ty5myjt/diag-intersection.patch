@@ -1,0 +1,11 @@
+--- baseline/program.ts
++++ diag-intersection/program.ts
+@@ -2776,7 +2776,7 @@
+         return filesByName.get(path) || undefined;
+     }
+ 
+-    function getDiagnosticsHelper<T extends Diagnostic>(
++    function getDiagnosticsHelper<T extends Readonly<Pick<Diagnostic, "file">> & Diagnostic>(
+         sourceFile: SourceFile | undefined,
+         getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly T[],
+         cancellationToken: CancellationToken | undefined,

@@ -1,0 +1,128 @@
+[
+  {
+    "candidate": "diag-exact",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "diag-exact",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "diag-intersection",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "diag-intersection",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "diag-overloads",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "diag-overloads",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "diag-readonly",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "diag-readonly",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "resolution-exact",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "resolution-exact",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "resolution-readonly",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "resolution-readonly",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  },
+  {
+    "candidate": "resolution-result-view",
+    "file": "program.ts",
+    "identical": true,
+    "before_bytes": 239854,
+    "after_bytes": 239854,
+    "before_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278",
+    "after_sha256": "1fb3cb542ee5247f805dcad75b1ec5dc2ea8cb4427f60bb526eed5f35d09c278"
+  },
+  {
+    "candidate": "resolution-result-view",
+    "file": "resolutionCache.ts",
+    "identical": true,
+    "before_bytes": 64979,
+    "after_bytes": 64979,
+    "before_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f",
+    "after_sha256": "044d9c295984284ac518c0c61c09d4a6c089b062d80811fc4ddca773571c751f"
+  }
+]

@@ -1,0 +1,17 @@
+--- baseline/program.ts
++++ diag-exact/program.ts
+@@ -2776,11 +2776,11 @@
+         return filesByName.get(path) || undefined;
+     }
+ 
+-    function getDiagnosticsHelper<T extends Diagnostic>(
++    function getDiagnosticsHelper(
+         sourceFile: SourceFile | undefined,
+-        getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly T[],
++        getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[],
+         cancellationToken: CancellationToken | undefined,
+-    ): readonly T[] {
++    ): readonly DiagnosticWithLocation[] {
+         if (sourceFile) {
+             return sortAndDeduplicateDiagnostics(getDiagnostics(sourceFile, cancellationToken));
+         }

@@ -1,0 +1,254 @@
+[
+  {
+    "file": "src/compiler/program.ts",
+    "line": 649,
+    "column": 12,
+    "text": "sortAndDeduplicateDiagnostics(diagnostics || emptyArray)",
+    "signature": "(diagnostics: readonly Diagnostic[]): SortedReadonlyArray<Diagnostic>",
+    "args": [
+      "Diagnostic[]"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2785,
+    "column": 20,
+    "text": "sortAndDeduplicateDiagnostics(getDiagnostics(sourceFile, cancellationToken))",
+    "signature": "(diagnostics: readonly T[]): SortedReadonlyArray<T>",
+    "args": [
+      "readonly T[]"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2787,
+    "column": 16,
+    "text": "sortAndDeduplicateDiagnostics(flatMap(program.getSourceFiles(), sourceFile => {\r\n            if (cancellationToken) {\r\n                cancellationToken.throwIfCancellationRequested();\r\n            }\r\n            return getDiagnostics(sourceFile, cancellationToken);\r\n        }))",
+    "signature": "(diagnostics: readonly T[]): SortedReadonlyArray<T>",
+    "args": [
+      "readonly T[]"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2796,
+    "column": 16,
+    "text": "getDiagnosticsHelper(sourceFile, getSyntacticDiagnosticsForFile, cancellationToken)",
+    "signature": "(sourceFile: SourceFile | undefined, getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[], cancellationToken: CancellationToken | undefined): readonly DiagnosticWithLocation[]",
+    "args": [
+      "SourceFile | undefined",
+      "(sourceFile: SourceFile) => readonly DiagnosticWithLocation[]",
+      "CancellationToken | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2800,
+    "column": 16,
+    "text": "getDiagnosticsHelper(\r\n            sourceFile,\r\n            (sourceFile, cancellationToken) => getSemanticDiagnosticsForFile(sourceFile, cancellationToken, nodesToCheck),\r\n            cancellationToken,\r\n        )",
+    "signature": "(sourceFile: SourceFile | undefined, getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly Diagnostic[], cancellationToken: CancellationToken | undefined): readonly Diagnostic[]",
+    "args": [
+      "SourceFile | undefined",
+      "(sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly Diagnostic[]",
+      "CancellationToken | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 2829,
+    "column": 16,
+    "text": "getDiagnosticsHelper(sourceFile, getDeclarationDiagnosticsForFile, cancellationToken)",
+    "signature": "(sourceFile: SourceFile | undefined, getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[], cancellationToken: CancellationToken | undefined): readonly DiagnosticWithLocation[]",
+    "args": [
+      "SourceFile | undefined",
+      "(sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[]",
+      "CancellationToken | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 3269,
+    "column": 16,
+    "text": "sortAndDeduplicateDiagnostics(concatenate(\r\n            programDiagnostics.getCombinedDiagnostics(program).getGlobalDiagnostics(),\r\n            getOptionsDiagnosticsOfConfigFile(),\r\n        ))",
+    "signature": "(diagnostics: readonly Diagnostic[]): SortedReadonlyArray<Diagnostic>",
+    "args": [
+      "Diagnostic[]"
+    ]
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 3285,
+    "column": 35,
+    "text": "sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice())",
+    "signature": "(diagnostics: readonly Diagnostic[]): SortedReadonlyArray<Diagnostic>",
+    "args": [
+      "Diagnostic[]"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 774,
+    "column": 17,
+    "text": "stopWatchFailedLookupLocationOfResolution(\r\n                    resolution,\r\n                    resolutionHost.toPath(getInferredLibraryNameResolveFrom(resolutionHost.getCompilationSettings(), getCurrentDirectory(), libFileName)),\r\n                    getResolvedModuleFromResolution,\r\n                )",
+    "signature": "(resolution: CachedResolvedModuleWithFailedLookupLocations, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<CachedResolvedModuleWithFailedLookupLocations, import(\"./types.js\").ResolvedModuleFull>): void",
+    "args": [
+      "CachedResolvedModuleWithFailedLookupLocations",
+      "Path",
+      "(resolution: ResolvedModuleWithFailedLookupLocations) => import(\"./types.js\").ResolvedModuleFull | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 903,
+    "column": 21,
+    "text": "watchFailedLookupLocationsOfExternalModuleResolutions(name, resolution, path, getResolutionWithResolvedFileName, deferWatchingNonRelativeResolution)",
+    "signature": "(name: string, resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>, deferWatchingNonRelativeResolution: boolean): void",
+    "args": [
+      "string",
+      "T",
+      "Path",
+      "GetResolutionWithResolvedFileName<T, R>",
+      "boolean"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 905,
+    "column": 25,
+    "text": "stopWatchFailedLookupLocationOfResolution(existingResolution, path, getResolutionWithResolvedFileName)",
+    "signature": "(resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>): void",
+    "args": [
+      "T",
+      "Path",
+      "GetResolutionWithResolvedFileName<T, R>"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 955,
+    "column": 25,
+    "text": "stopWatchFailedLookupLocationOfResolution(resolution, path, getResolutionWithResolvedFileName)",
+    "signature": "(resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>): void",
+    "args": [
+      "T",
+      "Path",
+      "GetResolutionWithResolvedFileName<T, R>"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 990,
+    "column": 16,
+    "text": "resolveNamesWithLocalCache({\r\n            entries: typeDirectiveReferences,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedTypeReferenceDirectives,\r\n            loader: createTypeReferenceResolutionLoader(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                getModuleResolutionHost(resolutionHost),\r\n                typeReferenceDirectiveResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedTypeReferenceDirectiveFromResolution,\r\n            shouldRetryResolution: resolution => resolution.resolvedTypeReferenceDirective === undefined,\r\n            deferWatchingNonRelativeResolution: false,\r\n        })",
+    "signature": "({ entries, containingFile, containingSourceFile, redirectedReference, options, perFileCache, reusedNames, loader, getResolutionWithResolvedFileName, deferWatchingNonRelativeResolution, shouldRetryResolution, logChanges, }: ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, import(\"./types.js\").ResolvedTypeReferenceDirective>): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[]",
+    "args": [
+      "{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; options: CompilerOptions; reusedNames: readonly T[] | undefined; perFileCache: Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>; loader: ResolutionLoader<string | FileReference, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, SourceFile | undefined>; getResolutionWithResolvedFileName: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations) => import(\"./types.js\").ResolvedTypeReferenceDirective | undefined; shouldRetryResolution: (resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations) => boolean; deferWatchingNonRelativeResolution: false; }"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1019,
+    "column": 16,
+    "text": "resolveNamesWithLocalCache({\r\n            entries: moduleLiterals,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedModuleNames,\r\n            loader: createModuleResolutionLoaderUsingGlobalCache(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                resolutionHost,\r\n                moduleResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedModuleFromResolution,\r\n            shouldRetryResolution: resolution => !resolution.resolvedModule || !resolutionExtensionIsTSOrJson(resolution.resolvedModule.extension),\r\n            logChanges: logChangesWhenResolvingModule,\r\n            deferWatchingNonRelativeResolution: true, // Defer non relative resolution watch because we could be using ambient modules\r\n        })",
+    "signature": "({ entries, containingFile, containingSourceFile, redirectedReference, options, perFileCache, reusedNames, loader, getResolutionWithResolvedFileName, deferWatchingNonRelativeResolution, shouldRetryResolution, logChanges, }: ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, import(\"./types.js\").ResolvedModuleFull>): readonly ResolvedModuleWithFailedLookupLocations[]",
+    "args": [
+      "{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; options: CompilerOptions; reusedNames: readonly StringLiteralLike[] | undefined; perFileCache: Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>; loader: ResolutionLoader<StringLiteralLike, ResolvedModuleWithFailedLookupLocations, SourceFile>; getResolutionWithResolvedFileName: (resolution: ResolvedModuleWithFailedLookupLocations) => import(\"./types.js\").ResolvedModuleFull | undefined; shouldRetryResolution: (resolution: ResolvedModuleWithFailedLookupLocations) => boolean; logChanges: boolean; deferWatchingNonRelativeResolution: true; }"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1053,
+    "column": 13,
+    "text": "watchFailedLookupLocationsOfExternalModuleResolutions(libraryName, resolution, path, getResolvedModuleFromResolution, /*deferWatchingNonRelativeResolution*/ false)",
+    "signature": "(name: string, resolution: CachedResolvedModuleWithFailedLookupLocations, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<CachedResolvedModuleWithFailedLookupLocations, import(\"./types.js\").ResolvedModuleFull>, deferWatchingNonRelativeResolution: boolean): void",
+    "args": [
+      "string",
+      "CachedResolvedModuleWithFailedLookupLocations",
+      "Path",
+      "(resolution: ResolvedModuleWithFailedLookupLocations) => import(\"./types.js\").ResolvedModuleFull | undefined",
+      "false"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1056,
+    "column": 17,
+    "text": "stopWatchFailedLookupLocationOfResolution(existingResolution, path, getResolvedModuleFromResolution)",
+    "signature": "(resolution: CachedResolvedModuleWithFailedLookupLocations, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<CachedResolvedModuleWithFailedLookupLocations, import(\"./types.js\").ResolvedModuleFull>): void",
+    "args": [
+      "CachedResolvedModuleWithFailedLookupLocations",
+      "Path",
+      "(resolution: ResolvedModuleWithFailedLookupLocations) => import(\"./types.js\").ResolvedModuleFull | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1445,
+    "column": 21,
+    "text": "stopWatchFailedLookupLocationOfResolution(\r\n                        resolution,\r\n                        filePath,\r\n                        getResolutionWithResolvedFileName,\r\n                    )",
+    "signature": "(resolution: T, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>): void",
+    "args": [
+      "T",
+      "Path",
+      "GetResolutionWithResolvedFileName<T, R>"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1471,
+    "column": 9,
+    "text": "removeResolutionsOfFileFromCache(resolvedModuleNames, filePath, getResolvedModuleFromResolution)",
+    "signature": "(cache: Map<string, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<CachedResolvedModuleWithFailedLookupLocations, import(\"./types.js\").ResolvedModuleFull>): void",
+    "args": [
+      "Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>>",
+      "Path",
+      "(resolution: ResolvedModuleWithFailedLookupLocations) => import(\"./types.js\").ResolvedModuleFull | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1472,
+    "column": 9,
+    "text": "removeResolutionsOfFileFromCache(resolvedTypeReferenceDirectives, filePath, getResolvedTypeReferenceDirectiveFromResolution)",
+    "signature": "(cache: Map<string, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>, filePath: Path, getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations, import(\"./types.js\").ResolvedTypeReferenceDirective>): void",
+    "args": [
+      "Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>>",
+      "Path",
+      "(resolution: ResolvedTypeReferenceDirectiveWithFailedLookupLocations) => import(\"./types.js\").ResolvedTypeReferenceDirective | undefined"
+    ]
+  },
+  {
+    "file": "src/compiler/watch.ts",
+    "line": 611,
+    "column": 25,
+    "text": "sortAndDeduplicateDiagnostics(allDiagnostics)",
+    "signature": "(diagnostics: readonly Diagnostic[]): SortedReadonlyArray<Diagnostic>",
+    "args": [
+      "Diagnostic[]"
+    ]
+  },
+  {
+    "file": "src/harness/incrementalUtils.ts",
+    "line": 339,
+    "column": 13,
+    "text": "expected.watchFailedLookupLocationsOfExternalModuleResolutions(name, expectedResolution, fileName, () => ({ resolvedFileName }), deferWatchingNonRelativeResolution)",
+    "signature": "",
+    "args": []
+  },
+  {
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "line": 523,
+    "column": 33,
+    "text": "ts.sortAndDeduplicateDiagnostics([...program.getSemanticDiagnostics(), ...program.getOptionsDiagnostics()])",
+    "signature": "",
+    "args": []
+  },
+  {
+    "file": "src/testRunner/unittests/tscWatch/watchApi.ts",
+    "line": 480,
+    "column": 37,
+    "text": "ts.sortAndDeduplicateDiagnostics(program.getSemanticDiagnostics())",
+    "signature": "",
+    "args": []
+  }
+]

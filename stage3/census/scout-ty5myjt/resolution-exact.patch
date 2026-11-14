@@ -1,0 +1,97 @@
+--- baseline/resolutionCache.ts
++++ resolution-exact/resolutionCache.ts
+@@ -62,6 +62,7 @@
+     type ResolutionLoader,
+     type ResolutionMode,
+     type ResolutionWithResolvedFileName,
++    type ResolvedModuleFull,
+     type ResolvedModuleWithFailedLookupLocations,
+     type ResolvedProjectReference,
+     type ResolvedTypeReferenceDirectiveWithFailedLookupLocations,
+@@ -103,11 +104,11 @@
+     startRecordingFilesWithChangedResolutions(): void;
+     finishRecordingFilesWithChangedResolutions(): Path[] | undefined;
+ 
+-    watchFailedLookupLocationsOfExternalModuleResolutions<T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(
++    watchFailedLookupLocationsOfExternalModuleResolutions<T extends ResolutionWithFailedLookupLocations>(
+         name: string,
+         resolution: T,
+         filePath: Path,
+-        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>,
++        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, ResolvedModuleFull>,
+         deferWatchingNonRelativeResolution: boolean,
+     ): void;
+ 
+@@ -841,7 +842,7 @@
+         }
+     }
+ 
+-    interface ResolveNamesWithLocalCacheInput<Entry, SourceFile, T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName> {
++    interface ResolveNamesWithLocalCacheInput<Entry, SourceFile, T extends ResolutionWithFailedLookupLocations> {
+         entries: readonly Entry[];
+         containingFile: string;
+         containingSourceFile: SourceFile;
+@@ -850,12 +851,12 @@
+         reusedNames?: readonly Entry[] | undefined;
+         perFileCache: Map<Path, ModeAwareCache<T>>;
+         loader: ResolutionLoader<Entry, T, SourceFile>;
+-        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>;
++        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, ResolvedModuleFull>;
+         shouldRetryResolution: (t: T) => boolean;
+         logChanges?: boolean;
+         deferWatchingNonRelativeResolution: boolean;
+     }
+-    function resolveNamesWithLocalCache<Entry, SourceFile, T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>({
++    function resolveNamesWithLocalCache<Entry, SourceFile, T extends ResolutionWithFailedLookupLocations>({
+         entries,
+         containingFile,
+         containingSourceFile,
+@@ -868,7 +869,7 @@
+         deferWatchingNonRelativeResolution,
+         shouldRetryResolution,
+         logChanges,
+-    }: ResolveNamesWithLocalCacheInput<Entry, SourceFile, T, R>): readonly T[] {
++    }: ResolveNamesWithLocalCacheInput<Entry, SourceFile, T>): readonly T[] {
+         const path = resolutionHost.toPath(containingFile);
+         const resolutionsInFile = perFileCache.get(path) || perFileCache.set(path, createModeAwareCache()).get(path)!;
+         const resolvedModules: T[] = [];
+@@ -1099,11 +1100,11 @@
+         return endsWith(dirPath, "/node_modules/@types");
+     }
+ 
+-    function watchFailedLookupLocationsOfExternalModuleResolutions<T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(
++    function watchFailedLookupLocationsOfExternalModuleResolutions<T extends ResolutionWithFailedLookupLocations>(
+         name: string,
+         resolution: T,
+         filePath: Path,
+-        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>,
++        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, ResolvedModuleFull>,
+         deferWatchingNonRelativeResolution: boolean,
+     ) {
+         (resolution.files ??= new Set()).add(filePath);
+@@ -1376,10 +1377,10 @@
+         return removeAtRoot;
+     }
+ 
+-    function stopWatchFailedLookupLocationOfResolution<T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(
++    function stopWatchFailedLookupLocationOfResolution<T extends ResolutionWithFailedLookupLocations>(
+         resolution: T,
+         filePath: Path,
+-        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>,
++        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, ResolvedModuleFull>,
+     ) {
+         Debug.checkDefined(resolution.files).delete(filePath);
+         if (resolution.files!.size) return;
+@@ -1432,10 +1433,10 @@
+         }, nonRecursive ? WatchDirectoryFlags.None : WatchDirectoryFlags.Recursive);
+     }
+ 
+-    function removeResolutionsOfFileFromCache<T extends ResolutionWithFailedLookupLocations, R extends ResolutionWithResolvedFileName>(
++    function removeResolutionsOfFileFromCache<T extends ResolutionWithFailedLookupLocations>(
+         cache: Map<string, ModeAwareCache<T>>,
+         filePath: Path,
+-        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, R>,
++        getResolutionWithResolvedFileName: GetResolutionWithResolvedFileName<T, ResolvedModuleFull>,
+     ) {
+         // Deleted file, stop watching failed lookups for all the resolutions in the file
+         const resolutions = cache.get(filePath);

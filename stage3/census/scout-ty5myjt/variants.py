@@ -3,6 +3,7 @@ root=pathlib.Path('/workspace/scratch/scout-ty5myjt')
 base=root/'adapted'
 for name in ['diag-intersection','diag-readonly','diag-exact','diag-overloads','resolution-readonly','resolution-exact','resolution-result-view']:
  tree=root/name
+ if tree.exists(): continue
  shutil.copytree(base/'src',tree/'src')
  file='program.ts' if name.startswith('diag') else 'resolutionCache.ts'
  p=tree/'src/compiler'/file
@@ -30,14 +31,14 @@ for name in ['diag-intersection','diag-readonly','diag-exact','diag-overloads','
   text=text.replace(', R extends ResolutionWithResolvedFileName','')
   text=text.replace('<T, R>','<T, ResolvedModuleFull>').replace('<Entry, SourceFile, T, R>', '<Entry, SourceFile, T>')
   # GetResolutionWithResolvedFileName itself retains R; only functions lose result binder.
-  original=re.search(r'export type GetResolutionWithResolvedFileName[^\r]+',p.read_text()).group()
+  original=re.search(r'export type GetResolutionWithResolvedFileName[^\r\n]+',p.read_text()).group()
   start=text.index('export type GetResolutionWithResolvedFileName'); end=text.index('\r\n',start)
   text=text[:start]+original+text[end:]
  if name=='resolution-result-view':
   text='interface ResolutionReadView extends ResolutionWithResolvedFileName { readonly resolvedFileName: string | undefined; }\r\n'+text
   text=text.replace(', R extends ResolutionWithResolvedFileName','')
   text=text.replace('GetResolutionWithResolvedFileName<T, R>', '(resolution: T) => ResolutionReadView | undefined').replace('<Entry, SourceFile, T, R>', '<Entry, SourceFile, T>')
-  original=re.search(r'export type GetResolutionWithResolvedFileName[^\r]+',p.read_text()).group()
+  original=re.search(r'export type GetResolutionWithResolvedFileName[^\r\n]+',p.read_text()).group()
   start=text.index('export type GetResolutionWithResolvedFileName');end=text.index('\r\n',start)
   text=text[:start]+original+text[end:]
  p.write_bytes(text.encode())

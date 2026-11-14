@@ -1,0 +1,13 @@
+[
+  {
+    "line": 339,
+    "signature": "(name: string, resolution: ts.CachedResolvedModuleWithFailedLookupLocations & ts.CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations, filePath: ts.Path, getResolutionWithResolvedFileName: ts.GetResolutionWithResolvedFileName<ts.CachedResolvedModuleWithFailedLookupLocations & ts.CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations, { resolvedFileName: string | undefined; }>, deferWatchingNonRelativeResolution: boolean): void",
+    "arguments": [
+      "string",
+      "ts.CachedResolvedModuleWithFailedLookupLocations & ts.CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "ts.Path",
+      "() => { resolvedFileName: string | undefined; }",
+      "boolean"
+    ]
+  }
+]
