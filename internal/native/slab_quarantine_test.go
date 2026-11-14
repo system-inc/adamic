@@ -10,6 +10,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A freed slab slot that the next value of its class takes again is unpoisoned by take, so a stale
@@ -83,7 +85,7 @@ func buildWithFlags(t *testing.T, source string, flags []string) string {
 
 func runtimeWithFlags(t *testing.T, flags []string) (string, string) {
 	t.Helper()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -110,7 +112,7 @@ func runtimeWithFlags(t *testing.T, flags []string) (string, string) {
 // other object from the exact same sanitized slab archive, including its headers.
 func slabQuarantineOffLibrary(t *testing.T, compiler, original string, flags []string) string {
 	t.Helper()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,12 +194,12 @@ func TestQuarantineIsPerThreadUnderTSan(t *testing.T) {
 	t.Run("shared_ring_mutant", func(t *testing.T) {
 		t.Parallel()
 		directory := t.TempDir()
-		files, err := fs.ReadDir(runtime, "runtime")
+		files, err := fs.ReadDir(native_runtime.Sources, "c")
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, file := range files {
-			contents, err := fs.ReadFile(runtime, "runtime/"+file.Name())
+			contents, err := fs.ReadFile(native_runtime.Sources, "c/"+file.Name())
 			if err != nil {
 				t.Fatal(err)
 			}

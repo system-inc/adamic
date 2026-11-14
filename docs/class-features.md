@@ -99,8 +99,8 @@ The original territory is new files under internal/lower and internal/native, pl
 | internal/lower/cycles.go | Follow captures and distinguish physical fields. |
 | internal/native/emit.go | Small shape/call/exception hooks; own spread receivers across callbacks. |
 | internal/native/reuse.go | Prevent reuse when spread drops private storage or closures. |
-| internal/native/runtime/adamic.h | Declare descriptors and helpers. |
-| internal/native/runtime/object.c | Copy public fields and materialize accessor results in order. |
+| internal/native_runtime/c/adamic.h | Declare descriptors and helpers. |
+| internal/native_runtime/c/object.c | Copy public fields and materialize accessor results in order. |
 | internal/oracle/class_inheritance_test.go | Register differential fixtures. |
 | internal/oracle/testdata/class_features_private.a | Hold private/readonly behavior and ownership to Node. |
 | internal/oracle/testdata/class_features_accessors.a | Hold accessor behavior and ownership to Node. |
@@ -134,15 +134,15 @@ Additional integration files in this step:
 | internal/lower/cycles.go | Follow constructor fields and strong parent edges. |
 | internal/native/class_inheritance.go | Emit static descriptor metadata. |
 | internal/native/emit.go | Write own static slots and emit constructor typeof. |
-| internal/native/runtime/adamic.h | Declare static lookup, presence metadata and typeof helpers. |
-| internal/native/runtime/class_features.c | Enumerate current own static keys. |
+| internal/native_runtime/c/adamic.h | Declare static lookup, presence metadata and typeof helpers. |
+| internal/native_runtime/c/class_features.c | Enumerate current own static keys. |
 | internal/oracle/class_inheritance_test.go | Register the static oracle. |
 | internal/oracle/testdata/class_features_static.a | Hold static semantics and ownership to Node. |
 | internal/oracle/testdata/class_features_static_private.a | Hold private brands, write order and Weak ownership to Node. |
 | internal/oracle/counts.md | Record measured costs. |
 | docs/class-features.md | Publish the static implementation and its limits. |
 
-New implementation files: internal/lower/class_static.go, internal/lower/class_static_private.go and internal/native/runtime/class_static.c.
+New implementation files: internal/lower/class_static.go, internal/lower/class_static_private.go and internal/native_runtime/c/class_static.c.
 
 The additional constructor-binding and private mutants bypass outside-helper temporal dead zone checks, skip static override soundness, replace exact private brands with ancestry, expose private static fields, check private write brands before the RHS, read the outer class binding inside its body, skip the constructor-parent edge and ignore constructors held behind construct-signature interfaces. Each is held by its dedicated lowering test or a Node oracle. An initial inner-binding mutation failed at compilation because it left an unused Go local; that attempt does not count. The corrected mutation preserves the local and must fail through the oracle.
 

@@ -185,7 +185,7 @@ func TestTheKeyLeavesOutNativeAndJavaScript(t *testing.T) {
 	if !slices.Equal(inputs.Files, lowering.files) {
 		t.Fatalf("the key's files are not the closure's: %d and %d", len(inputs.Files), len(lowering.files))
 	}
-	for _, excluded := range []string{"internal/native", "internal/javascript"} {
+	for _, excluded := range []string{"internal/native", "internal/native_runtime", "internal/javascript"} {
 		for _, file := range inputs.Files {
 			if file == excluded || strings.HasPrefix(file, excluded+"/") {
 				t.Errorf("the key names %s, under %s", file, excluded)

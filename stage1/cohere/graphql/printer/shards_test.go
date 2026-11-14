@@ -270,7 +270,7 @@ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.
 	if options.Sanitize {
 		name = "sanitized GraphQL printer"
 	}
-	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
+	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"), filepath.Join(repository, "internal/native_runtime"))
 	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
 		start := time.Now()
 		err := native.Build(string(data), dir+"/port", options)

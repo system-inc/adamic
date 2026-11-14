@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A record may change after a function-property narrowing. Binding must inspect
@@ -68,7 +70,7 @@ int main(void) {
 // Replace only object.c in the same sanitized runtime archive.
 func boundMethodRecordKindMutant(t *testing.T, compiler, library string, flags []string) string {
 	t.Helper()
-	source, err := runtime.ReadFile("runtime/object.c")
+	source, err := native_runtime.Sources.ReadFile("c/object.c")
 	if err != nil {
 		t.Fatal(err)
 	}

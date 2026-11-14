@@ -12,7 +12,7 @@ import (
 
 func jsonRecordsRuntimeBinary(t *testing.T, mutant string) string {
 	t.Helper()
-	encoder, err := os.ReadFile("runtime/json_stringify.c")
+	encoder, err := os.ReadFile("../native_runtime/c/json_stringify.c")
 	if err != nil {
 		t.Fatal(err)
 	}

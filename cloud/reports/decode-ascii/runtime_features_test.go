@@ -31,7 +31,7 @@ func TestRuntimeFeaturesMatchNode(t *testing.T) {
 	binary := filepath.Join(t.TempDir(), "program")
 	previous := os.Args
 	defer func() { os.Args = previous }()
-	os.Args = []string{"decode-ascii", "../../../internal/native/runtime", fixture, "native", binary}
+	os.Args = []string{"decode-ascii", "../../../internal/native_runtime/c", fixture, "native", binary}
 	main()
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()

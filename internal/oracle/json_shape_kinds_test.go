@@ -93,7 +93,7 @@ func TestJSONDecodeShapeKinds(t *testing.T) {
 
 func TestJSONDecodeShapeInternKindMutant(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -110,7 +110,7 @@ func TestJSONDecodeShapeInternKindMutant(t *testing.T) {
 
 func TestJSONDecodeShapeKindMutant(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

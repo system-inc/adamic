@@ -102,7 +102,7 @@ func (row hostShapeRow) key() string {
 }
 
 const (
-	hostShapeRuntime = "internal/native/runtime/"
+	hostShapeRuntime = "internal/native_runtime/c/"
 	plainFixture     = "prototype_runtime_plain.a"
 	// A tuple is read as an array before the host test (union.c's keyed_tuple, #g187f1e), where the
 	// flag marks a pair the runtime made without representation bytes, whose slots its shape's kinds
@@ -290,11 +290,12 @@ func entranceProblems(union string, headers map[string]string, emitter string) [
 // entranceSources reads union.c, the runtime's headers and the emitter's expressions.
 func entranceSources(t *testing.T) (string, map[string]string, string) {
 	t.Helper()
-	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
+	union, err := os.ReadFile(filepath.Join("../native_runtime/c", "union.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	paths, err := filepath.Glob(filepath.Join("runtime", "*.h"))
+	// Reads: internal/native_runtime/c/*.h
+	paths, err := filepath.Glob(filepath.Join("../native_runtime/c", "*.h"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -467,7 +468,8 @@ func readerProblems(sources map[string]string) []string {
 // readerSources reads every runtime C file and header by its name.
 func readerSources(t *testing.T) map[string]string {
 	t.Helper()
-	paths, err := filepath.Glob(filepath.Join("runtime", "*.[ch]"))
+	// Reads: internal/native_runtime/c/*.[ch]
+	paths, err := filepath.Glob(filepath.Join("../native_runtime/c", "*.[ch]"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -504,6 +506,7 @@ var hostShapeScan struct {
 func scannedHostShapes(t *testing.T) ([]foundShape, []string) {
 	t.Helper()
 	hostShapeScan.once.Do(func() {
+		// Reads: internal/native_runtime/c/*.[ch]
 		shapes, unclassified, err := runtimeShapes(filepath.Join("..", "..", hostShapeRuntime))
 		if err != nil {
 			hostShapeScan.err = err
@@ -1099,7 +1102,7 @@ func TestHostShapesClosure(t *testing.T) {
 	for _, problem := range readerProblems(readerSources(t)) {
 		t.Error(problem)
 	}
-	union, err := os.ReadFile(filepath.Join("runtime", "union.c"))
+	union, err := os.ReadFile(filepath.Join("../native_runtime/c", "union.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
