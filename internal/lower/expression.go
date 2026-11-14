@@ -517,12 +517,12 @@ type restHiddenPair struct {
 // of call signatures is judged, overloads included. Only a method the library declares on both sides
 // is passed over, its member read off its own object, which the runtime dispatches by name.
 func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visited map[restHiddenPair]bool) bool {
-	from, to = l.present(from), l.present(to)
 	if from == nil || to == nil || from == to || visited[restHiddenPair{from, to, flipped}] {
 		return false
 	}
 	visited[restHiddenPair{from, to, flipped}] = true
-	// A union or an intersection on either side is judged member by member: a value seen as
+	// A union or an intersection on either side is judged member by member, undefined and null aside,
+	// before present (which answers nil for a union of two values): a value seen as
 	// ((a: string) => string) | ((a: number) => number) has no call signature of the whole, but a later
 	// view or narrowing reaches each member (Language's e3 on #2t3h708).
 	for _, side := range []*checker.Type{from, to} {
@@ -530,10 +530,17 @@ func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visite
 			continue
 		}
 		for _, member := range side.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
 			if side == from && l.restHiddenWithin(member, to, flipped, visited) || side == to && l.restHiddenWithin(from, member, flipped, visited) {
 				return true
 			}
 		}
+		return false
+	}
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to {
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
