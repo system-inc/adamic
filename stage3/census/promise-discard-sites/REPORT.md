@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript’s compiler
 
-**0 new-reason sites observed in the 79-file census so far: 41/79 files attempted (20 full, 21 scan only). Both controls passed; coverage is incomplete.**
+**0 new-reason sites observed in the 79-file census so far: 61/79 files attempted (20 full, 41 scan only). Both controls passed; coverage is incomplete.**
 
 No compiler finding’s reason or text contains `an unawaited async task`. Control findings are excluded from this count.
 
@@ -86,26 +86,26 @@ The measurement-only wrapper in scan-only.go.txt invokes the existing latentScan
 | semver.ts | scan only | ran | 0 | 18.535 | False | 0 | 0 |
 | sourcemap.ts | scan only | ran | 0 | 18.008 | False | 18 | 0 |
 | symbolWalker.ts | scan only | ran | 0 | 16.768 | False | 7 | 0 |
-| sys.ts | not measured | not run | | | | unknown | unknown |
-| tracing.ts | not measured | not run | | | | unknown | unknown |
-| transformer.ts | not measured | not run | | | | unknown | unknown |
-| transformers/classFields.ts | not measured | not run | | | | unknown | unknown |
-| transformers/classThis.ts | not measured | not run | | | | unknown | unknown |
-| transformers/declarations/diagnostics.ts | not measured | not run | | | | unknown | unknown |
-| transformers/declarations.ts | not measured | not run | | | | unknown | unknown |
-| transformers/destructuring.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2015.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2016.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2017.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2018.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2019.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2020.ts | not measured | not run | | | | unknown | unknown |
-| transformers/es2021.ts | not measured | not run | | | | unknown | unknown |
-| transformers/esDecorators.ts | not measured | not run | | | | unknown | unknown |
-| transformers/esnext.ts | not measured | not run | | | | unknown | unknown |
-| transformers/generators.ts | not measured | not run | | | | unknown | unknown |
-| transformers/jsx.ts | not measured | not run | | | | unknown | unknown |
-| transformers/legacyDecorators.ts | not measured | not run | | | | unknown | unknown |
+| sys.ts | scan only | ran | 0 | 21.74 | False | 18 | 0 |
+| tracing.ts | scan only | ran | 0 | 20.239 | False | 1 | 0 |
+| transformer.ts | scan only | ran | 0 | 20.661 | False | 7 | 0 |
+| transformers/classFields.ts | scan only | ran | 0 | 36.186 | False | 75 | 0 |
+| transformers/classThis.ts | scan only | ran | 0 | 18.609 | False | 3 | 0 |
+| transformers/declarations/diagnostics.ts | scan only | ran | 0 | 30.921 | False | 54 | 0 |
+| transformers/declarations.ts | scan only | ran | 0 | 32.788 | False | 58 | 0 |
+| transformers/destructuring.ts | scan only | ran | 0 | 25.881 | False | 35 | 0 |
+| transformers/es2015.ts | scan only | ran | 0 | 35.435 | False | 154 | 0 |
+| transformers/es2016.ts | scan only | ran | 0 | 25.143 | False | 10 | 0 |
+| transformers/es2017.ts | scan only | ran | 0 | 27.408 | False | 26 | 0 |
+| transformers/es2018.ts | scan only | ran | 0 | 29.153 | False | 53 | 0 |
+| transformers/es2019.ts | scan only | ran | 0 | 23.235 | False | 1 | 0 |
+| transformers/es2020.ts | scan only | ran | 0 | 26.788 | False | 6 | 0 |
+| transformers/es2021.ts | scan only | ran | 0 | 17.534 | False | 0 | 0 |
+| transformers/esDecorators.ts | scan only | ran | 0 | 35.621 | False | 101 | 0 |
+| transformers/esnext.ts | scan only | ran | 0 | 25.503 | False | 28 | 0 |
+| transformers/generators.ts | scan only | ran | 0 | 30.021 | False | 83 | 0 |
+| transformers/jsx.ts | scan only | ran | 0 | 26.46 | False | 14 | 0 |
+| transformers/legacyDecorators.ts | scan only | ran | 0 | 24.959 | False | 18 | 0 |
 | transformers/module/esnextAnd2015.ts | not measured | not run | | | | unknown | unknown |
 | transformers/module/impliedNodeFormatDependent.ts | not measured | not run | | | | unknown | unknown |
 | transformers/module/module.ts | not measured | not run | | | | unknown | unknown |
@@ -136,5 +136,6 @@ Findings are deduplicated by (kind, where, reason, text). Full-mode totals can i
 | Batch | Files | Workers | Free bytes | Available bytes | Cgroup current bytes | Limit bytes |
 |---|---:|---:|---:|---:|---:|---:|
 | 1-20 of 58 | 20 | 4 | 17549721600 | 17802444800 | 654712832 | 17179869184 |
+| 21-40 of 58 | 20 | 4 | 17354866688 | 17622642688 | 681111552 | 17179869184 |
 
 The continuation records memory immediately before each batch. Four workers are used when at least 8 GiB of effective available memory remains. Checkpoints are committed and pushed after every 20 new results, plus the final partial batch. The earlier interruption and sandbox bookkeeping stop were preserved; this continuation performs writes only in the writable scratch worktree.

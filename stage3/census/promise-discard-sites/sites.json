@@ -768,6 +768,417 @@
       "mode": "scan only",
       "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-symbolWalker.ts.jsonl",
       "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-symbolWalker.ts.log"
+    },
+    {
+      "file": "sys.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 21.74,
+      "timeout": false,
+      "total_findings": 18,
+      "observed_findings": 18,
+      "compiler_findings": 18,
+      "kinds": {
+        "Refused": 17,
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "b4ec0d24b1ba6601978bf57005b98a07b35d126cd523174c583ca7e6dd259669",
+      "raw_sha256": "30f9fd18ee9eadc774b8f8f69e5961f39998b466c08618eea598ed8ff214f72e",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-sys.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-sys.ts.log"
+    },
+    {
+      "file": "tracing.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.239,
+      "timeout": false,
+      "total_findings": 1,
+      "observed_findings": 1,
+      "compiler_findings": 1,
+      "kinds": {
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "b05a3eb580f5bfffb6a91d8acf904fedf974f48ee48da00a1c34ec010c83fa62",
+      "raw_sha256": "c150e4051bac214eff973aaed85e4f01026fbacaaa697fc7654c56a5c57d4f75",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tracing.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tracing.ts.log"
+    },
+    {
+      "file": "transformer.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.661,
+      "timeout": false,
+      "total_findings": 7,
+      "observed_findings": 7,
+      "compiler_findings": 7,
+      "kinds": {
+        "Refused": 7
+      },
+      "new_reason_findings": [],
+      "sha256": "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3",
+      "raw_sha256": "b6c87847964558cc4dda35ce2a525d31ed19e00e4cf81fc89d0bd9d655165888",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformer.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformer.ts.log"
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 36.186,
+      "timeout": false,
+      "total_findings": 75,
+      "observed_findings": 75,
+      "compiler_findings": 75,
+      "kinds": {
+        "NotYet": 4,
+        "Refused": 71
+      },
+      "new_reason_findings": [],
+      "sha256": "67337f0d2a1b78d8de9776ab5d09e32b09d3424b1339a2de26045d349eb959d8",
+      "raw_sha256": "2d1093e4db10a0e7811f1f89bf881a263f71bca8ce64e2249d1cb3905b92a18b",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_classFields.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_classFields.ts.log"
+    },
+    {
+      "file": "transformers/classThis.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.609,
+      "timeout": false,
+      "total_findings": 3,
+      "observed_findings": 3,
+      "compiler_findings": 3,
+      "kinds": {
+        "Refused": 3
+      },
+      "new_reason_findings": [],
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd",
+      "raw_sha256": "6bc256ed3dd064390e3055f5877d830d5e4aeb8980ba9aa5846d2fc2a0363ddf",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_classThis.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_classThis.ts.log"
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.788,
+      "timeout": false,
+      "total_findings": 58,
+      "observed_findings": 58,
+      "compiler_findings": 58,
+      "kinds": {
+        "Refused": 53,
+        "NotYet": 5
+      },
+      "new_reason_findings": [],
+      "sha256": "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd",
+      "raw_sha256": "534fa35892ca4cf369202ba7742c483cbc55c2f3a72a74aab4e9611093baf931",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_declarations.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_declarations.ts.log"
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.921,
+      "timeout": false,
+      "total_findings": 54,
+      "observed_findings": 54,
+      "compiler_findings": 54,
+      "kinds": {
+        "Refused": 52,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "b1ba366b350ca654bc9b5c627e846bf86dd120a706e2c5edeb500ac28627e24d",
+      "raw_sha256": "0a1141c9e79b978da5171421a60a2eb0c90da52c7ed952f9a231d0df4e198431",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_declarations_diagnostics.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_declarations_diagnostics.ts.log"
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.881,
+      "timeout": false,
+      "total_findings": 35,
+      "observed_findings": 35,
+      "compiler_findings": 35,
+      "kinds": {
+        "Refused": 33,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+      "raw_sha256": "539642ce699a3b2d2cf191f7b8c84d3c28089a17ee10daabe9b00b5f2c2cc3a0",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_destructuring.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_destructuring.ts.log"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 35.435,
+      "timeout": false,
+      "total_findings": 154,
+      "observed_findings": 154,
+      "compiler_findings": 154,
+      "kinds": {
+        "Refused": 151,
+        "NotYet": 3
+      },
+      "new_reason_findings": [],
+      "sha256": "b3cd96874cfbdc0655f27e063213873f823f32437e8d747bf4ec13472a559918",
+      "raw_sha256": "f727cd8e7a0b666fa99e0b8ccbdec04b1ef3e0ff8c873677cacbce5210fb8414",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2015.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2015.ts.log"
+    },
+    {
+      "file": "transformers/es2016.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.143,
+      "timeout": false,
+      "total_findings": 10,
+      "observed_findings": 10,
+      "compiler_findings": 10,
+      "kinds": {
+        "Refused": 10
+      },
+      "new_reason_findings": [],
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+      "raw_sha256": "41455ba53c881ee84b377cad9f208eddaca78e04fa3743089becaf35b793c015",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2016.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2016.ts.log"
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.408,
+      "timeout": false,
+      "total_findings": 26,
+      "observed_findings": 26,
+      "compiler_findings": 26,
+      "kinds": {
+        "NotYet": 3,
+        "Refused": 23
+      },
+      "new_reason_findings": [],
+      "sha256": "a7e509c413a72c05f3c054439d930d5fab25b36ccda29975506d34a01d6b8d6e",
+      "raw_sha256": "93ab1368a149e3907eac345cfdbd0be57d133d9b95fe5f25366437965126f4f0",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2017.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2017.ts.log"
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 29.153,
+      "timeout": false,
+      "total_findings": 53,
+      "observed_findings": 53,
+      "compiler_findings": 53,
+      "kinds": {
+        "Refused": 49,
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "c9b798b0542a7f72877004143b8a768e808b9508ef7887b33beb6012a8ab7239",
+      "raw_sha256": "24206490e1cd85c0449dc7b4277ff3382c65672d66492a0bae095bc4139f1d93",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2018.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2018.ts.log"
+    },
+    {
+      "file": "transformers/es2019.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 23.235,
+      "timeout": false,
+      "total_findings": 1,
+      "observed_findings": 1,
+      "compiler_findings": 1,
+      "kinds": {
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+      "raw_sha256": "1560ce4e1d5ae8e9befc16b095f457a3ad3b2ac61934bcfa3dfd809e72a12b71",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2019.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2019.ts.log"
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.788,
+      "timeout": false,
+      "total_findings": 6,
+      "observed_findings": 6,
+      "compiler_findings": 6,
+      "kinds": {
+        "NotYet": 1,
+        "Refused": 5
+      },
+      "new_reason_findings": [],
+      "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+      "raw_sha256": "e94d962e21c0e1cee119f6bf05cd47811f17fd4984eb1ab70daba10cf94aa3af",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2020.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2020.ts.log"
+    },
+    {
+      "file": "transformers/es2021.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.534,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+      "raw_sha256": "d33237aacaea39c7af9a030cc925d47d819b3235f0e820fbd1f0c3c0c49cb635",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2021.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_es2021.ts.log"
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 35.621,
+      "timeout": false,
+      "total_findings": 101,
+      "observed_findings": 101,
+      "compiler_findings": 101,
+      "kinds": {
+        "NotYet": 3,
+        "Refused": 98
+      },
+      "new_reason_findings": [],
+      "sha256": "572d9ed4aaffe4a4da286122477601fe45ad2cf9354025333b3cabe538e6f7b0",
+      "raw_sha256": "c94d2eeb02f8539ed46e64e23c560b8288b602170285fc57b8cfacf0b7759782",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_esDecorators.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_esDecorators.ts.log"
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.503,
+      "timeout": false,
+      "total_findings": 28,
+      "observed_findings": 28,
+      "compiler_findings": 28,
+      "kinds": {
+        "NotYet": 1,
+        "Refused": 27
+      },
+      "new_reason_findings": [],
+      "sha256": "112a60322a57f7a60835cd1a3e5206556def471d9faae7284ecfe10885d7c12e",
+      "raw_sha256": "baa7d856362c6a52146fd1d450631d2ede2b55f26ae504d7e16f36ce7364995a",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_esnext.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_esnext.ts.log"
+    },
+    {
+      "file": "transformers/generators.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.021,
+      "timeout": false,
+      "total_findings": 83,
+      "observed_findings": 83,
+      "compiler_findings": 83,
+      "kinds": {
+        "NotYet": 3,
+        "Refused": 80
+      },
+      "new_reason_findings": [],
+      "sha256": "503850d4681b64d51f5ee6cc3c52e1d0ebd6828870f1bd4f4de3cdc0eb3eccd3",
+      "raw_sha256": "a79a045837a1b30e5614deb2c3cdcdd84b5d5149bcbb5566a2aacf8b4da05d99",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_generators.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_generators.ts.log"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.46,
+      "timeout": false,
+      "total_findings": 14,
+      "observed_findings": 14,
+      "compiler_findings": 14,
+      "kinds": {
+        "Refused": 14
+      },
+      "new_reason_findings": [],
+      "sha256": "a6152ff5eb16419db8e22e03f942b797e3ed828d095fc74f088d66c11b09f295",
+      "raw_sha256": "0bf5b2f785db5e8d6d7103f7d00ba5fb9dae1d17b0a23e0ee4e6b6646c6de983",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_jsx.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_jsx.ts.log"
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.959,
+      "timeout": false,
+      "total_findings": 18,
+      "observed_findings": 18,
+      "compiler_findings": 18,
+      "kinds": {
+        "NotYet": 2,
+        "Refused": 16
+      },
+      "new_reason_findings": [],
+      "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+      "raw_sha256": "4ee96c7c9f0727ef192e29510bf4494bf64ee2c90c8767547aa943365624e0b4",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_legacyDecorators.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_legacyDecorators.ts.log"
     }
   ],
   "new_reason_sites": [],
@@ -808,7 +1219,7 @@
     "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
   },
   "coverage": {
-    "ran": 40,
+    "ran": 60,
     "timed_out": 1
   },
   "expected_files": 79,
@@ -1242,14 +1653,154 @@
       "exit": 0,
       "seconds": 16.768,
       "total_findings": 7
+    },
+    "sys.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 21.74,
+      "total_findings": 18
+    },
+    "tracing.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.239,
+      "total_findings": 1
+    },
+    "transformer.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.661,
+      "total_findings": 7
+    },
+    "transformers/classFields.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 36.186,
+      "total_findings": 75
+    },
+    "transformers/classThis.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.609,
+      "total_findings": 3
+    },
+    "transformers/declarations.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.788,
+      "total_findings": 58
+    },
+    "transformers/declarations/diagnostics.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.921,
+      "total_findings": 54
+    },
+    "transformers/destructuring.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.881,
+      "total_findings": 35
+    },
+    "transformers/es2015.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 35.435,
+      "total_findings": 154
+    },
+    "transformers/es2016.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.143,
+      "total_findings": 10
+    },
+    "transformers/es2017.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.408,
+      "total_findings": 26
+    },
+    "transformers/es2018.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 29.153,
+      "total_findings": 53
+    },
+    "transformers/es2019.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 23.235,
+      "total_findings": 1
+    },
+    "transformers/es2020.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.788,
+      "total_findings": 6
+    },
+    "transformers/es2021.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.534,
+      "total_findings": 0
+    },
+    "transformers/esDecorators.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 35.621,
+      "total_findings": 101
+    },
+    "transformers/esnext.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.503,
+      "total_findings": 28
+    },
+    "transformers/generators.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.021,
+      "total_findings": 83
+    },
+    "transformers/jsx.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.46,
+      "total_findings": 14
+    },
+    "transformers/legacyDecorators.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.959,
+      "total_findings": 18
     }
   },
   "effective_coverage": {
     "full": 20,
-    "scan only": 21,
+    "scan only": 41,
     "timed out": 0,
     "failed": 0,
-    "not measured": 38,
+    "not measured": 18,
     "original_full_timeouts": 1
   },
   "stop_history": [
@@ -1292,6 +1843,38 @@
       "cgroup_current_bytes": 654712832,
       "cgroup_limit_bytes": 17179869184,
       "effective_available_bytes": 16629145600
+    },
+    {
+      "batch": "21-40 of 58",
+      "utc": "2026-11-14T00:11:10Z",
+      "files": [
+        "sys.ts",
+        "tracing.ts",
+        "transformer.ts",
+        "transformers/classFields.ts",
+        "transformers/classThis.ts",
+        "transformers/declarations/diagnostics.ts",
+        "transformers/declarations.ts",
+        "transformers/destructuring.ts",
+        "transformers/es2015.ts",
+        "transformers/es2016.ts",
+        "transformers/es2017.ts",
+        "transformers/es2018.ts",
+        "transformers/es2019.ts",
+        "transformers/es2020.ts",
+        "transformers/es2021.ts",
+        "transformers/esDecorators.ts",
+        "transformers/esnext.ts",
+        "transformers/generators.ts",
+        "transformers/jsx.ts",
+        "transformers/legacyDecorators.ts"
+      ],
+      "concurrency": 4,
+      "mem_free_bytes": 17354866688,
+      "mem_available_bytes": 17622642688,
+      "cgroup_current_bytes": 681111552,
+      "cgroup_limit_bytes": 17179869184,
+      "effective_available_bytes": 16601726976
     }
   ],
   "census_complete": false
