@@ -12,6 +12,21 @@ darwin leg can match", naming why, and a-check stays red the same way; no record
 The gate reads these records from its tools checkout, never from the candidate's tree and never fetched, so a change
 can't vouch for itself.
 
+## tools.json
+
+A leg's verdict depends on the Mac's Xcode build, SDK, go and Node as much as on the tree (Adamic Loom's ruling), and
+the gate runs on Linux and can't read the pool Mac's row in Loom, so `tools.json` here declares them:
+
+```
+{"xcode": "Xcode 27.2 (27B52)", "sdk": "macOS 27.2 (26B118)", "go": "go1.27.1 darwin/arm64", "node": "v24.19.0"}
+```
+
+It mirrors the pool Mac's row, in the spellings the records carry, and moves only through promote, like a record. The
+gate reads it from its tools checkout, never the candidate's tree, and it must be a JSON object of exactly those four
+keys, each a non-empty string; anything else, the file missing among it, leaves no record green, and phase `darwin`
+fails naming why. A record's `tools` must equal it exactly, so a re-tooled Mac needs a fresh record at its new tools,
+and changing `tools.json` retires every record at once. It's not a record: the gate never reads it as one.
+
 ## Entering a record
 
 Records enter only through promote, Node's reviewed act; nothing else writes here. One leg is one file, `<tip>.json`,
@@ -19,7 +34,8 @@ named by the full sha of the tip the leg ran at. Promote checks, before a record
 
 - the tip resolves in adamic;
 - its darwinPaths recomputes equal with `--darwin-paths-digest`, run in a clean checkout at the tip, `git status --porcelain` printing nothing, since go list reads the working tree and a tracked file edited by hand would be digested as the commit's (below);
-- its `aCheck` names every darwin .a in the tip's tree, the list `--darwin-a-paths` prints at the tip.
+- its `aCheck` names every darwin .a in the tip's tree, the list `--darwin-a-paths` prints at the tip;
+- its `tools` equals `tools.json` (below) key for key.
 
 ## The record
 
@@ -51,11 +67,14 @@ A record is green only when all of these hold:
 - `exit` is the number 0;
 - `counts.failed` is the number 0 and `counts.passed` is a number above 0;
 - `darwinPaths` is 64 lowercase hex;
+- `tools` is an object equal to `tools.json` exactly: the same four keys, `xcode`, `sdk`, `go` and `node`, each the same
+  string, and no other key (the order of keys in either file doesn't matter). A record that differs isn't green, naming
+  the key ("tools.sdk is ..., the gate tools declare ...");
 - `aCheck`, when present, is an object whose every value is an object holding a whole number `exit` and a string
   `errors`. A leg of a change with no darwin .a may leave `aCheck` out.
 
 Anything else, a file that isn't JSON, or a field of the wrong type, is not green, and a record that isn't green never
-makes the gate pass. `host`, `command`, `tools`, `counts.skipped` and `log.kept` are for the reader; the gate keeps
+makes the gate pass. `host`, `command`, `counts.skipped` and `log.kept` are for the reader; the gate keeps
 `host` beside the record's name in its result (`darwin_leg`).
 
 ## darwinPaths
