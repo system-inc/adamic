@@ -108,5 +108,110 @@
     "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
     "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
     "seconds": 18.357225526
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.262521262
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.144808731
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 6.460259931
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 6.58376669
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.138487511
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.834776702
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.715478683
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.246860158
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.030182064
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.53230852
   }
 ]
