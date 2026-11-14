@@ -1,0 +1,35 @@
+{
+  "baselineUnchanged": true,
+  "roads": {
+    "local3": {
+      "changedFiles": [
+        "src/compiler/sys.ts"
+      ],
+      "sha256": "e54784efde766ccd6a7b93cf0e4e2960392064f481f816289544afaf5656d9ef"
+    },
+    "local10": {
+      "changedFiles": [
+        "src/compiler/sys.ts"
+      ],
+      "sha256": "fe26be418e2bac9383d93eb6952df09358c1ec349c245d49fc88f555b6b63224"
+    },
+    "declaration3": {
+      "changedFiles": [
+        "src/compiler/sys.ts"
+      ],
+      "sha256": "7f795f251cdb7d08b1c549817bf5f65d15c4fd60e7f98acd64a8a84ce895c01b"
+    },
+    "declaration10": {
+      "changedFiles": [
+        "src/compiler/types.ts"
+      ],
+      "sha256": "587a3bb88a1b5245f411e86bcca1b39221fbd9ea2e33154acd4b6ae3e35a392d"
+    },
+    "declaration10-system": {
+      "changedFiles": [
+        "src/compiler/sys.ts"
+      ],
+      "sha256": "938f41b84bf1ebf9ece7ff8ba67535a20e57da1403973774d2ffcbe4edad6c44"
+    }
+  }
+}

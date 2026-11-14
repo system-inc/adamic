@@ -1,0 +1,56 @@
+[
+  {
+    "label": "control",
+    "phase": "install",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "control",
+    "phase": "dts",
+    "command": [
+      "node_modules/.bin/hereby",
+      "dts"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "declaration3",
+    "phase": "install",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "declaration3",
+    "phase": "dts",
+    "command": [
+      "node_modules/.bin/hereby",
+      "dts"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "declaration10",
+    "phase": "install",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "declaration10",
+    "phase": "dts",
+    "command": [
+      "node_modules/.bin/hereby",
+      "dts"
+    ],
+    "exit": 0
+  }
+]

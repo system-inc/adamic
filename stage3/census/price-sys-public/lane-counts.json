@@ -1,0 +1,152 @@
+{
+  "control": {
+    "counts": {
+      "3capture": 2200,
+      "3call": 4627
+    },
+    "oracleCounts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baselineDiffs": [
+      "api/typescript.d.ts"
+    ],
+    "workers": 8,
+    "runners": "all",
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 6.067
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 42.228
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 502.563
+      }
+    }
+  },
+  "local3": {
+    "counts": {
+      "3capture": 2200,
+      "3call": 4627
+    },
+    "oracleCounts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baselineDiffs": [
+      "api/typescript.d.ts"
+    ],
+    "workers": 8,
+    "runners": "all",
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 4.16
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 41.212
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 541.193
+      }
+    }
+  },
+  "local10": {
+    "counts": {
+      "3capture": 2200,
+      "3call": 4627
+    },
+    "oracleCounts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baselineDiffs": [
+      "api/typescript.d.ts"
+    ],
+    "workers": 8,
+    "runners": "all",
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 5.68
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 40.696
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 530.856
+      }
+    }
+  }
+}

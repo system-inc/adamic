@@ -1,0 +1,39 @@
+--- local10/src/compiler/sys.ts
++++ counting-local10/src/compiler/sys.ts
+@@ -1382,13 +1382,14 @@
+  */
+ export function patchWriteFileEnsuringDirectory(sys: System): void {
+     // patch writefile to create folder before writing the file
++    require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "3capture\n"); 
+     const originalWriteFile = sys.writeFile;
+     sys.writeFile = (path, data, writeBom) =>
+         writeFileEnsuringDirectories(
+             path,
+             data,
+             !!writeBom,
+-            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),
++            (path, data, writeByteOrderMark) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "3call\n"), originalWriteFile.call(sys, path, data, writeByteOrderMark)),
+             path => sys.createDirectory(path),
+             path => sys.directoryExists(path),
+         );
+@@ -1609,13 +1610,13 @@
+             base64encode: input => Buffer.from(input).toString("base64"),
+             require: (baseDir, moduleName) => {
+                 try {
+-                    const modulePath = resolveJSModule(moduleName, baseDir, {
+-                        fileExists: (path: string) => nodeSystem.fileExists(path),
+-                        readFile: (path: string) => nodeSystem.readFile(path),
+-                        directoryExists: (path: string) => nodeSystem.directoryExists(path),
+-                        realpath: nodeSystem.realpath ? (path: string) => nodeSystem.realpath!(path) : undefined,
+-                        getCurrentDirectory: () => nodeSystem.getCurrentDirectory(),
+-                        getDirectories: (path: string) => nodeSystem.getDirectories(path),
++                    require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10require\n"); const modulePath = resolveJSModule(moduleName, baseDir, {
++                        fileExists: (path: string) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10fileExists\n"), nodeSystem.fileExists(path)),
++                        readFile: (path: string) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10readFile\n"), nodeSystem.readFile(path)),
++                        directoryExists: (path: string) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10directoryExists\n"), nodeSystem.directoryExists(path)),
++                        realpath: nodeSystem.realpath ? (path: string) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10realpath\n"), nodeSystem.realpath!(path)) : undefined,
++                        getCurrentDirectory: () => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10getCurrentDirectory\n"), nodeSystem.getCurrentDirectory()),
++                        getDirectories: (path: string) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10getDirectories\n"), nodeSystem.getDirectories(path)),
+                         useCaseSensitiveFileNames: nodeSystem.useCaseSensitiveFileNames,
+                     });
+                     return { module: require(modulePath), modulePath, error: undefined };

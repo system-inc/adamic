@@ -1,0 +1,84 @@
+[
+  {
+    "label": "control",
+    "exit": 0,
+    "seconds": 350.05221198000004,
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/adapted/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/control/times.jsonl"
+    },
+    "road": "control"
+  },
+  {
+    "label": "local3-readonly-view",
+    "exit": 0,
+    "seconds": 107.40655871199988,
+    "sourceUnchanged": true,
+    "sourceSHA256": "e54784efde766ccd6a7b93cf0e4e2960392064f481f816289544afaf5656d9ef",
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/local3/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/local3/times.jsonl"
+    },
+    "road": "local3"
+  },
+  {
+    "label": "local10",
+    "exit": 0,
+    "seconds": 138.4307158239999,
+    "sourceUnchanged": true,
+    "sourceSHA256": "fe26be418e2bac9383d93eb6952df09358c1ec349c245d49fc88f555b6b63224",
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/local10/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/local10/times.jsonl"
+    },
+    "road": "local10"
+  },
+  {
+    "label": "declaration3",
+    "exit": 0,
+    "seconds": 165.422415925,
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/declaration3/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/declaration3/times.jsonl"
+    },
+    "road": "declaration3"
+  },
+  {
+    "label": "declaration10",
+    "exit": 0,
+    "seconds": 106.56480643699979,
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/declaration10/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/declaration10/times.jsonl"
+    },
+    "road": "declaration10"
+  },
+  {
+    "label": "declaration10-system",
+    "exit": 0,
+    "seconds": 117.36433809699975,
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "/workspace/scratch/price-sys-public/declaration10-system/src/compiler/sys.ts",
+      "LATENT_TIMES": "/workspace/scratch/price-sys-public/measurements/declaration10-system/times.jsonl"
+    },
+    "road": "declaration10-system"
+  }
+]

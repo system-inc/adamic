@@ -47,3 +47,15 @@ The complete 526-entry JSON inventory records explicit accesses and destructurin
 | System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:733:17 | `ts.sys.writeFile` |
 | System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:763:13 | `ts.sys.writeFile` |
 | System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:764:13 | `ts.sys.writeFile` |
+
+## Implicit readers
+
+The computed/rest/reflection audit found these additional reads of ModuleResolutionHost.directoryExists through object spread:
+
+| Source | Expression |
+|---|---|
+| src/harness/incrementalUtils.ts:525 | `...compilerHost` |
+| src/testRunner/unittests/helpers/tscWatch.ts:243 | `...compilerHost` |
+| src/testRunner/unittests/reuseProgramStructure.ts:305 | `...host` |
+
+No further checker-resolved computed, rest, in/own-presence, or standard Object/Reflect/JSON reflection access exposed these public declarations. The full named inventory retains overrides, homonyms and unresolved receivers; the compressed lexical ledger retains every literal mention, including type references and test strings. These are static src inventories, not claims about arbitrary reflective JavaScript outside src. Candidate-only readers are shown in the exact local diffs.

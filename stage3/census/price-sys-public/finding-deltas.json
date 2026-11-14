@@ -1,0 +1,187 @@
+{
+  "control": {
+    "count": 59,
+    "counts": {
+      "Refused": 18,
+      "NotYet": 41
+    }
+  },
+  "roads": {
+    "local3": {
+      "count": 58,
+      "counts": {
+        "Refused": 17,
+        "NotYet": 41
+      },
+      "new": [],
+      "gone": [
+        {
+          "projected": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1383:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1385:31",
+            "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+            "text": "src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)"
+          },
+          "actual": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1383:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1385:31",
+            "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+            "text": "src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)"
+          }
+        }
+      ],
+      "changed": []
+    },
+    "declaration3": {
+      "count": 58,
+      "counts": {
+        "Refused": 17,
+        "NotYet": 41
+      },
+      "new": [],
+      "gone": [
+        {
+          "projected": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1383:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1385:31",
+            "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+            "text": "src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)"
+          },
+          "actual": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1383:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1385:31",
+            "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+            "text": "src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)"
+          }
+        }
+      ],
+      "changed": []
+    },
+    "local10": {
+      "count": 58,
+      "counts": {
+        "Refused": 17,
+        "NotYet": 41
+      },
+      "new": [],
+      "gone": [
+        {
+          "projected": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1612:77",
+            "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+            "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+          },
+          "actual": {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "src/compiler/sys.ts:1612:77",
+            "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+            "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+          }
+        }
+      ],
+      "changed": []
+    },
+    "declaration10": {
+      "count": 59,
+      "counts": {
+        "Refused": 18,
+        "NotYet": 41
+      },
+      "new": [],
+      "gone": [],
+      "changed": []
+    },
+    "declaration10-system": {
+      "count": 59,
+      "counts": {
+        "Refused": 18,
+        "NotYet": 41
+      },
+      "new": [],
+      "gone": [],
+      "changed": [
+        {
+          "before": {
+            "projected": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "src/compiler/sys.ts:1473:5",
+              "phase": "refusal_scan",
+              "kind": "Refused",
+              "where": "src/compiler/sys.ts:1612:77",
+              "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+              "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+            },
+            "actual": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "src/compiler/sys.ts:1473:5",
+              "phase": "refusal_scan",
+              "kind": "Refused",
+              "where": "src/compiler/sys.ts:1612:77",
+              "reason": "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean",
+              "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean; make directoryExists readonly in the type it's seen as (readonly directoryExists: ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+            }
+          },
+          "after": {
+            "projected": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "src/compiler/sys.ts:1473:5",
+              "phase": "refusal_scan",
+              "kind": "Refused",
+              "where": "src/compiler/sys.ts:1612:77",
+              "reason": "a value of type System seen as ModuleResolutionHost, which can write ((directoryName: string) => boolean) | undefined where (path: string) => boolean is read",
+              "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, which can write ((directoryName: string) => boolean) | undefined where (path: string) => boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+            },
+            "actual": {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "src/compiler/sys.ts:1473:5",
+              "phase": "refusal_scan",
+              "kind": "Refused",
+              "where": "src/compiler/sys.ts:1612:77",
+              "reason": "a value of type System seen as ModuleResolutionHost, which can write ((directoryName: string) => boolean) | undefined where (path: string) => boolean is read",
+              "text": "src/compiler/sys.ts:1612:77: Adamic 0.1 refuses a value of type System seen as ModuleResolutionHost, which can write ((directoryName: string) => boolean) | undefined where (path: string) => boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+from pathlib import Path
+import os,subprocess,shutil,json,collections,time,hashlib
+s=Path('/workspace/scratch/price-sys-public');base=s/'adapted';assert (s/'apply.log').read_text().rstrip().endswith(str(base))
+while not (s/'supplement-complete.json').exists():time.sleep(5)
+for label in ['control','local3','local10']:
+ t=s/('count-pricing-'+label);o=s/('oracle-pricing-'+label);src=base if label=='control' else s/label
+ if label!='control':
+  while not (s/'measurements'/label/'stock.json').exists():time.sleep(5)
+ shutil.copytree(base,t,ignore=lambda directory,names: {'.git','node_modules','built'}.intersection(names) if Path(directory)==base else set())
+ shutil.copytree(src/'src',t/'src',dirs_exist_ok=True)
+ fixture_files={}
+ for root in (base/'tests').rglob('*'):
+  if root.is_dir() and root.name in ['node_modules','built']:
+   for f in root.rglob('*'):
+    if f.is_file():fixture_files[str(f.relative_to(base))]=hashlib.sha256(f.read_bytes()).hexdigest()
+ mismatches=[rel for rel,digest in fixture_files.items() if not (t/rel).is_file() or hashlib.sha256((t/rel).read_bytes()).hexdigest()!=digest]
+ (s/('fixture-audit-pricing-'+label+'.json')).write_text(json.dumps({'criticalFixtureFiles':len(fixture_files),'mismatches':mismatches,'sha256':fixture_files},indent=2)+'\n');assert not mismatches,mismatches
+ p=t/'src/compiler/sys.ts';b=p.read_bytes()
+ def count(tag):return ('require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "'+tag+'\\n"); ').encode()
+ old=b'    const originalWriteFile = ';assert b.count(old)==1;b=b.replace(old,b'    '+count('3capture')+b'\r\n'+old)
+ old=b'originalWriteFile.call(sys, path, data, writeByteOrderMark)';assert b.count(old)==1;b=b.replace(old,b'('+count('3call').rstrip(b'; ')+b', '+old+b')')
+ old=b'const modulePath = resolveJSModule(';assert b.count(old)==1;b=b.replace(old,count('10require')+old)
+ if label=='local10':
+  for tag,old in [('fileExists',b'nodeSystem.fileExists(path)'),('readFile',b'nodeSystem.readFile(path)'),('directoryExists',b'nodeSystem.directoryExists(path)'),('realpath',b'nodeSystem.realpath!(path)'),('getCurrentDirectory',b'nodeSystem.getCurrentDirectory()'),('getDirectories',b'nodeSystem.getDirectories(path)')]:
+   # Restrict observer to the local host expression.
+   start=b.index(b'const modulePath = resolveJSModule(');end=b.index(b'                    })',start)
+   part=b[start:end];assert part.count(old)==1;part=part.replace(old,b'('+count('10'+tag).rstrip(b'; ')+b', '+old+b')');b=b[:start]+part+b[end:]
+ p.write_bytes(b)
+ counts=s/('counts-pricing-'+label+'.jsonl');e=dict(os.environ,PRICE_SYS_COUNTS=str(counts),npm_config_cache=str(s/'npm-cache'),TMPDIR=str(s/'tmp'))
+ print(label,'oracle start',flush=True)
+ with (s/('oracle-pricing-'+label+'.log')).open('w') as log:r=subprocess.run([str(s/'repo/stage3/oracle/run.sh'),str(t),str(o)],env=e,stdout=log,stderr=log)
+ summary={'label':label,'exit':r.returncode,'counts':dict(collections.Counter(counts.read_text().splitlines())) if counts.exists() else {},'report':json.loads((o/'report.json').read_text()) if (o/'report.json').exists() else None}
+ (s/('count-summary-pricing-'+label+'.json')).write_text(json.dumps(summary,indent=2)+'\n');print(label,summary['exit'],summary['counts'],flush=True)
+ if not summary['report'] or any(summary['report']['phases'].get(n,{}).get('exit')!=0 for n in ['install','build']):break
+ expected=summary['report']['counts']=={'passing':106366,'failing':1,'pending':0} and summary['report']['baseline_diffs']==['api/typescript.d.ts'] and [f['title'] for f in summary['report']['failures']]==['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']
+ if not expected:
+  print('STOP: oracle does not match the lane control contract',flush=True);break

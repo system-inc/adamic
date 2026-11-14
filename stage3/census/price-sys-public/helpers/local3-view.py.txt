@@ -1,0 +1,15 @@
+from pathlib import Path
+import os,time,json,shutil,subprocess,difflib,hashlib,signal
+s=Path('/workspace/scratch/price-sys-public');base=s/'adapted'
+while not (s/'oracle-pricing-control/report.json').exists():time.sleep(5)
+shutil.move(s/'local3',s/'local3-bind');shutil.move(s/'measurements/local3',s/'measurements/local3-bind')
+t=s/'local3';shutil.copytree(base,t,ignore=shutil.ignore_patterns('.git','node_modules','built','tests'));d=s/'measurements/local3';d.mkdir();rel='src/compiler/sys.ts';p=t/rel;b=p.read_bytes();old=b'    const originalWriteFile = sys.writeFile;';new=b'    const writeFileView: { readonly writeFile: System["writeFile"]; } = sys;\r\n    const originalWriteFile = writeFileView.writeFile;';assert b.count(old)==1;p.write_bytes(b.replace(old,new));frozen=p.read_bytes();(d/'sys.ts.diff').write_text(''.join(difflib.unified_diff((base/rel).read_text().splitlines(True),p.read_text().splitlines(True),fromfile='control/'+rel,tofile='local3/'+rel)))
+with (d/'stock.log').open('w') as f:r=subprocess.run(['node',str(s/'check.cjs'),str(t),str(d/'stock.json')],stdout=f,stderr=f)
+print('stock',r.returncode,flush=True)
+cfg=json.loads((s/'measurements/control/tsconfig.stock.json').read_text());cfg['files']=json.loads((d/'stock.json').read_text())['roots'];(d/'tsconfig.stock.json').write_text(json.dumps(cfg,indent=2)+'\n');cmd=['node',str(s/'repo/stage3/api/node_modules/typescript/bin/tsc'),'--project',str(d/'tsconfig.stock.json'),'--pretty','false']
+with (d/'tsc.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=f)
+(d/'tsc-result.json').write_text(json.dumps({'version':'6.0.3','roots':79,'command':cmd,'exit':r.returncode},indent=2)+'\n');print('tsc',r.returncode,flush=True)
+env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_ONLY_FILE=str(p),LATENT_TIMES=str(d/'times.jsonl'));start=time.monotonic()
+with (d/'census.log').open('w') as f:r=subprocess.run([str(s/'latent'),str(t/'src/compiler'),str(d/'raw.jsonl')],stdout=f,stderr=f,env=env,timeout=1800)
+assert p.read_bytes()==frozen;row={'label':'local3-readonly-view','exit':r.returncode,'seconds':time.monotonic()-start,'sourceUnchanged':True,'sourceSHA256':hashlib.sha256(frozen).hexdigest(),'flags':{k:v for k,v in env.items() if k.startswith(('LATENT_','CENSUS_'))}};(d/'run.json').write_text(json.dumps(row,indent=2)+'\n');print(row,flush=True)
+# Keep the oracle controller paused for review of the complete census before resuming it.

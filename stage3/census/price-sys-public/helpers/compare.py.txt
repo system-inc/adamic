@@ -1,0 +1,47 @@
+from pathlib import Path
+import json,re,difflib,collections
+s=Path('/workspace/scratch/price-sys-public');out=s/'measurements';baseline=s/'adapted'
+def findings(label):
+ t=baseline if label=='control' else s/label
+ data=[json.loads(x) for x in (out/label/'raw.jsonl').read_text().splitlines()];assert data[0]['module_format']=='CommonJSBundle' and data[0]['latent_mode']=='full';assert data[-1]['status']=='relation_report'
+ rows=[]
+ for record in data:
+  for row in record.get('findings',[]):
+   if row.get('kind')=='Boundary':continue
+   row=dict(row)
+   for k,v in row.items():
+    if isinstance(v,str):row[k]=v.replace(str(t)+'/', '').replace(str(s/'repo')+'/', 'ADAMIC/')
+   rows.append(row)
+ # Project unchanged lines to control coordinates. Replacement lines align by relative position;
+ # newly inserted lines retain their own marked coordinates.
+ maps={}
+ if label!='control':
+  for rel in ['src/compiler/sys.ts','src/compiler/types.ts']:
+   a=(baseline/rel).read_text().splitlines();b=(t/rel).read_text().splitlines();m={}
+   for tag,i,j,k,l in difflib.SequenceMatcher(None,a,b,autojunk=False).get_opcodes():
+    if tag=='equal':
+     for q in range(l-k):m[k+q+1]=i+q+1
+    elif tag=='replace':
+     for q in range(min(j-i,l-k)):m[k+q+1]=i+q+1
+   maps[rel]=m
+ def project(v):
+  for rel,m in maps.items():
+   v=re.sub(re.escape(rel)+r':(\d+):(\d+)',lambda q:rel+':'+str(m.get(int(q[1]),'inserted-'+q[1]))+':'+q[2],v)
+  return v
+ dedup={}
+ for row in rows:
+  projected={k:project(v) if isinstance(v,str) else v for k,v in row.items()}
+  # Unit/phase metadata are retained but not counted twice across attempts.
+  key=tuple(projected.get(k,'') for k in ['kind','where','reason','text'])
+  dedup.setdefault(key,{'projected':projected,'actual':row})
+ return dedup
+control=findings('control');result={'control':{'count':len(control),'counts':dict(collections.Counter(k[0] for k in control))},'roads':{}}
+for label in ['local3','declaration3','local10','declaration10','declaration10-system']:
+ after=findings(label);gone=[control[k] for k in control.keys()-after.keys()];new=[after[k] for k in after.keys()-control.keys()];changed=[]
+ for g in gone[:]:
+  matches=[n for n in new if n['projected'].get('where')==g['projected'].get('where')]
+  if len(matches)==1:
+   n=matches[0];changed.append({'before':g,'after':n});gone.remove(g);new.remove(n)
+ result['roads'][label]={'count':len(after),'counts':dict(collections.Counter(k[0] for k in after)),'new':new,'gone':gone,'changed':changed,'findings':list(after.values())}
+(out/'comparison.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({label:{k:len(v[k]) for k in ['new','gone','changed']} for label,v in result['roads'].items()},indent=2))

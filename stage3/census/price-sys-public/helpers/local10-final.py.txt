@@ -1,0 +1,15 @@
+from pathlib import Path
+import os,time,json,subprocess,difflib,hashlib,signal
+s=Path('/workspace/scratch/price-sys-public');t=s/'local10';d=s/'measurements/local10';d.mkdir()
+while not (s/'count-summary-control-fixed.json').exists():time.sleep(5)
+rel='src/compiler/sys.ts';before=(t/rel).read_bytes();(d/'sys.ts.diff').write_text(''.join(difflib.unified_diff((s/'adapted'/rel).read_text().splitlines(True),before.decode().splitlines(True),fromfile='control/'+rel,tofile='local10/'+rel)))
+with (d/'stock.log').open('w') as f:r=subprocess.run(['node',str(s/'check.cjs'),str(t),str(d/'stock.json')],stdout=f,stderr=f)
+print('stock',r.returncode,flush=True)
+cfg=json.loads((s/'measurements/control/tsconfig.stock.json').read_text());cfg['files']=json.loads((d/'stock.json').read_text())['roots'];(d/'tsconfig.stock.json').write_text(json.dumps(cfg,indent=2)+'\n');cmd=['node',str(s/'repo/stage3/api/node_modules/typescript/bin/tsc'),'--project',str(d/'tsconfig.stock.json'),'--pretty','false']
+with (d/'tsc.log').open('w') as f:r=subprocess.run(cmd,stdout=f,stderr=f)
+(d/'tsc-result.json').write_text(json.dumps({'version':'6.0.3','roots':79,'command':cmd,'exit':r.returncode},indent=2)+'\n');print('tsc',r.returncode,flush=True)
+env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_ONLY_FILE=str(t/rel),LATENT_TIMES=str(d/'times.jsonl'));start=time.monotonic()
+with (d/'census.log').open('w') as f:r=subprocess.run([str(s/'latent'),str(t/'src/compiler'),str(d/'raw.jsonl')],stdout=f,stderr=f,env=env,timeout=1800)
+assert (t/rel).read_bytes()==before
+row={'label':'local10','exit':r.returncode,'seconds':time.monotonic()-start,'sourceUnchanged':True,'sourceSHA256':hashlib.sha256(before).hexdigest(),'flags':{k:v for k,v in env.items() if k.startswith(('LATENT_','CENSUS_'))}};(d/'run.json').write_text(json.dumps(row,indent=2)+'\n');print(row,flush=True)
+os.kill(12254,signal.SIGCONT)

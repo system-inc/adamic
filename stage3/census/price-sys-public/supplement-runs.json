@@ -1,0 +1,60 @@
+[
+  {
+    "label": "system-stock-tsc",
+    "command": [
+      "node",
+      "/workspace/scratch/price-sys-public/repo/stage3/api/node_modules/typescript/bin/tsc",
+      "--project",
+      "/workspace/scratch/price-sys-public/measurements/declaration10-system/tsconfig.stock.json",
+      "--pretty",
+      "false"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public/declaration10-system",
+    "exit": 0
+  },
+  {
+    "label": "system-adapted-install",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public/declaration10-system",
+    "exit": 0
+  },
+  {
+    "label": "system-adapted-dts",
+    "command": [
+      "node_modules/.bin/hereby",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public/declaration10-system",
+    "exit": 0
+  },
+  {
+    "label": "system-upstream-install",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public/TypeScript",
+    "exit": 0
+  },
+  {
+    "label": "system-upstream-dts",
+    "command": [
+      "node_modules/.bin/hereby",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public/TypeScript",
+    "exit": 0
+  },
+  {
+    "label": "declaration-erasure",
+    "command": [
+      "node",
+      "/workspace/scratch/price-sys-public/erasure.cjs"
+    ],
+    "cwd": "/workspace/scratch/price-sys-public",
+    "exit": 0
+  }
+]

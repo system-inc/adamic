@@ -1,0 +1,27 @@
+--- control/src/compiler/sys.ts
++++ counting-control/src/compiler/sys.ts
+@@ -1382,13 +1382,14 @@
+  */
+ export function patchWriteFileEnsuringDirectory(sys: System): void {
+     // patch writefile to create folder before writing the file
++    require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "3capture\n"); 
+     const originalWriteFile = sys.writeFile;
+     sys.writeFile = (path, data, writeBom) =>
+         writeFileEnsuringDirectories(
+             path,
+             data,
+             !!writeBom,
+-            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),
++            (path, data, writeByteOrderMark) => (require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "3call\n"), originalWriteFile.call(sys, path, data, writeByteOrderMark)),
+             path => sys.createDirectory(path),
+             path => sys.directoryExists(path),
+         );
+@@ -1609,7 +1610,7 @@
+             base64encode: input => Buffer.from(input).toString("base64"),
+             require: (baseDir, moduleName) => {
+                 try {
+-                    const modulePath = resolveJSModule(moduleName, baseDir, nodeSystem);
++                    require("fs").appendFileSync(process.env.PRICE_SYS_COUNTS!, "10require\n"); const modulePath = resolveJSModule(moduleName, baseDir, nodeSystem);
+                     return { module: require(modulePath), modulePath, error: undefined };
+                 }
+                 catch (error) {

@@ -50,7 +50,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -68,7 +68,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -345,7 +345,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -381,7 +381,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -712,7 +712,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -846,7 +846,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -1114,7 +1114,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -1150,7 +1150,7 @@
           "name": "directoryExists"
         }
       ],
-      "publicMember": false,
+      "publicMember": true,
       "publicMembers": [
         "System.directoryExists"
       ]
@@ -8503,5 +8503,10 @@
       "publicMember": false,
       "publicMembers": []
     }
+  ],
+  "publicMembersConsidered": [
+    "System.writeFile",
+    "ModuleResolutionHost.directoryExists",
+    "System.directoryExists"
   ]
 }

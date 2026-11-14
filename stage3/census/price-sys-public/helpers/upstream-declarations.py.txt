@@ -1,0 +1,12 @@
+from pathlib import Path
+import subprocess,shutil,difflib,json,os
+s=Path('/workspace/scratch/price-sys-public');t=s/'TypeScript';out=s/'upstream-declarations';out.mkdir();names=['typescript.d.ts','tsserverlibrary.d.ts'];before={n:(t/'built/local'/n).read_bytes() for n in names}
+for n,b in before.items():(out/('control-'+n)).write_bytes(b)
+changes=[('site3','src/compiler/sys.ts',b'writeFile(path: string, data: string, writeByteOrderMark?: boolean): void;',b'writeFile: (path: string, data: string, writeByteOrderMark?: boolean) => void;'),('site10','src/compiler/types.ts',b'directoryExists?(directoryName: string): boolean;',b'directoryExists?: ((directoryName: string) => boolean) | undefined;')]
+for label,file,old,new in changes:
+ p=t/file;src=p.read_bytes();assert src.count(old)==1;p.write_bytes(src.replace(old,new));
+ with (out/(label+'.log')).open('w') as f:r=subprocess.run(['node_modules/.bin/hereby','dts'],cwd=t,stdout=f,stderr=f)
+ assert r.returncode==0
+ for n in names:
+  b=(t/'built/local'/n).read_bytes();(out/(label+'-'+n)).write_bytes(b);(out/(label+'-'+n+'.diff')).write_text(''.join(difflib.unified_diff(before[n].decode().splitlines(True),b.decode().splitlines(True),fromfile='control/'+n,tofile=label+'/'+n)))
+ p.write_bytes(src)

@@ -1,0 +1,15 @@
+from pathlib import Path
+import subprocess,json,time,os,difflib
+s=Path('/workspace/scratch/price-sys-public');o=s/'adapted-declarations';o.mkdir();control={};rows=[]
+for label in ['control','declaration3','declaration10']:
+ while not (s/'measurements'/label/'stock.json').exists():time.sleep(5)
+ t=s/'adapted' if label=='control' else s/label
+ env=dict(os.environ,npm_config_cache=str(s/'npm-cache'),TMPDIR=str(s/'tmp'))
+ for phase,cmd in [('install',['npm','ci']),('dts',['node_modules/.bin/hereby','dts'])]:
+  with (o/(label+'-'+phase+'.log')).open('w') as f:r=subprocess.run(cmd,cwd=t,stdout=f,stderr=f,env=env)
+  rows.append(dict(label=label,phase=phase,command=cmd,exit=r.returncode));(o/'runs.json').write_text(json.dumps(rows,indent=2)+'\n');print(rows[-1],flush=True)
+  if r.returncode:raise RuntimeError(rows[-1])
+ for name in ['typescript.d.ts','tsserverlibrary.d.ts']:
+  b=(t/'built/local'/name).read_bytes();(o/(label+'-'+name)).write_bytes(b)
+  if label=='control':control[name]=b
+  else:(o/(label+'-'+name+'.diff')).write_text(''.join(difflib.unified_diff(control[name].decode().splitlines(True),b.decode().splitlines(True),fromfile='control/'+name,tofile=label+'/'+name)))
