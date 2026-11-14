@@ -1,0 +1,9 @@
+export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH
+export TMPDIR=/workspace/scratch/recordreplay/tmp
+export GOTMPDIR=/workspace/scratch/recordreplay/tmp
+export GOCACHE=/workspace/scratch/recordreplay/gocache
+export XDG_CACHE_HOME=/workspace/scratch/recordreplay/cache
+export npm_config_cache=/workspace/scratch/recordreplay/npm-cache
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/recordreplay/typescript
+export NODE_PATH=/workspace/scratch/recordreplay/head/stage3/api/node_modules
+export PYTHONDONTWRITEBYTECODE=1
