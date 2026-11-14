@@ -20,6 +20,6 @@ assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_00
 def run(args):
  rc=subprocess.call(args);print('checkpoint child_exit='+str(rc),flush=True)
  if rc:sys.exit(rc)
-run(['git','add',str(base)])
+run(['git','add',str(base),str(base.parent/'c4v7-census')])
 run(['git','commit','--quiet','-m',f'baobab: {mode} checkpoint {len(rows)}/79 roots'])
 run(['git','push','origin','HEAD:refs/heads/typescript/c4v7-census'])
