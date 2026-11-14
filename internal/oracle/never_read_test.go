@@ -31,10 +31,10 @@ func TestNeverReadTrustedAgreesWithNode(t *testing.T) {
 	}
 }
 
-// The same switch handed a value its type lies about (never_read/lie.ts, through a computed key): the
-// never read is reached, and it stops loudly at exit 70, naming itself at 13:14, natively and on the
-// JavaScript backend alike, where Node goes on into fail and throws. The pin holds the exit, what ran
-// before, and where the read is, not the trap's words.
+// The same switch handed a shape whose numeric enum tag lies (never_read/lie.ts): the never read is
+// reached, and it stops loudly at exit 70, naming itself at 15:14, natively and on the JavaScript
+// backend alike, where Node goes on into fail and throws. The pin holds the exit, what ran before, and
+// where the read is, not the trap's words.
 func TestNeverReadTrustedTrapsOnALie(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/never_read/lie.ts"))
@@ -50,8 +50,8 @@ func TestNeverReadTrustedTrapsOnALie(t *testing.T) {
 	}
 	sanitized, _ := natively(t, program)
 	for backend, got := range map[string]run{"native": sanitized, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || string(got.stdout) != "0\n" || !strings.HasPrefix(string(got.stderr), "adamic: panic: ") || !strings.Contains(string(got.stderr), "lie.ts:13:14") {
-			t.Errorf("%s: want exit 70 after 0, a panic naming the read at lie.ts:13:14; exit %d, stdout %q, stderr %q", backend, got.exitCode, got.stdout, got.stderr)
+		if got.exitCode != 70 || string(got.stdout) != "0\n" || !strings.HasPrefix(string(got.stderr), "adamic: panic: ") || !strings.Contains(string(got.stderr), "lie.ts:15:14") {
+			t.Errorf("%s: want exit 70 after 0, a panic naming the read at lie.ts:15:14; exit %d, stdout %q, stderr %q", backend, got.exitCode, got.stdout, got.stderr)
 		}
 	}
 }
