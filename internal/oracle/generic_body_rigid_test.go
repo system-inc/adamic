@@ -21,10 +21,13 @@ import (
 // and b04 its readonly form, which lowers. r1 to r8 are Language's roads to the same widening inside
 // f<T extends {}>(xs: T[]): an explicit type argument to an inner generic, a Set, a mutable tuple, a
 // Record, a method seen bivariantly, a generic class's field in a method, a nested closure, and
-// T extends U seen as U. Each program's stop is pinned in its .stop file as its wall, Refused or NotYet,
-// where it stops, and the rule's tag when the stop names one, never another rule's words; or "lowers",
-// and a lowering one is held to Node on release, sanitized native and JavaScript.
-// generic-body-rigid.mutants.md has the mutants.
+// T extends U seen as U. q01 to q03 are sys.ts:304's pollWatchedFileQueue<T extends
+// WatchedFileWithIsClosed> handed a queue of a subtype, which reads T out of the queue and writes it
+// back: q01 alone, q02 with sys.ts's host and its callbackOnWatchFileStat?.(...), which stops at the
+// optional call, and q03 with that call written as a checked one. Each program's stop is pinned in its
+// .stop file as its wall, Refused or NotYet, where it stops, and the rule's tag when the stop names one,
+// never another rule's words; or "lowers", and a lowering one is held to Node on release, sanitized
+// native and JavaScript. internal/lower/generic-body-rigid.mutants.md has the mutants.
 func TestGenericBodyKeepsTypeParameterRigid(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/generic_body_rigid"
@@ -78,8 +81,8 @@ func TestGenericBodyKeepsTypeParameterRigid(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 32 {
-		t.Fatalf("found %d programs, want 32", programs)
+	if programs != 38 {
+		t.Fatalf("found %d programs, want 38", programs)
 	}
 }
 
