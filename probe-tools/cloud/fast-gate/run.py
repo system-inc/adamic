@@ -386,19 +386,77 @@ darwinClosureEnvironment = {"GOOS": "darwin", "GOARCH": "arm64", "CGO_ENABLED": 
 darwinModuleFiles = ("go.mod", "go.sum", "go.work", "go.work.sum")
 
 
-def darwinClosureCommand():
-    return ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/..."]
+def darwinClosureCommand(compilers=()):
+    """The go list of the leg's closure: ./internal/apple/..., then each directory of compilers (darwinCompilers), sorted,
+    as a package pattern of its own."""
+    return ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/..."] + ["./" + directory for directory in sorted(compilers)]
 
 
-def darwinClosureWords():
-    """darwinClosureCommand as a hand would type it, its environment first, for a refusal to name."""
-    return " ".join(["%s=%s" % pair for pair in darwinClosureEnvironment.items()] + darwinClosureCommand())
+def darwinClosureWords(command):
+    """command, a darwinClosureCommand, as a hand would type it, its environment first, for a refusal to name what ran."""
+    return " ".join(["%s=%s" % pair for pair in darwinClosureEnvironment.items()] + command)
 
 
-def darwinClosureListing(tree):
-    """darwinClosureCommand's answer in tree, in darwinClosureEnvironment over this process's: the one place the leg's
-    closure is listed, so a test stubs it here and needs no go."""
-    return listedGoList(tree, darwinClosureCommand(), 300, dict(os.environ, **darwinClosureEnvironment))
+def darwinClosureListing(tree, command):
+    """command's answer in tree, in darwinClosureEnvironment over this process's: the one place the leg's closure is
+    listed, so a test stubs it here, reads the patterns it was asked, and needs no go."""
+    return listedGoList(tree, command, 300, dict(os.environ, **darwinClosureEnvironment))
+
+
+# compilerDependenciesPath is the map of the compiler packages each package exercises, which the compiler dependency
+# census reads (Gate.compilerDependencies) and darwinPathsDigest reads for the compilers the leg builds.
+compilerDependenciesPath = "cloud/fast-gate/compiler-dependencies.json"
+
+
+def compilerDeclarations(tools, tree):
+    """compilerDependenciesPath as the gate reads it, one reading for its every reader: the gate tools' map, with the
+    candidate's own entries laid over it, field by field for packages, drivers and launchers (a branch that adds a
+    compiler consumer declares it itself, developer tools, Oct 9). Returns (the declarations, the roots they were read
+    from). Raises ValueError for a map in neither, a layer that isn't an object or whose version isn't the first's, or a
+    merged map that isn't version 1 with a packages object; a layer that isn't JSON raises json's ValueError, and one
+    that can't be opened OSError. What each declaration names is the census's to judge."""
+    declarations, root = None, None
+    for source in (tools, tree):
+        if not os.path.exists(os.path.join(source, compilerDependenciesPath)):
+            continue
+        with open(os.path.join(source, compilerDependenciesPath)) as handle:
+            layer = json.load(handle)
+        if not isinstance(layer, dict):
+            raise ValueError("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
+        if declarations is None:
+            declarations, root = layer, source
+            continue
+        if layer.get("version") != declarations.get("version"):
+            raise ValueError("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
+        for field in ("packages", "drivers", "launchers"):
+            if isinstance(layer.get(field), dict):
+                declarations.setdefault(field, {}).update(layer[field])
+        root = root + " + " + source
+    if declarations is None:
+        raise ValueError("invalid compiler dependency map: no " + compilerDependenciesPath)
+    if declarations.get("version") != 1 or not isinstance(declarations.get("packages"), dict):
+        raise ValueError("invalid compiler dependency map: " + compilerDependenciesPath)
+    return declarations, root
+
+
+def darwinCompilers(tools, tree):
+    """The directories compilerDeclarations declares for internal/apple and every package below it, sorted: the compiler
+    the leg's tests build and run at run time (internal/apple/generate's tests build ./cmd/adamic with buildcache.Adamic,
+    then run adamic c), which go list -deps -test of ./internal/apple/... never names, since cmd/adamic is a main
+    package nothing imports. A map that can't be read is a DarwinPathsRefusal, never a listing without the compilers."""
+    try:
+        declarations = compilerDeclarations(tools, tree)[0]
+    except (OSError, ValueError) as error:
+        raise DarwinPathsRefusal("the compiler dependency map can't be read, so the compilers the darwin leg builds can't be "
+                                 "listed: %s" % error)
+    compilers = set()
+    for package, inputs in declarations["packages"].items():
+        if package != "internal/apple" and not package.startswith("internal/apple/"):
+            continue
+        if not isinstance(inputs, list) or not all(isinstance(value, str) and value for value in inputs):
+            raise DarwinPathsRefusal("the compiler dependency map's %s isn't a list of directories: %r" % (package, inputs))
+        compilers.update(inputs)
+    return sorted(compilers)
 
 
 def firstLinesOf(text, count=5):
@@ -416,9 +474,10 @@ def darwinPathsDigest(tree, commit, tools):
     """What a darwin leg vouches for, as one sha256 over the sorted lines naming each input of the leg's go test
     ./internal/apple/... and its git object at commit, so an equal digest means equal inputs (Adamic Loom's ruling):
     "dir <path> <object>\\n" for each directory inside tree that go list -deps -test names for the Mac's build
-    (darwinClosureCommand in darwinClosureEnvironment), the package's in-module dependency closure (internal/lower,
-    internal/ir, internal/native and more) with its tests' imports, each by its tree object, or a gitlink's commit object
-    for a directory at or inside a submodule; "file <path> <blob>\\n" for each darwinModuleFiles present at commit; and
+    (darwinClosureCommand in darwinClosureEnvironment) of ./internal/apple/... and of the compilers the map declares for
+    it (darwinCompilers, since the leg's tests build cmd/adamic at run time), so the in-module dependency closure of both
+    (internal/lower, internal/ir, internal/native and more) with its tests' imports, each by its tree object, or a
+    gitlink's commit object for a directory at or inside a submodule; "file <path> <blob>\\n" for each darwinModuleFiles present at commit; and
     "<mode> <object> <path>\\n" for each entry whose first rule in tools' executors.txt is darwin. A directory's tree
     object takes its subdirectories too, conservatively: a main that moved a package's testdata, or a package below one
     the closure names, moves the digest though go may read neither. The gate can't see a change's own tip, since a
@@ -428,7 +487,8 @@ def darwinPathsDigest(tree, commit, tools):
     go list reads the files on disk, so tree must be checked out at commit: a digest of another checkout would be a lie.
     The gate's tree is the candidate's checkout, which run() holds at its sha, and a hand writing a record runs
     --darwin-paths-digest in a checkout at the record's tip. Raises DarwinPathsRefusal when the checkout isn't at commit,
-    or when go list fails, names nothing, or names a directory inside tree that commit doesn't hold."""
+    when the compiler dependency map can't be read, or when go list fails, names nothing, or names a directory inside
+    tree that commit doesn't hold."""
     try:
         head = git(tree, "rev-parse", "HEAD")
         sha = git(tree, "rev-parse", "--verify", commit + "^{commit}")
@@ -437,12 +497,14 @@ def darwinPathsDigest(tree, commit, tools):
     if head != sha:
         raise DarwinPathsRefusal("%s is checked out at %s, not at %s, and go list reads the checkout's files, so its darwinPaths "
                                  "would be another commit's" % (tree, head, sha))
+    # With no internal/apple package declared, the listing is ./internal/apple/... alone, as before the map was read.
+    command = darwinClosureCommand(darwinCompilers(tools, tree))
     try:
-        listing = darwinClosureListing(tree)
+        listing = darwinClosureListing(tree, command)
     except (OSError, subprocess.SubprocessError) as error:
-        raise DarwinPathsRefusal("%s didn't run in %s: %s" % (darwinClosureWords(), tree, error))
+        raise DarwinPathsRefusal("%s didn't run in %s: %s" % (darwinClosureWords(command), tree, error))
     if listing.returncode != 0:
-        raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (darwinClosureWords(), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
+        raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (darwinClosureWords(command), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
     root = os.path.realpath(tree)
     directories = set()
     for line in listing.stdout.splitlines():
@@ -454,7 +516,7 @@ def darwinPathsDigest(tree, commit, tools):
             directories.add(os.path.relpath(real, root).replace(os.sep, "/"))
     if not directories:
         # internal/apple's own packages are in the tree, so a listing without one is no listing of the leg.
-        raise DarwinPathsRefusal("%s named no directory inside %s: %s" % (darwinClosureWords(), tree, firstLinesOf(listing.stderr or "")))
+        raise DarwinPathsRefusal("%s named no directory inside %s: %s" % (darwinClosureWords(command), tree, firstLinesOf(listing.stderr or "")))
     entries = commitEntries(tree, sha)
     gitlinks = {path: objectName for _, kind, objectName, path in entries if kind == "commit"}
     lines, trees = set(), []
@@ -2162,28 +2224,8 @@ class Gate:
         declare dependencies even when the executable name is computed: it may run the compiler.
         A missing package declaration fails selection before any tests start.
         """
-        name = "cloud/fast-gate/compiler-dependencies.json"
-        # The gate tools' map, with the candidate's own entries added over it: a branch that adds a compiler
-        # consumer declares it itself (developer tools, Oct 9).
-        declarations, root = None, None
-        for source in (self.arguments.tools, self.arguments.tree):
-            if not os.path.exists(os.path.join(source, name)):
-                continue
-            with open(os.path.join(source, name)) as handle:
-                layer = json.load(handle)
-            if declarations is None:
-                declarations, root = layer, source
-                continue
-            if layer.get("version") != declarations.get("version"):
-                raise ValueError("invalid compiler dependency map: " + name + " in " + source)
-            for field in ("packages", "drivers", "launchers"):
-                if isinstance(layer.get(field), dict):
-                    declarations.setdefault(field, {}).update(layer[field])
-            root = root + " + " + source
-        if declarations is None:
-            raise ValueError("invalid compiler dependency map: no " + name)
-        if declarations.get("version") != 1 or not isinstance(declarations.get("packages"), dict):
-            raise ValueError("invalid compiler dependency map: " + name)
+        # The gate tools' map with the candidate's laid over it, read as darwinPathsDigest reads it.
+        declarations, root = compilerDeclarations(self.arguments.tools, self.arguments.tree)
         packages = declarations["packages"]
         for package, inputs in packages.items():
             if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
@@ -2247,7 +2289,7 @@ class Gate:
         missing = [named for path, named in missing if path in touchedFiles]
         if missing:
             raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
-        self.result["compiler_dependency_map"] = {"root": root, "path": name}
+        self.result["compiler_dependency_map"] = {"root": root, "path": compilerDependenciesPath}
         return packages
 
     # The memory floor census (the planner's --fit-memory, Node's ruling): it finds the files that call testguard's
