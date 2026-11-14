@@ -1,0 +1,50 @@
+{
+  "typescript": "6.0.3",
+  "command": [
+    "node",
+    "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+    "--project",
+    "src/compiler/tsconfig.json",
+    "--noEmit",
+    "--strictFunctionTypes",
+    "true",
+    "--incremental",
+    "false",
+    "--composite",
+    "false",
+    "--pretty",
+    "false",
+    "--noErrorTruncation"
+  ],
+  "rootCount": 79,
+  "rootManifest": "root-manifest.json",
+  "diagnosticCount": 0,
+  "diagnostics": [],
+  "measurement": {
+    "command": [
+      "node",
+      "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "src/compiler/tsconfig.json",
+      "--noEmit",
+      "--strictFunctionTypes",
+      "true",
+      "--incremental",
+      "false",
+      "--composite",
+      "false",
+      "--pretty",
+      "false",
+      "--noErrorTruncation"
+    ],
+    "cwd": "/tmp/destructure-price-scratch/adapted",
+    "exit": 0,
+    "timeout": false,
+    "limit_seconds": null,
+    "wall_seconds": 14.323,
+    "peak_process_tree_rss_kib": 701536,
+    "sampling_interval_seconds": 0.2,
+    "samples": 70,
+    "max_descendant_rss_kib": 701296
+  }
+}

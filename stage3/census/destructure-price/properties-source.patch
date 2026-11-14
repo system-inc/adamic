@@ -1,0 +1,351 @@
+--- adapted-baseline/src/compiler/moduleSpecifiers.ts
++++ properties-road/src/compiler/moduleSpecifiers.ts
+@@ -174,7 +174,7 @@
+     /**
+      * @param syntaxImpliedNodeFormat Used when the import syntax implies ESM or CJS irrespective of the mode of the file.
+      */
+-    getAllowedEndingsInPreferredOrder(syntaxImpliedNodeFormat?: ResolutionMode): ModuleSpecifierEnding[];
++    getAllowedEndingsInPreferredOrder: (syntaxImpliedNodeFormat?: ResolutionMode) => ModuleSpecifierEnding[];
+     readonly excludeRegexes?: readonly string[] | undefined;
+ }
+ 
+--- adapted-baseline/src/compiler/performance.ts
++++ properties-road/src/compiler/performance.ts
+@@ -21,8 +21,8 @@
+ 
+ /** @internal */
+ export interface Timer {
+-    enter(): void;
+-    exit(): void;
++    enter: () => void;
++    exit: () => void;
+ }
+ 
+ /** @internal */
+--- adapted-baseline/src/compiler/sys.ts
++++ properties-road/src/compiler/sys.ts
+@@ -575,9 +575,9 @@
+     watchDirectory: HostWatchDirectory;
+     useCaseSensitiveFileNames: boolean;
+     getCurrentDirectory: System["getCurrentDirectory"];
+-    getAccessibleSortedChildDirectories(path: string): readonly string[];
++    getAccessibleSortedChildDirectories: (path: string) => readonly string[];
+     fileSystemEntryExists: FileSystemEntryExists;
+-    realpath(s: string): string;
++    realpath: (s: string) => string;
+     setTimeout: NonNullable<System["setTimeout"]>;
+     clearTimeout: NonNullable<System["clearTimeout"]>;
+ }
+@@ -978,8 +978,8 @@
+     useCaseSensitiveFileNames: boolean;
+     getCurrentDirectory: System["getCurrentDirectory"];
+     fsSupportsRecursiveFsWatch: boolean;
+-    getAccessibleSortedChildDirectories(path: string): readonly string[];
+-    realpath(s: string): string;
++    getAccessibleSortedChildDirectories: (path: string) => readonly string[];
++    realpath: (s: string) => string;
+     // For backward compatibility environment variables
+     tscWatchFile: string | undefined;
+     useNonPollingWatchers?: boolean;
+--- adapted-baseline/src/compiler/types.ts
++++ properties-road/src/compiler/types.ts
+@@ -8751,16 +8751,16 @@
+     /** @internal */ readonly baseFactory: BaseNodeFactory;
+     /** @internal */ readonly flags: NodeFactoryFlags;
+ 
+-    createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;
++    createNodeArray: <T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean) => NodeArray<T>;
+ 
+     //
+     // Literals
+     //
+ 
+-    createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;
++    createNumericLiteral: (value: string | number, numericLiteralFlags?: TokenFlags) => NumericLiteral;
+     createBigIntLiteral(value: string | PseudoBigInt): BigIntLiteral;
+-    createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;
+-    /** @internal */ createStringLiteral(text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral; // eslint-disable-line @typescript-eslint/unified-signatures
++    createStringLiteral: { (text: string, isSingleQuote?: boolean): StringLiteral;
++    /** @internal */ (text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral; }; // eslint-disable-line @typescript-eslint/unified-signatures
+     createStringLiteralFromNode(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean): StringLiteral;
+     createRegularExpressionLiteral(text: string): RegularExpressionLiteral;
+ 
+@@ -8768,8 +8768,8 @@
+     // Identifiers
+     //
+ 
+-    createIdentifier(text: string): Identifier;
+-    /** @internal */ createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier; // eslint-disable-line @typescript-eslint/unified-signatures
++    createIdentifier: { (text: string): Identifier;
++    /** @internal */ (text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier; }; // eslint-disable-line @typescript-eslint/unified-signatures
+ 
+     /**
+      * Create a unique temporary variable.
+@@ -8799,7 +8799,7 @@
+     getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags): Identifier;
+     /** @internal */ getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier; // eslint-disable-line @typescript-eslint/unified-signatures
+ 
+-    createPrivateIdentifier(text: string): PrivateIdentifier;
++    createPrivateIdentifier: (text: string) => PrivateIdentifier;
+     createUniquePrivateName(text?: string): PrivateIdentifier;
+     /** @internal */ createUniquePrivateName(text?: string, prefix?: string | GeneratedNamePart, suffix?: string): PrivateIdentifier; // eslint-disable-line @typescript-eslint/unified-signatures
+     getGeneratedPrivateNameForNode(node: Node): PrivateIdentifier;
+@@ -8809,18 +8809,18 @@
+     // Punctuation
+     //
+ 
+-    createToken(token: SyntaxKind.SuperKeyword): SuperExpression;
+-    createToken(token: SyntaxKind.ThisKeyword): ThisExpression;
+-    createToken(token: SyntaxKind.NullKeyword): NullLiteral;
+-    createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;
+-    createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;
+-    createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;
+-    createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;
+-    createToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;
+-    createToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;
+-    createToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;
+-    createToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;
+-    /** @internal */ createToken<TKind extends SyntaxKind>(token: TKind): Token<TKind>;
++    createToken: { (token: SyntaxKind.SuperKeyword): SuperExpression;
++    (token: SyntaxKind.ThisKeyword): ThisExpression;
++    (token: SyntaxKind.NullKeyword): NullLiteral;
++    (token: SyntaxKind.TrueKeyword): TrueLiteral;
++    (token: SyntaxKind.FalseKeyword): FalseLiteral;
++    (token: SyntaxKind.EndOfFileToken): EndOfFileToken;
++    (token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;
++    <TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;
++    <TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;
++    <TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;
++    <TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;
++    /** @internal */ <TKind extends SyntaxKind>(token: TKind): Token<TKind>; };
+ 
+     //
+     // Reserved words
+@@ -8955,29 +8955,29 @@
+     // Expression
+     //
+ 
+-    createArrayLiteralExpression(elements?: readonly Expression[], multiLine?: boolean): ArrayLiteralExpression;
++    createArrayLiteralExpression: (elements?: readonly Expression[], multiLine?: boolean) => ArrayLiteralExpression;
+     updateArrayLiteralExpression(node: ArrayLiteralExpression, elements: readonly Expression[]): ArrayLiteralExpression;
+-    createObjectLiteralExpression(properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean): ObjectLiteralExpression;
++    createObjectLiteralExpression: (properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean) => ObjectLiteralExpression;
+     updateObjectLiteralExpression(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]): ObjectLiteralExpression;
+-    createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;
++    createPropertyAccessExpression: (expression: Expression, name: string | MemberName) => PropertyAccessExpression;
+     updatePropertyAccessExpression(node: PropertyAccessExpression, expression: Expression, name: MemberName): PropertyAccessExpression;
+-    createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName): PropertyAccessChain;
++    createPropertyAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName) => PropertyAccessChain;
+     updatePropertyAccessChain(node: PropertyAccessChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, name: MemberName): PropertyAccessChain;
+-    createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;
++    createElementAccessExpression: (expression: Expression, index: number | Expression) => ElementAccessExpression;
+     updateElementAccessExpression(node: ElementAccessExpression, expression: Expression, argumentExpression: Expression): ElementAccessExpression;
+-    createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression): ElementAccessChain;
++    createElementAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression) => ElementAccessChain;
+     updateElementAccessChain(node: ElementAccessChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, argumentExpression: Expression): ElementAccessChain;
+-    createCallExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallExpression;
++    createCallExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallExpression;
+     updateCallExpression(node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallExpression;
+-    createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallChain;
++    createCallChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallChain;
+     updateCallChain(node: CallChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallChain;
+-    createNewExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;
++    createNewExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => NewExpression;
+     updateNewExpression(node: NewExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;
+     createTaggedTemplateExpression(tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral): TaggedTemplateExpression;
+     updateTaggedTemplateExpression(node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral): TaggedTemplateExpression;
+     createTypeAssertion(type: TypeNode, expression: Expression): TypeAssertion;
+     updateTypeAssertion(node: TypeAssertion, type: TypeNode, expression: Expression): TypeAssertion;
+-    createParenthesizedExpression(expression: Expression): ParenthesizedExpression;
++    createParenthesizedExpression: (expression: Expression) => ParenthesizedExpression;
+     updateParenthesizedExpression(node: ParenthesizedExpression, expression: Expression): ParenthesizedExpression;
+     createFunctionExpression(modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[] | undefined, type: TypeNode | undefined, body: Block): FunctionExpression;
+     updateFunctionExpression(node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block): FunctionExpression;
+@@ -9009,7 +9009,7 @@
+     createTemplateTail(text: string | undefined, rawText: string, templateFlags?: TokenFlags): TemplateTail;
+     createNoSubstitutionTemplateLiteral(text: string, rawText?: string): NoSubstitutionTemplateLiteral;
+     createNoSubstitutionTemplateLiteral(text: string | undefined, rawText: string): NoSubstitutionTemplateLiteral;
+-    /** @internal */ createLiteralLikeNode(kind: LiteralToken["kind"] | SyntaxKind.JsxTextAllWhiteSpaces, text: string): LiteralToken;
++    /** @internal */ createLiteralLikeNode: (kind: LiteralToken["kind"] | SyntaxKind.JsxTextAllWhiteSpaces, text: string) => LiteralToken;
+     /** @internal */ createTemplateLiteralLikeNode(kind: TemplateLiteralToken["kind"], text: string, rawText: string, templateFlags: TokenFlags | undefined): TemplateLiteralLikeNode;
+     createYieldExpression(asteriskToken: AsteriskToken, expression: Expression): YieldExpression;
+     createYieldExpression(asteriskToken: undefined, expression: Expression | undefined): YieldExpression;
+@@ -9045,24 +9045,24 @@
+     // Element
+     //
+ 
+-    createBlock(statements: readonly Statement[], multiLine?: boolean): Block;
++    createBlock: (statements: readonly Statement[], multiLine?: boolean) => Block;
+     updateBlock(node: Block, statements: readonly Statement[]): Block;
+-    createVariableStatement(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]): VariableStatement;
++    createVariableStatement: (modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]) => VariableStatement;
+     updateVariableStatement(node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList): VariableStatement;
+     createEmptyStatement(): EmptyStatement;
+-    createExpressionStatement(expression: Expression): ExpressionStatement;
++    createExpressionStatement: (expression: Expression) => ExpressionStatement;
+     updateExpressionStatement(node: ExpressionStatement, expression: Expression): ExpressionStatement;
+-    createIfStatement(expression: Expression, thenStatement: Statement, elseStatement?: Statement): IfStatement;
++    createIfStatement: (expression: Expression, thenStatement: Statement, elseStatement?: Statement) => IfStatement;
+     updateIfStatement(node: IfStatement, expression: Expression, thenStatement: Statement, elseStatement: Statement | undefined): IfStatement;
+     createDoStatement(statement: Statement, expression: Expression): DoStatement;
+     updateDoStatement(node: DoStatement, statement: Statement, expression: Expression): DoStatement;
+-    createWhileStatement(expression: Expression, statement: Statement): WhileStatement;
++    createWhileStatement: (expression: Expression, statement: Statement) => WhileStatement;
+     updateWhileStatement(node: WhileStatement, expression: Expression, statement: Statement): WhileStatement;
+-    createForStatement(initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;
++    createForStatement: (initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement) => ForStatement;
+     updateForStatement(node: ForStatement, initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;
+     createForInStatement(initializer: ForInitializer, expression: Expression, statement: Statement): ForInStatement;
+     updateForInStatement(node: ForInStatement, initializer: ForInitializer, expression: Expression, statement: Statement): ForInStatement;
+-    createForOfStatement(awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;
++    createForOfStatement: (awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement) => ForOfStatement;
+     updateForOfStatement(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;
+     createContinueStatement(label?: string | Identifier): ContinueStatement;
+     updateContinueStatement(node: ContinueStatement, label: Identifier | undefined): ContinueStatement;
+@@ -9081,9 +9081,9 @@
+     createTryStatement(tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;
+     updateTryStatement(node: TryStatement, tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;
+     createDebuggerStatement(): DebuggerStatement;
+-    createVariableDeclaration(name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression): VariableDeclaration;
++    createVariableDeclaration: (name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression) => VariableDeclaration;
+     updateVariableDeclaration(node: VariableDeclaration, name: BindingName, exclamationToken: ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined): VariableDeclaration;
+-    createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags?: NodeFlags): VariableDeclarationList;
++    createVariableDeclarationList: (declarations: readonly VariableDeclaration[], flags?: NodeFlags) => VariableDeclarationList;
+     updateVariableDeclarationList(node: VariableDeclarationList, declarations: readonly VariableDeclaration[]): VariableDeclarationList;
+     createFunctionDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;
+     updateFunctionDeclaration(node: FunctionDeclaration, modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;
+@@ -9579,7 +9579,7 @@
+     getCompilerOptions(): CompilerOptions;
+ 
+     /** Starts a new lexical environment. */
+-    startLexicalEnvironment(): void;
++    startLexicalEnvironment: () => void;
+ 
+     /** @internal */ setLexicalEnvironmentFlags(flags: LexicalEnvironmentFlags, value: boolean): void;
+     /** @internal */ getLexicalEnvironmentFlags(): LexicalEnvironmentFlags;
+@@ -9588,22 +9588,22 @@
+     suspendLexicalEnvironment(): void;
+ 
+     /** Resumes a suspended lexical environment, usually before visiting a function body. */
+-    resumeLexicalEnvironment(): void;
++    resumeLexicalEnvironment: () => void;
+ 
+     /** Ends a lexical environment, returning any declarations. */
+-    endLexicalEnvironment(): Statement[] | undefined;
++    endLexicalEnvironment: () => Statement[] | undefined;
+ 
+     /** Hoists a function declaration to the containing scope. */
+-    hoistFunctionDeclaration(node: FunctionDeclaration): void;
++    hoistFunctionDeclaration: (node: FunctionDeclaration) => void;
+ 
+     /** Hoists a variable declaration to the containing scope. */
+-    hoistVariableDeclaration(node: Identifier): void;
++    hoistVariableDeclaration: (node: Identifier) => void;
+ 
+     /** @internal */ startBlockScope(): void;
+ 
+     /** @internal */ endBlockScope(): Statement[] | undefined;
+ 
+-    /** @internal */ addBlockScopedVariable(node: Identifier): void;
++    /** @internal */ addBlockScopedVariable: (node: Identifier) => void;
+ 
+     /**
+      * Adds an initialization statement to the top of the lexical environment.
+@@ -9616,7 +9616,7 @@
+ export interface TransformationContext extends CoreTransformationContext {
+     /** @internal */ getEmitResolver(): EmitResolver;
+     /** @internal */ getEmitHost(): EmitHost;
+-    /** @internal */ getEmitHelperFactory(): EmitHelperFactory;
++    /** @internal */ getEmitHelperFactory: () => EmitHelperFactory;
+ 
+     /** Records a request for a non-scoped emit helper in the current context. */
+     requestEmitHelper(helper: EmitHelper): void;
+@@ -9822,7 +9822,7 @@
+      * A hook used by the Printer when generating unique names to avoid collisions with
+      * globally defined names that exist outside of the current source file.
+      */
+-    hasGlobalName?(name: string): boolean;
++    hasGlobalName?: (name: string) => boolean;
+     /**
+      * A hook used by the Printer to provide notifications prior to emitting a node. A
+      * compatible implementation **must** invoke `emitCallback` with the provided `hint` and
+@@ -9841,13 +9841,13 @@
+      * });
+      * ```
+      */
+-    onEmitNode?(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;
++    onEmitNode?: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;
+ 
+     /**
+      * A hook used to check if an emit notification is required for a node.
+      * @param node The node to emit.
+      */
+-    isEmitNotificationEnabled?(node: Node): boolean;
++    isEmitNotificationEnabled?: (node: Node) => boolean;
+     /**
+      * A hook used by the Printer to perform just-in-time substitution of a node. This is
+      * primarily used by node transformations that need to substitute one node for another,
+@@ -9864,7 +9864,7 @@
+      * });
+      * ```
+      */
+-    substituteNode?(hint: EmitHint, node: Node): Node;
++    substituteNode?: (hint: EmitHint, node: Node) => Node;
+     /** @internal */ onEmitSourceMapOfNode?: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;
+     /** @internal */ onEmitSourceMapOfToken?: (node: Node | undefined, token: SyntaxKind, writer: (s: string) => void, pos: number, emitCallback: (token: SyntaxKind, writer: (s: string) => void, pos: number) => number) => number;
+     /** @internal */ onEmitSourceMapOfPosition?: (pos: number) => void;
+@@ -10616,8 +10616,8 @@
+ 
+ /** @internal */
+ export interface EvaluationResolver {
+-    evaluateEntityNameExpression(expr: EntityNameExpression, location: Declaration | undefined): EvaluatorResult;
+-    evaluateElementAccessExpression(expr: ElementAccessExpression, location: Declaration | undefined): EvaluatorResult;
++    evaluateEntityNameExpression: (expr: EntityNameExpression, location: Declaration | undefined) => EvaluatorResult;
++    evaluateElementAccessExpression: (expr: ElementAccessExpression, location: Declaration | undefined) => EvaluatorResult;
+ }
+ 
+ /** @internal */
+@@ -10667,10 +10667,10 @@
+     shouldRemoveDeclaration(context: SyntacticTypeNodeBuilderContext, node: DynamicNamedDeclaration): boolean;
+     hasLateBindableName(node: Declaration): node is LateBoundDeclaration | LateBoundBinaryExpressionDeclaration;
+     createRecoveryBoundary(context: SyntacticTypeNodeBuilderContext): {
+-        startRecoveryScope(): () => void;
+-        finalizeBoundary(): boolean;
+-        markError(): void;
+-        hadError(): boolean;
++        startRecoveryScope: () => () => void;
++        finalizeBoundary: () => boolean;
++        markError: () => void;
++        hadError: () => boolean;
+     };
+ }
+ 
+--- adapted-baseline/src/compiler/utilities.ts
++++ properties-road/src/compiler/utilities.ts
+@@ -8175,7 +8175,7 @@
+ 
+ /** @internal */
+ export interface MutateMapSkippingNewValuesDelete<K, T> {
+-    onDeleteValue(existingValue: T, key: K): void;
++    onDeleteValue: (existingValue: T, key: K) => void;
+ }
+ 
+ /** @internal */
+@@ -8186,7 +8186,7 @@
+      * If the key is removed, caller will get callback of createNewValue for that key.
+      * If this callback is not provided, the value of such keys is not updated.
+      */
+-    onExistingValue?(existingValue: T, valueInNewMap: U, key: K): void;
++    onExistingValue?: (existingValue: T, valueInNewMap: U, key: K) => void;
+ }
+ 
+ /**
+@@ -8227,7 +8227,7 @@
+ 
+ /** @internal */
+ export interface MutateMapOptionsCreate<K, T, U> {
+-    createNewValue(key: K, valueInNewMap: U): T;
++    createNewValue: (key: K, valueInNewMap: U) => T;
+ }
+ 
+ /** @internal */

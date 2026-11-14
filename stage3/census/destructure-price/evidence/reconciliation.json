@@ -1,0 +1,1190 @@
+{
+  "rootCount": 79,
+  "objectBindingFiles": 54,
+  "astSites": 29,
+  "initializerOnlySites": 25,
+  "parameterSites": 4,
+  "completedCensusFiles": 24,
+  "censusUniqueRefusalLocations": 16,
+  "censusObservedBindingSites": 16,
+  "censusRawEvents": 18,
+  "astOnly": [
+    {
+      "site": "src/compiler/utilities.ts:8213",
+      "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+      "enclosing": "mutateMapSkippingNewValues",
+      "patternStart": {
+        "line": 8213,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 8213,
+        "column": 45
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/utilities.ts:8208:1",
+      "observed": [],
+      "mask": {
+        "kind": "unit coverage/deferred boundary",
+        "units": [
+          {
+            "where": "src/compiler/utilities.ts:8197:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8203:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8208:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          }
+        ]
+      }
+    },
+    {
+      "site": "src/compiler/utilities.ts:8253",
+      "type": "MutateMapOptions<K, T, U>",
+      "enclosing": "mutateMap",
+      "patternStart": {
+        "line": 8253,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 8253,
+        "column": 29
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/utilities.ts:8249:1",
+      "observed": [],
+      "mask": {
+        "kind": "unit coverage/deferred boundary",
+        "units": [
+          {
+            "where": "src/compiler/utilities.ts:8246:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8248:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8249:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          }
+        ]
+      }
+    },
+    {
+      "site": "src/compiler/sourcemap.ts:40",
+      "type": "Timer",
+      "enclosing": "createSourceMapGenerator",
+      "patternStart": {
+        "line": 40,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 40,
+        "column": 24
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/sourcemap.ts:36:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/sourcemap.ts:40:5",
+          "reason": "var",
+          "text": "src/compiler/sourcemap.ts:40:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/sourcemap.ts:36:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:236",
+      "type": "TransformationContext",
+      "enclosing": "transformTypeScript",
+      "patternStart": {
+        "line": 236,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 243,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/ts.ts:235:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/ts.ts:235:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/ts.ts:1430:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet",
+          "unit": "src/compiler/transformers/ts.ts:235:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/classFields.ts:355",
+      "type": "TransformationContext",
+      "enclosing": "transformClassFields",
+      "patternStart": {
+        "line": 355,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 363,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/classFields.ts:354:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/classFields.ts:354:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet",
+          "unit": "src/compiler/transformers/classFields.ts:354:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/esDecorators.ts:296",
+      "type": "TransformationContext",
+      "enclosing": "transformESDecorators",
+      "patternStart": {
+        "line": 296,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 302,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/esDecorators.ts:295:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/esDecorators.ts:295:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet",
+          "unit": "src/compiler/transformers/esDecorators.ts:295:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/es2018.ts:155",
+      "type": "TransformationContext",
+      "enclosing": "transformES2018",
+      "patternStart": {
+        "line": 155,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 161,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2018.ts:154:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2018.ts:154:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/es2018.ts:1233:36: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+          "unit": "src/compiler/transformers/es2018.ts:154:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/es2015.ts:489",
+      "type": "TransformationContext",
+      "enclosing": "transformES2015",
+      "patternStart": {
+        "line": 489,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 496,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2015.ts:488:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2015.ts:488:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet",
+          "unit": "src/compiler/transformers/es2015.ts:488:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/generators.ts:337",
+      "type": "TransformationContext",
+      "enclosing": "transformGenerators",
+      "patternStart": {
+        "line": 337,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 344,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/generators.ts:336:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/generators.ts:336:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+          "unit": "src/compiler/transformers/generators.ts:336:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/module/module.ts:192",
+      "type": "TransformationContext",
+      "enclosing": "transformModule",
+      "patternStart": {
+        "line": 192,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 198,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/module/module.ts:174:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/module/module.ts:174:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/module/module.ts:1926:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+          "unit": "src/compiler/transformers/module/module.ts:174:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/emitter.ts:771",
+      "type": "Timer",
+      "enclosing": "emitFiles",
+      "patternStart": {
+        "line": 771,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 771,
+        "column": 24
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:752:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:771:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:771:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:752:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/emitter.ts:1215",
+      "type": "PrintHandlers",
+      "enclosing": "createPrinter",
+      "patternStart": {
+        "line": 1215,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 1226,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:1215:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:1211:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/emitter.ts:1275",
+      "type": "Timer",
+      "enclosing": "createPrinter",
+      "patternStart": {
+        "line": 1275,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 1275,
+        "column": 51
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:1275:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:1275:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:1211:1"
+        },
+        "additionalPrologue": null
+      }
+    }
+  ],
+  "censusOnly": [],
+  "sites": [
+    {
+      "site": "src/compiler/sys.ts:590",
+      "type": "RecursiveDirectoryWatcherHost",
+      "enclosing": "createDirectoryWatcherSupportingRecursive",
+      "patternStart": {
+        "line": 590,
+        "column": 52
+      },
+      "patternEnd": {
+        "line": 599,
+        "column": 2
+      },
+      "parameter": true,
+      "enclosingDeclaration": "src/compiler/sys.ts:590:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/sys.ts:594:5",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/sys.ts:594:5: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/sys.ts:590:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/sys.ts:993",
+      "type": "CreateSystemWatchFunctions",
+      "enclosing": "createSystemWatchFunctions",
+      "patternStart": {
+        "line": 993,
+        "column": 44
+      },
+      "patternEnd": {
+        "line": 1011,
+        "column": 2
+      },
+      "parameter": true,
+      "enclosingDeclaration": "src/compiler/sys.ts:993:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/sys.ts:1003:5",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/sys.ts:1003:5: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/sys.ts:993:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/utilities.ts:8213",
+      "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+      "enclosing": "mutateMapSkippingNewValues",
+      "patternStart": {
+        "line": 8213,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 8213,
+        "column": 45
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/utilities.ts:8208:1",
+      "observed": [],
+      "mask": {
+        "kind": "unit coverage/deferred boundary",
+        "units": [
+          {
+            "where": "src/compiler/utilities.ts:8197:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8203:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8208:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          }
+        ]
+      }
+    },
+    {
+      "site": "src/compiler/utilities.ts:8253",
+      "type": "MutateMapOptions<K, T, U>",
+      "enclosing": "mutateMap",
+      "patternStart": {
+        "line": 8253,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 8253,
+        "column": 29
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/utilities.ts:8249:1",
+      "observed": [],
+      "mask": {
+        "kind": "unit coverage/deferred boundary",
+        "units": [
+          {
+            "where": "src/compiler/utilities.ts:8246:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8248:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          },
+          {
+            "where": "src/compiler/utilities.ts:8249:1",
+            "status": "deferred_generic_instantiation",
+            "instantiated": false,
+            "checkerDiagnostics": []
+          }
+        ]
+      }
+    },
+    {
+      "site": "src/compiler/utilities.ts:11317",
+      "type": "EvaluationResolver",
+      "enclosing": "createEvaluator",
+      "patternStart": {
+        "line": 11317,
+        "column": 33
+      },
+      "patternEnd": {
+        "line": 11317,
+        "column": 98
+      },
+      "parameter": true,
+      "enclosingDeclaration": "src/compiler/utilities.ts:11317:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/utilities.ts:11317:35",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/utilities.ts:11317:35: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/utilities.ts:11317:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/parser.ts:1472",
+      "type": "NodeFactory",
+      "enclosing": "<top-level>",
+      "patternStart": {
+        "line": 1472,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 1499,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "namespace initialization",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/parser.ts:1473:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/parser.ts:1473:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/parser.ts:1437:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/moduleSpecifiers.ts:583",
+      "type": "ModuleSpecifierPreferences",
+      "enclosing": "getLocalModuleSpecifier",
+      "patternStart": {
+        "line": 583,
+        "column": 169
+      },
+      "patternEnd": {
+        "line": 583,
+        "column": 279
+      },
+      "parameter": true,
+      "enclosingDeclaration": "src/compiler/moduleSpecifiers.ts:583:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/moduleSpecifiers.ts:583:171",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/moduleSpecifiers.ts:583:171: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/moduleSpecifiers.ts:583:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/sourcemap.ts:40",
+      "type": "Timer",
+      "enclosing": "createSourceMapGenerator",
+      "patternStart": {
+        "line": 40,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 40,
+        "column": 24
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/sourcemap.ts:36:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/sourcemap.ts:40:5",
+          "reason": "var",
+          "text": "src/compiler/sourcemap.ts:40:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/sourcemap.ts:36:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:236",
+      "type": "TransformationContext",
+      "enclosing": "transformTypeScript",
+      "patternStart": {
+        "line": 236,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 243,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/ts.ts:235:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/ts.ts:235:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/ts.ts:1430:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet",
+          "unit": "src/compiler/transformers/ts.ts:235:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/classFields.ts:355",
+      "type": "TransformationContext",
+      "enclosing": "transformClassFields",
+      "patternStart": {
+        "line": 355,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 363,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/classFields.ts:354:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/classFields.ts:354:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet",
+          "unit": "src/compiler/transformers/classFields.ts:354:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/typeSerializer.ts:133",
+      "type": "TransformationContext",
+      "enclosing": "createRuntimeTypeSerializer",
+      "patternStart": {
+        "line": 133,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 136,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/typeSerializer.ts:132:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/typeSerializer.ts:135:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/typeSerializer.ts:135:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/typeSerializer.ts:132:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/legacyDecorators.ts:89",
+      "type": "TransformationContext",
+      "enclosing": "transformLegacyDecorators",
+      "patternStart": {
+        "line": 89,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 93,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/legacyDecorators.ts:88:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/legacyDecorators.ts:91:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/legacyDecorators.ts:91:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/legacyDecorators.ts:88:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/esDecorators.ts:296",
+      "type": "TransformationContext",
+      "enclosing": "transformESDecorators",
+      "patternStart": {
+        "line": 296,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 302,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/esDecorators.ts:295:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/esDecorators.ts:295:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet",
+          "unit": "src/compiler/transformers/esDecorators.ts:295:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/es2017.ts:120",
+      "type": "TransformationContext",
+      "enclosing": "transformES2017",
+      "patternStart": {
+        "line": 120,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 126,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2017.ts:119:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2017.ts:122:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/es2017.ts:122:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/es2017.ts:119:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/es2018.ts:155",
+      "type": "TransformationContext",
+      "enclosing": "transformES2018",
+      "patternStart": {
+        "line": 155,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 161,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2018.ts:154:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2018.ts:154:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/es2018.ts:1233:36: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+          "unit": "src/compiler/transformers/es2018.ts:154:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/es2020.ts:43",
+      "type": "TransformationContext",
+      "enclosing": "transformES2020",
+      "patternStart": {
+        "line": 43,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 46,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2020.ts:42:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2020.ts:45:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/es2020.ts:45:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/es2020.ts:42:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/es2021.ts:26",
+      "type": "TransformationContext",
+      "enclosing": "transformES2021",
+      "patternStart": {
+        "line": 26,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 29,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2021.ts:25:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2021.ts:27:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/es2021.ts:27:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/es2021.ts:25:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/esnext.ts:77",
+      "type": "TransformationContext",
+      "enclosing": "transformESNext",
+      "patternStart": {
+        "line": 77,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 83,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/esnext.ts:71:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/esnext.ts:79:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/esnext.ts:79:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/esnext.ts:71:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/jsx.ts:99",
+      "type": "TransformationContext",
+      "enclosing": "transformJsx",
+      "patternStart": {
+        "line": 99,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 102,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/jsx.ts:92:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/jsx.ts:101:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/jsx.ts:101:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/jsx.ts:92:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/es2016.ts:22",
+      "type": "TransformationContext",
+      "enclosing": "transformES2016",
+      "patternStart": {
+        "line": 22,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 25,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2016.ts:21:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2016.ts:24:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/es2016.ts:24:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/es2016.ts:21:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/es2015.ts:489",
+      "type": "TransformationContext",
+      "enclosing": "transformES2015",
+      "patternStart": {
+        "line": 489,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 496,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/es2015.ts:488:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/es2015.ts:488:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet",
+          "unit": "src/compiler/transformers/es2015.ts:488:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/generators.ts:337",
+      "type": "TransformationContext",
+      "enclosing": "transformGenerators",
+      "patternStart": {
+        "line": 337,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 344,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/generators.ts:336:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/generators.ts:336:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+          "unit": "src/compiler/transformers/generators.ts:336:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/module/module.ts:192",
+      "type": "TransformationContext",
+      "enclosing": "transformModule",
+      "patternStart": {
+        "line": 192,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 198,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/module/module.ts:174:1",
+      "observed": [],
+      "mask": {
+        "kind": "function signature/prologue",
+        "evidence": {
+          "kind": "Boundary",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/module/module.ts:174:1",
+          "reason": "function signature or prologue failed; continued at next declaration",
+          "text": "src/compiler/transformers/module/module.ts:1926:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+          "unit": "src/compiler/transformers/module/module.ts:174:1"
+        }
+      }
+    },
+    {
+      "site": "src/compiler/transformers/module/system.ts:143",
+      "type": "TransformationContext",
+      "enclosing": "transformSystemModule",
+      "patternStart": {
+        "line": 143,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 148,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/module/system.ts:137:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/module/system.ts:145:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/module/system.ts:145:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/module/system.ts:137:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/transformers/module/esnextAnd2015.ts:68",
+      "type": "TransformationContext",
+      "enclosing": "transformECMAScriptModule",
+      "patternStart": {
+        "line": 68,
+        "column": 11
+      },
+      "patternEnd": {
+        "line": 71,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/transformers/module/esnextAnd2015.ts:67:1",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/transformers/module/esnextAnd2015.ts:70:9",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/transformers/module/esnextAnd2015.ts:70:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        }
+      ],
+      "mask": null
+    },
+    {
+      "site": "src/compiler/emitter.ts:771",
+      "type": "Timer",
+      "enclosing": "emitFiles",
+      "patternStart": {
+        "line": 771,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 771,
+        "column": 24
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:752:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:771:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:771:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:752:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/emitter.ts:1215",
+      "type": "PrintHandlers",
+      "enclosing": "createPrinter",
+      "patternStart": {
+        "line": 1215,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 1226,
+        "column": 6
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:1215:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:1211:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/emitter.ts:1275",
+      "type": "Timer",
+      "enclosing": "createPrinter",
+      "patternStart": {
+        "line": 1275,
+        "column": 9
+      },
+      "patternEnd": {
+        "line": 1275,
+        "column": 51
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+      "observed": [],
+      "mask": {
+        "kind": "var gate before binding",
+        "evidence": {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/emitter.ts:1275:5",
+          "reason": "var",
+          "text": "src/compiler/emitter.ts:1275:5: Adamic 0.1 refuses var; use const or let",
+          "unit": "src/compiler/emitter.ts:1211:1"
+        },
+        "additionalPrologue": null
+      }
+    },
+    {
+      "site": "src/compiler/expressionToTypeNode.ts:199",
+      "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+      "enclosing": "tryReuseExistingTypeNode",
+      "patternStart": {
+        "line": 199,
+        "column": 15
+      },
+      "patternEnd": {
+        "line": 199,
+        "column": 76
+      },
+      "parameter": false,
+      "enclosingDeclaration": "src/compiler/expressionToTypeNode.ts:198:5",
+      "observed": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "where": "src/compiler/expressionToTypeNode.ts:199:17",
+          "reason": "a method in object destructuring",
+          "text": "src/compiler/expressionToTypeNode.ts:199:17: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this",
+          "unit": "src/compiler/expressionToTypeNode.ts:198:5"
+        }
+      ],
+      "mask": null
+    }
+  ]
+}

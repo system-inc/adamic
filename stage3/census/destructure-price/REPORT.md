@@ -1,67 +1,383 @@
 | Site (binding start) | Type | Public or internal | Members (`*` = method signature) | Calls per lane run |
 | --- | --- | --- | --- | --- |
-| src/compiler/sys.ts:590 | RecursiveDirectoryWatcherHost | Internal | `watchDirectory`, `useCaseSensitiveFileNames`, `getCurrentDirectory`, `getAccessibleSortedChildDirectories*`, `fileSystemEntryExists`, `realpath*`, `setTimeout`, `clearTimeout` | runs=30; watchDirectory=238; useCaseSensitiveFileNames=0; getCurrentDirectory=20; getAccessibleSortedChildDirectories=167; fileSystemEntryExists=316; realpath=379; setTimeout=83; clearTimeout=54 |
-| src/compiler/sys.ts:993 | CreateSystemWatchFunctions | Internal | `pollingWatchFileWorker`, `getModifiedTime`, `setTimeout`, `clearTimeout`, `fsWatchWorker`, `fileSystemEntryExists`, `useCaseSensitiveFileNames`, `getCurrentDirectory`, `fsSupportsRecursiveFsWatch`, `getAccessibleSortedChildDirectories*`, `realpath*`, `tscWatchFile`, `useNonPollingWatchers`, `tscWatchDirectory`, `inodeWatching`, `fsWatchWithTimestamp`, `sysLog` | runs=4,785; pollingWatchFileWorker=4,786; getModifiedTime=1,180; setTimeout=358; clearTimeout=54; fsWatchWorker=13,330; fileSystemEntryExists=18,252; useCaseSensitiveFileNames=0; getCurrentDirectory=66; fsSupportsRecursiveFsWatch=0; getAccessibleSortedChildDirectories=167; realpath=379; tscWatchFile=0; useNonPollingWatchers=0; tscWatchDirectory=0; inodeWatching=0; fsWatchWithTimestamp=0; sysLog=168 |
-| src/compiler/utilities.ts:8213 | MutateMapSkippingNewValuesOptions<K, T, U> | Internal | `onDeleteValue*`, `onExistingValue*` | runs=33,708; onDeleteValue=76; onExistingValue=326 |
-| src/compiler/utilities.ts:8253 | MutateMapOptions<K, T, U> | Internal | `createNewValue*` | runs=8,913; createNewValue=2,855 |
-| src/compiler/utilities.ts:11317 | EvaluationResolver | Internal | `evaluateElementAccessExpression*`, `evaluateEntityNameExpression*` | runs=86,185; evaluateElementAccessExpression=51; evaluateEntityNameExpression=4,493 |
-| src/compiler/parser.ts:1472 | NodeFactory | Public | `createNodeArray*`, `createNumericLiteral*`, `createStringLiteral*`, `createLiteralLikeNode*`, `createIdentifier*`, `createPrivateIdentifier*`, `createToken*`, `createArrayLiteralExpression*`, `createObjectLiteralExpression*`, `createPropertyAccessExpression*`, `createPropertyAccessChain*`, `createElementAccessExpression*`, `createElementAccessChain*`, `createCallExpression*`, `createCallChain*`, `createNewExpression*`, `createParenthesizedExpression*`, `createBlock*`, `createVariableStatement*`, `createExpressionStatement*`, `createIfStatement*`, `createWhileStatement*`, `createForStatement*`, `createForOfStatement*`, `createVariableDeclaration*`, `createVariableDeclarationList*` | runs=9; createNodeArray=4,068,227; createNumericLiteral=377,494; createStringLiteral=375,394; createLiteralLikeNode=2,671; createIdentifier=8,254,453; createPrivateIdentifier=4,176; createToken=3,399,650; createArrayLiteralExpression=81,897; createObjectLiteralExpression=67,014; createPropertyAccessExpression=151,152; createPropertyAccessChain=812; createElementAccessExpression=40,053; createElementAccessChain=217; createCallExpression=106,406; createCallChain=394; createNewExpression=16,513; createParenthesizedExpression=44,643; createBlock=127,614; createVariableStatement=227,665; createExpressionStatement=184,328; createIfStatement=12,746; createWhileStatement=1,250; createForStatement=3,007; createForOfStatement=2,908; createVariableDeclaration=239,240; createVariableDeclarationList=232,784 |
-| src/compiler/moduleSpecifiers.ts:583 | ModuleSpecifierPreferences | Internal | `getAllowedEndingsInPreferredOrder*`, `relativePreference`, `excludeRegexes` | runs=3,769; getAllowedEndingsInPreferredOrder=3,141; relativePreference=0; excludeRegexes=0 |
-| src/compiler/sourcemap.ts:40 | Timer | Internal | `enter*`, `exit*` | runs=9,494; enter=3,659,380; exit=3,659,380 |
-| src/compiler/transformers/ts.ts:236 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=49,199; factory=0; getEmitHelperFactory=666; startLexicalEnvironment=6,788; resumeLexicalEnvironment=1,214; endLexicalEnvironment=8,002; hoistVariableDeclaration=124 |
-| src/compiler/transformers/classFields.ts:355 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*`, `endLexicalEnvironment*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `addBlockScopedVariable*` | runs=49,199; factory=0; getEmitHelperFactory=1,891; hoistVariableDeclaration=3,402; endLexicalEnvironment=3,555; startLexicalEnvironment=974; resumeLexicalEnvironment=2,581; addBlockScopedVariable=20 |
-| src/compiler/transformers/typeSerializer.ts:133 | TransformationContext | Public | `factory`, `hoistVariableDeclaration*` | runs=402; factory=0; hoistVariableDeclaration=38 |
-| src/compiler/transformers/legacyDecorators.ts:89 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*` | runs=1,027; factory=0; getEmitHelperFactory=1,583; hoistVariableDeclaration=44 |
-| src/compiler/transformers/esDecorators.ts:296 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=46,653; factory=0; getEmitHelperFactory=3,162; startLexicalEnvironment=1,503; endLexicalEnvironment=1,503; hoistVariableDeclaration=301 |
-| src/compiler/transformers/es2017.ts:120 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=36,281; factory=0; getEmitHelperFactory=2,513; resumeLexicalEnvironment=2,513; endLexicalEnvironment=2,513; hoistVariableDeclaration=106 |
-| src/compiler/transformers/es2018.ts:155 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=36,628; factory=0; getEmitHelperFactory=2,215; resumeLexicalEnvironment=26,640; endLexicalEnvironment=26,640; hoistVariableDeclaration=356 |
-| src/compiler/transformers/es2020.ts:43 | TransformationContext | Public | `factory`, `hoistVariableDeclaration*` | runs=36,871; factory=0; hoistVariableDeclaration=432 |
-| src/compiler/transformers/es2021.ts:26 | TransformationContext | Public | `hoistVariableDeclaration*`, `factory` | runs=37,105; hoistVariableDeclaration=36; factory=0 |
-| src/compiler/transformers/esnext.ts:77 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*`, `startLexicalEnvironment*`, `endLexicalEnvironment*` | runs=47,449; factory=0; getEmitHelperFactory=2,081; hoistVariableDeclaration=626; startLexicalEnvironment=340; endLexicalEnvironment=340 |
-| src/compiler/transformers/jsx.ts:99 | TransformationContext | Public | `factory`, `getEmitHelperFactory*` | runs=590; factory=0; getEmitHelperFactory=148 |
-| src/compiler/transformers/es2016.ts:22 | TransformationContext | Public | `factory`, `hoistVariableDeclaration*` | runs=36,212; factory=0; hoistVariableDeclaration=228 |
-| src/compiler/transformers/es2015.ts:489 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=3,754; factory=0; getEmitHelperFactory=779; startLexicalEnvironment=7,183; resumeLexicalEnvironment=10,368; endLexicalEnvironment=17,551; hoistVariableDeclaration=431 |
-| src/compiler/transformers/generators.ts:337 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistFunctionDeclaration*`, `hoistVariableDeclaration*` | runs=3,754; factory=0; getEmitHelperFactory=1,029; resumeLexicalEnvironment=1,011; endLexicalEnvironment=1,011; hoistFunctionDeclaration=6; hoistVariableDeclaration=1,085 |
-| src/compiler/transformers/module/module.ts:192 | TransformationContext | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=48,396; factory=0; getEmitHelperFactory=2,845; startLexicalEnvironment=11,206; endLexicalEnvironment=11,206; hoistVariableDeclaration=24 |
-| src/compiler/transformers/module/system.ts:143 | TransformationContext | Public | `factory`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=618; factory=0; startLexicalEnvironment=632; endLexicalEnvironment=632; hoistVariableDeclaration=1,229 |
-| src/compiler/transformers/module/esnextAnd2015.ts:68 | TransformationContext | Public | `factory`, `getEmitHelperFactory*` | runs=45,988; factory=0; getEmitHelperFactory=15,905 |
-| src/compiler/emitter.ts:771 | Timer | Internal | `enter*`, `exit*` | runs=54,954; enter=54,954; exit=54,950 |
-| src/compiler/emitter.ts:1215 | PrintHandlers | Public | `hasGlobalName*`, `onEmitNode*`, `isEmitNotificationEnabled*`, `substituteNode*`, `onBeforeEmitNode`, `onAfterEmitNode`, `onBeforeEmitNodeArray`, `onAfterEmitNodeArray`, `onBeforeEmitToken`, `onAfterEmitToken` | runs=73,916; hasGlobalName=49,960; onEmitNode=4,628,553; isEmitNotificationEnabled=3,975,026; substituteNode=3,986,302; onBeforeEmitNode=451,527; onAfterEmitNode=451,527; onBeforeEmitNodeArray=110,298; onAfterEmitNodeArray=110,298; onBeforeEmitToken=6,180; onAfterEmitToken=6,180 |
-| src/compiler/emitter.ts:1275 | Timer | Internal | `enter*`, `exit*` | runs=73,916; enter=10,552,068; exit=10,552,068 |
-| src/compiler/expressionToTypeNode.ts:199 | Recovery boundary (anonymous) | Internal | `finalizeBoundary*`, `startRecoveryScope*`, `hadError*`, `markError*` | runs=184,002; finalizeBoundary=184,001; startRecoveryScope=332,198; hadError=664,647; markError=1,093 |
+| src/compiler/sys.ts:590 | `RecursiveDirectoryWatcherHost` | Internal/private | `watchDirectory`, `useCaseSensitiveFileNames`, `getCurrentDirectory`, `getAccessibleSortedChildDirectories*`, `fileSystemEntryExists`, `realpath*`, `setTimeout`, `clearTimeout` | runs=30; watchDirectory=238; useCaseSensitiveFileNames=0; getCurrentDirectory=20; getAccessibleSortedChildDirectories=167; fileSystemEntryExists=316; realpath=379; setTimeout=83; clearTimeout=54 |
+| src/compiler/sys.ts:993 | `CreateSystemWatchFunctions` | Internal/private | `pollingWatchFileWorker`, `getModifiedTime`, `setTimeout`, `clearTimeout`, `fsWatchWorker`, `fileSystemEntryExists`, `useCaseSensitiveFileNames`, `getCurrentDirectory`, `fsSupportsRecursiveFsWatch`, `getAccessibleSortedChildDirectories*`, `realpath*`, `tscWatchFile`, `useNonPollingWatchers`, `tscWatchDirectory`, `inodeWatching`, `fsWatchWithTimestamp`, `sysLog` | runs=4,785; pollingWatchFileWorker=4,786; getModifiedTime=1,180; setTimeout=358; clearTimeout=54; fsWatchWorker=13,330; fileSystemEntryExists=18,252; useCaseSensitiveFileNames=0; getCurrentDirectory=66; fsSupportsRecursiveFsWatch=0; getAccessibleSortedChildDirectories=167; realpath=379; tscWatchFile=0; useNonPollingWatchers=0; tscWatchDirectory=0; inodeWatching=0; fsWatchWithTimestamp=0; sysLog=168 |
+| src/compiler/utilities.ts:8213 | `MutateMapSkippingNewValuesOptions<K, T, U>` | Internal/private | `onDeleteValue*`, `onExistingValue*` | runs=33,708; onDeleteValue=76; onExistingValue=326 |
+| src/compiler/utilities.ts:8253 | `MutateMapOptions<K, T, U>` | Internal/private | `createNewValue*` | runs=8,913; createNewValue=2,855 |
+| src/compiler/utilities.ts:11317 | `EvaluationResolver` | Internal/private | `evaluateElementAccessExpression*`, `evaluateEntityNameExpression*` | runs=86,185; evaluateElementAccessExpression=51; evaluateEntityNameExpression=4,493 |
+| src/compiler/parser.ts:1472 | `NodeFactory` | Public | `createNodeArray*`, `createNumericLiteral*`, `createStringLiteral*`, `createLiteralLikeNode*`, `createIdentifier*`, `createPrivateIdentifier*`, `createToken*`, `createArrayLiteralExpression*`, `createObjectLiteralExpression*`, `createPropertyAccessExpression*`, `createPropertyAccessChain*`, `createElementAccessExpression*`, `createElementAccessChain*`, `createCallExpression*`, `createCallChain*`, `createNewExpression*`, `createParenthesizedExpression*`, `createBlock*`, `createVariableStatement*`, `createExpressionStatement*`, `createIfStatement*`, `createWhileStatement*`, `createForStatement*`, `createForOfStatement*`, `createVariableDeclaration*`, `createVariableDeclarationList*` | runs=9; createNodeArray=4,068,227; createNumericLiteral=377,494; createStringLiteral=375,394; createLiteralLikeNode=2,671; createIdentifier=8,254,453; createPrivateIdentifier=4,176; createToken=3,399,650; createArrayLiteralExpression=81,897; createObjectLiteralExpression=67,014; createPropertyAccessExpression=151,152; createPropertyAccessChain=812; createElementAccessExpression=40,053; createElementAccessChain=217; createCallExpression=106,406; createCallChain=394; createNewExpression=16,513; createParenthesizedExpression=44,643; createBlock=127,614; createVariableStatement=227,665; createExpressionStatement=184,328; createIfStatement=12,746; createWhileStatement=1,250; createForStatement=3,007; createForOfStatement=2,908; createVariableDeclaration=239,240; createVariableDeclarationList=232,784 |
+| src/compiler/moduleSpecifiers.ts:583 | `ModuleSpecifierPreferences` | Internal/private | `getAllowedEndingsInPreferredOrder*`, `relativePreference`, `excludeRegexes` | runs=3,769; getAllowedEndingsInPreferredOrder=3,141; relativePreference=0; excludeRegexes=0 |
+| src/compiler/sourcemap.ts:40 | `Timer` | Internal/private | `enter*`, `exit*` | runs=9,494; enter=3,659,380; exit=3,659,380 |
+| src/compiler/transformers/ts.ts:236 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=49,199; factory=0; getEmitHelperFactory=666; startLexicalEnvironment=6,788; resumeLexicalEnvironment=1,214; endLexicalEnvironment=8,002; hoistVariableDeclaration=124 |
+| src/compiler/transformers/classFields.ts:355 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*`, `endLexicalEnvironment*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `addBlockScopedVariable*` | runs=49,199; factory=0; getEmitHelperFactory=1,891; hoistVariableDeclaration=3,402; endLexicalEnvironment=3,555; startLexicalEnvironment=974; resumeLexicalEnvironment=2,581; addBlockScopedVariable=20 |
+| src/compiler/transformers/typeSerializer.ts:133 | `TransformationContext` | Public | `factory`, `hoistVariableDeclaration*` | runs=402; factory=0; hoistVariableDeclaration=38 |
+| src/compiler/transformers/legacyDecorators.ts:89 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*` | runs=1,027; factory=0; getEmitHelperFactory=1,583; hoistVariableDeclaration=44 |
+| src/compiler/transformers/esDecorators.ts:296 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=46,653; factory=0; getEmitHelperFactory=3,162; startLexicalEnvironment=1,503; endLexicalEnvironment=1,503; hoistVariableDeclaration=301 |
+| src/compiler/transformers/es2017.ts:120 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=36,281; factory=0; getEmitHelperFactory=2,513; resumeLexicalEnvironment=2,513; endLexicalEnvironment=2,513; hoistVariableDeclaration=106 |
+| src/compiler/transformers/es2018.ts:155 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=36,628; factory=0; getEmitHelperFactory=2,215; resumeLexicalEnvironment=26,640; endLexicalEnvironment=26,640; hoistVariableDeclaration=356 |
+| src/compiler/transformers/es2020.ts:43 | `TransformationContext` | Public | `factory`, `hoistVariableDeclaration*` | runs=36,871; factory=0; hoistVariableDeclaration=432 |
+| src/compiler/transformers/es2021.ts:26 | `TransformationContext` | Public | `hoistVariableDeclaration*`, `factory` | runs=37,105; hoistVariableDeclaration=36; factory=0 |
+| src/compiler/transformers/esnext.ts:77 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `hoistVariableDeclaration*`, `startLexicalEnvironment*`, `endLexicalEnvironment*` | runs=47,449; factory=0; getEmitHelperFactory=2,081; hoistVariableDeclaration=626; startLexicalEnvironment=340; endLexicalEnvironment=340 |
+| src/compiler/transformers/jsx.ts:99 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*` | runs=590; factory=0; getEmitHelperFactory=148 |
+| src/compiler/transformers/es2016.ts:22 | `TransformationContext` | Public | `factory`, `hoistVariableDeclaration*` | runs=36,212; factory=0; hoistVariableDeclaration=228 |
+| src/compiler/transformers/es2015.ts:489 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=3,754; factory=0; getEmitHelperFactory=779; startLexicalEnvironment=7,183; resumeLexicalEnvironment=10,368; endLexicalEnvironment=17,551; hoistVariableDeclaration=431 |
+| src/compiler/transformers/generators.ts:337 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `resumeLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistFunctionDeclaration*`, `hoistVariableDeclaration*` | runs=3,754; factory=0; getEmitHelperFactory=1,029; resumeLexicalEnvironment=1,011; endLexicalEnvironment=1,011; hoistFunctionDeclaration=6; hoistVariableDeclaration=1,085 |
+| src/compiler/transformers/module/module.ts:192 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=48,396; factory=0; getEmitHelperFactory=2,845; startLexicalEnvironment=11,206; endLexicalEnvironment=11,206; hoistVariableDeclaration=24 |
+| src/compiler/transformers/module/system.ts:143 | `TransformationContext` | Public | `factory`, `startLexicalEnvironment*`, `endLexicalEnvironment*`, `hoistVariableDeclaration*` | runs=618; factory=0; startLexicalEnvironment=632; endLexicalEnvironment=632; hoistVariableDeclaration=1,229 |
+| src/compiler/transformers/module/esnextAnd2015.ts:68 | `TransformationContext` | Public | `factory`, `getEmitHelperFactory*` | runs=45,988; factory=0; getEmitHelperFactory=15,905 |
+| src/compiler/emitter.ts:771 | `Timer` | Internal/private | `enter*`, `exit*` | runs=54,954; enter=54,954; exit=54,950 |
+| src/compiler/emitter.ts:1215 | `PrintHandlers` | Public | `hasGlobalName*`, `onEmitNode*`, `isEmitNotificationEnabled*`, `substituteNode*`, `onBeforeEmitNode`, `onAfterEmitNode`, `onBeforeEmitNodeArray`, `onAfterEmitNodeArray`, `onBeforeEmitToken`, `onAfterEmitToken` | runs=73,916; hasGlobalName=49,960; onEmitNode=4,628,553; isEmitNotificationEnabled=3,975,026; substituteNode=3,986,302; onBeforeEmitNode=451,527; onAfterEmitNode=451,527; onBeforeEmitNodeArray=110,298; onAfterEmitNodeArray=110,298; onBeforeEmitToken=6,180; onAfterEmitToken=6,180 |
+| src/compiler/emitter.ts:1275 | `Timer` | Internal/private | `enter*`, `exit*` | runs=73,916; enter=10,552,068; exit=10,552,068 |
+| src/compiler/expressionToTypeNode.ts:199 | `Recovery boundary (anonymous)` | Internal/private | `finalizeBoundary*`, `startRecoveryScope*`, `hadError*`, `markError*` | runs=184,002; finalizeBoundary=184,001; startRecoveryScope=332,198; hadError=664,647; markError=1,093 |
 
-The heat above is certified for the one completed, unfiltered eight-worker oracle run described below. `runs` counts enclosing-body entries; the parser binding counts namespace initializations. Non-function values have zero calls. Other function properties are counted as well as method-signature members.
+Certified for the single complete oracle run below. `runs` means enclosing-body entries; parser runs are **namespace initializations (9), not parsed-file counts**. Non-callable values have zero calls. Existing function properties are counted as well as method signatures; only `*` members on public receiver types incur the proposed extra calls. Alias-local names, exact declarations and positions are in [heat.json](evidence/heat.json).
 
-## Certified price and workload
+## Price
 
-- **19 public sites; 82 method-signature bindings/wrappers.**
-- **30,851,760 extra calls per measured lane run** if each public binding adds one receiver-forwarding call. Internal property conversions add no runtime calls.
-- **61,753,448 total counted local-member calls** across public and internal sites, including existing function properties.
-- Oracle: **106,366 passing, one failing, zero pending**; the sole failure and sole baseline diff are the expected public API acknowledgement for `api/typescript.d.ts`.
-- All **eight worker snapshots** were present; controls and discarded attempts are excluded.
-- Wall time including install/build/tests: **498.719 s**. Peak sampled sum of process-tree RSS: **9,049,844 KiB (8.63 GiB)**; largest descendant high-water RSS: **2,737,656 KiB**. Sampling interval is 0.2 s; shared pages are counted per process in the sum. Counter wall time is not a measurement of arrow overhead.
+| Road | Public sites / wrappers | Extra calls per measured lane | Stock strictFunctionTypes diagnostics (79 roots) | Declaration result |
+| --- | --- | ---: | ---: | --- |
+| Baseline | — | 0 | 0 | Adapted baseline |
+| All 11 receiver types: taken methods become properties | — | 0; JavaScript fingerprint unchanged for all 5 edited files | 1 (TS2322) | 34 public members change; 3 internal overloads exposed; normal `hereby dts` fails |
+| Hybrid: internal/private types as properties, public sites as receiver arrows | 19 / 82 | **30,851,760** | **0** | Normal `hereby dts` passes; both public files byte-identical |
 
-## Counter validity
+Public-call breakdown: parser **18,022,708**, printer handlers **12,639,841**, the 17 transformer bindings **189,211**. Total counted local-member calls across all 29 sites, including existing function properties, were **61,753,448**. This is one observed run with the pinned workload and batching, not a universal constant or a wall-time forecast.
 
-Each local is wrapped after destructuring, including defaults. Function values use strict forwarding functions that preserve the receiver and all arguments. The original callable is retained for symbol-resolved identity tests, preserving the printer’s default-sentinel shortcuts. Six identity comparisons were redirected to original values: three printer function comparisons and three non-function preference comparisons. No source object is proxied.
+The extra-call total is the measured number of calls through public method bindings multiplied by the proposal’s one forwarding call per use. Counter wall time is not arrow-overhead timing. Source recipes are private measurement experiments, not an Adamic adaptation or evidence of native compilation. No compiler implementation or rule changed.
 
-Controls passed before this lane: default callback expected 1 / observed 1; supplied callback expected 1 / observed 1; parser/printer printed `const answer = 42;`; default notification/substitution sentinels remained skipped; bare and explicit receivers were forwarded correctly. See [controls](evidence/controls-result.json).
+## Workload, controls and counter validity
 
-All **80,520** test input/reference files were verified byte-identical to the adapted baseline before the accepted run. Thirty nested node_modules fixture files and two nested built reference files omitted by the initial copy were restored. Task scratch was moved from tmpfs to disk to remove RAM-backed file pressure. The private `.parallelperf.json` cache was cleared for fresh-checkout batching. The oracle retained its 40-second hook timeout and all runners/tests. Discarded incomplete, timed-out, fixture-deficient or OOM attempts contribute no heat.
+The unfiltered oracle used all runners and eight workers, with its unchanged **40,000 ms** hook timeout. Results were **106,366 passing, one failing, zero pending**. The sole failure was `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`; the sole baseline diff was `api/typescript.d.ts`. Install/build exited zero and tests exited one as expected. All eight worker snapshots were present; controls and discarded attempts are excluded. See [oracle-summary.json](evidence/oracle-summary.json).
 
-## Census and type experiments — pending
+The counter wraps each local **after destructuring**, including defaults; it never proxies the source object. Strict forwarding functions preserve the receiver and argument list and retain name/length metadata. Original values are retained for six symbol-resolved identity comparisons: three printer sentinel checks and three non-callable preference comparisons. This preserves the default-sentinel shortcuts instead of creating artificial calls. Every function-valued taken member is counted, not just methods.
 
-Next: full single-file CommonJSBundle census for the **24 files holding these 29 sites**, one at a time, each capped at 60 minutes. A completed census requires exit zero, exactly one selected file record and a final relation trailer. Partial checkpoint: 13/24 files completed, with 11 distinct method refusals against 13 AST sites in those files. No final census total is claimed. The source-map timer binding is masked by `var`; the ES2018 context binding is masked by a function-prologue predicate-array failure. See evidence/census-summary.json and evidence/census-masks.json. The former 54-file census is not reused.
+Before the accepted lane, the default control recorded **1/1**, the supplied callback control **1/1**, and the parser/printer printed `const answer = 42;`. Sentinel controls confirmed default notification/substitution calls stayed zero; bare and explicit receivers were preserved. [controls.cjs](controls.cjs) and [controls-result.json](evidence/controls-result.json) retain the assertions and observations.
 
-Then: stock tsc 6.0.3 strictFunctionTypes ledgers over the 79 roots for both roads; actual property-road bundled declaration diff and hybrid byte-identity check. These will run sequentially after the census, with per-run memory measurements. Earlier incomplete type experiments are not results.
+All **80,520** test input/reference files were verified byte-identical to the baseline. Thirty nested node_modules fixture files and two nested built reference files omitted by an early copy were restored. Scratch was moved from tmpfs to disk; the private `.parallelperf.json` history was cleared for fresh-checkout batching. Incomplete, fixture-deficient, timed-out and OOM attempts were discarded. [test-input-verification.json](evidence/test-input-verification.json) records the accepted input inventory hash.
 
-## Static inventory and public status
+## Full latent census and AST comparison
 
-The typed AST inventory finds **29** sites over **11** receiver types. Four are parameter patterns without initializers; a literal initializer-only scan finds 25. The broader typed scan includes all 29. Public types from the successful adapted `hereby dts` build are **PrintHandlers, NodeFactory and TransformationContext**; the other named types are absent. `tsserverlibrary.d.ts` re-exports `./typescript.js`, so API presence through that re-export is distinguished from literal repeated declarations.
+All **24 files** holding the 29 AST sites were measured separately with `LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1`, one exact `LATENT_ONLY_FILE` per run, **CommonJSBundle**, a **3,600 second** limit per file and no overlapping measurement jobs. Every run exited zero, emitted exactly one selected-file record and ended with a relation trailer; none timed out.
 
-The [AST inventory](evidence/ast-sites.json) gives enclosing functions, type declaration locations, each member’s declaration and method-signature status. The [heat ledger](evidence/heat.json) adds enclosing entry and member call counts. Exhaustive source-provider attribution is still being reviewed; external public API implementations cannot be treated as a closed set.
+The census emitted **18 raw events** for `a method in object destructuring`, at **16 distinct locations / binding sites**. The extra two events repeat the module-specifier binding. No other reason is folded into that count. There are **13 AST-only sites** and **zero census-only sites** for the broader scan. The counter and hybrid price cover all 29 AST sites, not merely the 16 observed compiler refusals.
+
+| Selected file | AST sites | Distinct method refusals | Raw events | Seconds | Peak summed RSS (KiB) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| src/compiler/emitter.ts | 3 | 0 | 0 | 693.389 | 1,681,732 |
+| src/compiler/expressionToTypeNode.ts | 1 | 1 | 1 | 90.364 | 1,100,724 |
+| src/compiler/moduleSpecifiers.ts | 1 | 1 | 3 | 54.005 | 1,025,156 |
+| src/compiler/parser.ts | 1 | 1 | 1 | 652.683 | 2,161,384 |
+| src/compiler/sourcemap.ts | 1 | 0 | 0 | 47.663 | 907,804 |
+| src/compiler/sys.ts | 2 | 2 | 2 | 96.875 | 995,512 |
+| src/compiler/transformers/classFields.ts | 1 | 0 | 0 | 138.695 | 1,150,156 |
+| src/compiler/transformers/es2015.ts | 1 | 0 | 0 | 205.727 | 1,368,484 |
+| src/compiler/transformers/es2016.ts | 1 | 1 | 1 | 27.720 | 920,864 |
+| src/compiler/transformers/es2017.ts | 1 | 1 | 1 | 103.318 | 1,131,284 |
+| src/compiler/transformers/es2018.ts | 1 | 0 | 0 | 109.306 | 1,210,852 |
+| src/compiler/transformers/es2020.ts | 1 | 1 | 1 | 48.062 | 997,680 |
+| src/compiler/transformers/es2021.ts | 1 | 1 | 1 | 23.954 | 930,352 |
+| src/compiler/transformers/esDecorators.ts | 1 | 0 | 0 | 104.988 | 1,087,996 |
+| src/compiler/transformers/esnext.ts | 1 | 1 | 1 | 79.550 | 1,050,816 |
+| src/compiler/transformers/generators.ts | 1 | 0 | 0 | 109.026 | 1,147,668 |
+| src/compiler/transformers/jsx.ts | 1 | 1 | 1 | 74.555 | 1,040,548 |
+| src/compiler/transformers/legacyDecorators.ts | 1 | 1 | 1 | 84.288 | 1,042,532 |
+| src/compiler/transformers/module/esnextAnd2015.ts | 1 | 1 | 1 | 62.214 | 1,021,900 |
+| src/compiler/transformers/module/module.ts | 1 | 0 | 0 | 89.470 | 1,139,448 |
+| src/compiler/transformers/module/system.ts | 1 | 1 | 1 | 136.579 | 1,288,056 |
+| src/compiler/transformers/ts.ts | 1 | 0 | 0 | 138.699 | 1,159,592 |
+| src/compiler/transformers/typeSerializer.ts | 1 | 1 | 1 | 49.038 | 1,002,956 |
+| src/compiler/utilities.ts | 3 | 1 | 1 | 494.161 | 1,851,384 |
+
+The full typed scan covers all **79 compiler roots** and **54 object-binding files**. A literal initializer-only scan has **25 sites** and misses the four destructured parameters at `sys.ts:590`, `sys.ts:993`, `moduleSpecifiers.ts:583` and `utilities.ts:11317`. Those four are observed by the census. Including parameter types yields the 29-site inventory. A fresh scan reproduced all original positions.
+
+| AST criterion | Sites | Census matches | AST-only | Census-only |
+| --- | ---: | ---: | ---: | ---: |
+| Initializer type only | 25 | 12 | 13 | 4 parameters |
+| Initializer or parameter type | 29 | 16 | 13 | 0 |
+
+The following are measured coverage gaps, not additional method refusals:
+
+| AST-only site | Why this census does not reach the method check |
+| --- | --- |
+| src/compiler/utilities.ts:8213 | deferred_generic_instantiation (no concrete instantiation) |
+| src/compiler/utilities.ts:8253 | deferred_generic_instantiation (no concrete instantiation) |
+| src/compiler/sourcemap.ts:40 | src/compiler/sourcemap.ts:40:5: Adamic 0.1 refuses var; use const or let |
+| src/compiler/transformers/ts.ts:236 | src/compiler/transformers/ts.ts:1430:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet |
+| src/compiler/transformers/classFields.ts:355 | src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet |
+| src/compiler/transformers/esDecorators.ts:296 | src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet |
+| src/compiler/transformers/es2018.ts:155 | src/compiler/transformers/es2018.ts:1233:36: stage 0 can't lower a branded supertype inside a checked predicate's array target yet |
+| src/compiler/transformers/es2015.ts:489 | src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet |
+| src/compiler/transformers/generators.ts:337 | src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet |
+| src/compiler/transformers/module/module.ts:192 | src/compiler/transformers/module/module.ts:1926:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet |
+| src/compiler/emitter.ts:771 | src/compiler/emitter.ts:771:5: Adamic 0.1 refuses var; use const or let |
+| src/compiler/emitter.ts:1215 | src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let |
+| src/compiler/emitter.ts:1275 | src/compiler/emitter.ts:1275:5: Adamic 0.1 refuses var; use const or let |
+
+The gaps comprise **4 var gates, 7 function signature/prologue failures and 2 deferred generic bodies**. [reconciliation.json](evidence/reconciliation.json) records each span, enclosing declaration, observed refusal or precise boundary. Headers have empty diagnostic arrays and `checker_rejected: false`; the overlay’s fixed historical label “measured on a checker-rejected program” does not establish rejection here. The no-output guards still run.
+
+## Receiver declarations and public status
+
+`typescript.d.ts` was built in the adapted checkout after `npm ci` and `node_modules/.bin/hereby dts`. `tsserverlibrary.d.ts` literally contains only the re-export below: public API presence follows that re-export, not duplicate interface text. The public/private decision is by receiver type as proposed, including internal members of public types.
+
+```typescript
+import ts = require("./typescript.js");
+export = ts;
+```
+
+| Receiver type | Source declaration | Source visibility | typescript.d.ts | tsserverlibrary.d.ts API |
+| --- | --- | --- | --- | --- |
+| `RecursiveDirectoryWatcherHost` | src/compiler/sys.ts:574:1 | Private, non-exported; no @internal tag | Absent | Absent |
+| `CreateSystemWatchFunctions` | src/compiler/sys.ts:968:1 | @internal on CreateSystemWatchFunctions | Absent | Absent |
+| `MutateMapSkippingNewValuesOptions<K, T, U>` | src/compiler/utilities.ts:8182:1 | @internal on MutateMapSkippingNewValuesOptions | Absent | Absent |
+| `MutateMapOptions<K, T, U>` | src/compiler/utilities.ts:8238:1 | @internal on MutateMapOptions | Absent | Absent |
+| `EvaluationResolver` | src/compiler/types.ts:10618:1 | @internal on EvaluationResolver | Absent | Absent |
+| `NodeFactory` | src/compiler/types.ts:8748:1 | Public | Present | Re-exported |
+| `ModuleSpecifierPreferences` | src/compiler/moduleSpecifiers.ts:172:1 | @internal on ModuleSpecifierPreferences | Absent | Absent |
+| `Timer` | src/compiler/performance.ts:23:1 | @internal on Timer | Absent | Absent |
+| `TransformationContext` | src/compiler/types.ts:9616:1 | Public | Present | Re-exported |
+| `PrintHandlers` | src/compiler/types.ts:9820:1 | Public | Present | Re-exported |
+| `Recovery boundary (anonymous)` | src/compiler/types.ts:10669:71 | @internal on SyntacticTypeNodeBuilderResolver | Absent | Absent |
+
+The anonymous boundary belongs to `SyntacticTypeNodeBuilderResolver.createRecoveryBoundary`. RecursiveDirectoryWatcherHost is private rather than itself tagged @internal; its absence from the public bundles places it on the internal/private road.
+
+## Enclosing functions and implementation sources
+
+Parser binding calls follow `createSourceFile → Parser.parseSourceFile → parseSourceFileWorker → parse… → factoryCreate*`. Its binding lives in namespace initialization. The named transformer paths and all other enclosing functions are listed here; counts remain in the leading table.
+
+| Site | Enclosing function / scope |
+| --- | --- |
+| src/compiler/sys.ts:590 | `createDirectoryWatcherSupportingRecursive` |
+| src/compiler/sys.ts:993 | `createSystemWatchFunctions` |
+| src/compiler/utilities.ts:8213 | `mutateMapSkippingNewValues` |
+| src/compiler/utilities.ts:8253 | `mutateMap` |
+| src/compiler/utilities.ts:11317 | `createEvaluator` |
+| src/compiler/parser.ts:1472 | `Parser namespace initialization` |
+| src/compiler/moduleSpecifiers.ts:583 | `getLocalModuleSpecifier` |
+| src/compiler/sourcemap.ts:40 | `createSourceMapGenerator` |
+| src/compiler/transformers/ts.ts:236 | `transformTypeScript` |
+| src/compiler/transformers/classFields.ts:355 | `transformClassFields` |
+| src/compiler/transformers/typeSerializer.ts:133 | `createRuntimeTypeSerializer` |
+| src/compiler/transformers/legacyDecorators.ts:89 | `transformLegacyDecorators` |
+| src/compiler/transformers/esDecorators.ts:296 | `transformESDecorators` |
+| src/compiler/transformers/es2017.ts:120 | `transformES2017` |
+| src/compiler/transformers/es2018.ts:155 | `transformES2018` |
+| src/compiler/transformers/es2020.ts:43 | `transformES2020` |
+| src/compiler/transformers/es2021.ts:26 | `transformES2021` |
+| src/compiler/transformers/esnext.ts:77 | `transformESNext` |
+| src/compiler/transformers/jsx.ts:99 | `transformJsx` |
+| src/compiler/transformers/es2016.ts:22 | `transformES2016` |
+| src/compiler/transformers/es2015.ts:489 | `transformES2015` |
+| src/compiler/transformers/generators.ts:337 | `transformGenerators` |
+| src/compiler/transformers/module/module.ts:192 | `transformModule` |
+| src/compiler/transformers/module/system.ts:143 | `transformSystemModule` |
+| src/compiler/transformers/module/esnextAnd2015.ts:68 | `transformECMAScriptModule` |
+| src/compiler/emitter.ts:771 | `emitFiles` |
+| src/compiler/emitter.ts:1215 | `createPrinter` |
+| src/compiler/emitter.ts:1275 | `createPrinter` |
+| src/compiler/expressionToTypeNode.ts:199 | `tryReuseExistingTypeNode` |
+
+The source supplier audit spans **604 src roots**, including compiler, server, harness and unit-test adapters. It follows contextual object construction, class heritage, direct arguments, direct assignments, Object.assign overrides and the recovery-boundary return object. It has **zero unresolved indexed callable edges**. [implementation-index.json](evidence/implementation-index.json) and the following tables enumerate the resolved source definitions per member. This is a conservative source index, not a closed-world proof for future external public API callers or arbitrary dynamic reflection. Conditional factory variants are identified explicitly: real createTimer sites exclude noop; parser factory flags exclude the NoIndentationOnFreshPropertyAccess wrappers. Other type-boundary candidates are retained.
+
+`this` means the implementation’s own receiver use; nested normal-function/class scopes are excluded and nested arrows are included. Arrow `this` is lexical. Bound entries retain their target and fixed receiver. No resolved plain-function method supplier reads its own `this`; the this-reading method suppliers are lexical arrows or a bound class target. Non-callable members have no function implementation / this observation.
+
+| Site | Taken callable member → implementation definitions |
+| --- | --- |
+| src/compiler/sys.ts:590 | watchDirectory → F001; getCurrentDirectory → F002, F003; getAccessibleSortedChildDirectories → F005, F006; fileSystemEntryExists → F007, F008; realpath → F010, F011; setTimeout → F013, F014; clearTimeout → F016, F017 |
+| src/compiler/sys.ts:993 | pollingWatchFileWorker → F019, F020; getModifiedTime → F022, F023; setTimeout → F013, F014; clearTimeout → F016, F017; fsWatchWorker → F025, F026; fileSystemEntryExists → F007, F008; getCurrentDirectory → F002, F003; getAccessibleSortedChildDirectories → F005, F006; realpath → F010, F011; sysLog → F028, F029 |
+| src/compiler/utilities.ts:8213 | onDeleteValue → F030, F031, F032, F033, F034; onExistingValue → F035 |
+| src/compiler/utilities.ts:8253 | createNewValue → F036, F037, F038, F039, F040, F041 |
+| src/compiler/utilities.ts:11317 | evaluateElementAccessExpression → F042; evaluateEntityNameExpression → F043 |
+| src/compiler/parser.ts:1472 | createNodeArray → F044; createNumericLiteral → F045; createStringLiteral → F046; createLiteralLikeNode → F047; createIdentifier → F048; createPrivateIdentifier → F049; createToken → F050; createArrayLiteralExpression → F051; createObjectLiteralExpression → F052; createPropertyAccessExpression → F053; createPropertyAccessChain → F054; createElementAccessExpression → F055; createElementAccessChain → F056; createCallExpression → F057; createCallChain → F058; createNewExpression → F059; createParenthesizedExpression → F060; createBlock → F061; createVariableStatement → F062; createExpressionStatement → F063; createIfStatement → F064; createWhileStatement → F065; createForStatement → F066; createForOfStatement → F067; createVariableDeclaration → F068; createVariableDeclarationList → F069 |
+| src/compiler/moduleSpecifiers.ts:583 | getAllowedEndingsInPreferredOrder → F070 |
+| src/compiler/sourcemap.ts:40 | enter → F071; exit → F072 |
+| src/compiler/transformers/ts.ts:236 | getEmitHelperFactory → F002, F073; startLexicalEnvironment → F074, F075; resumeLexicalEnvironment → F076, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/classFields.ts:355 | getEmitHelperFactory → F002, F073; hoistVariableDeclaration → F079, F075; endLexicalEnvironment → F077, F078; startLexicalEnvironment → F074, F075; resumeLexicalEnvironment → F076, F075; addBlockScopedVariable → F080, F075 |
+| src/compiler/transformers/typeSerializer.ts:133 | hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/legacyDecorators.ts:89 | getEmitHelperFactory → F002, F073; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/esDecorators.ts:296 | getEmitHelperFactory → F002, F073; startLexicalEnvironment → F074, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/es2017.ts:120 | getEmitHelperFactory → F002, F073; resumeLexicalEnvironment → F076, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/es2018.ts:155 | getEmitHelperFactory → F002, F073; resumeLexicalEnvironment → F076, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/es2020.ts:43 | hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/es2021.ts:26 | hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/esnext.ts:77 | getEmitHelperFactory → F002, F073; hoistVariableDeclaration → F079, F075; startLexicalEnvironment → F074, F075; endLexicalEnvironment → F077, F078 |
+| src/compiler/transformers/jsx.ts:99 | getEmitHelperFactory → F002, F073 |
+| src/compiler/transformers/es2016.ts:22 | hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/es2015.ts:489 | getEmitHelperFactory → F002, F073; startLexicalEnvironment → F074, F075; resumeLexicalEnvironment → F076, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/generators.ts:337 | getEmitHelperFactory → F002, F073; resumeLexicalEnvironment → F076, F075; endLexicalEnvironment → F077, F078; hoistFunctionDeclaration → F081, F075; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/module/module.ts:192 | getEmitHelperFactory → F002, F073; startLexicalEnvironment → F074, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/module/system.ts:143 | startLexicalEnvironment → F074, F075; endLexicalEnvironment → F077, F078; hoistVariableDeclaration → F079, F075 |
+| src/compiler/transformers/module/esnextAnd2015.ts:68 | getEmitHelperFactory → F002, F073 |
+| src/compiler/emitter.ts:771 | enter → F071; exit → F072 |
+| src/compiler/emitter.ts:1215 | hasGlobalName → F082, F073; onEmitNode → F083, F084, F085; isEmitNotificationEnabled → F086; substituteNode → F087, F088; onBeforeEmitNode → F089; onAfterEmitNode → F090; onBeforeEmitNodeArray → F091; onAfterEmitNodeArray → F092; onBeforeEmitToken → F093; onAfterEmitToken → F094 |
+| src/compiler/emitter.ts:1275 | enter → F071, F075; exit → F072, F075 |
+| src/compiler/expressionToTypeNode.ts:199 | finalizeBoundary → F095; startRecoveryScope → F096; hadError → F097; markError → F098 |
+
+| ID | Source location | Kind | Reads this | Target / receiver or name |
+| --- | --- | --- | --- | --- |
+| F001 | src/compiler/sys.ts:1132:5 | plain function | no | nonRecursiveWatchDirectory |
+| F002 | src/compiler/core.ts:1896:12 | arrow | no |  |
+| F003 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:473:34 | bound | fixed binding; inspect target | targets F004; receiver this |
+| F004 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1282:36 | arrow | lexical yes |  |
+| F005 | src/compiler/sys.ts:1508:50 | arrow | no |  |
+| F006 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:475:50 | arrow | lexical yes |  |
+| F007 | src/compiler/sys.ts:1880:9 | plain function | no | fileSystemEntryExists |
+| F008 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:471:36 | bound | fixed binding; inspect target | targets F009; receiver this |
+| F009 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1022:5 | class method | yes | fileSystemEntryExists |
+| F010 | src/compiler/sys.ts:1911:9 | plain function | no | realpath |
+| F011 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:476:23 | bound | fixed binding; inspect target | targets F012; receiver this |
+| F012 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1261:5 | class method | yes | realpath |
+| F013 | src/compiler/sys.ts:1499:25 | arrow | no |  |
+| F014 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:468:25 | bound | fixed binding; inspect target | targets F015; receiver this |
+| F015 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1103:5 | class method | yes | setTimeout |
+| F016 | src/compiler/sys.ts:1500:27 | arrow | no |  |
+| F017 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:469:27 | bound | fixed binding; inspect target | targets F018; receiver this |
+| F018 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1111:5 | class method | yes | clearTimeout |
+| F019 | src/compiler/sys.ts:1733:9 | plain function | no | fsWatchFileWorker |
+| F020 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:466:37 | bound | fixed binding; inspect target | targets F021; receiver this |
+| F021 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:866:5 | class method | yes | watchFileWorker |
+| F022 | src/compiler/sys.ts:1920:9 | plain function | no | getModifiedTime |
+| F023 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:467:30 | bound | fixed binding; inspect target | targets F024; receiver this |
+| F024 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1031:5 | class method | yes | getModifiedTime |
+| F025 | src/compiler/sys.ts:1766:9 | plain function | no | fsWatchWorker |
+| F026 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:470:28 | bound | fixed binding; inspect target | targets F027; receiver this |
+| F027 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:873:5 | class method | yes | fsWatchWorker |
+| F028 | src/compiler/sys.ts:565:1 | plain function | no | sysLog |
+| F029 | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:481:21 | arrow | lexical yes |  |
+| F030 | src/compiler/utilities.ts:8033:1 | plain function | no | closeFileWatcher |
+| F031 | src/compiler/watchUtilities.ts:845:1 | plain function | no | closeFileWatcherOf |
+| F032 | src/compiler/tsbuildPublic.ts:703:30 | arrow | no |  |
+| F033 | src/compiler/tsbuildPublic.ts:709:30 | arrow | no |  |
+| F034 | src/compiler/tsbuildPublic.ts:715:30 | arrow | no |  |
+| F035 | src/compiler/watchUtilities.ts:545:5 | plain function | no | updateWildcardDirectoryWatcher |
+| F036 | src/compiler/watchPublic.ts:1086:5 | plain function | no | watchMissingFilePath |
+| F037 | src/server/project.ts:1704:17 | arrow | lexical yes |  |
+| F038 | src/compiler/watchUtilities.ts:537:5 | plain function | no | createWildcardDirectoryWatcher |
+| F039 | src/compiler/resolutionCache.ts:1632:5 | plain function | no | createTypeRootsWatch |
+| F040 | src/compiler/tsbuildPublic.ts:2193:29 | arrow | no |  |
+| F041 | src/compiler/tsbuildPublic.ts:2214:29 | arrow | no |  |
+| F042 | src/compiler/checker.ts:48013:5 | plain function | no | evaluateElementAccessExpression |
+| F043 | src/compiler/checker.ts:47978:5 | plain function | no | evaluateEntityNameExpression |
+| F044 | src/compiler/factory/nodeFactory.ts:1169:5 | plain function | no | createNodeArray |
+| F045 | src/compiler/factory/nodeFactory.ts:1233:5 | plain function | no | createNumericLiteral |
+| F046 | src/compiler/factory/nodeFactory.ts:1259:5 | plain function | no | createStringLiteral |
+| F047 | src/compiler/factory/nodeFactory.ts:1281:5 | plain function | no | createLiteralLikeNode |
+| F048 | src/compiler/factory/nodeFactory.ts:1326:5 | plain function | no | createIdentifier |
+| F049 | src/compiler/factory/nodeFactory.ts:1396:5 | plain function | no | createPrivateIdentifier |
+| F050 | src/compiler/factory/nodeFactory.ts:1453:5 | plain function | no | createToken |
+| F051 | src/compiler/factory/nodeFactory.ts:2848:5 | plain function | no | createArrayLiteralExpression |
+| F052 | src/compiler/factory/nodeFactory.ts:2869:5 | plain function | no | createObjectLiteralExpression |
+| F053 | src/compiler/factory/nodeFactory.ts:2903:5 | plain function | no | createPropertyAccessExpression |
+| F054 | src/compiler/factory/nodeFactory.ts:2930:5 | plain function | no | createPropertyAccessChain |
+| F055 | src/compiler/factory/nodeFactory.ts:2968:5 | plain function | no | createElementAccessExpression |
+| F056 | src/compiler/factory/nodeFactory.ts:2995:5 | plain function | no | createElementAccessChain |
+| F057 | src/compiler/factory/nodeFactory.ts:3038:5 | plain function | no | createCallExpression |
+| F058 | src/compiler/factory/nodeFactory.ts:3064:5 | plain function | no | createCallChain |
+| F059 | src/compiler/factory/nodeFactory.ts:3088:5 | plain function | no | createNewExpression |
+| F060 | src/compiler/factory/nodeFactory.ts:3160:5 | plain function | no | createParenthesizedExpression |
+| F061 | src/compiler/factory/nodeFactory.ts:3856:5 | plain function | no | createBlock |
+| F062 | src/compiler/factory/nodeFactory.ts:3876:5 | plain function | no | createVariableStatement |
+| F063 | src/compiler/factory/nodeFactory.ts:3907:5 | plain function | no | createExpressionStatement |
+| F064 | src/compiler/factory/nodeFactory.ts:3925:5 | plain function | no | createIfStatement |
+| F065 | src/compiler/factory/nodeFactory.ts:3970:5 | plain function | no | createWhileStatement |
+| F066 | src/compiler/factory/nodeFactory.ts:3991:5 | plain function | no | createForStatement |
+| F067 | src/compiler/factory/nodeFactory.ts:4046:5 | plain function | no | createForOfStatement |
+| F068 | src/compiler/factory/nodeFactory.ts:4251:5 | plain function | no | createVariableDeclaration |
+| F069 | src/compiler/factory/nodeFactory.ts:4276:5 | plain function | no | createVariableDeclarationList |
+| F070 | src/compiler/moduleSpecifiers.ts:199:44 | arrow | no |  |
+| F071 | src/compiler/performance.ts:41:5 | plain function | no | enter |
+| F072 | src/compiler/performance.ts:47:5 | plain function | no | exit |
+| F073 | src/compiler/core.ts:1889:1 | plain function | no | notImplemented |
+| F074 | src/compiler/transformer.ts:480:5 | plain function | no | startLexicalEnvironment |
+| F075 | src/compiler/core.ts:1797:1 | plain function | no | noop |
+| F076 | src/compiler/transformer.ts:509:5 | plain function | no | resumeLexicalEnvironment |
+| F077 | src/compiler/transformer.ts:520:5 | plain function | no | endLexicalEnvironment |
+| F078 | src/compiler/core.ts:1822:1 | plain function | no | returnUndefined |
+| F079 | src/compiler/transformer.ts:431:5 | plain function | no | hoistVariableDeclaration |
+| F080 | src/compiler/transformer.ts:621:5 | plain function | no | addBlockScopedVariable |
+| F081 | src/compiler/transformer.ts:449:5 | plain function | no | hoistFunctionDeclaration |
+| F082 | src/compiler/checker.ts:51235:5 | plain function | no | hasGlobalName |
+| F083 | src/compiler/transformer.ts:414:5 | plain function | no | emitNodeWithNotification |
+| F084 | src/harness/typeWriter.ts:54:21 | arrow | no |  |
+| F085 | src/compiler/transformer.ts:232:1 | plain function | no | noEmitNotification |
+| F086 | src/compiler/transformer.ts:402:5 | plain function | no | isEmitNotificationEnabled |
+| F087 | src/compiler/transformer.ts:385:5 | plain function | no | substituteNode |
+| F088 | src/compiler/transformer.ts:227:1 | plain function | no | noEmitSubstitution |
+| F089 | src/services/textChanges.ts:1422:65 | arrow | no |  |
+| F090 | src/services/textChanges.ts:1427:63 | arrow | no |  |
+| F091 | src/services/textChanges.ts:1432:75 | arrow | no |  |
+| F092 | src/services/textChanges.ts:1437:73 | arrow | no |  |
+| F093 | src/services/textChanges.ts:1442:67 | arrow | no |  |
+| F094 | src/services/textChanges.ts:1447:65 | arrow | no |  |
+| F095 | src/compiler/checker.ts:8140:13 | plain function | no | finalizeBoundary |
+| F096 | src/compiler/checker.ts:8125:13 | plain function | no | startRecoveryScope |
+| F097 | src/compiler/checker.ts:8116:27 | arrow | no |  |
+| F098 | src/compiler/checker.ts:8118:13 | plain function | no | markError |
+
+## Stock strictFunctionTypes and declaration experiments
+
+All ledgers use the actual **stock tsc 6.0.3 CLI**, the 79-root compiler tsconfig and explicit `--strictFunctionTypes true --noEmit --incremental false --composite false --pretty false --noErrorTruncation`. The checkout’s node types resolve normally. [root-manifest.json](evidence/root-manifest.json) records the roots/options; [baseline](evidence/strict-baseline.json), [property](evidence/strict-properties.json) and [hybrid](evidence/strict-hybrid.json) retain the complete diagnostics. Earlier missing-node prototype diagnostics are discarded.
+
+The property road converts **53 unique source member groups across 5 files** for the 11 receiver types, including inherited declarations; overloads become callable property type literals. Transpiling every changed file with stock TypeScript, ES2020/ESNext and comments removed produced byte-identical JavaScript. The hybrid converts **16 internal/private groups**, and replaces the 19 public patterns with 82 receiver arrows. Original callable types are restored locally with type assertions to preserve generics and overloads; optional undefined values, defaults and printer identity guards are preserved. These choices are part of the measured recipe, not a claim that Adamic supports every introduced syntax form.
+
+The exact private recipes are [properties-source.patch](properties-source.patch), [hybrid-source.patch](hybrid-source.patch) and [variants.cjs](variants.cjs). A fresh typed scan found **baseline 29, property road 0, hybrid 0** method-signature object-binding sites. [road-audit.json](evidence/road-audit.json) also records source internal-tag ownership.
+
+The property road’s sole diagnostic is:
+
+```text
+src/compiler/factory/nodeFactory.ts:639:9 TS2322
+Type '(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string) => Mutable<PropertyAccessChain>' is not assignable to type '(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName) => PropertyAccessChain'.
+  Types of parameters 'name' and 'name' are incompatible.
+    Type 'string | MemberName' is not assignable to type 'string'.
+      Type 'Identifier' is not assignable to type 'string'.
+```
+
+No annotation was fixed. Normal property `hereby dts` failed in build-services on this same error (task exit 1; tsc exit 2). It emitted fresh declaration intermediates, including the typescript entrypoint and compiler types. To obtain the actual API projection without weakening checking or modifying source, the unchanged official dts-services bundler command was run directly on those intermediates:
+
+```sh
+node scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+```
+
+That projection succeeded. It is **not a successful property-road hereby dts build**. The property tsserverlibrary shim was not emitted because the full task stopped before dts-lssl. The exact **19,174-byte** [typescript.d.ts diff](property-typescript.d.ts.diff) is from the emitted intermediates and official bundler, not a predicted/manual declaration edit. It changes **34 public members** and retains previously internal call signatures inside the new property type literals: createStringLiteral **1→2**, createIdentifier **1→2**, createToken **11→12**. The @internal comments remain visible in that public projection; the bundler did not strip those nested signatures.
+
+The hybrid’s unmodified `hereby dts` passed. Both files compare byte for byte with baseline:
+
+| Bundle / road | Bytes | SHA-256 |
+| --- | ---: | --- |
+| baseline/typescript.d.ts | 593536 | `f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516` |
+| baseline/tsserverlibrary.d.ts | 866 | `cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd` |
+| properties/typescript.d.ts | 594004 | `762dfec7eb3d43ba06d8b4b8bcaca884b732d27d2bf23769c6ac5ffaacad4aef` |
+| hybrid/typescript.d.ts | 593536 | `f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516` |
+| hybrid/tsserverlibrary.d.ts | 866 | `cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd` |
+
+## Sequential execution and peak memory
+
+No accepted counting, census, declaration or type-check experiment overlaps another. [timeline.json](evidence/timeline.json) records the serial intervals and measurements. Endpoints derive from metadata-write times and measured wall durations. Peak sum RSS is sampled at 0.2 s across descendants even when the oracle starts new process sessions; shared pages count once per process. Largest-descendant high-water RSS is recorded separately. These are RSS observations, not cgroup physical-memory totals. Census peaks and limits are in the per-file table above.
+
+| Job | Exit | Seconds | Peak summed RSS (KiB) | Largest descendant HWM (KiB) |
+| --- | ---: | ---: | ---: | ---: |
+| clean-lane.json | 1 | 498.719 | 9,049,844 | 2,737,656 |
+| reconciliation-memory.json | 0 | 4.720 | 527,664 | 527,444 |
+| strict-baseline-memory.json | 0 | 14.323 | 701,536 | 701,296 |
+| variants-preparation.json | 0 | 4.929 | 517,532 | 542,080 |
+| strict-properties-memory.json | 2 | 13.925 | 699,208 | 699,560 |
+| strict-hybrid-memory.json | 0 | 16.377 | 701,700 | 701,908 |
+| dts-properties.json | 1 | 23.846 | 1,097,628 | 1,052,236 |
+| property-official-bundler.json | 0 | 4.297 | 483,320 | 494,924 |
+| dts-hybrid.json | 0 | 25.040 | 1,057,964 | 1,018,120 |
+| providers-memory-final.json | 0 | 21.671 | 1,122,368 | 1,123,192 |
+| road-audit-memory.json | 0 | 8.609 | 1,086,536 | 1,086,276 |
+
+Discarded attempts also ran serially; their peaks are retained for audit, not included in heat. See [discarded-attempts.json](evidence/discarded-attempts.json).
+
+| Attempt | Why discarded | Peak summed RSS (KiB) |
+| --- | --- | ---: |
+| counting-lane | stopped: sentinel identity affected | 8,872,196 |
+| certified-lane | discarded: omitted node_modules fixtures | 8,802,516 |
+| final-lane | discarded: OOM while scratch occupied tmpfs | 10,063,928 |
+| accepted-lane | discarded: two omitted built references and one hook timeout | 12,268,576 |
 
 ## Public declaration quotations
+
+The public receiver declarations below are quoted from the baseline bundle; CoreTransformationContext is included because TransformationContext inherits the taken lexical/hoist methods.
 
 ### PrintHandlers
 
@@ -657,9 +973,63 @@ interface TransformationContext extends CoreTransformationContext {
     }
 ```
 
+### CoreTransformationContext (inherited owner)
 
-## Provenance
+```typescript
+interface CoreTransformationContext {
+        readonly factory: NodeFactory;
+        /** Gets the compiler options supplied to the transformer. */
+        getCompilerOptions(): CompilerOptions;
+        /** Starts a new lexical environment. */
+        startLexicalEnvironment(): void;
+        /** Suspends the current lexical environment, usually after visiting a parameter list. */
+        suspendLexicalEnvironment(): void;
+        /** Resumes a suspended lexical environment, usually before visiting a function body. */
+        resumeLexicalEnvironment(): void;
+        /** Ends a lexical environment, returning any declarations. */
+        endLexicalEnvironment(): Statement[] | undefined;
+        /** Hoists a function declaration to the containing scope. */
+        hoistFunctionDeclaration(node: FunctionDeclaration): void;
+        /** Hoists a variable declaration to the containing scope. */
+        hoistVariableDeclaration(node: Identifier): void;
+    }
+```
 
-Adamic source pin `8e3a784aa5a601f57342c07b68f145fe56252c21`, fresh detached private worktree before creating this report branch. Recursive shallow submodules initialized: cohere `5360753e19e4417675a90e92a1823bea66b13918`, compiler fork `d92d9bfee114c80be2c375d72edae966176e3a4f`. Upstream TypeScript v6.0.3 confirmed at `050880ce59e30b356b686bd3144efe24f875ebc8`. Node v24.19.0; Go go1.27.1. Adapter npm ci and stage3/apply.sh completed. The real compiler, method rule and shared checkout are unchanged; all experiments are private scratch copies.
+## Raw evidence hashes
 
-Raw large evidence remains in scratch. Final publication will include small JSON and SHA-256/byte sizes for large artifacts rather than forcing a blocked payload.
+[raw-manifest.json](evidence/raw-manifest.json) records byte sizes and SHA-256 for every raw trace/log and deterministic gzip archive. Large raw artifacts (at least 100,000 bytes) are listed here. Archives are retained in private scratch; if permitted by automatic review they are published separately under evidence/raw. If an archive is absent from the branch, its hash and raw file remain available in scratch; no blocked payload is forced.
+
+| Raw file | Bytes | SHA-256 |
+| --- | ---: | --- |
+| census/emitter-times.jsonl | 117611 | `d5aba47bb368955ed34ba01d0518ee26181356d2de6f9c4c02396113a8ba2387` |
+| census/emitter.jsonl | 2487598 | `9869e70f6239a9a9a059df4f51b4170f6c90d4f7d11ebc247abd09b626dc7b63` |
+| census/expressionToTypeNode.jsonl | 478907 | `d2f84ffbf07aa1bdf72a5e39813f4f258413c675777fce94b1eb7d96863a91f5` |
+| census/moduleSpecifiers.jsonl | 394631 | `b702fb716c946385a1cd87921bf7872daac500667ec85f48c26997927389cf1a` |
+| census/parser-times.jsonl | 150517 | `b205d83c95965b0a09de7a8567bf4f514d9abd0c364f6c365f11b6193e429353` |
+| census/parser.jsonl | 5146635 | `cabb35d792fff5b68de7972ab7b95cd86f207310245e31727aeece5256723bb4` |
+| census/sourcemap.jsonl | 294202 | `8fc714535a4929763d06743115fef5d0f4dae79cbdad2492dc9aaeb3880b3906` |
+| census/sys.jsonl | 637089 | `1a2aa3ce929203007df9c045e2ac8f15cf2d5ce3e9f90f1ac8bfd43a23dfaccc` |
+| census/transformers__classFields.jsonl | 989267 | `6c81eeaa5e01b242ef9cb382245efa57b062a24ba2c3e54ec495aa45559de319` |
+| census/transformers__es2015.jsonl | 1595577 | `67e585bc53bf93337758f0c81e151be094698ac73b56af59e65aa02ec24b789a` |
+| census/transformers__es2017.jsonl | 488973 | `02a4dc272067118ece3eee3a5c5780fd2d4ee2a58c098d312824905c4c3dcbcf` |
+| census/transformers__es2018.jsonl | 619360 | `7b44ea4a22f484c934e3ec6564390d144efa292227135c9663e45d6e5452be7d` |
+| census/transformers__es2020.jsonl | 158740 | `83cf9682bf2249aa3598d090afa41b69267af4fbb7d6006d5a2855205ef927d5` |
+| census/transformers__esDecorators.jsonl | 806780 | `953bcf3c4433c3a60f98a23b5d54eae1774bca69d6e3572fdb8f72740e8ca8c9` |
+| census/transformers__esnext.jsonl | 301247 | `e60529a5ac7308acdabc1d1f7e3df15717307dc679a824ee3c7501153ee1f537` |
+| census/transformers__generators.jsonl | 956100 | `6ed8871348cc58a314229714b7c0c3de45123f9e24cf044126416ff2456d02c7` |
+| census/transformers__jsx.jsonl | 304907 | `52d9ee6379a819db56fb2d122f4b851df835bb7ec60a562fb9717ff52e72e8ab` |
+| census/transformers__legacyDecorators.jsonl | 371921 | `8f9141e08c8c35412b7ba56069dfa376ca4d23dfe3c9f4048a241f3d5e582023` |
+| census/transformers__module__esnextAnd2015.jsonl | 157897 | `ab9fe798acb81f39d3d8cfa926ca630c555f2f168d89b75834f0d06b7751a3c0` |
+| census/transformers__module__module.jsonl | 640167 | `06909bad51fd45df7cc21dd57dfe9e4b4ae4eff8cc5f32de08aa987ea1cb18e1` |
+| census/transformers__module__system.jsonl | 601877 | `18b207190df514bcf88209e58053f21334bf1efe4477aeb76fdba0cce3b1eb21` |
+| census/transformers__ts.jsonl | 944412 | `6ebb205cbe94e7ef664eba0e8a94bf3eb23b41aacef63f908e27a72d62aade07` |
+| census/transformers__typeSerializer.jsonl | 171044 | `24bdc684aac49ce04bdacfff01a7dfcd18c852e3234b83098e3b6ca2d652af9d` |
+| census/utilities-times.jsonl | 244804 | `828ad3e29592f4a5111fdb09f0f122e6cdaac56b9f9ad1bed48cafb52da0660c` |
+| census/utilities.jsonl | 3942150 | `f4ee02e9c9cc39fdae37b7f887c5af9a69f26d0c6b6432165d017b7bca6eec35` |
+| clean-oracle/report.json | 169524 | `6cb5d258cfe73f5783edb9132bb8c6db947f540b8a49e6bbb5136eeb97ca26ff` |
+
+## Provenance and scope
+
+Source pin: Adamic `8e3a784aa5a601f57342c07b68f145fe56252c21`, fresh private detached worktree before this report branch. Recursive shallow submodules: cohere `5360753e19e4417675a90e92a1823bea66b13918`, compiler fork `d92d9bfee114c80be2c375d72edae966176e3a4f`. Upstream v6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Node v24.19.0; Go go1.27.1. Adapter npm ci, upstream npm ci and stage3/apply.sh completed. ADAMIC_TYPESCRIPT_SOURCE, temporary directories, Go build/module caches and npm caches were task scratch. The original /tmp task paths now point to disk-backed scratch through a symlink.
+
+The census tool is the repository’s scratch Go overlay, built with CommonJSBundle and no-output guards. The counting copy and two source recipes are separate from the real adapted baseline. The shared checkout, compiler and method rule are unchanged. Only this report, measurement scripts and evidence are committed; no Go files are added.

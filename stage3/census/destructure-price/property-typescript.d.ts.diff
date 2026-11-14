@@ -1,0 +1,202 @@
+--- adapted-baseline/typescript.d.ts
++++ property-road/typescript.d.ts
+@@ -7527,13 +7527,19 @@
+         };
+     };
+     interface NodeFactory {
+-        createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;
+-        createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;
++        createNodeArray: <T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean) => NodeArray<T>;
++        createNumericLiteral: (value: string | number, numericLiteralFlags?: TokenFlags) => NumericLiteral;
+         createBigIntLiteral(value: string | PseudoBigInt): BigIntLiteral;
+-        createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;
++        createStringLiteral: {
++            (text: string, isSingleQuote?: boolean): StringLiteral;
++            /** @internal */ (text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;
++        };
+         createStringLiteralFromNode(sourceNode: PropertyNameLiteral | PrivateIdentifier, isSingleQuote?: boolean): StringLiteral;
+         createRegularExpressionLiteral(text: string): RegularExpressionLiteral;
+-        createIdentifier(text: string): Identifier;
++        createIdentifier: {
++            (text: string): Identifier;
++            /** @internal */ (text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;
++        };
+         /**
+          * Create a unique temporary variable.
+          * @param recordTempVariable An optional callback used to record the temporary variable name. This
+@@ -7555,20 +7561,23 @@
+         createUniqueName(text: string, flags?: GeneratedIdentifierFlags): Identifier;
+         /** Create a unique name generated for a node. */
+         getGeneratedNameForNode(node: Node | undefined, flags?: GeneratedIdentifierFlags): Identifier;
+-        createPrivateIdentifier(text: string): PrivateIdentifier;
++        createPrivateIdentifier: (text: string) => PrivateIdentifier;
+         createUniquePrivateName(text?: string): PrivateIdentifier;
+         getGeneratedPrivateNameForNode(node: Node): PrivateIdentifier;
+-        createToken(token: SyntaxKind.SuperKeyword): SuperExpression;
+-        createToken(token: SyntaxKind.ThisKeyword): ThisExpression;
+-        createToken(token: SyntaxKind.NullKeyword): NullLiteral;
+-        createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;
+-        createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;
+-        createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;
+-        createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;
+-        createToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;
+-        createToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;
+-        createToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;
+-        createToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;
++        createToken: {
++            (token: SyntaxKind.SuperKeyword): SuperExpression;
++            (token: SyntaxKind.ThisKeyword): ThisExpression;
++            (token: SyntaxKind.NullKeyword): NullLiteral;
++            (token: SyntaxKind.TrueKeyword): TrueLiteral;
++            (token: SyntaxKind.FalseKeyword): FalseLiteral;
++            (token: SyntaxKind.EndOfFileToken): EndOfFileToken;
++            (token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;
++            <TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;
++            <TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;
++            <TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;
++            <TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;
++            /** @internal */ <TKind extends SyntaxKind>(token: TKind): Token<TKind>;
++        };
+         createSuper(): SuperExpression;
+         createThis(): ThisExpression;
+         createNull(): NullLiteral;
+@@ -7662,29 +7671,29 @@
+         updateArrayBindingPattern(node: ArrayBindingPattern, elements: readonly ArrayBindingElement[]): ArrayBindingPattern;
+         createBindingElement(dotDotDotToken: DotDotDotToken | undefined, propertyName: string | PropertyName | undefined, name: string | BindingName, initializer?: Expression): BindingElement;
+         updateBindingElement(node: BindingElement, dotDotDotToken: DotDotDotToken | undefined, propertyName: PropertyName | undefined, name: BindingName, initializer: Expression | undefined): BindingElement;
+-        createArrayLiteralExpression(elements?: readonly Expression[], multiLine?: boolean): ArrayLiteralExpression;
++        createArrayLiteralExpression: (elements?: readonly Expression[], multiLine?: boolean) => ArrayLiteralExpression;
+         updateArrayLiteralExpression(node: ArrayLiteralExpression, elements: readonly Expression[]): ArrayLiteralExpression;
+-        createObjectLiteralExpression(properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean): ObjectLiteralExpression;
++        createObjectLiteralExpression: (properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean) => ObjectLiteralExpression;
+         updateObjectLiteralExpression(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]): ObjectLiteralExpression;
+-        createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;
++        createPropertyAccessExpression: (expression: Expression, name: string | MemberName) => PropertyAccessExpression;
+         updatePropertyAccessExpression(node: PropertyAccessExpression, expression: Expression, name: MemberName): PropertyAccessExpression;
+-        createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName): PropertyAccessChain;
++        createPropertyAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName) => PropertyAccessChain;
+         updatePropertyAccessChain(node: PropertyAccessChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, name: MemberName): PropertyAccessChain;
+-        createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;
++        createElementAccessExpression: (expression: Expression, index: number | Expression) => ElementAccessExpression;
+         updateElementAccessExpression(node: ElementAccessExpression, expression: Expression, argumentExpression: Expression): ElementAccessExpression;
+-        createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression): ElementAccessChain;
++        createElementAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression) => ElementAccessChain;
+         updateElementAccessChain(node: ElementAccessChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, argumentExpression: Expression): ElementAccessChain;
+-        createCallExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallExpression;
++        createCallExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallExpression;
+         updateCallExpression(node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallExpression;
+-        createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallChain;
++        createCallChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallChain;
+         updateCallChain(node: CallChain, expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallChain;
+-        createNewExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;
++        createNewExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => NewExpression;
+         updateNewExpression(node: NewExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;
+         createTaggedTemplateExpression(tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral): TaggedTemplateExpression;
+         updateTaggedTemplateExpression(node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral): TaggedTemplateExpression;
+         createTypeAssertion(type: TypeNode, expression: Expression): TypeAssertion;
+         updateTypeAssertion(node: TypeAssertion, type: TypeNode, expression: Expression): TypeAssertion;
+-        createParenthesizedExpression(expression: Expression): ParenthesizedExpression;
++        createParenthesizedExpression: (expression: Expression) => ParenthesizedExpression;
+         updateParenthesizedExpression(node: ParenthesizedExpression, expression: Expression): ParenthesizedExpression;
+         createFunctionExpression(modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[] | undefined, type: TypeNode | undefined, body: Block): FunctionExpression;
+         updateFunctionExpression(node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block): FunctionExpression;
+@@ -7739,24 +7748,24 @@
+         createTemplateSpan(expression: Expression, literal: TemplateMiddle | TemplateTail): TemplateSpan;
+         updateTemplateSpan(node: TemplateSpan, expression: Expression, literal: TemplateMiddle | TemplateTail): TemplateSpan;
+         createSemicolonClassElement(): SemicolonClassElement;
+-        createBlock(statements: readonly Statement[], multiLine?: boolean): Block;
++        createBlock: (statements: readonly Statement[], multiLine?: boolean) => Block;
+         updateBlock(node: Block, statements: readonly Statement[]): Block;
+-        createVariableStatement(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]): VariableStatement;
++        createVariableStatement: (modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]) => VariableStatement;
+         updateVariableStatement(node: VariableStatement, modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList): VariableStatement;
+         createEmptyStatement(): EmptyStatement;
+-        createExpressionStatement(expression: Expression): ExpressionStatement;
++        createExpressionStatement: (expression: Expression) => ExpressionStatement;
+         updateExpressionStatement(node: ExpressionStatement, expression: Expression): ExpressionStatement;
+-        createIfStatement(expression: Expression, thenStatement: Statement, elseStatement?: Statement): IfStatement;
++        createIfStatement: (expression: Expression, thenStatement: Statement, elseStatement?: Statement) => IfStatement;
+         updateIfStatement(node: IfStatement, expression: Expression, thenStatement: Statement, elseStatement: Statement | undefined): IfStatement;
+         createDoStatement(statement: Statement, expression: Expression): DoStatement;
+         updateDoStatement(node: DoStatement, statement: Statement, expression: Expression): DoStatement;
+-        createWhileStatement(expression: Expression, statement: Statement): WhileStatement;
++        createWhileStatement: (expression: Expression, statement: Statement) => WhileStatement;
+         updateWhileStatement(node: WhileStatement, expression: Expression, statement: Statement): WhileStatement;
+-        createForStatement(initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;
++        createForStatement: (initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement) => ForStatement;
+         updateForStatement(node: ForStatement, initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;
+         createForInStatement(initializer: ForInitializer, expression: Expression, statement: Statement): ForInStatement;
+         updateForInStatement(node: ForInStatement, initializer: ForInitializer, expression: Expression, statement: Statement): ForInStatement;
+-        createForOfStatement(awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;
++        createForOfStatement: (awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement) => ForOfStatement;
+         updateForOfStatement(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;
+         createContinueStatement(label?: string | Identifier): ContinueStatement;
+         updateContinueStatement(node: ContinueStatement, label: Identifier | undefined): ContinueStatement;
+@@ -7775,9 +7784,9 @@
+         createTryStatement(tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;
+         updateTryStatement(node: TryStatement, tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;
+         createDebuggerStatement(): DebuggerStatement;
+-        createVariableDeclaration(name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression): VariableDeclaration;
++        createVariableDeclaration: (name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression) => VariableDeclaration;
+         updateVariableDeclaration(node: VariableDeclaration, name: BindingName, exclamationToken: ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined): VariableDeclaration;
+-        createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags?: NodeFlags): VariableDeclarationList;
++        createVariableDeclarationList: (declarations: readonly VariableDeclaration[], flags?: NodeFlags) => VariableDeclarationList;
+         updateVariableDeclarationList(node: VariableDeclarationList, declarations: readonly VariableDeclaration[]): VariableDeclarationList;
+         createFunctionDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;
+         updateFunctionDeclaration(node: FunctionDeclaration, modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;
+@@ -8026,17 +8035,17 @@
+         /** Gets the compiler options supplied to the transformer. */
+         getCompilerOptions(): CompilerOptions;
+         /** Starts a new lexical environment. */
+-        startLexicalEnvironment(): void;
++        startLexicalEnvironment: () => void;
+         /** Suspends the current lexical environment, usually after visiting a parameter list. */
+         suspendLexicalEnvironment(): void;
+         /** Resumes a suspended lexical environment, usually before visiting a function body. */
+-        resumeLexicalEnvironment(): void;
++        resumeLexicalEnvironment: () => void;
+         /** Ends a lexical environment, returning any declarations. */
+-        endLexicalEnvironment(): Statement[] | undefined;
++        endLexicalEnvironment: () => Statement[] | undefined;
+         /** Hoists a function declaration to the containing scope. */
+-        hoistFunctionDeclaration(node: FunctionDeclaration): void;
++        hoistFunctionDeclaration: (node: FunctionDeclaration) => void;
+         /** Hoists a variable declaration to the containing scope. */
+-        hoistVariableDeclaration(node: Identifier): void;
++        hoistVariableDeclaration: (node: Identifier) => void;
+     }
+     interface TransformationContext extends CoreTransformationContext {
+         /** Records a request for a non-scoped emit helper in the current context. */
+@@ -8183,7 +8192,7 @@
+          * A hook used by the Printer when generating unique names to avoid collisions with
+          * globally defined names that exist outside of the current source file.
+          */
+-        hasGlobalName?(name: string): boolean;
++        hasGlobalName?: (name: string) => boolean;
+         /**
+          * A hook used by the Printer to provide notifications prior to emitting a node. A
+          * compatible implementation **must** invoke `emitCallback` with the provided `hint` and
+@@ -8202,12 +8211,12 @@
+          * });
+          * ```
+          */
+-        onEmitNode?(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;
++        onEmitNode?: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;
+         /**
+          * A hook used to check if an emit notification is required for a node.
+          * @param node The node to emit.
+          */
+-        isEmitNotificationEnabled?(node: Node): boolean;
++        isEmitNotificationEnabled?: (node: Node) => boolean;
+         /**
+          * A hook used by the Printer to perform just-in-time substitution of a node. This is
+          * primarily used by node transformations that need to substitute one node for another,
+@@ -8224,7 +8233,7 @@
+          * });
+          * ```
+          */
+-        substituteNode?(hint: EmitHint, node: Node): Node;
++        substituteNode?: (hint: EmitHint, node: Node) => Node;
+     }
+     interface PrinterOptions {
+         removeComments?: boolean | undefined;

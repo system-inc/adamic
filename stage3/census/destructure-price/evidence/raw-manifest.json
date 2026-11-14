@@ -1,0 +1,798 @@
+{
+  "largeThresholdBytes": 100000,
+  "archivesLocation": "private task scratch r2/archives; if published, evidence/raw/",
+  "artifacts": [
+    {
+      "file": "census/emitter-times.jsonl",
+      "bytes": 117611,
+      "sha256": "d5aba47bb368955ed34ba01d0518ee26181356d2de6f9c4c02396113a8ba2387",
+      "large": true,
+      "archive": "census__emitter-times.jsonl.gz",
+      "archiveBytes": 8065,
+      "archiveSha256": "0c7cebe38aed8fcb13e510e9e35ea0771455757715f65bed029622832b55c551"
+    },
+    {
+      "file": "census/emitter.jsonl",
+      "bytes": 2487598,
+      "sha256": "9869e70f6239a9a9a059df4f51b4170f6c90d4f7d11ebc247abd09b626dc7b63",
+      "large": true,
+      "archive": "census__emitter.jsonl.gz",
+      "archiveBytes": 82200,
+      "archiveSha256": "012e38c470724f7209c05f5c6014e8f0d53bda180a8959f5081e6f3f233e64a2"
+    },
+    {
+      "file": "census/emitter.log",
+      "bytes": 143,
+      "sha256": "b58ed4f2895c7b3bb1c9802c39b28322dd6725db3c9b2fccaadea2c0080ce080",
+      "large": false,
+      "archive": "census__emitter.log.gz",
+      "archiveBytes": 132,
+      "archiveSha256": "1559a38c0a5e3a8ec64fa7f77b2aef4688ae52799b99274790f1e688ea52ed11"
+    },
+    {
+      "file": "census/expressionToTypeNode-times.jsonl",
+      "bytes": 18493,
+      "sha256": "01b3c0ec6597ccad333bfbe20c0d861382f74b5690856dcc44d27487debeaf85",
+      "large": false,
+      "archive": "census__expressionToTypeNode-times.jsonl.gz",
+      "archiveBytes": 1334,
+      "archiveSha256": "25172460d3cd6db65094b5e923863043056aa716ae668d5a8488026a1440373a"
+    },
+    {
+      "file": "census/expressionToTypeNode.jsonl",
+      "bytes": 478907,
+      "sha256": "d2f84ffbf07aa1bdf72a5e39813f4f258413c675777fce94b1eb7d96863a91f5",
+      "large": true,
+      "archive": "census__expressionToTypeNode.jsonl.gz",
+      "archiveBytes": 19588,
+      "archiveSha256": "279bd995e6f6a838f97628e95da65d516b67c9afa71dde1bad88e46e3ccce4f4"
+    },
+    {
+      "file": "census/expressionToTypeNode.log",
+      "bytes": 154,
+      "sha256": "fb6bab1edea54e1c23d128e2e3ae8c9dc475fdb6267c3241bddcafc914feb257",
+      "large": false,
+      "archive": "census__expressionToTypeNode.log.gz",
+      "archiveBytes": 142,
+      "archiveSha256": "31c9db2b64a6b4c90b3b9056147ffec2670eed6e1685217d64b714d9c6d543e4"
+    },
+    {
+      "file": "census/moduleSpecifiers-times.jsonl",
+      "bytes": 15352,
+      "sha256": "99e8ffe33025e11bccdb52869f5c4b90e15bb84ceb138454ddfde27787f78ac1",
+      "large": false,
+      "archive": "census__moduleSpecifiers-times.jsonl.gz",
+      "archiveBytes": 1159,
+      "archiveSha256": "91a018a541b696549c6d51ac4d393fc27c1c4fa65b2b2212ef17a105063cfb75"
+    },
+    {
+      "file": "census/moduleSpecifiers.jsonl",
+      "bytes": 394631,
+      "sha256": "b702fb716c946385a1cd87921bf7872daac500667ec85f48c26997927389cf1a",
+      "large": true,
+      "archive": "census__moduleSpecifiers.jsonl.gz",
+      "archiveBytes": 19425,
+      "archiveSha256": "84f3499d6042e89ee08f4f77ec45df882b5f7a4e62ddaa5ab08e178739fedec6"
+    },
+    {
+      "file": "census/moduleSpecifiers.log",
+      "bytes": 150,
+      "sha256": "988ea4c10533fcf144983fcadaad3df621c8f0bc7d419b2fd2e380cfdaad3004",
+      "large": false,
+      "archive": "census__moduleSpecifiers.log.gz",
+      "archiveBytes": 138,
+      "archiveSha256": "1a69f057f3ac976527c0189e50030cc449afc6b33c6079cd6b1429678c17c193"
+    },
+    {
+      "file": "census/parser-times.jsonl",
+      "bytes": 150517,
+      "sha256": "b205d83c95965b0a09de7a8567bf4f514d9abd0c364f6c365f11b6193e429353",
+      "large": true,
+      "archive": "census__parser-times.jsonl.gz",
+      "archiveBytes": 10423,
+      "archiveSha256": "0737ffe169db88ff318b45fca4cb112cec33eadf9bdac9d104699c4aa6162529"
+    },
+    {
+      "file": "census/parser.jsonl",
+      "bytes": 5146635,
+      "sha256": "cabb35d792fff5b68de7972ab7b95cd86f207310245e31727aeece5256723bb4",
+      "large": true,
+      "archive": "census__parser.jsonl.gz",
+      "archiveBytes": 139578,
+      "archiveSha256": "f14defd67577f9d0b53df3b78f0a9f8ed513adaca5353bb72b29461125293e94"
+    },
+    {
+      "file": "census/parser.log",
+      "bytes": 142,
+      "sha256": "ebc197727c9937f5a2ba2c1c0cba6b11a3e8808ce0382d13655f0472f16115fe",
+      "large": false,
+      "archive": "census__parser.log.gz",
+      "archiveBytes": 131,
+      "archiveSha256": "1677117b03235fd3d80203452ca7e57c629b78cbef5085c6723a6e6e4616fb6c"
+    },
+    {
+      "file": "census/sourcemap-times.jsonl",
+      "bytes": 16326,
+      "sha256": "61a1cdd0116a93f3731f5f2a0a947d49ad93494bbf305a37560deb2b1fb27d2d",
+      "large": false,
+      "archive": "census__sourcemap-times.jsonl.gz",
+      "archiveBytes": 1233,
+      "archiveSha256": "f1fadf1e08843b3d5ad1ecef30b235fc7894237ae5cbf60ed4aef0a0866742d5"
+    },
+    {
+      "file": "census/sourcemap.jsonl",
+      "bytes": 294202,
+      "sha256": "8fc714535a4929763d06743115fef5d0f4dae79cbdad2492dc9aaeb3880b3906",
+      "large": true,
+      "archive": "census__sourcemap.jsonl.gz",
+      "archiveBytes": 11703,
+      "archiveSha256": "c052a0924d12b96028afa068131b40faf7da7bb68a1942c623c98e6a6bad381a"
+    },
+    {
+      "file": "census/sourcemap.log",
+      "bytes": 143,
+      "sha256": "95d7ef91a52c37ebb958ca98addcf836146bca32185333b177ee8c122f8bb6ae",
+      "large": false,
+      "archive": "census__sourcemap.log.gz",
+      "archiveBytes": 132,
+      "archiveSha256": "589c08bb5fd3bbee3f5b853c9d3a5387c133d412b88da0086c0a5d4ec313b0c0"
+    },
+    {
+      "file": "census/sys-times.jsonl",
+      "bytes": 35868,
+      "sha256": "418ef0efe7a38a115613738d0d3f01c7e96f3bfb4f0b78d713465b98876af622",
+      "large": false,
+      "archive": "census__sys-times.jsonl.gz",
+      "archiveBytes": 2600,
+      "archiveSha256": "6b02da06575beaa127415175c5e81575ec87ec1bdf79e08796d1681a6282c8d7"
+    },
+    {
+      "file": "census/sys.jsonl",
+      "bytes": 637089,
+      "sha256": "1a2aa3ce929203007df9c045e2ac8f15cf2d5ce3e9f90f1ac8bfd43a23dfaccc",
+      "large": true,
+      "archive": "census__sys.jsonl.gz",
+      "archiveBytes": 26415,
+      "archiveSha256": "e6282920d3570be6ce520fd42a33cfc2f320f385874fb595b313b0932c7975bb"
+    },
+    {
+      "file": "census/sys.log",
+      "bytes": 138,
+      "sha256": "ac6f8849219426b3357f75447c60a2c5b43397524d37c94944fd35eb073cad98",
+      "large": false,
+      "archive": "census__sys.log.gz",
+      "archiveBytes": 130,
+      "archiveSha256": "2d76b422456799939a0769186b78457a7996ddf667309c156c3a10862967a8e0"
+    },
+    {
+      "file": "census/transformers__classFields-times.jsonl",
+      "bytes": 39577,
+      "sha256": "a5470e54ec47947cf7b70dcbfb6dc60c948a9a672b006526333f7dce7a6998b8",
+      "large": false,
+      "archive": "census__transformers__classFields-times.jsonl.gz",
+      "archiveBytes": 2570,
+      "archiveSha256": "8ec640510718ff91caa778cace6fe25e9a25e76bea26521facf32f43c37bb5b0"
+    },
+    {
+      "file": "census/transformers__classFields.jsonl",
+      "bytes": 989267,
+      "sha256": "6c81eeaa5e01b242ef9cb382245efa57b062a24ba2c3e54ec495aa45559de319",
+      "large": true,
+      "archive": "census__transformers__classFields.jsonl.gz",
+      "archiveBytes": 36600,
+      "archiveSha256": "ceeb85f006abb50ad193a1304e17dd38888278a2180185a66c8e2eb746ab178f"
+    },
+    {
+      "file": "census/transformers__classFields.log",
+      "bytes": 159,
+      "sha256": "68fbb111405e5b125b61693d10cbb8e3da69651b7e6fd757faab6c22ae294eda",
+      "large": false,
+      "archive": "census__transformers__classFields.log.gz",
+      "archiveBytes": 143,
+      "archiveSha256": "5ba0dc4e449e7e1a34985aa196939072b0434bf28159acace5a6de7ae8286128"
+    },
+    {
+      "file": "census/transformers__es2015-times.jsonl",
+      "bytes": 54951,
+      "sha256": "640c3c9b6dc7584be8ba69142b7be7ebfea357b6c252b92fb9b5352c072135d7",
+      "large": false,
+      "archive": "census__transformers__es2015-times.jsonl.gz",
+      "archiveBytes": 3630,
+      "archiveSha256": "3d7985ca77949d2aeb5c45c9dddf9d5743bb786bee12eb05d348c9423ec45dda"
+    },
+    {
+      "file": "census/transformers__es2015.jsonl",
+      "bytes": 1595577,
+      "sha256": "67e585bc53bf93337758f0c81e151be094698ac73b56af59e65aa02ec24b789a",
+      "large": true,
+      "archive": "census__transformers__es2015.jsonl.gz",
+      "archiveBytes": 53911,
+      "archiveSha256": "bce91e92fa5d4c59d0d3f435018a2b52722ea193ea006fd40f23418d349f429d"
+    },
+    {
+      "file": "census/transformers__es2015.log",
+      "bytes": 155,
+      "sha256": "21ec9833bd80f471fbabeca19b3341bfba9e87d42e3f0f9898bf23c5b5376266",
+      "large": false,
+      "archive": "census__transformers__es2015.log.gz",
+      "archiveBytes": 139,
+      "archiveSha256": "ccff5cdea21f263e9101d989bc9e397dcf33c412a3697abdca34e702a8bd6285"
+    },
+    {
+      "file": "census/transformers__es2016-times.jsonl",
+      "bytes": 2106,
+      "sha256": "fe5ed625875c89b44601ef4a23e6f9e9cbd6a534aedd935371f4ac8631cf6a81",
+      "large": false,
+      "archive": "census__transformers__es2016-times.jsonl.gz",
+      "archiveBytes": 305,
+      "archiveSha256": "c1a0d5fd66a44d8652ccbd44675ca61ce616defbcc8f9b5065751c27b31100df"
+    },
+    {
+      "file": "census/transformers__es2016.jsonl",
+      "bytes": 75816,
+      "sha256": "f813dfb6cb2b236ddd83a34c28dce7f4a883acf1d16ad719979927248bf3047b",
+      "large": false,
+      "archive": "census__transformers__es2016.jsonl.gz",
+      "archiveBytes": 3535,
+      "archiveSha256": "e9bc9a8d37cca3839b8a2780bde895ff4a15c865f045b9aff631ffe3078aa8ca"
+    },
+    {
+      "file": "census/transformers__es2016.log",
+      "bytes": 151,
+      "sha256": "9590d1336fdb89bd41facaab583353e5c419565f9d4614d8aae96c9b6d62b7ae",
+      "large": false,
+      "archive": "census__transformers__es2016.log.gz",
+      "archiveBytes": 136,
+      "archiveSha256": "9e006df97232547a5075b6d85bad1fd76c01e091a0560fe407e8ad8e736483a0"
+    },
+    {
+      "file": "census/transformers__es2017-times.jsonl",
+      "bytes": 15636,
+      "sha256": "d742da26f57eb6700a22b00fc8a7f1e22e775af56b1483d8ee5a6a71f17b2796",
+      "large": false,
+      "archive": "census__transformers__es2017-times.jsonl.gz",
+      "archiveBytes": 1161,
+      "archiveSha256": "ef247b50470ce921ff8d66fddf21fa0220ab9ecddeec35a0a433809846abc47c"
+    },
+    {
+      "file": "census/transformers__es2017.jsonl",
+      "bytes": 488973,
+      "sha256": "02a4dc272067118ece3eee3a5c5780fd2d4ee2a58c098d312824905c4c3dcbcf",
+      "large": true,
+      "archive": "census__transformers__es2017.jsonl.gz",
+      "archiveBytes": 17143,
+      "archiveSha256": "a23f0f783a8c34131b40b909530e499afb8c13590a01ad40dab4e6353fde364b"
+    },
+    {
+      "file": "census/transformers__es2017.log",
+      "bytes": 153,
+      "sha256": "e07a91230dfee7f16265deb08bbcf82353b2f800197c7af32d30af83b728a416",
+      "large": false,
+      "archive": "census__transformers__es2017.log.gz",
+      "archiveBytes": 137,
+      "archiveSha256": "ada9d4c496aaeb7ee97ac8227a33fb333f8508ceaf08d580559d5a42dec724c1"
+    },
+    {
+      "file": "census/transformers__es2018-times.jsonl",
+      "bytes": 18676,
+      "sha256": "fa14dfad0fa71227bc9051765000caa7da3b141817c4afbb8ed03fdf59324fc7",
+      "large": false,
+      "archive": "census__transformers__es2018-times.jsonl.gz",
+      "archiveBytes": 1355,
+      "archiveSha256": "64c6a51009c0c64f02b436ec4a4b502773de058b75695641760a76bd8ac7549b"
+    },
+    {
+      "file": "census/transformers__es2018.jsonl",
+      "bytes": 619360,
+      "sha256": "7b44ea4a22f484c934e3ec6564390d144efa292227135c9663e45d6e5452be7d",
+      "large": true,
+      "archive": "census__transformers__es2018.jsonl.gz",
+      "archiveBytes": 22572,
+      "archiveSha256": "3576401e70686d32613627ad93b679e5bb8b0fd89e8ca1582355a4c64d336435"
+    },
+    {
+      "file": "census/transformers__es2018.log",
+      "bytes": 153,
+      "sha256": "46b1405aeadab253d2cef1de56a75289dfb33b18285e0b9ee047df407aa71b4e",
+      "large": false,
+      "archive": "census__transformers__es2018.log.gz",
+      "archiveBytes": 138,
+      "archiveSha256": "c14491b214e68d4b4cc57059e931adeac9f9446773eba462b0d7ae2f2e3d3a56"
+    },
+    {
+      "file": "census/transformers__es2020-times.jsonl",
+      "bytes": 3894,
+      "sha256": "9cf134bdc9b66b6026397132ec0a3c09862f85ac1eba063fed9364b2395aac50",
+      "large": false,
+      "archive": "census__transformers__es2020-times.jsonl.gz",
+      "archiveBytes": 419,
+      "archiveSha256": "c0f6adb7b64c3ea0d952860149e986df1059b9abd42bcddd275f08a2bc39ec0d"
+    },
+    {
+      "file": "census/transformers__es2020.jsonl",
+      "bytes": 158740,
+      "sha256": "83cf9682bf2249aa3598d090afa41b69267af4fbb7d6006d5a2855205ef927d5",
+      "large": true,
+      "archive": "census__transformers__es2020.jsonl.gz",
+      "archiveBytes": 7013,
+      "archiveSha256": "e43b32d7c73f909d42c0ed1fab44ce3b56e77ea731c731eadc07579c76997dd9"
+    },
+    {
+      "file": "census/transformers__es2020.log",
+      "bytes": 153,
+      "sha256": "4c08c20bdbf573176bbc4d9f56cfe17b3135dca1f233b772f6534b801e27b509",
+      "large": false,
+      "archive": "census__transformers__es2020.log.gz",
+      "archiveBytes": 138,
+      "archiveSha256": "87065c06812e7c6870156f60e73293f7383e6d381968f4bb911631434a544bc0"
+    },
+    {
+      "file": "census/transformers__es2021-times.jsonl",
+      "bytes": 1500,
+      "sha256": "d706baf5d4d2787ecba5d459ccfb309340a1b89b67f248ec4516281db298e4e6",
+      "large": false,
+      "archive": "census__transformers__es2021-times.jsonl.gz",
+      "archiveBytes": 262,
+      "archiveSha256": "3ca8fa1021f5b80fe048ef249dce946bb7c66e6ebc47ac08fcab0a54b52a4641"
+    },
+    {
+      "file": "census/transformers__es2021.jsonl",
+      "bytes": 38650,
+      "sha256": "15ab1d82e83976ac1b8ea8fb4dada1f6b0dcfc4f34d7224ad00d4a1403f21e7d",
+      "large": false,
+      "archive": "census__transformers__es2021.jsonl.gz",
+      "archiveBytes": 2576,
+      "archiveSha256": "7fa42a85415b4f92f39e6b52dc878885748871f1169a189d637c46c410fa6c3d"
+    },
+    {
+      "file": "census/transformers__es2021.log",
+      "bytes": 151,
+      "sha256": "59bd57fa3e5b9c9163e74388cdc53f199c974a710b92fcdb84694b15041c9933",
+      "large": false,
+      "archive": "census__transformers__es2021.log.gz",
+      "archiveBytes": 136,
+      "archiveSha256": "f86853cc0c9d464bac8daef8b9de41b8190f882850c485fe6022af389d22d2de"
+    },
+    {
+      "file": "census/transformers__esDecorators-times.jsonl",
+      "bytes": 27926,
+      "sha256": "873a1a7a83aa8463d77b889b0fa913fab808e0ebfcc07404aba7bbca37b7577c",
+      "large": false,
+      "archive": "census__transformers__esDecorators-times.jsonl.gz",
+      "archiveBytes": 1874,
+      "archiveSha256": "bd3f4846be4a9d131d940a06058691d313d493430ad7b68164cdc4b2fff62e0f"
+    },
+    {
+      "file": "census/transformers__esDecorators.jsonl",
+      "bytes": 806780,
+      "sha256": "953bcf3c4433c3a60f98a23b5d54eae1774bca69d6e3572fdb8f72740e8ca8c9",
+      "large": true,
+      "archive": "census__transformers__esDecorators.jsonl.gz",
+      "archiveBytes": 28187,
+      "archiveSha256": "7c0773b61b8092764be7137c7855b12c04d4dcf17d348500add331c884f9de8c"
+    },
+    {
+      "file": "census/transformers__esDecorators.log",
+      "bytes": 159,
+      "sha256": "3561e290a2bcd25f8346c6629b4d6f4390880a95f2ad99bea6e389a5ab1834a9",
+      "large": false,
+      "archive": "census__transformers__esDecorators.log.gz",
+      "archiveBytes": 142,
+      "archiveSha256": "57d781d13c93e6351b1b6c2061fcbd90347cb19e64fda95a5ff421408347fa45"
+    },
+    {
+      "file": "census/transformers__esnext-times.jsonl",
+      "bytes": 8726,
+      "sha256": "f0dc0f5904cac5de393538bb90f94b9caf042ef8c1edea68ba18ea61e465bd19",
+      "large": false,
+      "archive": "census__transformers__esnext-times.jsonl.gz",
+      "archiveBytes": 747,
+      "archiveSha256": "b02089875ebda8aefd9532b94cf9a24582857c77f21dc13b9d9b7cdf70d90c3c"
+    },
+    {
+      "file": "census/transformers__esnext.jsonl",
+      "bytes": 301247,
+      "sha256": "e60529a5ac7308acdabc1d1f7e3df15717307dc679a824ee3c7501153ee1f537",
+      "large": true,
+      "archive": "census__transformers__esnext.jsonl.gz",
+      "archiveBytes": 12209,
+      "archiveSha256": "83fcaed7398e301707c15d1ce780024d373d016cc932e37d7dfa8641ad773b75"
+    },
+    {
+      "file": "census/transformers__esnext.log",
+      "bytes": 153,
+      "sha256": "42057df551a6a36cefd34174a7f76071bc9ffae1b4fa3dcaa064b14c84e2aeff",
+      "large": false,
+      "archive": "census__transformers__esnext.log.gz",
+      "archiveBytes": 137,
+      "archiveSha256": "0fcd2885793dbc65298a249b28c745aadc77c3291d916ef4b1ef776fe3743e74"
+    },
+    {
+      "file": "census/transformers__generators-times.jsonl",
+      "bytes": 44935,
+      "sha256": "39a9187fd5387cd7e5c4b4cc5612ab2c8f562d4241cf7988226faba39f6c7911",
+      "large": false,
+      "archive": "census__transformers__generators-times.jsonl.gz",
+      "archiveBytes": 2880,
+      "archiveSha256": "66c21f083da008237cf3196dd0f7f78c685ed39d480367fd9b83f14f04bbc451"
+    },
+    {
+      "file": "census/transformers__generators.jsonl",
+      "bytes": 956100,
+      "sha256": "6ed8871348cc58a314229714b7c0c3de45123f9e24cf044126416ff2456d02c7",
+      "large": true,
+      "archive": "census__transformers__generators.jsonl.gz",
+      "archiveBytes": 28814,
+      "archiveSha256": "b3dfc8a4c7cf3a11e2bacb9f503a7697537f0b451f6b86d6d3fac4d4a1ce97b2"
+    },
+    {
+      "file": "census/transformers__generators.log",
+      "bytes": 158,
+      "sha256": "24ef2f3a920f21143195e37b9963bb7c9fedf52e23a2ef57e5667e8027ece6c2",
+      "large": false,
+      "archive": "census__transformers__generators.log.gz",
+      "archiveBytes": 139,
+      "archiveSha256": "f1f2b2fab7070030034253e42fabe81dab4365066bff8f466650eff3e90b3d5f"
+    },
+    {
+      "file": "census/transformers__jsx-times.jsonl",
+      "bytes": 11814,
+      "sha256": "fb8caaa5500347a15ee0e387d28a1395a7e0c500dc2c88b232d2acefc6275b2c",
+      "large": false,
+      "archive": "census__transformers__jsx-times.jsonl.gz",
+      "archiveBytes": 950,
+      "archiveSha256": "deda7b3baf7d2280e05722127cbf3ab57f8c229afe5f86575b640dd56685cd38"
+    },
+    {
+      "file": "census/transformers__jsx.jsonl",
+      "bytes": 304907,
+      "sha256": "52d9ee6379a819db56fb2d122f4b851df835bb7ec60a562fb9717ff52e72e8ab",
+      "large": true,
+      "archive": "census__transformers__jsx.jsonl.gz",
+      "archiveBytes": 13236,
+      "archiveSha256": "8bf7b27a614505aeadd6dd016b283713049c01a764d9dc13c4ef96ec31bc6696"
+    },
+    {
+      "file": "census/transformers__jsx.log",
+      "bytes": 150,
+      "sha256": "4f0d595ea18017cdea5acd9ffcc23ea363da4e96d1ede07a765e654f03c59b50",
+      "large": false,
+      "archive": "census__transformers__jsx.log.gz",
+      "archiveBytes": 136,
+      "archiveSha256": "701f54e085b335b4141387ff98dcbfe0fba1ad35cd5a43ae42e51a2f66f66ad2"
+    },
+    {
+      "file": "census/transformers__legacyDecorators-times.jsonl",
+      "bytes": 12833,
+      "sha256": "0d91323d7d2d850ef82687138c3af537a0cb06c8f41f3eb3b1c9de827f02dc3a",
+      "large": false,
+      "archive": "census__transformers__legacyDecorators-times.jsonl.gz",
+      "archiveBytes": 953,
+      "archiveSha256": "892ff81312711a53148b7402538dde6ee27040f85abed3a5077b5770746cc552"
+    },
+    {
+      "file": "census/transformers__legacyDecorators.jsonl",
+      "bytes": 371921,
+      "sha256": "8f9141e08c8c35412b7ba56069dfa376ca4d23dfe3c9f4048a241f3d5e582023",
+      "large": true,
+      "archive": "census__transformers__legacyDecorators.jsonl.gz",
+      "archiveBytes": 14548,
+      "archiveSha256": "f48901fedd584d5a116277d289e746dc11341bfb67431820c0d48237a20121d6"
+    },
+    {
+      "file": "census/transformers__legacyDecorators.log",
+      "bytes": 163,
+      "sha256": "9ad149271ff35714b49aa6f52e81180a8035836a7dca76784d1bca955a96a315",
+      "large": false,
+      "archive": "census__transformers__legacyDecorators.log.gz",
+      "archiveBytes": 144,
+      "archiveSha256": "cedf27b49a14d70dd2aad352a35c58daf242bd5e5445ff96afd3b0f9c80c47f9"
+    },
+    {
+      "file": "census/transformers__module__esnextAnd2015-times.jsonl",
+      "bytes": 4924,
+      "sha256": "da39bcebf10fc3ffa144c5035f9632968057e8efa7d46fa513ddf6bed2ac708f",
+      "large": false,
+      "archive": "census__transformers__module__esnextAnd2015-times.jsonl.gz",
+      "archiveBytes": 502,
+      "archiveSha256": "cf2dd07ef8c5874e7abe737c5f00567a75e594cd15ca08690c65e56750345a39"
+    },
+    {
+      "file": "census/transformers__module__esnextAnd2015.jsonl",
+      "bytes": 157897,
+      "sha256": "ab9fe798acb81f39d3d8cfa926ca630c555f2f168d89b75834f0d06b7751a3c0",
+      "large": true,
+      "archive": "census__transformers__module__esnextAnd2015.jsonl.gz",
+      "archiveBytes": 7665,
+      "archiveSha256": "43d822454d13c14d73ea8488e5bd1c8c5cefcc389ccf86442c5b69118c90b8e2"
+    },
+    {
+      "file": "census/transformers__module__esnextAnd2015.log",
+      "bytes": 167,
+      "sha256": "88a9107b0b569c91b11edd89fdb33c477e56ffb6f0cb3e8484ca0df9eef90179",
+      "large": false,
+      "archive": "census__transformers__module__esnextAnd2015.log.gz",
+      "archiveBytes": 149,
+      "archiveSha256": "71c61bbd58e76a1136c79a44cd33066b7bbf0536086d16647015e47275fb69d4"
+    },
+    {
+      "file": "census/transformers__module__module-times.jsonl",
+      "bytes": 24318,
+      "sha256": "d730ba4aec4b3be1aa8114fed26da9ed90de8fa978f1cfd849f740b158099a4e",
+      "large": false,
+      "archive": "census__transformers__module__module-times.jsonl.gz",
+      "archiveBytes": 1655,
+      "archiveSha256": "580b85a436bed75b43e15ab1222a6e92b83d7f773d24701c2bb32ad8e08b2205"
+    },
+    {
+      "file": "census/transformers__module__module.jsonl",
+      "bytes": 640167,
+      "sha256": "06909bad51fd45df7cc21dd57dfe9e4b4ae4eff8cc5f32de08aa987ea1cb18e1",
+      "large": true,
+      "archive": "census__transformers__module__module.jsonl.gz",
+      "archiveBytes": 22151,
+      "archiveSha256": "da7925c26e5952ee359bd2ef5b05f345c294754509d23ef8af3f42ddea82f34a"
+    },
+    {
+      "file": "census/transformers__module__module.log",
+      "bytes": 160,
+      "sha256": "375f0e7aa372745fb56afe93ce20633841617f3a8060c0ac9984c790fbc2179f",
+      "large": false,
+      "archive": "census__transformers__module__module.log.gz",
+      "archiveBytes": 140,
+      "archiveSha256": "0b641b281fa37fc26ea262a0e8d8e56d1d04168a0585ab6eb7410c425192b8bd"
+    },
+    {
+      "file": "census/transformers__module__system-times.jsonl",
+      "bytes": 22419,
+      "sha256": "8892410540e1b6a6862967e48d8930e24ddf39e31b1add3ce86986cd00030b52",
+      "large": false,
+      "archive": "census__transformers__module__system-times.jsonl.gz",
+      "archiveBytes": 1552,
+      "archiveSha256": "14c397f59388ed53cfc6dde6b7df069009e2f9db6bbd0b1cef2b24dc1744a0e7"
+    },
+    {
+      "file": "census/transformers__module__system.jsonl",
+      "bytes": 601877,
+      "sha256": "18b207190df514bcf88209e58053f21334bf1efe4477aeb76fdba0cce3b1eb21",
+      "large": true,
+      "archive": "census__transformers__module__system.jsonl.gz",
+      "archiveBytes": 22091,
+      "archiveSha256": "e303ead3953588e03841f4ca37d4164a805228379797a9e97932419f8b62c86c"
+    },
+    {
+      "file": "census/transformers__module__system.log",
+      "bytes": 160,
+      "sha256": "df7470ebf686699731e222192f7361284fe48c8fb4fa305400a361012a6e1fdf",
+      "large": false,
+      "archive": "census__transformers__module__system.log.gz",
+      "archiveBytes": 143,
+      "archiveSha256": "6ad7a95b66e1e481ebe3786e755a5d5fbc0c5322d6bc787ef6a08b9a46a66b1c"
+    },
+    {
+      "file": "census/transformers__ts-times.jsonl",
+      "bytes": 35869,
+      "sha256": "522b3b94212b60e84e2e29caa4576a89d66c68f3930096fa78cdb3875b88f0f0",
+      "large": false,
+      "archive": "census__transformers__ts-times.jsonl.gz",
+      "archiveBytes": 2521,
+      "archiveSha256": "42557402b6e30cc98301123c680cc60bd68afc00d2b4ff77c121e8640185ce39"
+    },
+    {
+      "file": "census/transformers__ts.jsonl",
+      "bytes": 944412,
+      "sha256": "6ebb205cbe94e7ef664eba0e8a94bf3eb23b41aacef63f908e27a72d62aade07",
+      "large": true,
+      "archive": "census__transformers__ts.jsonl.gz",
+      "archiveBytes": 33784,
+      "archiveSha256": "7e58767df93e965f044448e7cc08bd842c35f4439767edcbe7d771f506681ba3"
+    },
+    {
+      "file": "census/transformers__ts.log",
+      "bytes": 150,
+      "sha256": "98abbd8c662d1810cdf41569070839c1abc6d1b2491acaa12cf8e4417b2e9320",
+      "large": false,
+      "archive": "census__transformers__ts.log.gz",
+      "archiveBytes": 135,
+      "archiveSha256": "5fa0fb48c6d78308a199c714c5b8a7a2ea08dda7855fbd6a343f9d3fa3263ab6"
+    },
+    {
+      "file": "census/transformers__typeSerializer-times.jsonl",
+      "bytes": 6966,
+      "sha256": "3d756d1e48468279d623aee2b6e204a4b145323db2e6fd13351f0be73ffde9e2",
+      "large": false,
+      "archive": "census__transformers__typeSerializer-times.jsonl.gz",
+      "archiveBytes": 603,
+      "archiveSha256": "8d83a3da95a21be348f67a905293eacde1fb27a88e051da527dc1a12895f93e8"
+    },
+    {
+      "file": "census/transformers__typeSerializer.jsonl",
+      "bytes": 171044,
+      "sha256": "24bdc684aac49ce04bdacfff01a7dfcd18c852e3234b83098e3b6ca2d652af9d",
+      "large": true,
+      "archive": "census__transformers__typeSerializer.jsonl.gz",
+      "archiveBytes": 8311,
+      "archiveSha256": "c36112148afd0ea71d51bc5b473ab784fd07cbae526e8bd3b1c0303b0e2357b6"
+    },
+    {
+      "file": "census/transformers__typeSerializer.log",
+      "bytes": 160,
+      "sha256": "6aa608ec22d1b505d976573c479b47e5e6cdd517c278a443786895babe37160b",
+      "large": false,
+      "archive": "census__transformers__typeSerializer.log.gz",
+      "archiveBytes": 145,
+      "archiveSha256": "a1c31d39f0f7a25b38ab181f630ef39fb22eb324e0569d2fea850dd5f9aa523d"
+    },
+    {
+      "file": "census/utilities-times.jsonl",
+      "bytes": 244804,
+      "sha256": "828ad3e29592f4a5111fdb09f0f122e6cdaac56b9f9ad1bed48cafb52da0660c",
+      "large": true,
+      "archive": "census__utilities-times.jsonl.gz",
+      "archiveBytes": 16033,
+      "archiveSha256": "1f05f3edcdfd10fd4e958a8fa17ddf52c6e16d03294a37444e564c58fa7b50d0"
+    },
+    {
+      "file": "census/utilities.jsonl",
+      "bytes": 3942150,
+      "sha256": "f4ee02e9c9cc39fdae37b7f887c5af9a69f26d0c6b6432165d017b7bca6eec35",
+      "large": true,
+      "archive": "census__utilities.jsonl.gz",
+      "archiveBytes": 134540,
+      "archiveSha256": "8328eaa51f7eb5b885381fdc2dff962dcf7a424ad6ef30db69802bc4ac7f2f0c"
+    },
+    {
+      "file": "census/utilities.log",
+      "bytes": 145,
+      "sha256": "f4f0163778cdd2e0df49f8d4825bf14509d6530d2e730ea5a27d49c971977e8b",
+      "large": false,
+      "archive": "census__utilities.log.gz",
+      "archiveBytes": 133,
+      "archiveSha256": "a92081cd97984ea0418041bfba0ee9c82617ca0e25bec56ab808f52f7df64919"
+    },
+    {
+      "file": "clean-oracle/baseline.diff",
+      "bytes": 71315,
+      "sha256": "e990045d4345f8de90d253f87d432bc19ffe274e4deaee90e4ab81eeb97e5c34",
+      "large": false,
+      "archive": "clean-oracle__baseline.diff.gz",
+      "archiveBytes": 12092,
+      "archiveSha256": "9c7cc460dda542db44f5eae9588571117371793a666b9892f20ca3a61cfa4278"
+    },
+    {
+      "file": "clean-oracle/build.log",
+      "bytes": 2320,
+      "sha256": "cd5f1dba813f5af9cf91852f337f42b6c2860d3492eac7e889ce0c19a4e4b182",
+      "large": false,
+      "archive": "clean-oracle__build.log.gz",
+      "archiveBytes": 616,
+      "archiveSha256": "96059b69ae1a52f222e0c6383a6762e500954a1c7a61173d450e6c62731b3d68"
+    },
+    {
+      "file": "clean-oracle/install.log",
+      "bytes": 822,
+      "sha256": "a7559adff83103c8eb61f1d959aee27962f2048ad1b4fe6aac124cfdf4457266",
+      "large": false,
+      "archive": "clean-oracle__install.log.gz",
+      "archiveBytes": 367,
+      "archiveSha256": "c142c919d6c012b66466cc60dda7d2e7af6615bf41b8a98241adee6303fbc4dd"
+    },
+    {
+      "file": "clean-oracle/report.json",
+      "bytes": 169524,
+      "sha256": "6cb5d258cfe73f5783edb9132bb8c6db947f540b8a49e6bbb5136eeb97ca26ff",
+      "large": true,
+      "archive": "clean-oracle__report.json.gz",
+      "archiveBytes": 28212,
+      "archiveSha256": "545074009aa92491b85821c54171ca42b73592012ce0da0204032ab752cf4c2c"
+    },
+    {
+      "file": "clean-oracle/tests.log",
+      "bytes": 82852,
+      "sha256": "e98dd78f069687e9a70430e93977d522c570fcefea041f542fb3ae18d0e8c9cb",
+      "large": false,
+      "archive": "clean-oracle__tests.log.gz",
+      "archiveBytes": 14780,
+      "archiveSha256": "b584c102b0ecf4071c0e19cbc9d70b0d6026f67567b9a5bfd5644165296cdce8"
+    },
+    {
+      "file": "counter-snapshots.json",
+      "bytes": 57654,
+      "sha256": "cee9e6cb811e8c231dad6eacaa3e1352ecbc9d16fe5b70b83969c696399f792b",
+      "large": false,
+      "archive": "counter-snapshots.json.gz",
+      "archiveBytes": 5741,
+      "archiveSha256": "a9a0b45e56b5dc0b1cd105265d7ed4683094447932724b53ab3f47a880f0b056"
+    },
+    {
+      "file": "dts-hybrid.log",
+      "bytes": 852,
+      "sha256": "2775012dc73e09e7cbd04f155ea9c0b40443c280e2a634a22ee98cb0100ac891",
+      "large": false,
+      "archive": "dts-hybrid.log.gz",
+      "archiveBytes": 362,
+      "archiveSha256": "8dbf93bbe88c84e055fb3faa578a0fe729d4632aa4d326c2edb57a9dec820a59"
+    },
+    {
+      "file": "dts-properties.log",
+      "bytes": 1041,
+      "sha256": "99ab7e464e4c7091016282528da60ec17b9d2cd62e47516ea7c94165ad57b1b9",
+      "large": false,
+      "archive": "dts-properties.log.gz",
+      "archiveBytes": 503,
+      "archiveSha256": "882b232fe1f4585bf2de90d6c24556c8e6fb69fdcea3a5f9f0217e869b50549d"
+    },
+    {
+      "file": "property-official-bundler.log",
+      "bytes": 169,
+      "sha256": "a839413829b5bf05345a0122e72367253af5bc9eea13b86bb7e66bc35b7d2ac2",
+      "large": false,
+      "archive": "property-official-bundler.log.gz",
+      "archiveBytes": 114,
+      "archiveSha256": "1f7261532cbef5f40add041191ffdf1bb2c4b8a79ade55cbdb3e5a9d34717702"
+    },
+    {
+      "file": "providers-memory.log",
+      "bytes": 46,
+      "sha256": "92f0b396a266c57ea93849ba367218378f736edaa3642bea78a626ba48ae7c54",
+      "large": false,
+      "archive": "providers-memory.log.gz",
+      "archiveBytes": 65,
+      "archiveSha256": "aee7a5e0e11ef9acbb47a810dafbff58d229df9ec7cd528ad4732b3084d3d627"
+    },
+    {
+      "file": "reconciliation-memory.log",
+      "bytes": 51,
+      "sha256": "d9c7b8f034875b67d5bc8301812dda46137dc17b622f6d31972ee271b01b20d6",
+      "large": false,
+      "archive": "reconciliation-memory.log.gz",
+      "archiveBytes": 57,
+      "archiveSha256": "e96d7fd2273c696abcca46b007f27bb6597161ace0effabed556a3e9cdd18aa8"
+    },
+    {
+      "file": "road-audit-memory.log",
+      "bytes": 50,
+      "sha256": "fd52e7ec775ff9ff06460e4cb1a7eebf24b20ac928244d1fb9326db1ce38f601",
+      "large": false,
+      "archive": "road-audit-memory.log.gz",
+      "archiveBytes": 68,
+      "archiveSha256": "74bbcf7178ac54c3959a2ab0d22453439dd0cff74f2eda336d0466226ab38b0b"
+    },
+    {
+      "file": "strict-baseline-memory.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "large": false,
+      "archive": "strict-baseline-memory.log.gz",
+      "archiveBytes": 20,
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "file": "strict-hybrid-memory.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "large": false,
+      "archive": "strict-hybrid-memory.log.gz",
+      "archiveBytes": 20,
+      "archiveSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "file": "strict-properties-memory.log",
+      "bytes": 521,
+      "sha256": "befc3efc31357245412971001e460740e8c9076b5c9bbdb38ec4c9a1696cc398",
+      "large": false,
+      "archive": "strict-properties-memory.log.gz",
+      "archiveBytes": 256,
+      "archiveSha256": "409ee04fc4925e8db7047df7ad01adfbd9a1620de89f8cdc66aa0a6753785ed9"
+    },
+    {
+      "file": "variants-preparation.log",
+      "bytes": 101,
+      "sha256": "150108ea08765b2734db3e19f58a5919b3d92dd67848ee631e8edce96cb6c701",
+      "large": false,
+      "archive": "variants-preparation.log.gz",
+      "archiveBytes": 81,
+      "archiveSha256": "d9c6bc57b1949e8c8171bed1a95a9862315ef5931bc4fb620907cddb036f2bac"
+    }
+  ]
+}

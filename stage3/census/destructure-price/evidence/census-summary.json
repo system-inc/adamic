@@ -532,5 +532,430 @@
       "module_format": "CommonJSBundle",
       "status": "measurement"
     }
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 1,
+    "observedUniqueSites": 1,
+    "eventCount": 1,
+    "sites": [
+      {
+        "where": "src/compiler/transformers/module/system.ts:145:9",
+        "phase": "lowering",
+        "unit": "src/compiler/transformers/module/system.ts:137:1"
+      }
+    ],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__module__system.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 136.579,
+      "peak_process_tree_rss_kib": 1288056,
+      "sampling_interval_seconds": 0.2,
+      "samples": 666,
+      "max_descendant_rss_kib": 1287624
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "astSites": 2,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 2,
+    "observedUniqueSites": 2,
+    "eventCount": 2,
+    "sites": [
+      {
+        "where": "src/compiler/sys.ts:1003:5",
+        "phase": "lowering",
+        "unit": "src/compiler/sys.ts:993:1"
+      },
+      {
+        "where": "src/compiler/sys.ts:594:5",
+        "phase": "lowering",
+        "unit": "src/compiler/sys.ts:590:1"
+      }
+    ],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/sys.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 96.875,
+      "peak_process_tree_rss_kib": 995512,
+      "sampling_interval_seconds": 0.2,
+      "samples": 472,
+      "max_descendant_rss_kib": 995060
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__module__module.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 89.47,
+      "peak_process_tree_rss_kib": 1139448,
+      "sampling_interval_seconds": 0.2,
+      "samples": 437,
+      "max_descendant_rss_kib": 1139196
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__ts.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 138.699,
+      "peak_process_tree_rss_kib": 1159592,
+      "sampling_interval_seconds": 0.2,
+      "samples": 676,
+      "max_descendant_rss_kib": 1159352
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__generators.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 109.026,
+      "peak_process_tree_rss_kib": 1147668,
+      "sampling_interval_seconds": 0.2,
+      "samples": 531,
+      "max_descendant_rss_kib": 1150972
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__esDecorators.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 104.988,
+      "peak_process_tree_rss_kib": 1087996,
+      "sampling_interval_seconds": 0.2,
+      "samples": 510,
+      "max_descendant_rss_kib": 1087576
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__classFields.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 138.695,
+      "peak_process_tree_rss_kib": 1150156,
+      "sampling_interval_seconds": 0.2,
+      "samples": 672,
+      "max_descendant_rss_kib": 1149744
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2015.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 205.727,
+      "peak_process_tree_rss_kib": 1368484,
+      "sampling_interval_seconds": 0.2,
+      "samples": 999,
+      "max_descendant_rss_kib": 1368220
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "astSites": 3,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 0,
+    "observedUniqueSites": 0,
+    "eventCount": 0,
+    "sites": [],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/emitter.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 693.389,
+      "peak_process_tree_rss_kib": 1681732,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3367,
+      "max_descendant_rss_kib": 1681252
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "astSites": 3,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 1,
+    "observedUniqueSites": 1,
+    "eventCount": 1,
+    "sites": [
+      {
+        "where": "src/compiler/utilities.ts:11317:35",
+        "phase": "lowering",
+        "unit": "src/compiler/utilities.ts:11317:1"
+      }
+    ],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/utilities.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 494.161,
+      "peak_process_tree_rss_kib": 1851384,
+      "sampling_interval_seconds": 0.2,
+      "samples": 2406,
+      "max_descendant_rss_kib": 1850884
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "astSites": 1,
+    "complete": true,
+    "selectedFileRecords": 1,
+    "censusCount": 1,
+    "observedUniqueSites": 1,
+    "eventCount": 1,
+    "sites": [
+      {
+        "where": "src/compiler/parser.ts:1473:9",
+        "phase": "lowering",
+        "unit": "src/compiler/parser.ts:1437:1"
+      }
+    ],
+    "dependencySites": [],
+    "measurement": {
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/parser.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 652.683,
+      "peak_process_tree_rss_kib": 2161384,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3165,
+      "max_descendant_rss_kib": 2161012
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    }
   }
 ]

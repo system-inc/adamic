@@ -1,0 +1,86 @@
+[
+  {
+    "attempt": "counting-lane",
+    "reason": "stopped: sentinel identity affected",
+    "measurement": {
+      "command": [
+        "python3",
+        "stage3/oracle/run.py",
+        "/workspace/scratch/destructure-price-f2989762/counting",
+        "/workspace/scratch/destructure-price-f2989762/r2/oracle"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/work",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 218.392,
+      "peak_process_tree_rss_kib": 8872196,
+      "sampling_interval_seconds": 0.2,
+      "samples": 1009,
+      "max_descendant_rss_kib": 421540
+    }
+  },
+  {
+    "attempt": "certified-lane",
+    "reason": "discarded: omitted node_modules fixtures",
+    "measurement": {
+      "command": [
+        "python3",
+        "stage3/oracle/run.py",
+        "/workspace/scratch/destructure-price-f2989762/counting",
+        "/workspace/scratch/destructure-price-f2989762/r2/certified-oracle"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/work",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 530.329,
+      "peak_process_tree_rss_kib": 8802516,
+      "sampling_interval_seconds": 0.2,
+      "samples": 2467,
+      "max_descendant_rss_kib": 2738568
+    }
+  },
+  {
+    "attempt": "final-lane",
+    "reason": "discarded: OOM while scratch occupied tmpfs",
+    "measurement": {
+      "command": [
+        "python3",
+        "stage3/oracle/run.py",
+        "/workspace/scratch/destructure-price-f2989762/counting",
+        "/workspace/scratch/destructure-price-f2989762/r2/final-oracle"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/work",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 119.619,
+      "peak_process_tree_rss_kib": 10063928,
+      "sampling_interval_seconds": 0.2,
+      "samples": 540,
+      "max_descendant_rss_kib": 1630684
+    }
+  },
+  {
+    "attempt": "accepted-lane",
+    "reason": "discarded: two omitted built references and one hook timeout",
+    "measurement": {
+      "command": [
+        "python3",
+        "stage3/oracle/run.py",
+        "/workspace/scratch/destructure-price-f2989762/counting",
+        "/workspace/scratch/destructure-price-f2989762/r2/accepted-oracle"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/work",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 513.106,
+      "peak_process_tree_rss_kib": 12268576,
+      "sampling_interval_seconds": 0.2,
+      "samples": 2258,
+      "max_descendant_rss_kib": 2003788
+    }
+  }
+]

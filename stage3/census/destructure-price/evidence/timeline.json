@@ -1,0 +1,703 @@
+{
+  "samplingIntervalSeconds": 0.2,
+  "jobsDoNotOverlap": true,
+  "jobs": [
+    {
+      "job": "clean-lane.json",
+      "startUnix": 1794679735.328,
+      "endUnix": 1794680234.047,
+      "command": [
+        "python3",
+        "stage3/oracle/run.py",
+        "/workspace/scratch/destructure-price-f2989762/counting",
+        "/workspace/scratch/destructure-price-f2989762/r2/clean-oracle"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/work",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 498.719,
+      "peak_process_tree_rss_kib": 9049844,
+      "sampling_interval_seconds": 0.2,
+      "samples": 2297,
+      "max_descendant_rss_kib": 2737656
+    },
+    {
+      "job": "census/transformers__es2021.json",
+      "startUnix": 1794680350.612,
+      "endUnix": 1794680374.566,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2021.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 23.954,
+      "peak_process_tree_rss_kib": 930352,
+      "sampling_interval_seconds": 0.2,
+      "samples": 118,
+      "max_descendant_rss_kib": 929936
+    },
+    {
+      "job": "census/transformers__es2016.json",
+      "startUnix": 1794680374.621,
+      "endUnix": 1794680402.341,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2016.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 27.72,
+      "peak_process_tree_rss_kib": 920864,
+      "sampling_interval_seconds": 0.2,
+      "samples": 136,
+      "max_descendant_rss_kib": 920356
+    },
+    {
+      "job": "census/transformers__es2020.json",
+      "startUnix": 1794680402.413,
+      "endUnix": 1794680450.475,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2020.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 48.062,
+      "peak_process_tree_rss_kib": 997680,
+      "sampling_interval_seconds": 0.2,
+      "samples": 235,
+      "max_descendant_rss_kib": 997048
+    },
+    {
+      "job": "census/transformers__module__esnextAnd2015.json",
+      "startUnix": 1794680450.544,
+      "endUnix": 1794680512.758,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__module__esnextAnd2015.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 62.214,
+      "peak_process_tree_rss_kib": 1021900,
+      "sampling_interval_seconds": 0.2,
+      "samples": 304,
+      "max_descendant_rss_kib": 1021480
+    },
+    {
+      "job": "census/transformers__typeSerializer.json",
+      "startUnix": 1794680512.812,
+      "endUnix": 1794680561.85,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__typeSerializer.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 49.038,
+      "peak_process_tree_rss_kib": 1002956,
+      "sampling_interval_seconds": 0.2,
+      "samples": 239,
+      "max_descendant_rss_kib": 1002408
+    },
+    {
+      "job": "census/sourcemap.json",
+      "startUnix": 1794680561.903,
+      "endUnix": 1794680609.566,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/sourcemap.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 47.663,
+      "peak_process_tree_rss_kib": 907804,
+      "sampling_interval_seconds": 0.2,
+      "samples": 233,
+      "max_descendant_rss_kib": 907228
+    },
+    {
+      "job": "census/transformers__esnext.json",
+      "startUnix": 1794680609.64,
+      "endUnix": 1794680689.19,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__esnext.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 79.55,
+      "peak_process_tree_rss_kib": 1050816,
+      "sampling_interval_seconds": 0.2,
+      "samples": 387,
+      "max_descendant_rss_kib": 1050384
+    },
+    {
+      "job": "census/transformers__jsx.json",
+      "startUnix": 1794680689.266,
+      "endUnix": 1794680763.821,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__jsx.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 74.555,
+      "peak_process_tree_rss_kib": 1040548,
+      "sampling_interval_seconds": 0.2,
+      "samples": 363,
+      "max_descendant_rss_kib": 1039972
+    },
+    {
+      "job": "census/transformers__legacyDecorators.json",
+      "startUnix": 1794680763.906,
+      "endUnix": 1794680848.194,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__legacyDecorators.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 84.288,
+      "peak_process_tree_rss_kib": 1042532,
+      "sampling_interval_seconds": 0.2,
+      "samples": 412,
+      "max_descendant_rss_kib": 1042020
+    },
+    {
+      "job": "census/transformers__es2017.json",
+      "startUnix": 1794680848.244,
+      "endUnix": 1794680951.562,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2017.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 103.318,
+      "peak_process_tree_rss_kib": 1131284,
+      "sampling_interval_seconds": 0.2,
+      "samples": 503,
+      "max_descendant_rss_kib": 1130676
+    },
+    {
+      "job": "census/transformers__es2018.json",
+      "startUnix": 1794680951.636,
+      "endUnix": 1794681060.942,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2018.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 109.306,
+      "peak_process_tree_rss_kib": 1210852,
+      "sampling_interval_seconds": 0.2,
+      "samples": 533,
+      "max_descendant_rss_kib": 1210264
+    },
+    {
+      "job": "census/expressionToTypeNode.json",
+      "startUnix": 1794681061.011,
+      "endUnix": 1794681151.375,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/expressionToTypeNode.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 90.364,
+      "peak_process_tree_rss_kib": 1100724,
+      "sampling_interval_seconds": 0.2,
+      "samples": 440,
+      "max_descendant_rss_kib": 1101888
+    },
+    {
+      "job": "census/moduleSpecifiers.json",
+      "startUnix": 1794681151.44,
+      "endUnix": 1794681205.445,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/moduleSpecifiers.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 54.005,
+      "peak_process_tree_rss_kib": 1025156,
+      "sampling_interval_seconds": 0.2,
+      "samples": 263,
+      "max_descendant_rss_kib": 1024576
+    },
+    {
+      "job": "census/transformers__module__system.json",
+      "startUnix": 1794681205.501,
+      "endUnix": 1794681342.08,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__module__system.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 136.579,
+      "peak_process_tree_rss_kib": 1288056,
+      "sampling_interval_seconds": 0.2,
+      "samples": 666,
+      "max_descendant_rss_kib": 1287624
+    },
+    {
+      "job": "census/sys.json",
+      "startUnix": 1794681342.184,
+      "endUnix": 1794681439.059,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/sys.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 96.875,
+      "peak_process_tree_rss_kib": 995512,
+      "sampling_interval_seconds": 0.2,
+      "samples": 472,
+      "max_descendant_rss_kib": 995060
+    },
+    {
+      "job": "census/transformers__module__module.json",
+      "startUnix": 1794681439.117,
+      "endUnix": 1794681528.587,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__module__module.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 89.47,
+      "peak_process_tree_rss_kib": 1139448,
+      "sampling_interval_seconds": 0.2,
+      "samples": 437,
+      "max_descendant_rss_kib": 1139196
+    },
+    {
+      "job": "census/transformers__ts.json",
+      "startUnix": 1794681528.646,
+      "endUnix": 1794681667.345,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__ts.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 138.699,
+      "peak_process_tree_rss_kib": 1159592,
+      "sampling_interval_seconds": 0.2,
+      "samples": 676,
+      "max_descendant_rss_kib": 1159352
+    },
+    {
+      "job": "census/transformers__generators.json",
+      "startUnix": 1794681667.431,
+      "endUnix": 1794681776.457,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__generators.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 109.026,
+      "peak_process_tree_rss_kib": 1147668,
+      "sampling_interval_seconds": 0.2,
+      "samples": 531,
+      "max_descendant_rss_kib": 1150972
+    },
+    {
+      "job": "census/transformers__esDecorators.json",
+      "startUnix": 1794681776.512,
+      "endUnix": 1794681881.5,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__esDecorators.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 104.988,
+      "peak_process_tree_rss_kib": 1087996,
+      "sampling_interval_seconds": 0.2,
+      "samples": 510,
+      "max_descendant_rss_kib": 1087576
+    },
+    {
+      "job": "census/transformers__classFields.json",
+      "startUnix": 1794681881.587,
+      "endUnix": 1794682020.282,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__classFields.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 138.695,
+      "peak_process_tree_rss_kib": 1150156,
+      "sampling_interval_seconds": 0.2,
+      "samples": 672,
+      "max_descendant_rss_kib": 1149744
+    },
+    {
+      "job": "census/transformers__es2015.json",
+      "startUnix": 1794682020.352,
+      "endUnix": 1794682226.079,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/transformers__es2015.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 205.727,
+      "peak_process_tree_rss_kib": 1368484,
+      "sampling_interval_seconds": 0.2,
+      "samples": 999,
+      "max_descendant_rss_kib": 1368220
+    },
+    {
+      "job": "census/emitter.json",
+      "startUnix": 1794682226.189,
+      "endUnix": 1794682919.578,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/emitter.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 693.389,
+      "peak_process_tree_rss_kib": 1681732,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3367,
+      "max_descendant_rss_kib": 1681252
+    },
+    {
+      "job": "census/utilities.json",
+      "startUnix": 1794682919.74,
+      "endUnix": 1794683413.901,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/utilities.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 494.161,
+      "peak_process_tree_rss_kib": 1851384,
+      "sampling_interval_seconds": 0.2,
+      "samples": 2406,
+      "max_descendant_rss_kib": 1850884
+    },
+    {
+      "job": "census/parser.json",
+      "startUnix": 1794683414.113,
+      "endUnix": 1794684066.796,
+      "command": [
+        "/tmp/destructure-price-scratch/census",
+        "/workspace/scratch/destructure-price-f2989762/original-scratch/adapted/src/compiler",
+        "/workspace/scratch/destructure-price-f2989762/r2/census/parser.jsonl"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 652.683,
+      "peak_process_tree_rss_kib": 2161384,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3165,
+      "max_descendant_rss_kib": 2161012
+    },
+    {
+      "job": "reconciliation-memory.json",
+      "startUnix": 1794684118.358,
+      "endUnix": 1794684123.078,
+      "command": [
+        "node",
+        "/workspace/scratch/destructure-price-f2989762/r2/reconcile.cjs"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 4.72,
+      "peak_process_tree_rss_kib": 527664,
+      "sampling_interval_seconds": 0.2,
+      "samples": 24,
+      "max_descendant_rss_kib": 527444
+    },
+    {
+      "job": "strict-baseline-memory.json",
+      "startUnix": 1794684163.789,
+      "endUnix": 1794684178.112,
+      "command": [
+        "node",
+        "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+        "--project",
+        "src/compiler/tsconfig.json",
+        "--noEmit",
+        "--strictFunctionTypes",
+        "true",
+        "--incremental",
+        "false",
+        "--composite",
+        "false",
+        "--pretty",
+        "false",
+        "--noErrorTruncation"
+      ],
+      "cwd": "/tmp/destructure-price-scratch/adapted",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 14.323,
+      "peak_process_tree_rss_kib": 701536,
+      "sampling_interval_seconds": 0.2,
+      "samples": 70,
+      "max_descendant_rss_kib": 701296
+    },
+    {
+      "job": "variants-preparation.json",
+      "startUnix": 1794684284.599,
+      "endUnix": 1794684289.528,
+      "command": [
+        "node",
+        "/workspace/scratch/destructure-price-f2989762/r2/variants.cjs"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 4.929,
+      "peak_process_tree_rss_kib": 517532,
+      "sampling_interval_seconds": 0.2,
+      "samples": 25,
+      "max_descendant_rss_kib": 542080
+    },
+    {
+      "job": "strict-properties-memory.json",
+      "startUnix": 1794684289.627,
+      "endUnix": 1794684303.552,
+      "command": [
+        "node",
+        "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+        "--project",
+        "src/compiler/tsconfig.json",
+        "--noEmit",
+        "--strictFunctionTypes",
+        "true",
+        "--incremental",
+        "false",
+        "--composite",
+        "false",
+        "--pretty",
+        "false",
+        "--noErrorTruncation"
+      ],
+      "cwd": "/workspace/scratch/destructure-price-f2989762/properties",
+      "exit": 2,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 13.925,
+      "peak_process_tree_rss_kib": 699208,
+      "sampling_interval_seconds": 0.2,
+      "samples": 68,
+      "max_descendant_rss_kib": 699560
+    },
+    {
+      "job": "strict-hybrid-memory.json",
+      "startUnix": 1794684373.573,
+      "endUnix": 1794684389.95,
+      "command": [
+        "node",
+        "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+        "--project",
+        "src/compiler/tsconfig.json",
+        "--noEmit",
+        "--strictFunctionTypes",
+        "true",
+        "--incremental",
+        "false",
+        "--composite",
+        "false",
+        "--pretty",
+        "false",
+        "--noErrorTruncation"
+      ],
+      "cwd": "/workspace/scratch/destructure-price-f2989762/hybrid",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 16.377,
+      "peak_process_tree_rss_kib": 701700,
+      "sampling_interval_seconds": 0.2,
+      "samples": 79,
+      "max_descendant_rss_kib": 701908
+    },
+    {
+      "job": "dts-properties.json",
+      "startUnix": 1794684390.055,
+      "endUnix": 1794684413.901,
+      "command": [
+        "node_modules/.bin/hereby",
+        "dts"
+      ],
+      "cwd": "/workspace/scratch/destructure-price-f2989762/properties",
+      "exit": 1,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 23.846,
+      "peak_process_tree_rss_kib": 1097628,
+      "sampling_interval_seconds": 0.2,
+      "samples": 116,
+      "max_descendant_rss_kib": 1052236
+    },
+    {
+      "job": "property-official-bundler.json",
+      "startUnix": 1794684524.533,
+      "endUnix": 1794684528.83,
+      "command": [
+        "node",
+        "scripts/dtsBundler.mjs",
+        "--entrypoint",
+        "./built/local/typescript/typescript.d.ts",
+        "--output",
+        "./built/local/typescript.d.ts"
+      ],
+      "cwd": "/workspace/scratch/destructure-price-f2989762/properties",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 4.297,
+      "peak_process_tree_rss_kib": 483320,
+      "sampling_interval_seconds": 0.2,
+      "samples": 22,
+      "max_descendant_rss_kib": 494924
+    },
+    {
+      "job": "dts-hybrid.json",
+      "startUnix": 1794684528.877,
+      "endUnix": 1794684553.917,
+      "command": [
+        "node_modules/.bin/hereby",
+        "dts"
+      ],
+      "cwd": "/workspace/scratch/destructure-price-f2989762/hybrid",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 25.04,
+      "peak_process_tree_rss_kib": 1057964,
+      "sampling_interval_seconds": 0.2,
+      "samples": 122,
+      "max_descendant_rss_kib": 1018120
+    },
+    {
+      "job": "providers-memory-final.json",
+      "startUnix": 1794685054.693,
+      "endUnix": 1794685076.364,
+      "command": [
+        "node",
+        "--max-old-space-size=10000",
+        "/workspace/scratch/destructure-price-f2989762/r2/providers.cjs"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 900,
+      "wall_seconds": 21.671,
+      "peak_process_tree_rss_kib": 1122368,
+      "sampling_interval_seconds": 0.2,
+      "samples": 107,
+      "max_descendant_rss_kib": 1123192
+    },
+    {
+      "job": "road-audit-memory.json",
+      "startUnix": 1794685384.327,
+      "endUnix": 1794685392.936,
+      "command": [
+        "node",
+        "/workspace/scratch/destructure-price-f2989762/r2/road-audit.cjs"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": null,
+      "wall_seconds": 8.609,
+      "peak_process_tree_rss_kib": 1086536,
+      "sampling_interval_seconds": 0.2,
+      "samples": 43,
+      "max_descendant_rss_kib": 1086276
+    }
+  ]
+}

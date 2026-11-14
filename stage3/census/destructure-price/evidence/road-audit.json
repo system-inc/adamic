@@ -1,0 +1,439 @@
+{
+  "baseline": {
+    "roots": 79,
+    "remainingMethodDestructuringSites": 29,
+    "sites": [
+      {
+        "where": "src/compiler/sys.ts:590:52",
+        "type": "RecursiveDirectoryWatcherHost",
+        "methodMembers": [
+          "getAccessibleSortedChildDirectories",
+          "realpath"
+        ]
+      },
+      {
+        "where": "src/compiler/sys.ts:993:44",
+        "type": "CreateSystemWatchFunctions",
+        "methodMembers": [
+          "getAccessibleSortedChildDirectories",
+          "realpath"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:8213:11",
+        "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+        "methodMembers": [
+          "onDeleteValue",
+          "onExistingValue"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:8253:11",
+        "type": "MutateMapOptions<K, T, U>",
+        "methodMembers": [
+          "createNewValue"
+        ]
+      },
+      {
+        "where": "src/compiler/utilities.ts:11317:33",
+        "type": "EvaluationResolver",
+        "methodMembers": [
+          "evaluateElementAccessExpression",
+          "evaluateEntityNameExpression"
+        ]
+      },
+      {
+        "where": "src/compiler/parser.ts:1472:9",
+        "type": "NodeFactory",
+        "methodMembers": [
+          "createNodeArray",
+          "createNumericLiteral",
+          "createStringLiteral",
+          "createLiteralLikeNode",
+          "createIdentifier",
+          "createPrivateIdentifier",
+          "createToken",
+          "createArrayLiteralExpression",
+          "createObjectLiteralExpression",
+          "createPropertyAccessExpression",
+          "createPropertyAccessChain",
+          "createElementAccessExpression",
+          "createElementAccessChain",
+          "createCallExpression",
+          "createCallChain",
+          "createNewExpression",
+          "createParenthesizedExpression",
+          "createBlock",
+          "createVariableStatement",
+          "createExpressionStatement",
+          "createIfStatement",
+          "createWhileStatement",
+          "createForStatement",
+          "createForOfStatement",
+          "createVariableDeclaration",
+          "createVariableDeclarationList"
+        ]
+      },
+      {
+        "where": "src/compiler/moduleSpecifiers.ts:583:169",
+        "type": "ModuleSpecifierPreferences",
+        "methodMembers": [
+          "getAllowedEndingsInPreferredOrder"
+        ]
+      },
+      {
+        "where": "src/compiler/sourcemap.ts:40:9",
+        "type": "Timer",
+        "methodMembers": [
+          "enter",
+          "exit"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/ts.ts:236:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "startLexicalEnvironment",
+          "resumeLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/classFields.ts:355:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "hoistVariableDeclaration",
+          "endLexicalEnvironment",
+          "startLexicalEnvironment",
+          "resumeLexicalEnvironment",
+          "addBlockScopedVariable"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/typeSerializer.ts:133:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/legacyDecorators.ts:89:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/esDecorators.ts:296:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "startLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2017.ts:120:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "resumeLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2018.ts:155:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "resumeLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2020.ts:43:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2021.ts:26:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/esnext.ts:77:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "hoistVariableDeclaration",
+          "startLexicalEnvironment",
+          "endLexicalEnvironment"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/jsx.ts:99:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2016.ts:22:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/es2015.ts:489:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "startLexicalEnvironment",
+          "resumeLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/generators.ts:337:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "resumeLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistFunctionDeclaration",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/module.ts:192:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory",
+          "startLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/system.ts:143:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "startLexicalEnvironment",
+          "endLexicalEnvironment",
+          "hoistVariableDeclaration"
+        ]
+      },
+      {
+        "where": "src/compiler/transformers/module/esnextAnd2015.ts:68:11",
+        "type": "TransformationContext",
+        "methodMembers": [
+          "getEmitHelperFactory"
+        ]
+      },
+      {
+        "where": "src/compiler/emitter.ts:771:9",
+        "type": "Timer",
+        "methodMembers": [
+          "enter",
+          "exit"
+        ]
+      },
+      {
+        "where": "src/compiler/emitter.ts:1215:9",
+        "type": "PrintHandlers",
+        "methodMembers": [
+          "hasGlobalName",
+          "onEmitNode",
+          "isEmitNotificationEnabled",
+          "substituteNode"
+        ]
+      },
+      {
+        "where": "src/compiler/emitter.ts:1275:9",
+        "type": "Timer",
+        "methodMembers": [
+          "enter",
+          "exit"
+        ]
+      },
+      {
+        "where": "src/compiler/expressionToTypeNode.ts:199:15",
+        "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+        "methodMembers": [
+          "finalizeBoundary",
+          "startRecoveryScope",
+          "hadError",
+          "markError"
+        ]
+      }
+    ],
+    "types": [
+      {
+        "type": "RecursiveDirectoryWatcherHost",
+        "public": false,
+        "internalTagOwner": null,
+        "exportedDeclaration": false,
+        "declarations": [
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 574,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "CreateSystemWatchFunctions",
+        "public": false,
+        "internalTagOwner": "CreateSystemWatchFunctions",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/sys.ts",
+            "line": 968,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+        "public": false,
+        "internalTagOwner": "MutateMapSkippingNewValuesOptions",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/utilities.ts",
+            "line": 8182,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "MutateMapOptions<K, T, U>",
+        "public": false,
+        "internalTagOwner": "MutateMapOptions",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/utilities.ts",
+            "line": 8238,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "EvaluationResolver",
+        "public": false,
+        "internalTagOwner": "EvaluationResolver",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 10618,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "NodeFactory",
+        "public": true,
+        "internalTagOwner": null,
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 8748,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "ModuleSpecifierPreferences",
+        "public": false,
+        "internalTagOwner": "ModuleSpecifierPreferences",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/moduleSpecifiers.ts",
+            "line": 172,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "Timer",
+        "public": false,
+        "internalTagOwner": "Timer",
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/performance.ts",
+            "line": 23,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "TransformationContext",
+        "public": true,
+        "internalTagOwner": null,
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 9616,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "PrintHandlers",
+        "public": true,
+        "internalTagOwner": null,
+        "exportedDeclaration": true,
+        "declarations": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 9820,
+            "column": 1
+          }
+        ]
+      },
+      {
+        "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+        "public": false,
+        "internalTagOwner": "SyntacticTypeNodeBuilderResolver",
+        "exportedDeclaration": false,
+        "declarations": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 10669,
+            "column": 71
+          }
+        ]
+      }
+    ]
+  },
+  "properties": {
+    "roots": 79,
+    "remainingMethodDestructuringSites": 0,
+    "sites": []
+  },
+  "hybrid": {
+    "roots": 79,
+    "remainingMethodDestructuringSites": 0,
+    "sites": []
+  }
+}

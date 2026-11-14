@@ -1,0 +1,29 @@
+const ts=require('/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript'),fs=require('fs'),path=require('path');
+const root=fs.realpathSync('/tmp/destructure-price-scratch/adapted'),r2='/workspace/scratch/destructure-price-f2989762/r2';
+const inventory=JSON.parse(fs.readFileSync(r2+'/heat.json')).sites,summary=JSON.parse(fs.readFileSync(r2+'/census/summary.json'));
+if(summary.length!==24||summary.some(r=>!r.complete))throw Error('incomplete census');
+const cfg=ts.getParsedCommandLineOfConfigFile(root+'/src/compiler/tsconfig.json',{}, {...ts.sys,onUnRecoverableConfigFileDiagnostic:d=>{throw Error(ts.flattenDiagnosticMessageText(d.messageText,'\n'))}}),program=ts.createProgram(cfg.fileNames,cfg.options),checker=program.getTypeChecker();
+const patterns=new Map(),fresh=[];let filesWithBindings=new Set();
+for(const sf of program.getSourceFiles())if(sf.fileName.startsWith(root+'/src/compiler/')&&!sf.isDeclarationFile){const relative=path.relative(root,sf.fileName),list=[];function walk(n){if(ts.isObjectBindingPattern(n)){filesWithBindings.add(relative);list.push(n);const type=checker.getTypeAtLocation(n.parent.initializer||n);if(n.elements.some(e=>type.getProperty((e.propertyName||e.name).getText())?.declarations?.some(ts.isMethodSignature))){const p=sf.getLineAndCharacterOfPosition(n.getStart());fresh.push(relative+':'+(p.line+1)+':'+(p.character+1));}}ts.forEachChild(n,walk)}walk(sf);patterns.set(relative,list);}
+const old=inventory.map(s=>s.file+':'+s.line+':'+s.column).sort();if(JSON.stringify(old)!==JSON.stringify(fresh.sort()))throw Error('AST inventory changed');
+const records=new Map(),allMethodFindings=[];
+for(const row of summary){const slug=row.file.replace(/^src\/compiler\//,'').replace(/\.ts$/,'').replaceAll('/','__');const data=fs.readFileSync(r2+'/census/'+slug+'.jsonl','utf8').trim().split('\n').map(JSON.parse),record=data.find(r=>r.file===root+'/'+row.file);if(!record)throw Error('missing file record');records.set(row.file,record);for(const r of data)for(const f of r.findings||[])if(f.kind==='Refused'&&f.reason==='a method in object destructuring')allMethodFindings.push(f);}
+function whereParts(where){const m=where.match(/^(.*):(\d+):(\d+)$/);return m?{file:path.relative(root,m[1]),line:+m[2],column:+m[3]}:null;}
+function inside(where,sf,n){const p=whereParts(where);if(!p||p.file!==path.relative(root,sf.fileName))return false;const pos=sf.getPositionOfLineAndCharacter(p.line-1,p.column-1);return pos>=n.getStart()&&pos<n.end;}
+function small(f){return {kind:f.kind,phase:f.phase,where:f.where.replace(root+'/',''),reason:f.reason,text:f.text?.replaceAll(root+'/',''),unit:f.unit?.replace(root+'/','')};}
+const results=[];
+for(const site of inventory){const sf=program.getSourceFile(root+'/'+site.file),n=patterns.get(site.file).find(n=>{const p=sf.getLineAndCharacterOfPosition(n.getStart());return p.line+1===site.line&&p.character+1===site.column});if(!n)throw Error('missing pattern');let fn=n.parent;while(fn&&!ts.isFunctionLike(fn))fn=fn.parent;let statement=n;while(statement.parent&&!ts.isStatement(statement))statement=statement.parent;
+ const rec=records.get(site.file),observed=[...new Map(allMethodFindings.filter(f=>inside(f.where,sf,n)).map(f=>[f.where,small(f)])).values()];
+ const units=rec.units.filter(u=>u.name===site.enclosing);let mask=null;
+ if(!observed.length){const line=sf.getLineAndCharacterOfPosition(statement.getStart()).line+1;const gate=rec.findings.find(f=>f.kind==='Refused'&&f.reason==='var'&&whereParts(f.where)?.file===site.file&&whereParts(f.where)?.line===line);
+ const prologue=rec.findings.find(f=>f.kind==='Boundary'&&f.reason.startsWith('function signature or prologue failed')&&units.some(u=>u.where===f.where));
+ if(gate)mask={kind:'var gate before binding',evidence:small(gate),additionalPrologue:prologue?small(prologue):null};
+ else if(prologue)mask={kind:'function signature/prologue',evidence:small(prologue)};
+ else{const boundary=rec.findings.find(f=>f.kind==='Boundary'&&whereParts(f.where)?.file===site.file&&whereParts(f.where)?.line===line);mask=boundary?{kind:'statement fails before method check',evidence:small(boundary)}:{kind:'unit coverage/deferred boundary',units:units.map(u=>({where:u.where.replace(root+'/',''),status:u.status,instantiated:u.instantiated,checkerDiagnostics:u.checker_diagnostics}))};}}
+ const end=sf.getLineAndCharacterOfPosition(n.end),owner=fn?sf.getLineAndCharacterOfPosition(fn.getStart()):null;
+ results.push({site:site.site,type:site.type,enclosing:site.enclosing,patternStart:{line:site.line,column:site.column},patternEnd:{line:end.line+1,column:end.character+1},parameter:ts.isParameter(n.parent),enclosingDeclaration:owner?site.file+':'+(owner.line+1)+':'+(owner.character+1):'namespace initialization',observed,mask});
+}
+const unmatched=[...new Map(allMethodFindings.filter(f=>{const p=whereParts(f.where),sf=p&&program.getSourceFile(root+'/'+p.file);return !sf||!inventory.some(s=>s.file===p.file&&patterns.get(p.file).some(n=>{const l=sf.getLineAndCharacterOfPosition(n.getStart());return l.line+1===s.line&&l.character+1===s.column&&inside(f.where,sf,n)}));}).map(f=>[f.where,small(f)])).values()];
+const unique=[...new Map(allMethodFindings.map(f=>[f.where,small(f)])).values()];
+const result={rootCount:cfg.fileNames.length,objectBindingFiles:filesWithBindings.size,astSites:fresh.length,initializerOnlySites:results.filter(s=>!s.parameter).length,parameterSites:results.filter(s=>s.parameter).length,completedCensusFiles:summary.length,censusUniqueRefusalLocations:unique.length,censusObservedBindingSites:results.filter(s=>s.observed.length).length,censusRawEvents:allMethodFindings.length,astOnly:results.filter(s=>!s.observed.length),censusOnly:unmatched,sites:results};
+fs.writeFileSync(r2+'/reconciliation.json',JSON.stringify(result,null,2));console.log(JSON.stringify({ast:result.astSites,census:unique.length,astOnly:result.astOnly.length,censusOnly:unmatched.length}));

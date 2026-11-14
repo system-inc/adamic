@@ -1,0 +1,353 @@
+{
+  "files": {
+    "baseline/typescript.d.ts": {
+      "bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    "baseline/tsserverlibrary.d.ts": {
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    },
+    "properties/typescript.d.ts": {
+      "bytes": 594004,
+      "sha256": "762dfec7eb3d43ba06d8b4b8bcaca884b732d27d2bf23769c6ac5ffaacad4aef"
+    },
+    "properties/tsserverlibrary.d.ts": {
+      "exists": false,
+      "reason": "property dts task failed before dts-lssl"
+    },
+    "hybrid/typescript.d.ts": {
+      "bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    "hybrid/tsserverlibrary.d.ts": {
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  },
+  "hybridByteIdentical": true,
+  "propertyStandardHerebyDtsExit": 1,
+  "propertyProjection": "Declaration intermediates emitted by the failing unmodified hereby dts build, completed with its unchanged official dtsBundler command; no source or checking flags changed.",
+  "changedPublicMembers": 34,
+  "changes": [
+    {
+      "member": "ts.NodeFactory.createNodeArray",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;"
+      ],
+      "after": "createNodeArray: <T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean) => NodeArray<T>;"
+    },
+    {
+      "member": "ts.NodeFactory.createNumericLiteral",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;"
+      ],
+      "after": "createNumericLiteral: (value: string | number, numericLiteralFlags?: TokenFlags) => NumericLiteral;"
+    },
+    {
+      "member": "ts.NodeFactory.createStringLiteral",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 2,
+      "before": [
+        "createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;"
+      ],
+      "after": "createStringLiteral: {\n            (text: string, isSingleQuote?: boolean): StringLiteral;\n            /** @internal */ (text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;\n        };"
+    },
+    {
+      "member": "ts.NodeFactory.createIdentifier",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 2,
+      "before": [
+        "createIdentifier(text: string): Identifier;"
+      ],
+      "after": "createIdentifier: {\n            (text: string): Identifier;\n            /** @internal */ (text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;\n        };"
+    },
+    {
+      "member": "ts.NodeFactory.createPrivateIdentifier",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createPrivateIdentifier(text: string): PrivateIdentifier;"
+      ],
+      "after": "createPrivateIdentifier: (text: string) => PrivateIdentifier;"
+    },
+    {
+      "member": "ts.NodeFactory.createToken",
+      "beforeOverloads": 11,
+      "afterCallSignatures": 12,
+      "before": [
+        "createToken(token: SyntaxKind.SuperKeyword): SuperExpression;",
+        "createToken(token: SyntaxKind.ThisKeyword): ThisExpression;",
+        "createToken(token: SyntaxKind.NullKeyword): NullLiteral;",
+        "createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;",
+        "createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;",
+        "createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;",
+        "createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;",
+        "createToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;",
+        "createToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;",
+        "createToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;",
+        "createToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;"
+      ],
+      "after": "createToken: {\n            (token: SyntaxKind.SuperKeyword): SuperExpression;\n            (token: SyntaxKind.ThisKeyword): ThisExpression;\n            (token: SyntaxKind.NullKeyword): NullLiteral;\n            (token: SyntaxKind.TrueKeyword): TrueLiteral;\n            (token: SyntaxKind.FalseKeyword): FalseLiteral;\n            (token: SyntaxKind.EndOfFileToken): EndOfFileToken;\n            (token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;\n            <TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;\n            <TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;\n            <TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;\n            <TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;\n            /** @internal */ <TKind extends SyntaxKind>(token: TKind): Token<TKind>;\n        };"
+    },
+    {
+      "member": "ts.NodeFactory.createArrayLiteralExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createArrayLiteralExpression(elements?: readonly Expression[], multiLine?: boolean): ArrayLiteralExpression;"
+      ],
+      "after": "createArrayLiteralExpression: (elements?: readonly Expression[], multiLine?: boolean) => ArrayLiteralExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createObjectLiteralExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createObjectLiteralExpression(properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean): ObjectLiteralExpression;"
+      ],
+      "after": "createObjectLiteralExpression: (properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean) => ObjectLiteralExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createPropertyAccessExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;"
+      ],
+      "after": "createPropertyAccessExpression: (expression: Expression, name: string | MemberName) => PropertyAccessExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createPropertyAccessChain",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName): PropertyAccessChain;"
+      ],
+      "after": "createPropertyAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName) => PropertyAccessChain;"
+    },
+    {
+      "member": "ts.NodeFactory.createElementAccessExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;"
+      ],
+      "after": "createElementAccessExpression: (expression: Expression, index: number | Expression) => ElementAccessExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createElementAccessChain",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression): ElementAccessChain;"
+      ],
+      "after": "createElementAccessChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression) => ElementAccessChain;"
+    },
+    {
+      "member": "ts.NodeFactory.createCallExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createCallExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallExpression;"
+      ],
+      "after": "createCallExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createCallChain",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallChain;"
+      ],
+      "after": "createCallChain: (expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallChain;"
+    },
+    {
+      "member": "ts.NodeFactory.createNewExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createNewExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;"
+      ],
+      "after": "createNewExpression: (expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => NewExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createParenthesizedExpression",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createParenthesizedExpression(expression: Expression): ParenthesizedExpression;"
+      ],
+      "after": "createParenthesizedExpression: (expression: Expression) => ParenthesizedExpression;"
+    },
+    {
+      "member": "ts.NodeFactory.createBlock",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createBlock(statements: readonly Statement[], multiLine?: boolean): Block;"
+      ],
+      "after": "createBlock: (statements: readonly Statement[], multiLine?: boolean) => Block;"
+    },
+    {
+      "member": "ts.NodeFactory.createVariableStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createVariableStatement(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]): VariableStatement;"
+      ],
+      "after": "createVariableStatement: (modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]) => VariableStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createExpressionStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createExpressionStatement(expression: Expression): ExpressionStatement;"
+      ],
+      "after": "createExpressionStatement: (expression: Expression) => ExpressionStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createIfStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createIfStatement(expression: Expression, thenStatement: Statement, elseStatement?: Statement): IfStatement;"
+      ],
+      "after": "createIfStatement: (expression: Expression, thenStatement: Statement, elseStatement?: Statement) => IfStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createWhileStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createWhileStatement(expression: Expression, statement: Statement): WhileStatement;"
+      ],
+      "after": "createWhileStatement: (expression: Expression, statement: Statement) => WhileStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createForStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createForStatement(initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;"
+      ],
+      "after": "createForStatement: (initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement) => ForStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createForOfStatement",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createForOfStatement(awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;"
+      ],
+      "after": "createForOfStatement: (awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement) => ForOfStatement;"
+    },
+    {
+      "member": "ts.NodeFactory.createVariableDeclaration",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createVariableDeclaration(name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression): VariableDeclaration;"
+      ],
+      "after": "createVariableDeclaration: (name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression) => VariableDeclaration;"
+    },
+    {
+      "member": "ts.NodeFactory.createVariableDeclarationList",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags?: NodeFlags): VariableDeclarationList;"
+      ],
+      "after": "createVariableDeclarationList: (declarations: readonly VariableDeclaration[], flags?: NodeFlags) => VariableDeclarationList;"
+    },
+    {
+      "member": "ts.CoreTransformationContext.startLexicalEnvironment",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "startLexicalEnvironment(): void;"
+      ],
+      "after": "startLexicalEnvironment: () => void;"
+    },
+    {
+      "member": "ts.CoreTransformationContext.resumeLexicalEnvironment",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "resumeLexicalEnvironment(): void;"
+      ],
+      "after": "resumeLexicalEnvironment: () => void;"
+    },
+    {
+      "member": "ts.CoreTransformationContext.endLexicalEnvironment",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "endLexicalEnvironment(): Statement[] | undefined;"
+      ],
+      "after": "endLexicalEnvironment: () => Statement[] | undefined;"
+    },
+    {
+      "member": "ts.CoreTransformationContext.hoistFunctionDeclaration",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "hoistFunctionDeclaration(node: FunctionDeclaration): void;"
+      ],
+      "after": "hoistFunctionDeclaration: (node: FunctionDeclaration) => void;"
+    },
+    {
+      "member": "ts.CoreTransformationContext.hoistVariableDeclaration",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "hoistVariableDeclaration(node: Identifier): void;"
+      ],
+      "after": "hoistVariableDeclaration: (node: Identifier) => void;"
+    },
+    {
+      "member": "ts.PrintHandlers.hasGlobalName",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "hasGlobalName?(name: string): boolean;"
+      ],
+      "after": "hasGlobalName?: (name: string) => boolean;"
+    },
+    {
+      "member": "ts.PrintHandlers.onEmitNode",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "onEmitNode?(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;"
+      ],
+      "after": "onEmitNode?: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
+    },
+    {
+      "member": "ts.PrintHandlers.isEmitNotificationEnabled",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "isEmitNotificationEnabled?(node: Node): boolean;"
+      ],
+      "after": "isEmitNotificationEnabled?: (node: Node) => boolean;"
+    },
+    {
+      "member": "ts.PrintHandlers.substituteNode",
+      "beforeOverloads": 1,
+      "afterCallSignatures": 1,
+      "before": [
+        "substituteNode?(hint: EmitHint, node: Node): Node;"
+      ],
+      "after": "substituteNode?: (hint: EmitHint, node: Node) => Node;"
+    }
+  ],
+  "inheritedPublicDeclarations": [
+    "interface CoreTransformationContext {\n        readonly factory: NodeFactory;\n        /** Gets the compiler options supplied to the transformer. */\n        getCompilerOptions(): CompilerOptions;\n        /** Starts a new lexical environment. */\n        startLexicalEnvironment(): void;\n        /** Suspends the current lexical environment, usually after visiting a parameter list. */\n        suspendLexicalEnvironment(): void;\n        /** Resumes a suspended lexical environment, usually before visiting a function body. */\n        resumeLexicalEnvironment(): void;\n        /** Ends a lexical environment, returning any declarations. */\n        endLexicalEnvironment(): Statement[] | undefined;\n        /** Hoists a function declaration to the containing scope. */\n        hoistFunctionDeclaration(node: FunctionDeclaration): void;\n        /** Hoists a variable declaration to the containing scope. */\n        hoistVariableDeclaration(node: Identifier): void;\n    }"
+  ]
+}

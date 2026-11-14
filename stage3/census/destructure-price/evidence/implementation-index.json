@@ -1,0 +1,2180 @@
+{
+  "scope": "repository src contextual objects, class heritage, direct argument flows and recovery return objects; external public inputs remain open",
+  "sourceRoots": 604,
+  "closedExternalWorld": false,
+  "unresolvedIndexedCallableEdges": 0,
+  "conditionalPruning": [
+    "createTimer always uses enter/exit closures; noop remains only for createTimerIf",
+    "Parser factory flags exclude NoIndentationOnFreshPropertyAccess; those two conditional wrappers are not parser suppliers"
+  ],
+  "sites": [
+    {
+      "site": "src/compiler/sys.ts:590",
+      "members": [
+        {
+          "name": "watchDirectory",
+          "callable": true,
+          "implementations": [
+            "F001"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getCurrentDirectory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F003"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getAccessibleSortedChildDirectories",
+          "callable": true,
+          "implementations": [
+            "F005",
+            "F006"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "fileSystemEntryExists",
+          "callable": true,
+          "implementations": [
+            "F007",
+            "F008"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "realpath",
+          "callable": true,
+          "implementations": [
+            "F010",
+            "F011"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "setTimeout",
+          "callable": true,
+          "implementations": [
+            "F013",
+            "F014"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "clearTimeout",
+          "callable": true,
+          "implementations": [
+            "F016",
+            "F017"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/sys.ts:993",
+      "members": [
+        {
+          "name": "pollingWatchFileWorker",
+          "callable": true,
+          "implementations": [
+            "F019",
+            "F020"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getModifiedTime",
+          "callable": true,
+          "implementations": [
+            "F022",
+            "F023"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "setTimeout",
+          "callable": true,
+          "implementations": [
+            "F013",
+            "F014"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "clearTimeout",
+          "callable": true,
+          "implementations": [
+            "F016",
+            "F017"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "fsWatchWorker",
+          "callable": true,
+          "implementations": [
+            "F025",
+            "F026"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "fileSystemEntryExists",
+          "callable": true,
+          "implementations": [
+            "F007",
+            "F008"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getCurrentDirectory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F003"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "fsSupportsRecursiveFsWatch",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getAccessibleSortedChildDirectories",
+          "callable": true,
+          "implementations": [
+            "F005",
+            "F006"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "realpath",
+          "callable": true,
+          "implementations": [
+            "F010",
+            "F011"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "tscWatchFile",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "useNonPollingWatchers",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "tscWatchDirectory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "inodeWatching",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "fsWatchWithTimestamp",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "sysLog",
+          "callable": true,
+          "implementations": [
+            "F028",
+            "F029"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/utilities.ts:8213",
+      "members": [
+        {
+          "name": "onDeleteValue",
+          "callable": true,
+          "implementations": [
+            "F030",
+            "F031",
+            "F032",
+            "F033",
+            "F034"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onExistingValue",
+          "callable": true,
+          "implementations": [
+            "F035"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/utilities.ts:8253",
+      "members": [
+        {
+          "name": "createNewValue",
+          "callable": true,
+          "implementations": [
+            "F036",
+            "F037",
+            "F038",
+            "F039",
+            "F040",
+            "F041"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/utilities.ts:11317",
+      "members": [
+        {
+          "name": "evaluateElementAccessExpression",
+          "callable": true,
+          "implementations": [
+            "F042"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "evaluateEntityNameExpression",
+          "callable": true,
+          "implementations": [
+            "F043"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:1472",
+      "members": [
+        {
+          "name": "createNodeArray",
+          "callable": true,
+          "implementations": [
+            "F044"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createNumericLiteral",
+          "callable": true,
+          "implementations": [
+            "F045"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createStringLiteral",
+          "callable": true,
+          "implementations": [
+            "F046"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createLiteralLikeNode",
+          "callable": true,
+          "implementations": [
+            "F047"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createIdentifier",
+          "callable": true,
+          "implementations": [
+            "F048"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createPrivateIdentifier",
+          "callable": true,
+          "implementations": [
+            "F049"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createToken",
+          "callable": true,
+          "implementations": [
+            "F050"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createArrayLiteralExpression",
+          "callable": true,
+          "implementations": [
+            "F051"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createObjectLiteralExpression",
+          "callable": true,
+          "implementations": [
+            "F052"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createPropertyAccessExpression",
+          "callable": true,
+          "implementations": [
+            "F053"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/factory/nodeFactory.ts:636:13",
+              "kind": "arrow",
+              "readsThis": false,
+              "name": null
+            }
+          ]
+        },
+        {
+          "name": "createPropertyAccessChain",
+          "callable": true,
+          "implementations": [
+            "F054"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/factory/nodeFactory.ts:640:13",
+              "kind": "arrow",
+              "readsThis": false,
+              "name": null
+            }
+          ]
+        },
+        {
+          "name": "createElementAccessExpression",
+          "callable": true,
+          "implementations": [
+            "F055"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createElementAccessChain",
+          "callable": true,
+          "implementations": [
+            "F056"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createCallExpression",
+          "callable": true,
+          "implementations": [
+            "F057"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createCallChain",
+          "callable": true,
+          "implementations": [
+            "F058"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createNewExpression",
+          "callable": true,
+          "implementations": [
+            "F059"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createParenthesizedExpression",
+          "callable": true,
+          "implementations": [
+            "F060"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createBlock",
+          "callable": true,
+          "implementations": [
+            "F061"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createVariableStatement",
+          "callable": true,
+          "implementations": [
+            "F062"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createExpressionStatement",
+          "callable": true,
+          "implementations": [
+            "F063"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createIfStatement",
+          "callable": true,
+          "implementations": [
+            "F064"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createWhileStatement",
+          "callable": true,
+          "implementations": [
+            "F065"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createForStatement",
+          "callable": true,
+          "implementations": [
+            "F066"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createForOfStatement",
+          "callable": true,
+          "implementations": [
+            "F067"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F068"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "createVariableDeclarationList",
+          "callable": true,
+          "implementations": [
+            "F069"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/moduleSpecifiers.ts:583",
+      "members": [
+        {
+          "name": "getAllowedEndingsInPreferredOrder",
+          "callable": true,
+          "implementations": [
+            "F070"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "relativePreference",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "excludeRegexes",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/sourcemap.ts:40",
+      "members": [
+        {
+          "name": "enter",
+          "callable": true,
+          "implementations": [
+            "F071"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/core.ts:1797:1",
+              "kind": "plain function",
+              "readsThis": false,
+              "name": "noop"
+            }
+          ]
+        },
+        {
+          "name": "exit",
+          "callable": true,
+          "implementations": [
+            "F072"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/core.ts:1797:1",
+              "kind": "plain function",
+              "readsThis": false,
+              "name": "noop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:236",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/classFields.ts:355",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "addBlockScopedVariable",
+          "callable": true,
+          "implementations": [
+            "F080",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/typeSerializer.ts:133",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/legacyDecorators.ts:89",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/esDecorators.ts:296",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2017.ts:120",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2018.ts:155",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2020.ts:43",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2021.ts:26",
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/esnext.ts:77",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/jsx.ts:99",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2016.ts:22",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/es2015.ts:489",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/generators.ts:337",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F076",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistFunctionDeclaration",
+          "callable": true,
+          "implementations": [
+            "F081",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/module/module.ts:192",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/module/system.ts:143",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F074",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "callable": true,
+          "implementations": [
+            "F077",
+            "F078"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "callable": true,
+          "implementations": [
+            "F079",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/transformers/module/esnextAnd2015.ts:68",
+      "members": [
+        {
+          "name": "factory",
+          "callable": false,
+          "implementations": [],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "callable": true,
+          "implementations": [
+            "F002",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/emitter.ts:771",
+      "members": [
+        {
+          "name": "enter",
+          "callable": true,
+          "implementations": [
+            "F071"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/core.ts:1797:1",
+              "kind": "plain function",
+              "readsThis": false,
+              "name": "noop"
+            }
+          ]
+        },
+        {
+          "name": "exit",
+          "callable": true,
+          "implementations": [
+            "F072"
+          ],
+          "excludedConditionalCandidates": [
+            {
+              "location": "src/compiler/core.ts:1797:1",
+              "kind": "plain function",
+              "readsThis": false,
+              "name": "noop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/emitter.ts:1215",
+      "members": [
+        {
+          "name": "hasGlobalName",
+          "callable": true,
+          "implementations": [
+            "F082",
+            "F073"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onEmitNode",
+          "callable": true,
+          "implementations": [
+            "F083",
+            "F084",
+            "F085"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "isEmitNotificationEnabled",
+          "callable": true,
+          "implementations": [
+            "F086"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "substituteNode",
+          "callable": true,
+          "implementations": [
+            "F087",
+            "F088"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onBeforeEmitNode",
+          "callable": true,
+          "implementations": [
+            "F089"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onAfterEmitNode",
+          "callable": true,
+          "implementations": [
+            "F090"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onBeforeEmitNodeArray",
+          "callable": true,
+          "implementations": [
+            "F091"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onAfterEmitNodeArray",
+          "callable": true,
+          "implementations": [
+            "F092"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onBeforeEmitToken",
+          "callable": true,
+          "implementations": [
+            "F093"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "onAfterEmitToken",
+          "callable": true,
+          "implementations": [
+            "F094"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/emitter.ts:1275",
+      "members": [
+        {
+          "name": "enter",
+          "callable": true,
+          "implementations": [
+            "F071",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "exit",
+          "callable": true,
+          "implementations": [
+            "F072",
+            "F075"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/expressionToTypeNode.ts:199",
+      "members": [
+        {
+          "name": "finalizeBoundary",
+          "callable": true,
+          "implementations": [
+            "F095"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "startRecoveryScope",
+          "callable": true,
+          "implementations": [
+            "F096"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "hadError",
+          "callable": true,
+          "implementations": [
+            "F097"
+          ],
+          "excludedConditionalCandidates": []
+        },
+        {
+          "name": "markError",
+          "callable": true,
+          "implementations": [
+            "F098"
+          ],
+          "excludedConditionalCandidates": []
+        }
+      ]
+    }
+  ],
+  "catalogue": [
+    {
+      "id": "F001",
+      "location": "src/compiler/sys.ts:1132:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "nonRecursiveWatchDirectory"
+    },
+    {
+      "id": "F002",
+      "location": "src/compiler/core.ts:1896:12",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F003",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:473:34",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1282:36",
+          "kind": "arrow",
+          "readsThis": true,
+          "name": null
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F004"
+      ]
+    },
+    {
+      "id": "F004",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1282:36",
+      "kind": "arrow",
+      "readsThis": true,
+      "name": null
+    },
+    {
+      "id": "F005",
+      "location": "src/compiler/sys.ts:1508:50",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F006",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:475:50",
+      "kind": "arrow",
+      "readsThis": true,
+      "name": null
+    },
+    {
+      "id": "F007",
+      "location": "src/compiler/sys.ts:1880:9",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "fileSystemEntryExists"
+    },
+    {
+      "id": "F008",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:471:36",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1022:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "fileSystemEntryExists"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F009"
+      ]
+    },
+    {
+      "id": "F009",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1022:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "fileSystemEntryExists"
+    },
+    {
+      "id": "F010",
+      "location": "src/compiler/sys.ts:1911:9",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "realpath"
+    },
+    {
+      "id": "F011",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:476:23",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1261:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "realpath"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F012"
+      ]
+    },
+    {
+      "id": "F012",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1261:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "realpath"
+    },
+    {
+      "id": "F013",
+      "location": "src/compiler/sys.ts:1499:25",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F014",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:468:25",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1103:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "setTimeout"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F015"
+      ]
+    },
+    {
+      "id": "F015",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1103:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "setTimeout"
+    },
+    {
+      "id": "F016",
+      "location": "src/compiler/sys.ts:1500:27",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F017",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:469:27",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1111:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "clearTimeout"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F018"
+      ]
+    },
+    {
+      "id": "F018",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1111:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "clearTimeout"
+    },
+    {
+      "id": "F019",
+      "location": "src/compiler/sys.ts:1733:9",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "fsWatchFileWorker"
+    },
+    {
+      "id": "F020",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:466:37",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:866:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "watchFileWorker"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F021"
+      ]
+    },
+    {
+      "id": "F021",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:866:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "watchFileWorker"
+    },
+    {
+      "id": "F022",
+      "location": "src/compiler/sys.ts:1920:9",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "getModifiedTime"
+    },
+    {
+      "id": "F023",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:467:30",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1031:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "getModifiedTime"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F024"
+      ]
+    },
+    {
+      "id": "F024",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1031:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "getModifiedTime"
+    },
+    {
+      "id": "F025",
+      "location": "src/compiler/sys.ts:1766:9",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "fsWatchWorker"
+    },
+    {
+      "id": "F026",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:470:28",
+      "kind": "bound",
+      "target": [
+        {
+          "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:873:5",
+          "kind": "class method",
+          "readsThis": true,
+          "name": "fsWatchWorker"
+        }
+      ],
+      "receiver": "this",
+      "targetIds": [
+        "F027"
+      ]
+    },
+    {
+      "id": "F027",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:873:5",
+      "kind": "class method",
+      "readsThis": true,
+      "name": "fsWatchWorker"
+    },
+    {
+      "id": "F028",
+      "location": "src/compiler/sys.ts:565:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "sysLog"
+    },
+    {
+      "id": "F029",
+      "location": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:481:21",
+      "kind": "arrow",
+      "readsThis": true,
+      "name": null
+    },
+    {
+      "id": "F030",
+      "location": "src/compiler/utilities.ts:8033:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "closeFileWatcher"
+    },
+    {
+      "id": "F031",
+      "location": "src/compiler/watchUtilities.ts:845:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "closeFileWatcherOf"
+    },
+    {
+      "id": "F032",
+      "location": "src/compiler/tsbuildPublic.ts:703:30",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F033",
+      "location": "src/compiler/tsbuildPublic.ts:709:30",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F034",
+      "location": "src/compiler/tsbuildPublic.ts:715:30",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F035",
+      "location": "src/compiler/watchUtilities.ts:545:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "updateWildcardDirectoryWatcher"
+    },
+    {
+      "id": "F036",
+      "location": "src/compiler/watchPublic.ts:1086:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "watchMissingFilePath"
+    },
+    {
+      "id": "F037",
+      "location": "src/server/project.ts:1704:17",
+      "kind": "arrow",
+      "readsThis": true,
+      "name": null
+    },
+    {
+      "id": "F038",
+      "location": "src/compiler/watchUtilities.ts:537:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createWildcardDirectoryWatcher"
+    },
+    {
+      "id": "F039",
+      "location": "src/compiler/resolutionCache.ts:1632:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createTypeRootsWatch"
+    },
+    {
+      "id": "F040",
+      "location": "src/compiler/tsbuildPublic.ts:2193:29",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F041",
+      "location": "src/compiler/tsbuildPublic.ts:2214:29",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F042",
+      "location": "src/compiler/checker.ts:48013:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "evaluateElementAccessExpression"
+    },
+    {
+      "id": "F043",
+      "location": "src/compiler/checker.ts:47978:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "evaluateEntityNameExpression"
+    },
+    {
+      "id": "F044",
+      "location": "src/compiler/factory/nodeFactory.ts:1169:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createNodeArray"
+    },
+    {
+      "id": "F045",
+      "location": "src/compiler/factory/nodeFactory.ts:1233:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createNumericLiteral"
+    },
+    {
+      "id": "F046",
+      "location": "src/compiler/factory/nodeFactory.ts:1259:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createStringLiteral"
+    },
+    {
+      "id": "F047",
+      "location": "src/compiler/factory/nodeFactory.ts:1281:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createLiteralLikeNode"
+    },
+    {
+      "id": "F048",
+      "location": "src/compiler/factory/nodeFactory.ts:1326:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createIdentifier"
+    },
+    {
+      "id": "F049",
+      "location": "src/compiler/factory/nodeFactory.ts:1396:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createPrivateIdentifier"
+    },
+    {
+      "id": "F050",
+      "location": "src/compiler/factory/nodeFactory.ts:1453:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createToken"
+    },
+    {
+      "id": "F051",
+      "location": "src/compiler/factory/nodeFactory.ts:2848:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createArrayLiteralExpression"
+    },
+    {
+      "id": "F052",
+      "location": "src/compiler/factory/nodeFactory.ts:2869:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createObjectLiteralExpression"
+    },
+    {
+      "id": "F053",
+      "location": "src/compiler/factory/nodeFactory.ts:2903:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createPropertyAccessExpression"
+    },
+    {
+      "id": "F054",
+      "location": "src/compiler/factory/nodeFactory.ts:2930:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createPropertyAccessChain"
+    },
+    {
+      "id": "F055",
+      "location": "src/compiler/factory/nodeFactory.ts:2968:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createElementAccessExpression"
+    },
+    {
+      "id": "F056",
+      "location": "src/compiler/factory/nodeFactory.ts:2995:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createElementAccessChain"
+    },
+    {
+      "id": "F057",
+      "location": "src/compiler/factory/nodeFactory.ts:3038:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createCallExpression"
+    },
+    {
+      "id": "F058",
+      "location": "src/compiler/factory/nodeFactory.ts:3064:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createCallChain"
+    },
+    {
+      "id": "F059",
+      "location": "src/compiler/factory/nodeFactory.ts:3088:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createNewExpression"
+    },
+    {
+      "id": "F060",
+      "location": "src/compiler/factory/nodeFactory.ts:3160:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createParenthesizedExpression"
+    },
+    {
+      "id": "F061",
+      "location": "src/compiler/factory/nodeFactory.ts:3856:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createBlock"
+    },
+    {
+      "id": "F062",
+      "location": "src/compiler/factory/nodeFactory.ts:3876:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createVariableStatement"
+    },
+    {
+      "id": "F063",
+      "location": "src/compiler/factory/nodeFactory.ts:3907:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createExpressionStatement"
+    },
+    {
+      "id": "F064",
+      "location": "src/compiler/factory/nodeFactory.ts:3925:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createIfStatement"
+    },
+    {
+      "id": "F065",
+      "location": "src/compiler/factory/nodeFactory.ts:3970:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createWhileStatement"
+    },
+    {
+      "id": "F066",
+      "location": "src/compiler/factory/nodeFactory.ts:3991:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createForStatement"
+    },
+    {
+      "id": "F067",
+      "location": "src/compiler/factory/nodeFactory.ts:4046:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createForOfStatement"
+    },
+    {
+      "id": "F068",
+      "location": "src/compiler/factory/nodeFactory.ts:4251:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createVariableDeclaration"
+    },
+    {
+      "id": "F069",
+      "location": "src/compiler/factory/nodeFactory.ts:4276:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "createVariableDeclarationList"
+    },
+    {
+      "id": "F070",
+      "location": "src/compiler/moduleSpecifiers.ts:199:44",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F071",
+      "location": "src/compiler/performance.ts:41:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "enter"
+    },
+    {
+      "id": "F072",
+      "location": "src/compiler/performance.ts:47:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "exit"
+    },
+    {
+      "id": "F073",
+      "location": "src/compiler/core.ts:1889:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "notImplemented"
+    },
+    {
+      "id": "F074",
+      "location": "src/compiler/transformer.ts:480:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "startLexicalEnvironment"
+    },
+    {
+      "id": "F075",
+      "location": "src/compiler/core.ts:1797:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "noop"
+    },
+    {
+      "id": "F076",
+      "location": "src/compiler/transformer.ts:509:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "resumeLexicalEnvironment"
+    },
+    {
+      "id": "F077",
+      "location": "src/compiler/transformer.ts:520:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "endLexicalEnvironment"
+    },
+    {
+      "id": "F078",
+      "location": "src/compiler/core.ts:1822:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "returnUndefined"
+    },
+    {
+      "id": "F079",
+      "location": "src/compiler/transformer.ts:431:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "hoistVariableDeclaration"
+    },
+    {
+      "id": "F080",
+      "location": "src/compiler/transformer.ts:621:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "addBlockScopedVariable"
+    },
+    {
+      "id": "F081",
+      "location": "src/compiler/transformer.ts:449:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "hoistFunctionDeclaration"
+    },
+    {
+      "id": "F082",
+      "location": "src/compiler/checker.ts:51235:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "hasGlobalName"
+    },
+    {
+      "id": "F083",
+      "location": "src/compiler/transformer.ts:414:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "emitNodeWithNotification"
+    },
+    {
+      "id": "F084",
+      "location": "src/harness/typeWriter.ts:54:21",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F085",
+      "location": "src/compiler/transformer.ts:232:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "noEmitNotification"
+    },
+    {
+      "id": "F086",
+      "location": "src/compiler/transformer.ts:402:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "isEmitNotificationEnabled"
+    },
+    {
+      "id": "F087",
+      "location": "src/compiler/transformer.ts:385:5",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "substituteNode"
+    },
+    {
+      "id": "F088",
+      "location": "src/compiler/transformer.ts:227:1",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "noEmitSubstitution"
+    },
+    {
+      "id": "F089",
+      "location": "src/services/textChanges.ts:1422:65",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F090",
+      "location": "src/services/textChanges.ts:1427:63",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F091",
+      "location": "src/services/textChanges.ts:1432:75",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F092",
+      "location": "src/services/textChanges.ts:1437:73",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F093",
+      "location": "src/services/textChanges.ts:1442:67",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F094",
+      "location": "src/services/textChanges.ts:1447:65",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F095",
+      "location": "src/compiler/checker.ts:8140:13",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "finalizeBoundary"
+    },
+    {
+      "id": "F096",
+      "location": "src/compiler/checker.ts:8125:13",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "startRecoveryScope"
+    },
+    {
+      "id": "F097",
+      "location": "src/compiler/checker.ts:8116:27",
+      "kind": "arrow",
+      "readsThis": false,
+      "name": null
+    },
+    {
+      "id": "F098",
+      "location": "src/compiler/checker.ts:8118:13",
+      "kind": "plain function",
+      "readsThis": false,
+      "name": "markError"
+    }
+  ]
+}

@@ -1,16 +1,381 @@
 [
   {
+    "site": "src/compiler/utilities.ts:8213",
+    "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+    "enclosing": "mutateMapSkippingNewValues",
+    "patternStart": {
+      "line": 8213,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 8213,
+      "column": 45
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/utilities.ts:8208:1",
+    "observed": [],
+    "mask": {
+      "kind": "unit coverage/deferred boundary",
+      "units": [
+        {
+          "where": "src/compiler/utilities.ts:8197:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        },
+        {
+          "where": "src/compiler/utilities.ts:8203:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        },
+        {
+          "where": "src/compiler/utilities.ts:8208:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        }
+      ]
+    }
+  },
+  {
+    "site": "src/compiler/utilities.ts:8253",
+    "type": "MutateMapOptions<K, T, U>",
+    "enclosing": "mutateMap",
+    "patternStart": {
+      "line": 8253,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 8253,
+      "column": 29
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/utilities.ts:8249:1",
+    "observed": [],
+    "mask": {
+      "kind": "unit coverage/deferred boundary",
+      "units": [
+        {
+          "where": "src/compiler/utilities.ts:8246:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        },
+        {
+          "where": "src/compiler/utilities.ts:8248:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        },
+        {
+          "where": "src/compiler/utilities.ts:8249:1",
+          "status": "deferred_generic_instantiation",
+          "instantiated": false,
+          "checkerDiagnostics": []
+        }
+      ]
+    }
+  },
+  {
     "site": "src/compiler/sourcemap.ts:40",
-    "maskKind": "statement gate",
-    "observedReason": "var",
-    "observedWhere": "src/compiler/sourcemap.ts:40:5",
-    "explanation": "Statement is refused before destructured members are lowered."
+    "type": "Timer",
+    "enclosing": "createSourceMapGenerator",
+    "patternStart": {
+      "line": 40,
+      "column": 9
+    },
+    "patternEnd": {
+      "line": 40,
+      "column": 24
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/sourcemap.ts:36:1",
+    "observed": [],
+    "mask": {
+      "kind": "var gate before binding",
+      "evidence": {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "src/compiler/sourcemap.ts:40:5",
+        "reason": "var",
+        "text": "src/compiler/sourcemap.ts:40:5: Adamic 0.1 refuses var; use const or let",
+        "unit": "src/compiler/sourcemap.ts:36:1"
+      },
+      "additionalPrologue": null
+    }
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:236",
+    "type": "TransformationContext",
+    "enclosing": "transformTypeScript",
+    "patternStart": {
+      "line": 236,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 243,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/ts.ts:235:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/ts.ts:235:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/ts.ts:1430:55: stage 0 can't lower a value of type ParameterPropertyDeclaration yet",
+        "unit": "src/compiler/transformers/ts.ts:235:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/transformers/classFields.ts:355",
+    "type": "TransformationContext",
+    "enclosing": "transformClassFields",
+    "patternStart": {
+      "line": 355,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 363,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/classFields.ts:354:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/classFields.ts:354:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/classFields.ts:671:55: stage 0 can't lower a value of type PrivateIdentifierInExpression yet",
+        "unit": "src/compiler/transformers/classFields.ts:354:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/transformers/esDecorators.ts:296",
+    "type": "TransformationContext",
+    "enclosing": "transformESDecorators",
+    "patternStart": {
+      "line": 296,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 302,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/esDecorators.ts:295:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/esDecorators.ts:295:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/esDecorators.ts:670:14: stage 0 can't lower a function returning ImmediatelyInvokedArrowFunction yet",
+        "unit": "src/compiler/transformers/esDecorators.ts:295:1"
+      }
+    }
   },
   {
     "site": "src/compiler/transformers/es2018.ts:155",
-    "maskKind": "function prologue",
-    "observedReason": "a branded supertype inside a checked predicate's array target",
-    "observedWhere": "src/compiler/transformers/es2018.ts:1233:36",
-    "explanation": "Outer transformES2018 has an explicit function-signature/prologue failure boundary before its body binding can be examined."
+    "type": "TransformationContext",
+    "enclosing": "transformES2018",
+    "patternStart": {
+      "line": 155,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 161,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/es2018.ts:154:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/es2018.ts:154:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/es2018.ts:1233:36: stage 0 can't lower a branded supertype inside a checked predicate's array target yet",
+        "unit": "src/compiler/transformers/es2018.ts:154:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/transformers/es2015.ts:489",
+    "type": "TransformationContext",
+    "enclosing": "transformES2015",
+    "patternStart": {
+      "line": 489,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 496,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/es2015.ts:488:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/es2015.ts:488:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/es2015.ts:825:14: stage 0 can't lower a function returning CapturedThis yet",
+        "unit": "src/compiler/transformers/es2015.ts:488:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/transformers/generators.ts:337",
+    "type": "TransformationContext",
+    "enclosing": "transformGenerators",
+    "patternStart": {
+      "line": 337,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 344,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/generators.ts:336:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/generators.ts:336:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/generators.ts:1387:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+        "unit": "src/compiler/transformers/generators.ts:336:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/transformers/module/module.ts:192",
+    "type": "TransformationContext",
+    "enclosing": "transformModule",
+    "patternStart": {
+      "line": 192,
+      "column": 11
+    },
+    "patternEnd": {
+      "line": 198,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/transformers/module/module.ts:174:1",
+    "observed": [],
+    "mask": {
+      "kind": "function signature/prologue",
+      "evidence": {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "src/compiler/transformers/module/module.ts:174:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "src/compiler/transformers/module/module.ts:1926:43: stage 0 can't lower a value of type InitializedVariableDeclaration yet",
+        "unit": "src/compiler/transformers/module/module.ts:174:1"
+      }
+    }
+  },
+  {
+    "site": "src/compiler/emitter.ts:771",
+    "type": "Timer",
+    "enclosing": "emitFiles",
+    "patternStart": {
+      "line": 771,
+      "column": 9
+    },
+    "patternEnd": {
+      "line": 771,
+      "column": 24
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/emitter.ts:752:1",
+    "observed": [],
+    "mask": {
+      "kind": "var gate before binding",
+      "evidence": {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "src/compiler/emitter.ts:771:5",
+        "reason": "var",
+        "text": "src/compiler/emitter.ts:771:5: Adamic 0.1 refuses var; use const or let",
+        "unit": "src/compiler/emitter.ts:752:1"
+      },
+      "additionalPrologue": null
+    }
+  },
+  {
+    "site": "src/compiler/emitter.ts:1215",
+    "type": "PrintHandlers",
+    "enclosing": "createPrinter",
+    "patternStart": {
+      "line": 1215,
+      "column": 9
+    },
+    "patternEnd": {
+      "line": 1226,
+      "column": 6
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+    "observed": [],
+    "mask": {
+      "kind": "var gate before binding",
+      "evidence": {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "src/compiler/emitter.ts:1215:5",
+        "reason": "var",
+        "text": "src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let",
+        "unit": "src/compiler/emitter.ts:1211:1"
+      },
+      "additionalPrologue": null
+    }
+  },
+  {
+    "site": "src/compiler/emitter.ts:1275",
+    "type": "Timer",
+    "enclosing": "createPrinter",
+    "patternStart": {
+      "line": 1275,
+      "column": 9
+    },
+    "patternEnd": {
+      "line": 1275,
+      "column": 51
+    },
+    "parameter": false,
+    "enclosingDeclaration": "src/compiler/emitter.ts:1211:1",
+    "observed": [],
+    "mask": {
+      "kind": "var gate before binding",
+      "evidence": {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "src/compiler/emitter.ts:1275:5",
+        "reason": "var",
+        "text": "src/compiler/emitter.ts:1275:5: Adamic 0.1 refuses var; use const or let",
+        "unit": "src/compiler/emitter.ts:1211:1"
+      },
+      "additionalPrologue": null
+    }
   }
 ]

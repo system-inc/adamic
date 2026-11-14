@@ -1,0 +1,673 @@
+--- adapted-baseline/src/compiler/emitter.ts
++++ hybrid-road/src/compiler/emitter.ts
+@@ -1212,18 +1212,27 @@
+     // Why var? It avoids TDZ checks in the runtime which can be costly.
+     // See: https://github.com/microsoft/TypeScript/issues/52924
+     /* eslint-disable no-var */
+-    var {
+-        hasGlobalName,
+-        onEmitNode = noEmitNotification,
+-        isEmitNotificationEnabled,
+-        substituteNode = noEmitSubstitution,
+-        onBeforeEmitNode,
+-        onAfterEmitNode,
+-        onBeforeEmitNodeArray,
+-        onAfterEmitNodeArray,
+-        onBeforeEmitToken,
+-        onAfterEmitToken,
+-    } = handlers;
++    var __destructureReceiver1215 = handlers,
++__destructureOriginal1215_0 = __destructureReceiver1215.hasGlobalName,
++hasGlobalName = __destructureOriginal1215_0 === undefined ? undefined : (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_0>>) => __destructureReceiver1215.hasGlobalName!(...args)) as NonNullable<typeof __destructureOriginal1215_0>),
++__destructureOriginal1215_1 = __destructureReceiver1215.onEmitNode === undefined ? noEmitNotification : __destructureReceiver1215.onEmitNode,
++onEmitNode = __destructureReceiver1215.onEmitNode === undefined ? (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_1>>) => noEmitNotification(...args)) as NonNullable<typeof __destructureOriginal1215_1>) : (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_1>>) => __destructureReceiver1215.onEmitNode!(...args)) as NonNullable<typeof __destructureOriginal1215_1>),
++__destructureOriginal1215_2 = __destructureReceiver1215.isEmitNotificationEnabled,
++isEmitNotificationEnabled = __destructureOriginal1215_2 === undefined ? undefined : (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_2>>) => __destructureReceiver1215.isEmitNotificationEnabled!(...args)) as NonNullable<typeof __destructureOriginal1215_2>),
++__destructureOriginal1215_3 = __destructureReceiver1215.substituteNode === undefined ? noEmitSubstitution : __destructureReceiver1215.substituteNode,
++substituteNode = __destructureReceiver1215.substituteNode === undefined ? (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_3>>) => noEmitSubstitution(...args)) as NonNullable<typeof __destructureOriginal1215_3>) : (((...args: Parameters<NonNullable<typeof __destructureOriginal1215_3>>) => __destructureReceiver1215.substituteNode!(...args)) as NonNullable<typeof __destructureOriginal1215_3>),
++__destructureOriginal1215_4 = __destructureReceiver1215.onBeforeEmitNode,
++onBeforeEmitNode = __destructureOriginal1215_4,
++__destructureOriginal1215_5 = __destructureReceiver1215.onAfterEmitNode,
++onAfterEmitNode = __destructureOriginal1215_5,
++__destructureOriginal1215_6 = __destructureReceiver1215.onBeforeEmitNodeArray,
++onBeforeEmitNodeArray = __destructureOriginal1215_6,
++__destructureOriginal1215_7 = __destructureReceiver1215.onAfterEmitNodeArray,
++onAfterEmitNodeArray = __destructureOriginal1215_7,
++__destructureOriginal1215_8 = __destructureReceiver1215.onBeforeEmitToken,
++onBeforeEmitToken = __destructureOriginal1215_8,
++__destructureOriginal1215_9 = __destructureReceiver1215.onAfterEmitToken,
++onAfterEmitToken = __destructureOriginal1215_9;
+ 
+     var extendedDiagnostics = !!printerOptions.extendedDiagnostics;
+     var omitBraceSourcePositions = !!printerOptions.omitBraceSourceMapPositions;
+@@ -1499,12 +1508,12 @@
+     function getPipelinePhase(phase: PipelinePhase, emitHint: EmitHint, node: Node) {
+         switch (phase) {
+             case PipelinePhase.Notification:
+-                if (onEmitNode !== noEmitNotification && (!isEmitNotificationEnabled || isEmitNotificationEnabled(node))) {
++                if (__destructureOriginal1215_1 !== noEmitNotification && (!isEmitNotificationEnabled || isEmitNotificationEnabled(node))) {
+                     return pipelineEmitWithNotification;
+                 }
+                 // falls through
+             case PipelinePhase.Substitution:
+-                if (substituteNode !== noEmitSubstitution && (lastSubstitution = substituteNode(emitHint, node) || node) !== node) {
++                if (__destructureOriginal1215_3 !== noEmitSubstitution && (lastSubstitution = substituteNode(emitHint, node) || node) !== node) {
+                     if (currentParenthesizerRule) {
+                         lastSubstitution = currentParenthesizerRule(lastSubstitution);
+                     }
+@@ -1908,7 +1917,7 @@
+             }
+             if (isExpression(node)) {
+                 hint = EmitHint.Expression;
+-                if (substituteNode !== noEmitSubstitution) {
++                if (__destructureOriginal1215_3 !== noEmitSubstitution) {
+                     const substitute = substituteNode(hint, node) || node;
+                     if (substitute !== node) {
+                         node = substitute;
+--- adapted-baseline/src/compiler/moduleSpecifiers.ts
++++ hybrid-road/src/compiler/moduleSpecifiers.ts
+@@ -174,7 +174,7 @@
+     /**
+      * @param syntaxImpliedNodeFormat Used when the import syntax implies ESM or CJS irrespective of the mode of the file.
+      */
+-    getAllowedEndingsInPreferredOrder(syntaxImpliedNodeFormat?: ResolutionMode): ModuleSpecifierEnding[];
++    getAllowedEndingsInPreferredOrder: (syntaxImpliedNodeFormat?: ResolutionMode) => ModuleSpecifierEnding[];
+     readonly excludeRegexes?: readonly string[] | undefined;
+ }
+ 
+--- adapted-baseline/src/compiler/parser.ts
++++ hybrid-road/src/compiler/parser.ts
+@@ -1469,34 +1469,59 @@
+ 
+     var factory = createNodeFactory(NodeFactoryFlags.NoParenthesizerRules | NodeFactoryFlags.NoNodeConverters | NodeFactoryFlags.NoOriginalNode, baseNodeFactory);
+ 
+-    var {
+-        createNodeArray: factoryCreateNodeArray,
+-        createNumericLiteral: factoryCreateNumericLiteral,
+-        createStringLiteral: factoryCreateStringLiteral,
+-        createLiteralLikeNode: factoryCreateLiteralLikeNode,
+-        createIdentifier: factoryCreateIdentifier,
+-        createPrivateIdentifier: factoryCreatePrivateIdentifier,
+-        createToken: factoryCreateToken,
+-        createArrayLiteralExpression: factoryCreateArrayLiteralExpression,
+-        createObjectLiteralExpression: factoryCreateObjectLiteralExpression,
+-        createPropertyAccessExpression: factoryCreatePropertyAccessExpression,
+-        createPropertyAccessChain: factoryCreatePropertyAccessChain,
+-        createElementAccessExpression: factoryCreateElementAccessExpression,
+-        createElementAccessChain: factoryCreateElementAccessChain,
+-        createCallExpression: factoryCreateCallExpression,
+-        createCallChain: factoryCreateCallChain,
+-        createNewExpression: factoryCreateNewExpression,
+-        createParenthesizedExpression: factoryCreateParenthesizedExpression,
+-        createBlock: factoryCreateBlock,
+-        createVariableStatement: factoryCreateVariableStatement,
+-        createExpressionStatement: factoryCreateExpressionStatement,
+-        createIfStatement: factoryCreateIfStatement,
+-        createWhileStatement: factoryCreateWhileStatement,
+-        createForStatement: factoryCreateForStatement,
+-        createForOfStatement: factoryCreateForOfStatement,
+-        createVariableDeclaration: factoryCreateVariableDeclaration,
+-        createVariableDeclarationList: factoryCreateVariableDeclarationList,
+-    } = factory;
++    var __destructureReceiver1472 = factory,
++__destructureOriginal1472_0 = __destructureReceiver1472.createNodeArray,
++factoryCreateNodeArray = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_0>>) => __destructureReceiver1472.createNodeArray!(...args)) as NonNullable<typeof __destructureOriginal1472_0>,
++__destructureOriginal1472_1 = __destructureReceiver1472.createNumericLiteral,
++factoryCreateNumericLiteral = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_1>>) => __destructureReceiver1472.createNumericLiteral!(...args)) as NonNullable<typeof __destructureOriginal1472_1>,
++__destructureOriginal1472_2 = __destructureReceiver1472.createStringLiteral,
++factoryCreateStringLiteral = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_2>>) => __destructureReceiver1472.createStringLiteral!(...args)) as NonNullable<typeof __destructureOriginal1472_2>,
++__destructureOriginal1472_3 = __destructureReceiver1472.createLiteralLikeNode,
++factoryCreateLiteralLikeNode = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_3>>) => __destructureReceiver1472.createLiteralLikeNode!(...args)) as NonNullable<typeof __destructureOriginal1472_3>,
++__destructureOriginal1472_4 = __destructureReceiver1472.createIdentifier,
++factoryCreateIdentifier = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_4>>) => __destructureReceiver1472.createIdentifier!(...args)) as NonNullable<typeof __destructureOriginal1472_4>,
++__destructureOriginal1472_5 = __destructureReceiver1472.createPrivateIdentifier,
++factoryCreatePrivateIdentifier = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_5>>) => __destructureReceiver1472.createPrivateIdentifier!(...args)) as NonNullable<typeof __destructureOriginal1472_5>,
++__destructureOriginal1472_6 = __destructureReceiver1472.createToken,
++factoryCreateToken = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_6>>) => __destructureReceiver1472.createToken!(...args)) as NonNullable<typeof __destructureOriginal1472_6>,
++__destructureOriginal1472_7 = __destructureReceiver1472.createArrayLiteralExpression,
++factoryCreateArrayLiteralExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_7>>) => __destructureReceiver1472.createArrayLiteralExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_7>,
++__destructureOriginal1472_8 = __destructureReceiver1472.createObjectLiteralExpression,
++factoryCreateObjectLiteralExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_8>>) => __destructureReceiver1472.createObjectLiteralExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_8>,
++__destructureOriginal1472_9 = __destructureReceiver1472.createPropertyAccessExpression,
++factoryCreatePropertyAccessExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_9>>) => __destructureReceiver1472.createPropertyAccessExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_9>,
++__destructureOriginal1472_10 = __destructureReceiver1472.createPropertyAccessChain,
++factoryCreatePropertyAccessChain = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_10>>) => __destructureReceiver1472.createPropertyAccessChain!(...args)) as NonNullable<typeof __destructureOriginal1472_10>,
++__destructureOriginal1472_11 = __destructureReceiver1472.createElementAccessExpression,
++factoryCreateElementAccessExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_11>>) => __destructureReceiver1472.createElementAccessExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_11>,
++__destructureOriginal1472_12 = __destructureReceiver1472.createElementAccessChain,
++factoryCreateElementAccessChain = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_12>>) => __destructureReceiver1472.createElementAccessChain!(...args)) as NonNullable<typeof __destructureOriginal1472_12>,
++__destructureOriginal1472_13 = __destructureReceiver1472.createCallExpression,
++factoryCreateCallExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_13>>) => __destructureReceiver1472.createCallExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_13>,
++__destructureOriginal1472_14 = __destructureReceiver1472.createCallChain,
++factoryCreateCallChain = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_14>>) => __destructureReceiver1472.createCallChain!(...args)) as NonNullable<typeof __destructureOriginal1472_14>,
++__destructureOriginal1472_15 = __destructureReceiver1472.createNewExpression,
++factoryCreateNewExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_15>>) => __destructureReceiver1472.createNewExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_15>,
++__destructureOriginal1472_16 = __destructureReceiver1472.createParenthesizedExpression,
++factoryCreateParenthesizedExpression = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_16>>) => __destructureReceiver1472.createParenthesizedExpression!(...args)) as NonNullable<typeof __destructureOriginal1472_16>,
++__destructureOriginal1472_17 = __destructureReceiver1472.createBlock,
++factoryCreateBlock = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_17>>) => __destructureReceiver1472.createBlock!(...args)) as NonNullable<typeof __destructureOriginal1472_17>,
++__destructureOriginal1472_18 = __destructureReceiver1472.createVariableStatement,
++factoryCreateVariableStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_18>>) => __destructureReceiver1472.createVariableStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_18>,
++__destructureOriginal1472_19 = __destructureReceiver1472.createExpressionStatement,
++factoryCreateExpressionStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_19>>) => __destructureReceiver1472.createExpressionStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_19>,
++__destructureOriginal1472_20 = __destructureReceiver1472.createIfStatement,
++factoryCreateIfStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_20>>) => __destructureReceiver1472.createIfStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_20>,
++__destructureOriginal1472_21 = __destructureReceiver1472.createWhileStatement,
++factoryCreateWhileStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_21>>) => __destructureReceiver1472.createWhileStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_21>,
++__destructureOriginal1472_22 = __destructureReceiver1472.createForStatement,
++factoryCreateForStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_22>>) => __destructureReceiver1472.createForStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_22>,
++__destructureOriginal1472_23 = __destructureReceiver1472.createForOfStatement,
++factoryCreateForOfStatement = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_23>>) => __destructureReceiver1472.createForOfStatement!(...args)) as NonNullable<typeof __destructureOriginal1472_23>,
++__destructureOriginal1472_24 = __destructureReceiver1472.createVariableDeclaration,
++factoryCreateVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_24>>) => __destructureReceiver1472.createVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal1472_24>,
++__destructureOriginal1472_25 = __destructureReceiver1472.createVariableDeclarationList,
++factoryCreateVariableDeclarationList = ((...args: Parameters<NonNullable<typeof __destructureOriginal1472_25>>) => __destructureReceiver1472.createVariableDeclarationList!(...args)) as NonNullable<typeof __destructureOriginal1472_25>;
+ 
+     var fileName: string;
+     var sourceFlags: NodeFlags;
+--- adapted-baseline/src/compiler/performance.ts
++++ hybrid-road/src/compiler/performance.ts
+@@ -21,8 +21,8 @@
+ 
+ /** @internal */
+ export interface Timer {
+-    enter(): void;
+-    exit(): void;
++    enter: () => void;
++    exit: () => void;
+ }
+ 
+ /** @internal */
+--- adapted-baseline/src/compiler/sys.ts
++++ hybrid-road/src/compiler/sys.ts
+@@ -575,9 +575,9 @@
+     watchDirectory: HostWatchDirectory;
+     useCaseSensitiveFileNames: boolean;
+     getCurrentDirectory: System["getCurrentDirectory"];
+-    getAccessibleSortedChildDirectories(path: string): readonly string[];
++    getAccessibleSortedChildDirectories: (path: string) => readonly string[];
+     fileSystemEntryExists: FileSystemEntryExists;
+-    realpath(s: string): string;
++    realpath: (s: string) => string;
+     setTimeout: NonNullable<System["setTimeout"]>;
+     clearTimeout: NonNullable<System["clearTimeout"]>;
+ }
+@@ -978,8 +978,8 @@
+     useCaseSensitiveFileNames: boolean;
+     getCurrentDirectory: System["getCurrentDirectory"];
+     fsSupportsRecursiveFsWatch: boolean;
+-    getAccessibleSortedChildDirectories(path: string): readonly string[];
+-    realpath(s: string): string;
++    getAccessibleSortedChildDirectories: (path: string) => readonly string[];
++    realpath: (s: string) => string;
+     // For backward compatibility environment variables
+     tscWatchFile: string | undefined;
+     useNonPollingWatchers?: boolean;
+--- adapted-baseline/src/compiler/transformers/classFields.ts
++++ hybrid-road/src/compiler/transformers/classFields.ts
+@@ -352,15 +352,21 @@
+  * @internal
+  */
+ export function transformClassFields(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        hoistVariableDeclaration,
+-        endLexicalEnvironment,
+-        startLexicalEnvironment,
+-        resumeLexicalEnvironment,
+-        addBlockScopedVariable,
+-    } = context;
++    const __destructureReceiver355 = context,
++__destructureOriginal355_0 = __destructureReceiver355.factory,
++factory = __destructureOriginal355_0,
++__destructureOriginal355_1 = __destructureReceiver355.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_1>>) => __destructureReceiver355.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal355_1>,
++__destructureOriginal355_2 = __destructureReceiver355.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_2>>) => __destructureReceiver355.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal355_2>,
++__destructureOriginal355_3 = __destructureReceiver355.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_3>>) => __destructureReceiver355.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal355_3>,
++__destructureOriginal355_4 = __destructureReceiver355.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_4>>) => __destructureReceiver355.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal355_4>,
++__destructureOriginal355_5 = __destructureReceiver355.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_5>>) => __destructureReceiver355.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal355_5>,
++__destructureOriginal355_6 = __destructureReceiver355.addBlockScopedVariable,
++addBlockScopedVariable = ((...args: Parameters<NonNullable<typeof __destructureOriginal355_6>>) => __destructureReceiver355.addBlockScopedVariable!(...args)) as NonNullable<typeof __destructureOriginal355_6>;
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+     const languageVersion = getEmitScriptTarget(compilerOptions);
+--- adapted-baseline/src/compiler/transformers/es2015.ts
++++ hybrid-road/src/compiler/transformers/es2015.ts
+@@ -486,14 +486,19 @@
+ 
+ /** @internal */
+ export function transformES2015(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        startLexicalEnvironment,
+-        resumeLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver489 = context,
++__destructureOriginal489_0 = __destructureReceiver489.factory,
++factory = __destructureOriginal489_0,
++__destructureOriginal489_1 = __destructureReceiver489.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal489_1>>) => __destructureReceiver489.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal489_1>,
++__destructureOriginal489_2 = __destructureReceiver489.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal489_2>>) => __destructureReceiver489.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal489_2>,
++__destructureOriginal489_3 = __destructureReceiver489.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal489_3>>) => __destructureReceiver489.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal489_3>,
++__destructureOriginal489_4 = __destructureReceiver489.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal489_4>>) => __destructureReceiver489.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal489_4>,
++__destructureOriginal489_5 = __destructureReceiver489.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal489_5>>) => __destructureReceiver489.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal489_5>;
+ 
+     const compilerOptions = context.getCompilerOptions();
+     const resolver = context.getEmitResolver();
+--- adapted-baseline/src/compiler/transformers/es2016.ts
++++ hybrid-road/src/compiler/transformers/es2016.ts
+@@ -19,10 +19,11 @@
+ 
+ /** @internal */
+ export function transformES2016(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver22 = context,
++__destructureOriginal22_0 = __destructureReceiver22.factory,
++factory = __destructureOriginal22_0,
++__destructureOriginal22_1 = __destructureReceiver22.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal22_1>>) => __destructureReceiver22.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal22_1>;
+ 
+     return chainBundle(context, transformSourceFile);
+ 
+--- adapted-baseline/src/compiler/transformers/es2017.ts
++++ hybrid-road/src/compiler/transformers/es2017.ts
+@@ -117,13 +117,17 @@
+ 
+ /** @internal */
+ export function transformES2017(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        resumeLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver120 = context,
++__destructureOriginal120_0 = __destructureReceiver120.factory,
++factory = __destructureOriginal120_0,
++__destructureOriginal120_1 = __destructureReceiver120.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal120_1>>) => __destructureReceiver120.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal120_1>,
++__destructureOriginal120_2 = __destructureReceiver120.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal120_2>>) => __destructureReceiver120.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal120_2>,
++__destructureOriginal120_3 = __destructureReceiver120.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal120_3>>) => __destructureReceiver120.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal120_3>,
++__destructureOriginal120_4 = __destructureReceiver120.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal120_4>>) => __destructureReceiver120.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal120_4>;
+ 
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/transformers/es2018.ts
++++ hybrid-road/src/compiler/transformers/es2018.ts
+@@ -152,13 +152,17 @@
+ 
+ /** @internal */
+ export function transformES2018(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        resumeLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver155 = context,
++__destructureOriginal155_0 = __destructureReceiver155.factory,
++factory = __destructureOriginal155_0,
++__destructureOriginal155_1 = __destructureReceiver155.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal155_1>>) => __destructureReceiver155.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal155_1>,
++__destructureOriginal155_2 = __destructureReceiver155.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal155_2>>) => __destructureReceiver155.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal155_2>,
++__destructureOriginal155_3 = __destructureReceiver155.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal155_3>>) => __destructureReceiver155.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal155_3>,
++__destructureOriginal155_4 = __destructureReceiver155.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal155_4>>) => __destructureReceiver155.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal155_4>;
+ 
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/transformers/es2020.ts
++++ hybrid-road/src/compiler/transformers/es2020.ts
+@@ -40,10 +40,11 @@
+ 
+ /** @internal */
+ export function transformES2020(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver43 = context,
++__destructureOriginal43_0 = __destructureReceiver43.factory,
++factory = __destructureOriginal43_0,
++__destructureOriginal43_1 = __destructureReceiver43.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal43_1>>) => __destructureReceiver43.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal43_1>;
+ 
+     return chainBundle(context, transformSourceFile);
+ 
+--- adapted-baseline/src/compiler/transformers/es2021.ts
++++ hybrid-road/src/compiler/transformers/es2021.ts
+@@ -23,10 +23,11 @@
+ 
+ /** @internal */
+ export function transformES2021(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        hoistVariableDeclaration,
+-        factory,
+-    } = context;
++    const __destructureReceiver26 = context,
++__destructureOriginal26_0 = __destructureReceiver26.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal26_0>>) => __destructureReceiver26.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal26_0>,
++__destructureOriginal26_1 = __destructureReceiver26.factory,
++factory = __destructureOriginal26_1;
+     return chainBundle(context, transformSourceFile);
+ 
+     function transformSourceFile(node: SourceFile) {
+--- adapted-baseline/src/compiler/transformers/esDecorators.ts
++++ hybrid-road/src/compiler/transformers/esDecorators.ts
+@@ -293,13 +293,17 @@
+ 
+ /** @internal */
+ export function transformESDecorators(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        startLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver296 = context,
++__destructureOriginal296_0 = __destructureReceiver296.factory,
++factory = __destructureOriginal296_0,
++__destructureOriginal296_1 = __destructureReceiver296.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal296_1>>) => __destructureReceiver296.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal296_1>,
++__destructureOriginal296_2 = __destructureReceiver296.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal296_2>>) => __destructureReceiver296.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal296_2>,
++__destructureOriginal296_3 = __destructureReceiver296.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal296_3>>) => __destructureReceiver296.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal296_3>,
++__destructureOriginal296_4 = __destructureReceiver296.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal296_4>>) => __destructureReceiver296.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal296_4>;
+ 
+     const languageVersion = getEmitScriptTarget(context.getCompilerOptions());
+     let top: LexicalEnvironmentStackEntry | undefined;
+--- adapted-baseline/src/compiler/transformers/esnext.ts
++++ hybrid-road/src/compiler/transformers/esnext.ts
+@@ -74,13 +74,17 @@
+     //       `ScriptTargetFeatures`, `CommandLineOptionOfCustomType`, transformers/esnext.ts, compiler/commandLineParser.ts,
+     //       compiler/utilitiesPublic.ts, and the contents of each lib/esnext.*.d.ts file.
+ 
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        hoistVariableDeclaration,
+-        startLexicalEnvironment,
+-        endLexicalEnvironment,
+-    } = context;
++    const __destructureReceiver77 = context,
++__destructureOriginal77_0 = __destructureReceiver77.factory,
++factory = __destructureOriginal77_0,
++__destructureOriginal77_1 = __destructureReceiver77.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal77_1>>) => __destructureReceiver77.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal77_1>,
++__destructureOriginal77_2 = __destructureReceiver77.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal77_2>>) => __destructureReceiver77.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal77_2>,
++__destructureOriginal77_3 = __destructureReceiver77.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal77_3>>) => __destructureReceiver77.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal77_3>,
++__destructureOriginal77_4 = __destructureReceiver77.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal77_4>>) => __destructureReceiver77.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal77_4>;
+ 
+     let exportBindings: IdentifierNameMap<ExportSpecifier>;
+     let exportVars: VariableDeclaration[];
+--- adapted-baseline/src/compiler/transformers/generators.ts
++++ hybrid-road/src/compiler/transformers/generators.ts
+@@ -334,14 +334,19 @@
+ 
+ /** @internal */
+ export function transformGenerators(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        resumeLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistFunctionDeclaration,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver337 = context,
++__destructureOriginal337_0 = __destructureReceiver337.factory,
++factory = __destructureOriginal337_0,
++__destructureOriginal337_1 = __destructureReceiver337.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal337_1>>) => __destructureReceiver337.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal337_1>,
++__destructureOriginal337_2 = __destructureReceiver337.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal337_2>>) => __destructureReceiver337.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal337_2>,
++__destructureOriginal337_3 = __destructureReceiver337.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal337_3>>) => __destructureReceiver337.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal337_3>,
++__destructureOriginal337_4 = __destructureReceiver337.hoistFunctionDeclaration,
++hoistFunctionDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal337_4>>) => __destructureReceiver337.hoistFunctionDeclaration!(...args)) as NonNullable<typeof __destructureOriginal337_4>,
++__destructureOriginal337_5 = __destructureReceiver337.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal337_5>>) => __destructureReceiver337.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal337_5>;
+ 
+     const compilerOptions = context.getCompilerOptions();
+     const languageVersion = getEmitScriptTarget(compilerOptions);
+--- adapted-baseline/src/compiler/transformers/jsx.ts
++++ hybrid-road/src/compiler/transformers/jsx.ts
+@@ -96,10 +96,11 @@
+         utilizedImplicitRuntimeImports?: Map<string, Map<string, ImportSpecifier>>;
+     }
+ 
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-    } = context;
++    const __destructureReceiver99 = context,
++__destructureOriginal99_0 = __destructureReceiver99.factory,
++factory = __destructureOriginal99_0,
++__destructureOriginal99_1 = __destructureReceiver99.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal99_1>>) => __destructureReceiver99.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal99_1>;
+     const compilerOptions = context.getCompilerOptions();
+     let currentSourceFile: SourceFile;
+     let currentFileState!: PerFileState;
+--- adapted-baseline/src/compiler/transformers/legacyDecorators.ts
++++ hybrid-road/src/compiler/transformers/legacyDecorators.ts
+@@ -86,11 +86,13 @@
+ 
+ /** @internal */
+ export function transformLegacyDecorators(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver89 = context,
++__destructureOriginal89_0 = __destructureReceiver89.factory,
++factory = __destructureOriginal89_0,
++__destructureOriginal89_1 = __destructureReceiver89.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal89_1>>) => __destructureReceiver89.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal89_1>,
++__destructureOriginal89_2 = __destructureReceiver89.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal89_2>>) => __destructureReceiver89.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal89_2>;
+ 
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/transformers/module/esnextAnd2015.ts
++++ hybrid-road/src/compiler/transformers/module/esnextAnd2015.ts
+@@ -65,10 +65,11 @@
+ 
+ /** @internal */
+ export function transformECMAScriptModule(context: TransformationContext): (x: SourceFile | Bundle) => SourceFile | Bundle {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-    } = context;
++    const __destructureReceiver68 = context,
++__destructureOriginal68_0 = __destructureReceiver68.factory,
++factory = __destructureOriginal68_0,
++__destructureOriginal68_1 = __destructureReceiver68.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal68_1>>) => __destructureReceiver68.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal68_1>;
+     const host = context.getEmitHost();
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/transformers/module/module.ts
++++ hybrid-road/src/compiler/transformers/module/module.ts
+@@ -189,13 +189,17 @@
+         }
+     }
+ 
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        startLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver192 = context,
++__destructureOriginal192_0 = __destructureReceiver192.factory,
++factory = __destructureOriginal192_0,
++__destructureOriginal192_1 = __destructureReceiver192.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal192_1>>) => __destructureReceiver192.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal192_1>,
++__destructureOriginal192_2 = __destructureReceiver192.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal192_2>>) => __destructureReceiver192.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal192_2>,
++__destructureOriginal192_3 = __destructureReceiver192.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal192_3>>) => __destructureReceiver192.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal192_3>,
++__destructureOriginal192_4 = __destructureReceiver192.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal192_4>>) => __destructureReceiver192.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal192_4>;
+ 
+     const compilerOptions = context.getCompilerOptions();
+     const resolver = context.getEmitResolver();
+--- adapted-baseline/src/compiler/transformers/module/system.ts
++++ hybrid-road/src/compiler/transformers/module/system.ts
+@@ -140,12 +140,15 @@
+         externalImports: (ImportDeclaration | ImportEqualsDeclaration | ExportDeclaration)[];
+     }
+ 
+-    const {
+-        factory,
+-        startLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver143 = context,
++__destructureOriginal143_0 = __destructureReceiver143.factory,
++factory = __destructureOriginal143_0,
++__destructureOriginal143_1 = __destructureReceiver143.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal143_1>>) => __destructureReceiver143.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal143_1>,
++__destructureOriginal143_2 = __destructureReceiver143.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal143_2>>) => __destructureReceiver143.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal143_2>,
++__destructureOriginal143_3 = __destructureReceiver143.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal143_3>>) => __destructureReceiver143.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal143_3>;
+ 
+     const compilerOptions = context.getCompilerOptions();
+     const resolver = context.getEmitResolver();
+--- adapted-baseline/src/compiler/transformers/ts.ts
++++ hybrid-road/src/compiler/transformers/ts.ts
+@@ -233,14 +233,19 @@
+ 
+ /** @internal */
+ export function transformTypeScript(context: TransformationContext): Transformer<SourceFile | Bundle> {
+-    const {
+-        factory,
+-        getEmitHelperFactory: emitHelpers,
+-        startLexicalEnvironment,
+-        resumeLexicalEnvironment,
+-        endLexicalEnvironment,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver236 = context,
++__destructureOriginal236_0 = __destructureReceiver236.factory,
++factory = __destructureOriginal236_0,
++__destructureOriginal236_1 = __destructureReceiver236.getEmitHelperFactory,
++emitHelpers = ((...args: Parameters<NonNullable<typeof __destructureOriginal236_1>>) => __destructureReceiver236.getEmitHelperFactory!(...args)) as NonNullable<typeof __destructureOriginal236_1>,
++__destructureOriginal236_2 = __destructureReceiver236.startLexicalEnvironment,
++startLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal236_2>>) => __destructureReceiver236.startLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal236_2>,
++__destructureOriginal236_3 = __destructureReceiver236.resumeLexicalEnvironment,
++resumeLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal236_3>>) => __destructureReceiver236.resumeLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal236_3>,
++__destructureOriginal236_4 = __destructureReceiver236.endLexicalEnvironment,
++endLexicalEnvironment = ((...args: Parameters<NonNullable<typeof __destructureOriginal236_4>>) => __destructureReceiver236.endLexicalEnvironment!(...args)) as NonNullable<typeof __destructureOriginal236_4>,
++__destructureOriginal236_5 = __destructureReceiver236.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal236_5>>) => __destructureReceiver236.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal236_5>;
+ 
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/transformers/typeSerializer.ts
++++ hybrid-road/src/compiler/transformers/typeSerializer.ts
+@@ -130,10 +130,11 @@
+ 
+ /** @internal */
+ export function createRuntimeTypeSerializer(context: TransformationContext): RuntimeTypeSerializer {
+-    const {
+-        factory,
+-        hoistVariableDeclaration,
+-    } = context;
++    const __destructureReceiver133 = context,
++__destructureOriginal133_0 = __destructureReceiver133.factory,
++factory = __destructureOriginal133_0,
++__destructureOriginal133_1 = __destructureReceiver133.hoistVariableDeclaration,
++hoistVariableDeclaration = ((...args: Parameters<NonNullable<typeof __destructureOriginal133_1>>) => __destructureReceiver133.hoistVariableDeclaration!(...args)) as NonNullable<typeof __destructureOriginal133_1>;
+ 
+     const resolver = context.getEmitResolver();
+     const compilerOptions = context.getCompilerOptions();
+--- adapted-baseline/src/compiler/types.ts
++++ hybrid-road/src/compiler/types.ts
+@@ -10616,8 +10616,8 @@
+ 
+ /** @internal */
+ export interface EvaluationResolver {
+-    evaluateEntityNameExpression(expr: EntityNameExpression, location: Declaration | undefined): EvaluatorResult;
+-    evaluateElementAccessExpression(expr: ElementAccessExpression, location: Declaration | undefined): EvaluatorResult;
++    evaluateEntityNameExpression: (expr: EntityNameExpression, location: Declaration | undefined) => EvaluatorResult;
++    evaluateElementAccessExpression: (expr: ElementAccessExpression, location: Declaration | undefined) => EvaluatorResult;
+ }
+ 
+ /** @internal */
+@@ -10667,10 +10667,10 @@
+     shouldRemoveDeclaration(context: SyntacticTypeNodeBuilderContext, node: DynamicNamedDeclaration): boolean;
+     hasLateBindableName(node: Declaration): node is LateBoundDeclaration | LateBoundBinaryExpressionDeclaration;
+     createRecoveryBoundary(context: SyntacticTypeNodeBuilderContext): {
+-        startRecoveryScope(): () => void;
+-        finalizeBoundary(): boolean;
+-        markError(): void;
+-        hadError(): boolean;
++        startRecoveryScope: () => () => void;
++        finalizeBoundary: () => boolean;
++        markError: () => void;
++        hadError: () => boolean;
+     };
+ }
+ 
+--- adapted-baseline/src/compiler/utilities.ts
++++ hybrid-road/src/compiler/utilities.ts
+@@ -8175,7 +8175,7 @@
+ 
+ /** @internal */
+ export interface MutateMapSkippingNewValuesDelete<K, T> {
+-    onDeleteValue(existingValue: T, key: K): void;
++    onDeleteValue: (existingValue: T, key: K) => void;
+ }
+ 
+ /** @internal */
+@@ -8186,7 +8186,7 @@
+      * If the key is removed, caller will get callback of createNewValue for that key.
+      * If this callback is not provided, the value of such keys is not updated.
+      */
+-    onExistingValue?(existingValue: T, valueInNewMap: U, key: K): void;
++    onExistingValue?: (existingValue: T, valueInNewMap: U, key: K) => void;
+ }
+ 
+ /**
+@@ -8227,7 +8227,7 @@
+ 
+ /** @internal */
+ export interface MutateMapOptionsCreate<K, T, U> {
+-    createNewValue(key: K, valueInNewMap: U): T;
++    createNewValue: (key: K, valueInNewMap: U) => T;
+ }
+ 
+ /** @internal */

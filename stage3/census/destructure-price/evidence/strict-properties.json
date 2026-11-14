@@ -1,0 +1,58 @@
+{
+  "typescript": "6.0.3",
+  "command": [
+    "node",
+    "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+    "--project",
+    "src/compiler/tsconfig.json",
+    "--noEmit",
+    "--strictFunctionTypes",
+    "true",
+    "--incremental",
+    "false",
+    "--composite",
+    "false",
+    "--pretty",
+    "false",
+    "--noErrorTruncation"
+  ],
+  "rootCount": 79,
+  "rootManifest": "root-manifest.json",
+  "diagnosticCount": 1,
+  "diagnostics": [
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 639,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string) => Mutable<PropertyAccessChain>' is not assignable to type '(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName) => PropertyAccessChain'.\n  Types of parameters 'name' and 'name' are incompatible.\n    Type 'string | MemberName' is not assignable to type 'string'.\n      Type 'Identifier' is not assignable to type 'string'."
+    }
+  ],
+  "measurement": {
+    "command": [
+      "node",
+      "/tmp/destructure-price-scratch/work/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "src/compiler/tsconfig.json",
+      "--noEmit",
+      "--strictFunctionTypes",
+      "true",
+      "--incremental",
+      "false",
+      "--composite",
+      "false",
+      "--pretty",
+      "false",
+      "--noErrorTruncation"
+    ],
+    "cwd": "/workspace/scratch/destructure-price-f2989762/properties",
+    "exit": 2,
+    "timeout": false,
+    "limit_seconds": null,
+    "wall_seconds": 13.925,
+    "peak_process_tree_rss_kib": 699208,
+    "sampling_interval_seconds": 0.2,
+    "samples": 68,
+    "max_descendant_rss_kib": 699560
+  }
+}
