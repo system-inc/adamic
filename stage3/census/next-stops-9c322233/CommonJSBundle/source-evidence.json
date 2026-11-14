@@ -1,0 +1,61 @@
+[
+  {
+    "where": "sys.ts:272:23",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan",
+    "owner": "01a11410",
+    "emitter": "internal/lower/cast_proof.go: (*lowering).castProof (via castRefusal)",
+    "adapted_line": "        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;",
+    "adapted_excerpt": "269:     }\n270: \n271:     function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {\n272:         const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;\n273:         queue.pollingInterval = pollingInterval;\n274:         queue.pollIndex = 0;\n275:         queue.pollScheduled = false;"
+  },
+  {
+    "where": "-",
+    "kind": "accepted",
+    "reason": "-",
+    "phase": "accepted",
+    "owner": "lower.LowerWithOptions (accepted; no stop)",
+    "emitter": "lower.LowerWithOptions (accepted; no stop)"
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "adapted_line": "            fixedpollinginterval: WatchFileKind.FixedPollingInterval,",
+    "adapted_excerpt": "290:     {\n291:         name: \"watchFile\",\n292:         type: new Map(Object.entries({\n293:             fixedpollinginterval: WatchFileKind.FixedPollingInterval,\n294:             prioritypollinginterval: WatchFileKind.PriorityPollingInterval,\n295:             dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,\n296:             fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "adapted_line": "    Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,",
+    "adapted_excerpt": "10: /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/\n11: /** @internal */\n12: export const Diagnostics = {\n13:     Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,\n14:     Identifier_expected: diag(1003, DiagnosticCategory.Error, \"Identifier_expected_1003\", \"Identifier expected.\") as DiagnosticMessage,\n15:     _0_expected: diag(1005, DiagnosticCategory.Error, \"_0_expected_1005\", \"'{0}' expected.\") as DiagnosticMessage,\n16:     A_file_cannot_have_a_reference_to_itself: diag(1006, DiagnosticCategory.Error, \"A_file_cannot_have_a_reference_to_itself_1006\", \"A file cannot have a reference to itself.\") as DiagnosticMessage,"
+  },
+  {
+    "where": "scanner.ts:2934:41",
+    "kind": "Refused",
+    "reason": "a value of type (TextRange & { value: number; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { value: number; } is read",
+    "phase": "refusal_scan",
+    "owner": "adaptation 70, stage 3",
+    "emitter": "internal/lower/invariance.go: (*lowering).wideningRefusal (via refuseWidening and stringWideningRefusal, rule 3100)",
+    "owner_basis": "stage3/meter/owners.json: seen as",
+    "adapted_line": "                decimalEscapes = append(decimalEscapes, { pos: start, end: pos, value: +tokenValue });",
+    "adapted_excerpt": "2931:             if (ch >= CharacterCodes._1 && ch <= CharacterCodes._9) {\n2932:                 const start = pos;\n2933:                 scanDigits();\n2934:                 decimalEscapes = append(decimalEscapes, { pos: start, end: pos, value: +tokenValue });\n2935:                 return true;\n2936:             }\n2937:             return false;"
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "adapted_line": "        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");",
+    "adapted_excerpt": "68:         const buildArray = build ? isArray(build) ? build : build.split(\".\") : emptyArray;\n69: \n70:         Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), \"Invalid argument: prerelease\");\n71:         Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");\n72: \n73:         this.major = major;\n74:         this.minor = minor;"
+  }
+]
