@@ -6,7 +6,7 @@ Head: `1d48ecb5a5321717daf901579e49a23291995589`; main and confirmed merge-base:
 
 ## Part 2 — paired refusal scan
 
-All 79 adapted compiler files at each commit, CommonJSBundle. Scan-only sees refusal-scan findings only, including the existing scan helper’s contract/deferred bookkeeping; it does not lower bodies. The full first-stop census is needed to name lowering-phase stops. All controls and per-file output validations passed.
+All 79 adapted compiler files at each commit, CommonJSBundle. Scan-only sees refusal-scan findings only; all 4,397 main and 4,024 head findings have phase `refusal_scan`. It does not lower bodies. The full first-stop census is needed to name lowering-phase stops. All controls and per-file output validations passed.
 
 The adapted source identity check is in [source-identity.json](source-identity.json). Finding identity is `(kind, file, line, column, reason)`. Paths are normalized to `src/compiler/`; identical lines map by identity. “Changed” means the same key has different normalized diagnostic text; reason/kind changes count as gone plus new.
 
