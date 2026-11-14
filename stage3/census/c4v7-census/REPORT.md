@@ -2,7 +2,7 @@
 
 sys.ts:304:13: Part 1 pending. scanner.ts:2934:41: Part 1 pending. **12 new refusal-scan findings.**
 
-Head: `1d48ecb5a5321717daf901579e49a23291995589`; main and confirmed merge-base: `5c8338c4232c37afb304ce6865458b67655c590a`. Measurement and reporting only; no adaptation or compiler changes.
+Compiler branch `compiler/constraint-body-rigid-3`, c4v-7, task #p0fy047. Head: `1d48ecb5a5321717daf901579e49a23291995589`; main and confirmed merge-base: `5c8338c4232c37afb304ce6865458b67655c590a`. Measurement and reporting only; no adaptation or compiler changes.
 
 ## Part 2 — paired refusal scan
 
@@ -21,42 +21,42 @@ The adapted source identity check is in [source-identity.json](source-identity.j
 | a value of type (TextRange & { name: string; })[] \| undefined seen as {}[] \| undefined, which can write {} where TextRange & { name: string; } is read | 1 | 0 | 0 |
 | a value of type (TextRange & { value: number; })[] \| undefined seen as {}[] \| undefined, which can write {} where TextRange & { value: number; } is read | 1 | 0 | 0 |
 | a value of type (WatchedFileWithUnchangedPolls \| undefined)[] seen as (WatchedFileWithIsClosed \| undefined)[], which can write WatchedFileWithIsClosed \| undefined where WatchedFileWithUnchangedPolls \| undefined is read | 1 | 0 | 0 |
-| a value of type (chain: ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo seen as (chain: DiagnosticMessageChain \| ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo \| undefined, which can write ReusableDiagnosticMessageChain[] \| undefined where DiagnosticMessageChain[] \| undefined is read | 1 | 0 | 0 |
+| a value of type (chain: ReusableDiagnosticMessageChain) =&gt; RepopulateDiagnosticChainInfo seen as (chain: DiagnosticMessageChain \| ReusableDiagnosticMessageChain) =&gt; RepopulateDiagnosticChainInfo \| undefined, which can write ReusableDiagnosticMessageChain[] \| undefined where DiagnosticMessageChain[] \| undefined is read | 1 | 0 | 0 |
 | a value of type (readonly IncrementalBuildInfoFileId[])[] \| undefined seen as {}[] \| undefined, which can write {} where readonly IncrementalBuildInfoFileId[] is read | 1 | 0 | 0 |
-| a value of type (resolution: ResolvedModuleWithFailedLookupLocations) => ResolvedModuleFull \| undefined seen as GetResolutionWithResolvedFileName<CachedResolvedModuleWithFailedLookupLocations, ResolutionWithResolvedFileName>, which can write string \| undefined where string is read | 3 | 0 | 0 |
-| a value of type (sourceFile: SourceFile) => readonly DiagnosticWithLocation[] seen as (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) => readonly Diagnostic[], which can write SourceFile \| undefined where SourceFile is read | 1 | 0 | 0 |
-| a value of type (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) => readonly Diagnostic[], which can write SourceFile \| undefined where SourceFile is read | 1 | 0 | 0 |
-| a value of type AssertClause seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type AssertEntry seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type (resolution: ResolvedModuleWithFailedLookupLocations) =&gt; ResolvedModuleFull \| undefined seen as GetResolutionWithResolvedFileName&lt;CachedResolvedModuleWithFailedLookupLocations, ResolutionWithResolvedFileName&gt;, which can write string \| undefined where string is read | 3 | 0 | 0 |
+| a value of type (sourceFile: SourceFile) =&gt; readonly DiagnosticWithLocation[] seen as (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) =&gt; readonly Diagnostic[], which can write SourceFile \| undefined where SourceFile is read | 1 | 0 | 0 |
+| a value of type (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) =&gt; readonly DiagnosticWithLocation[] seen as (sourceFile: SourceFile, cancellationToken: CancellationToken \| undefined) =&gt; readonly Diagnostic[], which can write SourceFile \| undefined where SourceFile is read | 1 | 0 | 0 |
+| a value of type AssertClause seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type AssertEntry seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type BindingElement[] \| undefined seen as {}[] \| undefined, which can write {} where BindingElement is read | 1 | 0 | 0 |
 | a value of type BindingOrAssignmentElement[] \| undefined seen as {}[] \| undefined, which can write {} where BindingOrAssignmentElement is read | 3 | 0 | 0 |
-| a value of type Block seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type BreakStatement seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type Block seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type BreakStatement seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type CallExpression[] \| undefined seen as {}[] \| undefined, which can write {} where CallExpression is read | 2 | 0 | 0 |
-| a value of type CallSignatureDeclaration seen as Mutable<SignatureDeclarationBase>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type CaseBlock seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type CallSignatureDeclaration seen as Mutable&lt;SignatureDeclarationBase&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type CaseBlock seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type ClassElement[] \| undefined seen as {}[] \| undefined, which can write {} where ClassElement is read | 5 | 0 | 0 |
 | a value of type CommentDirective[] \| undefined seen as {}[] \| undefined, which can write {} where CommentDirective is read | 3 | 0 | 0 |
-| a value of type ConstructSignatureDeclaration seen as Mutable<SignatureDeclarationBase>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ConstructorTypeNode seen as Mutable<SignatureDeclarationBase>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ContinueStatement seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ConstructSignatureDeclaration seen as Mutable&lt;SignatureDeclarationBase&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ConstructorTypeNode seen as Mutable&lt;SignatureDeclarationBase&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ContinueStatement seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type Decorator[] \| undefined seen as {}[] \| undefined, which can write {} where Decorator is read | 3 | 0 | 0 |
 | a value of type DiagnosticRelatedInformation[] \| undefined seen as {}[] \| undefined, which can write {} where DiagnosticRelatedInformation is read | 1 | 0 | 0 |
 | a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile \| undefined where SourceFile is read | 0 | 2 | 0 |
 | a value of type DiagnosticWithLocation[] \| undefined seen as {}[] \| undefined, which can write {} where DiagnosticWithLocation is read | 1 | 0 | 0 |
 | a value of type ElementWithComputedPropertyName[] \| undefined seen as {}[] \| undefined, which can write {} where ElementWithComputedPropertyName is read | 1 | 0 | 0 |
 | a value of type EmitHelper[] \| undefined seen as {}[] \| undefined, which can write {} where EmitHelper is read | 2 | 0 | 0 |
-| a value of type ExpressionStatement seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ExpressionStatement seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type Expression[] seen as {}[], which can write {} where Expression is read | 2 | 0 | 0 |
 | a value of type Expression[] \| undefined seen as {}[] \| undefined, which can write {} where Expression is read | 10 | 0 | 0 |
 | a value of type Identifier[] seen as {}[], which can write {} where Identifier is read | 1 | 0 | 0 |
 | a value of type Identifier[] \| undefined seen as {}[] \| undefined, which can write {} where Identifier is read | 1 | 0 | 0 |
-| a value of type ImportAttribute seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ImportAttributes seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ImportClause seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ImportDeclaration seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ImportTypeAssertionContainer seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type ImportTypeNode seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportAttribute seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportAttributes seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportClause seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportDeclaration seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportTypeAssertionContainer seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ImportTypeNode seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type IncrementalBuildInfoDiagnosticOfFile[] \| undefined seen as {}[] \| undefined, which can write {} where IncrementalBuildInfoDiagnosticOfFile is read | 1 | 0 | 0 |
 | a value of type IncrementalBuildInfoDiagnostic[] \| undefined seen as {}[] \| undefined, which can write {} where IncrementalBuildInfoDiagnostic is read | 2 | 0 | 0 |
 | a value of type IncrementalBuildInfoEmitSignature[] \| undefined seen as {}[] \| undefined, which can write {} where IncrementalBuildInfoEmitSignature is read | 1 | 0 | 0 |
@@ -64,198 +64,198 @@ The adapted source identity check is in [source-identity.json](source-identity.j
 | a value of type IncrementalBuildInfoFilePendingEmit[] \| undefined seen as {}[] \| undefined, which can write {} where IncrementalBuildInfoFilePendingEmit is read | 1 | 0 | 0 |
 | a value of type IncrementalBuildInfoResolvedRoot[] \| undefined seen as {}[] \| undefined, which can write {} where IncrementalBuildInfoResolvedRoot is read | 1 | 0 | 0 |
 | a value of type IndexInfo[] \| undefined seen as {}[] \| undefined, which can write {} where IndexInfo is read | 3 | 0 | 0 |
-| a value of type IndexSignatureDeclaration seen as Mutable<SignatureDeclarationBase>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type IndexSignatureDeclaration seen as Mutable&lt;SignatureDeclarationBase&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type IterationTypes[] \| undefined seen as {}[] \| undefined, which can write {} where IterationTypes is read | 1 | 0 | 0 |
-| a value of type JSDocAugmentsTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocCallbackTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocAugmentsTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocCallbackTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read | 3 | 0 | 0 |
-| a value of type JSDocFunctionType seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocImplementsTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocImportTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocLink seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocLinkCode seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocLinkPlain seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocNameReference seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocOverloadTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocParameterTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocFunctionType seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocImplementsTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocImportTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocLink seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocLinkCode seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocLinkPlain seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocNameReference seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocOverloadTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocParameterTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type JSDocParameterTag[] seen as Node[], which can write Node where JSDocParameterTag is read | 1 | 0 | 0 |
 | a value of type JSDocParameterTag[] \| undefined seen as {}[] \| undefined, which can write {} where JSDocParameterTag is read | 1 | 0 | 0 |
 | a value of type JSDocPropertyLikeTag[] \| undefined seen as {}[] \| undefined, which can write {} where JSDocPropertyLikeTag is read | 1 | 0 | 0 |
-| a value of type JSDocPropertyTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocPropertyTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type JSDocPropertyTag[] \| undefined seen as {}[] \| undefined, which can write {} where JSDocPropertyTag is read | 1 | 0 | 0 |
-| a value of type JSDocSeeTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocSignature seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocSeeTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocSignature seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type JSDocTag[] seen as Node[], which can write Node where JSDocTag is read | 1 | 0 | 0 |
-| a value of type JSDocTemplateTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocText seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocTypeExpression seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocTypeLiteral seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocTypedefTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type JSDocUnknownTag seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocTemplateTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocText seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocTypeExpression seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocTypeLiteral seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocTypedefTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type JSDocUnknownTag seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type JsxChild[] seen as Node[], which can write Node where JsxChild is read | 1 | 0 | 0 |
-| a value of type Map<Path, ModeAwareCache<CachedResolvedModuleWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<ResolutionWithFailedLookupLocations>>, which can write string where Path is read | 1 | 0 | 0 |
-| a value of type Map<Path, ModeAwareCache<CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations>> seen as Map<string, ModeAwareCache<ResolutionWithFailedLookupLocations>>, which can write string where Path is read | 1 | 0 | 0 |
-| a value of type Map<string, SingleFileWatcher<FileWatcherCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback \| FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback \| FsWatchCallback> where SingleFileWatcher<FileWatcherCallback> is read | 1 | 0 | 0 |
-| a value of type Map<string, SingleFileWatcher<FsWatchCallback>> seen as Map<string, SingleFileWatcher<FileWatcherCallback \| FsWatchCallback>>, which can write SingleFileWatcher<FileWatcherCallback \| FsWatchCallback> where SingleFileWatcher<FsWatchCallback> is read | 1 | 0 | 0 |
-| a value of type MappedTypeNode seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type Map&lt;Path, ModeAwareCache&lt;CachedResolvedModuleWithFailedLookupLocations&gt;&gt; seen as Map&lt;string, ModeAwareCache&lt;ResolutionWithFailedLookupLocations&gt;&gt;, which can write string where Path is read | 1 | 0 | 0 |
+| a value of type Map&lt;Path, ModeAwareCache&lt;CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations&gt;&gt; seen as Map&lt;string, ModeAwareCache&lt;ResolutionWithFailedLookupLocations&gt;&gt;, which can write string where Path is read | 1 | 0 | 0 |
+| a value of type Map&lt;string, SingleFileWatcher&lt;FileWatcherCallback&gt;&gt; seen as Map&lt;string, SingleFileWatcher&lt;FileWatcherCallback \| FsWatchCallback&gt;&gt;, which can write SingleFileWatcher&lt;FileWatcherCallback \| FsWatchCallback&gt; where SingleFileWatcher&lt;FileWatcherCallback&gt; is read | 1 | 0 | 0 |
+| a value of type Map&lt;string, SingleFileWatcher&lt;FsWatchCallback&gt;&gt; seen as Map&lt;string, SingleFileWatcher&lt;FileWatcherCallback \| FsWatchCallback&gt;&gt;, which can write SingleFileWatcher&lt;FileWatcherCallback \| FsWatchCallback&gt; where SingleFileWatcher&lt;FsWatchCallback&gt; is read | 1 | 0 | 0 |
+| a value of type MappedTypeNode seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type ModifierLike[] seen as Node[], which can write Node where ModifierLike is read | 1 | 0 | 0 |
 | a value of type ModifierLike[] \| undefined seen as {}[] \| undefined, which can write {} where ModifierLike is read | 4 | 0 | 0 |
 | a value of type Modifier[] \| undefined seen as {}[] \| undefined, which can write {} where Modifier is read | 1 | 0 | 0 |
 | a value of type ModuleExportName[] \| undefined seen as {}[] \| undefined, which can write {} where ModuleExportName is read | 4 | 0 | 0 |
-| a value of type Mutable<ArrayBindingPattern> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ArrayBindingPattern is read | 1 | 0 | 0 |
-| a value of type Mutable<ArrayLiteralExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ArrayLiteralExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ArrayTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ArrayType is read | 1 | 0 | 0 |
-| a value of type Mutable<ArrowFunction> seen as Mutable<SignatureDeclarationBase>, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.ArrowFunction is read | 1 | 0 | 0 |
-| a value of type Mutable<AsExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.AsExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<AwaitExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.AwaitExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<BinaryExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.BinaryExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<BindingElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.BindingElement is read | 1 | 0 | 0 |
-| a value of type Mutable<Bundle> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.Bundle is read | 1 | 0 | 0 |
-| a value of type Mutable<CallChain> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.CallExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<CallExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.CallExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<CaseClause> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.CaseClause is read | 1 | 0 | 0 |
-| a value of type Mutable<CatchClause> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.CatchClause is read | 1 | 0 | 0 |
-| a value of type Mutable<ClassDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ClassDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<ClassExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ClassExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ClassStaticBlockDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ClassStaticBlockDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<CommaListExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.CommaListExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ComputedPropertyName> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ComputedPropertyName is read | 1 | 0 | 0 |
-| a value of type Mutable<ConditionalExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ConditionalExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ConditionalTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ConditionalType is read | 1 | 0 | 0 |
-| a value of type Mutable<ConstructorDeclaration> seen as Mutable<SignatureDeclarationBase>, which can write Node where ClassLikeDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<Decorator> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.Decorator is read | 1 | 0 | 0 |
-| a value of type Mutable<DefaultClause> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.DefaultClause is read | 1 | 0 | 0 |
-| a value of type Mutable<DeleteExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.DeleteExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<DoStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.DoStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<ElementAccessChain> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ElementAccessExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ElementAccessExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ElementAccessExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<EnumDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.EnumDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<EnumMember> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.EnumMember is read | 1 | 0 | 0 |
-| a value of type Mutable<ExportAssignment> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ExportAssignment is read | 1 | 0 | 0 |
-| a value of type Mutable<ExportDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ExportDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<ExportSpecifier> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ExportSpecifier is read | 1 | 0 | 0 |
-| a value of type Mutable<ExpressionWithTypeArguments> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ExpressionWithTypeArguments is read | 1 | 0 | 0 |
-| a value of type Mutable<ExternalModuleReference> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ExternalModuleReference is read | 1 | 0 | 0 |
-| a value of type Mutable<ForInStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ForInStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<ForOfStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ForOfStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<ForStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ForStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<FunctionDeclaration> seen as Mutable<SignatureDeclarationBase>, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<FunctionExpression> seen as Mutable<SignatureDeclarationBase>, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<FunctionTypeNode> seen as Mutable<SignatureDeclarationBase>, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionType is read | 1 | 0 | 0 |
-| a value of type Mutable<GetAccessorDeclaration> seen as Mutable<SignatureDeclarationBase>, which can write Node where InterfaceDeclaration \| ObjectLiteralExpression \| TypeLiteralNode \| ClassLikeDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<HeritageClause> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.HeritageClause is read | 1 | 0 | 0 |
-| a value of type Mutable<IfStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.IfStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<ImportEqualsDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ImportEqualsDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<ImportSpecifier> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ImportSpecifier is read | 1 | 0 | 0 |
-| a value of type Mutable<IndexedAccessTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.IndexedAccessType is read | 1 | 0 | 0 |
-| a value of type Mutable<InferTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.InferType is read | 1 | 0 | 0 |
-| a value of type Mutable<InterfaceDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.InterfaceDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<JSDoc> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JSDoc is read | 1 | 0 | 0 |
-| a value of type Mutable<JSDocEnumTag> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JSDocEnumTag is read | 1 | 0 | 0 |
-| a value of type Mutable<JSDocMemberName> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JSDocMemberName is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxAttribute> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxAttribute is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxAttributes> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxAttributes is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxClosingElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxClosingElement is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxElement is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxFragment> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxFragment is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxNamespacedName> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxNamespacedName is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxOpeningElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxOpeningElement is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxSelfClosingElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxSelfClosingElement is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxSpreadAttribute> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxSpreadAttribute is read | 1 | 0 | 0 |
-| a value of type Mutable<JsxText> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.JsxText is read | 1 | 0 | 0 |
-| a value of type Mutable<LabeledStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.LabeledStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<LiteralTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.LiteralType is read | 1 | 0 | 0 |
-| a value of type Mutable<MetaProperty> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.MetaProperty is read | 1 | 0 | 0 |
-| a value of type Mutable<MethodDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.MethodDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<MethodSignature> seen as Mutable<SignatureDeclarationBase>, which can write Node where InterfaceDeclaration \| TypeLiteralNode is read | 1 | 0 | 0 |
-| a value of type Mutable<ModuleBlock> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ModuleBlock is read | 1 | 0 | 0 |
-| a value of type Mutable<ModuleDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ModuleDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<NamedExports> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NamedExports is read | 1 | 0 | 0 |
-| a value of type Mutable<NamedTupleMember> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NamedTupleMember is read | 1 | 0 | 0 |
-| a value of type Mutable<NamespaceExportDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NamespaceExportDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<NewExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NewExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<NonNullChain> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NonNullExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<NonNullExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.NonNullExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ObjectBindingPattern> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ObjectBindingPattern is read | 1 | 0 | 0 |
-| a value of type Mutable<ObjectLiteralExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ObjectLiteralExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<OptionalTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.OptionalType is read | 1 | 0 | 0 |
-| a value of type Mutable<ParameterDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.Parameter is read | 1 | 0 | 0 |
-| a value of type Mutable<ParenthesizedExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ParenthesizedExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<ParenthesizedTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ParenthesizedType is read | 1 | 0 | 0 |
-| a value of type Mutable<PartiallyEmittedExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PartiallyEmittedExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<PostfixUnaryExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PostfixUnaryExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<PrefixUnaryExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PrefixUnaryExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<PropertyAccessChain> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PropertyAccessExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<PropertyAccessExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PropertyAccessExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<PropertyAssignment> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PropertyAssignment is read | 1 | 0 | 0 |
-| a value of type Mutable<PropertyDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PropertyDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<PropertySignature> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.PropertySignature is read | 1 | 0 | 0 |
-| a value of type Mutable<QualifiedName> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.QualifiedName is read | 1 | 0 | 0 |
-| a value of type Mutable<RestTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.RestType is read | 1 | 0 | 0 |
-| a value of type Mutable<SatisfiesExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.SatisfiesExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<SetAccessorDeclaration> seen as Mutable<SignatureDeclarationBase>, which can write Node where InterfaceDeclaration \| ObjectLiteralExpression \| TypeLiteralNode \| ClassLikeDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<ShorthandPropertyAssignment> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ShorthandPropertyAssignment is read | 1 | 0 | 0 |
-| a value of type Mutable<SourceFile> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.SourceFile is read | 1 | 0 | 0 |
-| a value of type Mutable<SpreadAssignment> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.SpreadAssignment is read | 1 | 0 | 0 |
-| a value of type Mutable<SpreadElement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.SpreadElement is read | 1 | 0 | 0 |
-| a value of type Mutable<SyntheticReferenceExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.SyntheticReferenceExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<T> seen as Mutable<Node>, which can write SyntaxKind where T["kind"] is read | 1 | 0 | 0 |
-| a value of type Mutable<TaggedTemplateExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TaggedTemplateExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<TemplateExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TemplateExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<TemplateLiteralTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TemplateLiteralType is read | 1 | 0 | 0 |
-| a value of type Mutable<TemplateLiteralTypeSpan> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TemplateLiteralTypeSpan is read | 1 | 0 | 0 |
-| a value of type Mutable<TemplateSpan> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TemplateSpan is read | 1 | 0 | 0 |
-| a value of type Mutable<ThrowStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.ThrowStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<TryStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TryStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<TupleTypeNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TupleType is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeAliasDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeAliasDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeAssertion> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeAssertionExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeLiteralNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeLiteral is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeOfExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeOfExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<TypePredicateNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypePredicate is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeQueryNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeQuery is read | 1 | 0 | 0 |
-| a value of type Mutable<TypeReferenceNode> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.TypeReference is read | 1 | 0 | 0 |
-| a value of type Mutable<VariableDeclaration> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.VariableDeclaration is read | 1 | 0 | 0 |
-| a value of type Mutable<VariableDeclarationList> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.VariableDeclarationList is read | 1 | 0 | 0 |
-| a value of type Mutable<VariableStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.VariableStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<VoidExpression> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.VoidExpression is read | 1 | 0 | 0 |
-| a value of type Mutable<WhileStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.WhileStatement is read | 1 | 0 | 0 |
-| a value of type Mutable<WithStatement> seen as Mutable<Node>, which can write SyntaxKind where SyntaxKind.WithStatement is read | 1 | 0 | 0 |
-| a value of type NamedImports seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type NamespaceExport seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type NamespaceImport seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type NonNullable<T>[] seen as Node[], which can write Node where NonNullable<T> is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ArrayBindingPattern&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ArrayBindingPattern is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ArrayLiteralExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ArrayLiteralExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ArrayTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ArrayType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ArrowFunction&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.ArrowFunction is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;AsExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.AsExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;AwaitExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.AwaitExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;BinaryExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.BinaryExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;BindingElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.BindingElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;Bundle&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.Bundle is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;CallChain&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.CallExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;CallExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.CallExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;CaseClause&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.CaseClause is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;CatchClause&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.CatchClause is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ClassDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ClassDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ClassExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ClassExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ClassStaticBlockDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ClassStaticBlockDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;CommaListExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.CommaListExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ComputedPropertyName&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ComputedPropertyName is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ConditionalExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ConditionalExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ConditionalTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ConditionalType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ConstructorDeclaration&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write Node where ClassLikeDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;Decorator&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.Decorator is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;DefaultClause&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.DefaultClause is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;DeleteExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.DeleteExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;DoStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.DoStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ElementAccessChain&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ElementAccessExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ElementAccessExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ElementAccessExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;EnumDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.EnumDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;EnumMember&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.EnumMember is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ExportAssignment&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ExportAssignment is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ExportDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ExportDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ExportSpecifier&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ExportSpecifier is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ExpressionWithTypeArguments&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ExpressionWithTypeArguments is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ExternalModuleReference&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ExternalModuleReference is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ForInStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ForInStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ForOfStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ForOfStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ForStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ForStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;FunctionDeclaration&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;FunctionExpression&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;FunctionTypeNode&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write SyntaxKind.MethodSignature \| SyntaxKind.MethodDeclaration \| SyntaxKind.Constructor \| SyntaxKind.GetAccessor \| SyntaxKind.SetAccessor \| SyntaxKind.CallSignature \| SyntaxKind.ConstructSignature \| ... 6 more ... \| SyntaxKind.JSDocFunctionType where SyntaxKind.FunctionType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;GetAccessorDeclaration&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write Node where InterfaceDeclaration \| ObjectLiteralExpression \| TypeLiteralNode \| ClassLikeDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;HeritageClause&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.HeritageClause is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;IfStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.IfStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ImportEqualsDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ImportEqualsDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ImportSpecifier&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ImportSpecifier is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;IndexedAccessTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.IndexedAccessType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;InferTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.InferType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;InterfaceDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.InterfaceDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JSDoc&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JSDoc is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JSDocEnumTag&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JSDocEnumTag is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JSDocMemberName&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JSDocMemberName is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxAttribute&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxAttribute is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxAttributes&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxAttributes is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxClosingElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxClosingElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxFragment&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxFragment is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxNamespacedName&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxNamespacedName is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxOpeningElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxOpeningElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxSelfClosingElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxSelfClosingElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxSpreadAttribute&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxSpreadAttribute is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;JsxText&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.JsxText is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;LabeledStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.LabeledStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;LiteralTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.LiteralType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;MetaProperty&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.MetaProperty is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;MethodDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.MethodDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;MethodSignature&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write Node where InterfaceDeclaration \| TypeLiteralNode is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ModuleBlock&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ModuleBlock is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ModuleDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ModuleDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NamedExports&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NamedExports is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NamedTupleMember&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NamedTupleMember is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NamespaceExportDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NamespaceExportDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NewExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NewExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NonNullChain&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NonNullExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;NonNullExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.NonNullExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ObjectBindingPattern&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ObjectBindingPattern is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ObjectLiteralExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ObjectLiteralExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;OptionalTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.OptionalType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ParameterDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.Parameter is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ParenthesizedExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ParenthesizedExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ParenthesizedTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ParenthesizedType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PartiallyEmittedExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PartiallyEmittedExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PostfixUnaryExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PostfixUnaryExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PrefixUnaryExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PrefixUnaryExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PropertyAccessChain&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PropertyAccessExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PropertyAccessExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PropertyAccessExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PropertyAssignment&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PropertyAssignment is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PropertyDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PropertyDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;PropertySignature&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.PropertySignature is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;QualifiedName&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.QualifiedName is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;RestTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.RestType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SatisfiesExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.SatisfiesExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SetAccessorDeclaration&gt; seen as Mutable&lt;SignatureDeclarationBase&gt;, which can write Node where InterfaceDeclaration \| ObjectLiteralExpression \| TypeLiteralNode \| ClassLikeDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ShorthandPropertyAssignment&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ShorthandPropertyAssignment is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SourceFile&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.SourceFile is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SpreadAssignment&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.SpreadAssignment is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SpreadElement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.SpreadElement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;SyntheticReferenceExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.SyntheticReferenceExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;T&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where T["kind"] is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TaggedTemplateExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TaggedTemplateExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TemplateExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TemplateExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TemplateLiteralTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TemplateLiteralType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TemplateLiteralTypeSpan&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TemplateLiteralTypeSpan is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TemplateSpan&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TemplateSpan is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;ThrowStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.ThrowStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TryStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TryStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TupleTypeNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TupleType is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeAliasDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeAliasDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeAssertion&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeAssertionExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeLiteralNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeLiteral is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeOfExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeOfExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypePredicateNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypePredicate is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeQueryNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeQuery is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;TypeReferenceNode&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.TypeReference is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;VariableDeclaration&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.VariableDeclaration is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;VariableDeclarationList&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.VariableDeclarationList is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;VariableStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.VariableStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;VoidExpression&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.VoidExpression is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;WhileStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.WhileStatement is read | 1 | 0 | 0 |
+| a value of type Mutable&lt;WithStatement&gt; seen as Mutable&lt;Node&gt;, which can write SyntaxKind where SyntaxKind.WithStatement is read | 1 | 0 | 0 |
+| a value of type NamedImports seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type NamespaceExport seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type NamespaceImport seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type NonNullable&lt;T&gt;[] seen as Node[], which can write Node where NonNullable&lt;T&gt; is read | 1 | 0 | 0 |
 | a value of type ObjectLiteralElementLike[] \| undefined seen as {}[] \| undefined, which can write {} where ObjectLiteralElementLike is read | 4 | 0 | 0 |
 | a value of type ParameterDeclaration[] \| undefined seen as {}[] \| undefined, which can write {} where ParameterDeclaration is read | 1 | 0 | 0 |
 | a value of type PropertyName[] \| undefined seen as {}[] \| undefined, which can write {} where PropertyName is read | 1 | 0 | 0 |
 | a value of type RequireOrImportCall[] \| undefined seen as {}[] \| undefined, which can write {} where RequireOrImportCall is read | 1 | 0 | 0 |
 | a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string \| undefined where string is read | 0 | 4 | 0 |
-| a value of type ReturnStatement seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type ReturnStatement seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type Signature[] \| undefined seen as {}[] \| undefined, which can write {} where Signature is read | 2 | 0 | 0 |
 | a value of type Statement[] seen as {}[], which can write {} where Statement is read | 11 | 0 | 0 |
 | a value of type Statement[] \| undefined seen as {}[] \| undefined, which can write {} where Statement is read | 28 | 0 | 0 |
 | a value of type StringLiteralLike[] \| undefined seen as {}[] \| undefined, which can write {} where StringLiteralLike is read | 2 | 0 | 0 |
 | a value of type StringLiteralType[] seen as {}[], which can write {} where StringLiteralType is read | 1 | 0 | 0 |
-| a value of type SwitchStatement seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type SwitchStatement seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type Symbol[] seen as {}[], which can write {} where Symbol is read | 3 | 0 | 0 |
 | a value of type Symbol[] \| undefined seen as {}[] \| undefined, which can write {} where Symbol is read | 4 | 0 | 0 |
-| a value of type T seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 3 | 0 | 0 |
+| a value of type T seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 3 | 0 | 0 |
 | a value of type T[] seen as (DiagnosticMessageChain \| ReusableDiagnosticMessageChain)[] \| undefined, which can write DiagnosticMessageChain \| ReusableDiagnosticMessageChain where T is read | 3 | 0 | 0 |
 | a value of type T[] seen as Node[], which can write Node where T is read | 1 | 0 | 0 |
 | a value of type T[] seen as Statement[], which can write Statement where T is read | 4 | 0 | 0 |
 | a value of type TemplateLiteralTypeSpan[] seen as Node[], which can write Node where TemplateLiteralTypeSpan is read | 1 | 0 | 0 |
 | a value of type TemplateSpan[] seen as Node[], which can write Node where TemplateSpan is read | 1 | 0 | 0 |
 | a value of type TypeNode[] seen as Node[], which can write Node where TypeNode is read | 1 | 0 | 0 |
-| a value of type TypeOperatorNode seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
-| a value of type TypeParameterDeclaration seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type TypeOperatorNode seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type TypeParameterDeclaration seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type TypeParameterDeclaration[] seen as Node[], which can write Node where TypeParameterDeclaration is read | 1 | 0 | 0 |
 | a value of type TypeParameter[] \| undefined seen as {}[] \| undefined, which can write {} where TypeParameter is read | 4 | 0 | 0 |
 | a value of type Type[] seen as {}[], which can write {} where Type is read | 5 | 0 | 0 |
 | a value of type Type[] \| undefined seen as {}[] \| undefined, which can write {} where Type is read | 24 | 0 | 0 |
 | a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read | 2 | 0 | 0 |
 | a value of type VariableDeclaration[] \| undefined seen as {}[] \| undefined, which can write {} where VariableDeclaration is read | 3 | 0 | 0 |
-| a value of type YieldExpression seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
+| a value of type YieldExpression seen as Mutable&lt;Node&gt;, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace | 1 | 0 | 0 |
 | a value of type [Identifier, BindingOrAssignmentElement][] \| undefined seen as {}[] \| undefined, which can write {} where [Identifier, BindingOrAssignmentElement] is read | 1 | 0 | 0 |
 | a value of type __String[] \| undefined seen as {}[] \| undefined, which can write {} where __String is read | 1 | 0 | 0 |
 | a value of type string[] seen as TsConfigSourceFile \| CompilerOptionsValue, which can write string \| number where string is read | 1 | 0 | 0 |
@@ -265,7 +265,7 @@ The adapted source identity check is in [source-identity.json](source-identity.j
 | an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read | 0 | 5 | 0 |
 | an unproven value assigned to a numeric literal or enum member slot SyntaxKind | 10 | 0 | 0 |
 | optional property constraint in TypeParameter absent from structural source Type, which can hide fields | 2 | 0 | 0 |
-| optional property createProgram in IncrementalProgramOptions<BuilderProgram> absent from structural source IncrementalCompilationOptions, which can hide fields | 1 | 0 | 0 |
+| optional property createProgram in IncrementalProgramOptions&lt;BuilderProgram&gt; absent from structural source IncrementalCompilationOptions, which can hide fields | 1 | 0 | 0 |
 | optional property modifiers in ArrowFunction absent from structural source never, which can hide fields | 0 | 1 | 0 |
 
 Of the scout’s 191 selected ‘seen as’ sites, 191 are present on main, **191 are gone on head** (191 removed by this head versus main), and 0 remain on head. The older scout’s sys.ts:307:13 maps to main/head sys.ts:304:13, proven by reconstructing the scout’s full sys.ts source hash from its owner pins; the other 190 sites use byte-identical source files. See [scout-site-mapping.json](scout-site-mapping.json). Exact key membership is preserved in [selected-191-pairing.json](selected-191-pairing.json).
