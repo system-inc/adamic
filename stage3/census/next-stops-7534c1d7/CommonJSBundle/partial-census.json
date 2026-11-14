@@ -108,5 +108,110 @@
     "reason": "a cast the runtime can't check",
     "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
     "seconds": 14.958694566
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.130695424
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.070698703
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 5.165016643
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.316158133
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 20.0442272
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 20.379439008
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.980322759
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.12284048
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 18.692220109
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 16.643052719
   }
 ]
