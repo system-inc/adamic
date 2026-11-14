@@ -2790,12 +2790,12 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 
 // A recipe keys a linked package's directory by its non-test names (packageListingKind): a dependency's test file is
 // compiled into no binary but its own package's tests (#c2chyab), so one added to a moves no key of cmd/b's, where
-// internal/flow's new test file moved all 200 runtime archive keys on main 9ac2dc52, while a non-test name added
-// there, Go or not, still moves it. The package under test keeps every name, and so does a package with an embed
+// internal/flow's new test file moved all 200 runtime archive keys on main 9ac2dc52, while a non-test .go file added
+// there, ignored or not, still moves it. The package under test keeps every name, and so does a package with an embed
 // pattern, which a new _test.go can match (Compiler's and Node's rulings). Mutants, each caught: the recipe's listing
 // left whole for every package; the package listing valued as a whole one; the narrowing applied to every listing kind
 // (the package under test's and the embedding package's listings then hold still); a package with an embed pattern
-// narrowed; the package under test narrowed; a non-test name dropped by the narrowing too.
+// narrowed; the package under test narrowed; a non-test .go file dropped by the narrowing too.
 // Not parallel: go list runs in the module, and t.Setenv takes the trace and read modes away.
 func TestARecipeListsADependencysDirectoryWithoutItsTestFiles(t *testing.T) {
 	root, err := filepath.EvalSymlinks(t.TempDir())
@@ -2861,9 +2861,10 @@ func TestARecipeListsADependencysDirectoryWithoutItsTestFiles(t *testing.T) {
 	if now := valued(embedding); now == before[embedding] {
 		t.Errorf("a test file added to e, whose go:embed pattern can match one, left its listing at %s", now)
 	}
-	// Every name but a _test.go one still counts: a non-test .go file, one a build constraint leaves out, a file that
-	// isn't Go, a testdata directory.
-	for name, content := range map[string]string{"a/b.go": "package a\n", "a/b_never.go": "//go:build never\n\npackage a\n", "a/notes.txt": "a note\n", "a/testdata/input.txt": "input\n"} {
+	// Every Go source name but a _test.go one still counts: a non-test .go file, and one a build constraint leaves out.
+	// A file go never compiles and a testdata directory count for nothing (TestADependencysMarkdownFileMovesNoKey,
+	// TestADependencysSubdirectoryMovesNoKey).
+	for name, content := range map[string]string{"a/b.go": "package a\n", "a/b_never.go": "//go:build never\n\npackage a\n"} {
 		previous := valued(dependency)
 		committed(name, content)
 		if now := valued(dependency); now == previous {
@@ -2896,6 +2897,200 @@ func TestATracedListingCountsTestFiles(t *testing.T) {
 	forgetTracked()
 	if found, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "listing source") {
 		t.Fatalf("a test file added where the build listed found %q (settled %s), %v; want a miss naming listing source", found, product, err)
+	}
+}
+
+// listedRecipe is the recipe of pkg's binary in a module of its own, files committed at a temporary root, and the root.
+// Each tree value is read afresh: a trace or read mode holds what it values for the process's life (heldForLife). Its
+// callers aren't parallel: go list runs in the module, and t.Setenv takes the trace and read modes away.
+func listedRecipe(t *testing.T, files map[string]string, pkg string) (string, recipe) {
+	t.Helper()
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for name, content := range files {
+		write(t, root, name, content)
+	}
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "module")
+	forgetTracked()
+	t.Setenv("GOWORK", "off")
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	found := recipeOf(root, journalEntry{Package: pkg})
+	if found.reason != "" {
+		t.Fatalf("%s's recipe: %s", pkg, found.reason)
+	}
+	return root, found
+}
+
+// listingMoves says whether adding name, tracked, to the tree at root moves entry's value, and with it the key of every
+// product whose read set holds it: a read set isn't recomputed on a later tree, so the entry is all that can see it.
+func listingMoves(t *testing.T, root string, entry readEntry, name, content string) bool {
+	t.Helper()
+	valued := func() string {
+		t.Helper()
+		forgetTracked()
+		value, err := treeEntryValue(root, "", entry)
+		if err != nil {
+			t.Fatalf("%s %s: %v", entry.Kind, entry.Path, err)
+		}
+		return value
+	}
+	before := valued()
+	write(t, root, name, content)
+	gitIn(t, root, "add", name)
+	return valued() != before
+}
+
+// listedModuleFiles is a module whose cmd/b links a, a plain package, and e, one with an embed pattern.
+var listedModuleFiles = map[string]string{
+	"go.mod":        "module example.com/listed\n\ngo 1.22\n",
+	"a/a.go":        "package a\n\nfunc A() int { return 1 }\n",
+	"e/e.go":        "package e\n\nimport \"embed\"\n\n//go:embed *.txt\nvar Data embed.FS\n",
+	"e/data.txt":    "data\n",
+	"cmd/b/main.go": "package main\n\nimport (\n\t\"example.com/listed/a\"\n\t\"example.com/listed/e\"\n)\n\nfunc main() { _, _ = a.A(), e.Data }\n",
+}
+
+// A markdown file added to a linked package's directory moves no key of a binary linking it: go/build never takes a .md
+// into a package, yet adding internal/flow/generator_trace.mutants.md moved all 181 runtime archive keys, their bytes
+// equal (fix 1b). Nor does a name whose extension is a source one in another case only (.C), since go/build matches
+// extensions case-sensitively. Mutants, each caught: the package listing naming every non-test name again (fix 1's);
+// packageSourceExtensions matched without regard to case.
+// Not parallel: listedRecipe.
+func TestADependencysMarkdownFileMovesNoKey(t *testing.T) {
+	root, binary := listedRecipe(t, listedModuleFiles, "example.com/listed/cmd/b")
+	dependency := readEntry{Kind: packageListingKind, Path: "a"}
+	if !slices.Contains(binary.entries, dependency) {
+		t.Fatalf("cmd/b's recipe %+v lacks %+v", binary.entries, dependency)
+	}
+	for name, content := range map[string]string{"a/notes.md": "# Notes\n", "a/shout.C": "int shout;\n"} {
+		if listingMoves(t, root, dependency, name, content) {
+			t.Errorf("%s added to cmd/b's dependency a moved its package listing", name)
+		}
+	}
+}
+
+// Every Go source file added to a linked package's directory still moves the key of a binary linking it, by its
+// extension alone: a non-test .go file, a C file (go/build's CFiles), and a .go file a build constraint leaves out,
+// which an edit of the constraint compiles in without moving any other entry. So does a go.mod, which makes the
+// directory a module of its own, so go list would load another package there. Mutants, each caught: .go dropped from
+// packageSourceExtensions; .c dropped from it; the package listing filtered by what the build context matches (go/build's
+// own MatchFile) instead of by extension, which drops the ignored file; go.mod dropped from packageSource.
+// Not parallel: listedRecipe.
+func TestADependencysGoSourceFilesMoveItsKey(t *testing.T) {
+	root, binary := listedRecipe(t, listedModuleFiles, "example.com/listed/cmd/b")
+	dependency := readEntry{Kind: packageListingKind, Path: "a"}
+	if !slices.Contains(binary.entries, dependency) {
+		t.Fatalf("cmd/b's recipe %+v lacks %+v", binary.entries, dependency)
+	}
+	for _, added := range []struct{ name, content string }{
+		{"a/b.go", "package a\n"},
+		{"a/c.c", "int c;\n"},
+		{"a/ignored.go", "//go:build ignore\n\npackage a\n"},
+		{"a/go.mod", "module example.com/separate\n\ngo 1.22\n"},
+	} {
+		if !listingMoves(t, root, dependency, added.name, added.content) {
+			t.Errorf("%s added to cmd/b's dependency a left its package listing as it was", added.name)
+		}
+	}
+}
+
+// A markdown file added to a linked package with an embed pattern still moves the key of a binary linking it: a pattern
+// can match any name, so the package keeps its whole listing, though *.txt matches no .md. Mutants, each caught: the
+// embed pattern's exception dropped from recipeEntries (e narrowed); the narrowing applied to every listing kind.
+// Not parallel: listedRecipe.
+func TestAnEmbeddingDependencysMarkdownFileMovesItsKey(t *testing.T) {
+	root, binary := listedRecipe(t, listedModuleFiles, "example.com/listed/cmd/b")
+	embedding := readEntry{Kind: "listing", Path: "e"}
+	if !slices.Contains(binary.entries, embedding) || slices.Contains(binary.entries, readEntry{Kind: packageListingKind, Path: "e"}) {
+		t.Fatalf("cmd/b's recipe keys e, whose go:embed can match a new file, as %+v, want %+v alone", binary.entries, embedding)
+	}
+	if !listingMoves(t, root, embedding, "e/notes.md", "# Notes\n") {
+		t.Error("a markdown file added to e, whose go:embed pattern can match a new name, left its listing as it was")
+	}
+}
+
+// A markdown file added to the package under test's directory still moves its own test binary's key: its listing is
+// the whole one, every name counted. Mutants, each caught: the package under test narrowed in recipeEntries; the
+// narrowing applied to every listing kind.
+// Not parallel: listedRecipe.
+func TestThePackageUnderTestsMarkdownFileMovesItsKey(t *testing.T) {
+	root, tests := listedRecipe(t, listedModuleFiles, "example.com/listed/a.test")
+	under := readEntry{Kind: "listing", Path: "a"}
+	if !slices.Contains(tests.entries, under) || slices.Contains(tests.entries, readEntry{Kind: packageListingKind, Path: "a"}) {
+		t.Fatalf("a's tests' recipe keys a's own directory as %+v, want %+v alone", tests.entries, under)
+	}
+	if !listingMoves(t, root, under, "a/notes.md", "# Notes\n") {
+		t.Error("a markdown file added to a left the listing a's own tests key as it was")
+	}
+}
+
+// A subdirectory added to a linked package's directory moves no key of a binary linking it, whatever it holds: a
+// testdata directory, a directory of notes, or another package, which a binary links only once a .go file it compiles
+// imports it, an edit keyed by content. Mutant: the package listing naming its subdirectories, with their trailing "/",
+// again.
+// Not parallel: listedRecipe.
+func TestADependencysSubdirectoryMovesNoKey(t *testing.T) {
+	root, binary := listedRecipe(t, listedModuleFiles, "example.com/listed/cmd/b")
+	dependency := readEntry{Kind: packageListingKind, Path: "a"}
+	if !slices.Contains(binary.entries, dependency) {
+		t.Fatalf("cmd/b's recipe %+v lacks %+v", binary.entries, dependency)
+	}
+	for name, content := range map[string]string{"a/testdata/input.txt": "input\n", "a/docs/guide.md": "# Guide\n", "a/nested/nested.go": "package nested\n"} {
+		if listingMoves(t, root, dependency, name, content) {
+			t.Errorf("%s added to cmd/b's dependency a moved its package listing", name)
+		}
+	}
+}
+
+// A linked cgo package whose include path reaches into its own directory (#cgo CFLAGS: -I${SRCDIR}/sub) keeps its whole
+// listing, so a header added under sub/ moves the key of a binary linking it: a header the include path reaches there
+// can change what compiles, and the narrowed listing names no subdirectory. A package whose include path reaches only
+// outside its directory stays narrowed. Every include-path option counts, not only -I: s's -isystem ${SRCDIR}/sub, the
+// option and its path in two words, keeps s whole too. It needs go list to report the cgo flags, which it does only
+// with cgo on, and skips, saying so, where no C compiler leaves cgo off. Mutants, each caught: the cgo include exception
+// dropped from recipeEntries (c narrowed); any -I flag taken as reaching into the package (o kept whole); a flag read
+// only as "-I" with its path in the next word (c narrowed); only -I read (s narrowed); CgoCFLAGS left undecoded (c
+// narrowed).
+// Not parallel: listedRecipe.
+func TestACgoDependencysIncludedSubdirectoryMovesItsKey(t *testing.T) {
+	files := map[string]string{
+		"go.mod":            "module example.com/listed\n\ngo 1.22\n",
+		"c/c.go":            "package c\n\n// #cgo CFLAGS: -I${SRCDIR}/sub\n// static int answer(void) { return 42; }\nimport \"C\"\n\nfunc Answer() int { return int(C.answer()) }\n",
+		"o/o.go":            "package o\n\n// #cgo CFLAGS: -I${SRCDIR}/../include\n// static int other(void) { return 7; }\nimport \"C\"\n\nfunc Other() int { return int(C.other()) }\n",
+		"s/s.go":            "package s\n\n// #cgo CFLAGS: -isystem ${SRCDIR}/sub\n// static int searched(void) { return 3; }\nimport \"C\"\n\nfunc Searched() int { return int(C.searched()) }\n",
+		"include/outside.h": "#define OUTSIDE 1\n",
+		"cmd/b/main.go":     "package main\n\nimport (\n\t\"example.com/listed/c\"\n\t\"example.com/listed/o\"\n\t\"example.com/listed/s\"\n)\n\nfunc main() { _, _, _ = c.Answer(), o.Other(), s.Searched() }\n",
+	}
+	root, binary := listedRecipe(t, files, "example.com/listed/cmd/b")
+	command := toolchain.Command("go", "list", "-f", "{{.CgoCFLAGS}}", "example.com/listed/c")
+	command.Dir = root
+	flags, err := command.Output()
+	if err != nil {
+		t.Fatalf("go list of c's cgo flags: %v", err)
+	}
+	if !strings.Contains(string(flags), "-I") {
+		t.Skipf("go list reports no cgo flags for c (%s), so cgo is off here, as it is without a C compiler: the include exception has nothing to read", strings.TrimSpace(string(flags)))
+	}
+	including := readEntry{Kind: "listing", Path: "c"}
+	if !slices.Contains(binary.entries, including) || slices.Contains(binary.entries, readEntry{Kind: packageListingKind, Path: "c"}) {
+		t.Fatalf("cmd/b's recipe keys c, whose cgo include path reaches c/sub, as %+v, want %+v alone", binary.entries, including)
+	}
+	if outside := (readEntry{Kind: packageListingKind, Path: "o"}); !slices.Contains(binary.entries, outside) {
+		t.Errorf("cmd/b's recipe keys o, whose cgo include path reaches only outside it, as %+v, want %+v", binary.entries, outside)
+	}
+	if !listingMoves(t, root, including, "c/sub/answer.h", "#define ANSWER 42\n") {
+		t.Error("a header added under c/sub, which c's include path reaches, left c's listing as it was")
+	}
+	system := readEntry{Kind: "listing", Path: "s"}
+	if !slices.Contains(binary.entries, system) || slices.Contains(binary.entries, readEntry{Kind: packageListingKind, Path: "s"}) {
+		t.Fatalf("cmd/b's recipe keys s, whose -isystem include path reaches s/sub, as %+v, want %+v alone", binary.entries, system)
+	}
+	if !listingMoves(t, root, system, "s/sub/system.h", "#define SYSTEM 3\n") {
+		t.Error("a header added under s/sub, which s's -isystem include path reaches, left s's listing as it was")
 	}
 }
 

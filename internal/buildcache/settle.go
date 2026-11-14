@@ -413,12 +413,15 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 // (#qx8fkaf, Node's ruling). Any read under it, a lookup that missed included, is a read of the install.
 const nodeInstallKind = "node install"
 
-// packageListingKind is a recipe's entry for a linked package's directory, the listing go list's load makes: valued as
-// a listing is, with every _test.go name left out (listing's tests). A dependency's test file is never compiled into
-// another package's binary (#c2chyab), yet a new one still moved its directory's listing: on main 9ac2dc52, adding
-// internal/flow/optional_receiver_units_test.go moved all 200 runtime archive keys, their bytes equal. A directory a
-// build's own code listed (a traced readdir, classifyPath) stays a "listing" of every name, and so does the recipe's own
-// entry for the package under test and for a package with an embed pattern, which can match a new _test.go
+// packageListingKind is a recipe's entry for a linked package's directory, the listing go list's load makes: valued by
+// the names of Go's source files alone, the regular files whose extension go/build takes into a package
+// (packageSourceExtensions), never a _test.go name, a subdirectory or any other file (listing's sources). A dependency's
+// test file is never compiled into another package's binary (#c2chyab), yet a new one still moved its directory's
+// listing: on main 9ac2dc52, adding internal/flow/optional_receiver_units_test.go moved all 200 runtime archive keys,
+// their bytes equal. A name go/build doesn't take moved them the same way: adding internal/flow/generator_trace.mutants.md
+// moved all 181, their bytes equal (fix 1b). A directory a build's own code listed (a traced readdir, classifyPath) stays
+// a "listing" of every name, and so does the recipe's own entry for the package under test, for a package with an embed
+// pattern, which can match any new name, and for a package whose cgo include path reaches into its own directory
 // (recipeEntries; Compiler's and Node's rulings).
 const packageListingKind = "package listing"
 
@@ -2094,9 +2097,8 @@ var recipeFor = recipeOf
 // every product's key at every change to how products are keyed, traced, settled or stored, which never changes a
 // product's bytes (54% of the rekeys over main's 200 landings of Oct 11 to 13, Adam's seed 48a9e045). The make files are
 // what decides a product's bytes, and TestTheMakeFilesUseNothingFromTheMachinery holds them to using nothing the
-// machinery defines, so a change outside them can't move a product's bytes. The listing still names every file but a
-// test file (packageListingKind), so a non-test file added or removed moves every key. Off is decision 1 for every
-// package.
+// machinery defines, so a change outside them can't move a product's bytes. The listing still names every non-test Go
+// source file (packageListingKind), so one added or removed moves every key. Off is decision 1 for every package.
 const makeFilesOnly = true
 
 // buildcachePackage is this package's import path, as go list names it.
@@ -2249,6 +2251,7 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 			Module                                                                     *struct{ GoMod string }
 			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
 			IgnoredGoFiles, TestGoFiles, XTestGoFiles, EmbedPatterns                   []string
+			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
 		}
 		if err := decoder.Decode(&listed); err == io.EOF {
 			break
@@ -2265,13 +2268,17 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
 		name, _, _ := strings.Cut(listed.ImportPath, " ")
 		under := test && (name == pkg || name == pkg+"_test")
-		// The directory, by its non-test names (packageListingKind), so a dependency's test file added, removed or renamed
-		// moves no key. The package under test's directory keeps every name, its test main's too (go list -test names it
-		// pkg.test, in pkg's directory), and so does a package with an embed pattern: a pattern can name .go files, and a
-		// read set isn't recomputed on a later tree, so a new _test.go it would match is caught by the listing alone. An
-		// embed directive added later is an edit of a non-test .go file, which moves the key by content.
+		// The directory, by its non-test Go source files alone (packageListingKind), so a dependency's test file, a file go
+		// never compiles (a markdown file) or a subdirectory added, removed or renamed moves no key. The package under
+		// test's directory keeps every name, its test main's too (go list -test names it pkg.test, in pkg's directory), and
+		// so does a package with an embed pattern: a pattern can name any file, a _test.go or a markdown file, and a read
+		// set isn't recomputed on a later tree, so a new file it would match is caught by the listing alone. An embed
+		// directive added later is an edit of a non-test .go file, which moves the key by content. So does a package whose
+		// cgo flags name an include directory in its own directory or under it (cgoIncludesWithin): a header the include
+		// path reaches in a subdirectory can change what compiles, and the narrowed listing names no subdirectory, so a
+		// subdirectory added there is caught by the whole listing.
 		kind := packageListingKind
-		if under || test && name == pkg+".test" || len(listed.EmbedPatterns) > 0 {
+		if under || test && name == pkg+".test" || len(listed.EmbedPatterns) > 0 || cgoIncludesWithin(listed.Dir, listed.CgoCFLAGS, listed.CgoCPPFLAGS, listed.CgoCXXFLAGS) {
 			kind = "listing"
 		}
 		add(kind, listed.Dir)
@@ -2309,6 +2316,43 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 		}
 	}
 	return ""
+}
+
+// includePathOptions are the C compiler's options that add a directory to the include path, each followed by the
+// directory in the same word or the next: -I, and -isystem, -iquote and -idirafter, which search the same way for the
+// includes they apply to. No other option is read as one: -include names a file to include, never a directory to search,
+// and starts with none of these.
+var includePathOptions = []string{"-isystem", "-iquote", "-idirafter", "-I"}
+
+// cgoIncludesWithin says whether any include-path flag of a package's cgo flags (includePathOptions; go list's
+// CgoCFLAGS, CgoCPPFLAGS and CgoCXXFLAGS, ${SRCDIR} already expanded to directory) names directory or a directory under
+// it, as "-I<path>" or "-I" followed by the path. A relative path is read from directory, where cgo's compiler runs, as
+// GoBuild's keyInputs reads one.
+func cgoIncludesWithin(directory string, flagLists ...[]string) bool {
+	for _, flags := range flagLists {
+		for index, flag := range flags {
+			for _, option := range includePathOptions {
+				include, found := strings.CutPrefix(flag, option)
+				if !found {
+					continue
+				}
+				if include == "" && index+1 < len(flags) {
+					include = flags[index+1]
+				}
+				if include == "" {
+					break
+				}
+				if !filepath.IsAbs(include) {
+					include = filepath.Join(directory, include)
+				}
+				if under(filepath.Clean(include), filepath.Clean(directory)) {
+					return true
+				}
+				break
+			}
+		}
+	}
+	return false
 }
 
 // localReplacements are the directories each place's go.mod and go.work replace modules with, absolute, read from the
