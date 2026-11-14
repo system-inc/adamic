@@ -841,10 +841,12 @@ export function createSystemWatchFunctions({ pollingWatchFileWorker, getModified
         }
     }
     function pollingWatchFile(fileName, callback, pollingInterval, options) {
-        return createSingleWatcherPerName(pollingWatches, useCaseSensitiveFileNames, fileName, callback, cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options), (getCallbacks) => (param1, param2, param3) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)));
+        return createSingleWatcherPerName(pollingWatches, useCaseSensitiveFileNames, fileName, callback, cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options), (getCallbacks) => (param1, param2, param3) => { const callbacks = getCallbacks(); if (callbacks)
+            callbacks.forEach(cb => cb(param1, param2, param3)); });
     }
     function fsWatch(fileOrDirectory, entryKind, callback, recursive, fallbackPollingInterval, fallbackOptions) {
-        return createSingleWatcherPerName(recursive ? fsWatchesRecursive : fsWatches, useCaseSensitiveFileNames, fileOrDirectory, callback, cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions), (getCallbacks) => (param1, param2, param3) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)));
+        return createSingleWatcherPerName(recursive ? fsWatchesRecursive : fsWatches, useCaseSensitiveFileNames, fileOrDirectory, callback, cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions), (getCallbacks) => (param1, param2, param3) => { const callbacks = getCallbacks(); if (callbacks)
+            callbacks.forEach(cb => cb(param1, param2, param3)); });
     }
     function fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, callback, recursive, fallbackPollingInterval, fallbackOptions) {
         let lastDirectoryPartWithDirectorySeparator;

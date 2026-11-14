@@ -1,0 +1,35 @@
+{
+  "base": [
+    {
+      "name": "createSingleWatcherPerName",
+      "casts": 1,
+      "any": 2
+    }
+  ],
+  "a": [
+    {
+      "name": "createSingleFileWatcherPerName",
+      "casts": 0,
+      "any": 0
+    },
+    {
+      "name": "createSingleFsWatcherPerName",
+      "casts": 0,
+      "any": 0
+    }
+  ],
+  "b": [
+    {
+      "name": "createSingleWatcherPerName",
+      "casts": 0,
+      "any": 0
+    }
+  ],
+  "c": [
+    {
+      "name": "createSingleWatcherPerName",
+      "casts": 0,
+      "any": 0
+    }
+  ]
+}

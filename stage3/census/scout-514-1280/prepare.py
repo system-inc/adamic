@@ -17,7 +17,7 @@ parts=[]
 for suffix,typ,p1,p2 in [('File','FileWatcherCallback','string','FileWatcherEventKind'),('Fs','FsWatchCallback','"rename" | "change"','string | undefined | null')]:
  h=helper.replace('createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>',f'createSingle{suffix}WatcherPerName')
  h=re.sub(r'\bT\b',typ,h)
- h=h.replace(old,f'                (param1: {p1}, param2: {p2}, param3?: Date) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)),')
+ h=h.replace(old.replace("as T", "as " + typ),f'                (param1: {p1}, param2: {p2}, param3?: Date) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)),')
  parts.append(h)
 a=s[:start]+'\n\n'.join(parts)+s[end:]
 a=a.replace('return createSingleWatcherPerName(\n            pollingWatches,','return createSingleFileWatcherPerName(\n            pollingWatches,').replace('return createSingleWatcherPerName(\n            recursive ?','return createSingleFsWatcherPerName(\n            recursive ?')
@@ -31,7 +31,7 @@ c=c.replace(old,'                createForwarder(() => cache.get(path)?.callback
 c=s[:start]+c+s[end:]
 for caller,typ,p1,p2 in [('cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options),','FileWatcherCallback','string','FileWatcherEventKind'),('cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),','FsWatchCallback','"rename" | "change"','string | undefined | null')]:
  assert c.count(caller)==1
- c=c.replace(caller,caller+f'\n            (getCallbacks: () => {typ}[] | undefined): {typ} => (param1: {p1}, param2: {p2}, param3?: Date) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)),')
+ c=c.replace(caller,caller+f'\n            (getCallbacks: () => {typ}[] | undefined): {typ} => (param1: {p1}, param2: {p2}, param3?: Date) => {{ const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); }},')
 variants['c']=c
 for name,t in variants.items():
  root=Path('/workspace/scratch/scout-'+name)

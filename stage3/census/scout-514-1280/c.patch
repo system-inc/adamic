@@ -24,7 +24,7 @@
              fileName,
              callback,
              cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options),
-+            (getCallbacks: () => FileWatcherCallback[] | undefined): FileWatcherCallback => (param1: string, param2: FileWatcherEventKind, param3?: Date) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)),
++            (getCallbacks: () => FileWatcherCallback[] | undefined): FileWatcherCallback => (param1: string, param2: FileWatcherEventKind, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },
          );
      }
      function fsWatch(
@@ -32,7 +32,7 @@
              fileOrDirectory,
              callback,
              cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),
-+            (getCallbacks: () => FsWatchCallback[] | undefined): FsWatchCallback => (param1: "rename" | "change", param2: string | undefined | null, param3?: Date) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)),
++            (getCallbacks: () => FsWatchCallback[] | undefined): FsWatchCallback => (param1: "rename" | "change", param2: string | undefined | null, param3?: Date) => { const callbacks = getCallbacks(); if (callbacks) callbacks.forEach(cb => cb(param1, param2, param3)); },
          );
      }
  

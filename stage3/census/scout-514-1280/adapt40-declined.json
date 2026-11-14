@@ -1,0 +1,18 @@
+[
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 516,
+    "column": 30,
+    "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+    "disposition": "declined",
+    "reason": "Generic/callback contract: parameter/result variance and actual instantiations need consumer analysis. This site was not completed."
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 516,
+    "column": 58,
+    "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+    "disposition": "declined",
+    "reason": "Generic/callback contract: parameter/result variance and actual instantiations need consumer analysis. This site was not completed."
+  }
+]

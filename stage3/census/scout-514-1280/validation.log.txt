@@ -1,0 +1,5 @@
+PASS: final prepare.py reproduces all three source candidates and patches exactly.
+PASS: every stock run has 79 roots; diagnostics baseline/A/C/C-minimal=0, B=1.
+PASS: all five CommonJSBundle full censuses have header, sys.ts record, completed trailer and exit 0; unit counts agree.
+PASS: 514:17 cast absent from candidate streams; B remains checker-skipped, not clearance.
+PASS: source SHA256 values match provenance; 21 predicate calls / 15 declared guards.

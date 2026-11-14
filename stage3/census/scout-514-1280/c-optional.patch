@@ -1,0 +1,38 @@
+--- base/src/compiler/sys.ts
++++ c-optional/src/compiler/sys.ts
+@@ -501,6 +501,7 @@
+     name: string,
+     callback: T,
+     createWatcher: (callback: T) => FileWatcher,
++    createForwarder: (getCallbacks: () => T[] | undefined) => T,
+ ): FileWatcher {
+     const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
+     const path = toCanonicalFileName(name);
+@@ -511,10 +512,7 @@
+     else {
+         cache.set(path, {
+             watcher: createWatcher(
+-                (
+-                    // Cant infer types correctly so lets satisfy checker
+-                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))
+-                ) as T,
++                createForwarder(() => cache.get(path)?.callbacks.slice()),
+             ),
+             callbacks: [callback],
+         });
+@@ -1198,6 +1196,7 @@
+             fileName,
+             callback,
+             cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options),
++            (getCallbacks: () => FileWatcherCallback[] | undefined): FileWatcherCallback => (param1: string, param2: FileWatcherEventKind, param3?: Date) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)),
+         );
+     }
+     function fsWatch(
+@@ -1214,6 +1213,7 @@
+             fileOrDirectory,
+             callback,
+             cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),
++            (getCallbacks: () => FsWatchCallback[] | undefined): FsWatchCallback => (param1: "rename" | "change", param2: string | undefined | null, param3?: Date) => getCallbacks()?.forEach(cb => cb(param1, param2, param3)),
+         );
+     }
+ 

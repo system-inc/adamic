@@ -1,0 +1,258 @@
+{
+  "calls": [
+    {
+      "caller": "hasJSDocParameterTags",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1107,
+      "predicate": "isJSDocParameterTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocAugmentsTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1112,
+      "predicate": "isJSDocAugmentsTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocClassTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1122,
+      "predicate": "isJSDocClassTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocPublicTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1127,
+      "predicate": "isJSDocPublicTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocPublicTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1132,
+      "predicate": "isJSDocPublicTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocPrivateTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1137,
+      "predicate": "isJSDocPrivateTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocPrivateTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1142,
+      "predicate": "isJSDocPrivateTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocProtectedTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1147,
+      "predicate": "isJSDocProtectedTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocProtectedTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1152,
+      "predicate": "isJSDocProtectedTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocReadonlyTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1157,
+      "predicate": "isJSDocReadonlyTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocReadonlyTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1162,
+      "predicate": "isJSDocReadonlyTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocOverrideTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1166,
+      "predicate": "isJSDocOverrideTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocDeprecatedTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1171,
+      "predicate": "isJSDocDeprecatedTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocDeprecatedTagNoCache",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1176,
+      "predicate": "isJSDocDeprecatedTag",
+      "noCache": true
+    },
+    {
+      "caller": "getJSDocEnumTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1181,
+      "predicate": "isJSDocEnumTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocThisTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1186,
+      "predicate": "isJSDocThisTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocReturnTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1191,
+      "predicate": "isJSDocReturnTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocTemplateTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1196,
+      "predicate": "isJSDocTemplateTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocSatisfiesTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1200,
+      "predicate": "isJSDocSatisfiesTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocTypeTag",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1206,
+      "predicate": "isJSDocTypeTag",
+      "noCache": false
+    },
+    {
+      "caller": "getJSDocType",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 1225,
+      "predicate": "isJSDocTypeTag",
+      "noCache": false
+    }
+  ],
+  "declarations": [
+    {
+      "predicate": "isJSDocParameterTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1148,
+      "claim": "JSDocParameterTag",
+      "test": "node.kind === SyntaxKind.JSDocParameterTag"
+    },
+    {
+      "predicate": "isJSDocAugmentsTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1096,
+      "claim": "JSDocAugmentsTag",
+      "test": "node.kind === SyntaxKind.JSDocAugmentsTag"
+    },
+    {
+      "predicate": "isJSDocClassTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1104,
+      "claim": "JSDocClassTag",
+      "test": "node.kind === SyntaxKind.JSDocClassTag"
+    },
+    {
+      "predicate": "isJSDocPublicTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1112,
+      "claim": "JSDocPublicTag",
+      "test": "node.kind === SyntaxKind.JSDocPublicTag"
+    },
+    {
+      "predicate": "isJSDocPrivateTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1116,
+      "claim": "JSDocPrivateTag",
+      "test": "node.kind === SyntaxKind.JSDocPrivateTag"
+    },
+    {
+      "predicate": "isJSDocProtectedTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1120,
+      "claim": "JSDocProtectedTag",
+      "test": "node.kind === SyntaxKind.JSDocProtectedTag"
+    },
+    {
+      "predicate": "isJSDocReadonlyTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1124,
+      "claim": "JSDocReadonlyTag",
+      "test": "node.kind === SyntaxKind.JSDocReadonlyTag"
+    },
+    {
+      "predicate": "isJSDocOverrideTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1128,
+      "claim": "JSDocOverrideTag",
+      "test": "node.kind === SyntaxKind.JSDocOverrideTag"
+    },
+    {
+      "predicate": "isJSDocDeprecatedTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1136,
+      "claim": "JSDocDeprecatedTag",
+      "test": "node.kind === SyntaxKind.JSDocDeprecatedTag"
+    },
+    {
+      "predicate": "isJSDocEnumTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1144,
+      "claim": "JSDocEnumTag",
+      "test": "node.kind === SyntaxKind.JSDocEnumTag"
+    },
+    {
+      "predicate": "isJSDocThisTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1156,
+      "claim": "JSDocThisTag",
+      "test": "node.kind === SyntaxKind.JSDocThisTag"
+    },
+    {
+      "predicate": "isJSDocReturnTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1152,
+      "claim": "JSDocReturnTag",
+      "test": "node.kind === SyntaxKind.JSDocReturnTag"
+    },
+    {
+      "predicate": "isJSDocTemplateTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1164,
+      "claim": "JSDocTemplateTag",
+      "test": "node.kind === SyntaxKind.JSDocTemplateTag"
+    },
+    {
+      "predicate": "isJSDocSatisfiesTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1184,
+      "claim": "JSDocSatisfiesTag",
+      "test": "node.kind === SyntaxKind.JSDocSatisfiesTag"
+    },
+    {
+      "predicate": "isJSDocTypeTag",
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1160,
+      "claim": "JSDocTypeTag",
+      "test": "node.kind === SyntaxKind.JSDocTypeTag"
+    }
+  ]
+}

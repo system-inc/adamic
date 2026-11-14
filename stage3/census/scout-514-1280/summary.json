@@ -1,0 +1,110 @@
+{
+  "a": {
+    "units": 137,
+    "raw_findings": 186,
+    "unique_all": 117,
+    "unique_refused_notyet": 61,
+    "kind_counts_unique": {
+      "Refused": 19,
+      "Boundary": 56,
+      "NotYet": 42
+    },
+    "exact_added": 82,
+    "exact_gone": 80,
+    "source_aligned_added": 4,
+    "source_aligned_gone": 2,
+    "source_aligned_changes": 1,
+    "cast_514_survives": false,
+    "checker_diagnostics": 0,
+    "seconds": 73.37259674072266,
+    "unit_statuses": {
+      "attempted": 135,
+      "deferred_generic_instantiation": 2
+    }
+  },
+  "b": {
+    "units": 136,
+    "raw_findings": 182,
+    "unique_all": 114,
+    "unique_refused_notyet": 58,
+    "kind_counts_unique": {
+      "NotYet": 39,
+      "Boundary": 55,
+      "SkippedDependency": 1,
+      "Refused": 19
+    },
+    "exact_added": 81,
+    "exact_gone": 82,
+    "source_aligned_added": 3,
+    "source_aligned_gone": 4,
+    "source_aligned_changes": 0,
+    "cast_514_survives": false,
+    "checker_diagnostics": 1,
+    "seconds": 67.6770396232605,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  },
+  "c": {
+    "units": 136,
+    "raw_findings": 186,
+    "unique_all": 115,
+    "unique_refused_notyet": 60,
+    "kind_counts_unique": {
+      "NotYet": 41,
+      "Boundary": 55,
+      "Refused": 19
+    },
+    "exact_added": 43,
+    "exact_gone": 43,
+    "source_aligned_added": 2,
+    "source_aligned_gone": 2,
+    "source_aligned_changes": 1,
+    "cast_514_survives": false,
+    "checker_diagnostics": 0,
+    "seconds": 70.80756449699402,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  },
+  "c-optional": {
+    "units": 136,
+    "raw_findings": 186,
+    "unique_all": 115,
+    "unique_refused_notyet": 60,
+    "kind_counts_unique": {
+      "NotYet": 41,
+      "Boundary": 55,
+      "Refused": 19
+    },
+    "exact_added": 43,
+    "exact_gone": 43,
+    "source_aligned_added": 2,
+    "source_aligned_gone": 2,
+    "source_aligned_changes": 1,
+    "cast_514_survives": false,
+    "checker_diagnostics": 0,
+    "seconds": 72.66903352737427,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  },
+  "base": {
+    "units": 136,
+    "raw_findings": 187,
+    "unique_all": 115,
+    "kind_counts_unique": {
+      "NotYet": 40,
+      "Refused": 20,
+      "Boundary": 55
+    },
+    "unique_refused_notyet": 60,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  }
+}

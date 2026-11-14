@@ -1,22 +1,22 @@
 --- base/sys.js
 +++ a/sys.js
-@@ -347,7 +347,36 @@
+@@ -347,7 +347,7 @@
          })();
      }
  }
 -function createSingleWatcherPerName(cache, useCaseSensitiveFileNames, name, callback, createWatcher) {
 +function createSingleFileWatcherPerName(cache, useCaseSensitiveFileNames, name, callback, createWatcher) {
-+    const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
-+    const path = toCanonicalFileName(name);
-+    const existing = cache.get(path);
-+    if (existing) {
-+        existing.callbacks.push(callback);
-+    }
-+    else {
-+        cache.set(path, {
-+            watcher: createWatcher((
-+            // Cant infer types correctly so lets satisfy checker
-+            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
+     const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
+     const path = toCanonicalFileName(name);
+     const existing = cache.get(path);
+@@ -356,9 +356,34 @@
+     }
+     else {
+         cache.set(path, {
+-            watcher: createWatcher((
+-            // Cant infer types correctly so lets satisfy checker
+-            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
++            watcher: createWatcher((param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))),
 +            callbacks: [callback],
 +        });
 +    }
@@ -35,10 +35,19 @@
 +    };
 +}
 +function createSingleFsWatcherPerName(cache, useCaseSensitiveFileNames, name, callback, createWatcher) {
-     const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
-     const path = toCanonicalFileName(name);
-     const existing = cache.get(path);
-@@ -843,10 +872,10 @@
++    const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
++    const path = toCanonicalFileName(name);
++    const existing = cache.get(path);
++    if (existing) {
++        existing.callbacks.push(callback);
++    }
++    else {
++        cache.set(path, {
++            watcher: createWatcher((param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))),
+             callbacks: [callback],
+         });
+     }
+@@ -843,10 +868,10 @@
          }
      }
      function pollingWatchFile(fileName, callback, pollingInterval, options) {

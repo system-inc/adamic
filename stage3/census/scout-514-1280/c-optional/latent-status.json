@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "--kill-after=10s",
+    "1800",
+    "/workspace/scratch/scout-latent",
+    "/workspace/scratch/scout-c/src/compiler",
+    "/workspace/scratch/scout-514-1280/stage3/census/scout-514-1280/c/latent.jsonl"
+  ],
+  "env": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/scout-c/src/compiler/sys.ts",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  },
+  "exit_code": 0,
+  "seconds": 72.66903352737427,
+  "binary_sha256": "4fe3ce54c4d3a928bcbfa4e1dbc5a1e9ea725e9c7dc775bce7248a818b20fc2b"
+}

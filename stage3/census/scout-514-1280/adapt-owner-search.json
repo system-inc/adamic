@@ -5,7 +5,8 @@
     "createSingleFsWatcherPerName",
     "pollingWatchFile",
     "fsWatch",
-    "createSystemWatchFunctions"
+    "createSystemWatchFunctions",
+    "getFirstJSDocTag"
   ],
   "matches": [
     {
@@ -76,5 +77,14 @@
       "preview": "    \"after\": \"export class TestServerHost implements server.ServerHost, FormatDiagnosticsHost, ModuleResolutionHost {\\n    args: string[] = [];\\n\\n    private readonly output: string[] = [];\\n\\n    private fs = new Map<Path, FSEntry>();\\n    private time = timeIncrements;\\n    getCanonicalFileName: (s: string) => string;\\n    toPath: (f: string) => Path;\\n    readonly timeoutCallbacks: Callbacks = new Callbacks(this, \\\"Timeout\\\", /*swallowExitException*/ true);\\n    readonly immediateCallbacks: ",
       "line_sha256": "57a04cd9997948d063ddac5e4201679785cfcf8a93571cbb3837cf2981fc7f64"
     }
-  ]
+  ],
+  "counts": {
+    "createSingleWatcherPerName": 0,
+    "createSingleFileWatcherPerName": 0,
+    "createSingleFsWatcherPerName": 0,
+    "pollingWatchFile": 2,
+    "fsWatch": 7,
+    "createSystemWatchFunctions": 3,
+    "getFirstJSDocTag": 0
+  }
 }

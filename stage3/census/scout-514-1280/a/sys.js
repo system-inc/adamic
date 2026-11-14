@@ -356,9 +356,7 @@ function createSingleFileWatcherPerName(cache, useCaseSensitiveFileNames, name, 
     }
     else {
         cache.set(path, {
-            watcher: createWatcher((
-            // Cant infer types correctly so lets satisfy checker
-            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
+            watcher: createWatcher((param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))),
             callbacks: [callback],
         });
     }
@@ -385,9 +383,7 @@ function createSingleFsWatcherPerName(cache, useCaseSensitiveFileNames, name, ca
     }
     else {
         cache.set(path, {
-            watcher: createWatcher((
-            // Cant infer types correctly so lets satisfy checker
-            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
+            watcher: createWatcher((param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))),
             callbacks: [callback],
         });
     }
