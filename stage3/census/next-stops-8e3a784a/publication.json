@@ -1,0 +1,24 @@
+{
+  "transport": "GitHub connector after HTTPS Git credential failure",
+  "checkpoint_commit_map": {
+    "bc206db9cf5215b4d5bede7bde206ec180407a5b": "3fe53edd1f8d2143df2b8009d4046d49919713b3",
+    "19f6961370107ab1d819ab8803b2eee3ecc7226c": "b30e44b103fe0a987b979b4f74683a7b28aed154"
+  },
+  "git_push_failures": [
+    {
+      "checkpoint": 70,
+      "exit_code": 128,
+      "error": "fatal: could not read Username for 'https://github.com': No such device or address"
+    },
+    {
+      "checkpoint": 79,
+      "exit_code": 128,
+      "error": "fatal: could not read Username for 'https://github.com': No such device or address"
+    }
+  ],
+  "verified_checkpoint_trees": {
+    "3fe53edd1f8d2143df2b8009d4046d49919713b3": "27a5f144964bbd4cfdab9bc2f9cb5f4f38d365f4",
+    "b30e44b103fe0a987b979b4f74683a7b28aed154": "4afa5c7cbcc0151a676b911bbb0227d21f115109"
+  },
+  "force": false
+}
