@@ -1,0 +1,198 @@
+{
+  "files": [
+    {
+      "file": "src/compiler/parser.ts",
+      "removedLines": 74,
+      "addedLines": 47,
+      "changedLinesTotal": 121,
+      "parserCallsRewritten": 46,
+      "transformerArrows": 0,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "removedLines": 8,
+      "addedLines": 7,
+      "changedLinesTotal": 15,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 5,
+      "directUsesRetained": 11,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "removedLines": 9,
+      "addedLines": 8,
+      "changedLinesTotal": 17,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 6,
+      "directUsesRetained": 15,
+      "valueUsesRetained": 17
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "removedLines": 4,
+      "addedLines": 2,
+      "changedLinesTotal": 6,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 2
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "removedLines": 5,
+      "addedLines": 4,
+      "changedLinesTotal": 9,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 2,
+      "directUsesRetained": 4,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "removedLines": 7,
+      "addedLines": 6,
+      "changedLinesTotal": 13,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 4,
+      "directUsesRetained": 16,
+      "valueUsesRetained": 7
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "removedLines": 7,
+      "addedLines": 6,
+      "changedLinesTotal": 13,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 4,
+      "directUsesRetained": 5,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "removedLines": 7,
+      "addedLines": 6,
+      "changedLinesTotal": 13,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 4,
+      "directUsesRetained": 15,
+      "valueUsesRetained": 2
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "removedLines": 4,
+      "addedLines": 3,
+      "changedLinesTotal": 7,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 4
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "removedLines": 4,
+      "addedLines": 3,
+      "changedLinesTotal": 7,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 2
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "removedLines": 7,
+      "addedLines": 6,
+      "changedLinesTotal": 13,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 4,
+      "directUsesRetained": 7,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "removedLines": 4,
+      "addedLines": 3,
+      "changedLinesTotal": 7,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 1,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "removedLines": 4,
+      "addedLines": 3,
+      "changedLinesTotal": 7,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 3
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "removedLines": 8,
+      "addedLines": 7,
+      "changedLinesTotal": 15,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 5,
+      "directUsesRetained": 18,
+      "valueUsesRetained": 3
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "removedLines": 8,
+      "addedLines": 7,
+      "changedLinesTotal": 15,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 5,
+      "directUsesRetained": 13,
+      "valueUsesRetained": 3
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "removedLines": 7,
+      "addedLines": 6,
+      "changedLinesTotal": 13,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 4,
+      "directUsesRetained": 13,
+      "valueUsesRetained": 2
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "removedLines": 6,
+      "addedLines": 4,
+      "changedLinesTotal": 10,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 3,
+      "directUsesRetained": 7,
+      "valueUsesRetained": 1
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "removedLines": 4,
+      "addedLines": 3,
+      "changedLinesTotal": 7,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 1,
+      "directUsesRetained": 2,
+      "valueUsesRetained": 0
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "removedLines": 12,
+      "addedLines": 11,
+      "changedLinesTotal": 23,
+      "parserCallsRewritten": 0,
+      "transformerArrows": 0,
+      "directUsesRetained": 0,
+      "valueUsesRetained": 0
+    }
+  ],
+  "privatePatch": {
+    "bytes": 42368,
+    "sha256": "43909e2f1638aaf323a978540c5fb4b12562f58ed9a34156d6155688e87fd09b"
+  }
+}

@@ -30,7 +30,7 @@ if(site.type==='NodeFactory'){
  const imp=sf.statements.find(s=>ts.isImportDeclaration(s)&&s.importClause?.namedBindings&&ts.isNamedImports(s.importClause.namedBindings)&&s.moduleSpecifier.text.endsWith('/_namespaces/ts.js'));
  if(!imp)throw Error('missing ts namespace import '+site.file);
  const existing=new Set(imp.importClause.namedBindings.elements.map(e=>e.name.text));const missing=[...imports].filter(n=>!existing.has(n)&&n!=='undefined');
- if(missing.length){const b=imp.importClause.namedBindings;edits.push({start:b.end-1,end:b.end-1,text:missing.map(n=>'    '+n+',\n').join('')});}
+ if(missing.length){const b=imp.importClause.namedBindings;edits.push({start:b.end-1,end:b.end-1,text:missing.map(n=>'    type '+n+',\n').join('')});}
 }else if(site.type==='PrintHandlers'){
  const view=pattern.elements.map(e=>{const name=(e.propertyName||e.name).text;return `readonly ${name}?: PrintHandlers["${name}"];`;}).join(' ');
  replacement=`const handlersView: { ${view} } = handlers;\n    `+pattern.elements.map(e=>{const name=(e.propertyName||e.name).text;members.push({name,local:e.name.text,default:e.initializer?.getText(sf)||null});return `const ${e.name.text} = handlersView.${name}${e.initializer?' ?? '+e.initializer.getText(sf):''};`;}).join('\n    ');
