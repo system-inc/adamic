@@ -13,8 +13,7 @@ New: `		if false && !graph.running[i] {`
 Run: `go test ./internal/lower -run '^TestTsSysPresenceLowers$' -count=1 -v`
 Red: both rows stop, a not yet at the first presence test judged, "whose receiver may hold a value the program didn't
 build as a plain object literal (local or result has no tracked producer)": setSys, which nothing calls, has its
-write `sys = s` collected, and its parameter s has no caller to give it a producer. The patch's store is no witness
-here, since patchWriteFileEnsuringDirectory is handed the arrow's own let, which setSys never writes.
+write `sys = s` collected, and its parameter s has no caller to give it a producer.
 
 ## M-b. ClosureTargets ignoring Direct
 
