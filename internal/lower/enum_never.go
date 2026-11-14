@@ -82,15 +82,7 @@ func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen m
 // An ordinary IR helper preserves evaluation order and reads the operand exactly once. Its
 // panic is shared by both backends; never itself does not need a new machine representation.
 func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity *ast.Symbol) ir.Expression {
-	of := ir.Number
-	if contextual := l.slotType(node); contextual != nil {
-		if representation, known := l.representation(contextual); known && !slotless(representation) {
-			of = representation
-		}
-	}
-	if node.Parent != nil && node.Parent.Kind == ast.KindReturnStatement && l.function != nil {
-		of = l.function.Returns
-	}
+	of := l.neverCheckReturns(node, ir.Number)
 	function := len(l.result.Functions)
 	local := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_never_value", Type: value.Type(), Function: function})
@@ -111,4 +103,19 @@ func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity 
 		Body: []ir.Statement{ir.Panic{Message: message}},
 	})
 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: of}
+}
+
+// neverCheckReturns is what a never check gives back where node sits: its slot's representation where
+// the slot has one of its own, a returned value's function's result, or otherwise.
+func (l *lowering) neverCheckReturns(node *ast.Node, otherwise ir.Type) ir.Type {
+	of := otherwise
+	if contextual := l.slotType(node); contextual != nil {
+		if representation, known := l.representation(contextual); known && !slotless(representation) {
+			of = representation
+		}
+	}
+	if node.Parent != nil && node.Parent.Kind == ast.KindReturnStatement && l.function != nil {
+		of = l.function.Returns
+	}
+	return of
 }
