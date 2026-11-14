@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -21,7 +22,13 @@ import (
 // suspensionProgram lowers source as main.a.
 func suspensionProgram(t *testing.T, source string) *ir.Program {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
+	return suspensionProgramAs(t, source, "main.a")
+}
+
+// suspensionProgramAs lowers source as the file named.
+func suspensionProgramAs(t *testing.T, source, name string) *ir.Program {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), name)
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
@@ -94,13 +101,18 @@ func TestSuspendingCalleeParametersEscape(t *testing.T) {
 function make(n: number): P {
     return { x: n };
 }
+// Each field is read into arithmetic held in a local, as graph.ts's sum reads its node: a field
+// returned or handed on alone counts as the parameter escaping today (region.go's escaping, #1jch5ez),
+// which would hide the region this pins.
 function weigh(p: P): number {
-    return p.x;
+    const weight = 1 + p.x;
+    return weight;
 }
 async function countLater(p: P): Promise<number> {
     await Promise.resolve(0);
-    console.log("later " + String(p.x));
-    return p.x;
+    const seen = 1 + p.x;
+    console.log("later " + String(seen));
+    return seen;
 }
 function relay(p: P): Promise<number> {
     return countLater(p);
@@ -145,7 +157,7 @@ await startRelay();
 	if regions == 0 {
 		t.Error("measure's weigh(make(5)) took no region in a program holding promises")
 	}
-	suspensionRun(t, program, "sync 5\nlater 7\nlater 9\n")
+	suspensionRun(t, program, "sync 6\nlater 8\nlater 10\n")
 }
 
 // A suspending body keeps its locals in frame cells, which reuse's entries and a borrowed element's
@@ -175,7 +187,8 @@ function makeP(n: number): P {
     return { x: n };
 }
 function weighP(p: P): number {
-    return p.x;
+    const weight = 1 + p.x;
+    return weight;
 }
 function grow(b: Box): Box {
     let c = { ...b, n: b.n + 1 };
@@ -251,5 +264,63 @@ await report(boxes);
 	if !region {
 		t.Error("summary's weighP(makeP(6)) took no region in a program holding promises and a generator")
 	}
-	suspensionRun(t, program, "seen 17 grown 3 weight 6\ntotal 26\n")
+	suspensionRun(t, program, "seen 17 grown 3 weight 7\ntotal 26\n")
+}
+
+// Runtime Performance's graph.ts (#ahnc64w), made small: a graph built fresh and summed in one
+// statement, ten rounds of it in the original, and one trailing setTimeout. The timer used to cost the
+// program every region; graph's statement now takes its region, and the emitted C opens and ends one.
+// Mutant: the program-wide gate put back in cProgram, and the C holds no region.
+func TestTimerProgramKeepsItsRegions(t *testing.T) {
+	t.Parallel()
+	program := suspensionProgramAs(t, `import 'node:timers';
+interface Node {
+	readonly value: number;
+	readonly next: Node | undefined;
+	readonly back: Node | undefined;
+}
+function build(depth: number, value: number): Node {
+	if (depth === 0) {
+		return { value, next: undefined, back: undefined };
+	}
+	return { value, next: build(depth - 1, value + 1), back: build(depth - 1, value + 2) };
+}
+function sum(node: Node): number {
+	let total = 1 + node.value;
+	if (node.next !== undefined) {
+		total += sum(node.next);
+	}
+	if (node.back !== undefined) {
+		total += sum(node.back);
+	}
+	return total;
+}
+function graph(seed: number): number {
+	const total = sum(build(3, seed));
+	return total;
+}
+let checksum = 0;
+for (let round = 0; round < 3; round += 1) {
+	checksum += graph(round);
+}
+console.log(`+"`graph checksum ${checksum}`"+`);
+setTimeout(() => {
+	console.log('quiet');
+}, 1);
+`, "main.ts")
+	if !program.HasPromises() {
+		t.Fatal("the timer no longer makes HasPromises true, so this pin no longer holds the gate")
+	}
+	graph := statementsOf(program.Functions[functionNamed(t, program, "graph")].Body)
+	planned := false
+	for statement := range planRegions(program).statements {
+		planned = planned || graph[statement]
+	}
+	if !planned {
+		t.Error("graph's statement took no region in a program holding a timer")
+	}
+	if !strings.Contains(C(program), "adamic_region_end(") {
+		t.Error("the emitted C ends no region in a program holding a timer")
+	}
+	suspensionRun(t, program, "graph checksum 243\nquiet\n")
 }
