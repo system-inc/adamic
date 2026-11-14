@@ -44,8 +44,12 @@ func TestFiniteKeyedWritesAgreeWithNode(t *testing.T) {
 // words: refused is a Refused, otherwise a NotYet, at line of the program. A keyed program with a twin is
 // Adamic's condition on #13p3y0c, that each arm is judged exactly as the plain o.f = v it stands for: the
 // twin is that named write, which stops today, and the keyed one must stop in the twin's own words, read
-// off the twin's lowering, not off this table. The four refused rows are tsc's shape and its probes on
-// #13p3y0c, refused at their {} by no-optional-widening until #7n03qzg lands, when they move on.
+// off the twin's lowering, not off this table. A row whose what is empty is a twin pair judged by the
+// refusal registry against the one field the twin names (#13p3y0c, Lower's must): its words and kind are
+// the twin's alone, read off the twin, and the table holds only where the keyed write stops. In each, the
+// union key's write type, the named fields' types intersected, is one neither field is, so only judging
+// each named field as its own slot gives the twin's stop. The four refused rows are tsc's shape and its
+// probes on #13p3y0c, refused at their {} by no-optional-widening until #7n03qzg lands, when they move on.
 var finiteKeyedWriteStops = []struct {
 	name    string
 	refused bool
@@ -53,19 +57,28 @@ var finiteKeyedWriteStops = []struct {
 	what    string
 	twin    string
 }{
+	{"accessor_keyed.a", false, 10, "a computed key without an own data field", ""},
 	{"absent_optional_keyed.a", false, 12, "writing a possibly absent optional own field", "absent_optional_named.a"},
 	{"absent_optional_named.a", false, 10, "writing a possibly absent optional own field", ""},
 	{"checked_view_keyed.a", false, 11, "writing a checked object field without its source-slot type certificate", "checked_view_named.a"},
 	{"checked_view_named.a", false, 10, "writing a checked object field without its source-slot type certificate", ""},
 	{"coalesce.a", true, 5, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"index_signature_union.a", false, 8, "a computed field write to an object with an index signature", ""},
+	{"invariance_keyed.a", false, 7, "", "invariance_named.a"},
+	{"invariance_named.a", false, 7, "", ""},
 	{"literal_key.a", true, 6, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
+	{"nominal_keyed.a", false, 8, "", "nominal_named.a"},
+	{"nominal_named.a", false, 8, "", ""},
+	{"optional_widening_keyed.a", false, 7, "", "optional_widening_named.a"},
+	{"optional_widening_named.a", false, 7, "", ""},
 	{"or_temporary.a", true, 5, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"placeholder_keyed.a", false, 5, "a placeholder reset without a represented variable or field slot", ""},
 	{"readonly_constructor.a", false, 8, "a computed write to readonly field Low", ""},
 	{"receiver_alternatives.a", false, 7, "a computed field stored differently across receiver alternatives", ""},
 	{"tsc_custom_levels.a", true, 14, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"value_held_differently.a", false, 7, "a computed field write whose value isn't held as every named field is", ""},
+	{"void_widening_keyed.a", false, 5, "", "void_widening_named.a"},
+	{"void_widening_named.a", false, 5, "", ""},
 }
 
 // Each program Node runs to the end stops at lowering where the table says, in its words, and a keyed
@@ -121,7 +134,7 @@ func TestFiniteKeyedWriteStops(t *testing.T) {
 			t.Parallel()
 			refused, where, what := stop(t, row.name)
 			kind := map[bool]string{false: "NotYet", true: "Refused"}
-			if refused != row.refused || what != row.what || !strings.Contains(where, row.name+":"+strconv.Itoa(row.line)+":") {
+			if !strings.Contains(where, row.name+":"+strconv.Itoa(row.line)+":") || (row.what != "" && (refused != row.refused || what != row.what)) {
 				t.Fatalf("stopped by %s at %s: %q; want %s at %s:%d: %q", kind[refused], where, what, kind[row.refused], row.name, row.line, row.what)
 			}
 			if row.twin == "" {

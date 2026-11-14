@@ -142,3 +142,20 @@ New:
 Red: `TestFiniteKeyedWriteStops/placeholder_keyed.a`. This stop on main, before setIndex, is what keeps
 `slots[side] = undefined!` out of finiteElementWrite, which would lower `undefined!` as an ordinary value
 where its named twin, `slots.left = undefined!`, is a placeholder reset with setProperty's own checks.
+
+## (h) each named field's slot judgment dropped
+
+internal/lower/element_access_fields.go, finiteElementWrite. Old:
+
+```go
+		if err := l.refuseInSlot(valueNode, slot); err != nil {
+```
+
+New:
+
+```go
+		if err := l.refuseInSlot(valueNode, slot); err != nil && false {
+```
+
+Red: the registry twins in `TestFiniteKeyedWriteStops` whose rule the union key's intersected write type
+hides, each keyed write then lowering, or stopping in other words than its named twin.
