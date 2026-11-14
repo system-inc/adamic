@@ -10,7 +10,7 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "root_kind": "",
     "depth": 0,
     "measurement": "measured on a checker-rejected program",
-    "unit": "src/compiler/sys.ts:1473:5",
+    "unit": "src/compiler/sys.ts:1467:1",
     "phase": "lowering",
     "kind": "Boundary",
     "where": "src/compiler/sys.ts:1517:9",
@@ -25,12 +25,10 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "measurement": "measured on a checker-rejected program",
     "unit": "src/compiler/sys.ts:1467:1",
     "phase": "lowering",
-    "kind": "Boundary",
-    "where": "src/compiler/sys.ts:1517:9",
-    "reason": "failed statement; state rolled back; continued at next statement or declaration",
-    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
-    "start": 68114,
-    "end": 72545
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1588:191",
+    "reason": "process.recordreplay as a value (use its supported process operation directly)",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
   },
   {
     "root_kind": "",
@@ -47,12 +45,14 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "root_kind": "",
     "depth": 0,
     "measurement": "measured on a checker-rejected program",
-    "unit": "src/compiler/sys.ts:1467:1",
+    "unit": "src/compiler/sys.ts:1473:5",
     "phase": "lowering",
-    "kind": "NotYet",
-    "where": "src/compiler/sys.ts:1588:191",
-    "reason": "process.recordreplay as a value (use its supported process operation directly)",
-    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1517:9",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+    "start": 68114,
+    "end": 72545
   },
   {
     "root_kind": "",
@@ -76,20 +76,7 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "root_kind": "",
     "depth": 0,
     "measurement": "measured on a checker-rejected program",
-    "unit": "src/compiler/sys.ts:1467:1",
-    "phase": "lowering",
-    "kind": "Boundary",
-    "where": "src/compiler/sys.ts:1612:21",
-    "reason": "failed statement; state rolled back; continued at next statement or declaration",
-    "text": "src/compiler/sys.ts:1517:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
-    "start": 72216,
-    "end": 72306
-  },
-  {
-    "root_kind": "",
-    "depth": 0,
-    "measurement": "measured on a checker-rejected program",
-    "unit": "src/compiler/sys.ts:1467:1",
+    "unit": "src/compiler/sys.ts:1473:5",
     "phase": "lowering",
     "kind": "Boundary",
     "where": "src/compiler/sys.ts:1613:21",
@@ -113,12 +100,27 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "root_kind": "",
     "depth": 0,
     "measurement": "measured on a checker-rejected program",
-    "unit": "src/compiler/sys.ts:1473:5",
+    "unit": "src/compiler/sys.ts:1467:1",
     "phase": "lowering",
-    "kind": "NotYet",
-    "where": "src/compiler/sys.ts:1613:46",
-    "reason": "reading modulePath",
-    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet"
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1613:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet",
+    "start": 72306,
+    "end": 72397
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1612:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1517:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+    "start": 72216,
+    "end": 72306
   },
   {
     "root_kind": "",
@@ -139,12 +141,10 @@ existing declaration file/line/column identities, preserved by this amendment; e
     "measurement": "measured on a checker-rejected program",
     "unit": "src/compiler/sys.ts:1473:5",
     "phase": "lowering",
-    "kind": "Boundary",
-    "where": "src/compiler/sys.ts:1613:21",
-    "reason": "failed statement; state rolled back; continued at next statement or declaration",
-    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet",
-    "start": 72306,
-    "end": 72397
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1613:46",
+    "reason": "reading modulePath",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet"
   }
 ]
 ```
