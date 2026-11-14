@@ -17,11 +17,12 @@ for m in modes:
  assert len(former)==73
  changed=sum(not c['unchanged'] for c in cs)
  cleared=lambda loc: not any(r.get('where','').endswith('/'+loc) for r in records[m])
- s[2:2]=[m+': **sys.ts:304:13 '+('cleared' if cleared('sys.ts:304:13') else 'not cleared')+'; scanner.ts:2934:41 '+('cleared' if cleared('scanner.ts:2934:41') else 'not cleared')+'** (ordinary first-stop census).','']
+ offset=2+2*modes.index(m)
+ s[offset:offset]=[m+': **sys.ts:304:13 '+('cleared' if cleared('sys.ts:304:13') else 'not cleared')+'; scanner.ts:2934:41 '+('cleared' if cleared('scanner.ts:2934:41') else 'not cleared')+'** (ordinary first-stop census).','']
  s += [m+': '+str(changed)+' changed exact tuples; '+str(79-changed)+' unchanged from 5c8338c4.','']
  accepted=[r for g in json.loads((base/m/'grouped-first-stops.json').read_text()) if g['kind']=='accepted' for r in g['roots']]
  s += ['Files lowering whole in '+m+': '+str(len(accepted))+'/79: '+', '.join(accepted)+'.','']
-s += ["See each format below for every changed stop and per-root comparison.",'']
+s += ["In each format, all 73 former sys.ts:304:13 roots now stop at sys.ts:514:17; the sys.ts root moves from scanner.ts:2934:41 to utilitiesPublic.ts:1280:52. The other five roots retain their exact baseline tuples. See each format below for every per-root comparison.",'']
 s += ['','Main moved from 5c8338c4 to a7d47283 (#2t3h708). The exact internal/lower/expression.go diff is retained in [expression-change.diff.txt](expression-change.diff.txt). It changes sameKeeping and valueSlotKeeps to judge rest-element representations and reject hidden rest views recursively; it does not change castRefusal/castProof or initialization preflight. Reach assessments below are by emitting path, not a counterfactual compiler run.','','## Adapted source at new stops','']
 seen=set()
 for m in modes:
@@ -30,7 +31,7 @@ for m in modes:
  for e in json.loads((base/m/'source-evidence.json').read_text()):
   key=(e['where'],e['kind'],e['reason'])
   if key in new and key not in seen:
-   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
+   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Adapted context:','','```typescript',e['adapted_excerpt'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
    if e.get('owner_basis'):s += ['Ownership evidence: '+e['owner_basis']+'.','']
    if e.get('expression_change_reach'):s += ['Reach of a7d47283 expression.go change: '+e['expression_change_reach'],'']
 if not seen:s+=['No new stop tuples relative to the 5c8338c4 baseline.','']
