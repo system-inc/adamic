@@ -2032,6 +2032,13 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
 		return l.enumNeverCheck(property.Name(), read, identity), nil
 	}
+	making, err := l.neverRead(property.Name())
+	if err != nil {
+		return nil, err
+	}
+	if making != nil {
+		return l.neverReadTrap(property.Name(), read, making), nil
+	}
 	return read, nil
 }
 
