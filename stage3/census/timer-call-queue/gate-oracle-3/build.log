@@ -1,0 +1,70 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /tmp/adamic-timer-queue-baseline/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 17ms
+Finished shim-compile-cache-tsserver in 17ms
+Finished shim-compile-cache-typings-installer in 17ms
+Finished generate-types-map in 19ms
+Finished bundle-watch-guard in 26ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 124ms
+Starting localize
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished localize in 1ms
+Finished copy-built-local-diagnostic-messages in 13ms
+Finished bundle-typings-installer in 69ms
+Finished bundle-tsserver in 164ms
+Finished build-watch-guard in 287ms
+Finished lib in 304ms
+Finished build-tsc in 454ms
+Finished build-services in 454ms
+Finished build-tsserver in 454ms
+Finished build-typings-installer in 454ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 1ms
+Finished bundle-tsc in 1.2s
+Finished bundle-services in 1.5s
+Starting lssl
+Finished lssl in 1ms
+Completed local in 1.7s
+
+> typescript@6.0.3 build:tests
+> hereby tests
+
+Using /tmp/adamic-timer-queue-baseline/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 146ms
+Starting bundle-tests
+Starting build-tests
+Finished lib in 306ms
+Finished build-tests in 600ms
+Finished bundle-tests in 1.8s
+Completed tests in 1.9s

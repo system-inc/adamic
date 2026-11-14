@@ -1,0 +1,31 @@
+
+> typescript@6.0.3 test
+> hereby runtests-parallel --light=false --workers=1 --lint=false --no-colors --runners=unittest --tests=sys:: symlinkWatching
+
+Using /tmp/adamic-timer-queue-baseline/Herebyfile.mjs to run runtests-parallel
+Starting lib
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting generate-types-map
+Finished generate-types-map in 8ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 129ms
+Starting bundle-tests
+Starting build-tests
+Starting build-services
+Finished lib in 199ms
+Finished build-tests in 410ms
+Finished build-services in 410ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 1ms
+Finished bundle-tests in 1s
+Starting do-runtests-parallel
+Running tests with config: {"test":["sys:: symlinkWatching"],"runners":["unittest"],"light":false,"noColor":true,"timeout":40000,"keepFailed":false}
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /tmp/adamic-timer-queue-baseline/node_modules/mocha/bin/_mocha -R /tmp/adamic-timer-queue-baseline/scripts/failed-tests.cjs -O "reporter=min" -g "sys:: symlinkWatching" --no-colors -t 40000 ./built/local/run.js
+[2J[1;3H
+  16 passing (43s)
+
+Finished do-runtests-parallel in 48.4s
+Completed runtests-parallel in 49.6s

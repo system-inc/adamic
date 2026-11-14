@@ -1,0 +1,64 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /tmp/adamic-timer-queue-baseline/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-typings-installer in 20ms
+Finished shim-compile-cache-tsserver in 20ms
+Finished shim-compile-cache-tsc in 21ms
+Finished generate-types-map in 23ms
+Finished bundle-watch-guard in 26ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 234ms
+/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:47
+    if(text.includes('function createDynamicPriorityPollingWatchFile(')) throw Error('gate: compiler bundle had no matching timer blocks '+filename);
+                                                                         ^
+
+Error: gate: compiler bundle had no matching timer blocks /tmp/adamic-timer-queue-baseline/node_modules/typescript/lib/_tsc.js
+    at Module._compile (/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:47:80)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at Object.<anonymous> (/tmp/adamic-timer-queue-baseline/node_modules/typescript/lib/tsc.js:8:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)
+    at Module._compile (/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:48:20)
+
+Node.js v24.19.0
+Error in build-watch-guard in 244ms
+Error: Process exited with code: 1
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:47
+    if(text.includes('function createDynamicPriorityPollingWatchFile(')) throw Error('gate: compiler bundle had no matching timer blocks '+filename);
+                                                                         ^
+
+Error: gate: compiler bundle had no matching timer blocks /tmp/adamic-timer-queue-baseline/node_modules/typescript/lib/_tsc.js
+    at Module._compile (/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:47:80)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at Object.<anonymous> (/tmp/adamic-timer-queue-baseline/node_modules/typescript/lib/tsc.js:8:18)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1872:14)
+    at Module._compile (/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-gate.cjs:48:20)
+
+Node.js v24.19.0
+Completed local with errors in 2.8s
+Failed tasks: build-services, build-tsc, build-tsserver, build-typings-installer, build-watch-guard
