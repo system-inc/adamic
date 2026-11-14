@@ -176,6 +176,7 @@ type viewWalkState struct {
 	checkedFieldWrites map[string]int
 	viewSiteSeen       map[string]int
 	viewSiteTrue       map[*ast.Node]bool
+	sourceSlotWrites   []sourceSlotWrite
 }
 
 func (l *lowering) viewWalkState() viewWalkState {
@@ -187,6 +188,7 @@ func (l *lowering) viewWalkState() viewWalkState {
 		checkedFieldWrites: maps.Clone(l.checkedFieldWrites),
 		viewSiteSeen:       maps.Clone(l.viewSiteSeen),
 		viewSiteTrue:       maps.Clone(l.viewSiteTrue),
+		sourceSlotWrites:   slices.Clone(l.sourceSlotWrites),
 	}
 }
 
@@ -198,15 +200,17 @@ func (l *lowering) restoreViewWalkState(state viewWalkState) {
 	l.checkedFieldWrites = state.checkedFieldWrites
 	l.viewSiteSeen = state.viewSiteSeen
 	l.viewSiteTrue = state.viewSiteTrue
+	l.sourceSlotWrites = state.sourceSlotWrites
 }
 
 // viewWalkCompared runs the whole walk, puts back the state it began from, runs the indexed walk, and
-// panics where the two differ in the refusal, the getters, CheckedFields or PlainReceivers. Lowering goes
-// on from the indexed walk's state, so the rest of the program is lowered as production lowers it.
+// panics where the two differ in the refusal, the getters, CheckedFields, PlainReceivers or the writes
+// recorded for the source-slot certificate (judgeViewAccess). Lowering goes on from the indexed walk's
+// state, so the rest of the program is lowered as production lowers it.
 func (l *lowering) viewWalkCompared(node *ast.Node, modules []*ast.SourceFile, fields map[string]bool) ([]*ast.Node, error) {
 	before := l.viewWalkState()
 	wholeGetters, wholeRefused := l.viewWalkWhole(modules, fields)
-	wholeFields, wholePlain := l.result.CheckedFields, l.result.PlainReceivers
+	wholeFields, wholePlain, wholeWrites := l.result.CheckedFields, l.result.PlainReceivers, l.sourceSlotWrites
 	l.restoreViewWalkState(before)
 	getters, refused := l.viewWalkIndexed(modules, fields)
 	var differences []string
@@ -221,6 +225,16 @@ func (l *lowering) viewWalkCompared(node *ast.Node, modules []*ast.SourceFile, f
 	}
 	if !maps.Equal(wholePlain, l.result.PlainReceivers) {
 		differences = append(differences, "PlainReceivers: only whole "+viewWalkOnly[int](wholePlain, l.result.PlainReceivers, strconv.Itoa)+", only indexed "+viewWalkOnly[int](l.result.PlainReceivers, wholePlain, strconv.Itoa))
+	}
+	if !slices.EqualFunc(wholeWrites, l.sourceSlotWrites, func(one, other sourceSlotWrite) bool { return one.target == other.target }) {
+		targets := func(writes []sourceSlotWrite) []*ast.Node {
+			var nodes []*ast.Node
+			for _, write := range writes {
+				nodes = append(nodes, write.target)
+			}
+			return nodes
+		}
+		differences = append(differences, "source-slot writes: whole "+l.viewWalkPlaces(targets(wholeWrites))+", indexed "+l.viewWalkPlaces(targets(l.sourceSlotWrites)))
 	}
 	if len(differences) != 0 {
 		panic("view walk comparison (#q1hyhzc): the indexed walk of the view at " + l.program.Where(node) + " isn't the whole walk's; " + strings.Join(differences, "; "))

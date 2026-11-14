@@ -1743,6 +1743,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	// As lowerWithElementKey does, before the accessors' dispatchers: the certificate adds checked
+	// fields and view contracts, which both modes' IR must hold alike.
+	if err := lowering.certifySourceSlots(); err != nil {
+		return nil, err
+	}
 	if err := lowering.finishAccessors(); err != nil {
 		return nil, err
 	}

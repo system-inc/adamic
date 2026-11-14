@@ -38,13 +38,14 @@ console.log(String(either.b));
 `
 
 // viewSitesTwoWrites writes a checked object field twice, on lines 5 and 6, so its view has two
-// accesses to refuse.
+// accesses to refuse. Each is a logical write, which keeps its stop: the source-slot certificate admits
+// only a plain = (#2msw6t8).
 const viewSitesTwoWrites = `interface Base {readonly kind:'box'|'other'}
 interface Box extends Base {readonly kind:'box';child:{ready:boolean}}
 const raw={kind:'box' as const,child:{ready:true,other:42}};
 const held:Base=raw;const view=held as Box;
-view.child={ready:true};
-view.child={ready:false};
+view.child&&={ready:true};
+view.child&&={ready:false};
 console.log(String(raw.child.other));
 `
 
