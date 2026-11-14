@@ -103,9 +103,9 @@ internal/lower/library_string.go:401
 407: 	}
 408: 	return l.castSlotRefusal(node)
 409: }
-410: 
+410:
 411: func init() { refusalRules.register(3100, "stringWideningRefusal", (*lowering).stringWideningRefusal) }
-412: 
+412:
 413: func (l *lowering) refuseStringWidening(node *ast.Node) error {
 414: 	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 415: 		return nil
@@ -140,7 +140,7 @@ internal/lower/refusals.go:98
 121: 	}
 122: 	return found
 123: }
-124: 
+124:
 125: // refuseNode runs refuse's per-node rules over node and everything under it, in refuse's order, and
 
 internal/lower/lower.go:138
@@ -153,4 +153,3 @@ internal/lower/lower.go:138
 144: 		}
 145: 	}
 146: 	// Link every declaration before lowering any function body, including across back edges.
-

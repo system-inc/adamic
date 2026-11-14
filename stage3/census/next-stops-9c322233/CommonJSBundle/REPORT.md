@@ -120,7 +120,7 @@ The former 73 sys.ts:272:23 roots now go to:
 
 ```typescript
 269:     }
-270: 
+270:
 271:     function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
 272:         const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
 273:         queue.pollingInterval = pollingInterval;
@@ -168,10 +168,10 @@ The former 73 sys.ts:272:23 roots now go to:
 
 ```typescript
 68:         const buildArray = build ? isArray(build) ? build : build.split(".") : emptyArray;
-69: 
+69:
 70:         Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), "Invalid argument: prerelease");
 71:         Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), "Invalid argument: build");
-72: 
+72:
 73:         this.major = major;
 74:         this.minor = minor;
 ```

@@ -19,6 +19,6 @@ s+=['','| Root | Before (location; kind; exact reason) | After (location; kind; 
 for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' | '+'; '.join(c['after']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' |']
 s+=['','## Adapted source at stops','']
 for e in read('source-evidence.json'):
- if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript',e['adapted_excerpt'],'```','']
+ if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','']
 s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from measured stage3/meter/owners.json or the emitting method.']
 (out/'REPORT.md').write_text('\n'.join(s)+'\n')
