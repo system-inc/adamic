@@ -1,0 +1,12 @@
+const fs=require('fs'),path=require('path'),ts=require('/workspace/scratch/scout-514-1280/stage3/api/node_modules/typescript');
+const root=process.argv[2],out=process.argv[3];
+const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):e.name.endsWith('.ts')?[path.join(d,e.name)]:[]);
+const roots=walk(path.join(root,'src/compiler')).sort();
+const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:['node'],typeRoots:['/workspace/scratch/scout-514-1280/stage3/api/node_modules/@types']};
+const program=ts.createProgram(roots,options),checker=program.getTypeChecker();
+const diagnostics=ts.getPreEmitDiagnostics(program).map(d=>({code:d.code,file:d.file?path.relative(root,d.file.fileName):null,line:d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start).line+1:null,column:d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start).character+1:null,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')}));
+const sys=program.getSourceFile(path.join(root,'src/compiler/sys.ts'));
+const calls=[];function visit(n){if(ts.isCallExpression(n)&&n.expression.getText(sys)==='createSingleWatcherPerName'){const sig=checker.getResolvedSignature(n);calls.push({line:sys.getLineAndCharacterOfPosition(n.getStart()).line+1,signature:checker.signatureToString(sig),callback:checker.typeToString(checker.getTypeAtLocation(n.arguments[3]))});}ts.forEachChild(n,visit)}visit(sys);
+fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'stock.json'),JSON.stringify({version:ts.version,roots:roots.map(f=>path.relative(root,f)),options,diagnostics,calls},null,2)+'\n');
+const emitted=ts.transpileModule(sys.text,{fileName:'sys.ts',compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext}}).outputText;fs.writeFileSync(path.join(out,'sys.js'),emitted);
+console.log(JSON.stringify({root,version:ts.version,roots:roots.length,diagnostics:diagnostics.length,calls}));

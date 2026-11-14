@@ -1,0 +1,80 @@
+{
+  "terms": [
+    "createSingleWatcherPerName",
+    "createSingleFileWatcherPerName",
+    "createSingleFsWatcherPerName",
+    "pollingWatchFile",
+    "fsWatch",
+    "createSystemWatchFunctions"
+  ],
+  "matches": [
+    {
+      "file": "stage3/adapt/47-host-errors/README.md",
+      "line": 66,
+      "terms": [
+        "fsWatch",
+        "createSystemWatchFunctions"
+      ],
+      "preview": "| sys.ts:1280, watchPresentFileSystemEntry | decline | createSystemWatchFunctions takes fsWatchWorker and getModifiedTime from its caller; the try also calls the returned watcher's on method. The type contracts impose no thrown-value constraint. An injected worker throwing null makes the original code throw TypeError; unconditional errorCode would instead select polling. An extracted actual function demonstrates this. |",
+      "line_sha256": "bd5c8d6db3d1a0e74fc1b499f5a559a9ccadfb38f523783d3a5dad1a8bbe53f9"
+    },
+    {
+      "file": "stage3/adapt/47-host-errors/verify.cjs",
+      "line": 143,
+      "terms": [
+        "fsWatch"
+      ],
+      "preview": "    const scope = vm.createContext({ hitSystemWatcherLimit: false, entryKind: 1, FileSystemEntryKind: { Directory: 1 }, fsWatchWithTimestamp: false,",
+      "line_sha256": "8567c999734ac557c391d5dc201196d323cc34b043b240335e1e301b7f412404"
+    },
+    {
+      "file": "stage3/adapt/47-host-errors/verify.cjs",
+      "line": 144,
+      "terms": [
+        "fsWatch"
+      ],
+      "preview": "        fsWatchWorker: worker, fileOrDirectory: \"watched\", recursive: false, inodeWatching: false, callback: () => {},",
+      "line_sha256": "d4ed5397c1f72c8e2e4198f14990c552dc4974ae64152f2a40d4b53552458ce3"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "line": 93,
+      "terms": [
+        "fsWatch"
+      ],
+      "preview": "    \"before\": \"class SessionServerHost implements ts.server.ServerHost {\\n    args: string[] = [];\\n    newLine: string;\\n    useCaseSensitiveFileNames = false;\\n    watchUtils = createWatchUtils<ServerHostFileWatcher, ServerHostDirectoryWatcher>(\\n        \\\"watchedFiles\\\",\\n        \\\"watchedDirectories\\\",\\n        ts.createGetCanonicalFileName(this.useCaseSensitiveFileNames),\\n        this,\\n    );\\n\\n    constructor(private host: NativeLanguageServiceHost) {\\n        this.newLine = this.host.g",
+      "line_sha256": "7aebbe0eddbd33f41f964f0261298b7c547e9db41d1dbc02780428b7a39b8ae7"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "line": 94,
+      "terms": [
+        "fsWatch"
+      ],
+      "preview": "    \"after\": \"class SessionServerHost implements ts.server.ServerHost {\\n    args: string[] = [];\\n    newLine: string;\\n    useCaseSensitiveFileNames = false;\\n    watchUtils = createWatchUtils<ServerHostFileWatcher, ServerHostDirectoryWatcher>(\\n        \\\"watchedFiles\\\",\\n        \\\"watchedDirectories\\\",\\n        ts.createGetCanonicalFileName(this.useCaseSensitiveFileNames),\\n        this,\\n    );\\n\\n    constructor(private host: NativeLanguageServiceHost) {\\n        this.newLine = this.host.ge",
+      "line_sha256": "16b9ac66ef5a9687f86c52867a45e528aafa14eee564ee5035e24abb366d63e2"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "line": 101,
+      "terms": [
+        "pollingWatchFile",
+        "fsWatch",
+        "createSystemWatchFunctions"
+      ],
+      "preview": "    \"before\": \"export class TestServerHost implements server.ServerHost, FormatDiagnosticsHost, ModuleResolutionHost {\\n    args: string[] = [];\\n\\n    private readonly output: string[] = [];\\n\\n    private fs = new Map<Path, FSEntry>();\\n    private time = timeIncrements;\\n    getCanonicalFileName: (s: string) => string;\\n    toPath: (f: string) => Path;\\n    readonly timeoutCallbacks: Callbacks = new Callbacks(this, \\\"Timeout\\\", /*swallowExitException*/ true);\\n    readonly immediateCallbacks:",
+      "line_sha256": "4e9f141dcf9f9d8be6461cbbd7a56154bfa7e3317da759f8e56454aadf50048c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "line": 102,
+      "terms": [
+        "pollingWatchFile",
+        "fsWatch",
+        "createSystemWatchFunctions"
+      ],
+      "preview": "    \"after\": \"export class TestServerHost implements server.ServerHost, FormatDiagnosticsHost, ModuleResolutionHost {\\n    args: string[] = [];\\n\\n    private readonly output: string[] = [];\\n\\n    private fs = new Map<Path, FSEntry>();\\n    private time = timeIncrements;\\n    getCanonicalFileName: (s: string) => string;\\n    toPath: (f: string) => Path;\\n    readonly timeoutCallbacks: Callbacks = new Callbacks(this, \\\"Timeout\\\", /*swallowExitException*/ true);\\n    readonly immediateCallbacks: ",
+      "line_sha256": "57a04cd9997948d063ddac5e4201679785cfcf8a93571cbb3837cf2981fc7f64"
+    }
+  ]
+}

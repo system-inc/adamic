@@ -1,0 +1,13 @@
+--- base/sys.js
++++ b/sys.js
+@@ -356,9 +356,7 @@
+     }
+     else {
+         cache.set(path, {
+-            watcher: createWatcher((
+-            // Cant infer types correctly so lets satisfy checker
+-            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
++            watcher: createWatcher((param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))),
+             callbacks: [callback],
+         });
+     }

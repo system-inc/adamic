@@ -1,0 +1,122 @@
+[
+  {
+    "file": "compiler/sys.ts",
+    "line": 498,
+    "text": "function createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>("
+  },
+  {
+    "file": "compiler/sys.ts",
+    "line": 1195,
+    "text": "return createSingleWatcherPerName("
+  },
+  {
+    "file": "compiler/sys.ts",
+    "line": 1211,
+    "text": "return createSingleWatcherPerName("
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1107,
+    "text": "return !!getFirstJSDocTag(node, isJSDocParameterTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1112,
+    "text": "return getFirstJSDocTag(node, isJSDocAugmentsTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1122,
+    "text": "return getFirstJSDocTag(node, isJSDocClassTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1127,
+    "text": "return getFirstJSDocTag(node, isJSDocPublicTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1132,
+    "text": "return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1137,
+    "text": "return getFirstJSDocTag(node, isJSDocPrivateTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1142,
+    "text": "return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1147,
+    "text": "return getFirstJSDocTag(node, isJSDocProtectedTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1152,
+    "text": "return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1157,
+    "text": "return getFirstJSDocTag(node, isJSDocReadonlyTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1162,
+    "text": "return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1166,
+    "text": "return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1171,
+    "text": "return getFirstJSDocTag(node, isJSDocDeprecatedTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1176,
+    "text": "return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1181,
+    "text": "return getFirstJSDocTag(node, isJSDocEnumTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1186,
+    "text": "return getFirstJSDocTag(node, isJSDocThisTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1191,
+    "text": "return getFirstJSDocTag(node, isJSDocReturnTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1196,
+    "text": "return getFirstJSDocTag(node, isJSDocTemplateTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1200,
+    "text": "return getFirstJSDocTag(node, isJSDocSatisfiesTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1206,
+    "text": "const tag = getFirstJSDocTag(node, isJSDocTypeTag);"
+  },
+  {
+    "file": "compiler/utilitiesPublic.ts",
+    "line": 1225,
+    "text": "let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);"
+  }
+]
