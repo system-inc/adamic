@@ -1,0 +1,37 @@
+{
+  "stock_tsc": {
+    "version": "6.0.3",
+    "roots": 79,
+    "main_diagnostics": 0,
+    "combined_diagnostics": 0,
+    "new": 0
+  },
+  "adamic_types": {
+    "roots": 79,
+    "combined_exit": 0
+  },
+  "javascript": {
+    "files": 79,
+    "all_byte_identical_to_main": true
+  },
+  "declarations": {
+    "typescript.d.ts": {
+      "byte_identical": true,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    "tsserverlibrary.d.ts": {
+      "byte_identical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  },
+  "contract_byte_identical": true,
+  "witness_byte_identical": true,
+  "form_trials": [
+    {
+      "form": "newChildWatches = [] as ChildDirectoryWatcher[]",
+      "stock_diagnostics": 0,
+      "full_census": "accepted; 0 new, 0 changed, only 790:87 and 877:34 gone, both refusal_scan",
+      "alternatives_tried": false
+    }
+  ]
+}
