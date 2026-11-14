@@ -4,7 +4,7 @@ s=Path('/workspace/scratch/diag-read-view-2');r=s/'repo';e=Path('/workspace/scra
 sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=r,text=True).strip()
 for f in subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],cwd=r,text=True).splitlines():
  p=d/'implementation'/f;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(r/f,p)
-for name in ['prepare.py','add-helpers.cjs','run-proof.py','pair.py','controls.cjs','stock.cjs','javascript.cjs','checkpoint.py']:
+for name in ['prepare.py','add-helpers.cjs','run-proof.py','pair.py','controls.cjs','stock.cjs','javascript.cjs','gate.py','checkpoint.py']:
  if (s/name).exists():shutil.copyfile(s/name,d/name)
 for p in (s/'raw').iterdir():
  if p.is_file() and not p.name.endswith('.jsonl'):shutil.copyfile(p,d/p.name)

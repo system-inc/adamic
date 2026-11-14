@@ -1,0 +1,39 @@
+{
+  "program.ts": {
+    "before": 528,
+    "after": 526,
+    "new": [],
+    "removed": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2795:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2796:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2828:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2829:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    ],
+    "changed": []
+  },
+  "utilitiesPublic.ts": {
+    "before": 217,
+    "after": 217,
+    "new": [],
+    "removed": [],
+    "changed": []
+  }
+}
