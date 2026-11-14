@@ -39,3 +39,29 @@ func TestTsSysPresenceAgreesWithNode(t *testing.T) {
 		})
 	}
 }
+
+// Road 7's safety (#p2n17c4 T1, lower/reach_roads_test.go): testdata/tssys_presence_early reads
+// getNodeSystem's literal through a hoisted function before the literal's declaration has run. The reach
+// takes that early cell for no source, so the presence test is judged by the literal assigned after it,
+// and only readiness stopping the early read keeps that true: it must throw Node's ReferenceError
+// natively, sanitized and on the JavaScript backend, as .a and as .ts, and the later read must find the
+// literal's method. Node's own output is pinned. Not in the oracle's fixtures list, so no counted row
+// moves with it. Mutant 14 in lower/reach_roads.mutants.md.
+func TestTsSysEarlyReadStopsAsNodeDoes(t *testing.T) {
+	t.Parallel()
+	const want = "ReferenceError|Cannot access 'nodeSystem' before initialization\nlate: writeOutputIsTTY present\ndone\n"
+	for _, entry := range []string{"main.a", "main.ts"} {
+		t.Run(entry, func(t *testing.T) {
+			t.Parallel()
+			relative := "internal/oracle/testdata/tssys_presence_early/" + entry
+			path, err := filepath.Abs(filepath.Join(repository, relative))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if node := onNode(t, path); string(node.stdout) != want || node.exitCode != 0 {
+				t.Fatalf("Node: exit %d, stdout %q, want exit 0 and %q", node.exitCode, node.stdout, want)
+			}
+			generatorAgrees(t, relative)
+		})
+	}
+}
