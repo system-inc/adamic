@@ -301,6 +301,14 @@ func generate(repository, lowerInput string) []byte {
 						// Shared on purpose: a cache of identities that are functions of the program alone, one map for
 						// every lowering of a latent run (lower.go.txt's latentRun), so a copy reads and fills the same one.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "viewSites" && printed(field.Type) == "*viewSiteIndex" {
+						// Shared on purpose: a function of the program alone, every property access and getter of its
+						// modules, which view checks against the module order it asks each time and builds again from
+						// another (view_sites.go, #q1hyhzc). One holder serves every lowering of a latent run, so a copy
+						// walks the index its original built instead of walking the whole program again. The counts and
+						// judged accesses beside it, checkedFieldWrites, viewSiteSeen and viewSiteTrue, are deep copies,
+						// and roll back with CheckedFields.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}
