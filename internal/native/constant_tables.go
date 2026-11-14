@@ -73,11 +73,17 @@ static adamic_array *%s(size_t count, const double *values) {
 // runtime operands. Numeric array fields are reconstructed before their record;
 // strings point to the existing immortal literals. Every record and nested array
 // is newly allocated, with its usual shape, mutable slots and reference counts.
-// Keep this top-level only: function literals may belong to reuse or region plans.
+// A function's literal batches too, since one function holding thousands of record
+// stores is what clang's wasm32 backend can't compile in a unit's time (#j2qkavx).
+// Reuse plans can't lose a site to the loop: they're keyed by the statements and
+// reads that consume a value, and a spread-free literal of closed records is none
+// of them. Region placement is emitter state, not on the IR, so a fresh function's
+// region version (inRegion) or a literal it hands a region (regionLiteralDepth)
+// takes ordinary emission, failing closed (Emit on #j2qkavx).
 // Graph, Program, record and checked-field layouts keep ordinary emission so their
 // allocation-site ownership and per-slot metadata remain under the existing planner.
 func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
-	if e.function != nil || e.fieldTypesNeeded() || e.dynamicProperties() || literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || literal.Element != ir.Object || literal.Spread != nil || len(literal.Elements) < 16 {
+	if e.inRegion || e.regionLiteralDepth != 0 || e.fieldTypesNeeded() || e.dynamicProperties() || literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || literal.Element != ir.Object || literal.Spread != nil || len(literal.Elements) < 16 {
 		return "", false
 	}
 	type run struct {
