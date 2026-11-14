@@ -1,0 +1,18 @@
+{
+  "file": "factory/nodeFactory.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 34.871723915000075,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/23.jsonl"
+  ],
+  "findings": 242,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "c38d4d6ab5a2ac22383fa839ec088830417064daa66abd0a49c63b7e41461988",
+  ".log_sha256": "eb1021bff34995e0ff789f1f4e684389b2b97a714afd7ce2d1fd435453c023f7"
+}

@@ -1,0 +1,18 @@
+{
+  "file": "factory/parenthesizerRules.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 22.477380020000055,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/25.jsonl"
+  ],
+  "findings": 17,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "1d1d0f0e1d90b51c892349fdd3e64e4cdd887da2c732089f788b9bd75e971e9f",
+  ".log_sha256": "427b3b3de94d02c4a1d48ed1e1231a26a44f27afbf1a81756accd1b34562c155"
+}

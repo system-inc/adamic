@@ -14,9 +14,13 @@ def load(label):
   dest=OUT/'part2'/label
   status=json.loads((dest/f'{i:02}-status.json').read_text());assert status['validated'] and status['exit_code']==0 and status['zero_lowering_units']
   rows=[json.loads(x) for x in gzip.decompress((dest/f'{i:02}.jsonl.gz').read_bytes()).splitlines()]
+  assert not rows[-1]['findings'],rows[-1]['findings']
+  assert not rows[-1]['relation_overflow']['after_load'] and not rows[-1]['relation_overflow']['end']
   record=next(x for x in rows if x.get('file'))
   for f in record['findings']:
+   raw_text=f['text'];raw_where=f['where']
    f={k:normalize(v) if isinstance(v,str) else v for k,v in f.items()}
+   f['raw_text']=raw_text;f['raw_where']=raw_where
    k=key(f)
    if k in found: assert found[k]['text']==f['text']
    found[k]=f

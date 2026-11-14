@@ -33,6 +33,9 @@ def run(task):
   assert len(records)==1 and records[0]['file']==str(root)
   assert records[0]['units']==[]
   assert rows[-1]['status']=='relation_report'
+  assert not rows[-1]['findings'],rows[-1]['findings']
+  assert not rows[-1]['relation_overflow']['after_load'] and not rows[-1]['relation_overflow']['end']
+  status['relation_report_clean']=True
   status.update(findings=len(records[0]['findings']),zero_lowering_units=True,validated=True)
  for f in (raw,log):
   if f.exists():

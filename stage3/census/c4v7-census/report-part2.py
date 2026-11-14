@@ -10,7 +10,7 @@ s=p['selected_191'];lines+=['',f"Of the scout’s 191 selected ‘seen as’ sit
 for i,f in enumerate(new,1):
  owner=f['enclosing_function'];generics=f['generic_bodies']
  rule=f.get('registered_rule')
- lines += [f"### {i}. {f['where']}",'',f"Kind: `{f['kind']}`. Rule: `{f['rule'] or 'none emitted'}`. Phase: `{f['phase']}`.",'','Reason: '+f['reason'],'','Text:','','```text',f['text'],'```','','Adapted source line:','','```typescript',f['source_line'],'```','','Enclosing function: '+(f"`{owner['name']}` at `{owner['where']}`" if owner else 'module scope')+'.']
+ lines += [f"### {i}. {f['where']}",'',f"Kind: `{f['kind']}`. Rule: `{f['rule'] or 'none emitted'}`. Phase: `{f['phase']}`.",'','Reason: '+f['reason'],'','Text:','','```text',f['raw_text'],'```','','Adapted source line:','','```typescript',f['source_line'],'```','','Enclosing function: '+(f"`{owner['name']}` at `{owner['where']}`" if owner else 'module scope')+'.']
  if rule:lines+=['','Registered rule: `'+str(rule['order'])+' '+rule['name']+'`; emitter `'+rule['emitter']+'` at `'+rule['emitter_source']+'`.']
  if generics:
   for g in generics:lines+=['','Generic body: `'+g['name']+'` at `'+g['where']+'`; parameters: `'+', '.join(g['typeParameters'])+'`.']

@@ -1,0 +1,18 @@
+{
+  "file": "factory/nodeChildren.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 27.342336022999916,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/21.jsonl"
+  ],
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "28cc84287484309a535bf4315b5f7b2e904082160ae74f8318f64c3076ebd424",
+  ".log_sha256": "8f0d1c0d9cbc6ff1e87d49eb16d0d31b0cb00b87074cec155bae54c8baf6473b"
+}
