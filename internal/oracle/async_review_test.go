@@ -266,9 +266,14 @@ func TestAsyncReviewComputedThen(t *testing.T) {
 }
 
 // promiseIntoVoidFixture is whether a fixture that doesn't lower stops at the promise-into-void refusal
-// rather than a NotYet: the three hidden thenables, refused where the thenable is first seen as a type that
-// names no promise (#8j8ecw0).
+// rather than a NotYet: hidden thenables and the former unhandled-rejection void views,
+// refused where the value is first seen as a type that names no promise (#8j8ecw0).
 func promiseIntoVoidFixture(path string) bool {
+	for _, fixture := range unhandledRejectionRefusals {
+		if path == unhandledRejectionRefusedPath(fixture.name) {
+			return true
+		}
+	}
 	switch path {
 	case "internal/oracle/testdata/async_review/refused/hidden_await.a", "internal/oracle/testdata/async_review/refused/hidden_resolve.a", "internal/oracle/testdata/async_review/refused/hidden_return.a":
 		return true

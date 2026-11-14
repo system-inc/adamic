@@ -35,6 +35,10 @@
 `async.c:jobs:1`
 `async.c:jobs_last:1`
 `async.c:subscriptions:1`
+# Rejected promises retained until the loop's next checkpoint. The same parallel
+# refusal and host publication boundary that protect subscriptions guard both ends.
+`async.c:unhandled_first:1`
+`async.c:unhandled_last:1`
 `async_host_impl.h:host_closed:1`
 `async_host_impl.h:host_completions:1`
 `async_host_impl.h:host_completions_last:1`

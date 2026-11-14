@@ -313,7 +313,8 @@ func TestProduct_AsyncOriginalCoverageRejectEager(t *testing.T) {
 }
 func TestAsyncOriginalCoverageRejectEagerRetainBudget(t *testing.T) {
 	t.Parallel()
-	checkAsyncOriginalBudget(t, "async_coverage_reject_eager", 18)
+	// The pending rejection list owns one retain until the drain checks it.
+	checkAsyncOriginalBudget(t, "async_coverage_reject_eager", 19)
 }
 
 func TestProduct_AsyncOriginalCoverageRejectEmpty(t *testing.T) {
@@ -322,7 +323,8 @@ func TestProduct_AsyncOriginalCoverageRejectEmpty(t *testing.T) {
 }
 func TestAsyncOriginalCoverageRejectEmptyRetainBudget(t *testing.T) {
 	t.Parallel()
-	checkAsyncOriginalBudget(t, "async_coverage_reject_empty", 9)
+	// The pending rejection list owns one retain until the drain checks it.
+	checkAsyncOriginalBudget(t, "async_coverage_reject_empty", 10)
 }
 
 func TestProduct_AsyncOriginalCoverageRejectNested(t *testing.T) {
