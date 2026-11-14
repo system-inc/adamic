@@ -6,6 +6,7 @@ function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recurs
 function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
 function undo(text, erased = false, removeComments = false) {
     const newline = text.includes('\r\n') ? '\r\n' : '\n';
+    if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
     text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
     text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
     assert.equal([...text.matchAll(/^([ \t]*)createSHA256Hash,(\r?)$/gm)].length, 1, 'reviewed shorthand missing or duplicated');
@@ -25,12 +26,12 @@ function undo(text, erased = false, removeComments = false) {
 }
 function TestCryptoSourceScope(before, after) {
     const names = inventory(before); assert.deepEqual(inventory(after), names, 'source inventory changed');
-    assert.equal(names.length, 746, 'source inventory size moved');
+    assert.equal(names.length, 747, 'source inventory size moved from main 8e3a784aa');
     const entries = names.map(file => ({file, before:hash(fs.readFileSync(path.join(before,file))), after:hash(fs.readFileSync(path.join(after,file)))}));
     const changed = entries.filter(x => x.before !== x.after).map(x => x.file);
     assert.deepEqual(changed, ['src/compiler/sys.ts'], 'source changed outside sys.ts');
     const a = fs.readFileSync(path.join(before,'src/compiler/sys.ts'),'utf8'), b = fs.readFileSync(path.join(after,'src/compiler/sys.ts'),'utf8');
-    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load and three hash expressions');
+    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load, three hash expressions and require result annotation');
     return {files:names.length, changed, undoRestoresExactBytes:true, inventory:entries};
 }
 function TestCryptoTranspileScope(before, after) {
