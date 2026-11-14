@@ -63,7 +63,7 @@ func TestHostStatusMutants(t *testing.T) {
 					t.Fatal(err)
 				}
 				arguments := []string{"-test.run=^TestFixturesHost$", "-test.count=1", "-fixtures=" + root}
-				arguments = append(arguments, hostStatusMutantTimeout(t)...)
+				arguments = append(arguments, childTestTimeout(t)...)
 				result := execute(t, filepath.Join(repository, "stage3/fixtures"), nil, executable, arguments...)
 				if mutation == "real" {
 					if result.Exit != 0 {
@@ -84,9 +84,11 @@ func TestHostStatusMutants(t *testing.T) {
 	}
 }
 
-// The child's clock must not be tighter than the unit's own under load.
-// Leave a small margin for the parent to report the child's result.
-func hostStatusMutantTimeout(t *testing.T) []string {
+// childTestTimeout is a child test binary's -test.timeout, taken from the parent's own deadline less
+// a margin to report the child's result, so the child dies only when the parent would. A fixed clock
+// is a guess at the slowest box: TestHostConfigurationFixtureReaders' 30s child outran it on an
+// 8-core box with the package running beside it (#q89xaef).
+func childTestTimeout(t *testing.T) []string {
 	if deadline, ok := t.Deadline(); ok {
 		remaining := time.Until(deadline) - 5*time.Second
 		if remaining < time.Second {
@@ -95,4 +97,33 @@ func hostStatusMutantTimeout(t *testing.T) []string {
 		return []string{"-test.timeout=" + remaining.String()}
 	}
 	return nil
+}
+
+// A child's clock is the parent's, less the margin: a fixed one turns a loaded box's slow child red
+// for the box's reason (#q89xaef). Under go test's default 10m deadline, 30s is far outside the band.
+func TestChildTestTimeoutFollowsTheParentsDeadline(t *testing.T) {
+	t.Parallel()
+	deadline, ok := t.Deadline()
+	arguments := childTestTimeout(t)
+	if !ok {
+		// With -timeout 0 the parent runs unbounded, so the child gets no flag and runs unbounded too.
+		if arguments != nil {
+			t.Fatalf("no parent deadline must give the child no -test.timeout, got %q", arguments)
+		}
+		return
+	}
+	if len(arguments) != 1 || !strings.HasPrefix(arguments[0], "-test.timeout=") {
+		t.Fatalf("want one -test.timeout flag, got %q", arguments)
+	}
+	child, err := time.ParseDuration(strings.TrimPrefix(arguments[0], "-test.timeout="))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := time.Until(deadline) - 5*time.Second
+	if want < time.Second {
+		want = time.Second
+	}
+	if child > want+time.Second || child < want-10*time.Second {
+		t.Fatalf("child timeout %v must follow the parent's deadline (want about %v)", child, want)
+	}
 }
