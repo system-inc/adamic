@@ -10,41 +10,14 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// tsprinterCompilerInputs are the repository paths the compiler a port is lowered and built by links: every
-// in-repository package internal/load, internal/lower and internal/native depend on, and each module file that pins one.
-// From cohere/TypeScript/tsc that is its go.mod, go.sum and the package directories linked (539 files), never tsc whole:
-// tsc is 66,741 of the submodule's 67,144 files, baselines and fourslash tests the compiler never links (Compiler's
-// review). Nested packages sit under their parent's entry. That code is compiled into this test binary, so no trace of a build
-// can see it: the key has to name it. TestMutantNativeInputsCoverWhatItReads keeps the list complete, and every entry
-// needed, as markdownblocks' TestLoweringInputsCoverCompilerDependencies keeps its loweringCompilerInputs.
-var tsprinterCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript-shim",
-	"cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript/tsc/internal/ast",
-	"cohere/TypeScript/tsc/internal/astnav", "cohere/TypeScript/tsc/internal/binder",
-	"cohere/TypeScript/tsc/internal/bundled", "cohere/TypeScript/tsc/internal/checker",
-	"cohere/TypeScript/tsc/internal/collections", "cohere/TypeScript/tsc/internal/compiler",
-	"cohere/TypeScript/tsc/internal/contentmapper", "cohere/TypeScript/tsc/internal/core",
-	"cohere/TypeScript/tsc/internal/debug", "cohere/TypeScript/tsc/internal/diagnostics",
-	"cohere/TypeScript/tsc/internal/evaluator", "cohere/TypeScript/tsc/internal/glob",
-	"cohere/TypeScript/tsc/internal/ipc", "cohere/TypeScript/tsc/internal/jsnum", "cohere/TypeScript/tsc/internal/json",
-	"cohere/TypeScript/tsc/internal/jsonrpc", "cohere/TypeScript/tsc/internal/locale",
-	"cohere/TypeScript/tsc/internal/module", "cohere/TypeScript/tsc/internal/modulespecifiers",
-	"cohere/TypeScript/tsc/internal/nativepath", "cohere/TypeScript/tsc/internal/nodebuilder",
-	"cohere/TypeScript/tsc/internal/osutil", "cohere/TypeScript/tsc/internal/outputpaths",
-	"cohere/TypeScript/tsc/internal/packagejson", "cohere/TypeScript/tsc/internal/parser",
-	"cohere/TypeScript/tsc/internal/printer", "cohere/TypeScript/tsc/internal/pseudochecker",
-	"cohere/TypeScript/tsc/internal/scanner", "cohere/TypeScript/tsc/internal/semver",
-	"cohere/TypeScript/tsc/internal/sourcemap", "cohere/TypeScript/tsc/internal/spanmap",
-	"cohere/TypeScript/tsc/internal/stringutil", "cohere/TypeScript/tsc/internal/symlinks",
-	"cohere/TypeScript/tsc/internal/tracing", "cohere/TypeScript/tsc/internal/transformers",
-	"cohere/TypeScript/tsc/internal/tsoptions", "cohere/TypeScript/tsc/internal/tspath",
-	"cohere/TypeScript/tsc/internal/vfs", "cohere/go.mod", "cohere/go.sum", "cohere/unicode_properties",
-	"cohere/static_single_assignment",
-}
+// tsprinterCompilerInputs keys the compiler already linked into this test binary.
+// The generated Lowering projection excludes tsc's baselines. The guard below
+// checks coverage and necessity against this consumer's own three package roots.
+var tsprinterCompilerInputs = compilerinputs.Lowering()
 
 // mutantNativeRecipe are this package's files whose code makes a mutant native: the port the mutations plant into, the
 // product and its key, and lowering; the mutations and the build wrapper are in oracles/oracles.go since #2ba0c20.
@@ -96,28 +69,18 @@ func TestMutantNativeInputsCoverWhatItReads(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native")
-	listing, err := combinedOutput(command)
+	// The central exact-output guard alone compares this snapshot with live links.
+	linked, err := compilerinputs.InputsFor([]string{"./internal/load", "./internal/lower", "./internal/native"})
 	if err != nil {
-		t.Fatalf("go list: %v\n%s", err, listing)
+		t.Fatal(err)
+	}
+	needed := map[string]bool{}
+	for _, input := range linked {
+		needed[input] = true
 	}
 	inside := func(path string) (string, bool) {
 		relative, err := filepath.Rel(root, path)
 		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
-	}
-	needed := map[string]bool{"go.work": true}
-	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
-		directory, goMod, _ := strings.Cut(line, "\t")
-		if relative, ok := inside(directory); ok {
-			needed[relative] = true
-		}
-		if relative, ok := inside(goMod); ok && goMod != "" {
-			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
-				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
-			}
-		}
 	}
 	declared := mutantNativeBuildFiles(t)
 	if gaps := compilerInputGaps(declared, needed); len(gaps) > 0 {
