@@ -1,0 +1,18 @@
+{
+  "forwarders": [
+    "directoryExists",
+    "fileExists",
+    "getCurrentDirectory",
+    "getDirectories",
+    "getGlobalTypingsCacheLocation",
+    "readFile",
+    "realpath",
+    "trace"
+  ],
+  "exactParameters": true,
+  "noHiddenRest": true,
+  "nodeSystemReceiver": true,
+  "presenceCases": 128,
+  "undefinedSlots": 0,
+  "noCallsDuringPresenceCheck": true
+}

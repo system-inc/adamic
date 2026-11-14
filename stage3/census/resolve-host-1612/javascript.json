@@ -1,0 +1,25 @@
+{
+  "sourceFiles": 747,
+  "changedSource": [
+    "src/compiler/sys.ts"
+  ],
+  "emittedFiles": 604,
+  "comparisons": 1208,
+  "differing": [
+    {
+      "file": "src/compiler/sys.ts",
+      "removeComments": false,
+      "before": "566d8d7320eddcfb85ac5722d3ddaa1ce216987cff10ac7958eadea58dd129b1",
+      "after": "0f64be118caf2da828519e8d8b6289039dcdc27c2b77f20ec5c70a4d8dfd69c4",
+      "onlyResolveHostSite": true
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "removeComments": true,
+      "before": "7697c11d01ed2f590e2472e0fdcd0496dddf5382f08e650c6edd6b64fb2ed8f8",
+      "after": "81fe1b28ee0530f9d8902660553348077d9538bbb0e7cbd161c05a0137f54093",
+      "onlyResolveHostSite": true
+    }
+  ],
+  "otherJavaScriptByteIdentical": true
+}
