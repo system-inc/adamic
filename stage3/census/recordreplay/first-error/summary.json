@@ -99,6 +99,36 @@
       "unit_first_stop_changes": 0,
       "regressions": 0,
       "new_process_findings": []
+    },
+    {
+      "pair": "A",
+      "group": 4,
+      "files": [
+        "src/compiler/core.ts",
+        "src/compiler/commandLineParser.ts",
+        "src/compiler/factory/nodeTests.ts",
+        "src/compiler/tsbuildPublic.ts",
+        "src/compiler/builder.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/_namespaces/ts.ts",
+        "src/compiler/transformers/esDecorators.ts",
+        "src/compiler/factory/emitNode.ts",
+        "src/compiler/expressionToTypeNode.ts",
+        "src/compiler/semver.ts",
+        "src/compiler/builderPublic.ts",
+        "src/compiler/debug.ts",
+        "src/compiler/corePublic.ts",
+        "src/compiler/transformers/taggedTemplate.ts",
+        "src/tsc/tsc.ts",
+        "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "deadline_seconds": 3600,
+      "complete": true,
+      "seconds": 870.742628639,
+      "unit_first_stop_changes": 0,
+      "regressions": 0,
+      "new_process_findings": []
     }
   ]
 }
