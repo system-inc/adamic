@@ -1,0 +1,81 @@
+// optional_value_call_test.go lowers this, then makes each `(callback ?? panic(...))(...)` the
+// optional call `callback?.(...)` in the IR, since lowering doesn't make that call from source yet.
+// Run as written, the calls with undefined panic; the test compares against what the optional calls
+// print, written out by hand.
+import { panic } from 'adamic';
+
+let ran = 0;
+function note(label: string): string {
+	ran = ran + 1;
+	console.log('argument ' + label);
+	return label;
+}
+function run(callback: ((label: string) => void) | undefined, label: string): void {
+	(callback ?? panic('run: the test makes this an optional call'))(note(label));
+}
+function relay(callback: ((label: string) => string) | undefined, label: string): string | undefined {
+	return (callback ?? panic('relay: the test makes this an optional call'))(note(label));
+}
+function shout(label: string): void {
+	console.log('callback ' + label);
+}
+function echo(label: string): string {
+	console.log('callback ' + label);
+	return label + '!';
+}
+// make's closure is fresh, so cb's cell holds the only count on it. clear's write lets go of that
+// count while the arguments run, after the callee is read and before it's called: the call must
+// still run the value it read.
+function make(word: string): ((label: string) => void) | undefined {
+	return (label: string): void => {
+		console.log(word + ' ' + label);
+	};
+}
+function hold(): void {
+	let cb = make('held');
+	const clear = (label: string): string => {
+		cb = undefined;
+		return note(label);
+	};
+	(cb ?? panic('hold: the test makes this an optional call'))(clear('e'));
+	console.log(cb === undefined ? 'cleared' : 'kept');
+}
+// A plain local and a parameter an argument writes: neither is captured, so each read of the callee is
+// counted only because the write marks it ExpressionAssigned (emit_locals.go's read). The argument lets
+// go of the old value after the callee is read, and the call still runs it; the next call finds
+// undefined and runs nothing, its argument included.
+type Report = (value: number) => void;
+function reporter(word: string): Report | undefined {
+	return (value: number): void => {
+		console.log(word + ' ' + String(value));
+	};
+}
+function nothing(): Report | undefined {
+	return undefined;
+}
+function after(cleared: Report | undefined, value: number): number {
+	console.log(cleared === undefined ? 'cleared' : 'kept');
+	return value;
+}
+function local(): void {
+	let cb = reporter('local');
+	(cb ?? panic('local: the test makes this an optional call'))(after(cb = nothing(), 1));
+	(cb ?? panic('local: the test makes this an optional call'))(after(cb, 2));
+}
+function parameter(cb: Report | undefined): void {
+	(cb ?? panic('parameter: the test makes this an optional call'))(after(cb = nothing(), 1));
+	(cb ?? panic('parameter: the test makes this an optional call'))(after(cb, 2));
+}
+run(shout, 'a');
+console.log('ran ' + String(ran));
+run(undefined, 'b');
+console.log('ran ' + String(ran));
+const first = relay(echo, 'c');
+console.log(first === undefined ? 'relay undefined' : 'relay ' + first);
+const second = relay(undefined, 'd');
+console.log(second === undefined ? 'relay undefined' : 'relay ' + second);
+console.log('ran ' + String(ran));
+hold();
+console.log('ran ' + String(ran));
+local();
+parameter(reporter('parameter'));

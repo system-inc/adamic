@@ -392,16 +392,30 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			}
 		}
 	} else if expression.Optional {
-		// Lowering makes an optional call only through an interface (ir.CallClosure's Optional).
-		panic("compiler bug: an optional call through a function value")
+		// callback?.(...) on a function value that may be undefined (ir.CallClosure's Optional). A bound
+		// call's target and a sibling's code are always there: lowering makes neither optional.
+		if expression.Bound || expression.Direct > 0 {
+			panic("compiler bug: an optional call of a bound target or a sibling's code")
+		}
+		// closure may be C that reads where the value lives, a global's retained read or a field's, so
+		// it's read once, here, and the test and the call both read the copy. The copy borrows: what
+		// closure names already holds it for the call. A call lends its callee nothing (borrow.go's value
+		// and consumes: a CallClosure isn't a consumer), so a captured cell's read is retained into a
+		// temporary the statement owns (emit_locals.go's read, the cell's adamic_retain), and a global's
+		// or an expression-assigned local's too, and an argument that writes the place, a clear() setting
+		// cb = undefined, lets go of the place's count, not this one.
+		callee := e.temporary()
+		e.line("%s %s = %s;", cType(ir.Closure), callee, closure)
+		return e.optionalCallThrough(expression, callee, receiver, method, closureArm, methodArm)
 	}
 	return e.calledThrough(expression, closure, receiver, method, exactCount, closureArm, methodArm)
 }
 
-// optionalCallThrough is object.name?.(...) once the object's function value or method is looked up,
-// the one read of it: undefined where the lookup found neither (no field or method by that name, or a
-// field holding undefined), with the arguments not evaluated, as JavaScript's chain stops there, and
-// otherwise the call of what it found.
+// optionalCallThrough is an optional call once its callee is read, the one read of it: object.name?.(...)
+// once the object's function value or method is looked up, or callback?.(...) on a function value, method
+// "" there. It's undefined where there's nothing to call (no field or method by that name, a field holding
+// undefined, or a function value that is undefined), with the arguments not evaluated, as JavaScript's
+// chain stops there, and otherwise the call of what it found.
 func (e *emitter) optionalCallThrough(expression ir.CallClosure, closure, receiver, method string, closureArm, methodArm ir.Discard) string {
 	text, value, owned := e.asideWith(func() string {
 		return e.calledThrough(expression, closure, receiver, method, false, closureArm, methodArm)
@@ -416,7 +430,12 @@ func (e *emitter) optionalCallThrough(expression ir.CallClosure, closure, receiv
 		result = e.temporary()
 		e.line("%s %s = %s;", cType(expression.Returns), result, undefined)
 	}
-	e.line("if (%s != NULL || %s) {", closure, e.methodPresent(method))
+	if method == "" {
+		// A function value alone: there's no method to look for.
+		e.line("if (%s != NULL) {", closure)
+	} else {
+		e.line("if (%s != NULL || %s) {", closure, e.methodPresent(method))
+	}
 	e.out.WriteString(text)
 	e.indent++
 	switch {

@@ -929,11 +929,14 @@ type (
 		FunctionType int
 		Returns      Type
 
-		// Optional is ?. on the call itself, object.name?.(...), through an interface (Closure is an
-		// ir.Property whose Method is set): the object's function value or method is looked up once,
+		// Optional is ?. on the call itself. Through an interface, object.name?.(...) (Closure is an
+		// ir.Property whose Method is set), the object's function value or method is looked up once,
 		// before the arguments, and called if it's there; where the object has none by that name, or its
 		// field holds undefined, the call is undefined (Returns holds it) and the arguments aren't
-		// evaluated. Lowering makes it on no other callee and through no checked view.
+		// evaluated. On a plain callee, callback?.(...), Closure is a function value whose type holds
+		// undefined and no null: it's evaluated once and tested before the arguments, and where it's
+		// undefined the call is undefined, with no argument evaluated. Lowering makes it on no other
+		// callee, through no checked view, and never on a Bound or Direct call.
 		Optional bool
 	}
 
