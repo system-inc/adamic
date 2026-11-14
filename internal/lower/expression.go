@@ -460,8 +460,20 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+				inside := l.checker.GetPropertyOfType(from, viewed.Name)
+				if inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 					return false
+				}
+				// A method with a rest, seen through a method with none, is a rest hidden from the next
+				// view as a function's is (restHiddenByView): a class's join(...items) seen as
+				// { join(a: string) } and then as { join(a: string, b: number) } reached the method through
+				// a mismatched function pointer.
+				if inside != nil {
+					insideSignatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(inside), checker.SignatureKindCall)
+					viewedSignatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(viewed), checker.SignatureKindCall)
+					if len(insideSignatures) > 0 && len(viewedSignatures) > 0 && l.restHiddenByView(insideSignatures[0], viewedSignatures[0]) {
+						return false
+					}
 				}
 				continue
 			}

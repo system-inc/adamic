@@ -55,13 +55,16 @@ func TestRestThroughFixedView(t *testing.T) {
 		// which reached the closure through a mismatched function pointer under UBSan). A view with a
 		// rest of its own (r14), a fixed function widened (r18) and a rest function handed to a library
 		// callback, whose adapter calls the source signature (r19, Language's union element covering
-		// map's three parameters), lower and agree.
+		// map's three parameters), lower and agree. A class method with a rest seen through a method
+		// with none (r20) is the same hidden rest, which reached the method through a mismatched
+		// function pointer on main.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
 		"r17_hidden_zero_hop":             ":2:28",
 		"r18_fixed_widened_control":       "",
 		"r19_library_callback_union_rest": "",
+		"r20_hidden_class_method":         ":2:42",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
