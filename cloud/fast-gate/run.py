@@ -579,7 +579,8 @@ def darwinTools(tools):
     if not isinstance(declared, dict):
         raise ValueError("%s isn't a JSON object" % darwinToolsPath)
     if set(declared) != set(darwinToolsKeys):
-        raise ValueError("%s names %s, not exactly %s" % (darwinToolsPath, ", ".join(sorted(declared)) or "nothing", ", ".join(darwinToolsKeys)))
+        raise ValueError("%s names %s, not exactly %s and %s" % (darwinToolsPath, ", ".join(sorted(declared)) or "nothing",
+                                                                ", ".join(darwinToolsKeys[:-1]), darwinToolsKeys[-1]))
     for key in darwinToolsKeys:
         if not isinstance(declared[key], str) or not declared[key].strip():
             raise ValueError("%s's %s isn't a non-empty string" % (darwinToolsPath, key))
