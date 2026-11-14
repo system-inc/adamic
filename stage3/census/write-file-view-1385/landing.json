@@ -1,0 +1,19 @@
+{
+  "branch": "typescript/write-file-view-1385-1",
+  "sha": "2bbc91af4a7dddbf31e14ddb5153ccd7acc4db3c",
+  "parent": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "tree": "3b4c1b80ad33d1d8291ecdf2b153454eb642364d",
+  "commitsOverBase": 1,
+  "files": [
+    "stage3/adapt/99-correctness-write-file-view/PROOF.md",
+    "stage3/adapt/99-correctness-write-file-view/README.md",
+    "stage3/adapt/99-correctness-write-file-view/adapt.cjs",
+    "stage3/adapt/99-correctness-write-file-view/contract.cjs",
+    "stage3/adapt/99-correctness-write-file-view/mutant.cjs",
+    "stage3/adapt/99-correctness-write-file-view/owners.json",
+    "stage3/adapt/99-correctness-write-file-view/witness.cjs",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "wholeLane": "pass",
+  "evidenceBranch": "typescript/write-file-view-1385-evidence"
+}

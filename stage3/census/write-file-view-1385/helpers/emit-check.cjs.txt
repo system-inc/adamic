@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict'),ts=require('/workspace/scratch/write-file-view-1385/repo/stage3/api/node_modules/typescript');
+const adapter=require('/workspace/scratch/write-file-view-1385/repo/stage3/adapt/99-correctness-write-file-view/adapt.cjs');
+const s='/workspace/scratch/write-file-view-1385',before=s+'/main',after=s+'/after',hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const files=ts.sys.readDirectory(before+'/src',['.ts','.tsx']).filter(f=>!f.endsWith('.d.ts')).sort(),rows=[];let pairs=0;
+for(const f of files){const rel=path.relative(before,f),a=fs.readFileSync(f,'utf8'),b=fs.readFileSync(path.join(after,rel),'utf8');const row={file:rel,sourceChanged:a!==b,sourceBeforeSHA256:hash(a),sourceAfterSHA256:hash(b),emits:[]};
+ for(const removeComments of [false,true]){const options={target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments},aj=ts.transpileModule(a,{fileName:rel,compilerOptions:options}).outputText,bj=ts.transpileModule(b,{fileName:rel,compilerOptions:options}).outputText;pairs++;
+  if(rel==='src/compiler/sys.ts'){adapter.assertJavaScript(a.replace(/\r\n/g,'\n'),b.replace(/\r\n/g,'\n'));const ar=adapter.ownerRange(aj),br=adapter.ownerRange(bj);assert.equal(bj.slice(0,br.start)+aj.slice(ar.start,ar.end)+bj.slice(br.end),aj);fs.writeFileSync(s+'/sys-'+(removeComments?'stripped':'comments')+'-before.js',aj);fs.writeFileSync(s+'/sys-'+(removeComments?'stripped':'comments')+'-after.js',bj);}else assert.equal(bj,aj,rel+': unexpected JavaScript change');
+  row.emits.push({removeComments,byteIdentical:aj===bj,beforeSHA256:hash(aj),afterSHA256:hash(bj)});
+ }
+ rows.push(row);
+}
+assert.deepEqual(rows.filter(r=>r.sourceChanged).map(r=>r.file),['src/compiler/sys.ts']);assert.deepEqual(rows.filter(r=>r.emits.some(e=>!e.byteIdentical)).map(r=>r.file),['src/compiler/sys.ts']);
+fs.writeFileSync(s+'/emitted-javascript.json',JSON.stringify({typescript:ts.version,files:files.length,pairs,emitCalls:pairs*2,changedFiles:['src/compiler/sys.ts'],allowedDelta:'Only patchWriteFileEnsuringDirectory: one local alias statement and original read redirected through that same alias',rows},null,2)+'\n');console.log(JSON.stringify({files:files.length,pairs,emitCalls:pairs*2,changedFiles:['src/compiler/sys.ts'],allOtherFilesByteIdentical:true}));

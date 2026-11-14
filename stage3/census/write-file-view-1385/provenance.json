@@ -1,0 +1,40 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+  "adamicBinarySHA256": "c64ea300d3c11f0e8d7a02ea2ebd8369d895b4f48b8ac76d8967b6ce901707f6",
+  "censusBinarySHA256": "abf69e0cb24bc11297cce1ec50a26cc0911284e9940339031f508930633d7c80",
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "apiPackageLockSHA256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+  "guardedFilesUnchanged": [
+    "stage3/lane/sanctioned-api.json",
+    "stage3/lane/expected.json",
+    "stage3/oracle/run.py",
+    "stage3/lane/run.py"
+  ],
+  "landing": {
+    "branch": "typescript/write-file-view-1385-1",
+    "sha": "2bbc91af4a7dddbf31e14ddb5153ccd7acc4db3c",
+    "parent": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+    "tree": "3b4c1b80ad33d1d8291ecdf2b153454eb642364d",
+    "commitsOverBase": 1,
+    "files": [
+      "stage3/adapt/99-correctness-write-file-view/PROOF.md",
+      "stage3/adapt/99-correctness-write-file-view/README.md",
+      "stage3/adapt/99-correctness-write-file-view/adapt.cjs",
+      "stage3/adapt/99-correctness-write-file-view/contract.cjs",
+      "stage3/adapt/99-correctness-write-file-view/mutant.cjs",
+      "stage3/adapt/99-correctness-write-file-view/owners.json",
+      "stage3/adapt/99-correctness-write-file-view/witness.cjs",
+      "stage3/upstream/LEDGER.md"
+    ],
+    "wholeLane": "pass",
+    "evidenceBranch": "typescript/write-file-view-1385-evidence"
+  },
+  "temp": "/workspace/scratch/write-file-view-1385/tmp",
+  "goCache": "/workspace/scratch/write-file-view-1385/go-cache",
+  "goModuleCache": "/workspace/scratch/write-file-view-1385/go-mod",
+  "freshApply": true,
+  "wholeLanePass": true
+}

@@ -1,0 +1,36 @@
+from pathlib import Path
+import json,re,difflib,collections
+s=Path('/workspace/scratch/write-file-view-1385');o=s/'checks';rel='src/compiler/sys.ts'
+def records(label):
+ data=[json.loads(x) for x in (o/(label+'-raw.jsonl')).read_text().splitlines()];h=data[0];assert h['module_format']=='CommonJSBundle' and h['latent_mode']=='full' and h['diagnostics']==[] and not h['checker_rejected'];assert data[-1]['status']=='relation_report'
+ a=(s/'main'/rel).read_text().splitlines();b=(s/label/rel).read_text().splitlines();mapping={}
+ for tag,i,j,k,l in difflib.SequenceMatcher(None,a,b,autojunk=False).get_opcodes():
+  if tag=='equal':
+   for z in range(l-k):mapping[k+z+1]=i+z+1
+  elif tag=='replace':
+   for z in range(min(j-i,l-k)):mapping[k+z+1]=i+z+1
+ def normalize(v):
+  v=v.replace(str(s/label)+'/', '');return re.sub(re.escape(rel)+r':(\d+):(\d+)',lambda m:rel+':'+str(mapping.get(int(m[1]),'inserted-'+m[1]))+':'+m[2],v)
+ unique={};raw=[]
+ for d in data:
+  for f in d.get('findings',[]):
+   if f['kind']=='Boundary':continue
+   row={k:normalize(v) if isinstance(v,str) else v for k,v in f.items()};key=tuple(row.get(k,'') for k in ['kind','where','reason','text']);raw.append(f)
+   if key not in unique:unique[key]={'finding':row,'phases':set(),'attempts':[]}
+   unique[key]['phases'].add(row.get('phase',''));unique[key]['attempts'].append({'unit':row.get('unit'),'phase':row.get('phase'),'actualWhere':f.get('where')})
+ for v in unique.values():v['phases']=sorted(v['phases'])
+ return unique,{'header':h,'unique':len(unique),'rawEvents':len(raw),'kinds':dict(collections.Counter(k[0] for k in unique))}
+main,ms=records('main');after,ats=records('after');mutant,muts=records('mutant');gone=[main[k] for k in main.keys()-after.keys()];new=[after[k] for k in after.keys()-main.keys()];changed=[]
+for g in gone[:]:
+ matches=[n for n in new if n['finding']['where']==g['finding']['where']]
+ if len(matches)==1:n=matches[0];changed.append({'before':g,'after':n});gone.remove(g);new.remove(n)
+result={'main':ms,'after':ats,'mutant':muts,'new':new,'gone':gone,'changed':changed,'mutantRestoresExactlyMain':main.keys()==mutant.keys()};(o/'delta.json').write_text(json.dumps(result,indent=2)+'\n')
+text='# Full sys.ts census delta\n\nNew: '+str(len(new))+'; gone: '+str(len(gone))+'; changed: '+str(len(changed))+'. Main '+str(len(main))+' unique; candidate '+str(len(after))+'; restoring mutant '+str(len(mutant))+'.\n'
+for kind,items in [('New',new),('Gone',gone)]:
+ for x in items:text+='\n## '+kind+'\n\n```json\n'+json.dumps(x,indent=2)+'\n```\n'
+for x in changed:text+='\n## Changed\n\n```json\n'+json.dumps(x,indent=2)+'\n```\n'
+(o/'CENSUS.md').write_text(text)
+print({'main':len(main),'after':len(after),'mutant':len(mutant),'new':len(new),'gone':len(gone),'changed':len(changed),'mutantRestoresExactlyMain':result['mutantRestoresExactlyMain']})
+assert not new and not changed,'STOP: a new or changed finding; do not widen'
+assert len(gone)==1 and gone[0]['finding']['where']=='src/compiler/sys.ts:1385:31'
+assert result['mutantRestoresExactlyMain']

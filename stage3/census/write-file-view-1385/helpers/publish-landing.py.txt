@@ -1,0 +1,15 @@
+from pathlib import Path
+import subprocess,json,os,hashlib
+s=Path('/workspace/scratch/write-file-view-1385');repo=s/'repo';plan=json.loads((s/'landing-plan.json').read_text());accept=json.loads((s/'post-lane.json').read_text());assert accept['status']=='pass';assert json.loads((s/'lane/report.json').read_text())['status']=='pass'
+for f,h in plan['files'].items():assert hashlib.sha256((repo/f).read_bytes()).hexdigest()==h
+base=plan['parent'];env=dict(os.environ,GIT_INDEX_FILE=str(s/'landing.index'))
+def git(*a,input=None):return subprocess.check_output(['git',*a],cwd=repo,env=env,text=True,input=input).strip()
+assert git('write-tree')==plan['tree'];assert set(git('diff','--cached','--name-only',base).splitlines())==set(plan['files'])
+name='typescript/write-file-view-1385-1';ref='refs/heads/'+name
+assert subprocess.run(['git','show-ref','--verify','--quiet',ref],cwd=repo).returncode==1
+assert git('ls-remote','origin',ref)==''
+message='stage3: capture writeFile through a local readonly view (#b8ffarm)\n\nPreserve the exact function and receiver in patchWriteFileEnsuringDirectory without changing public declarations. Pin the whole owner, reject drift and half states, retain the Node witness and restoring mutant, and record the accepted JavaScript alias delta.\n\nProof: full CommonJSBundle sys.ts census removes only 1385:31 with no new or changed findings; mutant restores it; all 79 roots pass stock tsc and adamic types; declarations match; full stage3 lane passes 106366 with only the sanctioned API row. Evidence: typescript/write-file-view-1385-evidence.\n'
+sha=git('commit-tree',plan['tree'],'-p',base,input=message);assert git('rev-list','--count',base+'..'+sha)=='1';assert git('rev-parse',sha+'^')==base;assert set(git('diff-tree','--no-commit-id','--name-only','-r',sha).splitlines())==set(plan['files'])
+git('update-ref',ref,sha,'');subprocess.run(['git','push','origin',ref+':'+ref],cwd=repo,check=True)
+assert git('ls-remote','origin',ref).split()[0]==sha
+result={'branch':name,'sha':sha,'parent':base,'tree':plan['tree'],'commitsOverBase':1,'files':sorted(plan['files']),'wholeLane':'pass','evidenceBranch':'typescript/write-file-view-1385-evidence'};(s/'landing.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

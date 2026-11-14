@@ -1,0 +1,6 @@
+from pathlib import Path
+import hashlib,json
+s=Path('/workspace/scratch/write-file-view-1385')
+def manifest(t):return {str(f.relative_to(t)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted((t/'src').rglob('*')) if f.is_file()}
+main=manifest(s/'main');after=manifest(s/'after');mut=manifest(s/'mutant');lane=manifest(s/'lane/adapted-tree');assert sorted(k for k in main.keys()|after.keys() if main.get(k)!=after.get(k))==['src/compiler/sys.ts'];assert lane==after;assert mut==main
+result={'mainToCandidateChangedFiles':['src/compiler/sys.ts'],'mutantExactlyMain':True,'wholeApplyExactlyCandidate':True,'files':len(main),'main':main,'after':after};(s/'source-integrity.json').write_text(json.dumps(result,indent=2)+'\n');print('PASS: every whole-apply source byte matches measured candidate; mutant exactly main')

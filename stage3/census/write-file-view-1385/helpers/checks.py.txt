@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,subprocess,os,time,hashlib
+s=Path('/workspace/scratch/write-file-view-1385');out=s/'checks';out.mkdir();rows=[];env=dict(os.environ,TMPDIR=str(s/'tmp'),GOTMPDIR=str(s/'tmp'),GOCACHE=str(s/'go-cache'),GOMODCACHE=str(s/'go-mod'),PYTHONDONTWRITEBYTECODE='1')
+def command(label,args,cwd=None):
+ start=time.monotonic()
+ with (out/(label+'.log')).open('w') as f:r=subprocess.run(args,cwd=cwd or s/'repo',env=env,stdout=f,stderr=f)
+ row={'label':label,'command':args,'exit':r.returncode,'seconds':time.monotonic()-start};rows.append(row);(out/'runs.json').write_text(json.dumps(rows,indent=2)+'\n');print(row,flush=True);return r.returncode
+for label in ['main','after','mutant']:
+ t=s/label;roots=sorted(str(f) for f in (t/'src/compiler').rglob('*.ts'));assert len(roots)==79
+ if label=='mutant':
+  for f in (s/'after').iterdir():
+   if f.is_file():import shutil;shutil.copyfile(f,t/f.name)
+  if (s/'after/node_modules').exists() and not (t/'node_modules').exists():(t/'node_modules').symlink_to(s/'after/node_modules',target_is_directory=True)
+ cfg={'compilerOptions':{'strict':True,'exactOptionalPropertyTypes':True,'noUncheckedIndexedAccess':True,'erasableSyntaxOnly':False,'verbatimModuleSyntax':True,'allowImportingTsExtensions':True,'noEmit':True,'module':'esnext','moduleDetection':'force','moduleResolution':'bundler','target':'es2024','lib':['es2024'],'types':['node'],'typeRoots':[str(s/'repo/stage3/api/node_modules/@types')]},'files':roots};(out/(label+'-tsconfig.json')).write_text(json.dumps(cfg,indent=2)+'\n')
+ assert command(label+'-stock',['node',str(s/'repo/stage3/api/node_modules/typescript/bin/tsc'),'--project',str(out/(label+'-tsconfig.json')),'--pretty','false'])==0
+ assert command(label+'-adamic',[str(s/'adamic'),'types',*roots])==0
+ e=dict(env,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE=str(t/'src/compiler/sys.ts'),CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_TIMES=str(out/(label+'-times.jsonl')))
+ frozen=hashlib.sha256((t/'src/compiler/sys.ts').read_bytes()).hexdigest();start=time.monotonic()
+ with (out/(label+'-census.log')).open('w') as f:r=subprocess.run([str(s/'latent'),str(t/'src/compiler'),str(out/(label+'-raw.jsonl'))],cwd=s/'repo',env=e,stdout=f,stderr=f,timeout=1800)
+ assert frozen==hashlib.sha256((t/'src/compiler/sys.ts').read_bytes()).hexdigest();row={'label':label+'-census','exit':r.returncode,'seconds':time.monotonic()-start,'sysSHA256':frozen,'flags':{k:v for k,v in e.items() if k.startswith(('LATENT_','CENSUS_'))}};rows.append(row);(out/'runs.json').write_text(json.dumps(rows,indent=2)+'\n');print(row,flush=True);assert r.returncode==0

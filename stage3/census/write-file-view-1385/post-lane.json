@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "lane": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 273,
+    "sanctioned_declarations": 273,
+    "added_lines": 327,
+    "removed_lines": 245
+  },
+  "replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false,
+    "valueIdentical": true,
+    "writes": 0,
+    "bytesAndMtimePreserved": true
+  },
+  "declarations": [
+    {
+      "file": "typescript.d.ts",
+      "byteIdentical": true,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "frozenImplementationFiles": 8
+}
