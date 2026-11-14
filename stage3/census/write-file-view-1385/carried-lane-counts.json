@@ -1,0 +1,29 @@
+{
+  "originBranch": "typescript/price-sys-public",
+  "originCommit": "3ecc182ad4c79a8783e4b673c01d977d046e515e",
+  "originReport": "stage3/census/price-sys-public/REPORT.md",
+  "runs": {
+    "main": {
+      "sysSHA256": "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+      "captures": 2200,
+      "calls": 4627,
+      "oracleCounts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "sourceIdenticalToCountedTree": true
+    },
+    "after": {
+      "sysSHA256": "e54784efde766ccd6a7b93cf0e4e2960392064f481f816289544afaf5656d9ef",
+      "captures": 2200,
+      "calls": 4627,
+      "oracleCounts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "sourceIdenticalToCountedTree": true
+    }
+  }
+}

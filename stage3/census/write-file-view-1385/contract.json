@@ -1,0 +1,28 @@
+{
+  "owners": 1,
+  "LF": true,
+  "CRLF": true,
+  "onlyTargetWritten": true,
+  "replayWrites": 0,
+  "bytesAndMtimePreserved": true,
+  "restoringReplayWrites": 0,
+  "javascriptDelta": "exact alias and redirected read in owner only, comments kept and removed",
+  "refused": [
+    "drift-before",
+    "drift-after",
+    "half-alias-only",
+    "half-read-only",
+    "half-restored-read",
+    "missing-owner",
+    "duplicate-before",
+    "duplicate-after",
+    "duplicate-overload",
+    "moved-owner",
+    "parse-error",
+    "mixed-inside-owner",
+    "mixed-outside-owner",
+    "mixed-after-replay",
+    "bare-CR"
+  ],
+  "unrelatedEditPreserved": true
+}

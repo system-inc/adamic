@@ -1,0 +1,81 @@
+{
+  "main": {
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "unique": 59,
+    "rawEvents": 92,
+    "kinds": {
+      "Refused": 18,
+      "NotYet": 41
+    }
+  },
+  "after": {
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "unique": 58,
+    "rawEvents": 91,
+    "kinds": {
+      "Refused": 17,
+      "NotYet": 41
+    }
+  },
+  "mutant": {
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "unique": 59,
+    "rawEvents": 92,
+    "kinds": {
+      "Refused": 18,
+      "NotYet": 41
+    }
+  },
+  "new": [],
+  "gone": [
+    {
+      "finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/sys.ts:1383:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/sys.ts:1385:31",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+        "text": "src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)"
+      },
+      "phases": [
+        "refusal_scan"
+      ],
+      "attempts": [
+        {
+          "unit": "src/compiler/sys.ts:1383:1",
+          "phase": "refusal_scan",
+          "actualWhere": "/workspace/scratch/write-file-view-1385/main/src/compiler/sys.ts:1385:31"
+        }
+      ]
+    }
+  ],
+  "changed": [],
+  "mutantRestoresExactlyMain": true
+}

@@ -1,0 +1,12 @@
+--- main/sys.js
++++ after/sys.js
+@@ -854,7 +854,8 @@
+     }
+ }
+ export function patchWriteFileEnsuringDirectory(sys) {
+-    const originalWriteFile = sys.writeFile;
++    const writeFileView = sys;
++    const originalWriteFile = writeFileView.writeFile;
+     sys.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
+ }
+ export let sys = (() => {
