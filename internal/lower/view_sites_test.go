@@ -3,7 +3,6 @@ package lower
 import (
 	"context"
 	"errors"
-	"hash/fnv"
 	"io/fs"
 	"maps"
 	"path/filepath"
@@ -170,14 +169,12 @@ func viewWalkPrograms() ([]string, error) {
 	return names, err
 }
 
-// viewWalkShardPrograms is the programs of names in shard, those whose name's FNV-1a hash falls in it, as
-// cycleComparisonShard divides the cycle finder's inputs, so a program keeps its shard while others come and go.
+// viewWalkShardPrograms is the programs of names in shard, those nameShard puts in it, as it divides the cycle
+// finder's inputs.
 func viewWalkShardPrograms(names []string, shard uint64) []string {
 	var selected []string
 	for _, name := range names {
-		hash := fnv.New64a()
-		hash.Write([]byte(name))
-		if hash.Sum64()%viewWalkShardCount == shard {
+		if nameShard(name, viewWalkShardCount) == shard {
 			selected = append(selected, name)
 		}
 	}
