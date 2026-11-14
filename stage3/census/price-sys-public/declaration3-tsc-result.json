@@ -1,0 +1,13 @@
+{
+  "version": "6.0.3",
+  "roots": 79,
+  "command": [
+    "node",
+    "/workspace/scratch/price-sys-public/repo/stage3/api/node_modules/typescript/bin/tsc",
+    "--project",
+    "/workspace/scratch/price-sys-public/measurements/declaration3/tsconfig.stock.json",
+    "--pretty",
+    "false"
+  ],
+  "exit": 0
+}

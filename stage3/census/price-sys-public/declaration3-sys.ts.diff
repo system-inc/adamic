@@ -1,0 +1,11 @@
+--- control/src/compiler/sys.ts
++++ declaration3/src/compiler/sys.ts
+@@ -1406,7 +1406,7 @@
+     getWidthOfTerminal?(): number;
+     readFile(path: string, encoding?: string): string | undefined;
+     getFileSize?(path: string): number;
+-    writeFile(path: string, data: string, writeByteOrderMark?: boolean): void;
++    writeFile: (path: string, data: string, writeByteOrderMark?: boolean) => void;
+ 
+     /**
+      * @pollingInterval - this parameter is used in polling-based watchers and ignored in watchers that

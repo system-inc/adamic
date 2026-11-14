@@ -3,7 +3,7 @@
 | Site | Road | Target gone | New findings | Declaration diff lines | Calls added per lane run |
 |---|---|---|---|---|---|
 | 3 | site-local (`bind`) | Yes | 0 | 0 | Counting pending |
-| 3 | declaration | Not measured | Not measured | Not measured | Not measured |
+| 3 | declaration | Yes | 0 | 2 typescript.d.ts; 0 tsserverlibrary.d.ts | Erasure/count verification pending |
 | 10 | site-local | Not measured | Not measured | Not measured | Not measured |
 | 10 | declaration | Not measured | Not measured | Not measured | Not measured |
 
@@ -30,3 +30,9 @@ The full single-file CommonJSBundle census exited 0 in 350.052 seconds, using LA
 Private candidate: `const originalWriteFile = sys.writeFile.bind(sys);`; the subsequent `.call(sys, ...)` remains unchanged. Its complete sys.ts census exits 0 (228.687 seconds): 58 unique findings, 41 NotYet and 17 Refused. Exactly the target refusal is gone; no finding is new or changed. Stock tsc over 79 roots exits 0. The one-line private candidate diff and full raw census are retained.
 
 The source captures writeFile once, immediately replaces sys.writeFile, and later invokes originalWriteFile.call(sys, ...). There is no identity comparison or other escape of originalWriteFile. A live-receiver arrow would look up the replacement and recurse. Bind captures the function and receiver at the original read point, creates a new function identity and performs a bind call then. The witness retains receiver-sensitive calls after a later replacement and confirms the identity difference and naive-arrow recursion. This is a measured candidate, not a proposed adaptation. The lane count and broader observation review remain pending.
+
+## Site 3 public declaration form
+
+Changing System.writeFile from method syntax to a function property removes exactly the same target refusal. Full sys.ts census exits 0 in 165.422 seconds: 58 unique findings, 41 NotYet and 17 Refused; no new or changed findings. Stock tsc exits 0 over 79 roots. Adapted-tree npm ci and hereby dts both exit 0. The exact adapted generated declaration diff is adjacent to the report: one removed and one added typescript.d.ts line; no tsserverlibrary.d.ts change.
+
+The initial counting control was disqualified because the scratch-copy helper omitted tracked test-fixture node_modules directories. A full control rerun and fresh candidate counting copies are queued with those fixtures preserved. No per-lane call total is claimed from the disqualified run.
