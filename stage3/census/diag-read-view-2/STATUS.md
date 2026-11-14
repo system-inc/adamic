@@ -30,6 +30,18 @@
       "seconds": 7.19960618999994,
       "limit": 6000
     },
+    "stock-tsc.result.json": {
+      "label": "stock-tsc",
+      "args": [
+        "node",
+        "/workspace/scratch/diag-read-view-2/stock.cjs"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {},
+      "exit": 0,
+      "seconds": 56.43669161699927,
+      "limit": 6000
+    },
     "main-dts.result.json": {
       "label": "main-dts",
       "args": [
@@ -65,6 +77,18 @@
       "extra": {},
       "exit": 0,
       "seconds": 61.5299575250001,
+      "limit": 6000
+    },
+    "javascript.result.json": {
+      "label": "javascript",
+      "args": [
+        "node",
+        "/workspace/scratch/diag-read-view-2/javascript.cjs"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {},
+      "exit": 0,
+      "seconds": 52.28831945699949,
       "limit": 6000
     },
     "main-npm-ci.result.json": {
