@@ -1,0 +1,13 @@
+{
+  "memory_events_before_retry": "low 0\nhigh 0\nmax 8394\noom 30\noom_kill 2\noom_group_kill 0",
+  "memory_max": "17179869184",
+  "memory_current_before_cleanup": "7834120192",
+  "note": "Worker exited without a test failure or summary; cgroup OOM kills suggest memory pressure. Counts were not complete and this attempt is not claimed as a pass.",
+  "cleanup": [
+    "scratch gocache",
+    "completed scratch main-tree",
+    "failed lane adapted-tree"
+  ],
+  "retry": "unmodified full lane, 8 workers, all runners, no filters",
+  "memory_current_after_cleanup": "3865169920"
+}

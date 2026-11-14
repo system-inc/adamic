@@ -81,3 +81,23 @@ The combined evidence is appended using a separate temporary Git index based on
 the current evidence tip and commit-tree with that tip as parent. The running
 implementation checkout stays at e53da7b28. All pushes are ordinary fast-forward
 pushes; no existing ref is forced. No Loom command or submission is invoked.
+
+## Resource retry
+
+The first lane stops after a worker exits without output or a test failure.
+Cgroup memory.max is 17179869184; memory.events records oom_kill=2. This
+suggests memory pressure, but no per-process kernel diagnosis is claimed.
+The failed run has no complete counts and is retained as a failed attempt.
+All sys.ts inputs, output artifacts and full source hashes were already saved
+before removing the task's unused Go cache, completed main-tree and failed
+lane adapted-tree. No proof output or shared checkout file was removed.
+
+```sh
+stage3/lane/run.sh /tmp/invoke-map-4pc8wd8/lane-2-retry > /tmp/invoke-map-4pc8wd8/evidence-2/lane-retry.log 2>&1
+```
+
+The retry uses the unchanged lane, the same implementation HEAD, eight workers,
+all runners and no test filter. Apply restores its correctly keyed product into
+a new tree; the initial lane already proved a fresh local adaptation pass.
+All 79 retry roots are independently checked against the original proof input
+hashes, and sys.ts is compared directly with the frozen combined bytes.

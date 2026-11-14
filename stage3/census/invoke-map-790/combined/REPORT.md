@@ -27,4 +27,11 @@ parent; those established baseline bytes are reused for the combined comparison.
 Both independent restoring mutants pass: each brings back exactly its own
 refusal_scan site, with no other new, gone or changed finding. The combined
 source is restored and only sys.ts differs in the source hashes.
-Fresh whole unfiltered lane is running; final receipts will be appended. No Loom submission.
+The first fresh whole lane passed apply/install/build but stopped when a worker
+exited without a test failure or complete counts. Cgroup OOM kills and its
+16 GiB memory limit suggest memory pressure; this attempt is not a pass.
+All failed receipts are retained under failed-lane/. Removing only task-owned
+unused Go cache and duplicate completed source trees reduced idle memory from
+7.8 GB to 3.9 GB. The identical full lane is retrying with eight workers, all
+runners, and no filters or source/tool changes. Retry apply/build pass, and all
+79 compiler inputs match the recorded combined source. Final receipts follow. No Loom submission.
