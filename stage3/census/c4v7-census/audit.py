@@ -7,6 +7,8 @@ hash=lambda data:hashlib.sha256(data).hexdigest()
 for label in ('main','head'):
  manifest=read(OUT/f'source-manifest-{label}.json')
  assert len(manifest)==747
+ current_names={str(p.relative_to(BASE/f'adapted-{label}')) for p in (BASE/f'adapted-{label}/src').rglob('*') if p.is_file()}
+ assert current_names==set(manifest)
  for name,expected in manifest.items():assert hash((BASE/f'adapted-{label}'/name).read_bytes())==expected,(label,name)
  assert hash((BASE/f'scan-{label}').read_bytes())==read(OUT/f'build-{label}.json')['binary_sha256']
  assert 'lower.LatentScanOnly(context.Background(), program,' in (OUT/f'driver-{label}.go.txt').read_text()
@@ -37,5 +39,7 @@ final=read(NS/'final-validation.json');assert final['observations']==316 and fin
 changed=subprocess.check_output(['git','diff','1d48ecb5a5321717daf901579e49a23291995589','--name-only'],text=True).splitlines()+subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()
 assert all(n.startswith(('stage3/census/c4v7-census/','stage3/census/next-stops-c4v7/')) for n in changed)
 assert not any(n.endswith('.go') for n in changed)
+ignored=subprocess.check_output(['git','ls-files','--others','--ignored','--exclude-standard',str(OUT),str(NS)],text=True).splitlines()
+assert not ignored,('unpackaged ignored evidence',ignored)
 result=dict(source_files_per_commit=747,unchanged_source_hashes_verified=True,scan_binaries_verified=True,raw_scan_processes_verified=158,zero_lowering_units=True,all_raw_hashes_verified=True,all_headers_checker_clean=True,relation_reports_clean=True,all_new_diagnostic_texts_quoted=12,all_79_root_table_rows_present=True,scout_mapping_verified=True,ordinary_observations=316,compiler_and_adaptations_unchanged=True)
 (OUT/'audit.json').write_text(json.dumps(result,indent=2)+'\n');print('final evidence audit passed')

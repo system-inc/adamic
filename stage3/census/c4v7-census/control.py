@@ -18,5 +18,7 @@ for name,(source,needle) in controls.items():
  assert any(needle in f['reason'] for f in records[0]['findings'])
  assert rows[-1]['status']=='relation_report'
  status.append(dict(name=name,exit_code=r.returncode,seconds=time.monotonic()-start,zero_lowering_units=True,expected_reason_found=True))
+for log in dest.glob(f'{label}-*.log'):
+ log.with_suffix('.log.gz').write_bytes(gzip.compress(log.read_bytes(),mtime=0));log.unlink()
 (dest/f'{label}-status.json').write_text(json.dumps(status,indent=2)+'\n')
 print(label,'controls passed')
