@@ -118,11 +118,9 @@ function measure(): number {
     weight += weigh(make(5));
     return weight;
 }
-const first = start();
-const second = startRelay();
 console.log("sync " + String(measure()));
-await first;
-await second;
+await start();
+await startRelay();
 `)
 	plan := planRegions(program)
 	for _, name := range []string{"countLater", "relay"} {
@@ -154,7 +152,8 @@ await second;
 // binding don't name, so the plans leave its body out (#kha2ea0): work, an async function, and steps,
 // a generator, each hold a statement that would take a region, a spread that would be reused and an
 // element that would be borrowed. grow and summary don't suspend and keep theirs: a spread reused in
-// grow, and a region in summary, which also consumes the generator, since a consumer can't sit in the
+// grow, and a region in summary (its own maker, since make's literals also go into the global boxes,
+// which keeps them out of a region), which also consumes the generator, since a consumer can't sit in the
 // suspending module function the top-level await makes Main. Mutant: the Suspends() skips dropped from planRegions' statements, planReuse
 // and planElementBorrows, and the plans reach into work and steps.
 func TestSuspendingBodiesPlanNothing(t *testing.T) {
@@ -168,6 +167,15 @@ function make(n: number): Box {
 }
 function weigh(b: Box): number {
     return b.n;
+}
+interface P {
+    readonly x: number;
+}
+function makeP(n: number): P {
+    return { x: n };
+}
+function weighP(p: P): number {
+    return p.x;
 }
 function grow(b: Box): Box {
     let c = { ...b, n: b.n + 1 };
@@ -207,7 +215,7 @@ function summary(): string {
         seen += v;
     }
     let weight = 0;
-    weight += weigh(make(6));
+    weight += weighP(makeP(6));
     return "seen " + String(seen) + " grown " + String(grow(make(1)).n) + " weight " + String(weight);
 }
 console.log(summary());
@@ -241,7 +249,7 @@ await report(boxes);
 		region = region || summarized[statement]
 	}
 	if !region {
-		t.Error("summary's weigh(make(6)) took no region in a program holding promises and a generator")
+		t.Error("summary's weighP(makeP(6)) took no region in a program holding promises and a generator")
 	}
 	suspensionRun(t, program, "seen 17 grown 3 weight 6\ntotal 26\n")
 }
