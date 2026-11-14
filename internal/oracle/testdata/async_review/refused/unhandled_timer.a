@@ -1,0 +1,9 @@
+// Each timer ends at a checkpoint, before the next ready timer (#r7tcjjq).
+import { setTimeout } from 'node:timers';
+async function fails() {
+	await Promise.resolve();
+	throw new Error('timer rejection');
+}
+const run: () => void = fails;
+setTimeout(() => { console.log('timer'); run(); }, 0);
+setTimeout(() => console.log('second'), 0);

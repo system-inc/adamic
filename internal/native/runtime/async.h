@@ -15,10 +15,12 @@ struct adamic_async_frame {
 };
 struct adamic_async_promise {
     adamic_heap heap;
-    bool settled, rejected, references;
+    bool settled, rejected, references, handled;
     adamic_value value;
     adamic_async_reaction *first, *last;
 };
+/* Scheduler entry points belong to the loop thread. Parallel work cannot
+ * create, await or share promises. Host workers publish completion bytes. */
 adamic_async_promise *adamic_async_new(void);
 void adamic_async_settle(adamic_async_promise *, adamic_value, bool, bool);
 void adamic_async_await(adamic_async_frame *, adamic_async_promise *);

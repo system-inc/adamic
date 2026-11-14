@@ -24,3 +24,27 @@ func TestAsyncUnexpectedExceptionStops(t *testing.T) {
 		t.Fatalf("want named exit 70, got %v: %s", err, output)
 	}
 }
+
+func TestAsyncUnhandledNonReferenceReasonStops(t *testing.T) {
+	t.Parallel()
+	source := `#include "async.h"
+int main(int argc, char **argv) {
+    adamic_start(argc, argv);
+    adamic_async_promise *promise = adamic_async_new();
+    adamic_async_settle(promise, (adamic_value){.number = 1}, false, true);
+    adamic_release(promise);
+    adamic_async_run();
+    return 0;
+}
+`
+	binary := filepath.Join(t.TempDir(), "non-reference-rejection")
+	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	output, err := exec.Command(binary).CombinedOutput()
+	exit, ok := err.(*exec.ExitError)
+	want := "adamic: panic: compiler bug: an unhandled rejection whose reason is not a reference\n"
+	if !ok || exit.ExitCode() != 70 || string(output) != want {
+		t.Fatalf("want named exit 70, got %v: %s", err, output)
+	}
+}
