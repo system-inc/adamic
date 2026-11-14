@@ -188,6 +188,9 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
    adamic_release(slot->reference);
   }
   *slot = value;
+  // Every object reserves these bytes, even when emission leaves them zero.
+  // An interpreting read keeps an error's private unwritten sentinel out of the target.
+  adamic_object_field_types(target)[adamic_slot_index(target, slot)] = adamic_object_field_type(source, index);
   adamic_object_publish(target, adamic_slot_index(target, slot));
  }
  free(indices);
