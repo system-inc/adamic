@@ -1,0 +1,90 @@
+/*
+ * ../tssys_presence's twin (#p2n17c4 T1): tsc's ts.sys (src/compiler/sys.ts at 050880ce) as that directory
+ * models it, for the presence tests read off it, with one difference. tsc's createDirectory reads the
+ * literal it's a method of (sys.ts:1546), and lower stops that at #dv99xzy before any presence test; here
+ * createDirectory decides without the literal, so the program lowers and every presence test is judged.
+ * Otherwise the same: an interface of required members and optional ones, two of each optional form
+ * present on the system and the rest absent, and an exported let made by an arrow called where it's
+ * written. The arrow nests getNodeSystem (sys.ts:1468), whose const literal holds method shorthands and
+ * shorthand properties of functions declared after its return. The arrow's own let is undefined until
+ * getNodeSystem fills it, a later call stores a field onto it in tsc (patchWriteFileEnsuringDirectory,
+ * sys.ts:1376-1381), and it's handed back with ! (sys.ts:1955-1963). setSys writes the export, and nothing
+ * calls it (sys.ts:1966-1969).
+ */
+export interface System {
+	newLine: string;
+	useCaseSensitiveFileNames: boolean;
+	write(s: string): void;
+	writeOutputIsTTY?(): boolean;
+	readFile(path: string): string | undefined;
+	writeFile(path: string, data: string): void;
+	directoryExists(path: string): boolean;
+	createDirectory(path: string): void;
+	getMemoryUsage?(): number;
+	tryEnableSourceMapsForHost?(): void;
+	setBlocking?(): void;
+	clearScreen?: () => void;
+	base64encode?: (input: string) => string;
+}
+
+function isNodeLikeSystem(): boolean {
+	return true;
+}
+
+// tsc's patchWriteFileEnsuringDirectory (sys.ts:1376-1381) is left out: it begins with
+// `const originalWriteFile = sys.writeFile`, a method read as a value, which stays refused under the
+// ruling, so tsc stops on that line before the store after it, whatever this head proves (#p2n17c4 T1,
+// Compiler's and Lower's ruling; a store through a parameter is #fj0vqtf's follow-up).
+export let sys: System = (() => {
+	function getNodeSystem(): System {
+		const useCaseSensitiveFileNames = true;
+		const nodeSystem: System = {
+			newLine: '\n',
+			useCaseSensitiveFileNames,
+			write(s: string): void {
+				console.log(s);
+			},
+			writeOutputIsTTY() {
+				return false;
+			},
+			readFile,
+			writeFile(path: string, data: string): void {
+				console.log(`writeFile ${path} ${data}`);
+			},
+			directoryExists,
+			// tsc asks nodeSystem.directoryExists here, which #dv99xzy stops; this answers as it would without
+			// reading the literal, so it prints what tsc's shape would.
+			createDirectory(directoryName: string) {
+				if (directoryName !== 'src') {
+					console.log(`createDirectory ${directoryName}`);
+				}
+			},
+			tryEnableSourceMapsForHost() {
+				console.log('tryEnableSourceMapsForHost');
+			},
+			setBlocking() {
+				console.log('setBlocking');
+			},
+			base64encode: (input: string): string => `encoded ${input}`,
+		};
+		return nodeSystem;
+
+		function readFile(path: string): string | undefined {
+			return path === 'tsconfig.json' ? '{}' : undefined;
+		}
+
+		function directoryExists(path: string): boolean {
+			return path === 'src';
+		}
+	}
+
+	let sys: System | undefined;
+	if (isNodeLikeSystem()) {
+		sys = getNodeSystem();
+	}
+	return sys!;
+})();
+
+export function setSys(s: System): void {
+	sys = s;
+}
