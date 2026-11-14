@@ -1,8 +1,9 @@
 # Mutants for finite keyed writes (#13p3y0c)
 
-Each mutant is one exact edit, put back from the commit after its run. None of them has run yet: they
-were written on the Mac, where Go doesn't build, and the Red column is what reading the code says must
-fail. The Linux run decides, and a mutant whose Red stays green is a check that proves nothing.
+Each mutant is one exact edit, put back from the commit after its run, and each red counts only beside
+its tests green at head. (a) to (f) ran through Loom's door as J-szx64ff at 5faa9634 on Lunatic, and (g)
+as J-80fz499 at 0c9141f8 on Lunatic: the tests green unmutated, and every mutant red on the test its Red
+names. (a) reds more than its Red lists: every program in TestFiniteKeyedWritesAgreeWithNode.
 
 The tests: `TestFiniteKeyedWritesAgreeWithNode` and `TestFiniteKeyedWriteStops`
 (internal/oracle/finite_keyed_write_test.go), `TestComputedFieldsWriteRefusalPin`
@@ -123,3 +124,21 @@ New: the three lines gone.
 
 Red: `TestFiniteKeyedWriteStops/absent_optional_keyed.a` lowers while its named twin,
 absent_optional_named.a, stops: the other half of Adamic's condition.
+
+## (g) the keyed placeholder's stop dropped
+
+internal/lower/assignments.go, the assignment statement. Old:
+
+```go
+	if l.uninitializedInitializer(binary.Right) && !ast.IsIdentifier(target) && target.Kind != ast.KindPropertyAccessExpression {
+```
+
+New:
+
+```go
+	if l.uninitializedInitializer(binary.Right) && !ast.IsIdentifier(target) && target.Kind != ast.KindPropertyAccessExpression && target.Kind != ast.KindElementAccessExpression {
+```
+
+Red: `TestFiniteKeyedWriteStops/placeholder_keyed.a`. This stop on main, before setIndex, is what keeps
+`slots[side] = undefined!` out of finiteElementWrite, which would lower `undefined!` as an ordinary value
+where its named twin, `slots.left = undefined!`, is a placeholder reset with setProperty's own checks.
