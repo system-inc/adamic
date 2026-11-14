@@ -1,0 +1,12 @@
+// tsc lets a constructor write its class's readonly field through this, by a key as by a name, so this
+// is the honest road to a computed write to one. finiteElementWrite stops it: a keyed arm doesn't judge
+// readonly as setProperty's named write does.
+class Levels {
+	readonly Low: number = 0;
+	High: number = 0;
+	constructor(level: 'Low' | 'High', value: number) {
+		this[level] = value;
+	}
+}
+const levels = new Levels('High', 3);
+console.log(`${levels.Low} ${levels.High}`);

@@ -1,0 +1,11 @@
+// Record<'a' | 'b', number> has no index signature: tsc maps it to the two fields a and b, so a key of
+// its key union writes a fixed object's field, as a written-out interface's does.
+type Totals = Record<'a' | 'b', number>;
+function add(totals: Totals, key: 'a' | 'b', amount: number): void {
+	totals[key] = totals[key] + amount;
+}
+const totals: Totals = { a: 1, b: 2 };
+add(totals, 'b', 10);
+add(totals, 'a', 5);
+add(totals, 'b', 100);
+console.log(`${totals.a} ${totals.b}`);

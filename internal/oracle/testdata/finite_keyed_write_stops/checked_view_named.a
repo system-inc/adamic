@@ -1,0 +1,11 @@
+// The plain write checked_view_keyed.a stands beside: view is held as Box, which checks child, an object field.
+// Rule C's source-slot certificate (#2msw6t8) admits view.child = ... at the view, so the program stops only at its
+// .a downcast, at the cast, never at the write: the keyed write, which the certificate doesn't reach, stops at the
+// view instead, the stricter of the two.
+interface Base { readonly kind: 'box' | 'other'; }
+interface Box extends Base { readonly kind: 'box'; child: { ready: boolean }; spare: { ready: boolean }; }
+const raw = { kind: 'box' as const, child: { ready: true, other: 42 }, spare: { ready: false } };
+const held: Base = raw;
+const view = held as Box;
+view.child = { ready: true };
+console.log(String(raw.child.other));

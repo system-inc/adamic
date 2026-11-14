@@ -1,0 +1,15 @@
+// One receiver alternative keeps a readonly string index signature, held as fixed storage because the
+// module enumerates (Object.keys), and the other has none, so the union has none and nothing before
+// setIndex takes the write: the only road found to finiteElementWrite's index-signature stop, record
+// storage's wall, not a fixed object's.
+interface Levels { Low: number; High: number; }
+interface Table { Low: number; High: number; readonly [name: string]: number; }
+function set(target: Levels | Table, level: 'Low' | 'High', value: number): void {
+	target[level] = value;
+}
+function names(table: Table): string {
+	return Object.keys(table).join(',');
+}
+const table: Table = { Low: 1, High: 2 };
+set(table, 'High', 5);
+console.log(`${names(table)} ${table.Low} ${table.High}`);

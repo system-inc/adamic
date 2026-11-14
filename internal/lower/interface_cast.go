@@ -132,6 +132,9 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 		if part.Kind == ast.KindPropertyAccessExpression {
 			_, refused = l.judgeViewAccess(part, false)
 		}
+		if part.Kind == ast.KindElementAccessExpression && ast.IsAssignmentTarget(part) {
+			refused = l.judgeViewKeyedWrite(part)
+		}
 		// A getter named as a contract field is judged by what can reach this view, once lowering
 		// is done (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
 		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
@@ -187,6 +190,36 @@ func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
 		}
 	}
 	return true, refused
+}
+
+// judgeViewKeyedWrite is judgeViewAccess's write guard for a computed write to a fixed object, which stores
+// each field its key's literals name (finiteElementWrite, #13p3y0c), so each is judged as the named write
+// is. Only setIndex's fixed objects are asked, so an array's or a tuple's element write registers no
+// receiver here. Both of view's walks call it, and the indexed walk asks every keyed write each time,
+// since its answer reads several names and keyed writes are few.
+func (l *lowering) judgeViewKeyedWrite(part *ast.Node) error {
+	access := part.AsElementAccessExpression()
+	receiver := l.checker.GetTypeAtLocation(access.Expression)
+	if base, _ := l.representation(receiver); base != ir.Object || checker.IsTupleType(receiver) {
+		return nil
+	}
+	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	members := []*checker.Type{keyType}
+	if keyType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = keyType.Types()
+	}
+	for _, member := range members {
+		name, named := literalKeyName(member)
+		if !named || !l.checkedViewReceiverField(part, receiver, name) {
+			continue
+		}
+		if field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(receiver), name); field != nil {
+			if of, _ := l.representation(l.checker.GetTypeOfSymbol(field)); of == ir.Object {
+				return l.notYet(part, "writing a checked object field without its source-slot type certificate")
+			}
+		}
+	}
+	return nil
 }
 
 const checkedFieldAliasAccessor = "a checked field alias of an accessor"
