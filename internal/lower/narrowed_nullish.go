@@ -581,11 +581,18 @@ func (l *lowering) reachFrom(node *ast.Node, reach *codeReach) {
 	case ast.KindDeleteExpression:
 		return // A delete writes, judged by name, and runs nothing.
 	case ast.KindElementAccessExpression:
-		if len(l.programAccessorNames()) == 0 {
-			return // With no getter anywhere and none installed, an element read runs nothing.
+		if l.elementReadRunsNothing() {
+			return
 		}
 	}
 	reach.everything = true
+}
+
+// elementReadRunsNothing is whether an element read can run no program code: the program writes no
+// getter or setter of any name, so none can serve it. reachBetween asks it, and a never read's
+// between does too (never_read.go), each judging an install on its own (propertyWrites.accessors).
+func (l *lowering) elementReadRunsNothing() bool {
+	return len(l.programAccessorNames()) == 0
 }
 
 // programAccessorNames is every getter and setter name the program writes, accessorName's set.
