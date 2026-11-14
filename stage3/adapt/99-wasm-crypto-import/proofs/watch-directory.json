@@ -1,0 +1,5 @@
+{
+  "before": "watchDirectory",
+  "after": "watchDirectory: (path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions) => watchDirectory(path, callback, !!recursive, options)",
+  "erased": "watchDirectory: (path, callback, recursive, options) => watchDirectory(path, callback, !!recursive, options)"
+}

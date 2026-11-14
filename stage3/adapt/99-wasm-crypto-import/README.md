@@ -283,3 +283,18 @@ proofs/resolve-host-contract.cjs, proofs/resolve-host-fixture.cjs and
 resolve-host-mutant.cjs. The path counters for getDirectories, trace and
 getCurrentDirectory are zero; separate direct checks cover those explicitly
 authorized exceptions. The lane never exercises this require path.
+
+## watchDirectory boundary forwarder (#cyjqp5f)
+
+JavaScript-changing and value-identical under the 13-site recursive read audit.
+The exact-parameter System.watchDirectory forwarder normalizes the optional
+recursive argument with `!!recursive` at the getNodeSystem boundary. The inner
+createSystemWatchFunctions boolean contract and every downstream signature stay
+unchanged. This amends the same whole-owner after text and SHA-256 after the
+require-result and fresh-resolution-host amendments; earlier pins are unchanged.
+No rest, default, assertion, host axiom, or census exception is introduced.
+
+See PROOF-watch-directory.md, proofs/watch-directory-contract.cjs,
+proofs/watch-directory-witness.cjs and watch-directory-mutant.cjs. Summaries and
+receipts are on typescript/watch-directory-1533-evidence; raw evidence remains
+in scratch with SHA-256 and byte sizes recorded in the report. No Loom submission.

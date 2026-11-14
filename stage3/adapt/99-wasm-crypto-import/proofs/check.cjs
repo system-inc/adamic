@@ -2,11 +2,13 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 const ts = require('typescript');
 const resolveHost = require('./resolve-host.json');
+const watchDirectory = require('./watch-directory.json');
 function hash(bytes) { return crypto.createHash('sha256').update(bytes).digest('hex'); }
 function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recursive:true, withFileTypes:true}).filter(e => e.isFile()).map(e => path.relative(tree, path.join(e.parentPath, e.name))).sort(); }
 function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
 function undo(text, erased = false, removeComments = false) {
     const newline = text.includes('\r\n') ? '\r\n' : '\n';
+    text = replaceOne(text, erased ? watchDirectory.erased : watchDirectory.after, watchDirectory.before);
     if (!erased) text = replaceOne(text, resolveHost.after.replace(/\n/g, newline), resolveHost.before);
     if (!erased) text = replaceOne(text, resolveHost.annotationAfter.replace(/\n/g, newline), resolveHost.annotationBefore);
     if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
