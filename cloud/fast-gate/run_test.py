@@ -933,15 +933,18 @@ class DarwinLegs(unittest.TestCase):
     main, so the leg's tip is never the gate's sha: a main that moved elsewhere still matches, one that moved inside the
     darwin paths doesn't. Mutants, each red here: cover() failing darwin unread; coverage reding on a passed darwin exit;
     the darwin phase failing unread; any one green condition dropped; the digest over every path; a-check passing a
-    refusal, an untyped stop or a path that isn't darwin's on a leg."""
+    darwin .a on any matching leg rather than on the run of it the leg recorded, or ignoring its header there; a-check
+    reading the leg for a live refusal, an untyped stop or a path that isn't darwin's."""
     gate = FailClosed.gate
     edited = "package apple\n\nvar Edited = 1\n"
 
     def setUp(self):
         FailClosed.setUp(self)
         self.addCleanup(shutil.rmtree, self.directory)
-        sources = {"cloud/fast-gate/executors.txt": "darwin internal/apple/*\ndarwin examples/apple/*\ninert *.md\nstage3 stage3/*\ninert notes/*\n",
+        sources = {"cloud/fast-gate/executors.txt": "a-check-exempt examples/apple/exempt/*\ndarwin internal/apple/*\ndarwin examples/apple/*\n"
+                                                    "inert *.md\nstage3 stage3/*\ninert notes/*\n",
                    "internal/apple/apple.go": "package apple\n", "examples/apple/app.a": "const x = 1\n",
+                   "examples/apple/refused.a": "// a-check: refused no-any\nconst x: any = 1\n", "examples/apple/exempt/vendored.a": "vendored\n",
                    "notes/main.md": "# main\n", "probes/probe.a": "const y = 1\n"}
         for name, source in sources.items():
             self.write(name, source)
@@ -1062,7 +1065,16 @@ class DarwinLegs(unittest.TestCase):
                 ("an uppercase log digest", {"log": {"sha256": "A" * 64}}, "log.sha256 isn't 64 lowercase hex"),
                 ("no log", {"log": None}, "log.sha256 isn't 64 lowercase hex"),
                 ("an uppercase tip", {"tip": tip.upper(), "name": tip + ".json"}, "tip isn't 40 lowercase hex"),
-                ("a tip that isn't its file name", {"name": "b" * 40 + ".json"}, "tip %s isn't its file name" % tip)):
+                ("a tip that isn't its file name", {"name": "b" * 40 + ".json"}, "tip %s isn't its file name" % tip),
+                ("aCheck as a list", {"aCheck": [{"exit": 0, "errors": ""}]}, "aCheck isn't an object"),
+                ("an aCheck entry without exit", {"aCheck": {"examples/apple/app.a": {"errors": ""}}},
+                 "aCheck examples/apple/app.a isn't an object of a whole number exit and a string errors"),
+                ("an aCheck exit as a bool", {"aCheck": {"examples/apple/app.a": {"exit": False, "errors": ""}}},
+                 "aCheck examples/apple/app.a isn't an object of a whole number exit and a string errors"),
+                ("aCheck errors that aren't a string", {"aCheck": {"examples/apple/app.a": {"exit": 0, "errors": None}}},
+                 "aCheck examples/apple/app.a isn't an object of a whole number exit and a string errors"),
+                ("an aCheck entry that isn't an object", {"aCheck": {"examples/apple/app.a": 0}},
+                 "aCheck examples/apple/app.a isn't an object of a whole number exit and a string errors")):
             with self.subTest(why):
                 self.clearLegs()
                 name = self.record(tip, **fields)
@@ -1103,7 +1115,7 @@ class DarwinLegs(unittest.TestCase):
         digest = printed.stdout.strip()
         # The definition the README gives: the sorted "<mode> <object> <path>" lines of the darwin paths alone.
         lines = sorted("100644 %s %s\n" % (run.git(self.tree, "rev-parse", "%s:%s" % (tip, path)), path)
-                       for path in ("internal/apple/apple.go", "examples/apple/app.a"))
+                       for path in ("internal/apple/apple.go", "examples/apple/app.a", "examples/apple/refused.a", "examples/apple/exempt/vendored.a"))
         self.assertEqual(digest, hashlib.sha256("".join(lines).encode()).hexdigest())
         gate, status, result = self.gate(base=base)
         self.assertNeedsLeg(gate, status, digest, "no darwin leg recorded for darwinPaths " + digest)
@@ -1112,7 +1124,18 @@ class DarwinLegs(unittest.TestCase):
         self.assertTrue(status.startswith("green:"), status)
         self.assertEqual(result["darwin_leg"]["darwinPaths"], digest)
 
-    def aCheck(self, path, returncode, errors):
+    def test_the_a_paths_mode_prints_every_darwin_a_a_check_could_be_handed(self):
+        base, tip = self.candidate()
+        printed = realRun([sys.executable, run.__file__, "--darwin-a-paths", "--tree", self.tree, "--sha", tip, "--tools", self.tree],
+                          capture_output=True, text=True, timeout=60)
+        self.assertEqual((printed.returncode, printed.stderr), (0, ""))
+        # Not the Go file, not a .a outside the darwin globs, not one an a-check-exempt line names.
+        self.assertEqual(printed.stdout.splitlines(), ["examples/apple/app.a", "examples/apple/refused.a"])
+        self.assertEqual(run.darwinAPaths(self.tree, tip, self.tree), ["examples/apple/app.a", "examples/apple/refused.a"])
+
+    missing = "adamic: load: darwin platform missing: Xcode SDK\n"
+
+    def aCheck(self, path, returncode=run.platformMissingExit, errors=missing):
         gate = run.Gate.__new__(run.Gate)
         gate.arguments = types.SimpleNamespace(tree=self.tree, out=self.directory, sha=self.sha, tools=self.tree, full=False)
         gate.result, gate.steps, gate.exits, gate.failure = {}, {}, {}, None
@@ -1125,32 +1148,66 @@ class DarwinLegs(unittest.TestCase):
             gate.aCheck([path])
         return gate
 
-    def test_a_check_passes_a_darwin_program_stopped_on_the_platform_on_its_leg(self):
+    def test_a_check_judges_a_darwin_program_stopped_on_the_platform_on_what_the_mac_recorded(self):
         base, tip = self.candidate()
-        missing = "adamic: load: darwin platform missing: Xcode SDK\n"
-        # Without a leg, exactly today's red.
-        gate = self.aCheck("examples/apple/app.a", run.platformMissingExit, missing)
-        self.assertEqual(gate.exits["a-check"], 1)
-        self.assertEqual(gate.result["a_check"]["examples/apple/app.a"], {"outcome": "failed", "expected": "checked", "first": missing.strip()})
-        self.assertIn("examples/apple/app.a: failed, expected checked (%s)" % missing.strip(), gate.failure["detail"])
-        self.record(tip)
-        gate = self.aCheck("examples/apple/app.a", run.platformMissingExit, missing)
-        self.assertIsNone(gate.failure)
-        self.assertEqual(gate.exits["a-check"], 0)
-        self.assertEqual(gate.result["a_check"]["examples/apple/app.a"],
-                         {"outcome": "darwin leg", "expected": "checked", "first": missing.strip(), "darwin_leg": tip + ".json"})
-        # Only the typed stop on a darwin path: a refusal, a type error, the words without the stop's exit, and a path
-        # that isn't darwin's each stay red beside the same leg.
+        # Without a leg, and with one that isn't green, exactly today's red.
+        for why, fields in (("no leg", None), ("a leg whose aCheck is malformed", {"aCheck": []})):
+            with self.subTest(why):
+                self.clearLegs()
+                if fields is not None:
+                    self.record(tip, **fields)
+                gate = self.aCheck("examples/apple/app.a")
+                self.assertEqual(gate.exits["a-check"], 1)
+                self.assertEqual(gate.result["a_check"]["examples/apple/app.a"], {"outcome": "failed", "expected": "checked", "first": self.missing.strip()})
+                self.assertIn("examples/apple/app.a: failed, expected checked (%s)" % self.missing.strip(), gate.failure["detail"])
+        typeError = "examples/apple/app.a(1,1): error TS2322: Type 'string' is not assignable to type 'number'.\n"
+        refusal = "examples/apple/refused.a:2:7: Adamic 0.1 refuses no-any: any isn't a type\n"
+        unrecorded = "the darwin leg %s.json recorded no adamic c for this path" % tip
+        # The recorded run, judged by a-check's own rules and the file's header, exactly as a run on this box.
+        for why, path, aCheck, outcome, first, passes in (
+                ("recorded clean", "examples/apple/app.a", {"examples/apple/app.a": {"exit": 0, "errors": ""}}, "checked", "", True),
+                ("recorded a type error", "examples/apple/app.a", {"examples/apple/app.a": {"exit": 1, "errors": typeError}}, "type error", typeError.strip(), False),
+                ("recorded the refusal its header expects", "examples/apple/refused.a", {"examples/apple/refused.a": {"exit": 1, "errors": refusal}}, "refused", refusal.strip(), True),
+                ("recorded clean where its header expects a refusal", "examples/apple/refused.a", {"examples/apple/refused.a": {"exit": 0, "errors": ""}}, "checked", "", False),
+                ("recorded another rule's refusal", "examples/apple/refused.a", {"examples/apple/refused.a": {"exit": 1, "errors": refusal.replace("no-any", "no-eval")}}, "refused",
+                 refusal.replace("no-any", "no-eval").strip(), False),
+                ("recorded the platform stop too", "examples/apple/app.a", {"examples/apple/app.a": {"exit": run.platformMissingExit, "errors": self.missing}}, "failed", self.missing.strip(), False),
+                ("recorded nothing for the path", "examples/apple/app.a", {"examples/apple/refused.a": {"exit": 0, "errors": ""}}, "failed", unrecorded, False),
+                ("recorded no aCheck at all", "examples/apple/app.a", None, "failed", unrecorded, False)):
+            with self.subTest(why):
+                self.clearLegs()
+                self.record(tip, aCheck=aCheck)
+                gate = self.aCheck(path)
+                self.assertEqual(gate.result["a_check"][path], {"outcome": outcome, "expected": "refused no-any" if path.endswith("refused.a") else "checked",
+                                                                "first": first, "source": "darwin leg %s.json" % tip})
+                self.assertEqual(gate.exits["a-check"], 0 if passes else 1)
+                if passes:
+                    self.assertIsNone(gate.failure)
+                else:
+                    self.assertIn("%s: %s, expected %s (%s)" % (path, outcome, gate.result["a_check"][path]["expected"], first), gate.failure["detail"])
+
+    def test_a_check_keeps_every_other_verdict_beside_a_leg(self):
+        base, tip = self.candidate()
+        self.record(tip, aCheck={path: {"exit": 0, "errors": ""} for path in ("examples/apple/app.a", "probes/probe.a")})
+        # Only the typed stop on a darwin path reads the leg: a live refusal, a live type error, the words without the
+        # stop's exit, and a path that isn't darwin's each keep the live verdict, red, even where the leg recorded clean.
         for why, path, returncode, errors, outcome in (
-                ("a refusal", "examples/apple/app.a", 1, "examples/apple/app.a:1:1: Adamic 0.1 refuses x\n" + missing, "refused"),
+                ("a refusal", "examples/apple/app.a", 1, "examples/apple/app.a:1:1: Adamic 0.1 refuses x\n" + self.missing, "refused"),
                 ("a type error", "examples/apple/app.a", 1, "examples/apple/app.a(1,1): error TS2322: x\n", "type error"),
-                ("the words without the typed stop", "examples/apple/app.a", 1, missing, "failed"),
-                ("a path that isn't darwin's", "probes/probe.a", run.platformMissingExit, missing, "failed")):
+                ("the words without the typed stop", "examples/apple/app.a", 1, self.missing, "failed"),
+                ("a path that isn't darwin's", "probes/probe.a", run.platformMissingExit, self.missing, "failed")):
             with self.subTest(why):
                 gate = self.aCheck(path, returncode, errors)
                 self.assertEqual(gate.exits["a-check"], 1)
                 self.assertEqual(gate.result["a_check"][path]["outcome"], outcome)
-                self.assertNotIn("darwin_leg", gate.result["a_check"][path])
+                self.assertNotIn("source", gate.result["a_check"][path])
+        # The live classification and the header rules are the functions the recorded path judges by.
+        self.assertEqual([run.aCheckOutcome(code, errors) for code, errors in ((0, ""), (1, "can't lower x yet"), (1, "Adamic 0.1 refuses r"), (1, "a error TS1"), (1, "?"))],
+                         ["checked", "checked", "refused", "type error", "failed"])
+        self.assertEqual([run.aCheckMeets(expect, outcome, errors) for expect, outcome, errors in (
+            ("", "checked", ""), ("refused no-any", "refused", "refuses no-any"), ("refused no-any", "refused", "refuses no-eval"),
+            ("type error TS1", "type error", "error TS1"), ("type error TS1", "type error", "error TS2"), ("type error", "type error", ""))],
+            [True, True, False, True, False, True])
 
 
 class GateRuns(unittest.TestCase):

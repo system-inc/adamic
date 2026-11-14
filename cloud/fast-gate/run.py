@@ -19,7 +19,8 @@ Package roots include test imports for commands that compile tests; paths are co
 Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
 coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
 --darwin-paths-digest --tree <checkout> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin leg's record
-at that tip holds (cloud/fast-gate/darwin-legs/README.md).
+at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the .a files its
+aCheck must cover, one a line.
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -358,21 +359,35 @@ lowercaseHex64 = re.compile(r"[0-9a-f]{64}")
 platformMissingExit = 5
 
 
+def darwinEntries(tree, commit, rules):
+    """Every entry of commit's tree (git ls-tree -r) whose first rule in rules is darwin, as (mode, type, object, path)."""
+    entries = []
+    for entry in git(tree, "ls-tree", "-r", "-z", "--full-tree", commit).split("\0"):
+        if not entry:
+            continue
+        described, path = entry.split("\t", 1)
+        mode, kind, objectName = described.split(" ")
+        if firstExecutor(rules, path) == "darwin":
+            entries.append((mode, kind, objectName, path))
+    return entries
+
+
 def darwinPathsDigest(tree, commit, tools):
     """What a darwin leg vouches for, as one sha256: over the sorted lines "<mode> <object> <path>\\n" of every entry of
     commit's tree (git ls-tree -r) whose first rule in tools' executors.txt is darwin. The gate can't see a change's own
     tip, since a candidate is rebased onto main with one parent, so it matches a record by this content instead: a main
     that moved elsewhere keeps the digest, and one that moved inside the darwin paths changes it."""
-    rules = executorMap(tools)[0]
-    lines = []
-    for entry in git(tree, "ls-tree", "-r", "-z", "--full-tree", commit).split("\0"):
-        if not entry:
-            continue
-        described, path = entry.split("\t", 1)
-        mode, _, objectName = described.split(" ")
-        if firstExecutor(rules, path) == "darwin":
-            lines.append("%s %s %s\n" % (mode, objectName, path))
+    lines = ["%s %s %s\n" % (mode, objectName, path) for mode, _, objectName, path in darwinEntries(tree, commit, executorMap(tools)[0])]
     return hashlib.sha256("".join(sorted(lines)).encode()).hexdigest()
+
+
+def darwinAPaths(tree, commit, tools):
+    """The .a files a darwin leg's record must carry adamic c's result for (its aCheck), sorted: every darwin blob of
+    commit's tree ending .a that no a-check-exempt glob in tools' executors.txt names. That's every darwin .a a-check
+    could be handed, a package's own among them (only go list tells those apart), so the Mac runs a superset, never less."""
+    rules, _, _, exempt = executorMap(tools)
+    return sorted(path for _, kind, _, path in darwinEntries(tree, commit, rules)
+                  if kind == "blob" and path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt))
 
 
 def wholeNumber(value):
@@ -407,6 +422,15 @@ def darwinLegRefusal(name, record):
         return "counts.passed is %r, not above 0" % (record["counts"].get("passed"),)
     if not isinstance(record.get("darwinPaths"), str) or not lowercaseHex64.fullmatch(record["darwinPaths"]):
         return "darwinPaths isn't 64 lowercase hex"
+    # aCheck is what adamic c said on the Mac for each darwin .a, which a-check judges by its own rules. A leg of a
+    # change with no darwin .a may leave it out; one present is read whole or the record isn't green.
+    if "aCheck" in record:
+        if not isinstance(record["aCheck"], dict):
+            return "aCheck isn't an object"
+        for path, recorded in record["aCheck"].items():
+            if not isinstance(path, str) or not isinstance(recorded, dict) or not wholeNumber(recorded.get("exit")) \
+                    or not isinstance(recorded.get("errors"), str):
+                return "aCheck %s isn't an object of a whole number exit and a string errors" % path
     return None
 
 
@@ -443,16 +467,46 @@ def darwinLegSummary(name, record):
     return summary
 
 
-def darwinPathsDigestMain():
+def darwinMain():
     """run.py --darwin-paths-digest --tree <checkout> --sha <tip> --tools <gate tools>: the darwinPaths a hand writes into
-    a darwin leg's record at that tip, the same digest the gate matches the candidate by."""
+    a darwin leg's record at that tip, the same digest the gate matches the candidate by. With --darwin-a-paths instead,
+    the .a files the record's aCheck must cover (darwinAPaths), one a line, so the Mac runs adamic c on exactly those."""
     lister = argparse.ArgumentParser()
-    lister.add_argument("--darwin-paths-digest", action="store_true")
+    modes = lister.add_mutually_exclusive_group(required=True)
+    modes.add_argument("--darwin-paths-digest", action="store_true")
+    modes.add_argument("--darwin-a-paths", action="store_true")
     lister.add_argument("--tree", required=True)
     lister.add_argument("--sha", required=True)
     lister.add_argument("--tools", required=True)
     arguments = lister.parse_args()
-    print(darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools))
+    if arguments.darwin_paths_digest:
+        print(darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools))
+    else:
+        for path in darwinAPaths(arguments.tree, arguments.sha, arguments.tools):
+            print(path)
+
+
+def aCheckOutcome(returncode, errors):
+    """What one adamic c run of a .a said, whether it ran here or a darwin leg recorded it: a clean result or a "can't
+    lower ... yet" stop is checked, since nothing was refused; then a refusal, a type error, or any other failure."""
+    if returncode == 0 or ("can't lower" in errors and " yet" in errors):
+        return "checked"
+    if "Adamic 0.1 refuses" in errors:
+        return "refused"
+    if " error TS" in errors:
+        return "type error"
+    return "failed"
+
+
+def aCheckMeets(expect, outcome, errors):
+    """Whether an outcome meets a .a's header: "refused <rule>" must be refused naming the rule, "type error <code>" a
+    type error with that code (any, without one), and no header must be checked. One rule for live and recorded runs."""
+    if expect.startswith("refused"):
+        return outcome == "refused" and expect[len("refused"):].strip() in errors
+    if expect.startswith("type error"):
+        code = expect[len("type error"):].strip()
+        return outcome == "type error" and (not code or ("error " + code) in errors)
+    return outcome == "checked"
 
 
 # goListFields are the fields of a go list record that its readers read, goPackages and goCommandInputs, and all go list
@@ -941,8 +995,8 @@ def main():
     if "--phase-unread" in sys.argv:
         phaseUnreadMain()
         return
-    if "--darwin-paths-digest" in sys.argv:
-        darwinPathsDigestMain()
+    if "--darwin-paths-digest" in sys.argv or "--darwin-a-paths" in sys.argv:
+        darwinMain()
         return
     if "--list-units" in sys.argv:
         try:
@@ -1564,8 +1618,9 @@ class Gate:
         types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
         passes, since nothing was refused. A file whose first line is "// a-check: refused <rule>" or
         "// a-check: type error <code>" must fail exactly that way instead. A darwin path stopped only because this box
-        has no darwin platform (the typed PlatformMissing stop) passes as "darwin leg" on the candidate's recorded leg
-        (darwinLegFor), whose pool Mac has the platform; any other outcome there is judged as anywhere else."""
+        has no darwin platform (the typed PlatformMissing stop, at load, before the checker or the refusal pass runs) is
+        judged instead on what adamic c said for it on the pool Mac, as the candidate's recorded leg (darwinLegFor) holds
+        it in aCheck, by the same rules and header; a leg that recorded nothing for it, or no leg, leaves it red."""
         started = time.monotonic()
         adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic-acheck"
         if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
@@ -1584,32 +1639,24 @@ class Gate:
             expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
             process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
             _, errors = process.communicate()
-            if process.returncode == 0 or ("can't lower" in errors and " yet" in errors):
-                outcome = "checked"
-            elif "Adamic 0.1 refuses" in errors:
-                outcome = "refused"
-            elif " error TS" in errors:
-                outcome = "type error"
-            else:
-                outcome = "failed"
+            outcome = aCheckOutcome(process.returncode, errors)
             row = {}
             if outcome == "failed" and process.returncode == platformMissingExit and "darwin platform missing" in errors:
                 rules = executorMap(self.arguments.tools)[0] if rules is None else rules
                 if firstExecutor(rules, path) == "darwin":
                     leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools) if leg is None else leg
                     if leg[0] is not None:
-                        outcome, row = "darwin leg", {"darwin_leg": leg[0]}
+                        # The stop came at load, so nothing here checked the program: the Mac's run of it is the verdict.
+                        row = {"source": "darwin leg " + leg[0]}
+                        recorded = leg[1].get("aCheck", {}).get(path)
+                        if recorded is None:
+                            errors = "the darwin leg %s recorded no adamic c for this path" % leg[0]
+                        else:
+                            errors = recorded["errors"]
+                            # A recorded platform stop is the Mac lacking the platform too, never a check of the program.
+                            outcome = "failed" if recorded["exit"] == platformMissingExit else aCheckOutcome(recorded["exit"], errors)
             first = errors.strip().splitlines()[0] if errors.strip() else ""
-            if outcome == "darwin leg":
-                # The program never reached the checker here; the recorded leg is its verdict, whatever its header expects.
-                ok = True
-            elif expect.startswith("refused"):
-                ok = outcome == "refused" and expect[len("refused"):].strip() in errors
-            elif expect.startswith("type error"):
-                code = expect[len("type error"):].strip()
-                ok = outcome == "type error" and (not code or ("error " + code) in errors)
-            else:
-                ok = outcome == "checked"
+            ok = aCheckMeets(expect, outcome, errors)
             results[path] = dict({"outcome": outcome, "expected": expect or "checked", "first": first[:300]}, **row)
             if not ok:
                 failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
