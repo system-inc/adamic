@@ -1,0 +1,12 @@
+// A key union of the string fields beside a number field, written with strings the program builds, so
+// the store lets go of what each field held.
+interface Labelled { name: string; label: string; count: number; }
+type Text = 'name' | 'label';
+function relabel(row: Labelled, key: Text, text: string): void {
+	row[key] = text;
+}
+const row: Labelled = { name: ['fir', 'st'].join(''), label: 'one', count: 1 };
+relabel(row, 'label', ['built', 'label'].join('-'));
+relabel(row, 'name', `n${String(row.count)}`);
+relabel(row, 'label', row.name + row.label);
+console.log(`${row.name} ${row.label} ${row.count}`);

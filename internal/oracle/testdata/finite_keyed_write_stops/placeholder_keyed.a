@@ -1,0 +1,9 @@
+// o.left = undefined! resets a placeholder field, judged by setProperty's own checks; written by a key,
+// no field is spelled for them to judge, so the write stops before setIndex, as it did before #13p3y0c.
+interface Slots { left: number; right: number; }
+function clear(slots: Slots, side: 'left' | 'right'): void {
+	slots[side] = undefined!;
+}
+const slots: Slots = { left: 1, right: 2 };
+clear(slots, 'left');
+console.log(`${slots.right}`);
