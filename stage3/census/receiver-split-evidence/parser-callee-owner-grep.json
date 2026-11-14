@@ -1,0 +1,387 @@
+{
+  "parseJsonText": {
+    "sites": [
+      {
+        "line": 1708,
+        "callee": "factoryCreateArrayLiteralExpression"
+      },
+      {
+        "line": 1709,
+        "callee": "factoryCreateExpressionStatement"
+      }
+    ],
+    "priorMatches": [
+      "stage3/adapt/75-optional-widening/README.md",
+      "stage3/adapt/75-optional-widening/evidence/wave2/census.json",
+      "stage3/adapt/75-optional-widening/evidence/wave1/remaining-sites.json",
+      "stage3/adapt/75-optional-widening/evidence/full-apply/census.json",
+      "stage3/adapt/43-any-returns/proof.cjs",
+      "stage3/adapt/99-correctness-core-multimap/owners.json"
+    ]
+  },
+  "reparseTopLevelAwait": {
+    "sites": [
+      {
+        "line": 1936,
+        "callee": "factoryCreateNodeArray"
+      }
+    ],
+    "priorMatches": [
+      "stage3/adapt/30-indexed-reads/sites.json",
+      "stage3/adapt/64-temporary-parser-range-read/README.md"
+    ]
+  },
+  "parseTokenNode": {
+    "sites": [
+      {
+        "line": 2557,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseTokenNodeJSDoc": {
+    "sites": [
+      {
+        "line": 2564,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "createNodeArray": {
+    "sites": [
+      {
+        "line": 2595,
+        "callee": "factoryCreateNodeArray"
+      }
+    ],
+    "priorMatches": [
+      "stage3/adapt/99-correctness-axolotl-e/README.md",
+      "stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+      "stage3/adapt/64-temporary-parser-range-read/README.md",
+      "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+      "stage3/adapt/91-patcher-discard/proofs/transpile.diff",
+      "stage3/adapt/99-correctness-core-each-node/witness.cjs"
+    ]
+  },
+  "createMissingNode": {
+    "sites": [
+      {
+        "line": 2628,
+        "callee": "factoryCreateIdentifier"
+      },
+      {
+        "line": 2630,
+        "callee": "factoryCreateNumericLiteral"
+      },
+      {
+        "line": 2631,
+        "callee": "factoryCreateStringLiteral"
+      },
+      {
+        "line": 2633,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "createIdentifier": {
+    "sites": [
+      {
+        "line": 2657,
+        "callee": "factoryCreateIdentifier"
+      }
+    ],
+    "priorMatches": [
+      "stage3/adapt/75-optional-widening/probe-ruling.cjs",
+      "stage3/adapt/99-cli-debug-assertion-level/witnesses.cjs",
+      "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+      "stage3/adapt/99-correctness-core-or-predicate/replay-fingerprint.cjs",
+      "stage3/adapt/99-correctness-core-or-predicate/compare.cjs",
+      "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+      "stage3/adapt/99-correctness-axolotl-x/compare.cjs",
+      "stage3/adapt/70-readonly-views/mutant.cjs",
+      "stage3/adapt/49-honest-optionals/read-probe.cjs",
+      "stage3/adapt/99-correctness-axolotl-t/startup-controls.cjs",
+      "stage3/adapt/99-correctness-core-multimap/owners.json"
+    ]
+  },
+  "parsePrivateIdentifier": {
+    "sites": [
+      {
+        "line": 2749,
+        "callee": "factoryCreatePrivateIdentifier"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseLiteralLikeNode": {
+    "sites": [
+      {
+        "line": 3768,
+        "callee": "factoryCreateNumericLiteral"
+      },
+      {
+        "line": 3769,
+        "callee": "factoryCreateStringLiteral"
+      },
+      {
+        "line": 3770,
+        "callee": "factoryCreateLiteralLikeNode"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseModifiersForConstructorType": {
+    "sites": [
+      {
+        "line": 4502,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseSuperExpression": {
+    "sites": [
+      {
+        "line": 6045,
+        "callee": "factoryCreatePropertyAccessExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseJsxElementOrSelfClosingElementOrFragment": {
+    "sites": [
+      {
+        "line": 6070,
+        "callee": "factoryCreateIdentifier"
+      }
+    ],
+    "priorMatches": [
+      "stage3/adapt/30-indexed-reads/sites.json"
+    ]
+  },
+  "parseJsxElementName": {
+    "sites": [
+      {
+        "line": 6247,
+        "callee": "factoryCreatePropertyAccessExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parsePropertyAccessExpressionRest": {
+    "sites": [
+      {
+        "line": 6419,
+        "callee": "factoryCreatePropertyAccessChain"
+      },
+      {
+        "line": 6420,
+        "callee": "factoryCreatePropertyAccessExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseElementAccessExpressionRest": {
+    "sites": [
+      {
+        "line": 6448,
+        "callee": "factoryCreateElementAccessChain"
+      },
+      {
+        "line": 6449,
+        "callee": "factoryCreateElementAccessExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseCallExpressionRest": {
+    "sites": [
+      {
+        "line": 6540,
+        "callee": "factoryCreateCallChain"
+      },
+      {
+        "line": 6541,
+        "callee": "factoryCreateCallExpression"
+      },
+      {
+        "line": 6548,
+        "callee": "factoryCreatePropertyAccessChain"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseParenthesizedExpression": {
+    "sites": [
+      {
+        "line": 6669,
+        "callee": "factoryCreateParenthesizedExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseArrayLiteralExpression": {
+    "sites": [
+      {
+        "line": 6696,
+        "callee": "factoryCreateArrayLiteralExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseObjectLiteralExpression": {
+    "sites": [
+      {
+        "line": 6762,
+        "callee": "factoryCreateObjectLiteralExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseNewExpressionOrNewDotTarget": {
+    "sites": [
+      {
+        "line": 6820,
+        "callee": "factoryCreateNewExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseBlock": {
+    "sites": [
+      {
+        "line": 6833,
+        "callee": "factoryCreateBlock"
+      },
+      {
+        "line": 6843,
+        "callee": "factoryCreateBlock"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseIfStatement": {
+    "sites": [
+      {
+        "line": 6894,
+        "callee": "factoryCreateIfStatement"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseWhileStatement": {
+    "sites": [
+      {
+        "line": 6925,
+        "callee": "factoryCreateWhileStatement"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseForOrForInOrForOfStatement": {
+    "sites": [
+      {
+        "line": 6954,
+        "callee": "factoryCreateForOfStatement"
+      },
+      {
+        "line": 6971,
+        "callee": "factoryCreateForStatement"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseThrowStatement": {
+    "sites": [
+      {
+        "line": 7069,
+        "callee": "factoryCreateIdentifier"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseExpressionOrLabeledStatement": {
+    "sites": [
+      {
+        "line": 7139,
+        "callee": "factoryCreateExpressionStatement"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseVariableDeclaration": {
+    "sites": [
+      {
+        "line": 7662,
+        "callee": "factoryCreateVariableDeclaration"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseVariableDeclarationList": {
+    "sites": [
+      {
+        "line": 7720,
+        "callee": "factoryCreateVariableDeclarationList"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseVariableStatement": {
+    "sites": [
+      {
+        "line": 7730,
+        "callee": "factoryCreateVariableStatement"
+      }
+    ],
+    "priorMatches": []
+  },
+  "tryParseModifier": {
+    "sites": [
+      {
+        "line": 8003,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseModifiersForArrowFunction": {
+    "sites": [
+      {
+        "line": 8062,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseJSDocTypeExpressionForTests": {
+    "sites": [
+      {
+        "line": 8797,
+        "callee": "factoryCreateToken"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parsePropertyAccessEntityNameExpression": {
+    "sites": [
+      {
+        "line": 9589,
+        "callee": "factoryCreatePropertyAccessExpression"
+      }
+    ],
+    "priorMatches": []
+  },
+  "parseJSDocIdentifierName": {
+    "sites": [
+      {
+        "line": 9919,
+        "callee": "factoryCreateIdentifier"
+      }
+    ],
+    "priorMatches": []
+  }
+}

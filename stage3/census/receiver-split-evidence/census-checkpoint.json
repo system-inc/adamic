@@ -1,0 +1,27 @@
+[
+  {
+    "file": "src/compiler/transformers/es2021.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); no position-based prepairing",
+    "baseFindings": 27,
+    "changeFindings": 25,
+    "paired": 25,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      }
+    ]
+  }
+]
