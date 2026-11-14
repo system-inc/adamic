@@ -19,7 +19,7 @@ func TestStackReservationMeasuresEnvironment(t *testing.T) { t.Parallel(); reser
 // exercises that reservation with real strings and a controlled initial frame and soft limit.
 func reservationProbe(t *testing.T, argv bool) {
 	t.Helper()
-	runtimeDirectory, err := filepath.Abs(filepath.Join(repository, "internal/native/runtime"))
+	runtimeDirectory, err := filepath.Abs(filepath.Join(repository, "internal/native_runtime/c"))
 	if err != nil {
 		t.Fatal(err)
 	}

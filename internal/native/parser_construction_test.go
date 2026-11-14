@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func parserConstructionProgram(fixture string) *ir.Program {
@@ -116,7 +117,7 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 			t.Fatal(err)
 		}
 	} else {
-		files, err := readRuntime(runtime, "runtime")
+		files, err := readRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			t.Fatal(err)
 		}

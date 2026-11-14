@@ -15,6 +15,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -657,7 +658,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	runtimeFiles, err := readRuntime(runtime, "runtime")
+	runtimeFiles, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		return err
 	}

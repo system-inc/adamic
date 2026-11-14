@@ -78,7 +78,7 @@ def main():
                                     stdout=output, stderr=error, timeout=60)
         if result.returncode:
             raise RuntimeError(f'{name}: witness failed to lower')
-        runtime = ROOT/'internal/native/runtime'
+        runtime = ROOT/'internal/native_runtime/c'
         binary = directory/name
         flags = ['-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
                  '-Wno-unused-variable', '-Wno-unused-but-set-variable',

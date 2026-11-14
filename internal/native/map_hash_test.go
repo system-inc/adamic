@@ -11,6 +11,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -18,7 +19,7 @@ import (
 // insertion algorithm and the runtime's own growing table sizes, without exporting a test API.
 func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (string, error) {
 	t.Helper()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

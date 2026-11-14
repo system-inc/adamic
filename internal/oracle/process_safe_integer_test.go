@@ -53,7 +53,7 @@ func processExitSafeInteger(t *testing.T, shard int) {
 			processExitSafeIntegerAgreement(t, program, truth, shard, value)
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+		data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/process.c"))
 		if err != nil {
 			t.Fatal(err)
 		}

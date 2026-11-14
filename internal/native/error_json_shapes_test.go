@@ -58,7 +58,7 @@ func TestErrorJSONShapeClosure(t *testing.T) {
 		}
 		seen[shape.key()] = true
 		t.Run(shape.key(), func(t *testing.T) {
-			data, err := os.ReadFile(filepath.Join("runtime", row.file))
+			data, err := os.ReadFile(filepath.Join("../native_runtime/c", row.file))
 			if err != nil {
 				t.Fatal(err)
 			}

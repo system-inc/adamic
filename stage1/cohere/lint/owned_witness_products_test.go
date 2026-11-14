@@ -35,7 +35,7 @@ func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 		// Reads: stage1/typescript/scanner/scanner.ts
 		// Reads: stage1/typescript/scanner/tokens.ts
 		// Reads: internal/load/prelude.d.ts
-		// Reads: internal/native/runtime/*.[ch]
+		// Reads: internal/native_runtime/c/*.[ch]
 		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err

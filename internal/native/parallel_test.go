@@ -13,6 +13,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func parallelHarness(t *testing.T, file string, options Options) string {
@@ -178,12 +180,12 @@ func parallelCheckMutant(t *testing.T, name string) {
 				t.Skip("TSan is unavailable on this platform; see capability probe")
 			}
 			directory := t.TempDir()
-			files, err := fs.ReadDir(runtime, "runtime")
+			files, err := fs.ReadDir(native_runtime.Sources, "c")
 			if err != nil {
 				t.Fatal(err)
 			}
 			for _, file := range files {
-				contents, err := fs.ReadFile(runtime, "runtime/"+file.Name())
+				contents, err := fs.ReadFile(native_runtime.Sources, "c/"+file.Name())
 				if err != nil {
 					t.Fatal(err)
 				}

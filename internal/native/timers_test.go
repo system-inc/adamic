@@ -253,7 +253,8 @@ func TestTimerMutantProductPinCatchesBareClang(t *testing.T) {
 func timerMutant(t *testing.T, file, before, after string) timerRuntime {
 	t.Helper()
 	runtime := timerRuntime{t.TempDir()}
-	entries, err := os.ReadDir("runtime")
+	// Reads: internal/native_runtime/c/*
+	entries, err := os.ReadDir("../native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -262,7 +263,7 @@ func timerMutant(t *testing.T, file, before, after string) timerRuntime {
 		if entry.IsDir() || (filepath.Ext(entry.Name()) != ".h" && filepath.Ext(entry.Name()) != ".c") {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("runtime", entry.Name()))
+		data, err := os.ReadFile(filepath.Join("../native_runtime/c", entry.Name()))
 		if err != nil {
 			t.Fatal(err)
 		}

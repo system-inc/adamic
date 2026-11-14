@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 
 root = Path(__file__).resolve().parents[2]
-runtime = 'internal/native/runtime/library_object.c'
+runtime = 'internal/native_runtime/c/library_object.c'
 mutants = [
  ('keys-integer-last', runtime, 'return ai ? -1 : 1;', 'return ai ? 1 : -1;', 'keys'),
  ('keys-descending', runtime, 'return a < b ? -1 : a > b ? 1 : 0;', 'return a < b ? 1 : a > b ? -1 : 0;', 'keys'),

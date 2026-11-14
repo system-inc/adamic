@@ -14,7 +14,7 @@ import (
 
 func programMillionMeasured(t *testing.T, enabled, sanitized bool) string {
 	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-million-measured-", enabled, "-", sanitized), Files: []string{"internal/oracle/program_region_million_measure_test.go", "internal/oracle/testdata/program_region/million.a", "internal/lower", "internal/native"}}, func(directory string) error {
+	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-million-measured-", enabled, "-", sanitized), Files: []string{"internal/oracle/program_region_million_measure_test.go", "internal/oracle/testdata/program_region/million.a", "internal/lower", "internal/native", "internal/native_runtime"}}, func(directory string) error {
 		path, err := filepath.Abs("testdata/program_region/million.a")
 		if err != nil {
 			return err

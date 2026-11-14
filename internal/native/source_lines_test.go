@@ -23,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -265,7 +266,7 @@ func TestDebugTwoDirectories(t *testing.T) {
 				if header != header2 || !reflect.DeepEqual(units, units2) {
 					t.Fatal("split unit bytes differ")
 				}
-				common, err := readRuntime(runtime, "runtime")
+				common, err := readRuntime(native_runtime.Sources, "c")
 				if err != nil {
 					t.Fatal(err)
 				}

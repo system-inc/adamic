@@ -23,7 +23,7 @@ func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				checkoutLibrary, err := native.RuntimeLibraryForSource(filepath.Join(checkout.Root, "internal", "native", "runtime"), "", native.Options{Sanitize: true})
+				checkoutLibrary, err := native.RuntimeLibraryForSource(filepath.Join(checkout.Root, "internal", "native_runtime", "c"), "", native.Options{Sanitize: true})
 				if err != nil {
 					t.Fatal(err)
 				}

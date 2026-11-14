@@ -13,6 +13,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every translation unit is a separate product and test, including optional
@@ -37,7 +38,7 @@ func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "gcc-runtime-" + name + mutant, Files: []string{"go.mod", "internal/native/runtime", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/gcc_units_test.go", "internal/native/gcc_invariants_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version")}}
+	inputs := buildcache.Inputs{Name: "gcc-runtime-" + name + mutant, Files: []string{"go.mod", "internal/native_runtime/c", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/gcc_units_test.go", "internal/native/gcc_invariants_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		found := false
 		for _, file := range files {
@@ -101,7 +102,7 @@ func checkGCCRuntimeUnit(t *testing.T, name string) {
 }
 func TestGCCRuntimeInventory(t *testing.T) {
 	t.Parallel()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

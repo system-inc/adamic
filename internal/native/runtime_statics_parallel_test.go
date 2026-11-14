@@ -11,6 +11,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each fixture has its own four-worker process and uses the same immutable runtime snapshot.
@@ -313,7 +315,7 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 		t.Fatal(err)
 	}
 	// The baseline archive is shared; only the changed C unit is recompiled for a mutant.
-	baseline, err := readRuntime(runtime, "runtime")
+	baseline, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
