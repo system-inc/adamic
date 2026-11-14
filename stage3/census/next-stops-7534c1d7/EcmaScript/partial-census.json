@@ -108,5 +108,110 @@
     "reason": "a cast the runtime can't check",
     "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
     "seconds": 14.208997935
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.280827428
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.072228443
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 5.184767621
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 5.053573813
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.290010062
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.075584145
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.937375826
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 20.494181325
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 19.571209647
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-7534c1d7-adapted/src/compiler/sys.ts:618:33",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 18.115138467
   }
 ]
