@@ -21,13 +21,25 @@ def run(name,cmd,cwd=R,expected=0,limit=600,env=None):
 # The original main adapter supplies both real snapshots; no hand-authored owner bytes.
 main=D/'main';afterBytes=(main/'src/compiler/sys.ts').read_bytes();beforeBytes=s.check_output(['git','-C',str(main),'show','refs/stage3/99-wasm-crypto-import-before:src/compiler/sys.ts'])
 (D/'main-before.ts').write_bytes(beforeBytes)
-run('pins',['node',P/'scoped-hashes.cjs',D/'main-before.ts',main/'src/compiler/sys.ts',P/'targets.json'])
+# Plan the erased amendment on the old landed crypto output, or accept an
+# already amended main product. The complete inventory is compared dynamically.
+newline=b'\r\n' if b'\r\n' in afterBytes else b'\n'
+if b'(process as any).recordreplay' in afterBytes:
+ assert afterBytes.count(b'(process as any).recordreplay')==1
+ afterBytes=afterBytes.replace(b'(process as any).recordreplay',b'process.recordreplay')
+ anchor=b'import * as _crypto from "node:crypto";'+newline+newline
+ assert afterBytes.count(anchor)==1
+ afterBytes=afterBytes.replace(anchor,b'import * as _crypto from "node:crypto";'+newline+b'import type {} from "../recordreplay.js";'+newline)
+(D/'planned-after.ts').write_bytes(afterBytes)
+expectedSources={str(f.relative_to(main)):h(f.read_bytes()) for f in (main/'src').rglob('*') if f.is_file()}
+expectedSources['src/compiler/sys.ts']=h(afterBytes)
+expectedSources['src/recordreplay.d.ts']=json.loads((P/'recordreplay/results.json').read_text())['augmentation_sha256']
+run('pins',['node',P/'scoped-hashes.cjs',D/'main-before.ts',D/'planned-after.ts',P/'targets.json'])
 pins=json.loads((P/'targets.json').read_text())[0]
 run('apply',['bash','stage3/apply.sh',D/'scoped'],limit=1800)
 scoped=D/'scoped';assert (scoped/'src/compiler/sys.ts').read_bytes()==afterBytes
-for f in (main/'src').rglob('*'):
- if f.is_file():assert f.read_bytes()==(scoped/f.relative_to(main)).read_bytes(),f
-assert sum(f.is_file() for f in (scoped/'src').rglob('*'))==746
+actualSources={str(f.relative_to(scoped)):h(f.read_bytes()) for f in (scoped/'src').rglob('*') if f.is_file()}
+assert actualSources==expectedSources, 'source inventory or bytes differ from the reviewed crypto and recordreplay plan'
 file=scoped/'src/compiler/sys.ts';saved=file.read_bytes();stamp=file.stat().st_mtime_ns
 log=run('rerun',['node',P.parent/'adapt.cjs',scoped]);assert json.loads(log.read_text())['files']==0;assert file.read_bytes()==saved and file.stat().st_mtime_ns==stamp
 # Input owner and import pins each have their own direct negative.
@@ -46,29 +58,31 @@ finally:file.write_bytes(saved)
 # A private copy uses hard links for immutable input, but its sys.ts is detached before any write.
 probe=D/'probe';shutil.copytree(main,probe,symlinks=True,copy_function=os.link,ignore=shutil.ignore_patterns('.git'))
 f=probe/'src/compiler/sys.ts';f.unlink();f.write_bytes(beforeBytes)
+(probe/'src/recordreplay.d.ts').unlink(missing_ok=True)
 run('bindings',['node',P/'bindings.cjs',probe,scoped,P/'scoped-bindings.json'])
 run('scope',['node',P/'check.cjs',probe,scoped,P/'scoped-checks.json'])
 site=json.loads((P/'foreign-site.json').read_text());old=site['before'].encode();new=site['after'].encode();assert beforeBytes.count(old)==1
 try:
- f.write_bytes(beforeBytes.replace(old,new));log=run('foreign-edit',['node',P.parent/'adapt.cjs',probe]);assert json.loads(log.read_text())['files']==1
+ f.write_bytes(beforeBytes.replace(old,new));log=run('foreign-edit',['node',P.parent/'adapt.cjs',probe]);assert json.loads(log.read_text())['files']==2
  assert f.read_bytes()==afterBytes.replace(old,new)
  actual=json.loads(s.check_output(['node',str(P/'scoped-hashes.cjs'),str(f)]));assert actual['ownerSha256']==pins['ownerAfterSha256'] and actual['importsSha256']==pins['importsAfterSha256']
  foreign=dict(site=site,ownerAfterSha256=actual['ownerSha256'],importsAfterSha256=actual['importsSha256'],foreignEditPreserved=True,wholeFileSha256=h(f.read_bytes()))
-finally:f.write_bytes(beforeBytes)
+finally:
+ f.write_bytes(beforeBytes);(probe/'src/recordreplay.d.ts').unlink(missing_ok=True)
 # The deliberately broken copy adds an otherwise invisible insertion in invokeCallbacks.
 source=(P.parent/'adapt.cjs').read_text();marker='    let importInsertions = 0;'
 extra="    const outside = file.text.indexOf('(existing as string[]).push(...fileNames);');\n    assert(outside >= 0);\n    edits.push({start: outside, end: outside, text: ' '});\n"
 assert source.count(marker)==1;broken=source.replace(marker,extra+marker)
-spanline="        assert(inOwner || importInsertion, 'edit outside getNodeSystem and node: import insertion');";assert broken.count(spanline)==1
+spanline="        assert(inOwner || importInsertion || recordreplayImport, 'edit outside getNodeSystem and pinned import edits');";assert broken.count(spanline)==1
 copy=P.parent/'.span-escape-adapter.cjs';unguarded=P.parent/'.span-escape-no-guard.cjs'
 try:
  copy.write_text(broken);stamp=f.stat().st_mtime_ns
- log=run('span-escape',['node',copy,probe],expected=1);assert 'edit outside getNodeSystem and node: import insertion' in log.read_text();assert f.read_bytes()==beforeBytes and f.stat().st_mtime_ns==stamp
+ log=run('span-escape',['node',copy,probe],expected=1);assert 'edit outside getNodeSystem and pinned import edits' in log.read_text();assert f.read_bytes()==beforeBytes and f.stat().st_mtime_ns==stamp
  unguarded.write_text(broken.replace(spanline,"        // Deliberate control: disable only the new edit-span assertion."))
- log=run('span-disabled-control',['node',unguarded,probe]);assert json.loads(log.read_text())['files']==1
+ log=run('span-disabled-control',['node',unguarded,probe]);assert json.loads(log.read_text())['files']==2
  assert f.read_bytes()!=afterBytes and f.read_bytes().replace(b' (existing as string[]).push(...fileNames);',old)==afterBytes
 finally:
- f.write_bytes(beforeBytes);copy.unlink(missing_ok=True);unguarded.unlink(missing_ok=True)
+ f.write_bytes(beforeBytes);(probe/'src/recordreplay.d.ts').unlink(missing_ok=True);copy.unlink(missing_ok=True);unguarded.unlink(missing_ok=True)
 # Produce a real adapted-tree view and run one of the lane's ordinary units, not a full oracle.
 run('install',['npm','ci','--no-audit','--no-fund'],scoped)
 run('build',['npm','run','build'],scoped,limit=1200)
@@ -79,7 +93,7 @@ shutil.copytree(scoped/'node_modules',R/'stage3/typescript/node_modules',symlink
 for p in (scoped/'built').rglob('*.tsbuildinfo'):p.unlink()
 log=run('lane-unit',['python3','stage3/lane/shard.py','stage3-lane-file-000',D/'lane-results'],env=dict(os.environ,STAGE3_ADAPTED_TREE=str(scoped)),limit=600)
 assert (scoped/'src/compiler/sys.ts').read_bytes()==afterBytes
-result=dict(base=base,pins=pins,wholeFileSha256=h(afterBytes),byteIdentical=True,all746SourceFilesIdentical=True,foreignEdit=foreign,movedOwnerRejectedBeforeWrite=True,movedImportsRejectedBeforeWrite=True,spanEscapeCaughtBeforeWrite=True,spanDisabledControlWritesExtraEdit=True,rerunFiles=0,laneLine=log.read_text().strip(),fullOraclesRerun=False,reason='compiled source bytes are identical to the landed adapter')
+result=dict(base=base,pins=pins,wholeFileSha256=h(afterBytes),byteIdentical=True,sourceFiles=len(actualSources),allSourceFilesMatchReviewedPlan=True,foreignEdit=foreign,movedOwnerRejectedBeforeWrite=True,movedImportsRejectedBeforeWrite=True,spanEscapeCaughtBeforeWrite=True,spanDisabledControlWritesExtraEdit=True,rerunFiles=0,laneLine=log.read_text().strip(),fullOraclesRerun=False,reason='source bytes match the reviewed crypto and erased recordreplay plan')
 (P/'scoped-results.json').write_text(json.dumps(result,indent=2)+'\n')
 for log in (P/'logs').glob('scoped-*.log'):
  with (Path(str(log)+'.gz')).open('wb') as raw:

@@ -2,6 +2,7 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 const ts = require('typescript');
 const resolveHost = require('./resolve-host.json');
+const recordreplay = require('../recordreplay.cjs');
 function hash(bytes) { return crypto.createHash('sha256').update(bytes).digest('hex'); }
 function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recursive:true, withFileTypes:true}).filter(e => e.isFile()).map(e => path.relative(tree, path.join(e.parentPath, e.name))).sort(); }
 function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
@@ -10,6 +11,10 @@ function undo(text, erased = false, removeComments = false) {
     if (!erased) text = replaceOne(text, resolveHost.after.replace(/\n/g, newline), resolveHost.before);
     if (!erased) text = replaceOne(text, resolveHost.annotationAfter.replace(/\n/g, newline), resolveHost.annotationBefore);
     if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
+    if (!erased) {
+        text = replaceOne(text, recordreplay.importText, '');
+        text = replaceOne(text, 'process.recordreplay', '(process as any).recordreplay');
+    }
     text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
     text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
     assert.equal([...text.matchAll(/^([ \t]*)createSHA256Hash,(\r?)$/gm)].length, 1, 'reviewed shorthand missing or duplicated');
@@ -28,14 +33,20 @@ function undo(text, erased = false, removeComments = false) {
     return text.slice(0, at) + lines.map(line => anchor[1] + line + newline).join('') + text.slice(at);
 }
 function TestCryptoSourceScope(before, after) {
-    const names = inventory(before); assert.deepEqual(inventory(after), names, 'source inventory changed');
+    const names = inventory(before), afterNames = inventory(after);
+    const added = 'src/recordreplay.d.ts';
     assert.equal(names.length, 747, 'source inventory size moved from main 8e3a784aa');
+    assert(!names.includes(added), 'before tree already holds the amendment declaration');
+    assert.deepEqual(afterNames, [...names, added].sort(), 'source inventory changed outside the reviewed declaration');
+    assert.equal(fs.readFileSync(path.join(after, added), 'utf8'), recordreplay.declaration, 'recordreplay declaration differs from the reviewed bytes');
     const entries = names.map(file => ({file, before:hash(fs.readFileSync(path.join(before,file))), after:hash(fs.readFileSync(path.join(after,file)))}));
-    const changed = entries.filter(x => x.before !== x.after).map(x => x.file);
-    assert.deepEqual(changed, ['src/compiler/sys.ts'], 'source changed outside sys.ts');
+    entries.push({file:added,before:null,after:hash(fs.readFileSync(path.join(after,added)))});
+    entries.sort((a,b) => a.file.localeCompare(b.file));
+    const changed = entries.filter(x => x.before !== x.after).map(x => x.file).sort();
+    assert.deepEqual(changed, ['src/compiler/sys.ts', added], 'source changed outside sys.ts and the reviewed declaration');
     const a = fs.readFileSync(path.join(before,'src/compiler/sys.ts'),'utf8'), b = fs.readFileSync(path.join(after,'src/compiler/sys.ts'),'utf8');
-    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load, three hash expressions and require result annotation');
-    return {files:names.length, changed, undoRestoresExactBytes:true, inventory:entries};
+    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import/load/hash edits, require result annotation, fresh resolution host and erased recordreplay amendment');
+    return {files:afterNames.length, beforeFiles:names.length, added:[added], changed, undoRestoresExactBytes:true, inventory:entries};
 }
 function TestCryptoTranspileScope(before, after) {
     const read = tree => fs.readFileSync(path.join(tree,'src/compiler/sys.ts'),'utf8');
