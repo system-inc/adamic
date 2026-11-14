@@ -163,7 +163,8 @@ All seven candidates were emitted for **both** program.ts and resolutionCache.ts
 **14/14 byte-identical comparisons**, stock 6.0.3 `transpileModule`, ES2024,
 CommonJS, comments retained. [javascript.json](javascript.json) gives byte counts
 and SHA256s; each candidate's `.js.diff` is empty. Each `.patch` records the exact
-scratch type changes. This establishes emission identity, not acceptance of the
+scratch type changes with CRLF normalized to LF for display; apply them to an
+LF-normalized copy. The measured candidate sources retain their original CRLF. This establishes emission identity, not acceptance of the
 stock-rejected controls or full body-lowering acceptance of diagnostics shapes.
 The additional helper-plus-sorter candidate is also stock-clean across 79 roots
 and has byte-identical program.ts and utilitiesPublic.ts emissions, recorded in
