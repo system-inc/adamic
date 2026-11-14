@@ -1028,6 +1028,17 @@ interface CoreTransformationContext {
 | census/utilities.jsonl | 3942150 | `f4ee02e9c9cc39fdae37b7f887c5af9a69f26d0c6b6432165d017b7bca6eec35` |
 | clean-oracle/report.json | 169524 | `6cb5d258cfe73f5783edb9132bb8c6db947f540b8a49e6bbb5136eeb97ca26ff` |
 
+## Raw publication review outcome
+
+Automatic approval review rejected the separate 88-archive push (899,250 compressed bytes), citing external publication of source-derived raw archives/process traces without accepted exact-payload authorization. The rejection happened before execution: no raw files were copied, committed or pushed. The user-requested fallback is complete: the report and small JSON are pushed, all raw/archive byte sizes and hashes are in the manifest, and raw archives remain in private task scratch. No bypass or raw-payload retry was attempted. See [publication-status.json](evidence/publication-status.json).
+
+Compressed archives at least 100,000 bytes also have their exact identifiers listed here:
+
+| Compressed archive | Bytes | SHA-256 |
+| --- | ---: | --- |
+| census__parser.jsonl.gz | 139578 | `f14defd67577f9d0b53df3b78f0a9f8ed513adaca5353bb72b29461125293e94` |
+| census__utilities.jsonl.gz | 134540 | `8328eaa51f7eb5b885381fdc2dff962dcf7a424ad6ef30db69802bc4ac7f2f0c` |
+
 ## Provenance and scope
 
 Source pin: Adamic `8e3a784aa5a601f57342c07b68f145fe56252c21`, fresh private detached worktree before this report branch. Recursive shallow submodules: cohere `5360753e19e4417675a90e92a1823bea66b13918`, compiler fork `d92d9bfee114c80be2c375d72edae966176e3a4f`. Upstream v6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Node v24.19.0; Go go1.27.1. Adapter npm ci, upstream npm ci and stage3/apply.sh completed. ADAMIC_TYPESCRIPT_SOURCE, temporary directories, Go build/module caches and npm caches were task scratch. The original /tmp task paths now point to disk-backed scratch through a symlink.
