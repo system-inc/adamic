@@ -1,48 +1,60 @@
 | Site (AST binding start) | Type | Public or internal | Members (`*` = method signature) | Calls per lane run |
 | --- | --- | --- | --- | --- |
-| src/compiler/sys.ts:590 | RecursiveDirectoryWatcherHost | Internal / anonymous | watchDirectory, useCaseSensitiveFileNames, getCurrentDirectory, getAccessibleSortedChildDirectories*, fileSystemEntryExists, realpath*, setTimeout, clearTimeout | Pending |
-| src/compiler/sys.ts:993 | CreateSystemWatchFunctions | Internal / anonymous | pollingWatchFileWorker, getModifiedTime, setTimeout, clearTimeout, fsWatchWorker, fileSystemEntryExists, useCaseSensitiveFileNames, getCurrentDirectory, fsSupportsRecursiveFsWatch, getAccessibleSortedChildDirectories*, realpath*, tscWatchFile, useNonPollingWatchers, tscWatchDirectory, inodeWatching, fsWatchWithTimestamp, sysLog | Pending |
-| src/compiler/utilities.ts:8213 | MutateMapSkippingNewValuesOptions<K, T, U> | Internal / anonymous | onDeleteValue*, onExistingValue* | Pending |
-| src/compiler/utilities.ts:8253 | MutateMapOptions<K, T, U> | Internal / anonymous | createNewValue* | Pending |
-| src/compiler/utilities.ts:11317 | EvaluationResolver | Internal / anonymous | evaluateElementAccessExpression*, evaluateEntityNameExpression* | Pending |
-| src/compiler/parser.ts:1472 | NodeFactory | Public | createNodeArray*, createNumericLiteral*, createStringLiteral*, createLiteralLikeNode*, createIdentifier*, createPrivateIdentifier*, createToken*, createArrayLiteralExpression*, createObjectLiteralExpression*, createPropertyAccessExpression*, createPropertyAccessChain*, createElementAccessExpression*, createElementAccessChain*, createCallExpression*, createCallChain*, createNewExpression*, createParenthesizedExpression*, createBlock*, createVariableStatement*, createExpressionStatement*, createIfStatement*, createWhileStatement*, createForStatement*, createForOfStatement*, createVariableDeclaration*, createVariableDeclarationList* | Pending |
-| src/compiler/moduleSpecifiers.ts:583 | ModuleSpecifierPreferences | Internal / anonymous | getAllowedEndingsInPreferredOrder*, relativePreference, excludeRegexes | Pending |
-| src/compiler/sourcemap.ts:40 | Timer | Internal / anonymous | enter*, exit* | Pending |
-| src/compiler/transformers/ts.ts:236 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/classFields.ts:355 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration*, endLexicalEnvironment*, startLexicalEnvironment*, resumeLexicalEnvironment*, addBlockScopedVariable* | Pending |
-| src/compiler/transformers/typeSerializer.ts:133 | TransformationContext | Public | factory, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/legacyDecorators.ts:89 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/esDecorators.ts:296 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/es2017.ts:120 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/es2018.ts:155 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/es2020.ts:43 | TransformationContext | Public | factory, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/es2021.ts:26 | TransformationContext | Public | hoistVariableDeclaration*, factory | Pending |
-| src/compiler/transformers/esnext.ts:77 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration*, startLexicalEnvironment*, endLexicalEnvironment* | Pending |
-| src/compiler/transformers/jsx.ts:99 | TransformationContext | Public | factory, getEmitHelperFactory* | Pending |
-| src/compiler/transformers/es2016.ts:22 | TransformationContext | Public | factory, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/es2015.ts:489 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/generators.ts:337 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistFunctionDeclaration*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/module/module.ts:192 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/module/system.ts:143 | TransformationContext | Public | factory, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Pending |
-| src/compiler/transformers/module/esnextAnd2015.ts:68 | TransformationContext | Public | factory, getEmitHelperFactory* | Pending |
-| src/compiler/emitter.ts:771 | Timer | Internal / anonymous | enter*, exit* | Pending |
-| src/compiler/emitter.ts:1215 | PrintHandlers | Public | hasGlobalName*, onEmitNode*, isEmitNotificationEnabled*, substituteNode*, onBeforeEmitNode, onAfterEmitNode, onBeforeEmitNodeArray, onAfterEmitNodeArray, onBeforeEmitToken, onAfterEmitToken | Pending |
-| src/compiler/emitter.ts:1275 | Timer | Internal / anonymous | enter*, exit* | Pending |
-| src/compiler/expressionToTypeNode.ts:199 | Recovery boundary (anonymous) | Internal / anonymous | finalizeBoundary*, startRecoveryScope*, hadError*, markError* | Pending |
+| src/compiler/sys.ts:590 | RecursiveDirectoryWatcherHost | Internal / anonymous | watchDirectory, useCaseSensitiveFileNames, getCurrentDirectory, getAccessibleSortedChildDirectories*, fileSystemEntryExists, realpath*, setTimeout, clearTimeout | Not certified |
+| src/compiler/sys.ts:993 | CreateSystemWatchFunctions | Internal / anonymous | pollingWatchFileWorker, getModifiedTime, setTimeout, clearTimeout, fsWatchWorker, fileSystemEntryExists, useCaseSensitiveFileNames, getCurrentDirectory, fsSupportsRecursiveFsWatch, getAccessibleSortedChildDirectories*, realpath*, tscWatchFile, useNonPollingWatchers, tscWatchDirectory, inodeWatching, fsWatchWithTimestamp, sysLog | Not certified |
+| src/compiler/utilities.ts:8213 | MutateMapSkippingNewValuesOptions<K, T, U> | Internal / anonymous | onDeleteValue*, onExistingValue* | Not certified |
+| src/compiler/utilities.ts:8253 | MutateMapOptions<K, T, U> | Internal / anonymous | createNewValue* | Not certified |
+| src/compiler/utilities.ts:11317 | EvaluationResolver | Internal / anonymous | evaluateElementAccessExpression*, evaluateEntityNameExpression* | Not certified |
+| src/compiler/parser.ts:1472 | NodeFactory | Public | createNodeArray*, createNumericLiteral*, createStringLiteral*, createLiteralLikeNode*, createIdentifier*, createPrivateIdentifier*, createToken*, createArrayLiteralExpression*, createObjectLiteralExpression*, createPropertyAccessExpression*, createPropertyAccessChain*, createElementAccessExpression*, createElementAccessChain*, createCallExpression*, createCallChain*, createNewExpression*, createParenthesizedExpression*, createBlock*, createVariableStatement*, createExpressionStatement*, createIfStatement*, createWhileStatement*, createForStatement*, createForOfStatement*, createVariableDeclaration*, createVariableDeclarationList* | Not certified |
+| src/compiler/moduleSpecifiers.ts:583 | ModuleSpecifierPreferences | Internal / anonymous | getAllowedEndingsInPreferredOrder*, relativePreference, excludeRegexes | Not certified |
+| src/compiler/sourcemap.ts:40 | Timer | Internal / anonymous | enter*, exit* | Not certified |
+| src/compiler/transformers/ts.ts:236 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/classFields.ts:355 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration*, endLexicalEnvironment*, startLexicalEnvironment*, resumeLexicalEnvironment*, addBlockScopedVariable* | Not certified |
+| src/compiler/transformers/typeSerializer.ts:133 | TransformationContext | Public | factory, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/legacyDecorators.ts:89 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/esDecorators.ts:296 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/es2017.ts:120 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/es2018.ts:155 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/es2020.ts:43 | TransformationContext | Public | factory, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/es2021.ts:26 | TransformationContext | Public | hoistVariableDeclaration*, factory | Not certified |
+| src/compiler/transformers/esnext.ts:77 | TransformationContext | Public | factory, getEmitHelperFactory*, hoistVariableDeclaration*, startLexicalEnvironment*, endLexicalEnvironment* | Not certified |
+| src/compiler/transformers/jsx.ts:99 | TransformationContext | Public | factory, getEmitHelperFactory* | Not certified |
+| src/compiler/transformers/es2016.ts:22 | TransformationContext | Public | factory, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/es2015.ts:489 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/generators.ts:337 | TransformationContext | Public | factory, getEmitHelperFactory*, resumeLexicalEnvironment*, endLexicalEnvironment*, hoistFunctionDeclaration*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/module/module.ts:192 | TransformationContext | Public | factory, getEmitHelperFactory*, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/module/system.ts:143 | TransformationContext | Public | factory, startLexicalEnvironment*, endLexicalEnvironment*, hoistVariableDeclaration* | Not certified |
+| src/compiler/transformers/module/esnextAnd2015.ts:68 | TransformationContext | Public | factory, getEmitHelperFactory* | Not certified |
+| src/compiler/emitter.ts:771 | Timer | Internal / anonymous | enter*, exit* | Not certified |
+| src/compiler/emitter.ts:1215 | PrintHandlers | Public | hasGlobalName*, onEmitNode*, isEmitNotificationEnabled*, substituteNode*, onBeforeEmitNode, onAfterEmitNode, onBeforeEmitNodeArray, onAfterEmitNodeArray, onBeforeEmitToken, onAfterEmitToken | Not certified |
+| src/compiler/emitter.ts:1275 | Timer | Internal / anonymous | enter*, exit* | Not certified |
+| src/compiler/expressionToTypeNode.ts:199 | Recovery boundary (anonymous) | Internal / anonymous | finalizeBoundary*, startRecoveryScope*, hadError*, markError* | Not certified |
 
-## Measurement checkpoint
+## Stopped: no certified hybrid price
 
-The completed adapted tree has 79 compiler roots. The typed AST scan found 54 files containing object binding patterns and 29 sites taking a method-signature member. Four sites are destructured parameters with no initializer: `sys.ts:590`, `sys.ts:993`, `utilities.ts:11317`, and `moduleSpecifiers.ts:583`. A literal initializer-only scan therefore finds 25; the broader scan including parameter types finds 29. This is an AST count, not yet a full-census count.
+The runtime counter failed a default-callback control. A supplied function is proxied and counted, but a destructuring default runs after that proxy has returned undefined. The control executed the default callback once and observed **zero** counted calls, where **one** was required. This affects the actual PrintHandlers bindings: onEmitNode defaults to noEmitNotification, and substituteNode defaults to noEmitSubstitution. The current counter cannot certify per-member heat. No extra-call price is extrapolated from its partial data.
 
-The public declaration build completed successfully: `npm ci`, followed by `node_modules/.bin/hereby dts` (27.6 seconds). Public types are `PrintHandlers`, `NodeFactory`, and `TransformationContext`. The inventory has 19 public sites and 82 method-signature bindings requiring wrappers under the proposal. This count includes internal members taken from a public type. It excludes members already declared as function properties.
+The independent parser/printer positive control passed: it parsed and printed `const answer = 42;`, recorded factory calls on the parser path, and recorded printer timer calls. That proves the counter fires on these paths; it does not repair the missing default path. The retained instrument.cjs and hooks.cjs are failed measurement prototypes, not validated reusable counters.
 
-`tsserverlibrary.d.ts` contains a re-export of `./typescript.js`, not duplicate interface declarations. Public presence is reported through that re-export as well as literal declaration presence in the evidence JSON.
+I stopped the private counting oracle after demonstrating that gap. Install and build passed (11.124 seconds and 40.014 seconds). Its unfiltered eight-worker test phase was intentionally terminated by SIGTERM after 458.505 seconds. No final test totals exist. No whole-lane heat is claimed.
 
-The full CommonJSBundle census is running with `LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1`, selecting all 54 destructuring files. No census total or agreement claim is made before its trailer and successful exit. The private counting oracle is also running, unfiltered with eight workers. No lane call counts or extra-call price are established yet.
+I also stopped the full census, with shell exit **143**. It emitted only a header and no file records or final relation trailer. Thus the census count is **unknown**, not zero and not 29. Census/AST agreement and individual census misses cannot be established. The header confirms full mode and CommonJSBundle; the driver ran with LATENT_FULL=1 and LATENT_ASSERT_NO_OUTPUT=1, selecting all 54 destructuring files. Its diagnostic arrays are empty and checker_rejected is false; the fixed historical label “measured on a checker-rejected program” does not establish rejection here. Partial timing rows reached binder, builder, builderPublic and builderState, not a completed-file coverage ledger.
+
+Two private type experiments were interrupted earlier to release measured memory pressure: approximately 15 GB was in use against a 16 GB worker limit while oracle and census overlapped. They produced neither completed stock strictFunctionTypes diagnostic ledgers nor the property-road bundled d.ts. No diagnostic totals, exact property-road d.ts diff, or hybrid declaration-identity result are claimed. This is a measurement stop; the method rule remains unchanged.
+
+## Completed static and declaration measurements
+
+The final adapted tree has **79 compiler roots**. The typed AST scan found **54 files** containing object binding patterns and **29 sites** taking a method-signature member. Four are destructured parameters without initializers: sys.ts:590, sys.ts:993, utilities.ts:11317 and moduleSpecifiers.ts:583. A literal initializer-only scan finds **25**; including parameter types finds **29**. These are AST counts, not census counts. Table locations denote binding-pattern starts, which can differ from refusal locations at individual members.
+
+The public declaration build passed after npm ci, using node_modules/.bin/hereby dts (27.6 seconds). Public types are **PrintHandlers, NodeFactory and TransformationContext**. The AST inventory contains **19 public sites** taking **82 method-signature members** under the proposal's public-type rule. These are static binding counts, not a measured valid wrapper implementation or call price. They include internal members taken from a public type and exclude members already declared as function properties.
+
+The other named types are absent from the built public typescript.d.ts. The anonymous recovery boundary is recorded separately as internal source evidence. tsserverlibrary.d.ts re-exports ./typescript.js rather than repeating interface declarations; public presence through that re-export and literal declaration presence are distinguished in the inventory.
+
+The parser binding is src/compiler/parser.ts:1472 in namespace initialization, not a function invocation. The 17 TransformationContext transformer paths are named individually in the leading table and AST evidence.
 
 ## Per-site type evidence
 
-The JSON [AST inventory](evidence/ast-sites.json) records enclosing functions, each destructured member, method-signature status, source declaration text and location, and initializer text. `enclosing: <top-level>` at the parser binding denotes namespace initialization, not a function invocation. Implementation/this attribution remains outstanding.
+The JSON [AST inventory](evidence/ast-sites.json) records enclosing functions, each destructured member, method-signature status, source declaration text and location, and initializer text. `enclosing: <top-level>` at the parser binding denotes namespace initialization, not a function invocation. Exhaustive implementation and this-use attribution remains outstanding. A supplementary private contextual-object-literal scan found providers and unresolved edges, but did not establish every flow, including external public API or test inputs. It is not treated as a completed implementation census.
 
 ## Public declaration quotations
 
@@ -642,8 +654,12 @@ interface TransformationContext extends CoreTransformationContext {
 
 ## Outstanding
 
-Census completion/reconciliation; complete implementation and `this` attribution; whole-lane counts and production-path positive control; exact public property declaration diff; stock strictFunctionTypes diagnostics for both roads across 79 roots. No adaptation or compiler change is committed.
+Census completion/reconciliation; exhaustive implementation and this-use attribution; corrected whole-lane counters including destructuring defaults; exact public property declaration diff; stock strictFunctionTypes diagnostics for both roads across 79 roots. The production-path positive control passed, but the default-path control failed. No adaptation or compiler change is committed.
 
 ## Provenance
 
 Adamic `8e3a784aa5a601f57342c07b68f145fe56252c21`, fresh detached scratch worktree. Upstream `v6.0.3` at `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized. Node v24.19.0 and Go go1.27.1. All writes, npm caches, Go caches and temporary files are in task scratch. Baseline adapted build: `stage3/apply.sh --build-product /tmp/destructure-price-scratch/adapted`. Shared checkout untouched. The measurement scripts currently retain absolute task paths for exact reproducibility in this worker.
+
+## Evidence publication boundary
+
+Automatic approval review rejected a push containing raw logs, process counters and source-derived provider evidence, citing sensitive payloads and an unverified remote. This final update publishes only the report. Raw measurements remain in private scratch; no claim depends on treating incomplete logs as complete evidence. The earlier pushed AST inventory and public declaration quotations remain available on this branch.
