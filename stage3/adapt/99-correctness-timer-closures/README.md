@@ -185,3 +185,31 @@ function-cast mutant, whole-owner contract, 79-root stock and Adamic checks,
 per-file emitted JavaScript comparison, upstream `hereby dts` comparison, and
 whole unfiltered lane receipts belong on `typescript/path-mint-618-evidence`,
 under `stage3/census/path-mint-618/`.
+
+## InvokeMap timer annotation amendment
+
+Adamic, #4pc8wd8, Nov 14, 2026. This amendment is type-only:
+`onTimerToUpdateChildWatches` declares `const invokeMap: InvokeMap = new Map();`.
+`invokeCallbacks` can store either a string array or `true`; the timer's existing
+`isArray(existing)` reader already handles both. Only the recursive watcher's
+after text and SHA-256 change; its before pin and all earlier amendments remain.
+No callback reader, cast, guard or runtime operation changes.
+
+The complete main/amendment single-file CommonJSBundle census delta, restoring
+map-declaration mutant, whole-owner contract and witness comparisons, 79-root
+stock and Adamic checks, per-file emitted JavaScript comparison, upstream
+`hereby dts` comparison, and whole unfiltered lane receipts belong on
+`typescript/invoke-map-790-evidence`, under `stage3/census/invoke-map-790/`.
+
+## Child-watcher empty literal amendment
+
+Compiler, #frhzgrc, Nov 14, 2026. The same recursive watcher after pin also
+annotates its fresh empty child-watcher array as `[] as ChildDirectoryWatcher[]`
+in `addChildDirectoryWatcher`. Stock TypeScript accepts this smallest local
+form, and the full sys.ts census accepts the assertion on the fresh literal:
+main against the combined amendment removes only 790:87 and 877:34, both in
+refusal_scan, with no new or changed finding. No typed-local fallback is needed.
+The JavaScript remains byte-identical. The before pin, existing reader guards,
+and all earlier amendments retain their text. Combined proofs and one restoring
+mutant per edit belong on `typescript/invoke-map-790-evidence`, under
+`stage3/census/invoke-map-790/combined/`.
