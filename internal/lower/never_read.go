@@ -283,17 +283,50 @@ func (l *lowering) neverPlaceWrittenBetween(read *ast.Node, from int, observed *
 	}
 }
 
-// neverReadTrap is the trusted never read made loud: the read evaluated, then a panic naming it and the
-// narrowing that made it never, shared by both backends, as enumNeverCheck's is. It gives back what the
-// read's slot holds, so no conversion follows a value that's never made.
-func (l *lowering) neverReadTrap(node *ast.Node, value ir.Expression, making *neverMaking) ir.Expression {
+// neverReadEvaluated is what a trusted never read evaluates before the trap: a binding's read, at its
+// declared slot, or a property or an element read's receiver and key, since a field narrowed to never has
+// no representation of its own to read at (typeOf's not yet), and what it would read is never used. A
+// getter of the name stops the read before it's trusted (neverPlaceWrittenBetween), so leaving the read
+// itself out runs nothing less of the program's.
+func (l *lowering) neverReadEvaluated(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
-	of := l.neverCheckReturns(node, value.Type())
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		return l.discardedValue(node.Expression())
+	case ast.KindElementAccessExpression:
+		receiver, err := l.discardedValue(node.Expression())
+		if err != nil {
+			return nil, err
+		}
+		key, err := l.discardedValue(node.AsElementAccessExpression().ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Comma{Left: receiver, Right: key}, nil
+	}
+	return l.enumNeverValue(node)
+}
+
+// neverReadTrap is the trusted never read made loud: what the read evaluates, then a panic naming it and
+// the narrowing that made it never, shared by both backends, as enumNeverCheck's is. It gives back what
+// the read's slot holds, so no conversion follows a value that's never made: a binding's own slot where
+// nothing around it has one, a field's declared one, or a number's.
+func (l *lowering) neverReadTrap(node *ast.Node, evaluated ir.Expression, making *neverMaking) ir.Expression {
+	node = ast.SkipParentheses(node)
+	otherwise := ir.Number
+	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindThisKeyword {
+		otherwise = evaluated.Type()
+	} else if declared := l.enumStoredType(node); declared != nil {
+		if representation, known := l.representation(declared); known && !slotless(representation) {
+			otherwise = representation
+		}
+	}
+	of := l.neverCheckReturns(node, otherwise)
 	message := "unreachable read of " + strings.Join(strings.Fields(sourceExpression(node)), " ") + " at " + l.program.Where(node) + ", never after " + making.madeNever.kind + " " + strings.Join(strings.Fields(sourceExpression(making.madeNever.node)), " ") + " at " + l.program.Where(making.madeNever.node)
 	function := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{
 		Name: "never_read", Returns: of,
 		Body: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
 	})
-	return ir.Comma{Left: value, Right: ir.Call{Function: function, Returns: of}}
+	return ir.Comma{Left: evaluated, Right: ir.Call{Function: function, Returns: of}}
 }

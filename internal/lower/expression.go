@@ -595,11 +595,11 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if making != nil {
-		value, err := l.enumNeverValue(node)
+		evaluated, err := l.neverReadEvaluated(node)
 		if err != nil {
 			return nil, err
 		}
-		return l.neverReadTrap(node, value, making), nil
+		return l.neverReadTrap(node, evaluated, making), nil
 	}
 	value, err := l.enumNeverValue(node)
 	if err != nil {
