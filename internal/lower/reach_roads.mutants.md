@@ -376,3 +376,27 @@ New:
 Expected: TestReachEarlyCellIsWhatItsDeclarationAssigns/uncaptured and /captured go Unknown, "missing expression",
 and TestTsSysPresenceLowers/.ts and TestTsSysPresenceAgreesWithNode/main.ts refuse execute.ts:19:6's presence test,
 as 368e1506 did before this road.
+
+## 14. A captured early cell read unchecked
+
+Road 7 takes an early, valueless cell for no source, which is true only while a read before its assignment stops.
+This takes that stop away from a captured preallocated cell.
+
+File: internal/lower/locals.go, checked.
+
+Old:
+
+```go
+	return l.result.Locals[local].NamespaceState || l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+```
+
+New:
+
+```go
+	return l.result.Locals[local].NamespaceState || l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (false && l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+```
+
+Run: `go test ./internal/oracle -run '^TestTsSysEarlyReadStopsAsNodeDoes$' -count=1 -v`.
+
+Expected: TestTsSysEarlyReadStopsAsNodeDoes goes red natively: peek's presence test reads nodeSystem's cell before
+getNodeSystem assigns it, where Node throws a ReferenceError.
