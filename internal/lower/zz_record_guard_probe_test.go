@@ -19,10 +19,11 @@ func recordGuardFunction(clauseCase bool) string {
 	return source + "\t}\n\treturn false;\n}\n"
 }
 
-const recordGuardMain = "const clause: ImportClause = { kind: SyntaxKind.ImportClause, parent: undefined as unknown as Node, phaseModifier: SyntaxKind.TypeKeyword };\nconst named: NamedImports = { kind: SyntaxKind.NamedImports, parent: clause };\nconst specifier: ImportSpecifier = { kind: SyntaxKind.ImportSpecifier, parent: named, isTypeOnly: false };\nconsole.log(String(isTypeOnly(specifier)));\nconsole.log(String(isTypeOnly(clause)));\n"
+// The root's parent is itself, set in its constructor, so no node needs a cast to be made.
+const recordGuardMain = "class Root {\n\treadonly kind: SyntaxKind = SyntaxKind.Identifier;\n\treadonly parent: Node;\n\tconstructor() {\n\t\tthis.parent = this;\n\t}\n}\nconst clause: ImportClause = { kind: SyntaxKind.ImportClause, parent: new Root(), phaseModifier: SyntaxKind.TypeKeyword };\nconst named: NamedImports = { kind: SyntaxKind.NamedImports, parent: clause };\nconst specifier: ImportSpecifier = { kind: SyntaxKind.ImportSpecifier, parent: named, isTypeOnly: false };\nconsole.log(String(isTypeOnly(specifier)));\nconsole.log(String(isTypeOnly(clause)));\n"
 
-// The hazard: a record cast to ImportClause and read as one, plainly.
-const recordGuardHazard = "function phase(clause: ImportClause): string {\n\treturn String(clause.phaseModifier);\n}\nconsole.log(phase(table as unknown as ImportClause));\n"
+// The hazard: a record passed as a weak type, downcast to ImportClause by its kind, and read plainly.
+const recordGuardHazard = "interface Weak {\n\treadonly kind?: SyntaxKind;\n}\nfunction plain(c: ImportClause): string {\n\treturn String(c.phaseModifier);\n}\nfunction phase(w: Weak): string {\n\tif (w.kind === SyntaxKind.ImportClause) {\n\t\treturn plain(w as ImportClause);\n\t}\n\treturn 'no';\n}\nconsole.log(phase(table));\n"
 
 func TestZZRecordGuardProbe(t *testing.T) {
 	for _, probe := range []struct{ name, source string }{
