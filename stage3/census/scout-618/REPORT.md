@@ -25,3 +25,58 @@ path.ts census is still required to verify lowering rather than only scan admiss
 Rule 99's README and owners.json were read. The recursive-watcher owner is pinned
 whole. Its after text still contains `let timerToUpdateChildWatches: any;`.
 Future work would amend this owner in rule 99; this scout changes neither pin.
+
+## Reader inventory (whole rule-99 after owner)
+
+There are five call expressions plus one function-value use:
+
+- `createDirectoryWatcher`: `dirPath` keys cache.get/set/delete,
+  callbackCache.add/remove, callback dispatch, and child-watch updates. Captured
+  callbacks and close retain this key; updates use it in the pending map too.
+- `toPathInLink`: passes the function to getRelativePathFromDirectory as its
+  string canonicalizer; the returned Path is consumed as a string comparison
+  key, and combinePaths produces a string filename.
+- Both recursive `invokeCallbacks` branches: canonicalize `link` for dirPath;
+  this keys cache/links and participates in callback-root equality, prefix,
+  separator, and length tests. One branch carries an InvokeMap, the other a
+  single filename. Callback payloads remain filenames, not branded keys.
+- `removeChildWatches`: canonicalized childWatcher.dirName keys cache.get before
+  recursively removing its children.
+- `isInPath`: canonicalized path is used only for string.includes(searchPath)
+  after the direct test fails and case-sensitive mode is excluded.
+
+No consumer observes the phantom brand. The Path-consuming boundaries are
+map/multimap keys and the dirPath parameters. The function-value consumer and
+includes consumer need only strings.
+
+## Completed baseline measurements
+
+Fresh full apply exited 0. The adapted sys.ts contains rule 99's exact whole
+`after` owner once. Its cast is at 618:33 and its timer local at 615.
+Stock TypeScript 6.0.3, all 79 recursively enumerated compiler roots, strict,
+noUncheckedIndexedAccess, exactOptionalPropertyTypes, ES2024, ESNext/Bundler,
+verbatimModuleSyntax, forced modules and pinned @types/node: **0 diagnostics**.
+
+The guarded full single-file CommonJSBundle census has a completed relation
+trailer, no overflow, and checker_rejected=false (the census's generic
+measurement label still says “measured on a checker-rejected program”). Counts
+are unique (kind, where, reason, text), combined scan and lowering; boundaries
+are counted separately. Baseline sys.ts: **41 NotYet, 19 Refused, 55 Boundary**.
+
+The full path.ts census completed: **13 NotYet, 3 Refused, 16 Boundary**, no
+errors/panics. `toPath` at adapted 764:1 is attempted with no finding. Its return
+cast at 768 is therefore accepted in actual lowering, not merely absent from a
+scan. The rule is castProof -> phantomCast -> phantomAssignable, which compares
+Path's string base after phantomBase admits its undefined, string-keyed,
+non-prototype brand member. This is the primitive rule in docs/rulings.md:29–31,
+35–37, not the interface/array brandMintOf rule. Rule 103's generic interface
+permits the separate PathPathComponents array brand; it does not mint Path.
+
+The timer local is **not settled**. Full baseline already finds NotYet
+`reading timerToUpdateChildWatches` at 764:13 (truth test before cancellation),
+782:17 (while condition), and 809:117 (log interpolation), each with a failed
+statement Boundary at 764:9, 782:9 and 809:9 respectively. These are latent
+nested-unit observations; they do not imply the ordinary first-stop compiler
+reaches them. Adaptation 40's TIMER-SLOT.md covers only the solution builder's
+`timerToBuildInvalidatedProject`; rule 99's concrete host methods do not retype
+this local.
