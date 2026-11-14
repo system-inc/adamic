@@ -86,10 +86,23 @@ func (f *cycleFinder) reassigned(local int) bool {
 	return f.assigned[local]
 }
 
-// graphRecordSite is one record literal: where, and its own record type.
+// graphRecordSite is one record literal: where, the element type recordLiteral builds it with, and the
+// record type it's built as, which its values must not reach again.
 type graphRecordSite struct {
-	node   *ast.Node
-	record *checker.Type
+	node    *ast.Node
+	element *checker.Type
+	record  *checker.Type
+}
+
+// recordLiteralType is the record type a record literal is built as: its slot's, as recordLiteralElement
+// reads it, or else the literal's own type.
+func (l *lowering) recordLiteralType(node *ast.Node) *checker.Type {
+	if t := l.slotType(node); t != nil {
+		if present := l.checker.GetNonNullableType(t); l.recordElement(present) != nil {
+			return present
+		}
+	}
+	return l.checker.GetTypeAtLocation(node)
 }
 
 // cyclicRecord is the first record literal whose own values can reach a record of its type again, or
@@ -106,18 +119,19 @@ func (f *cycleFinder) cyclicRecord() *graphRecordSite {
 	if len(f.selected) == 0 {
 		return nil
 	}
-	judged := map[*checker.Type]bool{}
+	type judgedPair struct{ element, record *checker.Type }
+	judged := map[judgedPair]bool{}
 	for index := range f.l.graphRecords {
 		site := &f.l.graphRecords[index]
-		element := f.l.recordElement(site.record)
-		if element == nil {
+		if site.element == nil || site.record == nil {
 			return site
 		}
-		if judged[site.record] {
+		pair := judgedPair{site.element, site.record}
+		if judged[pair] {
 			continue
 		}
-		judged[site.record] = true
-		if f.reaches(element, cycleNode{proven: site.record}) {
+		judged[pair] = true
+		if f.reaches(site.element, cycleNode{proven: site.record}) {
 			return site
 		}
 	}
