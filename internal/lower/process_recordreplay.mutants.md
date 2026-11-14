@@ -4,9 +4,13 @@ process.recordreplay reads as undefined on every target, a member Node's process
 #b5w3ycg, Nov 7 2026), through the road browser already took (host_binding_absent_members.go, rule 70, and the
 fold in library_node_process.go). Each mutant is one edit, applied alone, then reverted. Run
 `go test ./internal/lower -run 'TestProcessRecordReplay|TestHostBindingProcess' -count=1 -v` and
-`go test ./internal/oracle -run 'TestProcessRecordReplayAgreesWithNode' -count=1 -v`: the named tests go red. None of
-these has been run yet: they were written on a machine that doesn't build Go, so each "goes red" below is what the
-code says, not what a run printed.
+`go test ./internal/oracle -run 'TestProcessRecordReplayAgreesWithNode' -count=1 -v`: the named tests go red. All three
+were run on Loom's door in job J-cm3b2dz at 7ccad5b5 (Nov 14, 2026), and the tree read clean after:
+
+- (a) red: native, sanitized and JavaScript printed "true\nboolean\n" against Node's "false\nundefined\n".
+- (b) red: the reads stopped at process.go's "process.recordreplay as a value" not yet again.
+- (c) red, but only on wording: Language's view write still stops with the view check gone, at "a namespace object
+  used as a value". That stop already guards the attack; the view check is what names recordreplay in it.
 
 ## a. The fold answers true
 
