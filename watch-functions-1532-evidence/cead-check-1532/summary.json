@@ -2,7 +2,7 @@
   "base": "ceadba1d9baf55dc0917eaf27dec69ebada795db",
   "implementation": "8499a514fc1d4bbab019594dfeef0e09fc4b5bbf",
   "implementationBranch": "typescript/watch-file-check-1532-1",
-  "implementationPushed": false,
+  "implementationPushed": true,
   "census": {
     "new": 0,
     "gone": 1,
@@ -38,8 +38,12 @@
   "ownerContracts": "all 5 directories passed",
   "javascript": "747 source files compared; 1208 per-file emission checks; only guard differs; guard-dropping emitted sys.js equals main",
   "declarations": "both byte-identical; declarations.diff is empty",
-  "wholeLane": "bounded-memory full lane still in progress",
+  "wholeLane": "PASS",
   "laneNodeHeapMiB": 1536,
-  "laneCounts": null,
+  "laneCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
   "noLoom": true
 }

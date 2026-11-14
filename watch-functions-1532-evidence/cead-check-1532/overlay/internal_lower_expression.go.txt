@@ -1,0 +1,2161 @@
+package lower
+
+import (
+	"errors"
+	"reflect"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
+// a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
+func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if ast.IsDeclarationName(node) && l.placeholderOrigin(node) != "" {
+		if declared, _ := l.representation(l.checker.GetTypeOfSymbol(l.symbol(node))); declared == ir.Weak {
+			return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+		}
+		if stored, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(node)))); known {
+			if stored == ir.Weak {
+				return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+			}
+			return placeholderStorage(stored), nil
+		}
+	}
+
+	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
+				return stored, nil
+			}
+		}
+		return ir.Number, nil
+	}
+	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
+		return ir.Object, nil
+	}
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+		// A field narrowed to a nullish value still occupies its declared slot, which may
+		// hold a packed optional scalar or a tagged reference. Read that representation.
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			return l.typeOfSymbol(node, field)
+		}
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
+		return ir.Object, nil
+	}
+	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+		return valueType, nil
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+		return 0, l.refuseAnyValue(node)
+	}
+	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+}
+
+func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	proven = l.concrete(proven)
+	if _, _, known := l.nodeArrayLayoutOf(proven); known {
+		return ir.Array, true
+	}
+	if kind := l.typedArrayKind(proven); kind != 0 {
+		return kind, true
+	}
+	if l.isLibraryType(proven, "Function") {
+		// Opaque callable values keep closure storage; the refusal pass forbids invocation.
+		return ir.Closure, true
+	}
+	flags := proven.Flags()
+	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+				return ir.Union, true
+			}
+		}
+	}
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
+		return ir.Object, true
+	}
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.isArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			return 0, false
+		}
+	}
+	if flags&checker.TypeFlagsTypeParameter != 0 {
+		// Inside a generic class, a type parameter is what this instantiation made it.
+		substituted, isKnown := l.substitution[proven]
+		return substituted, isKnown
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
+		if target := l.weakTarget(proven); target != nil {
+			return l.representation(target)
+		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
+		}
+		return l.objectIntersection(proven)
+	}
+	switch {
+	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+		return ir.Object, true
+	case flags&checker.TypeFlagsNumberLike != 0:
+		return ir.Number, true
+	case flags&checker.TypeFlagsStringLike != 0:
+		return ir.String, true
+	case flags&checker.TypeFlagsBooleanLike != 0:
+		return ir.Boolean, true
+	case flags&checker.TypeFlagsObject != 0 && (l.isArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
+		return ir.Array, true
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		// A Set is held as a Map whose values aren't used (set.go).
+		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
+		return ir.Promise, true
+	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
+		// Structural types such as {} admit primitives. Their slots must preserve
+		// the runtime brand with the same boxes used for scalar/reference unions.
+		return ir.Union, true
+	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
+		return ir.Object, true
+	case flags&checker.TypeFlagsObject != 0:
+		// An object with call signatures is a function, held as a closure.
+		return ir.Closure, true
+	case flags&checker.TypeFlagsUnion != 0:
+		if l.includesNull(proven) && !dynamicObjectType(proven) {
+			// Preserve the area's nullable reference and RegExp protocols. Only
+			// differently stored members need the boxed union representation.
+			boxed := l.includesUndefined(proven)
+			for _, member := range proven.Types() {
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+					continue
+				}
+				of, known := l.representation(member)
+				if !known {
+					return 0, false
+				}
+				// A dictionary is boxed too: a bare record pointer has no null of its own.
+				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union || of == ir.Record
+			}
+			if boxed {
+				return ir.Union, true
+			}
+		}
+		var shared ir.Type
+		mixed, weak := false, false
+		for _, member := range proven.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
+				// undefined joins a union of references as a null pointer; it's checked below that
+				// the rest are references.
+				continue
+			}
+			if l.weakTarget(member) != nil {
+				// Weak<Target> is (Target & WeakBrand) | undefined: kept weakly.
+				weak = true
+				continue
+			}
+			memberType, isKnown := l.representation(member)
+			if !isKnown {
+				return 0, false
+			}
+			if shared != 0 && memberType != shared {
+				mixed = true
+			}
+			shared = memberType
+		}
+		if weak {
+			return ir.Weak, shared == 0
+		}
+		if mixed {
+			// Members held differently (string | number) are one Union, which holds undefined too.
+			return ir.Union, true
+		}
+		if shared != 0 && !shared.IsReference() && l.includesUndefined(proven) {
+			// number | undefined and boolean | undefined are each a present-and-value pair.
+			if maybe := ir.Maybe(shared); maybe.IsMaybe() {
+				return maybe, true
+			}
+			return 0, false
+		}
+		return shared, shared != 0
+	}
+	return 0, false
+}
+
+// isLibraryType reports whether a type is one of the library's, by name: Map, not a program's own
+// interface that happens to be called Map. A phantom extension is judged as its base (unbranded.go), so
+// tsc's SortedReadonlyArray<T> is a ReadonlyArray wherever lowering asks.
+func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
+	symbol := l.unbranded(proven).Symbol()
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return false
+	}
+	for _, name := range names {
+		if symbol.Name == name {
+			return true
+		}
+	}
+	return false
+}
+
+// includesUndefined is whether a value of type proven may be undefined at run time. A void member of a
+// union counts (#7yt238q): B | null | void is B | null | undefined spelled another way, and tsc folds
+// void | undefined to void, so the void is the only undefined it shows. Held as one pointer, its null and
+// its undefined were the same NULL, and x === undefined folded to false. Void alone isn't asked here: a
+// value typed exactly void is a discarded result, whose reads H2 refuses (void_reads.go).
+func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
+	}
+	for _, member := range proven.Types() {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 || l.phantomUndefined(member) {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) includesNull(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return proven.Flags()&checker.TypeFlagsNull != 0
+	}
+	for _, member := range proven.Types() {
+		if l.includesNull(member) {
+			return true
+		}
+	}
+	return false
+}
+
+// mayHoldNull reports whether a value of type proven may be null, failing closed: a null member, or a type
+// that could be anything at all, unknown, any, or one still open after concrete. A default is taken only
+// for undefined, never for a present null, so wherever null and undefined would be held alike this answer
+// decides between ?? and a NotYet (a parameter's default in functions.go, a destructured field's in
+// collections.go). includesNull alone reads unknown as holding no null (Compiler's must on #1mw3c4x, and
+// again on #smqr4vn).
+func (l *lowering) mayHoldNull(proven *checker.Type) bool {
+	concrete := l.concrete(proven)
+	return l.includesNull(concrete) || concrete.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsInstantiable) != 0
+}
+
+// expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
+// is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
+func (l *lowering) latentExpressionRaw(node *ast.Node) (ir.Expression, error) {
+	if err := l.neverExpression(node); err != nil {
+		return nil, err
+	}
+	l.inspectorRecordBuiltUse(node)
+	if binding := &l.optionalReceiverBinding; binding.receiver == node && binding.call == l.optionalReceiverCall {
+		binding.uses++
+		return binding.read, nil
+	}
+	if err := l.nodeHostCallbackArgument(node); err != nil {
+		return nil, err
+	}
+	if err := l.weakArrayCallback(node); err != nil {
+		return nil, err
+	}
+	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+		return nil, err
+	}
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
+		return nil, err
+	}
+	if err := l.regexUnsupportedUse(node); err != nil {
+		return nil, err
+	}
+	l.noteOverloadCall(node)
+	value, err := l.value(node)
+	if err == nil {
+		value = l.graphAllocation(value, node)
+		if err := l.noteViewArrayStorage(node, value); err != nil {
+			return nil, err
+		}
+	}
+	if err == nil {
+		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
+			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
+		}
+		if contextual := l.slotType(node); contextual != nil {
+			if err := l.valueSlotTags(node, contextual); err != nil {
+				return nil, err
+			}
+		}
+	}
+	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if _, constant := value.(ir.Undefined); !constant {
+			if contextual := l.slotType(node); contextual != nil {
+				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+					// Keep the read or call's effects when converting its only possible value.
+					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+				}
+			}
+		}
+	}
+	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
+		if contextual := l.slotType(node); contextual != nil {
+			if err := l.valueSlotKeeps(node, contextual); err != nil {
+				return nil, err
+			}
+		}
+	}
+	// A generic body names its parameter's constraint, not what the call infers, so an argument is
+	// judged against the parameter as declared too, a literal made right there included (#8k12t4s).
+	if err == nil && value.Type().IsReference() {
+		if declared := l.nodeHostDeclaredArgument(node); declared != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+				if reached := l.nodeHostViewAt(own, declared); reached != "" {
+					return nil, l.nodeHostViewRefusal(node, own, declared, reached)
+				}
+			}
+		}
+	}
+	// Anything the check above doesn't see (a tuple inside a literal, or a union around it) is still
+	// not yet: wherever a tuple flows into an array slot, at any depth.
+	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
+		if contextual := l.slotType(skipped); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
+			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+		// So is a value held other than as a map where a map is held, literals included: a literal is
+		// made as an object, never as the slot's map (container_fit.go). And so is a real Map, Set or
+		// array where a structural object type is held, unless the slot reads it only by members it's
+		// served by (shape_fit.go).
+		if contextual := l.slotType(skipped); contextual != nil {
+			if stop := l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual, l.libraryCallArgument(skipped)); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
+			// And so is a container whose elements are stored otherwise than the slot reads them
+			// (element_fit.go), literals included, since a union slot doesn't make one as its own.
+			if stop := l.elementsHeldOtherwise(skipped, contextual); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
+		}
+	}
+	if err != nil || value.Type() != ir.Weak {
+		if err == nil {
+			value = l.nullableObjectBoundary(node, value)
+		}
+		return value, err
+	}
+	read := l.checker.GetTypeAtLocation(node)
+	to, present := ir.Object, false
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
+		// The checker narrowed it to present (Target & WeakBrand).
+		to, present = target, true
+	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+		// A union of branded targets stays represented as Weak after narrowing.
+		// Absence, not that representation, decides whether its read needs liveness.
+		present = !l.includesUndefined(read)
+		for _, member := range read.Types() {
+			if target := l.weakTarget(member); target != nil {
+				if to, isKnown = l.representation(target); !isKnown {
+					return nil, l.notYet(node, "a Weak of "+l.checker.TypeToString(target))
+				}
+			}
+		}
+	}
+	if !to.IsReference() {
+		return nil, l.notYet(node, "a Weak of "+l.checker.TypeToString(read))
+	}
+	return ir.WeakTarget{Value: value, To: to, Present: present}, nil
+}
+
+// sameKeeping reports whether a value of type from, seen as type to, keeps everything inside it the
+// same way through both: every field to has, every element, map key and value, and every parameter
+// and result of a function, Weak in both or in neither, all the way down. And no rest is hidden from
+// the next view anywhere inside it (restHiddenWithin).
+func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	return l.sameKeepingWalk(from, to, visited) && !l.restHiddenWithin(from, to, false, map[restHiddenPair]bool{})
+}
+
+// sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
+// function's slots by representation.
+func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+		return true
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
+		return fromKind != 0 && fromKind == toKind
+	}
+	if !l.nodeBufferView(from, to) {
+		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeepingWalk(a, b, visited)
+	}
+	same := func(inside, viewed *checker.Type) bool {
+		fromKept, _ := l.kept(inside)
+		toKept, _ := l.kept(viewed)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalk(inside, viewed, visited)
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	switch {
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		// A closure's slots have no dynamic type descriptor. A view changing a boxed union
+		// to an unboxed scalar (or back) needs an adapter. References share the union pointer ABI.
+		sameCallable := func(inside, viewed *checker.Type) bool {
+			fromKept, _ := l.kept(inside)
+			toKept, _ := l.kept(viewed)
+			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
+		}
+		// Intrinsic callback adapters call the source signature, not the library's wider view.
+		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			sameCallable = same
+		}
+		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
+		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
+				return false
+			}
+		}
+		// A rest parameter collects every argument at and past its position into its array, each copied
+		// from the caller's own slot with no conversion to the element's representation (ClosureArgumentLayout,
+		// copyRest). So the rest's element is judged against each view parameter it collects, and against
+		// a view rest's element, as a fixed parameter is: (...items: (string | number)[]) seen as
+		// (a: string, b: number) packed b's raw double where a boxed union goes, and clang refused the C
+		// (#2t3h708). Converting each element at the call is #8q1pjsp.
+		if rest := len(fromParameters) - 1; len(toParameters) > 0 && fromSignatures[0].HasRestParameter() && l.isArrayType(l.checker.GetTypeOfSymbol(fromParameters[rest])) {
+			collected := len(toParameters)
+			if toSignatures[0].HasRestParameter() {
+				// A view rest before the function's own hands it that rest's element at every position.
+				collected = max(collected, len(fromParameters))
+			}
+			for position := rest; position < collected; position++ {
+				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
+					return false
+				}
+			}
+		}
+		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if !same(fromArguments[index], toArguments[index]) {
+				return false
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+					return false
+				}
+				continue
+			}
+			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
+// signature to, would be seen through a view with no rest. Every fixed view can be widened by arity in
+// the next view, (a: string) => string seen as (a: string, b: number) => string, and that relation no
+// longer shows the rest, while the closure underneath still collects every argument raw (copyRest). So
+// the rest is judged only while the type still shows it, and a view that hides it is NotYet: Language's
+// h1 to h3 on #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function
+// pointer. A library view hides it too (a rest function handed to map's callback), and so does a host
+// function's own rest. The one road kept is #995spev's: setTimeout or clearTimeout read as a value into
+// its ruled view exactly (nodeTimerView), whose forwarder closure stops past the arguments it forwards
+// (ir.HostForwardStop), so a later widening stops loudly. Calling through the callee's own layout is
+// #8q1pjsp's lift.
+func (l *lowering) restHiddenByView(from, to *checker.Signature, viewed *checker.Type) bool {
+	if !from.HasRestParameter() || to.HasRestParameter() {
+		return false
+	}
+	// bind's result, (...args: B) => R with B a fixed-length tuple ([] or [third: string]), takes a
+	// fixed count: its value is lowering's own bound closure over a target with no rest, since bind of a
+	// rest function is refused (function_bind.go), and that target drops what a wider view adds. A
+	// program closure whose rest is a tuple stays judged: copyRest would still collect the extra raw.
+	if declaration := from.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if parameters := from.Parameters(); len(parameters) > 0 {
+			if rest := l.checker.GetTypeOfSymbol(parameters[len(parameters)-1]); checker.IsTupleType(rest) && checker.TupleType_combinedFlags(rest.TargetTupleType())&checker.ElementFlagsVariable == 0 {
+				return false
+			}
+		}
+	}
+	if declaration := from.Declaration(); declaration != nil && declaration.Name() != nil && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+		// By the declaration's own name: setTimeout's symbol also holds its __promisify__ namespace.
+		name := map[string]string{"setTimeout": nodeSetTimeoutName, "clearTimeout": nodeClearTimeoutName}[declaration.Name().Text()]
+		if name != "" && l.nodeTimerView(viewed, name) {
+			return false
+		}
+	}
+	return true
+}
+
+// restAdapters is the closed list of intrinsic adapters a rest function literal may be handed to with
+// its rest hidden by the callback's type (Adamic's ruling on #2t3h708, Language's premise): each takes
+// the literal at a callback parameter the library itself calls, calls it by the function's own
+// signature, packing a rest's tail and freeing it at the call's end, and neither returns nor stores it.
+// A name joins only with its own witness of that shape, agreeing with Node natively under the sanitizers
+// and the leak check, and on the JavaScript backend. Any callback not on the list is judged by
+// restHiddenWithin, so it stays NotYet.
+var restAdapters = map[string]string{
+	"sort": "an array's sort comparator, closureComparator's adapter, witnessed by comparator_rest/rest_sort.a (#kwns2n5)",
+}
+
+// restAdapterCallback reports whether node is a function literal written as the callback argument of a
+// call to an adapter on restAdapters: an arrow or a function expression, through parentheses only (never
+// a cast, satisfies, a conditional or a binding), as the first argument of a method call on an array
+// whose resolved signature the library declares. Such a literal has never been seen through any type
+// but the library's parameter, and only the adapter calls it.
+func (l *lowering) restAdapterCallback(node *ast.Node) bool {
+	literal := ast.SkipParentheses(node)
+	if literal.Kind != ast.KindArrowFunction && literal.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	argument := literal
+	for argument.Parent != nil && argument.Parent.Kind == ast.KindParenthesizedExpression {
+		argument = argument.Parent
+	}
+	call := argument.Parent
+	if call == nil || call.Kind != ast.KindCallExpression {
+		return false
+	}
+	arguments := call.AsCallExpression().Arguments
+	if arguments == nil || len(arguments.Nodes) == 0 || arguments.Nodes[0] != argument {
+		return false
+	}
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return false
+	}
+	if _, listed := restAdapters[callee.Name().Text()]; !listed {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(call)
+	return l.isArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) && signature != nil && librarySignature(signature)
+}
+
+// restHiddenPair is a pair restHiddenWithin has judged, at its polarity.
+type restHiddenPair struct {
+	from, to *checker.Type
+	flipped  bool
+}
+
+// restHiddenWithin reports whether a value of type from, seen as type to, hides a rest from the next
+// view anywhere inside it: a function at the top, a field or method, an element, map key or value, a
+// result, or a parameter. A parameter carries its value the other way, so there the view's side is the
+// value's (flipped): setTimeout's own callback `(...args) => void` seen as `(label?: unknown) => void`
+// takes the program's fixed callback, which is safe, while a source taking `(a: string) => void` seen
+// as taking `(...items: string[]) => void` would call a rest closure through a fixed type. Every pair
+// of call signatures is judged, overloads included. Only a method the library declares on both sides
+// is passed over, its member read off its own object, which the runtime dispatches by name.
+func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visited map[restHiddenPair]bool) bool {
+	if from == nil || to == nil || from == to || visited[restHiddenPair{from, to, flipped}] {
+		return false
+	}
+	visited[restHiddenPair{from, to, flipped}] = true
+	// A union or an intersection on either side is judged member by member, undefined and null aside,
+	// before present (which answers nil for a union of two values): a value seen as
+	// ((a: string) => string) | ((a: number) => number) has no call signature of the whole, but a later
+	// view or narrowing reaches each member (Language's e3 on #2t3h708).
+	for _, side := range []*checker.Type{from, to} {
+		if side.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+			continue
+		}
+		for _, member := range side.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
+			if side == from && l.restHiddenWithin(member, to, flipped, visited) || side == to && l.restHiddenWithin(from, member, flipped, visited) {
+				return true
+			}
+		}
+		return false
+	}
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to {
+		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.restHiddenWithin(a, b, flipped, visited)
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	switch {
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		for _, source := range fromSignatures {
+			for _, view := range toSignatures {
+				if flipped && l.restHiddenByView(view, source, from) || !flipped && l.restHiddenByView(source, view, to) {
+					return true
+				}
+				sourceParameters, viewParameters := source.Parameters(), view.Parameters()
+				for index := 0; index < len(sourceParameters) && index < len(viewParameters); index++ {
+					if l.restHiddenWithin(l.checker.GetTypeOfSymbol(sourceParameters[index]), l.checker.GetTypeOfSymbol(viewParameters[index]), !flipped, visited) {
+						return true
+					}
+				}
+				if l.restHiddenWithin(l.checker.GetReturnTypeOfSignature(source), l.checker.GetReturnTypeOfSignature(view), flipped, visited) {
+					return true
+				}
+			}
+		}
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if l.restHiddenWithin(fromArguments[index], toArguments[index], flipped, visited) {
+				return true
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			inside := l.checker.GetPropertyOfType(from, viewed.Name)
+			if inside == nil || libraryDeclaredMethod(inside) && libraryDeclaredMethod(viewed) {
+				// A method the library declares on both sides is its member read off its own object (an
+				// array's splice overloads against a tuple's), which the runtime dispatches by name. A
+				// function value is never let through this way, whatever types it was seen through.
+				continue
+			}
+			if l.restHiddenWithin(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), flipped, visited) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// libraryDeclaredMethod reports whether a property is a method every declaration of which is in TypeScript's
+// bundled library.
+func libraryDeclaredMethod(property *ast.Symbol) bool {
+	if property.Flags&ast.SymbolFlagsMethod == 0 || len(property.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range property.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
+		}
+	}
+	return true
+}
+
+// tupleSeenAsArray finds, in a value of type from seen as type to, the first tuple seen as an array:
+// at the top, or as an element, field, map key or value, parameter or result, all the way down as
+// sameKeeping walks. It returns the tuple's type and the array's, or nils.
+func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) (*checker.Type, *checker.Type) {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+		return nil, nil
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	if checker.IsTupleType(from) && !checker.IsTupleType(to) {
+		return from, to
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	switch {
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		// A function is handed the other's arguments, and its results are seen as the other's.
+		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
+		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+			if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index]), visited); tuple != nil {
+				return tuple, array
+			}
+		}
+		return l.tupleSeenAsArray(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		if checker.IsTupleType(from) && l.isArrayType(to) {
+			return from, to
+		}
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if tuple, array := l.tupleSeenAsArray(fromArguments[index], toArguments[index], visited); tuple != nil {
+				return tuple, array
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+				continue
+			}
+			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil {
+				if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), visited); tuple != nil {
+					return tuple, array
+				}
+			}
+		}
+	}
+	return nil, nil
+}
+
+// present is a type without undefined, and a Weak's narrowing without its brand: the one object,
+// array, map or function type it is, or nil when it's none or several.
+func (l *lowering) present(proven *checker.Type) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		var only *checker.Type
+		for _, member := range proven.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
+			if only != nil {
+				return nil
+			}
+			only = member
+		}
+		if only == nil {
+			return nil
+		}
+		proven = only
+	}
+	if target := l.weakTarget(proven); target != nil {
+		proven = target
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return nil
+	}
+	return proven
+}
+
+// kept is how an element or a map's value of a type is kept: as its representation, except that one
+// narrowed from a Weak (Node & WeakBrand, as filter(x => x !== undefined) or every leaves an array of
+// Weak<Node>) is still a Weak, a handle, since that's what the array holds.
+func (l *lowering) kept(proven *checker.Type) (ir.Type, bool) {
+	if l.weakTarget(proven) != nil {
+		return ir.Weak, true
+	}
+	return l.representation(proven)
+}
+
+// typeArguments is a generic type's arguments, Map<K, V>'s K and V, through a Weak's narrowing
+// (Map<K, V> & WeakBrand), or nil for a type that has none.
+func (l *lowering) typeArguments(proven *checker.Type) []*checker.Type {
+	if target := l.weakTarget(proven); target != nil {
+		proven = target
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+		return nil
+	}
+	return l.checker.GetTypeArguments(proven)
+}
+
+// weakTarget is the Target of Target & WeakBrand, the present half of a Weak<Target>, or nil for
+// any other type.
+func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsIntersection == 0 {
+		return nil
+	}
+	var target *checker.Type
+	branded := false
+	for _, member := range proven.Types() {
+		if symbol := member.Symbol(); symbol != nil && symbol.Name == "WeakBrand" && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+			branded = true
+		} else if target == nil {
+			target = member
+		} else {
+			return nil
+		}
+	}
+	if !branded {
+		return nil
+	}
+	return target
+}
+
+// value lowers a value, as expression does, but leaves a Weak as it's kept.
+func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
+	if value, handled, err := l.inspectorDoomedValue(node); handled {
+		return value, err
+	}
+	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
+		if err := l.enumNeverReadGap(node); err != nil {
+			return nil, err
+		}
+		value, err := l.enumNeverValue(node)
+		if err != nil {
+			return nil, err
+		}
+		return l.enumNeverCheck(node, value, identity), nil
+	}
+	making, err := l.neverRead(node)
+	if err != nil {
+		return nil, err
+	}
+	if making != nil {
+		evaluated, err := l.neverReadEvaluated(node)
+		if err != nil {
+			return nil, err
+		}
+		return l.neverReadTrap(node, evaluated, making), nil
+	}
+	value, err := l.enumNeverValue(node)
+	if err != nil {
+		return nil, err
+	}
+	return l.programAllocation(node, value)
+}
+
+func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
+	node = ast.SkipParentheses(node)
+	if value, handled, err := l.functionObservation(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.mergedComputedRead(node); handled {
+		return value, err
+	}
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
+	}
+	if value, handled, err := l.typedArrayExpression(node); handled {
+		return value, err
+	}
+	if value, known, err := l.nodeRealpathValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.nodeTimerValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.namespaceExpression(node); known {
+		return value, err
+	}
+	if value, known, err := l.libraryMethodValue(node); known {
+		return value, err
+	}
+	if l.isArgumentsLength(node) {
+		return l.readArgumentsCount(), nil
+	}
+	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
+	if value, handled, err := l.recordExpression(node); handled {
+		return value, err
+	}
+	if observed, known := l.libraryArrayObservation(node); known {
+		return observed, nil
+	}
+	switch node.Kind {
+	case ast.KindAwaitExpression:
+		return l.awaitExpression(node)
+	case ast.KindNullKeyword:
+		return ir.Null{}, nil
+	case ast.KindRegularExpressionLiteral:
+		return l.regexConstant(node)
+	case ast.KindNumericLiteral:
+		return l.numericLiteral(node)
+	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
+		return ir.StringConstant{Index: l.constant(node.Text())}, nil
+	case ast.KindTrueKeyword, ast.KindFalseKeyword:
+		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
+	case ast.KindIdentifier:
+		if _, function, isStored := l.storedGeneratorLocal(node); isStored {
+			// A stored generator's one read (#qk8rztp S2c-4-1). A for-of over it is lowered before
+			// this (forOf), so the one-read Iterable<T> argument is the only read that reaches here,
+			// which storedGeneratorRead proved before it admitted the local; anything else stops.
+			if !l.iterableArgument(node) {
+				return nil, l.storedGeneratorNotYet(node)
+			}
+			return l.iterableOfGenerator(node, function)
+		}
+		if row, _ := l.hostBindingOf(node); row != nil {
+			// hostBindingRefusal admits only a typeof or a read its guard proves dead, and neither reaches here;
+			// a Provided row's read is processValue's, through its model (nodeProcessPath).
+			return nil, errors.New("lower: compiler bug: " + l.program.Where(node) + ": a read of the host binding " + row.Name + " reached lowering")
+		}
+		if value, known, err := l.libraryGlobalValue(node); known {
+			return value, err
+		}
+		if value, handled := l.staticClassRead(node); handled {
+			return value, nil
+		}
+		if value, handled, err := l.nestedReference(node); handled {
+			return value, err
+		}
+		local, isLocal := l.local(node)
+		if !isLocal && node.Text() == "undefined" {
+			return ir.Undefined{}, nil
+		}
+		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
+			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
+		}
+		if !isLocal && l.neverRestOnly(l.symbol(node)) {
+			// A function whose every value only goes into never-rest slots, is compared, or is handed to
+			// Error.captureStackTrace is read as its identity marker (never_rest_marker.go), before a
+			// forwarder or a generic instance is asked for: debug.ts's `stackCrawlMark ||
+			// assertEachIsDefined`, an overload set, has neither (#avqasqt). The proof admits only bare
+			// identifier reads as values, so every value read of such a function comes here, and its
+			// direct calls never do.
+			return l.neverRestMarker(node, l.symbol(node)), nil
+		}
+		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
+			return l.functionValue(node, function)
+		}
+		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			if generatorDeclaration(declaration) {
+				// As functionValue stops a non-generic generator, before any instance is asked for.
+				return nil, l.generatorNotYet(node, "used as a value")
+			}
+			return l.genericFunctionValue(node, declaration)
+		}
+		if !isLocal && l.isLibraryGlobal(node, "String") {
+			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
+		}
+		if !isLocal {
+			return nil, l.notYet(node, "reading "+node.Text())
+		}
+		return l.localRead(node, local)
+	case ast.KindVoidExpression:
+		operand, err := l.discardedValue(node.AsVoidExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if operand.Type() == ir.Promise {
+			return nil, &Refused{Where: l.program.Where(node), What: "an unawaited async task through the void operator", Fix: "await the call or keep its Promise"}
+		}
+		return ir.Void{Value: operand}, nil
+	case ast.KindPrefixUnaryExpression:
+		return l.prefix(node)
+	case ast.KindTypeOfExpression:
+		if value, handled, err := l.hostBindingTypeOf(node); handled {
+			return value, err
+		}
+		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
+			return ir.StringConstant{Index: l.constant("function")}, nil
+		}
+		if value, intrinsic := l.stringTypeOf(node); intrinsic {
+			return value, nil
+		}
+		if value, handled, err := l.methodPresenceTypeOf(node); handled {
+			return value, err
+		}
+		operand, err := l.expression(node.AsTypeOfExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		written := node.AsTypeOfExpression().Expression
+		null := l.typeOfNull(written)
+		if operand.Type() == ir.Union {
+			null = false
+		}
+		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+			switch operand.(type) {
+			case ir.ArrayIndex, ir.ViewElement, ir.MapGet, ir.ArrayPop:
+				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
+			default:
+				return nil, l.notYet(node, "typeof a value holding both null and undefined without a presence slot")
+			}
+		}
+		return ir.TypeOf{Value: operand, Null: null}, nil
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {
+			return l.assignmentValue(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindCommaToken {
+			return l.comma(node)
+		}
+		if logicalAssignment(binary.OperatorToken.Kind) {
+			return l.logicalAssignment(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindInKeyword {
+			return l.inProperty(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+			return l.coalesce(node)
+		}
+		// All arrays are truthy, including []; only undefined takes this fallback.
+		if binary.OperatorToken.Kind == ast.KindBarBarToken && l.arrayOrUndefined(l.checker.GetTypeAtLocation(binary.Left)) {
+			return l.coalesce(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
+			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
+				return lowered, nil
+			}
+			return l.classInstanceOf(node)
+		}
+		if value, handled, err := l.hostBindingAnd(node); handled {
+			return value, err
+		}
+		if value, handled, err := l.methodPresenceAnd(node); handled {
+			return value, err
+		}
+		// A flow-narrowed never expression still reads its declared boolean slots.
+		// Only a live result needs a placeholder for a non-returning arm.
+		if (binary.OperatorToken.Kind == ast.KindBarBarToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken) && l.isNever(binary.Right) && !l.isNever(node) {
+			return l.logicalNever(node)
+		}
+		left, err := l.expression(binary.Left)
+		if err != nil {
+			return nil, err
+		}
+		right, err := l.expression(binary.Right)
+		if err != nil {
+			return nil, err
+		}
+		if binary.OperatorToken.Kind == ast.KindPlusToken {
+			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
+		}
+		return l.combine(node, binary.OperatorToken.Kind, left, right)
+	case ast.KindTaggedTemplateExpression:
+		return l.stringRawTemplate(node)
+	case ast.KindTemplateExpression:
+		return l.template(node)
+	case ast.KindConditionalExpression:
+		return l.conditional(node)
+	case ast.KindObjectLiteralExpression:
+		return l.objectLiteral(node)
+	case ast.KindArrayLiteralExpression:
+		return l.arrayLiteral(node)
+	case ast.KindPropertyAccessExpression:
+		return l.property(node)
+	case ast.KindElementAccessExpression:
+		return l.elementAccess(node)
+	case ast.KindNewExpression:
+		if l.isLibraryGlobal(node.AsNewExpression().Expression, "Promise") {
+			return nil, l.notYet(node, "Promise executors and pending-I/O cancellation")
+		}
+		if err := l.genericFunctionIdentityNew(node); err != nil {
+			return nil, err
+		}
+		return l.newExpression(node)
+	case ast.KindThisKeyword:
+		if l.this < 0 {
+			return nil, l.notYet(node, "this outside a method")
+		}
+		if err := l.useOfThis(node); err != nil {
+			return nil, err
+		}
+		l.touch(l.this)
+		return ir.Read{Local: l.this, Of: ir.Object}, nil
+	case ast.KindArrowFunction:
+		return l.closure(node)
+	case ast.KindNonNullExpression:
+		return l.nonNull(node)
+	case ast.KindAsExpression:
+		return l.cast(node)
+	case ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+			return nil, err
+		}
+		return l.expression(satisfies.Expression)
+	case ast.KindFunctionExpression:
+		return l.functionExpression(node)
+	case ast.KindYieldExpression:
+		// A yield's result is what next(x) sends in, which isn't built (#qk8rztp S5).
+		return nil, l.generatorNotYet(node, "using a yield's result as a value")
+	case ast.KindCallExpression:
+		if value, handled, err := l.functionBind(node); handled {
+			return value, err
+		}
+		if value, handled, err := l.promiseValue(node); handled {
+			return value, err
+		}
+		if err := l.genericFunctionIdentityCall(node); err != nil {
+			return nil, err
+		}
+		if value, known, err := l.optionalIntrinsic(node); known {
+			return value, err
+		}
+		if optional, handled, err := l.optionalMethodCall(node); handled {
+			if err != nil {
+				return nil, err
+			}
+			return optional.value(), nil
+		}
+		if err := l.optionalCall(node); err != nil {
+			return nil, err
+		}
+		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
+			if err == nil && lowered.Type() == 0 {
+				return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: lowered}}, Result: ir.Undefined{}}, nil
+			}
+			return lowered, err
+		}
+		call, err := l.callOrMethod(node)
+		if err != nil {
+			return nil, err
+		}
+		if call.Type() == 0 {
+			return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: call}}, Result: ir.Undefined{}}, nil
+		}
+		return call, nil
+	}
+	return nil, l.notYet(node, describe(node))
+}
+
+// fit makes a value fit where a value of type to goes: a number or a boolean, or undefined, where
+// number | undefined or boolean | undefined goes, since that is two words and they are one. It also
+// unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
+func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if discarded, ok := value.(ir.Void); ok && (to.IsMaybe() || to.IsReference()) {
+		discarded.Of = to
+		return discarded
+	}
+	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
+		return ir.WeakOf{Value: value}
+	}
+	if to == ir.Union && value != nil && value.Type() != ir.Union {
+		return ir.Box{Value: value}
+	}
+	if _, isNull := value.(ir.Null); isNull && to.IsReference() && to != ir.Union {
+		return ir.Null{Of: to}
+	}
+	if _, isUndefined := value.(ir.Undefined); isUndefined && to.IsReference() && to != ir.Union {
+		// undefined going where a string, an array or a function may be missing is that reference,
+		// missing: typed as it, so the C holding it is.
+		return ir.Undefined{Of: to}
+	}
+	if !to.IsMaybe() || value == nil {
+		if value != nil && value.Type().IsMaybe() && value.Type().Present() == to {
+			return ir.Unwrap{Value: value}
+		}
+		return value
+	}
+	if value.Type() == to.Present() {
+		return ir.MaybeOf{Value: value, Of: to}
+	}
+	if _, isUndefined := value.(ir.Undefined); isUndefined {
+		return ir.MaybeOf{Of: to}
+	}
+	return value
+}
+
+// numericLiteral is the value the checker read from the literal, so 0x1F, 1_000 and 1e3 all mean
+// what JavaScript says they mean without a second parser here.
+func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
+	literal := l.checker.GetTypeAtLocation(node)
+	if literal.Flags()&checker.TypeFlagsNumberLiteral == 0 {
+		return nil, errors.New("lower: " + l.program.Where(node) + ": the checker gave a numeric literal a type that isn't a number literal")
+	}
+	value := reflect.ValueOf(literal.AsLiteralType().Value())
+	if value.Kind() != reflect.Float64 {
+		return nil, errors.New("lower: " + l.program.Where(node) + ": a numeric literal's value isn't a float64")
+	}
+	return ir.NumberConstant{Value: value.Float()}, nil
+}
+
+func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+		operand := ast.SkipParentheses(prefix.Operand)
+		if !ast.IsIdentifier(operand) {
+			return nil, l.notYet(node, "a prefix update value whose target is not a plain name")
+		}
+		local, known := l.local(operand)
+		if !known || l.result.Locals[local].Type != ir.Number {
+			return nil, l.notYet(node, "a prefix update value whose name is not stored as a number")
+		}
+		// An immediately called helper makes the write and resulting read one expression.
+		// Capturing a local carries its existing cell, so the caller observes the write.
+		index := len(l.result.Functions)
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "prefix_update", Closure: true, Returns: ir.Number})
+		outerIndex := l.functionIndex
+		l.functionIndex = index
+		l.closures = append(l.closures, index)
+		body, err := l.increment(node)
+		var value ir.Expression
+		if err == nil {
+			value, err = l.expression(operand)
+		}
+		l.closures = l.closures[:len(l.closures)-1]
+		l.functionIndex = outerIndex
+		if err != nil {
+			return nil, err
+		}
+		if value.Type() != ir.Number {
+			return nil, l.notYet(node, "a prefix update of a non-number")
+		}
+		l.result.Functions[index].Body = append(body, ir.Return{Value: value})
+		return ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: ir.Number}, nil
+	}
+	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
+		operand, err := l.libraryNumber(prefix.Operand)
+		if err != nil {
+			return nil, err
+		}
+		operator := ir.Plus
+		if prefix.Operator == ast.KindMinusToken {
+			operator = ir.Negate
+		}
+		if prefix.Operator == ast.KindTildeToken {
+			operator = ir.BitNot
+		}
+		return ir.Unary{Operator: operator, Operand: operand}, nil
+	}
+	if prefix.Operator == ast.KindExclamationToken {
+		if negated, handled, err := l.methodPresenceNot(prefix.Operand); handled {
+			return negated, err
+		}
+	}
+	operand, err := l.expression(prefix.Operand)
+	if err != nil {
+		return nil, err
+	}
+	if prefix.Operator == ast.KindExclamationToken {
+		return ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil
+	}
+	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
+}
+
+var arithmetic = map[ast.Kind]ir.Operator{
+	ast.KindPlusToken:             ir.Add,
+	ast.KindMinusToken:            ir.Subtract,
+	ast.KindAsteriskToken:         ir.Multiply,
+	ast.KindSlashToken:            ir.Divide,
+	ast.KindPercentToken:          ir.Remainder,
+	ast.KindAsteriskAsteriskToken: ir.Power,
+}
+
+// bitwise are the binary bitwise operators, on two numbers.
+var bitwise = map[ast.Kind]ir.Operator{
+	ast.KindAmpersandToken:                         ir.BitAnd,
+	ast.KindBarToken:                               ir.BitOr,
+	ast.KindCaretToken:                             ir.BitXor,
+	ast.KindLessThanLessThanToken:                  ir.ShiftLeft,
+	ast.KindGreaterThanGreaterThanToken:            ir.ShiftRight,
+	ast.KindGreaterThanGreaterThanGreaterThanToken: ir.ShiftRightUnsigned,
+}
+
+var comparisons = map[ast.Kind]ir.Operator{
+	ast.KindLessThanToken:          ir.Less,
+	ast.KindLessThanEqualsToken:    ir.LessOrEqual,
+	ast.KindGreaterThanToken:       ir.Greater,
+	ast.KindGreaterThanEqualsToken: ir.GreaterOrEqual,
+}
+
+// combine lowers a binary operator on two lowered operands.
+func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+	if (operator == ast.KindEqualsEqualsToken || operator == ast.KindExclamationEqualsToken) && l.placeholderNullishTest(node) {
+		value := left
+		if _, isNull := left.(ir.Null); isNull {
+			value = right
+		}
+		test := ir.Expression(ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: value}, Right: ir.IsUndefined{Value: value}})
+		if _, simple := value.(ir.Read); !simple {
+			// Hold effectful receivers once before testing both nullish tags.
+			b := l.libraryArrayBuilder([]ir.Expression{value})
+			held := b.read(b.parameters[0])
+			test = ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
+			if operator == ast.KindExclamationEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return b.finish("placeholder_nullish_test", test), nil
+		}
+		if operator == ast.KindExclamationEqualsToken {
+			test = ir.Unary{Operator: ir.Not, Operand: test}
+		}
+		return test, nil
+	}
+	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		left, right = l.concatenated(left), l.concatenated(right)
+	}
+	if operator == ast.KindPlusToken && both(ir.String) {
+		return ir.Concat{Parts: []ir.Expression{left, right}, Site: l.stringSite(node)}, nil
+	}
+	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if lowered, isBitwise := bitwise[operator]; isBitwise && both(ir.Number) {
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if lowered, isComparison := comparisons[operator]; isComparison && (both(ir.Number) || both(ir.String)) {
+		// Strings compare in UTF-16 code unit order, as JavaScript's do.
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+		_, leftNull := left.(ir.Null)
+		_, rightNull := right.(ir.Null)
+		if leftNull != rightNull {
+			value := left
+			if leftNull {
+				value = right
+			}
+			if !value.Type().IsReference() {
+				return nil, l.notYet(node, "null comparison with a scalar")
+			}
+			operand := node.AsBinaryExpression().Left
+			if leftNull {
+				operand = node.AsBinaryExpression().Right
+			}
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			if operator == ast.KindExclamationEqualsEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return test, nil
+		}
+		// x === undefined tests for a missing reference, whatever x's type.
+		_, leftUndefined := left.(ir.Undefined)
+		_, rightUndefined := right.(ir.Undefined)
+		if leftUndefined != rightUndefined {
+			value := left
+			if leftUndefined {
+				value = right
+			}
+			if pair := ir.Maybe(value.Type()); pair.IsMaybe() {
+				// A number or a boolean the checker narrowed to present: still evaluated, and never
+				// undefined.
+				value = fit(value, pair)
+			}
+			if !value.Type().IsReference() && !value.Type().IsMaybe() {
+				return nil, l.notYet(node, "comparing a "+typeName(value.Type())+" with undefined")
+			}
+			test := ir.Expression(ir.IsUndefined{Value: value})
+			operand := node.AsBinaryExpression().Left
+			if leftUndefined {
+				operand = node.AsBinaryExpression().Right
+			}
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+				test = ir.IsNull{Value: value, AlwaysFalse: true}
+			}
+			if operator == ast.KindExclamationEqualsEqualsToken {
+				test = ir.Unary{Operator: ir.Not, Operand: test}
+			}
+			return test, nil
+		}
+	}
+	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() != right.Type() {
+		// A pair against what it holds, or against another pair: each made a pair, and compared as one.
+		if pair := left.Type(); pair.IsMaybe() && right.Type() == pair.Present() {
+			right = fit(right, pair)
+		} else if pair := right.Type(); pair.IsMaybe() && left.Type() == pair.Present() {
+			left = fit(left, pair)
+		} else if left.Type() == ir.Union || right.Type() == ir.Union {
+			// A union against anything: both as unions, compared by member and value.
+			left, right = fit(left, ir.Union), fit(right, ir.Union)
+		}
+	}
+	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
+		if (l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)) || l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right))) && l.hasGenericFunctionValues() {
+			return nil, l.notYet(node, "function identity comparison in a program with specialized generic function values")
+		}
+		lowered := ir.Equal
+		if operator == ast.KindExclamationEqualsEqualsToken {
+			lowered = ir.NotEqual
+		}
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+	if value, known := l.censusBooleanLogical(node, operator, left, right); known {
+		return value, nil
+	}
+	if operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken {
+		if !both(ir.Boolean) {
+			of, err := l.typeOf(node)
+			if err != nil {
+				return nil, err
+			}
+			if from := left.Type(); from.IsReference() && from != ir.String && from != ir.Union && from != ir.Weak && of != from && of != ir.Union && !of.IsMaybe() {
+				// An object, array, Map or record is falsy only when it's missing, and a bare pointer to
+				// one is never null (one | null is boxed as a union). So left && x is x where the left
+				// is present and undefined where it isn't, which a reference result holds as its null
+				// pointer (holder.item && holder.item.name, a string | undefined). A number or boolean
+				// result says the checker proved the left present (node && node.kind === 1), so the
+				// missing arm runs only if a type was a lie somewhere: it stops there, loud, rather than
+				// read as 0 or false. || would keep the left itself, which the result can't hold.
+				leftNode := node.AsBinaryExpression().Left
+				if operator == ast.KindAmpersandAmpersandToken && of.IsReference() && of != ir.Weak {
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Undefined{Of: of}, Of: of}, nil
+				}
+				if operator == ast.KindAmpersandAmpersandToken && (of == ir.Number || of == ir.Boolean) && !l.mayBeUndefined(leftNode) && !l.includesNull(l.checker.GetTypeAtLocation(leftNode)) {
+					var unreachable ir.Expression = ir.NumberConstant{}
+					if of == ir.Boolean {
+						unreachable = ir.BooleanConstant{}
+					}
+					stop := ir.Panic{Message: ir.StringConstant{Index: l.constant("compiler bug: a left of && proven present was missing")}}
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: ir.Effects{Body: []ir.Statement{stop}, Result: unreachable}, Of: of}, nil
+				}
+				return nil, l.notYet(node, "a logical "+typeName(from)+" operand converted to "+typeName(of)+" without a proven result representation")
+			}
+			if left.Type() == ir.String && of != ir.String && of != ir.Union {
+				// A falsy string is "" (or undefined), which only a string or a union result can hold.
+				// The checker types string && x as x alone where a brand hides the string's falsy part
+				// (tsc's __String), so Node's "" would reach a slot that can't say it.
+				return nil, l.notYet(node, "a logical string operand converted to "+typeName(of)+", whose falsy \"\" the result can't hold")
+			}
+			if operator == ast.KindAmpersandAmpersandToken && of == ir.Union {
+				if missing, err := l.logicalNullLeft(node.AsBinaryExpression().Left, left); missing != nil || err != nil {
+					if err != nil {
+						return nil, err
+					}
+					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: missing, Of: of}, nil
+				}
+			}
+			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
+		}
+		lowered := ir.And
+		if operator == ast.KindBarBarToken {
+			lowered = ir.Or
+		}
+		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+	}
+
+	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
+}
+
+// concatenated writes the primitive operands of string addition as JavaScript does.
+// Objects retain their representation, so unsupported ToPrimitive remains NotYet.
+func (l *lowering) concatenated(value ir.Expression) ir.Expression {
+	switch value.(type) {
+	case ir.Null:
+		return ir.StringConstant{Index: l.constant("null")}
+	case ir.Undefined:
+		return ir.StringConstant{Index: l.constant("undefined")}
+	}
+	switch value.Type() {
+	case ir.Number:
+		return ir.NumberToString{Value: value}
+	case ir.Boolean:
+		return ir.BooleanToString{Value: value}
+	case ir.MaybeNumber, ir.MaybeBoolean:
+		return ir.MaybeToString{Value: value}
+	}
+	return value
+}
+
+// spelled is a string as + and a template write it: one that may be missing (a null reference) is
+// written "undefined", as JavaScript writes it.
+func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
+		return value
+	}
+	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
+}
+
+// template lowers a template literal to a Concat, writing each value as String() would.
+func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
+	template := node.AsTemplateExpression()
+	parts := []ir.Expression{}
+	if head := template.Head.Text(); head != "" {
+		parts = append(parts, ir.StringConstant{Index: l.constant(head)})
+	}
+	for _, span := range template.TemplateSpans.Nodes {
+		value, err := l.expression(span.AsTemplateSpan().Expression)
+		if err != nil {
+			return nil, err
+		}
+		switch value.Type() {
+		case ir.Number:
+			value = ir.NumberToString{Value: value}
+		case ir.Boolean:
+			value = ir.BooleanToString{Value: value}
+		case ir.MaybeNumber, ir.MaybeBoolean:
+			value = ir.MaybeToString{Value: value}
+		case ir.Union:
+			observed := l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)
+			switch {
+			case l.writable(observed):
+				value = ir.UnionToString{Value: value}
+			case dynamicObjectType(observed):
+				// As String's: only an unknown or an object (stringConversion).
+				value = l.toStringHint(value)
+			default:
+				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
+			}
+		case ir.String:
+			value = l.spelled(span.AsTemplateSpan().Expression, value)
+		default:
+			flags := l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression).Flags()
+			spelling := ""
+			if flags == checker.TypeFlagsNull {
+				spelling = "null"
+			} else if flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 && flags & ^(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) == 0 {
+				spelling = "undefined"
+			}
+			if spelling == "" {
+				return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+			}
+			value = ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant(spelling)}}
+		}
+		parts = append(parts, value)
+		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
+			parts = append(parts, ir.StringConstant{Index: l.constant(literal)})
+		}
+	}
+	return ir.Concat{Parts: parts, Site: l.stringSite(node)}, nil
+}
+
+func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if branch := l.literalCallableBranch(node); branch != nil {
+		return l.expression(branch)
+	}
+	conditional := node.AsConditionalExpression()
+	condition, err := l.condition(conditional.Condition)
+	if err != nil {
+		return nil, err
+	}
+	if symbol := l.hostBindingGuard(conditional.Condition); symbol != nil {
+		return l.hostBindingConditional(node, condition, symbol)
+	}
+	if l.isNever(conditional.WhenTrue) || l.isNever(conditional.WhenFalse) {
+		return l.conditionalNever(node, condition)
+	}
+	whenTrue, err := l.expression(conditional.WhenTrue)
+	if err != nil {
+		return nil, err
+	}
+	whenNot, err := l.expression(conditional.WhenFalse)
+	if err != nil {
+		return nil, err
+	}
+	if whenTrue.Type() != whenNot.Type() && (l.acceptsUndefined(node) || l.placeholderAllowsUnset(node)) {
+		// A stale narrowing in either branch may still hold undefined. Keep that representation
+		// when the whole conditional is observed or written into a slot that accepts it.
+		if pair := whenTrue.Type(); pair.IsMaybe() && whenNot.Type() == pair.Present() {
+			whenNot = fit(whenNot, pair)
+		} else if pair := whenNot.Type(); pair.IsMaybe() && whenTrue.Type() == pair.Present() {
+			whenTrue = fit(whenTrue, pair)
+		}
+	}
+	if whenTrue.Type() != whenNot.Type() {
+		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
+		// one.
+		if of, err := l.typeOf(node); err == nil && (of.IsMaybe() || of == ir.Union || of.IsReference()) {
+			whenTrue, whenNot = fit(whenTrue, of), fit(whenNot, of)
+		}
+	}
+	if whenTrue.Type() != whenNot.Type() {
+		// flag ? text : undefined is a reference that may be missing, held as text is, with undefined
+		// the null one: the checker's type for the whole says which.
+		_, trueUndefined := whenTrue.(ir.Undefined)
+		_, notUndefined := whenNot.(ir.Undefined)
+		present, presentNode := whenTrue, conditional.WhenTrue
+		if trueUndefined {
+			present, presentNode = whenNot, conditional.WhenFalse
+		}
+		// flag ? {} : undefined in a record slot builds its literal as the record (recordLiteralElement),
+		// where the checker's own type for the whole is {} | undefined: the record is what it holds.
+		builtAsRecord := ast.SkipParentheses(presentNode).Kind == ast.KindObjectLiteralExpression && l.recordLiteralElement(ast.SkipParentheses(presentNode)) != nil
+		if of, err := l.typeOf(node); err == nil && trueUndefined != notUndefined && present.Type().IsReference() && (of == present.Type() || builtAsRecord) {
+			if builtAsRecord {
+				of = present.Type()
+			}
+			return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot, Of: of}, nil
+		}
+		return nil, l.notYet(node, "a conditional whose branches have different types")
+	}
+	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil
+}
+
+func typeName(valueType ir.Type) string {
+	if valueType.IsTypedArray() {
+		return typedArrayName(valueType)
+	}
+	switch valueType {
+	case ir.Number:
+		return "number"
+	case ir.Boolean:
+		return "boolean"
+	case ir.String:
+		return "string"
+	case ir.MaybeNumber:
+		return "number | undefined"
+	case ir.MaybeBoolean:
+		return "boolean | undefined"
+	case ir.Union:
+		return "union of differently held members"
+	}
+	return "value"
+}
+
+// writable reports whether every member of a union is one a template writes: a number, a boolean, a
+// string or undefined.
+func (l *lowering) writable(proven *checker.Type) bool {
+	// Judge the members this instantiation stores, rather than the generic binder.
+	proven = l.concrete(proven)
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			continue
+		}
+		memberType, isKnown := l.representation(member)
+		if !isKnown || (memberType != ir.Number && memberType != ir.Boolean && memberType != ir.String) {
+			return false
+		}
+	}
+	return true
+}
+
+// slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
+// map's value, a cell, or a function value's argument or result. number | undefined is packed into
+// one (a reserved NaN is undefined); boolean | undefined has a tagged byte for object fields
+// (censusFieldSlotless), but remains unsupported in the other slot contexts, and a
+// Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
+// result takes one.
+func slotless(valueType ir.Type) bool {
+	return valueType == ir.MaybeBoolean || valueType == ir.Union
+}
+
+// A fitted Union occupies one counted reference. Keep the general slot refusal
+// for callers that have not arranged boxing, and optional booleans for Map slots.
+func boxedSlot(valueType ir.Type) bool {
+	return !slotless(valueType) || valueType == ir.Union
+}
+
+// call lowers a call to one of the module's functions, or to a function value.
+func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
+	l.noteOverloadCall(node)
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if function, isNested := l.nestedGeneratorCallee(callee); isNested {
+		// As a module generator's call below: its consumers lower it before this, and one passed
+		// straight into a one-body function's Iterable<T> parameter goes in through IterableOf
+		// (#qk8rztp S3a).
+		if l.iterableArgument(node) {
+			return l.iterableOfGenerator(node, function)
+		}
+		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
+	}
+	if generatorInPlace(callee) {
+		// A generator written in place and called (#qk8rztp S3b): its for-of and its call as a
+		// statement lower it before this, and the one-read Iterable<T> parameter takes it here, as a
+		// named generator's call. Any other use is a value no slot can hold yet, stopped before its
+		// body is lowered.
+		if !l.iterableArgument(node) {
+			return nil, l.inPlaceNotYet(node)
+		}
+		function, err := l.inPlaceGenerator(callee)
+		if err != nil {
+			return nil, err
+		}
+		return l.iterableOfGenerator(node, function)
+	}
+	if direct := l.nestedSibling(callee); direct >= 0 {
+		arguments := []ir.Expression{}
+		for _, argument := range call.Arguments.Nodes {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, err
+			}
+			position := len(arguments)
+			if position < len(l.result.Functions[direct].Parameters) {
+				value = fit(value, l.result.Locals[l.result.Functions[direct].Parameters[position]].Type)
+			}
+			arguments = append(arguments, value)
+		}
+		carrier := ir.Expression(ir.ClosureSelf{})
+		if l.function.NestedParent != l.result.Functions[direct].NestedParent {
+			// Anonymous captures have their own layout. Materialize a temporary carrier
+			// for the target layout; do not capture a sibling's canonical function value.
+			carrier = ir.MakeClosure{Function: direct}
+		}
+		// A nested overload set is called through its closure, so a narrow overload's result is checked
+		// here, as a direct call's is in censusOverloadResult.
+		return l.overloadResultCheck(node, ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns})
+	}
+	qualified := l.namespaceMember(callee)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
+		instance, err := l.instantiateFunction(node, declaration)
+		if err != nil {
+			return nil, err
+		}
+		if l.result.Functions[instance].Generator {
+			// A generic generator's instance, called anywhere but by a consumer, stops as a
+			// non-generic generator's call does below, and goes into an Iterable<T> parameter as
+			// one does.
+			if l.iterableArgument(node) {
+				return l.iterableOfGenerator(node, instance)
+			}
+			return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
+		}
+		if l.result.Functions[instance].Closure {
+			arguments := []ir.Expression{}
+			for position, argument := range call.Arguments.Nodes {
+				value, err := l.expression(argument)
+				if err != nil {
+					return nil, err
+				}
+				if position < len(l.result.Functions[instance].Parameters) {
+					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
+				}
+				arguments = append(arguments, value)
+			}
+			value, err := l.overloadResultCheck(node, ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns})
+			if err != nil {
+				return nil, err
+			}
+			return l.namespaceReadyCall(callee, value), nil
+		}
+		value, err := l.callFunction(call, instance)
+		if err == nil {
+			value = l.namespaceReadyCall(callee, value)
+		}
+		return value, err
+	}
+	function, isFunction := l.functions[l.symbol(callee)]
+	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
+		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
+			return l.callClosure(node)
+		}
+		return nil, l.notYet(node, "a call to "+describe(callee))
+	}
+	if l.result.Functions[function].Generator {
+		// The two consumers that keep a generator to themselves lower its call before this, and one
+		// passed straight into a one-body function's Iterable<T> parameter goes in through
+		// IterableOf (#qk8rztp S2c-1); a generator anywhere else is a value no slot can hold yet.
+		if l.iterableArgument(node) {
+			return l.iterableOfGenerator(node, function)
+		}
+		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
+	}
+	value, err := l.callFunction(call, function)
+	if err == nil {
+		value = l.namespaceReadyCall(callee, value)
+	}
+	return value, err
+}
+
+// callFunction lowers a call's arguments, in order, and the call to function.
+func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	if err := l.latentSignature(function); err != nil {
+		return nil, err
+	}
+	l.noteOverloadCall(call.AsNode())
+	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
+	if err != nil {
+		return nil, err
+	}
+	l.fitCallArguments(function, arguments, spread)
+	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
+}
+
+// coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
+// the left is missing.
+func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
+	binary := node.AsBinaryExpression()
+	value, err := l.expression(binary.Left)
+	if err != nil {
+		return nil, err
+	}
+	// What ?? makes is the checker's: the left side's present members and the right side's, which
+	// may be held differently (text ?? count is string | number, a Union).
+	of, err := l.typeOf(node)
+	if err != nil && l.placeholderReadOrigin(ast.SkipParentheses(binary.Left)) != "" {
+		declared, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(ast.SkipParentheses(binary.Left)))))
+		fallback, fallbackKnown := l.representation(l.checker.GetTypeAtLocation(binary.Right))
+		if known && fallbackKnown {
+			of, err = declared, nil
+			if declared != fallback {
+				of = ir.Union
+			}
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	if present := value.Type(); !present.IsMaybe() && !present.IsReference() {
+		// A value that can't be missing: ?? never runs its right side.
+		return fit(value, of), nil
+	}
+	right := ast.SkipParentheses(binary.Right)
+	if right.Kind == ast.KindCallExpression && l.isPreludeFunction(right.AsCallExpression().Expression, "panic") && len(right.AsCallExpression().Arguments.Nodes) == 1 {
+		message, err := l.expression(right.AsCallExpression().Arguments.Nodes[0])
+		if err != nil {
+			return nil, err
+		}
+		return ir.Coalesce{Value: value, Panic: message, Of: of}, nil
+	}
+	if l.isNever(binary.Right) {
+		fallback, err := l.neverValue(binary.Right, of)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Coalesce{Value: value, Fallback: fallback, Of: of}, nil
+	}
+	fallback, err := l.expression(binary.Right)
+	if err != nil {
+		return nil, err
+	}
+	fallback = fit(fallback, of)
+	if _, isUndefined := fallback.(ir.Undefined); fallback.Type() != of && !(isUndefined && of.IsReference()) {
+		return nil, l.notYet(node, "?? whose sides have different types")
+	}
+	return ir.Coalesce{Value: value, Fallback: fallback, Of: of}, nil
+}
+
+// closure lowers an arrow function to a function of its own and the closure that captures it.
+func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
+	index := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "closure", Closure: true})
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	if l.instance != nil {
+		l.instance.templates = append(l.instance.templates, template{closure: index, proven: l.checker.GetTypeAtLocation(node), isClosure: true})
+	}
+	l.closures = append(l.closures, index)
+	err := l.lowerFunction(index, node, -1)
+	l.closures = l.closures[:len(l.closures)-1]
+	if err != nil {
+		return nil, err
+	}
+	return ir.MakeClosure{Function: index}, nil
+}
+
+// overloadSetValueStop stops an overload set read as a value. A call through the value resolves to
+// the slot's own signature, never to an overload, so a narrow overload's result check would never
+// run there (#z5d0jye, Compiler's must on 19ab1c58). functionValue asks it of a module-level set and
+// nestedReference of a nested one, so both say the same words.
+func (l *lowering) overloadSetValueStop(node *ast.Node, symbol *ast.Symbol) error {
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+			return l.notYet(node, "an overloaded function as a value")
+		}
+	}
+	return nil
+}
+
+// functionValue makes one stable adapter per named function. It binds optional
+// and rest parameters and forwards the original count, even though its ordinary
+// parameters have been padded or collected before reaching the target.
+func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if err := l.latentSignature(target); err != nil {
+		return nil, err
+	}
+	symbol := l.symbol(node)
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	if err := l.overloadSetValueStop(node, symbol); err != nil {
+		return nil, err
+	}
+	if l.result.Functions[target].Generator {
+		return nil, l.generatorNotYet(node, "used as a value")
+	}
+	if held, isMade := l.forwarders[target]; isMade {
+		return ir.Read{Local: held, Of: ir.Closure}, nil
+	}
+	for _, parameter := range symbol.Declarations[0].Parameters() {
+		if parameter.Name().Text() == "this" {
+			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+		}
+	}
+	callee := l.result.Functions[target]
+	if censusCallableSlotless(callee.Returns) {
+		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
+	}
+	index := len(l.result.Functions)
+	forwarder := ir.Function{SourceLength: callee.SourceLength, Name: callee.Name + "_value", Source: callee.Source, Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
+	forwarder.Source.Role = "value_adapter"
+	forwarder.Source.Declaration = append(append([]string{}, callee.Source.Declaration...), "value_adapter")
+	arguments := []ir.Expression{}
+	for _, parameter := range callee.Parameters {
+		declared := l.result.Locals[parameter]
+		if censusCallableSlotless(declared.Type) {
+			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: declared.Name, Type: declared.Type, Function: index})
+		forwarder.Parameters = append(forwarder.Parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
+	}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns, ForwardCount: true, RestPacked: true}
+	if callee.Returns == 0 {
+		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
+	} else {
+		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
+	}
+	l.result.Functions = append(l.result.Functions, forwarder)
+	// A checked predicate's value checks its own claim at every call through it (#vdt9f1q).
+	checked, isChecked, err := l.checkedPredicateForwarder(node, symbol, index, call)
+	if err != nil {
+		return nil, err
+	}
+	if isChecked {
+		l.result.Functions[index].Body = checked
+	}
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	// One function value for the function, made before anything runs and held by a global of its
+	// own, so reading the function twice gives the same value, === as JavaScript's.
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "value_adapter", Source: forwarder.Source, Type: ir.Closure, Global: true, Function: -1})
+	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
+	if l.forwarders == nil {
+		l.forwarders = map[int]int{}
+	}
+	l.forwarders[target] = held
+	return ir.Read{Local: held, Of: ir.Closure}, nil
+}
+
+// optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
+// to be evaluated once and tested before the call, which stage 0 doesn't lower yet for the library's
+// methods or a function value called directly. Lowered as a plain call, it ran the method on
+// undefined. One form lowered is object?.method(...) on a method the program declares (a class's, an
+// interface's, or a function value in a field): the call goes through the object's methods, which
+// stops at undefined as JavaScript's chain does (ir.Property's Method). The other, an optional
+// method's object?.method?.(...) and object.method?.(...), its callers lower before asking here
+// (optionalMethodCall).
+func (l *lowering) optionalCall(call *ast.Node) error {
+	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
+		return nil
+	}
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil && call.AsCallExpression().QuestionDotToken == nil {
+		if method := l.checker.GetSymbolAtLocation(callee); method != nil && len(method.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(method.Declarations[0])) {
+			return l.optionalHostCall(call, method)
+		}
+	}
+	return l.notYet(call, optionalCallNotYet)
+}
+
+// callClosure lowers a call through a function value.
+func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	l.inspectorRecordBuiltUse(node)
+	l.noteOverloadCall(node)
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
+		// never[] admits a zero-argument call in TypeScript. The erased slot does
+		// not retain a source signature to prove its required arguments or ABI.
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+	}
+	// A hand-driven `x.next()` over an Iterable view parameter: property lets its callee past the
+	// library-member guard, and handNextView records the call for checkIterableViews to prove.
+	hand := l.handDrivenNext(node)
+	if hand && len(node.AsCallExpression().Arguments.Nodes) != 0 {
+		return nil, l.notYet(node, "next(x) through a view, whose value is sent in (#qk8rztp S2c-2)")
+	}
+	if hand {
+		l.handNext = node.AsCallExpression().Expression
+	}
+	// A nested overload set called by name resolves to its overload here and is checked, so its
+	// callee alone passes nestedReference's value stop.
+	enclosingCallee := l.nestedCallee
+	l.nestedCallee = ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses)
+	closure, err := l.expression(node.AsCallExpression().Expression)
+	l.nestedCallee = enclosingCallee
+	l.handNext = nil
+	if err != nil {
+		return nil, err
+	}
+	if hand {
+		if err := l.handNextView(node, closure); err != nil {
+			return nil, err
+		}
+	}
+	ownField := ast.SkipOuterExpressions(node.AsCallExpression().Expression, ast.OEKParentheses|ast.OEKAssertions).Kind == ast.KindPropertyAccessExpression
+	switch callee := closure.(type) {
+	case ir.Property:
+		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+		// fields (ir.Property's Method).
+		callee.Method = true
+		closure = callee
+	case ir.Defined:
+		// The same call where the checker narrowed undefined out of an optional field, if (o.m) o.m():
+		// defined (narrowed.go) checks the read, and the call keeps its object, so a host's method or
+		// a literal method gets its receiver as JavaScript's does, where the plain road called the
+		// value with none (#0bxc4jh). The check stays the Defined's own, made on what the object's
+		// lookup finds, in its words (ir.MethodCallee). Only the call's own field read moves: an alias
+		// (const f = o.m; if (f) f()) reads a variable, and a computed key, o['m'](), a read through
+		// ?. (if (o?.m) o?.m(), whose missing object the Defined's check stops) or a Defined around
+		// anything else keeps the plain road.
+		if property, isProperty := callee.Value.(ir.Property); isProperty && !property.Optional && ownField {
+			property.Method = true
+			callee.Value = property
+			closure = callee
+		}
+	case ir.Coalesce:
+		// o.m!(): the non-null assertion's check (non_null.go) around the call's own field read, which
+		// JavaScript runs as o.m(), with o as this. It moves as the Defined does, on the same terms,
+		// and its check stays the assertion's own, its words and its panic, made on what the lookup
+		// finds (ir.MethodCallee). A ?? panic(...) and an assertion around anything else keep the
+		// plain road.
+		if property, isProperty := callee.Value.(ir.Property); isProperty && callee.Panic != nil && callee.Fallback == nil && !property.Optional && ownField {
+			property.Method = true
+			callee.Value = property
+			closure = callee
+		}
+	}
+	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+	if err != nil {
+		return nil, err
+	}
+	// The native emitter packs a bare field's call through a checked callable view by the view's
+	// signature, which has no spread; a narrowed one keeps the plain road's packing (callThrough).
+	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 {
+		contract := l.result.ViewContracts[property.ViewContract-1]
+		if contract.Of == ir.Closure && contract.Unsupported == "" && (contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewCallable) {
+			return nil, l.notYet(node, "spread arguments through a checked callable view")
+		}
+	}
+	var returns ir.Type
+	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+		var isKnown bool
+		if returns, isKnown = l.representation(result); !isKnown {
+			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
+		}
+	}
+	// Each argument is made what the function value takes: a number or undefined where it takes
+	// number | undefined is packed as one.
+	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+		parameters := signatures[0].Parameters()
+		position := 0
+		expanded := false
+		for index := range arguments {
+			if len(spread) > index && spread[index] {
+				expanded = true
+				continue
+			}
+			if len(parameters) == 0 {
+				break
+			}
+			parameter := parameters[min(position, len(parameters)-1)]
+			rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
+			proven := l.checker.GetTypeOfSymbol(parameter)
+			if rest {
+				// Only a reference has type arguments to read. The checker dereferences nil for a rest
+				// parameter typed as anything else, a union of tuples or a type parameter (#egxccg8).
+				if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+					return nil, l.notYet(node, "a call through a function value whose rest parameter isn't an array")
+				}
+				elements := l.checker.GetTypeArguments(proven)
+				if len(elements) == 1 {
+					proven = elements[0]
+				}
+			} else if expanded || position >= len(parameters) {
+				position++
+				continue
+			}
+			if takes, known := l.representation(proven); known {
+				// The checker describes a defaulted parameter by its present type,
+				// but its incoming slot must preserve undefined until the body runs.
+				if !rest && len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
+					takes = ir.Maybe(takes)
+				}
+				arguments[index] = fit(arguments[index], takes)
+			}
+			position++
+		}
+	}
+	for _, argument := range arguments {
+		if censusCallableSlotless(argument.Type()) {
+			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
+		}
+	}
+	if censusCallableSlotless(returns) {
+		return nil, l.notYet(node, "a function value returning "+typeName(returns))
+	}
+	// A call through a checked function-type claim checks it (predicates_function_type.go).
+	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	if err != nil {
+		return nil, err
+	}
+	// A nested overload set that captures is called through its closure value, so a narrow overload's
+	// result is checked here too.
+	return l.overloadResultCheck(node, value)
+}
+
+// Optional booleans have a three-state byte in the function-call ABI.
+// General union arguments still need a representation adapter.
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }
+
+// valueSlotStops is lowering's own judgment of a value seen as the slot it goes into, beside the refusal
+// registry's: valueSlotTags, and valueSlotKeeps for a value held by reference. expression runs the two
+// halves where it lowers the value, against the value's own slot. A write that can land under a slot it
+// isn't lowered against, a computed-key record write under a declared property, runs both against that
+// slot too (namedWriteStop, #b6m00y7), so one list of these checks serves both.
+func (l *lowering) valueSlotStops(node *ast.Node, slot *checker.Type, reference bool) error {
+	if err := l.valueSlotTags(node, slot); err != nil {
+		return err
+	}
+	if reference {
+		return l.valueSlotKeeps(node, slot)
+	}
+	return nil
+}
+
+// valueSlotTags is a value's null and undefined tags against the slot's, and an unknown view.
+func (l *lowering) valueSlotTags(node *ast.Node, slot *checker.Type) error {
+	if l.nullableObjectViewHazard(node, slot) {
+		return l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
+	}
+	return l.unknownView(node, l.checker.GetTypeAtLocation(node), slot)
+}
+
+// valueSlotKeeps is a value held by reference against the slot it goes into: a Buffer or Hash seen as
+// another type, a host object's view (#8k12t4s), a weak or strong keep, a typed array's buffer and a
+// tuple seen as an array. A literal is made as its slot, so it's never judged here.
+func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
+	if literal := ast.SkipParentheses(node).Kind; literal == ast.KindArrayLiteralExpression || literal == ast.KindObjectLiteralExpression {
+		return nil
+	}
+	// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
+	// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
+	// other keeps the target, so the same object, array or function can't be both. A tuple is held
+	// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
+	// made as the type it's written into, so it never differs.
+	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(slot)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+		return l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+	}
+	// Any other host object may be seen through a type only as far as its registration names
+	// the members that type reaches (#8k12t4s); Buffer and Hash are refused whole above.
+	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferType(l.present(own), "Buffer") && !l.nodeBufferType(l.present(own), "Hash") {
+		if reached := l.nodeHostViewAt(own, slot); reached != "" {
+			return l.nodeHostViewRefusal(node, own, slot, reached)
+		}
+	}
+	// A listed adapter's own callback literal is the one rest function that may meet a view hiding its
+	// rest: only the adapter calls it, by its own signature (restAdapterCallback).
+	keeps := l.sameKeeping
+	if l.restAdapterCallback(node) {
+		keeps = l.sameKeepingWalk
+	}
+	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !keeps(own, slot, map[[2]*checker.Type]bool{}) {
+		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
+			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+		}
+		if !l.restAdapterCallback(node) && l.restHiddenWithin(own, slot, false, map[restHiddenPair]bool{}) {
+			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
+		}
+		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
+	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
+		return l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
+	}
+	return nil
+}
+
+func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	return l.latentSpecExpression(node)
+}

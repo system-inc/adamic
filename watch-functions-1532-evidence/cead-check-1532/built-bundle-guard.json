@@ -1,0 +1,10 @@
+{
+  "mainSha256": "77f6bd50b4e54e3053b30ab586533fba05c14b3736852784e08f4c94f612c246",
+  "afterSha256": "b26510864a1ee5ba609a94e05e155d42290aae8255d4214561e20cc4c32f67d1",
+  "droppingGuardRestoresMainBuiltBundleExactly": true,
+  "guardLines": [
+    "    if (defaultPollingInterval !== 250 /* Low */ && defaultPollingInterval !== 500 /* Medium */ && defaultPollingInterval !== 2e3 /* High */) {",
+    "      return Debug.fail(`Invalid dynamic polling interval: ${defaultPollingInterval}`);",
+    "    }"
+  ]
+}

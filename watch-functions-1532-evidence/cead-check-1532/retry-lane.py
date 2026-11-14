@@ -9,7 +9,7 @@ cmd=[str(repo/'stage3/lane/run.sh'),str(s/'lane-bounded')];start=time.monotonic(
 with (s/'whole-lane-bounded.log').open('w') as log:r=subprocess.run(cmd,cwd=repo,env=env,stdout=log,stderr=subprocess.STDOUT)
 (s/'memory-events-after-bounded-lane.txt').write_text(Path('/sys/fs/cgroup/memory.events').read_text())
 (s/'bounded-lane-command.json').write_text(json.dumps({'command':cmd,'exit':r.returncode,'seconds':time.monotonic()-start,'implementation':sha,'environment':{k:env[k] for k in ['ADAMIC_TYPESCRIPT_SOURCE','STAGE3_CACHE','TMPDIR','GOTMPDIR','GOCACHE','NODE_PATH','npm_config_cache','NODE_OPTIONS']}},indent=2)+'\n');assert r.returncode==0
-assert (s/'lane-bounded/verdict.txt').read_text().strip()=='PASS'
+assert json.loads((s/'lane-bounded/report.json').read_text())['status']=='pass'
 remote=subprocess.check_output(['git','ls-remote','--heads','origin','refs/heads/typescript/watch-file-check-1532-1'],cwd=repo,text=True).strip();assert not remote,'implementation branch name already exists remotely'
 with (s/'push-implementation.log').open('w') as log:r=subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/watch-file-check-1532-1'],cwd=repo,env=env,stdout=log,stderr=subprocess.STDOUT)
 assert r.returncode==0

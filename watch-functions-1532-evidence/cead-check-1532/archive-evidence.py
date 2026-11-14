@@ -68,4 +68,16 @@ Use the implementation SHA on the stated base, Node v24.19.0, Go 1.27.1, recursi
 
 Scripts retain their exact scratch paths and must be relocated together for replay. amend.cjs records the mechanical pin amendments; implementation.patch.gz is the complete one-commit diff. The generated census overlay uses physical .go.txt filenames; production IR output is disabled. run-census.py and compare-census.py reproduce the census. count-run.py plus post-count.py reproduce instrumentation, control and pristine baseline build. scope-stock.cjs, contracts.cjs, witness.cjs and interval-10.cjs reproduce bounded proofs. proof-commands.json and bounded-lane-command.json retain exact commands, environments, exits and elapsed times. retry-lane.py runs the ordinary lane and pushes only after PASS. Upstream bundles used for witnesses contain no private counting instrumentation; their hashes are in built-node-modules.json.
 ''')
+for name in ['make-overlay-txt.py','built-bundle-guard.json','lane-verdict-parser-correction.json','retry-lane.py']:
+ p=s/name
+ if p.exists():shutil.copyfile(p,out/name)
+for name in ['overlay-build.log','census-build.log','adamic-build.log','push-implementation.log']:
+ p=s/name
+ if p.exists():(out/(name+'.gz')).write_bytes(gzip.compress(p.read_bytes(),mtime=0))
+shutil.copytree(s/'overlay',out/'overlay',dirs_exist_ok=True)
+assert not list((out/'overlay').glob('*.go'))
+versions={'go':subprocess.check_output(['/tmp/watch-file-check-1532/toolchains/go/bin/go','version'],text=True).strip(),'node':subprocess.check_output(['node','--version'],text=True).strip(),'compilerSourceBase':'ceadba1d9baf55dc0917eaf27dec69ebada795db','measurementOverlay':'overlay/overlay.json','binaries':{name:hashlib.sha256((s/name).read_bytes()).hexdigest() for name in ['latent','adamic']}}
+(out/'tool-provenance.json').write_text(json.dumps(versions,indent=2)+'\n')
+if laneDone:
+ with (out/'README.md').open('a') as doc:doc.write('\n## Final verdict\n\nWhole lane PASS on implementation '+sha+': 106,366 passing, one sanctioned public-API failure, zero pending; eight workers, all runners, no filter. Its only baseline diff is api/typescript.d.ts, the declaration guard passes, and memory.events is unchanged during the 1536 MiB Node-heap run. The normal lane exited zero and recorded this implementation SHA. The external controller originally assumed verdict.txt contained only PASS; it actually contains a longer PASS line. The corrected controller validates the structured report status; the original traceback and correction receipt are retained. No lane test was repeated for that parser correction. The implementation branch is pushed, without force.\n\nThe actual built typescript.js bundle also becomes byte-identical to main when only its three-line guard is removed; built-bundle-guard.json retains both hashes and the exact emitted guard.\n')
 manifest={str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name!='manifest-sha256.json'};(out/'manifest-sha256.json').write_text(json.dumps(manifest,indent=2)+'\n')

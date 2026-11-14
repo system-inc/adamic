@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/tmp/watch-file-check-cead/work/stage3/lane/run.sh",
+    "/tmp/watch-file-check-cead/lane-bounded"
+  ],
+  "exit": 0,
+  "seconds": 535.160541741001,
+  "implementation": "8499a514fc1d4bbab019594dfeef0e09fc4b5bbf",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/watch-functions-1532/TypeScript",
+    "STAGE3_CACHE": "/tmp/watch-file-check-cead/cache",
+    "TMPDIR": "/tmp/watch-file-check-cead/tmp",
+    "GOTMPDIR": "/tmp/watch-file-check-cead/tmp",
+    "GOCACHE": "/tmp/watch-file-check-1532/go-cache",
+    "NODE_PATH": "/tmp/watch-file-check-cead/work/stage3/api/node_modules",
+    "npm_config_cache": "/tmp/watch-functions-1532/npm-cache",
+    "NODE_OPTIONS": "--max-old-space-size=1536"
+  }
+}
