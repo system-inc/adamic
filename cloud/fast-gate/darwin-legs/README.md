@@ -18,7 +18,7 @@ Records enter only through promote, Node's reviewed act; nothing else writes her
 named by the full sha of the tip the leg ran at. Promote checks, before a record lands:
 
 - the tip resolves in adamic;
-- its darwinPaths recomputes equal with `--darwin-paths-digest`, run in a checkout at the tip (below);
+- its darwinPaths recomputes equal with `--darwin-paths-digest`, run in a clean checkout at the tip, `git status --porcelain` printing nothing, since go list reads the working tree and a tracked file edited by hand would be digested as the commit's (below);
 - its `aCheck` names every darwin .a in the tip's tree, the list `--darwin-a-paths` prints at the tip.
 
 ## The record
