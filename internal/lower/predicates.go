@@ -731,19 +731,22 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		}
 	}
 	for index, parameter := range signature.Parameters() {
-		if index >= len(node.AsCallExpression().Arguments.Nodes) {
-			continue
-		}
-		var contract *ast.Node
-		for _, declaration := range parameter.Declarations {
-			if declaration.Kind == ast.KindParameter && declaration.Type() != nil && declaration.Type().Kind == ast.KindFunctionType && declaration.Type().Type() != nil && declaration.Type().Type().Kind == ast.KindTypePredicate {
-				contract = declaration.Type().Type()
-			}
-		}
+		contract := predicateContract(parameter)
 		// A parameter whose claim is checked at every call through it takes any function of its type: a
 		// lie stops at that call. A library's parameter is called where nothing checks it, so its
 		// argument keeps the proof (checkedFunctionTypeClaim).
 		if contract == nil || l.checkedFunctionTypeClaim(contract) {
+			continue
+		}
+		// A spread at or before the parameter hands it an element no argument here is written as, so
+		// nothing below would judge it: find(...args) reached find's narrowing overload with the
+		// predicate raw. It stops at the spread until a spread's elements are judged.
+		for _, argument := range node.AsCallExpression().Arguments.Nodes[:min(index+1, len(node.AsCallExpression().Arguments.Nodes))] {
+			if argument.Kind == ast.KindSpreadElement {
+				return l.notYet(argument, "a spread argument covering a predicate parameter")
+			}
+		}
+		if index >= len(node.AsCallExpression().Arguments.Nodes) {
 			continue
 		}
 		if refused := l.predicateArgumentProof(parameter, contract, node.AsCallExpression().Arguments.Nodes[index]); refused != nil {
@@ -751,6 +754,20 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 		}
 	}
 	return nil
+}
+
+// predicateContract is the claim parameter's written type makes of the function it takes, when it's written as
+// a function type claiming a predicate, or nil. predicateArguments judges an argument against it, and lowering
+// reads the same contract where it builds a predicate parameter's checked closure
+// (checkedPredicateParameterPassed), so the two can't judge one argument apart.
+func predicateContract(parameter *ast.Symbol) *ast.Node {
+	var contract *ast.Node
+	for _, declaration := range parameter.Declarations {
+		if declaration.Kind == ast.KindParameter && declaration.Type() != nil && declaration.Type().Kind == ast.KindFunctionType && declaration.Type().Type() != nil && declaration.Type().Type().Kind == ast.KindTypePredicate {
+			contract = declaration.Type().Type()
+		}
+	}
+	return contract
 }
 
 // predicateArgumentProof is nil when argument, passed for parameter, whose written claim is contract, proves
@@ -790,6 +807,22 @@ func (l *lowering) predicateArgumentProof(parameter *ast.Symbol, contract, writt
 	}
 	if contract.AsTypePredicateNode().Type == nil || target == nil {
 		return failure()
+	}
+	// A predicate parameter proves nothing: whatever its caller passed is behind it. In .ts, where the
+	// program takes a narrowing predicate, it's passed as its checked closure, which lowering builds at
+	// this site (checkedPredicateParameterValue, #jqf1drp under rulings.md:140's #vdt9f1q): it checks
+	// the parameter's own claim on every true answer it hands on, as tsc's getFirstJSDocTag hands its
+	// predicate to core.ts's find. In .a it stays refused, naming the fix.
+	if parameter := l.predicateParameterArgument(argument); parameter != nil {
+		if l.checkedPredicateParameterSite(contract, parameter) {
+			return nil
+		}
+		refused := failure()
+		if !l.checkedAssertionSource(argument) {
+			refused.What += ": a parameter carries no proof of its claim"
+			refused.Fix = "prove it with a named predicate whose body proves both branches, passed directly, or return a boolean and narrow at the caller (adamic/no-type-predicate)"
+		}
+		return refused
 	}
 	if argument.Kind == ast.KindCallExpression {
 		if !l.predicateProducerProven(argument, target) {

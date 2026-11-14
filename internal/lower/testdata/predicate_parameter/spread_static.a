@@ -1,0 +1,40 @@
+interface Circle {
+    readonly kind: "circle";
+    readonly radius: number;
+}
+interface Square {
+    readonly kind: "square";
+    readonly side: number;
+}
+type Shape = Circle | Square;
+// core.ts's find, with stage 3's array[i]! adaptation: a narrowing overload over a boolean implementation.
+function find<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number): U | undefined;
+function find<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): T | undefined;
+function find<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): T | undefined {
+    if (array === undefined) return undefined;
+    for (let i = startIndex ?? 0; i < array.length; i++) {
+        const value = array[i]!;
+        if (predicate(value, i)) {
+            return value;
+        }
+    }
+    return undefined;
+}
+// utilitiesPublic.ts's getFirstJSDocTag: its predicate parameter forwarded to find.
+function getFirst<T extends Shape>(shapes: readonly Shape[], predicate: (shape: Shape) => shape is T): T | undefined {
+    return find(shapes, predicate);
+}
+const shapes: Shape[] = [{ kind: "square", side: 2 }, { kind: "circle", radius: 3 }];
+// Its predicate parameter handed to find through a spread.
+function getFirstSpread<T extends Shape>(list: readonly Shape[], predicate: (shape: Shape) => shape is T): T | undefined {
+    const args = [list, predicate] as const;
+    return find(...args);
+}
+// A static method that lies on true: it says yes to a Square.
+class Guards {
+    static isCircle(shape: Shape): shape is Circle {
+        return shape.kind === "square";
+    }
+}
+const circle = getFirstSpread(shapes, Guards.isCircle);
+console.log(circle === undefined ? "none" : `radius ${String(circle.radius)}`);
