@@ -1,0 +1,9 @@
+// p8 on #13p3y0c: a literal key, which constructionIndexWrite takes before setIndex. Refused at the {}
+// until #7n03qzg lands.
+interface Levels { Low: number; Medium: number; High: number; }
+function set(): Partial<Levels> | undefined {
+	let c: Partial<Levels> | undefined;
+	(c || (c = {}))['Low'] = 7;
+	return c;
+}
+console.log(String(set()?.Low));

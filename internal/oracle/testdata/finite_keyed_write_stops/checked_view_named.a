@@ -1,0 +1,11 @@
+// Adamic's condition, the checked view's half: view is held as Box, which checks child, an object field,
+// so writing it without the source slot's type certificate could hand raw a child its own type can't
+// hold (TestViewObjectWritesNeedSourceCertificate). Its keyed twin, checked_view_keyed.a, must stop in
+// the same words.
+interface Base { readonly kind: 'box' | 'other'; }
+interface Box extends Base { readonly kind: 'box'; child: { ready: boolean }; spare: { ready: boolean }; }
+const raw = { kind: 'box' as const, child: { ready: true, other: 42 }, spare: { ready: false } };
+const held: Base = raw;
+const view = held as Box;
+view.child = { ready: true };
+console.log(String(raw.child.other));
