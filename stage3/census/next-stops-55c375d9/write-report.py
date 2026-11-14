@@ -31,6 +31,6 @@ s+=['','## Adapted source at stops','']
 for e in read('source-evidence.json'):
  if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','']
 for e in read('source-evidence.json'):
- if e.get('expression_change_reach'):s+=['### 8e3a784a never-read reach: '+e['where'],'',e['expression_change_reach'],'']
+ if e.get('expression_change_reach'):s+=['### Prior lowering change reach: '+e['where'],'',e['expression_change_reach'],'']
 s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from emitting source and stage3/adapt/**/owners.json searches retained in ownership-search.json.']
 (out/'REPORT.md').write_text('\n'.join(s)+'\n')

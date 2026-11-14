@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "where": "sys.ts:1385:31",
+    "kind": "Refused",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "phase": "refusal_scan (unbound method)",
+    "owner": "internal/lower/refusals.go: (*lowering).methodValueRefusal / methodValueStop (patchWriteFileEnsuringDirectory)",
+    "emitter": "internal/lower/refusals.go:305",
+    "owner_basis": "The adapted stop is inside src/compiler/sys.ts:patchWriteFileEnsuringDirectory. A search of stage3/adapt/**/owners.json finds no adaptation pin for this function. The only textual match for its name is a use within the TestServerHost owner in src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts, pinned by 99-correctness-timer-closures; that does not own this compiler function. The same adaptation pins sys.ts:System and createDirectoryWatcherSupportingRecursive, including the landed timer closure amendment, but neither owns patchWriteFileEnsuringDirectory. methodValueRefusal is registered at priority 2900 (refusals.go:271); lower.go:141-145 runs the refusal scan before declaration and body lowering"
+  }
+]
