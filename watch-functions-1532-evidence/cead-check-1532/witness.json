@@ -1,0 +1,199 @@
+{
+  "members": [
+    {
+      "interval": 250,
+      "nodeMain": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            250,
+            "pollLowPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "adapted": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            250,
+            "pollLowPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "byteIdentical": true
+    },
+    {
+      "interval": 500,
+      "nodeMain": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            500,
+            "pollPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "adapted": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            500,
+            "pollPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "byteIdentical": true
+    },
+    {
+      "interval": 2000,
+      "nodeMain": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            2000,
+            "pollPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "adapted": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ],
+          [
+            "setTimeout",
+            2000,
+            "pollPollingIntervalQueue"
+          ],
+          [
+            "registered"
+          ],
+          [
+            "closed"
+          ]
+        ],
+        "result": "closed"
+      },
+      "byteIdentical": true
+    }
+  ],
+  "rejected": [
+    {
+      "interval": "10",
+      "nodeMain": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ]
+        ],
+        "error": {
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'files')"
+        }
+      },
+      "adapted": {
+        "trace": [],
+        "error": {
+          "name": "Error",
+          "message": "Debug Failure. Invalid dynamic polling interval: 10"
+        }
+      }
+    },
+    {
+      "interval": "undefined",
+      "nodeMain": {
+        "trace": [
+          [
+            "getModifiedTime",
+            "/virtual/file.ts"
+          ]
+        ],
+        "error": {
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'files')"
+        }
+      },
+      "adapted": {
+        "trace": [],
+        "error": {
+          "name": "Error",
+          "message": "Debug Failure. Invalid dynamic polling interval: undefined"
+        }
+      }
+    }
+  ],
+  "mutant": {
+    "dropsOnlyGuard": true,
+    "restores": "TypeError",
+    "observation": {
+      "trace": [
+        [
+          "getModifiedTime",
+          "/virtual/file.ts"
+        ]
+      ],
+      "error": {
+        "name": "TypeError",
+        "message": "Cannot read properties of undefined (reading 'files')"
+      }
+    }
+  },
+  "countCase": "nonzero"
+}

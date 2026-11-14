@@ -1,0 +1,38 @@
+[
+  {
+    "name": "99-correctness-core-multimap",
+    "exit": 0
+  },
+  {
+    "name": "99-correctness-single-watcher-forwarder",
+    "exit": 0
+  },
+  {
+    "name": "99-correctness-timer-closures",
+    "exit": 0
+  },
+  {
+    "name": "93-builtin-imports",
+    "fullAfterTextPinned": true,
+    "replayZeroWrites": true,
+    "bytesAndMtimePreserved": true,
+    "refusals": [
+      "interval",
+      "duplicate",
+      "mixedInside",
+      "import"
+    ]
+  },
+  {
+    "name": "99-wasm-crypto-import",
+    "fullAfterTextPinned": true,
+    "replayZeroWrites": true,
+    "bytesAndMtimePreserved": true,
+    "refusals": [
+      "interval",
+      "duplicate",
+      "mixedInside",
+      "import"
+    ]
+  }
+]

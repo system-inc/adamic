@@ -1,15 +1,6 @@
 {
+  "status": "pre-lane proofs complete; bounded lane in progress",
   "base": "ceadba1d9baf55dc0917eaf27dec69ebada795db",
-  "census": {
-    "new": 0,
-    "gone": 1,
-    "changed": 0,
-    "target1532Gone": true,
-    "sibling1533Unchanged": true,
-    "oldNodeWatchFileStopAbsent": true
-  },
-  "applyExit": "0",
-  "count": "first run invalidated by OOM; quiet retry pending or running",
-  "status": "checkpoint; not a final proof verdict",
-  "noLoom": true
+  "implementation": "8499a514fc1d4bbab019594dfeef0e09fc4b5bbf",
+  "evidenceRetainsFailedResourceRuns": true
 }

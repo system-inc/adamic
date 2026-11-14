@@ -1,0 +1,29 @@
+{
+  "orphanedWorkersFromFailedRun": [
+    {
+      "pid": 21179,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/tmp/watch-file-check-cead/lane/adapted-tree/built/local/run.js",
+        "--config=\"/tmp/watch-file-check-cead/tmp/ts-tests3/task-config1.json\""
+      ]
+    },
+    {
+      "pid": 21186,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/tmp/watch-file-check-cead/lane/adapted-tree/built/local/run.js",
+        "--config=\"/tmp/watch-file-check-cead/tmp/ts-tests3/task-config3.json\""
+      ]
+    },
+    {
+      "pid": 21193,
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/tmp/watch-file-check-cead/lane/adapted-tree/built/local/run.js",
+        "--config=\"/tmp/watch-file-check-cead/tmp/ts-tests3/task-config5.json\""
+      ]
+    }
+  ],
+  "action": "SIGTERM after parent disappeared"
+}

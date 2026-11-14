@@ -1,0 +1,45 @@
+{
+  "base": "ceadba1d9baf55dc0917eaf27dec69ebada795db",
+  "implementation": "8499a514fc1d4bbab019594dfeef0e09fc4b5bbf",
+  "implementationBranch": "typescript/watch-file-check-1532-1",
+  "implementationPushed": false,
+  "census": {
+    "new": 0,
+    "gone": 1,
+    "changed": 0,
+    "target1532Gone": true,
+    "sibling1533Unchanged": true,
+    "old1734LoweringStopAbsent": true
+  },
+  "dynamicHistogram": {
+    "250": 2,
+    "500": 4,
+    "2000": 0,
+    "undefined": 0,
+    "others": {},
+    "total": 6
+  },
+  "countCase": "nonzero; not a vacuous members-only observation",
+  "countControl": "passed; 250 and 10 logged separately; 10 restored baseline TypeError",
+  "memberWitness": [
+    250,
+    500,
+    2000
+  ],
+  "inadmissibleWitness": [
+    "10",
+    "undefined"
+  ],
+  "guardDroppingMutantRestores": "TypeError (not the refusal)",
+  "symlinkInterval10Modes": "byte-identical registration/close for polling file, fsEvents file, polling directory",
+  "stockTsc603": "0 diagnostics on 79 roots, both sides",
+  "adamicTypes": "0 diagnostics on 79 roots, both sides",
+  "fullApply": "passed",
+  "ownerContracts": "all 5 directories passed",
+  "javascript": "747 source files compared; 1208 per-file emission checks; only guard differs; guard-dropping emitted sys.js equals main",
+  "declarations": "both byte-identical; declarations.diff is empty",
+  "wholeLane": "bounded-memory full lane still in progress",
+  "laneNodeHeapMiB": 1536,
+  "laneCounts": null,
+  "noLoom": true
+}

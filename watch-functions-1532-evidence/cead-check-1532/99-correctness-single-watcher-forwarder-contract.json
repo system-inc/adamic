@@ -1,0 +1,34 @@
+{
+  "initial": {
+    "files": 1,
+    "edits": 4,
+    "javascriptChanging": true
+  },
+  "second": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true
+  },
+  "noWriteReplay": true,
+  "refusals": [
+    "drift-0",
+    "half-adapted-0",
+    "duplicate-0",
+    "moved-0",
+    "drift-1",
+    "half-adapted-1",
+    "duplicate-1",
+    "moved-1",
+    "drift-2",
+    "half-adapted-2",
+    "duplicate-2",
+    "moved-2",
+    "drift-3",
+    "half-adapted-3",
+    "duplicate-3",
+    "moved-3",
+    "half-helper-parameter",
+    "parse-error"
+  ],
+  "unrelatedAndLFCRLF": true
+}

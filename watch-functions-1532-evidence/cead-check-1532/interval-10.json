@@ -1,0 +1,37 @@
+{
+  "main": [
+    {
+      "case": "polling file",
+      "interval": 10,
+      "result": "registered and closed"
+    },
+    {
+      "case": "fsEvents file",
+      "interval": 10,
+      "result": "registered and closed"
+    },
+    {
+      "case": "polling directory",
+      "interval": 10,
+      "result": "registered and closed"
+    }
+  ],
+  "after": [
+    {
+      "case": "polling file",
+      "interval": 10,
+      "result": "registered and closed"
+    },
+    {
+      "case": "fsEvents file",
+      "interval": 10,
+      "result": "registered and closed"
+    },
+    {
+      "case": "polling directory",
+      "interval": 10,
+      "result": "registered and closed"
+    }
+  ],
+  "byteIdentical": true
+}

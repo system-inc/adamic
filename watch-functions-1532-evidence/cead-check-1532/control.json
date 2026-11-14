@@ -1,0 +1,15 @@
+{
+  "counterFires": true,
+  "memberRegistrationAndClose": true,
+  "nonMemberTypeError": true,
+  "rows": [
+    {
+      "interval": "250",
+      "type": "number"
+    },
+    {
+      "interval": "10",
+      "type": "number"
+    }
+  ]
+}
