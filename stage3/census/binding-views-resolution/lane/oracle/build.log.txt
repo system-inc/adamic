@@ -1,0 +1,73 @@
+
+> typescript@6.0.3 build
+> npm run build:compiler && npm run build:tests
+
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/scratch/binding-views-resolution/lane/adapted-tree/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-tsc in 16ms
+Finished shim-compile-cache-tsserver in 17ms
+Finished shim-compile-cache-typings-installer in 17ms
+Finished generate-types-map in 18ms
+Finished bundle-watch-guard in 42ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 127ms
+Starting localize
+> /workspace/adamic-tools/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 9ms
+Finished bundle-typings-installer in 88ms
+Finished bundle-tsserver in 187ms
+Finished lib in 375ms
+Finished build-watch-guard in 2.6s
+Finished bundle-tsc in 2.7s
+Finished bundle-services in 2.7s
+Finished localize in 3.2s
+Finished build-tsc in 23.6s
+Finished build-services in 23.6s
+Finished build-tsserver in 23.6s
+Finished build-typings-installer in 23.6s
+Starting dts-services
+> /workspace/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 1ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 3s
+Starting dts-lssl
+Finished dts-lssl in 1ms
+Completed local in 26.8s
+
+> typescript@6.0.3 build:tests
+> hereby tests
+
+Using /workspace/scratch/binding-views-resolution/lane/adapted-tree/Herebyfile.mjs to run tests
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 113ms
+Starting bundle-tests
+Starting build-tests
+Finished lib in 165ms
+Finished bundle-tests in 1.2s
+Finished build-tests in 8.9s
+Completed tests in 9s

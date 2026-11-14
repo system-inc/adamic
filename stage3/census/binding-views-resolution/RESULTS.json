@@ -1,0 +1,239 @@
+{
+  "status": "PASS",
+  "implementation_branch": "typescript/binding-views-resolution-1",
+  "implementation_sha": "61636df700acf25afe229345128bfa4c193fda23",
+  "parent": "7534c1d7575db02bb7b6512119e0685987b7e333",
+  "single_commit": true,
+  "scope": {
+    "status": "pass",
+    "commit": "61636df700acf25afe229345128bfa4c193fda23",
+    "source_files": 747,
+    "changed": [
+      "compiler/resolutionCache.ts"
+    ],
+    "program_unchanged": true,
+    "program_sha256": "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688"
+  },
+  "committed_files": [
+    "stage3/adapt/99-correctness-binding-views/PROOF.md",
+    "stage3/adapt/99-correctness-binding-views/README.md",
+    "stage3/adapt/99-correctness-binding-views/adapt.cjs",
+    "stage3/adapt/99-correctness-binding-views/engine.cjs",
+    "stage3/adapt/99-correctness-binding-views/mutant.cjs",
+    "stage3/adapt/99-correctness-binding-views/owners.json",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "declarations": {
+    "status": "pass",
+    "commit": "61636df700acf25afe229345128bfa4c193fda23",
+    "baseline_npm_ci": 0,
+    "candidate_npm_ci": 0,
+    "baseline_dts": 0,
+    "candidate_dts": 0,
+    "rows": [
+      {
+        "file": "typescript.d.ts",
+        "identical": true,
+        "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "identical": true,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+      }
+    ]
+  },
+  "census": {
+    "status": "pass",
+    "rows": [
+      {
+        "file": "resolutionCache.ts",
+        "mode": "full",
+        "before_raw": 221,
+        "after_raw": 217,
+        "before_unique": 133,
+        "after_unique": 129,
+        "new": 0,
+        "changed": 0,
+        "gone": 4,
+        "restored_targets": 4
+      }
+    ]
+  },
+  "checks": {
+    "status": "pass",
+    "commit": "61636df700acf25afe229345128bfa4c193fda23",
+    "roots": 79,
+    "stock": {
+      "before": 0,
+      "after": 0,
+      "new": 0,
+      "version": "6.0.3",
+      "ambient": "scout pinned @types/node plus ledger require shim"
+    },
+    "adamic": {
+      "exit": 0,
+      "diagnostics": 0,
+      "build_revision": "61636df700acf25afe229345128bfa4c193fda23",
+      "build_modified": false
+    },
+    "javascript": {
+      "files": 604,
+      "emits": 1208,
+      "identical": true
+    },
+    "pins_consistent": true,
+    "program_unchanged": true,
+    "amendment_95h": false,
+    "committed_files": [
+      "stage3/adapt/99-correctness-binding-views/PROOF.md",
+      "stage3/adapt/99-correctness-binding-views/README.md",
+      "stage3/adapt/99-correctness-binding-views/adapt.cjs",
+      "stage3/adapt/99-correctness-binding-views/engine.cjs",
+      "stage3/adapt/99-correctness-binding-views/mutant.cjs",
+      "stage3/adapt/99-correctness-binding-views/owners.json",
+      "stage3/upstream/LEDGER.md"
+    ]
+  },
+  "contracts": {
+    "status": "pass",
+    "rows": [
+      {
+        "name": "apply writes only resolutionCache.ts",
+        "writes": 1
+      },
+      {
+        "name": "adapter replay",
+        "writes": 0
+      },
+      {
+        "name": "owner drift",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "outside-owner drift",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "duplicate owner",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "half-adapted constraints",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "half-adapted inserted owner",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "mixed line endings",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "CRLF preserved",
+        "pass": true
+      },
+      {
+        "name": "mutant restores only resolutionCache.ts",
+        "writes": 1
+      },
+      {
+        "name": "mutant replay",
+        "writes": 0
+      },
+      {
+        "name": "no program.ts dependency",
+        "pass": true
+      }
+    ]
+  },
+  "mutant": {
+    "status": "pass",
+    "restored": "resolutionCache.ts",
+    "program_unchanged": true
+  },
+  "generated": {
+    "status": "pass",
+    "regenerated": false,
+    "reason": "canonical hashed inputs unchanged",
+    "files": [
+      {
+        "file": "sanctioned-api.json",
+        "sha256": "42851b6eb29f2c94fda1f9bfd4c819fc5eaf6b2fa65c0263de5ffb0490bf81d4"
+      },
+      {
+        "file": "shard-plan.json",
+        "sha256": "b07180a064fb4048b3e8c5b74529002e960ab2af2dfe399ef457c62c785ca42b"
+      },
+      {
+        "file": "shards.json",
+        "sha256": "c6aac4b07abc5164021e2382fccef265b7a0047de40bd33b2151b6ce5185a647"
+      },
+      {
+        "file": "shards_generated_test.go",
+        "sha256": "f9e1eb2afbdd50f7c6afe90ea155d9216079da5f494ce5d32d0988805a1b9a1b"
+      }
+    ]
+  },
+  "applied": {
+    "source_files": 747,
+    "program_unchanged": true,
+    "all_source_bytes_identical": true,
+    "replay": {
+      "files": 0,
+      "edits": 0,
+      "javascriptChanging": false
+    },
+    "tested_product_key": "a293afb5e9a03713b44910a7edf404fa36d7011b24e934c468e3a8c197fe5245"
+  },
+  "lane": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 273,
+      "sanctioned_declarations": 273,
+      "added_lines": 327,
+      "removed_lines": 245
+    },
+    "execution": {
+      "commit": "61636df700acf25afe229345128bfa4c193fda23",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 1364.594
+    },
+    "verdict": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]"
+  },
+  "oracle_settings": {
+    "workers": 8,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0"
+  },
+  "ledger": "one type-only line, four resolution sites, #ty5myjt",
+  "program_change": false,
+  "amendment_95h": false,
+  "loom": "Never submitted"
+}
