@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "name": "apply writes only resolutionCache.ts",
+      "writes": 1
+    },
+    {
+      "name": "adapter replay",
+      "writes": 0
+    },
+    {
+      "name": "owner drift",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "outside-owner drift",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "duplicate owner",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "half-adapted constraints",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "half-adapted inserted owner",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "mixed line endings",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "CRLF preserved",
+      "pass": true
+    },
+    {
+      "name": "mutant restores only resolutionCache.ts",
+      "writes": 1
+    },
+    {
+      "name": "mutant replay",
+      "writes": 0
+    },
+    {
+      "name": "no program.ts dependency",
+      "pass": true
+    }
+  ]
+}

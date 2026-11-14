@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "commit": "61636df700acf25afe229345128bfa4c193fda23",
+  "baseline_npm_ci": 0,
+  "candidate_npm_ci": 0,
+  "baseline_dts": 0,
+  "candidate_dts": 0,
+  "rows": [
+    {
+      "file": "typescript.d.ts",
+      "identical": true,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "identical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ]
+}

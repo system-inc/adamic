@@ -1,0 +1,19 @@
+{
+  "commit": "61636df700acf25afe229345128bfa4c193fda23",
+  "command": [
+    "/workspace/scratch/binding-views-resolution/latent",
+    "/workspace/scratch/binding-views-resolution/mutant/src/compiler",
+    "/workspace/scratch/binding-views-resolution/evidence/mutant/resolutionCache.ts.jsonl"
+  ],
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/binding-views-resolution/mutant/src/compiler/resolutionCache.ts",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  },
+  "exit": 0,
+  "mode": "full",
+  "seconds": 177.52104434800003,
+  "binary_sha256": "da8dae987db00ab993dd30bbc7d79fcb26b4d442f136aeadf317e301b0f9aa6a",
+  "input_sha256": "a2a02f0f675ff9c65c350da8af0868ff8b30604559d222aa7bbe68a010742ed8"
+}

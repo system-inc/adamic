@@ -1,7 +1,9 @@
 {
-  "status": "in progress; proofs pending",
+  "status": "source proofs PASS; whole lane pending",
   "implementation_sha": "61636df700acf25afe229345128bfa4c193fda23",
   "parent": "7534c1d7575db02bb7b6512119e0685987b7e333",
   "scope": "resolutionCache.ts only; no 95h amendment or program edit",
-  "loom": "Never submitted"
+  "loom": "Never submitted",
+  "source_scope": "Only resolutionCache.ts changes; program.ts byte-identical to baseline",
+  "census": "full: 133 -> 129 unique; 4 gone, 0 new, 0 changed; mutant restores all four"
 }

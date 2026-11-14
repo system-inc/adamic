@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "commit": "61636df700acf25afe229345128bfa4c193fda23",
+  "roots": 79,
+  "stock": {
+    "before": 0,
+    "after": 0,
+    "new": 0,
+    "version": "6.0.3",
+    "ambient": "scout pinned @types/node plus ledger require shim"
+  },
+  "adamic": {
+    "exit": 0,
+    "diagnostics": 0,
+    "build_revision": "61636df700acf25afe229345128bfa4c193fda23",
+    "build_modified": false
+  },
+  "javascript": {
+    "files": 604,
+    "emits": 1208,
+    "identical": true
+  },
+  "pins_consistent": true,
+  "program_unchanged": true,
+  "amendment_95h": false,
+  "committed_files": [
+    "stage3/adapt/99-correctness-binding-views/PROOF.md",
+    "stage3/adapt/99-correctness-binding-views/README.md",
+    "stage3/adapt/99-correctness-binding-views/adapt.cjs",
+    "stage3/adapt/99-correctness-binding-views/engine.cjs",
+    "stage3/adapt/99-correctness-binding-views/mutant.cjs",
+    "stage3/adapt/99-correctness-binding-views/owners.json",
+    "stage3/upstream/LEDGER.md"
+  ]
+}
