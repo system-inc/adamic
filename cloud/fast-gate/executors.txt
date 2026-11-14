@@ -9,8 +9,9 @@
 mode enforce
 #
 # executor  glob
-# Darwin only: the Apple package and its examples, tested on Kirk's Mac. A gate on the box reads
-# "needs darwin leg" and is never green until integration attaches the Mac's result.
+# Darwin only: the Apple package and its examples, tested by a darwin leg on a pool Mac (Shackler). A gate
+# passes darwin on the leg's record in cloud/fast-gate/darwin-legs/ whose darwinPaths matches the candidate's,
+# and is red with "needs a darwin leg" without one.
 darwin      internal/apple/*
 darwin      examples/apple/*
 # Not executed by anything: prose, evidence and records.

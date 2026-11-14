@@ -11,6 +11,7 @@ import io
 import re
 import shutil
 import contextlib
+import hashlib
 import json
 import os
 import subprocess
@@ -923,6 +924,233 @@ class Coverage(FailClosed):
         self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
         self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
         self.assertEqual(result["executors"], {"stage3": 2})
+
+
+class DarwinLegs(unittest.TestCase):
+    """The darwin executor passes on a pool Mac's recorded leg, cloud/fast-gate/darwin-legs/<tip>.json in the tools
+    checkout, whose darwinPaths digests the candidate's darwin paths, and is red without one, naming the pool Mac and the
+    digest it looked for (no box builds on Kirk's Mac, so no wording names it). The candidate is the change rebased onto
+    main, so the leg's tip is never the gate's sha: a main that moved elsewhere still matches, one that moved inside the
+    darwin paths doesn't. Mutants, each red here: cover() failing darwin unread; coverage reding on a passed darwin exit;
+    the darwin phase failing unread; any one green condition dropped; the digest over every path; a-check passing a
+    refusal, an untyped stop or a path that isn't darwin's on a leg."""
+    gate = FailClosed.gate
+    edited = "package apple\n\nvar Edited = 1\n"
+
+    def setUp(self):
+        FailClosed.setUp(self)
+        self.addCleanup(shutil.rmtree, self.directory)
+        sources = {"cloud/fast-gate/executors.txt": "darwin internal/apple/*\ndarwin examples/apple/*\ninert *.md\nstage3 stage3/*\ninert notes/*\n",
+                   "internal/apple/apple.go": "package apple\n", "examples/apple/app.a": "const x = 1\n",
+                   "notes/main.md": "# main\n", "probes/probe.a": "const y = 1\n"}
+        for name, source in sources.items():
+            self.write(name, source)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        self.main = self.commit("the darwin map")
+        self.legs = os.path.join(self.tree, run.darwinLegsDirectory)
+
+    def write(self, name, source):
+        os.makedirs(os.path.dirname(os.path.join(self.tree, name)), exist_ok=True)
+        with open(os.path.join(self.tree, name), "w") as handle:
+            handle.write(source)
+
+    def commit(self, message):
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message], check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        return self.sha
+
+    def on(self, parent, path, source, message):
+        # Only the edited path is added: the records are the tools checkout's, untracked here, never the candidate's.
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", parent], check=True)
+        self.write(path, source)
+        realRun(["git", "-C", self.tree, "add", "--", path], check=True)
+        return self.commit(message)
+
+    def candidate(self, mainEdit=None):
+        """(base, tip): the change's tip, cut from self.main, and the main the candidate is rebased onto, which took
+        mainEdit (a path and its source) after the cut. The tree is left at the candidate, self.sha."""
+        tip = self.on(self.main, "internal/apple/apple.go", self.edited, "the change")
+        base = self.main if mainEdit is None else self.on(self.main, mainEdit[0], mainEdit[1], "main moved")
+        self.on(base, "internal/apple/apple.go", self.edited, "the change, rebased")
+        return base, tip
+
+    def record(self, at, name=None, **fields):
+        """A green record of the leg at commit at, at its darwinPaths, with fields over it (None drops one), as
+        darwin-legs/name (<at>.json unless given)."""
+        record = {"tip": at, "host": "Shackler", "claim": "C-probe", "log": {"sha256": "a" * 64, "kept": "Shackler:~/legs/probe.log"},
+                  "command": "go test ./internal/apple/...", "tools": {"go": "go1.24", "node": "v24", "xcode": "16", "sdk": "macosx15"},
+                  "counts": {"passed": 12, "failed": 0, "skipped": 1}, "exit": 0, "darwinPaths": run.darwinPathsDigest(self.tree, at, self.tree)}
+        record = {key: value for key, value in dict(record, **fields).items() if value is not None}
+        os.makedirs(self.legs, exist_ok=True)
+        name = name or at + ".json"
+        with open(os.path.join(self.legs, name), "w") as handle:
+            json.dump(record, handle)
+        return name
+
+    def clearLegs(self):
+        for name in os.listdir(self.legs) if os.path.isdir(self.legs) else []:
+            os.remove(os.path.join(self.legs, name))
+
+    def assertNeedsLeg(self, gate, status, digest, why):
+        self.assertTrue(status.startswith("red:"), status)
+        self.assertEqual(gate.failure["step"], "darwin")
+        self.assertEqual(gate.failure["detail"],
+                         "needs a darwin leg on a pool Mac (Shackler), recorded in cloud/fast-gate/darwin-legs/<tip>.json at darwinPaths %s, "
+                         "for internal/apple/apple.go: %s" % (digest, why))
+        self.assertNotIn("Kirk", gate.failure["detail"])
+
+    def test_a_recorded_leg_at_the_candidate_s_darwin_paths_passes_the_gate(self):
+        base, tip = self.candidate()
+        self.record(tip)
+        summary = {"record": tip + ".json", "tip": tip, "host": "Shackler", "claim": "C-probe", "log": "a" * 64,
+                   "darwinPaths": run.darwinPathsDigest(self.tree, tip, self.tree)}
+        for full in (False, True):
+            with self.subTest(full=full):
+                gate, status, result = self.gate(base=base, full=full)
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertIn("darwin", result["planned_stages"])
+                self.assertEqual((result["stages_exit"]["coverage"], result["stages_exit"]["darwin"]), (0, 0))
+                self.assertEqual(result["darwin_leg"], summary)
+        # The pool's units: coverage alone keeps darwin's passed exit off its record and stays green, and the darwin unit
+        # passes on the same record.
+        for phase in ("coverage", "darwin"):
+            with self.subTest(phase=phase):
+                gate, status, result = self.gate(base=base, extra={"phase": phase})
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(result["stages_exit"], {phase: 0})
+                self.assertEqual(set(result["steps_seconds"]), {phase})
+                self.assertEqual(result["darwin_leg"], summary)
+
+    def test_main_moving_inside_the_darwin_paths_after_the_leg_is_red_naming_the_pool_mac_and_the_digest(self):
+        base, tip = self.candidate(("internal/apple/moved.go", "package apple\n\nvar Moved = 1\n"))
+        self.record(tip)
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertNotEqual(digest, run.darwinPathsDigest(self.tree, tip, self.tree))
+        for extra in ({}, {"phase": "coverage"}, {"phase": "darwin"}):
+            with self.subTest(extra=extra):
+                gate, status, result = self.gate(base=base, extra=extra)
+                self.assertNeedsLeg(gate, status, digest, "no darwin leg recorded for darwinPaths " + digest)
+                self.assertNotIn("darwin_leg", result)
+                if extra.get("phase") == "coverage":
+                    self.assertEqual(result["stages_exit"], {"coverage": 1})
+                else:
+                    self.assertEqual(result["stages_exit"]["darwin"], 1)
+
+    def test_main_moving_elsewhere_still_matches(self):
+        base, tip = self.candidate(("notes/main.md", "# main, moved\n"))
+        self.assertNotEqual(run.git(self.tree, "rev-parse", tip + "^{tree}"), run.git(self.tree, "rev-parse", self.sha + "^{tree}"))
+        self.assertEqual(run.darwinPathsDigest(self.tree, self.sha, self.tree), run.darwinPathsDigest(self.tree, tip, self.tree))
+        self.record(tip)
+        gate, status, result = self.gate(base=base)
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["darwin_leg"]["record"], tip + ".json")
+
+    def test_a_record_that_isnt_green_never_passes(self):
+        base, tip = self.candidate()
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        for why, fields, reason in (
+                ("exit 1", {"exit": 1}, "exit is 1, not 0"),
+                ("exit false, which Python calls 0", {"exit": False}, "exit is False, not 0"),
+                ("exit as a string", {"exit": "0"}, "exit is '0', not 0"),
+                ("a failed test", {"counts": {"passed": 12, "failed": 1, "skipped": 0}}, "counts.failed is 1, not 0"),
+                ("no test passed", {"counts": {"passed": 0, "failed": 0, "skipped": 12}}, "counts.passed is 0, not above 0"),
+                ("no counts", {"counts": None}, "counts isn't an object"),
+                ("both claim and job", {"job": "J-probe"}, "names claim and job, not exactly one of claim and job"),
+                ("neither claim nor job", {"claim": None}, "names neither, not exactly one of claim and job"),
+                ("an empty claim", {"claim": " "}, "claim isn't a non-empty string"),
+                ("a short log digest", {"log": {"sha256": "a" * 63}}, "log.sha256 isn't 64 lowercase hex"),
+                ("an uppercase log digest", {"log": {"sha256": "A" * 64}}, "log.sha256 isn't 64 lowercase hex"),
+                ("no log", {"log": None}, "log.sha256 isn't 64 lowercase hex"),
+                ("an uppercase tip", {"tip": tip.upper(), "name": tip + ".json"}, "tip isn't 40 lowercase hex"),
+                ("a tip that isn't its file name", {"name": "b" * 40 + ".json"}, "tip %s isn't its file name" % tip)):
+            with self.subTest(why):
+                self.clearLegs()
+                name = self.record(tip, **fields)
+                self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree), (None, "%s isn't green: %s" % (name, reason)))
+                gate, status, result = self.gate(base=base)
+                self.assertNeedsLeg(gate, status, digest, "%s isn't green: %s" % (name, reason))
+        # What can't be read holds no digest: a file that isn't JSON, a JSON list, a record with no darwinPaths.
+        self.clearLegs()
+        with open(os.path.join(self.legs, tip + ".json"), "w") as handle:
+            handle.write('{"tip": "' + tip + '", ')
+        with open(os.path.join(self.legs, "c" * 40 + ".json"), "w") as handle:
+            handle.write(json.dumps([digest]))
+        self.record(tip, name="d" * 40 + ".json", darwinPaths=None)
+        self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree), (None, "no darwin leg recorded for darwinPaths " + digest))
+        # The control: the same record whole is green, and a red record sorted before it doesn't hide it.
+        self.clearLegs()
+        self.record(tip, name="0" * 40 + ".json", tip="0" * 40, exit=1)
+        self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], None)
+        self.record(tip)
+        self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], tip + ".json")
+
+    def test_no_record_is_red_naming_the_pool_mac(self):
+        base, tip = self.candidate()
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertFalse(os.path.exists(self.legs))
+        for full in (False, True):
+            with self.subTest(full=full):
+                gate, status, result = self.gate(base=base, full=full)
+                self.assertNeedsLeg(gate, status, digest, "no darwin leg recorded for darwinPaths " + digest)
+                self.assertEqual(result["stages_exit"]["darwin"], 1)
+                self.assertEqual(result["needs_darwin"], ["internal/apple/apple.go"])
+
+    def test_the_digest_mode_prints_the_digest_the_gate_matches(self):
+        base, tip = self.candidate()
+        printed = realRun([sys.executable, run.__file__, "--darwin-paths-digest", "--tree", self.tree, "--sha", tip, "--tools", self.tree],
+                          capture_output=True, text=True, timeout=60)
+        self.assertEqual((printed.returncode, printed.stderr), (0, ""))
+        digest = printed.stdout.strip()
+        # The definition the README gives: the sorted "<mode> <object> <path>" lines of the darwin paths alone.
+        lines = sorted("100644 %s %s\n" % (run.git(self.tree, "rev-parse", "%s:%s" % (tip, path)), path)
+                       for path in ("internal/apple/apple.go", "examples/apple/app.a"))
+        self.assertEqual(digest, hashlib.sha256("".join(lines).encode()).hexdigest())
+        gate, status, result = self.gate(base=base)
+        self.assertNeedsLeg(gate, status, digest, "no darwin leg recorded for darwinPaths " + digest)
+        self.record(tip, darwinPaths=digest)
+        gate, status, result = self.gate(base=base)
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["darwin_leg"]["darwinPaths"], digest)
+
+    def aCheck(self, path, returncode, errors):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=self.tree, out=self.directory, sha=self.sha, tools=self.tree, full=False)
+        gate.result, gate.steps, gate.exits, gate.failure = {}, {}, {}, None
+        gate.lock, gate.started, gate.complete, gate.killSessions = threading.Lock(), 0.0, False, lambda: None
+
+        def spawn(command, stdout, stderr=None, directory=None, environment=None):
+            return types.SimpleNamespace(communicate=lambda: ("", errors), returncode=returncode)
+
+        with mock.patch.object(gate, "step", lambda *arguments: True), mock.patch.object(gate, "spawn", spawn), mock.patch("builtins.print"):
+            gate.aCheck([path])
+        return gate
+
+    def test_a_check_passes_a_darwin_program_stopped_on_the_platform_on_its_leg(self):
+        base, tip = self.candidate()
+        missing = "adamic: load: darwin platform missing: Xcode SDK\n"
+        # Without a leg, exactly today's red.
+        gate = self.aCheck("examples/apple/app.a", run.platformMissingExit, missing)
+        self.assertEqual(gate.exits["a-check"], 1)
+        self.assertEqual(gate.result["a_check"]["examples/apple/app.a"], {"outcome": "failed", "expected": "checked", "first": missing.strip()})
+        self.assertIn("examples/apple/app.a: failed, expected checked (%s)" % missing.strip(), gate.failure["detail"])
+        self.record(tip)
+        gate = self.aCheck("examples/apple/app.a", run.platformMissingExit, missing)
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.exits["a-check"], 0)
+        self.assertEqual(gate.result["a_check"]["examples/apple/app.a"],
+                         {"outcome": "darwin leg", "expected": "checked", "first": missing.strip(), "darwin_leg": tip + ".json"})
+        # Only the typed stop on a darwin path: a refusal, a type error, the words without the stop's exit, and a path
+        # that isn't darwin's each stay red beside the same leg.
+        for why, path, returncode, errors, outcome in (
+                ("a refusal", "examples/apple/app.a", 1, "examples/apple/app.a:1:1: Adamic 0.1 refuses x\n" + missing, "refused"),
+                ("a type error", "examples/apple/app.a", 1, "examples/apple/app.a(1,1): error TS2322: x\n", "type error"),
+                ("the words without the typed stop", "examples/apple/app.a", 1, missing, "failed"),
+                ("a path that isn't darwin's", "probes/probe.a", run.platformMissingExit, missing, "failed")):
+            with self.subTest(why):
+                gate = self.aCheck(path, returncode, errors)
+                self.assertEqual(gate.exits["a-check"], 1)
+                self.assertEqual(gate.result["a_check"][path]["outcome"], outcome)
+                self.assertNotIn("darwin_leg", gate.result["a_check"][path])
 
 
 class GateRuns(unittest.TestCase):
