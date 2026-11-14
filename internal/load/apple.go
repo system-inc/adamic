@@ -14,7 +14,7 @@ import (
 	"sync"
 
 	"github.com/system-inc/adamic/internal/apple/generate"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
@@ -52,7 +52,7 @@ var generatedBindings struct {
 // appleBindingsDirectory is where the generated binding files are: AppleBindingsVariable's
 // directory when it's set, or this Mac's cache, generated the first time it's needed.
 func appleBindingsDirectory() (string, error) {
-	if directory := os.Getenv(AppleBindingsVariable); directory != "" {
+	if directory := os.Getenv("ADAMIC_APPLE_BINDINGS"); directory != "" {
 		return directory, nil
 	}
 	generatedBindings.once.Do(func() {
@@ -134,7 +134,7 @@ func AppleHolds() (map[string][]string, error) {
 // run would trust.
 func cachedAppleBindings() (string, error) {
 	if runtime.GOOS != "darwin" {
-		return "", &toolchain.PlatformMissing{Platform: "darwin", Missing: fmt.Sprintf("Apple's frameworks are generated from Xcode's SDK, which only a Mac has; set %s to a directory of generated bindings", AppleBindingsVariable)}
+		return "", &platform.Missing{Platform: "darwin", Requirement: fmt.Sprintf("Apple's frameworks are generated from Xcode's SDK, which only a Mac has; set %s to a directory of generated bindings", AppleBindingsVariable)}
 	}
 	build, err := generate.SDKBuild("macosx")
 	if err != nil {
@@ -196,7 +196,7 @@ func appleBinding(module string) (map[string]string, error) {
 		}
 		files[appleDirectory+"/"+relative+".addition.d.ts"] = string(embedded)
 	}
-	if !generated && os.Getenv(AppleBindingsVariable) == "" {
+	if !generated && os.Getenv("ADAMIC_APPLE_BINDINGS") == "" {
 		return files, nil
 	}
 	directory, err := appleBindingsDirectory()

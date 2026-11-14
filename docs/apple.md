@@ -223,7 +223,7 @@ A closure Apple calls is handed how many arguments it was given, as main's closu
 
 ## Missing platform
 
-Without generated bindings, loading an Apple framework on Linux reports `toolchain.PlatformMissing` for darwin, preserving the SDK explanation through the loader and CLI (exit 5). SDK discovery on a Mac and native Apple builds use the same typed stop when xcrun or the selected SDK is missing. A generator, binding check, swiftc or clang that runs and fails remains an ordinary error. Linux controls and their [mutant evidence](../internal/apple/platform.mutants.md) hold that boundary. The admission delta records these programs as darwin only when their Apple import key also holds; the Mac witnesses judge them.
+Without generated bindings, loading an Apple framework on Linux reports `platform.Missing` for darwin, preserving the SDK explanation through the loader and CLI (exit 5). SDK discovery on a Mac and native Apple builds use the same typed stop when xcrun or the selected SDK is missing. A generator, binding check, swiftc or clang that runs and fails remains an ordinary error. Linux controls and their [mutant evidence](../internal/apple/platform.mutants.md) hold that boundary. The admission delta records these programs as darwin only when their Apple import key also holds; the Mac witnesses judge them.
 
 ## Not yet
 

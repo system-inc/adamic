@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 )
 
 // A foreign function (ir.Foreign) is one call into Apple's frameworks: its body is a typed
@@ -486,7 +486,7 @@ func swiftUIShim() (string, error) {
 	version, err := exec.Command("xcrun", "swiftc", "--version").CombinedOutput()
 	if err != nil {
 		if errors.Is(err, exec.ErrNotFound) {
-			return "", &toolchain.PlatformMissing{Platform: "darwin", Missing: "xcrun: " + err.Error()}
+			return "", &platform.Missing{Platform: "darwin", Requirement: "xcrun: " + err.Error()}
 		}
 		return "", fmt.Errorf("native: swiftc --version: %w\n%s", err, version)
 	}
@@ -518,7 +518,7 @@ func swiftUIShim() (string, error) {
 	partial := filepath.Join(scratch, "swiftui.o")
 	if combined, err := exec.Command("xcrun", "swiftc", "-parse-as-library", "-emit-object", "-O", "-module-name", "AdamicSwiftUI", "-target", "arm64-apple-macos15.0", sourcePath, "-o", partial).CombinedOutput(); err != nil {
 		if errors.Is(err, exec.ErrNotFound) {
-			return "", &toolchain.PlatformMissing{Platform: "darwin", Missing: "xcrun: " + err.Error()}
+			return "", &platform.Missing{Platform: "darwin", Requirement: "xcrun: " + err.Error()}
 		}
 		return "", fmt.Errorf("native: swiftc failed: %w\n%s", err, combined)
 	}
@@ -536,11 +536,11 @@ func BuildApple(source string, output string, options Options) error {
 	sdk, err := exec.Command("xcrun", "--show-sdk-path").Output()
 	if err != nil {
 		if errors.Is(err, exec.ErrNotFound) {
-			return &toolchain.PlatformMissing{Platform: "darwin", Missing: "xcrun: " + err.Error()}
+			return &platform.Missing{Platform: "darwin", Requirement: "xcrun: " + err.Error()}
 		}
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {
-			return &toolchain.PlatformMissing{Platform: "darwin", Missing: "native: the SDK's path: " + err.Error()}
+			return &platform.Missing{Platform: "darwin", Requirement: "native: the SDK's path: " + err.Error()}
 		}
 		return fmt.Errorf("native: the SDK's path: %w", err)
 	}

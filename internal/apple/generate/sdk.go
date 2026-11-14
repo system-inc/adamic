@@ -16,7 +16,7 @@ import (
 	"strings"
 
 	"github.com/system-inc/adamic/internal/apple/naming"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 )
 
 // The generator's own sources, so Version changes whenever what it would write could.
@@ -162,7 +162,7 @@ func CheckSDK(ctx context.Context, sdk, directory string) error {
 func missingSDK(sdk string, err error) error {
 	var exit *exec.ExitError
 	if errors.Is(err, exec.ErrNotFound) || errors.As(err, &exit) {
-		return &toolchain.PlatformMissing{Platform: "darwin", Missing: fmt.Sprintf("Apple's SDK %s: %v", sdk, err)}
+		return &platform.Missing{Platform: "darwin", Requirement: fmt.Sprintf("Apple's SDK %s: %v", sdk, err)}
 	}
 	return fmt.Errorf("Apple's SDK %s: %w", sdk, err)
 }

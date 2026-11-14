@@ -3,7 +3,7 @@ package generate
 import (
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 	"os"
 	"path/filepath"
 	"strings"
@@ -21,7 +21,7 @@ func TestSDKDiscoveryPlatformMissing(t *testing.T) {
 			}
 		}
 		_, err := SDKBuild("macosx")
-		var missing *toolchain.PlatformMissing
+		var missing *platform.Missing
 		if !errors.As(err, &missing) {
 			t.Fatalf("SDKBuild installed=%v: expected PlatformMissing, got %v", installed, err)
 		}
@@ -40,7 +40,7 @@ func TestSDKCheckCompilerFailureIsOrdinary(t *testing.T) {
 	}
 	t.Setenv("PATH", dir)
 	err := CheckSDK(context.Background(), "macosx", dir)
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if err == nil || errors.As(err, &missing) || !strings.Contains(err.Error(), "check-rejected") {
 		t.Fatalf("check failure: %v", err)
 	}
@@ -69,7 +69,7 @@ func TestSDKGeneratorFailureIsOrdinary(t *testing.T) {
 	}
 	t.Setenv("PATH", dir)
 	_, err = FromSDK(context.Background(), "macosx", "macos", []string{"Foundation"})
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if err == nil || errors.As(err, &missing) || !strings.Contains(err.Error(), "generator-rejected") {
 		t.Fatalf("generator failure: %v", err)
 	}

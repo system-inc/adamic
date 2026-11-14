@@ -202,8 +202,8 @@ The darwin class (#an8zcp1, Language and Adamic) is unjudged here. Apple's
 framework programs belong to the darwin witnesses on a Mac, rather than Node.
 The class needs two independent keys: the delta's own TypeScript parse finds a
 module specifier beginning `apple/`, and head's lowering compile or native build
-exits `toolchain.PlatformMissingExitCode` (5). The compiler reserves that exit
-for the typed `toolchain.PlatformMissing` error; diagnostic words grant nothing.
+exits `platform.MissingExitCode` (5). The compiler reserves that exit
+for the typed `platform.Missing` error; diagnostic words grant nothing.
 Nothing on main raises that error yet; Apple's slice supplies its platform stops.
 
 The parser reads Git blobs at the revision being judged, including every local

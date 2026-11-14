@@ -3,7 +3,7 @@ package native
 import (
 	"errors"
 	"fmt"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,7 +15,7 @@ import (
 func TestBuildAppleMissingXcrun(t *testing.T) {
 	t.Setenv("PATH", t.TempDir())
 	err := BuildApple("int main(void) { return 0; }", filepath.Join(t.TempDir(), "program"), Options{})
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if !errors.As(err, &missing) || missing.Platform != "darwin" {
 		t.Fatalf("BuildApple: expected PlatformMissing, got %v", err)
 	}
@@ -29,7 +29,7 @@ func TestBuildAppleMissingSDK(t *testing.T) {
 	}
 	t.Setenv("PATH", dir)
 	err := BuildApple("", filepath.Join(dir, "program"), Options{})
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if !errors.As(err, &missing) {
 		t.Fatalf("SDK discovery: expected PlatformMissing, got %v", err)
 	}
@@ -50,7 +50,7 @@ func TestSwiftCompilerFailureIsNotPlatformMissing(t *testing.T) {
 			t.Setenv("PATH", dir)
 			t.Setenv("XDG_CACHE_HOME", dir)
 			_, err := swiftUIShim()
-			var missing *toolchain.PlatformMissing
+			var missing *platform.Missing
 			if err == nil || errors.As(err, &missing) || !strings.Contains(err.Error(), "swiftc-rejected") {
 				t.Fatalf("compiler failure: %v", err)
 			}
@@ -84,7 +84,7 @@ func TestClangFailureIsNotPlatformMissing(t *testing.T) {
 	t.Setenv("ADAMIC_TOOLS", "")
 	t.Setenv("ADAMIC_SANDBOX", "")
 	err = BuildApple("int main(void) { return 0; }", filepath.Join(dir, "program"), Options{})
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if err == nil || errors.As(err, &missing) || !strings.Contains(err.Error(), "clang-rejected") {
 		t.Fatalf("compiler failure: %v", err)
 	}
@@ -94,7 +94,7 @@ func TestClangFailureIsNotPlatformMissing(t *testing.T) {
 func TestSwiftUIShimMissingXcrun(t *testing.T) {
 	t.Setenv("PATH", t.TempDir())
 	_, err := swiftUIShim()
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if !errors.As(err, &missing) {
 		t.Fatalf("shim: expected PlatformMissing, got %v", err)
 	}

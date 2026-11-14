@@ -3,7 +3,7 @@ package load
 import (
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -120,7 +120,7 @@ func TestAppleMissingPlatformSurvivesLoad(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err := Load([]string{source})
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if !errors.As(err, &missing) || missing.Platform != "darwin" {
 		t.Fatalf("Load: expected PlatformMissing, got %v", err)
 	}
