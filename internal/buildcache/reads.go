@@ -81,7 +81,7 @@ type readSet struct {
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, package listing (a recipe's linked package's
-// directory, its _test.go names left out), exists or link (paths in the tree), above (paths
+// directory, by its non-test Go source files alone), exists or link (paths in the tree), above (paths
 // above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
 // for, by whether and as what it exists), product (a name key), tool (a path
 // under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
@@ -747,8 +747,9 @@ func readTreeValue(root, kind, name string) string {
 	}
 	switch {
 	case info.IsDir() && kind != "exists":
-		// A recipe's package listing leaves its _test.go names out (packageListingKind); every other listing keeps them.
-		return "directory " + listing(root, path, kind != packageListingKind)
+		// A recipe's package listing names the directory's non-test Go source files alone (packageListingKind); every other
+		// listing names every tracked name.
+		return "directory " + listing(root, path, kind == packageListingKind)
 	case info.IsDir():
 		return "directory"
 	case kind == "content" && info.Mode().IsRegular():
@@ -888,10 +889,22 @@ func blobID(content []byte, length int) string {
 	return hex.EncodeToString(sum[:])
 }
 
-// listing is a directory's tracked entries, by name and kind, sorted; .git never counts, and a file whose name ends
-// _test.go counts only with tests. A directory so named, and every other name (testdata/, a file that isn't Go, an
-// ignored non-test .go), always counts.
-func listing(root, directory string, tests bool) string {
+// packageSourceExtensions are the extensions go/build takes as a package's source files: .go, and every one its
+// fileListForExt files (C, C++, headers, assembly, Objective-C, Fortran, SWIG, syso). They're case-sensitive, as go/build
+// matches them, so .S is assembly and .C is nothing. A package listing names only these, since go/build reads no other
+// name of the directory into the package: a name it doesn't take changes what compiles only through an embed pattern or
+// a cgo include path into a subdirectory, whose packages keep the whole listing (recipeEntries), through a go.mod, which
+// packageSource names by itself, or through a quoted #include of another extension, which
+// TestNoTrackedIncludeNamesAFileAPackageListingLeavesOut keeps out of the tree.
+var packageSourceExtensions = []string{".go", ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".s", ".S", ".sx", ".syso",
+	".m", ".f", ".F", ".for", ".f90", ".swig", ".swigcxx"}
+
+// listing is a directory's tracked entries, by name and kind, sorted; .git never counts. Every tracked name counts, a
+// directory's with a trailing "/", unless sources: then only a regular file whose extension go/build takes
+// (packageSourceExtensions), and never one whose name ends _test.go, or a go.mod counts (packageSource), so a
+// subdirectory, a test file and a file go
+// never compiles (a markdown file, testdata/) are left out. A package listing (packageListingKind) is the sources one.
+func listing(root, directory string, sources bool) string {
 	entries, err := os.ReadDir(directory)
 	if err != nil {
 		return "unreadable: " + err.Error()
@@ -901,7 +914,7 @@ func listing(root, directory string, tests bool) string {
 		path := filepath.Join(directory, entry.Name())
 		info, err := os.Stat(path)
 		isDirectory := err == nil && info.IsDir()
-		if entry.Name() == ".git" || !tests && !isDirectory && strings.HasSuffix(entry.Name(), "_test.go") || !Tracked(root, path, isDirectory) {
+		if entry.Name() == ".git" || sources && !packageSource(entry.Name(), info, err) || !Tracked(root, path, isDirectory) {
 			continue
 		}
 		suffix := ""
@@ -913,6 +926,18 @@ func listing(root, directory string, tests bool) string {
 	sort.Strings(names)
 	sum := sha256.Sum256([]byte(strings.Join(names, "\n")))
 	return hex.EncodeToString(sum[:])
+}
+
+// packageSource says whether name, stat'ed as info (or failing to, statErr), is a file a package listing names: a
+// regular file, reached through a link or not, whose extension go/build takes as a package's source, and no test file,
+// or one named go.mod. A go.mod added to a linked package's directory makes the directory a module of its own, so go
+// list would load another package there, or none, and a read set isn't recomputed on a later tree: the listing is all
+// that sees it.
+func packageSource(name string, info fs.FileInfo, statErr error) bool {
+	if statErr != nil || !info.Mode().IsRegular() {
+		return false
+	}
+	return name == "go.mod" || slices.Contains(packageSourceExtensions, filepath.Ext(name)) && !strings.HasSuffix(name, "_test.go")
 }
 
 func local(name string) bool {
