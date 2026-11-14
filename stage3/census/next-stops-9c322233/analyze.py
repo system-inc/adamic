@@ -24,12 +24,15 @@ for g in result:print(g['count'],g['where'],g['kind'],g['reason'])
 
 # Resolve only exact measured stop tuples from the pinned baseline metadata.
 known={(g['where'],g['kind'],g['reason']):g for g in old}
+for g in json.loads((base/'reviewed-stops.json').read_text()):known[(g['where'],g['kind'],g['reason'])]=g
 evidence=[]
 for g in result:
  key=(g['where'],g['kind'],g['reason'])
  assert key in known, 'New stop needs emitting-source review: '+str(key)
  for k in ['phase','owner']:g[k]=known[key][k]
- e={k:g[k] for k in ['where','kind','reason','phase','owner']}
+ for k in ['emitter','owner_basis']:
+  if k in known[key]:g[k]=known[key][k]
+ e={k:g[k] for k in ['where','kind','reason','phase','owner','emitter','owner_basis'] if k in g}
  if g['where']!='-':
   file,line,col=g['where'].rsplit(':',2);lines=(tree/'src/compiler'/file).read_text().splitlines();n=int(line)
   e['adapted_line']=lines[n-1]

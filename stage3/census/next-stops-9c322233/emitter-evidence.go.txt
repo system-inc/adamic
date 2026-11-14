@@ -1,0 +1,156 @@
+internal/lower/invariance.go:574
+574: func (l *lowering) refuseWidening(node *ast.Node) error {
+575: 	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
+576: 		return nil
+577: 	}
+578: 	if literalMember(node) && !judgedLiteralMembers[node.Kind] {
+579: 		return l.unjudgedLiteralMember(node)
+580: 	}
+581: 	var own, contextual *checker.Type
+582: 	var found *widening
+583: 	switch {
+584: 	case node.Kind == ast.KindAsExpression:
+585: 		as := node.AsAsExpression()
+586: 		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+587: 			return nil
+588: 		}
+589: 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+590: 		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+
+internal/lower/invariance.go:680
+680: 			}
+681: 		}
+682: 	default:
+683: 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+684: 			return nil
+685: 		}
+686: 		if l.genericFunction(node) {
+687: 			// same<Item> written where a (value: number) => number goes is instantiated to exactly
+688: 			// that type, Item = number, so there's no wider view of it to judge.
+689: 			return nil
+690: 		}
+691: 		if pattern := destructuringTarget(node); pattern != nil {
+692: 			// [a, b] = tuple and { a, b } = value keep nothing of the pattern: each element or field
+693: 			// is read out and stored into its target, so each is the view, seen as its target's type,
+694: 			// and the pattern isn't one.
+695: 			if pattern.Kind == ast.KindObjectLiteralExpression {
+696: 				return l.refuseFieldWidening(node, pattern)
+697: 			}
+698: 			return l.refuseElementWidening(node, pattern)
+699: 		}
+700: 		if viewSite(node) {
+701: 			contextual = l.slotType(node)
+702: 		}
+703: 		if contextual == nil && !l.conditionalBranchInSlot(node) {
+704: 			// With no type written for it, a value can still be taken into a wider one tsc made: the
+705: 			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
+706: 			// Animal[]), a literal's elements likewise, a function's returns likewise.
+707: 			contextual = l.impliedTarget(node)
+708: 		}
+709: 		if contextual == nil {
+710: 			return nil
+711: 		}
+712: 		own = l.checker.GetTypeAtLocation(node)
+713: 		found = l.freshOrWidened(node, own, contextual)
+714: 		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
+715: 			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
+716: 				if literal := l.slotType(node.Parent.Parent); literal != nil {
+717: 					contextual, found = l.memberLiteralSlotWidened(node, own, literal, name.Text(), contextual)
+718: 				}
+719: 			}
+720: 		}
+721: 	}
+722: 	if found == nil {
+723: 		return nil
+724: 	}
+725: 	return l.wideningRefusal(node, own, contextual, found)
+726: }
+
+internal/lower/invariance.go:1138
+1138: func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+1139: 	if found.declaredKey != "" {
+1140: 		return l.declaredKeyRefusal(node, own, contextual, found)
+1141: 	}
+1142: 	if found.genericMethod != "" {
+1143: 		return l.notYet(node, "a generic method "+found.genericMethod+" of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target))
+1144: 	}
+1145: 	if found.unfixedGeneric {
+1146: 		return l.notYet(node, "a generic function of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target)+", which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any")
+1147: 	}
+1148: 	if found.enum {
+1149: 		if enumObjectSymbol(found.target) != nil {
+1150: 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+1151: 		}
+1152: 		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
+1153: 			return l.flagWriteRefusal(node, found.target)
+1154: 		}
+1155: 		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
+1156: 			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+1157: 		}
+1158: 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+1159: 	}
+1160: 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+1161: 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+1162: 	if found.parameter {
+
+internal/lower/library_string.go:401
+401: func (l *lowering) stringWideningRefusal(node *ast.Node) error {
+402: 	if !l.refusal.checkedCasts[node] {
+403: 		return l.refuseStringWidening(node)
+404: 	}
+405: 	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
+406: 		return nil
+407: 	}
+408: 	return l.castSlotRefusal(node)
+409: }
+410: 
+411: func init() { refusalRules.register(3100, "stringWideningRefusal", (*lowering).stringWideningRefusal) }
+412: 
+413: func (l *lowering) refuseStringWidening(node *ast.Node) error {
+414: 	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
+415: 		return nil
+416: 	}
+417: 	return l.refuseWidening(node)
+418: }
+
+internal/lower/refusals.go:98
+98: 			return true
+99: 		}
+100: 		if branch := l.literalCallableBranch(node); branch != nil {
+101: 			return visit(branch)
+102: 		}
+103: 		// Each rule registers from its own file (refusal_rules.go); the first that refuses a node wins.
+104: 		for _, rule := range refusalRules.rules {
+105: 			prune, err := rule.check(l, node)
+106: 			if err != nil {
+107: 				found = err
+108: 				return true
+109: 			}
+110: 			if prune {
+111: 				return false
+112: 			}
+113: 		}
+114: 		node.ForEachChild(visit)
+115: 		return false
+116: 	}
+117: 	l.refusal.deferred = nil
+118: 	module.AsNode().ForEachChild(visit)
+119: 	if found == nil {
+120: 		found = l.refusal.deferred
+121: 	}
+122: 	return found
+123: }
+124: 
+125: // refuseNode runs refuse's per-node rules over node and everything under it, in refuse's order, and
+
+internal/lower/lower.go:138
+138: 	if err := lowering.namespaceInitialization(modules); err != nil {
+139: 		return nil, err
+140: 	}
+141: 	for _, module := range modules {
+142: 		if err := lowering.refuse(module); err != nil {
+143: 			return nil, err
+144: 		}
+145: 	}
+146: 	// Link every declaration before lowering any function body, including across back edges.
+

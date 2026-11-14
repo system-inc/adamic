@@ -1,0 +1,11 @@
+[
+  {
+    "where": "scanner.ts:2934:41",
+    "kind": "Refused",
+    "reason": "a value of type (TextRange & { value: number; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { value: number; } is read",
+    "phase": "refusal_scan",
+    "owner": "adaptation 70, stage 3",
+    "owner_basis": "stage3/meter/owners.json: seen as",
+    "emitter": "internal/lower/invariance.go: (*lowering).wideningRefusal (via refuseWidening and stringWideningRefusal, rule 3100)"
+  }
+]
