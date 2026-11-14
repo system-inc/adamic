@@ -14,7 +14,7 @@ function parse(file, text) {
 function locate(file, text) {
     const source = parse(file, text), states = [], edits = [];
     for (const pin of owners.filter(owner => owner.file === file)) {
-        const found = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === pin.owner);
+        const found = source.statements.filter(node => (ts.isFunctionDeclaration(node) || ts.isTypeAliasDeclaration(node)) && node.name?.text === pin.owner);
         assert([pin.beforeDeclarations, pin.afterDeclarations].includes(found.length), `${pin.owner}: owner count drift`);
         const start = found[0].getStart(source), end = found.at(-1).end;
         const spelling = text.slice(start, end), hash = digest(spelling);
