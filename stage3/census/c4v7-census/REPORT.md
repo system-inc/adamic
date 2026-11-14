@@ -5,7 +5,9 @@ sys.ts:304:13: unmeasured. scanner.ts:2934:41: unmeasured. New refusal-scan find
 Measurement and reporting only; no adaptation or compiler changes.
 Head: `1d48ecb5a5321717daf901579e49a23291995589`. Main: `5c8338c4232c37afb304ce6865458b67655c590a`.
 `git merge-base` returned exactly the main commit. Detached worktrees were freshly created under `/workspace/scratch/c4v7-census`.
-Both stage3/api `npm ci` installs passed. Recursive submodule setup and the upstream TypeScript checkout are in progress.
+Both stage3/api `npm ci` installs passed. Recursive submodule setup passed at both commits. Upstream TypeScript HEAD and peeled v6.0.3 both match `050880ce59e30b356b686bd3144efe24f875ebc8`. Head scan-only build and both head promise controls passed. Baseline scan-only build and both apply runs remain in progress.
+
+The first npm installs used the default npm cache; both were repeated successfully with an explicit scratch cache and preserved logs.
 
 Part 2 precedes Part 1. Scan-only sees refusal-scan findings only, and cannot establish lowering-phase stops.
 The requested promise-discard-sites README is absent at branch tip `2dc0593b937f8fbaf6c32f8107a899f78c223966`; its REPORT.md and the latent README document the wrapper and build procedure.

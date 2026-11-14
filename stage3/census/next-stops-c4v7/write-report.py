@@ -4,13 +4,13 @@ from pathlib import Path
 base=Path(__file__).resolve().parent;mode=os.environ['CENSUS_MODULE_FORMAT'];out=base/mode
 read=lambda n:json.loads((out/n).read_text())
 groups=read('grouped-first-stops.json');comparisons=read('comparison.json')
-s=['# Next stops: '+mode,'','Measured compiler/apply commit: `5c8338c4232c37afb304ce6865458b67655c590a`. Roots and locations are relative to `src/compiler/`. Two ordinary observations per root agree except timing.','','| Roots | Location | Kind | Exact reason | Phase | Owner |','| ---: | --- | --- | --- | --- | --- |']
+s=['# Next stops: '+mode,'','Measured compiler/apply commit: `1d48ecb5a5321717daf901579e49a23291995589`. Roots and locations are relative to `src/compiler/`. Two ordinary observations per root agree except timing.','','| Roots | Location | Kind | Exact reason | Phase | Owner |','| ---: | --- | --- | --- | --- | --- |']
 for g in groups:s.append('| '+' | '.join([str(g['count']),g['where'],g['kind'],g['reason'].replace('|','\\|').replace('<','&lt;').replace('>','&gt;'),g['phase'],g['owner']])+' |')
 s+=['','## Root membership','']
 for g in groups:s+=['- '+g['where']+' '+g['kind']+': '+', '.join('`'+r+'`' for r in g['roots'])]
 accepted=[r for g in groups if g['kind']=='accepted' for r in g['roots']]
-s+=['','Files lowering whole: '+str(len(accepted))+'/79: '+', '.join(accepted)+'. No native-output success is claimed.','','## Comparison with 5d334653','','Baseline: typescript/next-stops-5d334653 at `046d714aaed0d32650757488725965d061ad6955`.','',str(sum(c['unchanged'] for c in comparisons))+' unchanged exact tuples; '+str(sum(not c['unchanged'] for c in comparisons))+' changed.','']
-former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:290:19'};assert len(former)==73
+s+=['','Files lowering whole: '+str(len(accepted))+'/79: '+', '.join(accepted)+'. No native-output success is claimed.','','## Comparison with 5c8338c4','','Baseline: typescript/next-stops-5c8338c4 at `5c8338c4232c37afb304ce6865458b67655c590a`.','',str(sum(c['unchanged'] for c in comparisons))+' unchanged exact tuples; '+str(sum(not c['unchanged'] for c in comparisons))+' changed.','']
+former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:304:13'};assert len(former)==73
 s+=['The former 73 sys.ts:290:19 roots now go to:','']
 for g in groups:
  n=len(former.intersection(g['roots']))

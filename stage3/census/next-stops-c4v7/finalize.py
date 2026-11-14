@@ -10,16 +10,16 @@ assert [r['roots'] for r in records[modes[0]]]==[r['roots'] for r in records[mod
 matching=sum({k:a.get(k) for k in keys}=={k:b.get(k) for k in keys} for a,b in zip(*(records[m] for m in modes)))
 assert all((base/m/'validation.json').exists() for m in modes)
 p=json.loads((base/'provenance.json').read_text())
-s=['# Next stops on 5c8338c4','','Measured commit: `'+p['sha']+'` (main, "stage3/adapt: admit undefined slots in the changed-file polling queue"). Parent: `'+p['parent']+'`. Baseline: `'+p['baseline']+'` on typescript/next-stops-5d334653.','','Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','']
+s=['# Next stops on c4v-7','','Measured commit: `'+p['sha']+'` (c4v-7). Parent: `'+p['parent']+'`. Baseline: `'+p['baseline']+'` on typescript/next-stops-5c8338c4.','','Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','']
 for m in modes:
  cs=json.loads((base/m/'comparison.json').read_text())
- former=[c for c in cs if c['before'][0]=='sys.ts:290:19']
+ former=[c for c in cs if c['before'][0]=='sys.ts:304:13']
  assert len(former)==73
  changed=sum(not c['unchanged'] for c in cs)
- s += [m+': '+str(changed)+' changed exact tuples; '+str(79-changed)+' unchanged from 5d334653.','']
+ s += [m+': '+str(changed)+' changed exact tuples; '+str(79-changed)+' unchanged from 5c8338c4.','']
  accepted=[r for g in json.loads((base/m/'grouped-first-stops.json').read_text()) if g['kind']=='accepted' for r in g['roots']]
  s += ['Files lowering whole in '+m+': '+str(len(accepted))+'/79: '+', '.join(accepted)+'.','']
-s += ["The per-root comparisons below record every changed and unchanged exact tuple against 5d334653.",'']
+s += ["The per-root comparisons below record every changed and unchanged exact tuple against 5c8338c4.",'']
 s += ['','## Adapted source at new stops','']
 seen=set()
 for m in modes:
@@ -30,7 +30,7 @@ for m in modes:
   if key in new and key not in seen:
    seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
    if e.get('owner_basis'):s += ['Ownership evidence: '+e['owner_basis']+'.','']
-if not seen:s+=['No new stop tuples relative to the 5d334653 baseline.','']
+if not seen:s+=['No new stop tuples relative to the 5c8338c4 baseline.','']
 for m in modes:
  report=(base/m/'REPORT.md').read_text().splitlines()[1:]
  s += ['## '+m,'','\n'.join('#'+line if line.startswith('#') else line for line in report)]

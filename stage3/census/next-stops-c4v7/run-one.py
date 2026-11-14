@@ -6,7 +6,7 @@ roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79,len(root
 (out/'roots.json').write_text(json.dumps(list(map(str,roots)),indent=2)+'\n')
 index=int(sys.argv[1]);assert 1<=index<=79
 root=roots[index-1];dest=scratch/f'next-stops-c4v7-root-{index:02}.jsonl'
-run(f'root-{index:02}',[str(scratch/'next-stops-c4v7-census'),str(root),str(dest)])
+run(f'root-{index:02}',[str(scratch/'ordinary-head'),str(root),str(dest)])
 data=dest.read_bytes();observations=[json.loads(line) for line in data.splitlines()]
 assert len(observations)==2
 assert {k:v for k,v in observations[0].items() if k!='seconds'}=={k:v for k,v in observations[1].items() if k!='seconds'}
