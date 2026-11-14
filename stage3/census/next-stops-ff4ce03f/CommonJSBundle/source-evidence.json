@@ -1,0 +1,68 @@
+[
+  {
+    "where": "sys.ts:514:17",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan",
+    "owner": "internal/lower/cast_proof.go: (*lowering).castProof (createSingleWatcherPerName)",
+    "emitter": "internal/lower/cast_proof.go: (*lowering).castRefusal -> castProof (rule 1900)",
+    "owner_basis": "grep stage3/adapt/**/owners.json for createSingleWatcherPerName returns no match; no adaptation pins this function",
+    "expression_change_reach": "No: lowerWithElementKey runs refuse before declaration and body lowering. The registered rule 1900 castRefusal/castProof rejects the as T cast during refusal_scan; value/neverRead is downstream and cannot reach this first stop. The arrow parameter declared never does not make this cast provable.",
+    "adapted_line": "                (",
+    "adapted_excerpt": "511:     else {\n512:         cache.set(path, {\n513:             watcher: createWatcher(\n514:                 (\n515:                     // Cant infer types correctly so lets satisfy checker\n516:                     (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))\n517:                 ) as T,"
+  },
+  {
+    "where": "-",
+    "kind": "accepted",
+    "reason": "-",
+    "phase": "accepted",
+    "owner": "lower.LowerWithOptions (accepted; no stop)",
+    "emitter": "lower.LowerWithOptions (accepted; no stop)",
+    "expression_change_reach": "No changed stop is claimed here. Initialization preflight runs before the refusal scan and body lowering; accepted roots have no stop."
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "expression_change_reach": "No changed stop is claimed here. Initialization preflight runs before the refusal scan and body lowering; accepted roots have no stop.",
+    "adapted_line": "            fixedpollinginterval: WatchFileKind.FixedPollingInterval,",
+    "adapted_excerpt": "290:     {\n291:         name: \"watchFile\",\n292:         type: new Map(Object.entries({\n293:             fixedpollinginterval: WatchFileKind.FixedPollingInterval,\n294:             prioritypollinginterval: WatchFileKind.PriorityPollingInterval,\n295:             dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,\n296:             fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "expression_change_reach": "No changed stop is claimed here. Initialization preflight runs before the refusal scan and body lowering; accepted roots have no stop.",
+    "adapted_line": "    Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,",
+    "adapted_excerpt": "10: /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/\n11: /** @internal */\n12: export const Diagnostics = {\n13:     Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,\n14:     Identifier_expected: diag(1003, DiagnosticCategory.Error, \"Identifier_expected_1003\", \"Identifier expected.\") as DiagnosticMessage,\n15:     _0_expected: diag(1005, DiagnosticCategory.Error, \"_0_expected_1005\", \"'{0}' expected.\") as DiagnosticMessage,\n16:     A_file_cannot_have_a_reference_to_itself: diag(1006, DiagnosticCategory.Error, \"A_file_cannot_have_a_reference_to_itself_1006\", \"A file cannot have a reference to itself.\") as DiagnosticMessage,"
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "expression_change_reach": "No changed stop is claimed here. Initialization preflight runs before the refusal scan and body lowering; accepted roots have no stop.",
+    "adapted_line": "        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");",
+    "adapted_excerpt": "68:         const buildArray = build ? isArray(build) ? build : build.split(\".\") : emptyArray;\n69: \n70:         Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), \"Invalid argument: prerelease\");\n71:         Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");\n72: \n73:         this.major = major;\n74:         this.minor = minor;"
+  },
+  {
+    "where": "utilitiesPublic.ts:1280:52",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan (predicate contracts)",
+    "owner": "internal/lower/predicates.go: (*lowering).predicateArgumentProof (getFirstJSDocTag)",
+    "emitter": "internal/lower/refusals.go: (*lowering).refuse contract walk -> predicateArguments -> predicateArgumentProof; also registered rule 1700",
+    "owner_basis": "grep stage3/adapt/**/owners.json for getFirstJSDocTag returns no match; no adaptation pins this function",
+    "expression_change_reach": "No: refuse walks predicate call contracts before body lowering. predicateArguments/predicateArgumentProof rejects the forwarded predicate here; the new value/neverRead lowering is downstream and cannot reach this first stop.",
+    "adapted_line": "    return find(getJSDocTagsWorker(node, noCache), predicate);",
+    "adapted_excerpt": "1277: \n1278: /** Get the first JSDoc tag of a specified kind, or undefined if not present. */\n1279: function getFirstJSDocTag<T extends JSDocTag>(node: Node, predicate: (tag: JSDocTag) => tag is T, noCache?: boolean): T | undefined {\n1280:     return find(getJSDocTagsWorker(node, noCache), predicate);\n1281: }\n1282: \n1283: /** Gets all JSDoc tags that match a specified predicate */"
+  }
+]
