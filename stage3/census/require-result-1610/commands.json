@@ -1,0 +1,102 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "candidate": "ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "scratch": "/workspace/scratch/require-result-1610",
+  "completed": [
+    {
+      "command": "git submodule update --init --recursive --depth 1",
+      "cwd": "/workspace/scratch/require-result-1610/work",
+      "exit": 0
+    },
+    {
+      "command": "npm ci --prefix stage3/api",
+      "cwd": "/workspace/scratch/require-result-1610/work",
+      "exit": 0
+    },
+    {
+      "command": "stage3/apply.sh /workspace/scratch/require-result-1610/main-adapted",
+      "exit": 0
+    },
+    {
+      "command": "node /workspace/scratch/require-result-1610/stock-valid.cjs",
+      "exit": 0,
+      "note": "NODE_PATH=work/stage3/api/node_modules; explicit pinned Node typeRoots"
+    },
+    {
+      "command": "bash /workspace/scratch/require-result-1610/measure.sh",
+      "exit": 0,
+      "note": "initial missing-Node-types stock probe invalid; stock-valid.cjs supersedes it"
+    },
+    {
+      "command": "python3 /workspace/scratch/require-result-1610/delta.py",
+      "exit": 0
+    },
+    {
+      "command": "node /workspace/scratch/require-result-1610/emit.cjs",
+      "exit": 0
+    },
+    {
+      "command": "adamic types <79 sorted compiler roots>",
+      "exit": 0,
+      "roots": "adamic-types.json"
+    },
+    {
+      "command": "node stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs /workspace/scratch/require-result-1610/main-adapted",
+      "exit": 0
+    },
+    {
+      "command": "node stage3/adapt/99-wasm-crypto-import/proofs/check.cjs /workspace/scratch/require-result-1610/crypto-before /workspace/scratch/require-result-1610/candidate-types /workspace/scratch/require-result-1610/crypto-scope.json",
+      "exit": 0,
+      "note": "candidate-types had annotated sys.ts at this invocation; named mutant was applied later"
+    },
+    {
+      "command": "node stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs /workspace/scratch/require-result-1610/candidate-types",
+      "exit": 0,
+      "note": "cmp with baseline-sys.ts exits 0; source-hashes.txt"
+    },
+    {
+      "command": "npm ci && node_modules/.bin/hereby dts",
+      "cwd": "/workspace/scratch/require-result-1610/dts-main",
+      "exit": 0
+    },
+    {
+      "command": "npm ci && node_modules/.bin/hereby dts",
+      "cwd": "/workspace/scratch/require-result-1610/dts-change",
+      "exit": 0
+    },
+    {
+      "command": "diff -u <main/typescript.d.ts> <change/typescript.d.ts>",
+      "exit": 0
+    },
+    {
+      "command": "diff -u <main/tsserverlibrary.d.ts> <change/tsserverlibrary.d.ts>",
+      "exit": 0
+    },
+    {
+      "command": "stage3/lane/run.sh /workspace/scratch/require-result-1610/lane-final",
+      "exit": 0,
+      "commit": "ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8",
+      "mode": "whole and unfiltered"
+    },
+    {
+      "command": "node /workspace/scratch/require-result-1610/final-source.cjs",
+      "exit": 0,
+      "result": "747 files, only sys.ts changed, measured candidate bytes exact, replay zero writes and unchanged bytes/mtime"
+    },
+    {
+      "command": "git push origin HEAD:refs/heads/typescript/require-result-1610-1",
+      "exit": 0,
+      "sha": "ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8",
+      "force": false
+    }
+  ],
+  "aborted": [
+    {
+      "command": "stage3/lane/run.sh /workspace/scratch/require-result-1610/lane",
+      "exit": 143,
+      "note": "Deliberately stopped during initial apply before tests to update historical crypto proof input; not acceptance evidence."
+    }
+  ],
+  "pending": []
+}

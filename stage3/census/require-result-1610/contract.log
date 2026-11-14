@@ -1,0 +1,17 @@
+{
+  "LF": true,
+  "CRLF": true,
+  "exactAfterText": true,
+  "zeroWriteReplay": true,
+  "bytesAndMtimePreserved": true,
+  "restoringMutant": true,
+  "refused": [
+    "restored-result-\"\\n\"",
+    "restored-result-\"\\r\\n\"",
+    "half-adapted-result",
+    "owner-drift",
+    "duplicate-arrow",
+    "duplicate-owner",
+    "mixed-line-endings"
+  ]
+}

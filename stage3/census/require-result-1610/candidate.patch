@@ -1,8 +1,39 @@
+commit ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8
+Author:     Kirk Ouimet <kirk@kirkouimet.com>
+AuthorDate: Sat Nov 14 17:38:40 2026 +0000
+Commit:     Kirk Ouimet <kirk@kirkouimet.com>
+CommitDate: Sat Nov 14 17:38:40 2026 +0000
+
+    stage3: annotate nodeSystem require result (#baobab item 9)
+
+diff --git a/stage3/adapt/99-wasm-crypto-import/PROOF-require-result.md b/stage3/adapt/99-wasm-crypto-import/PROOF-require-result.md
+new file mode 100644
+index 000000000..6fc88269d
+--- /dev/null
++++ b/stage3/adapt/99-wasm-crypto-import/PROOF-require-result.md
+@@ -0,0 +1,17 @@
++# Require result annotation proof
++
++Task #baobab item 9; base 8e3a784aa5a601f57342c07b68f145fe56252c21.
++The only added source change is `(baseDir, moduleName): ModuleImportResult =>`.
++Stock TypeScript 6.0.3 accepts both returns with zero diagnostics on all 79 roots,
++using stage3/api's pinned Node types. Adamic types exits zero on the same roots.
++All 604 source files emit byte-identical JavaScript (1,208 comparisons with
++comments kept/removed). The full sys.ts CommonJSBundle census goes from 185 to
++184 findings: only the 1610:22 refusal_scan finding disappears; zero new or
++changed findings. `module: any` adds no finding under the existing computed-path
++require host model. The restoring mutant reinstates the original source.
++
++The evidence branch retains complete streams, delta records with phases,
++commands, source pins, contract, restoring-mutant, upstream npm ci / hereby dts
++and empty declaration diffs, full apply, and whole unfiltered lane receipts.
++These receipts, rather than this document, establish the final acceptance gates.
++No compiler rule, sanction, lane count or filter is changed.
 diff --git a/stage3/adapt/99-wasm-crypto-import/README.md b/stage3/adapt/99-wasm-crypto-import/README.md
-index eb0f0ad4a..ba7c27518 100644
+index eb0f0ad4a..e9bd914b0 100644
 --- a/stage3/adapt/99-wasm-crypto-import/README.md
 +++ b/stage3/adapt/99-wasm-crypto-import/README.md
-@@ -244,3 +244,24 @@ oracle, fixture, meter, owners map or committed patch table is edited.
+@@ -244,3 +244,29 @@ oracle, fixture, meter, owners map or committed patch table is edited.
  The whole getNodeSystem before/after pins now include 93's concrete timer
  forwarding arrows. They forward the optional label and opaque unknown handle
  under Adamic's 05:48Z contract. This adapter's crypto transformation is unchanged.
@@ -27,6 +58,11 @@ index eb0f0ad4a..ba7c27518 100644
 +half-adapted input, mixed endings and replay. Full evidence and acceptance
 +receipts belong on `typescript/require-result-1610-evidence`, under
 +`stage3/census/require-result-1610/`. Nothing is submitted to Loom.
++
++The existing proofs/check.cjs source-scope oracle also undoes the annotation.
++Its source inventory is rebased from the historical 746 files to this task's
++main 8e3a784aa inventory of 747 files; the before/after inventories must still
++match exactly. Its two crypto JavaScript scope checks remain unchanged and pass.
 diff --git a/stage3/adapt/99-wasm-crypto-import/adapt.cjs b/stage3/adapt/99-wasm-crypto-import/adapt.cjs
 index 9e1e3d70b..3b62e25bb 100644
 --- a/stage3/adapt/99-wasm-crypto-import/adapt.cjs
@@ -86,6 +122,79 @@ index 9e1e3d70b..3b62e25bb 100644
  if (require.main === module) {
      assert.equal(process.argv.length, 3, 'usage: node adapt.cjs <tree>');
      console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));
+diff --git a/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs b/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs
+index d901b1237..5431cf95a 100644
+--- a/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs
++++ b/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs
+@@ -6,6 +6,7 @@ function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recurs
+ function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
+ function undo(text, erased = false, removeComments = false) {
+     const newline = text.includes('\r\n') ? '\r\n' : '\n';
++    if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
+     text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
+     text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
+     assert.equal([...text.matchAll(/^([ \t]*)createSHA256Hash,(\r?)$/gm)].length, 1, 'reviewed shorthand missing or duplicated');
+@@ -25,12 +26,12 @@ function undo(text, erased = false, removeComments = false) {
+ }
+ function TestCryptoSourceScope(before, after) {
+     const names = inventory(before); assert.deepEqual(inventory(after), names, 'source inventory changed');
+-    assert.equal(names.length, 746, 'source inventory size moved');
++    assert.equal(names.length, 747, 'source inventory size moved from main 8e3a784aa');
+     const entries = names.map(file => ({file, before:hash(fs.readFileSync(path.join(before,file))), after:hash(fs.readFileSync(path.join(after,file)))}));
+     const changed = entries.filter(x => x.before !== x.after).map(x => x.file);
+     assert.deepEqual(changed, ['src/compiler/sys.ts'], 'source changed outside sys.ts');
+     const a = fs.readFileSync(path.join(before,'src/compiler/sys.ts'),'utf8'), b = fs.readFileSync(path.join(after,'src/compiler/sys.ts'),'utf8');
+-    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load and three hash expressions');
++    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load, three hash expressions and require result annotation');
+     return {files:names.length, changed, undoRestoresExactBytes:true, inventory:entries};
+ }
+ function TestCryptoTranspileScope(before, after) {
+diff --git a/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs b/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs
+new file mode 100644
+index 000000000..4b53ef08e
+--- /dev/null
++++ b/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs
+@@ -0,0 +1,40 @@
++'use strict';
++const fs = require('node:fs'), path = require('node:path'), os = require('node:os'), cp = require('node:child_process'), assert = require('node:assert/strict');
++const {adapt, requireBefore, requireAfter} = require('../adapt.cjs');
++const {restore} = require('../require-result-mutant.cjs');
++const baseline = path.resolve(process.argv[2]);
++const before = cp.execFileSync('git', ['-C', baseline, 'show', 'refs/stage3/99-wasm-crypto-import-before:src/compiler/sys.ts'], {encoding: 'utf8'});
++const expected = fs.readFileSync(path.join(baseline, 'src/compiler/sys.ts'), 'utf8').replace(requireBefore, requireAfter);
++const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'require-result-contract-')), file = path.join(scratch, 'src/compiler/sys.ts');
++const cases = [];
++function seed(text = before) { fs.writeFileSync(file, text); }
++function snapshot() { return [fs.readFileSync(file, 'utf8'), String(fs.statSync(file, {bigint: true}).mtimeNs)]; }
++function noWrites(action) {
++    const write = fs.writeFileSync; let writes = 0;
++    fs.writeFileSync = (...args) => { writes++; return write(...args); };
++    try { action(); assert.equal(writes, 0); } finally { fs.writeFileSync = write; }
++}
++function refused(name, text) {
++    seed(text); const old = snapshot();
++    noWrites(() => assert.throws(() => adapt(scratch), undefined, name));
++    assert.deepEqual(snapshot(), old); cases.push(name);
++}
++try {
++    fs.cpSync(path.join(baseline, 'src'), path.join(scratch, 'src'), {recursive: true});
++    for (const newline of ['\n', '\r\n']) {
++        seed(before.replace(/\r\n/g, '\n').replace(/\n/g, newline));
++        assert.equal(adapt(scratch).files, 1);
++        assert.equal(fs.readFileSync(file, 'utf8'), expected.replace(/\r\n/g, '\n').replace(/\n/g, newline));
++        const old = snapshot(); noWrites(() => assert.equal(adapt(scratch).files, 0)); assert.deepEqual(snapshot(), old);
++        restore(scratch);
++        assert(fs.readFileSync(file, 'utf8').includes(requireBefore));
++        refused('restored-result-' + JSON.stringify(newline), fs.readFileSync(file, 'utf8'));
++    }
++    refused('half-adapted-result', before.replace(requireBefore, requireAfter));
++    refused('owner-drift', before.replace(requireBefore, requireBefore + ' /* drift */'));
++    refused('duplicate-arrow', before.replace(requireBefore, requireBefore + '\n' + requireBefore));
++    const owner = require('./targets.json')[0].ownerBeforeText;
++    refused('duplicate-owner', before + '\r\n' + owner);
++    refused('mixed-line-endings', before.replace('\r\n', '\n'));
++    console.log(JSON.stringify({LF: true, CRLF: true, exactAfterText: true, zeroWriteReplay: true, bytesAndMtimePreserved: true, restoringMutant: true, refused: cases}, null, 2));
++} finally { fs.rmSync(scratch, {recursive: true, force: true}); }
 diff --git a/stage3/adapt/99-wasm-crypto-import/proofs/targets.json b/stage3/adapt/99-wasm-crypto-import/proofs/targets.json
 index 54773f764..4949a22f8 100644
 --- a/stage3/adapt/99-wasm-crypto-import/proofs/targets.json
@@ -103,6 +212,31 @@ index 54773f764..4949a22f8 100644
 +    "ownerAfterText": "function getNodeSystem(): System {\r\n        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n        let activeSession: import(\"inspector\").Session | \"stopping\" | undefined;\r\n        let profilePath = \"./profile.cpuprofile\";\r\n\r\n        const isMacOs = process.platform === \"darwin\";\r\n        const isLinuxOrMacOs = process.platform === \"linux\" || isMacOs;\r\n\r\n        const statSyncOptions = { throwIfNoEntry: false } as const;\r\n\r\n        const platform: string = _os.platform();\r\n        const useCaseSensitiveFileNames = isFileSystemCaseSensitive();\r\n        const fsRealpath = !!_fs.realpathSync.native ? process.platform === \"win32\" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;\r\n\r\n        // If our filename is \"sys.js\", then we are executing unbundled on the raw tsc output.\r\n        // In that case, simulate a faked path in the directory where a bundle would normally\r\n        // appear (e.g. the directory containing lib.*.d.ts files).\r\n        //\r\n        // Note that if we ever emit as files like cjs/mjs, this check will be wrong.\r\n        const executingFilePath = __filename.endsWith(\"sys.js\") ? _path.join(_path.dirname(__dirname), \"__fake__.js\") : __filename;\r\n\r\n        const fsSupportsRecursiveFsWatch = process.platform === \"win32\" || isMacOs;\r\n        const getCurrentDirectory = memoize(() => process.cwd());\r\n        const { watchFile, watchDirectory } = createSystemWatchFunctions({\r\n            pollingWatchFileWorker: fsWatchFileWorker,\r\n            getModifiedTime,\r\n            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n            fsWatchWorker,\r\n            useCaseSensitiveFileNames,\r\n            getCurrentDirectory,\r\n            fileSystemEntryExists,\r\n            // Node 4.0 `fs.watch` function supports the \"recursive\" option on both OSX and Windows\r\n            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n            fsSupportsRecursiveFsWatch,\r\n            getAccessibleSortedChildDirectories: path => getAccessibleFileSystemEntries(path).directories,\r\n            realpath,\r\n            tscWatchFile: process.env.TSC_WATCHFILE,\r\n            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,\r\n            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,\r\n            inodeWatching: isLinuxOrMacOs,\r\n            fsWatchWithTimestamp: isMacOs,\r\n            sysLog,\r\n        });\r\n        const nodeSystem: System = {\r\n            args: process.argv.slice(2),\r\n            newLine: _os.EOL,\r\n            useCaseSensitiveFileNames,\r\n            write(s: string): void {\r\n                process.stdout.write(s);\r\n            },\r\n            getWidthOfTerminal() {\r\n                return process.stdout.columns ?? 0;\r\n            },\r\n            writeOutputIsTTY() {\r\n                return !!process.stdout.isTTY;\r\n            },\r\n            readFile,\r\n            writeFile,\r\n            watchFile,\r\n            watchDirectory,\r\n            preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,\r\n            resolvePath: path => _path.resolve(path),\r\n            fileExists,\r\n            directoryExists,\r\n            getAccessibleFileSystemEntries,\r\n            createDirectory(directoryName: string) {\r\n                if (!nodeSystem.directoryExists(directoryName)) {\r\n                    // Wrapped in a try-catch to prevent crashing if we are in a race\r\n                    // with another copy of ourselves to create the same directory\r\n                    try {\r\n                        _fs.mkdirSync(directoryName);\r\n                    }\r\n                    catch (e) {\r\n                        if (errorCode(e) !== \"EEXIST\") {\r\n                            // Failed for some other reason (access denied?); still throw\r\n                            throw e;\r\n                        }\r\n                    }\r\n                }\r\n            },\r\n            getExecutingFilePath() {\r\n                return executingFilePath;\r\n            },\r\n            getCurrentDirectory,\r\n            getDirectories,\r\n            getEnvironmentVariable(name: string) {\r\n                return process.env[name] || \"\";\r\n            },\r\n            readDirectory,\r\n            getModifiedTime,\r\n            setModifiedTime,\r\n            deleteFile,\r\n            createHash: createSHA256Hash,\r\n            createSHA256Hash,\r\n            getMemoryUsage() {\r\n                if (global.gc) {\r\n                    global.gc();\r\n                }\r\n                return process.memoryUsage().heapUsed;\r\n            },\r\n            getFileSize(path) {\r\n                const stat = statSync(path);\r\n                if (stat?.isFile()) {\r\n                    return stat.size;\r\n                }\r\n                return 0;\r\n            },\r\n            exit(exitCode?: number): undefined {\r\n                disableCPUProfiler(() => process.exit(exitCode));\r\n            },\r\n            enableCPUProfiler,\r\n            disableCPUProfiler,\r\n            cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, \"--cpu-prof\") || contains(process.execArgv, \"--prof\"),\r\n            realpath,\r\n            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,\r\n            tryEnableSourceMapsForHost() {\r\n                try {\r\n                    require(\"source-map-support\").install();\r\n                }\r\n                catch {\r\n                    // Could not enable source maps.\r\n                }\r\n            },\r\n            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n            clearScreen: () => {\r\n                process.stdout.write(\"\\x1B[2J\\x1B[3J\\x1B[H\");\r\n            },\r\n            setBlocking: () => {\r\n                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };\r\n                if (handle && handle.setBlocking) {\r\n                    handle.setBlocking(true);\r\n                }\r\n            },\r\n            base64decode: input => Buffer.from(input, \"base64\").toString(\"utf8\"),\r\n            base64encode: input => Buffer.from(input).toString(\"base64\"),\r\n            require: (baseDir, moduleName): ModuleImportResult => {\r\n                try {\r\n                    const modulePath = resolveJSModule(moduleName, baseDir, nodeSystem);\r\n                    return { module: require(modulePath), modulePath, error: undefined };\r\n                }\r\n                catch (error) {\r\n                    return { module: undefined, modulePath: undefined, error };\r\n                }\r\n            },\r\n        };\r\n        return nodeSystem;\r\n\r\n        /** Calls fs.statSync, returning undefined if any errors are thrown */\r\n        function statSync(path: string): import(\"fs\").Stats | undefined {\r\n            // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.\r\n            try {\r\n                return _fs.statSync(path, statSyncOptions);\r\n            }\r\n            catch {\r\n                // This should never happen as we are passing throwIfNoEntry: false,\r\n                // but guard against this just in case (e.g. a polyfill doesn't check this flag).\r\n                return undefined;\r\n            }\r\n        }\r\n\r\n        /**\r\n         * Uses the builtin inspector APIs to capture a CPU profile\r\n         * See https://nodejs.org/api/inspector.html#inspector_example_usage for details\r\n         */\r\n        function enableCPUProfiler(path: string, cb: () => void) {\r\n            if (activeSession) {\r\n                cb();\r\n                return false;\r\n            }\r\n            const inspector: typeof import(\"inspector\") = require(\"inspector\");\r\n            if (!inspector || !inspector.Session) {\r\n                cb();\r\n                return false;\r\n            }\r\n            const session = new inspector.Session();\r\n            session.connect();\r\n\r\n            session.post(\"Profiler.enable\", () => {\r\n                session.post(\"Profiler.start\", () => {\r\n                    activeSession = session;\r\n                    profilePath = path;\r\n                    cb();\r\n                });\r\n            });\r\n            return true;\r\n        }\r\n\r\n        /**\r\n         * Strips non-TS paths from the profile, so users with private projects shouldn't\r\n         * need to worry about leaking paths by submitting a cpu profile to us\r\n         */\r\n        function cleanupPaths(profile: import(\"inspector\").Profiler.Profile) {\r\n            let externalFileCounter = 0;\r\n            const remappedPaths = new Map<string, string>();\r\n            const normalizedDir = normalizeSlashes(_path.dirname(executingFilePath));\r\n            // Windows rooted dir names need an extra `/` prepended to be valid file:/// urls\r\n            const fileUrlRoot = `file://${getRootLength(normalizedDir) === 1 ? \"\" : \"/\"}${normalizedDir}`;\r\n            for (const node of profile.nodes) {\r\n                if (node.callFrame.url) {\r\n                    const url = normalizeSlashes(node.callFrame.url);\r\n                    if (containsPath(fileUrlRoot, url, useCaseSensitiveFileNames)) {\r\n                        node.callFrame.url = getRelativePathToDirectoryOrUrl(fileUrlRoot, url, fileUrlRoot, createGetCanonicalFileName(useCaseSensitiveFileNames), /*isAbsolutePathAnUrl*/ true);\r\n                    }\r\n                    else if (!nativePattern.test(url)) {\r\n                        node.callFrame.url = (remappedPaths.has(url) ? remappedPaths : remappedPaths.set(url, `external${externalFileCounter}.js`)).get(url)!;\r\n                        externalFileCounter++;\r\n                    }\r\n                }\r\n            }\r\n            return profile;\r\n        }\r\n\r\n        function disableCPUProfiler(cb: () => void) {\r\n            if (activeSession && activeSession !== \"stopping\") {\r\n                const s = activeSession;\r\n                activeSession.post(\"Profiler.stop\", (err, { profile }) => {\r\n                    if (!err) {\r\n                        if (statSync(profilePath)?.isDirectory()) {\r\n                            profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, \"-\")}+P${process.pid}.cpuprofile`);\r\n                        }\r\n                        try {\r\n                            _fs.mkdirSync(_path.dirname(profilePath), { recursive: true });\r\n                        }\r\n                        catch {\r\n                            // do nothing and ignore fallible fs operation\r\n                        }\r\n                        _fs.writeFileSync(profilePath, JSON.stringify(cleanupPaths(profile))!);\r\n                    }\r\n                    activeSession = undefined;\r\n                    s.disconnect();\r\n                    cb();\r\n                });\r\n                activeSession = \"stopping\";\r\n                return true;\r\n            }\r\n            else {\r\n                cb();\r\n                return false;\r\n            }\r\n        }\r\n\r\n        function isFileSystemCaseSensitive(): boolean {\r\n            // win32\\win64 are case insensitive platforms\r\n            if (platform === \"win32\" || platform === \"win64\") {\r\n                return false;\r\n            }\r\n            // If this file exists under a different case, we must be case-insensitve.\r\n            return !fileExists(swapCase(__filename));\r\n        }\r\n\r\n        /** Convert all lowercase chars to uppercase, and vice-versa */\r\n        function swapCase(s: string): string {\r\n            return s.replace(/\\w/g, ch => {\r\n                const up = ch.toUpperCase();\r\n                return ch === up ? ch.toLowerCase() : up;\r\n            });\r\n        }\r\n\r\n        function fsWatchFileWorker(fileName: string, callback: FileWatcherCallback, pollingInterval: number): FileWatcher {\r\n            _fs.watchFile(fileName, { persistent: true, interval: pollingInterval }, fileChanged);\r\n            let eventKind: FileWatcherEventKind;\r\n            return {\r\n                close: () => _fs.unwatchFile(fileName, fileChanged),\r\n            };\r\n\r\n            function fileChanged(curr: import(\"fs\").Stats, prev: import(\"fs\").Stats) {\r\n                // previous event kind check is to ensure we recongnize the file as previously also missing when it is restored or renamed twice (that is it disappears and reappears)\r\n                // In such case, prevTime returned is same as prev time of event when file was deleted as per node documentation\r\n                const isPreviouslyDeleted = +prev.mtime === 0 || eventKind === FileWatcherEventKind.Deleted;\r\n                if (+curr.mtime === 0) {\r\n                    if (isPreviouslyDeleted) {\r\n                        // Already deleted file, no need to callback again\r\n                        return;\r\n                    }\r\n                    eventKind = FileWatcherEventKind.Deleted;\r\n                }\r\n                else if (isPreviouslyDeleted) {\r\n                    eventKind = FileWatcherEventKind.Created;\r\n                }\r\n                // If there is no change in modified time, ignore the event\r\n                else if (+curr.mtime === +prev.mtime) {\r\n                    return;\r\n                }\r\n                else {\r\n                    // File changed\r\n                    eventKind = FileWatcherEventKind.Changed;\r\n                }\r\n                callback(fileName, eventKind, curr.mtime);\r\n            }\r\n        }\r\n\r\n        function fsWatchWorker(\r\n            fileOrDirectory: string,\r\n            recursive: boolean,\r\n            callback: FsWatchCallback,\r\n        ) {\r\n            // Node 4.0 `fs.watch` function supports the \"recursive\" option on both OSX and Windows\r\n            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n            return _fs.watch(\r\n                fileOrDirectory,\r\n                fsSupportsRecursiveFsWatch ?\r\n                    { persistent: true, recursive: !!recursive } : { persistent: true },\r\n                callback,\r\n            );\r\n        }\r\n\r\n        function readFile(fileName: string, _encoding?: string): string | undefined {\r\n            let buffer: Buffer;\r\n            try {\r\n                buffer = _fs.readFileSync(fileName);\r\n            }\r\n            catch {\r\n                return undefined;\r\n            }\r\n            let len = buffer.length;\r\n            if (len >= 2 && buffer[0]! === 0xFE && buffer[1]! === 0xFF) {\r\n                // Big endian UTF-16 byte order mark detected. Since big endian is not supported by node.js,\r\n                // flip all byte pairs and treat as little endian.\r\n                len &= ~1; // Round down to a multiple of 2\r\n                for (let i = 0; i < len; i += 2) {\r\n                    const temp = buffer[i]!;\r\n                    buffer[i] = buffer[i + 1]!;\r\n                    buffer[i + 1] = temp;\r\n                }\r\n                return buffer.toString(\"utf16le\", 2);\r\n            }\r\n            if (len >= 2 && buffer[0]! === 0xFF && buffer[1]! === 0xFE) {\r\n                // Little endian UTF-16 byte order mark detected\r\n                return buffer.toString(\"utf16le\", 2);\r\n            }\r\n            if (len >= 3 && buffer[0]! === 0xEF && buffer[1]! === 0xBB && buffer[2]! === 0xBF) {\r\n                // UTF-8 byte order mark detected\r\n                return buffer.toString(\"utf8\", 3);\r\n            }\r\n            // Default is UTF-8 with no byte order mark\r\n            return buffer.toString(\"utf8\");\r\n        }\r\n\r\n        function writeFile(fileName: string, data: string, writeByteOrderMark?: boolean): void {\r\n            // If a BOM is required, emit one\r\n            if (writeByteOrderMark) {\r\n                data = byteOrderMarkIndicator + data;\r\n            }\r\n\r\n            let fd: number | undefined;\r\n\r\n            try {\r\n                fd = _fs.openSync(fileName, \"w\");\r\n                _fs.writeSync(fd, data, /*position*/ undefined, \"utf8\");\r\n            }\r\n            finally {\r\n                if (fd !== undefined) {\r\n                    _fs.closeSync(fd);\r\n                }\r\n            }\r\n        }\r\n\r\n        function getAccessibleFileSystemEntries(path: string): FileSystemEntries {\r\n            try {\r\n                const entries = _fs.readdirSync(path || \".\", { withFileTypes: true });\r\n                const files: string[] = [];\r\n                const directories: string[] = [];\r\n                for (const dirent of entries) {\r\n                    // withFileTypes is not supported before Node 10.10.\r\n                    const entry = typeof dirent === \"string\" ? dirent : dirent.name;\r\n\r\n                    // This is necessary because on some file system node fails to exclude\r\n                    // \".\" and \"..\". See https://github.com/nodejs/node/issues/4002\r\n                    if (entry === \".\" || entry === \"..\") {\r\n                        continue;\r\n                    }\r\n\r\n                    let stat: import(\"fs\").Stats | import(\"fs\").Dirent | undefined;\r\n                    if (typeof dirent === \"string\" || dirent.isSymbolicLink()) {\r\n                        const name = combinePaths(path, entry);\r\n\r\n                        stat = statSync(name);\r\n                        if (!stat) {\r\n                            continue;\r\n                        }\r\n                    }\r\n                    else {\r\n                        stat = dirent;\r\n                    }\r\n\r\n                    if (stat.isFile()) {\r\n                        files.push(entry);\r\n                    }\r\n                    else if (stat.isDirectory()) {\r\n                        directories.push(entry);\r\n                    }\r\n                }\r\n                files.sort();\r\n                directories.sort();\r\n                return { files, directories };\r\n            }\r\n            catch {\r\n                return emptyFileSystemEntries;\r\n            }\r\n        }\r\n\r\n        function readDirectory(path: string, extensions?: readonly string[], excludes?: readonly string[], includes?: readonly string[], depth?: number): string[] {\r\n            return matchFiles(path, extensions, excludes, includes, useCaseSensitiveFileNames, process.cwd(), depth, getAccessibleFileSystemEntries, realpath);\r\n        }\r\n\r\n        function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {\r\n            const stat = statSync(path);\r\n            if (!stat) {\r\n                return false;\r\n            }\r\n            switch (entryKind) {\r\n                case FileSystemEntryKind.File:\r\n                    return stat.isFile();\r\n                case FileSystemEntryKind.Directory:\r\n                    return stat.isDirectory();\r\n                default:\r\n                    return false;\r\n            }\r\n        }\r\n\r\n        function fileExists(path: string): boolean {\r\n            return fileSystemEntryExists(path, FileSystemEntryKind.File);\r\n        }\r\n\r\n        function directoryExists(path: string): boolean {\r\n            return fileSystemEntryExists(path, FileSystemEntryKind.Directory);\r\n        }\r\n\r\n        function getDirectories(path: string): string[] {\r\n            return getAccessibleFileSystemEntries(path).directories.slice();\r\n        }\r\n\r\n        function fsRealPathHandlingLongPath(path: string): string {\r\n            return path.length < 260 ? _fs.realpathSync.native(path) : _fs.realpathSync(path);\r\n        }\r\n\r\n        function realpath(path: string): string {\r\n            try {\r\n                return fsRealpath(path);\r\n            }\r\n            catch {\r\n                return path;\r\n            }\r\n        }\r\n\r\n        function getModifiedTime(path: string) {\r\n            return statSync(path)?.mtime;\r\n        }\r\n\r\n        function setModifiedTime(path: string, time: Date) {\r\n            try {\r\n                _fs.utimesSync(path, time, time);\r\n            }\r\n            catch {\r\n                return;\r\n            }\r\n        }\r\n\r\n        function deleteFile(path: string) {\r\n            try {\r\n                return _fs.unlinkSync(path);\r\n            }\r\n            catch {\r\n                return;\r\n            }\r\n        }\r\n\r\n        function createSHA256Hash(data: string): string {\r\n            const hash = _crypto.createHash(\"sha256\");\r\n            hash.update(data);\r\n            return hash.digest(\"hex\");\r\n        }\r\n    }"
    }
  ]
+diff --git a/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs b/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs
+new file mode 100644
+index 000000000..133207d04
+--- /dev/null
++++ b/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs
+@@ -0,0 +1,19 @@
++'use strict';
++const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
++const ts = require('typescript');
++const {requireBefore, requireAfter} = require('./adapt.cjs');
++function restore(tree) {
++    const file = path.join(tree, 'src/compiler/sys.ts'), before = fs.readFileSync(file, 'utf8');
++    assert.equal(before.split(requireAfter).length, 2, 'restoring mutant: missing or duplicate annotated arrow');
++    assert(!before.includes(requireBefore), 'restoring mutant: already restored');
++    const after = before.replace(requireAfter, requireBefore);
++    for (const removeComments of [false, true]) {
++        const emit = text => ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, removeComments}}).outputText;
++        assert.equal(emit(before), emit(after), 'restoring mutant changed JavaScript');
++    }
++    assert.equal(fs.readFileSync(file, 'utf8'), before, 'source changed while planning');
++    fs.writeFileSync(file, after);
++    return {files: 1, restored: 'require: (baseDir, moduleName) => {', javascriptIdentical: true};
++}
++module.exports = {restore};
++if (require.main === module) console.log(JSON.stringify(restore(path.resolve(process.argv[2]))));
 diff --git a/stage3/upstream/LEDGER.md b/stage3/upstream/LEDGER.md
 index 2e72fc22a..ab0da842e 100644
 --- a/stage3/upstream/LEDGER.md

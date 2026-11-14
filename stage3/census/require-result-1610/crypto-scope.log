@@ -1,0 +1,24 @@
+{
+  "scope": {
+    "files": 747,
+    "changed": [
+      "src/compiler/sys.ts"
+    ],
+    "undoRestoresExactBytes": true,
+    "inventory": "747 entries recorded in checks.json"
+  },
+  "transpile": [
+    {
+      "removeComments": false,
+      "beforeSha256": "e0a0b3b0cf4ad341e7174627df736f2ded267840d103ad15b4a396af353ffa32",
+      "afterSha256": "566d8d7320eddcfb85ac5722d3ddaa1ce216987cff10ac7958eadea58dd129b1",
+      "onlyReviewedChanges": true
+    },
+    {
+      "removeComments": true,
+      "beforeSha256": "7e27b9d8d6eb7ff24b54a4f658a4da39e4993f3ca62594618ee2a620b9276e77",
+      "afterSha256": "7697c11d01ed2f590e2472e0fdcd0496dddf5382f08e650c6edd6b64fb2ed8f8",
+      "onlyReviewedChanges": true
+    }
+  ]
+}

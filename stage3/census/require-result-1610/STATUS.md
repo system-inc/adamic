@@ -21,7 +21,14 @@ Upstream v6.0.3: 050880ce59e30b356b686bd3144efe24f875ebc8.
 - Separate upstream npm ci + node_modules/.bin/hereby dts: both pass.
   typescript.d.ts and tsserverlibrary.d.ts are byte-identical; both empty diff
   files are retained, with per-side hashes in declarations.json.
-- Whole unfiltered lane, including candidate full apply: running; not yet claimed.
+- Whole unfiltered lane: PASS, 106,366 passing, one sanctioned API failure, zero pending.
+  Candidate full apply, install and build exit 0; oracle/tests exit 1 only for
+  the sanctioned API baseline row. See lane/report.json and complete logs.
+- Final source scope: 747 files; only sys.ts changes, with the exact measured
+  annotation bytes. Actual adapter replay writes nothing and preserves bytes/mtime.
+- Existing crypto source and JavaScript scope checks pass (747-file inventory).
+- Implementation is one commit on the exact base:
+  ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8.
 
 Source snapshots and original streams/logs are gzip-compressed in raw/.
 All source work is in isolated scratch worktrees. No Loom submission is made.
