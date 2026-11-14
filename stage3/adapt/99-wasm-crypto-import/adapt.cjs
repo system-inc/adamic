@@ -7,6 +7,14 @@ const ts = require('typescript');
 const {compiler, nodes} = require('../47-host-errors/adapt.cjs');
 const manifest = require('./proofs/targets.json');
 const local = '_crypto';
+const resolveHost = require('./proofs/resolve-host.json');
+function forwardResolveHost(text) {
+    for (const [before, after] of [[resolveHost.before, resolveHost.after], [resolveHost.annotationBefore, resolveHost.annotationAfter]]) {
+        assert.equal(text.split(before).length, 2, 'resolve host missing or duplicate site');
+        text = text.replace(before, after.replace(/\n/g, text.includes('\r\n') ? '\r\n' : '\n'));
+    }
+    return text;
+}
 const requireBefore = 'require: (baseDir, moduleName) => {';
 const requireAfter = 'require: (baseDir, moduleName): ModuleImportResult => {';
 const ownerText = text => text.replace(/\r?\n/g, '\r\n');
@@ -148,7 +156,7 @@ function adapt(tree) {
         text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
         boundary = edit.start;
     }
-    if (!done) text = annotateRequire(text);
+    if (!done) text = forwardResolveHost(annotateRequire(text));
     const changedFile = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
     const changedOwner = one(nodes(ts, changedFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'changed getNodeSystem');
     assert.equal(hash(ownerText(changedOwner.getText(changedFile))), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
@@ -163,7 +171,7 @@ function adapt(tree) {
     if (edits.length) fs.writeFileSync(file.fileName, text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
 }
-module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter};
+module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter, forwardResolveHost};
 if (require.main === module) {
     assert.equal(process.argv.length, 3, 'usage: node adapt.cjs <tree>');
     console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));

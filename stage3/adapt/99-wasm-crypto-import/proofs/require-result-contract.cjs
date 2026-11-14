@@ -3,8 +3,8 @@ const fs = require('node:fs'), path = require('node:path'), os = require('node:o
 const {adapt, requireBefore, requireAfter} = require('../adapt.cjs');
 const {restore} = require('../require-result-mutant.cjs');
 const baseline = path.resolve(process.argv[2]);
-const before = cp.execFileSync('git', ['-C', baseline, 'show', 'refs/stage3/99-wasm-crypto-import-before:src/compiler/sys.ts'], {encoding: 'utf8'});
-const expected = fs.readFileSync(path.join(baseline, 'src/compiler/sys.ts'), 'utf8').replace(requireBefore, requireAfter);
+const before = cp.execFileSync('git', ['-C', path.resolve(process.argv[3] || baseline), 'show', 'refs/stage3/99-wasm-crypto-import-before:src/compiler/sys.ts'], {encoding: 'utf8'});
+const expected = fs.readFileSync(path.join(baseline, 'src/compiler/sys.ts'), 'utf8');
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'require-result-contract-')), file = path.join(scratch, 'src/compiler/sys.ts');
 const cases = [];
 function seed(text = before) { fs.writeFileSync(file, text); }

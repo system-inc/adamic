@@ -1,11 +1,14 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 const ts = require('typescript');
+const resolveHost = require('./resolve-host.json');
 function hash(bytes) { return crypto.createHash('sha256').update(bytes).digest('hex'); }
 function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recursive:true, withFileTypes:true}).filter(e => e.isFile()).map(e => path.relative(tree, path.join(e.parentPath, e.name))).sort(); }
 function replaceOne(text, before, after) { assert.equal(text.split(before).length, 2, `reviewed site missing or duplicated: ${before}`); return text.replace(before, after); }
 function undo(text, erased = false, removeComments = false) {
     const newline = text.includes('\r\n') ? '\r\n' : '\n';
+    if (!erased) text = replaceOne(text, resolveHost.after.replace(/\n/g, newline), resolveHost.before);
+    if (!erased) text = replaceOne(text, resolveHost.annotationAfter.replace(/\n/g, newline), resolveHost.annotationBefore);
     if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
     text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
     text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
@@ -39,7 +42,8 @@ function TestCryptoTranspileScope(before, after) {
     return [false,true].map(removeComments => {
         const emit = text => ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,removeComments}}).outputText;
         const a = emit(read(before)), b = emit(read(after)); assert.notEqual(a,b);
-        assert.equal(undo(b,true,removeComments),a,'JavaScript changed outside the crypto import, removed optional load and two hash stores');
+        const scoped = emit(read(after).replace(resolveHost.after.replace(/\n/g, read(after).includes('\r\n') ? '\r\n' : '\n'), resolveHost.before));
+        assert.equal(undo(scoped,true,removeComments),a,'JavaScript changed outside the crypto import, removed optional load and two hash stores');
         return {removeComments,beforeSha256:hash(a),afterSha256:hash(b),onlyReviewedChanges:true};
     });
 }

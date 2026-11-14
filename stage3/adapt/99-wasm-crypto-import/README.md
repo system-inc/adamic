@@ -270,3 +270,16 @@ The existing proofs/check.cjs source-scope oracle also undoes the annotation.
 Its source inventory is rebased from the historical 746 files to this task's
 main 8e3a784aa inventory of 747 files; the before/after inventories must still
 match exactly. Its two crypto JavaScript scope checks remain unchanged and pass.
+
+## Fresh resolution host amendment (#b8ffarm)
+
+JavaScript-changing and value-identical under the audited zero-write and
+no-function-observer conditions. The require call now constructs a fresh
+ModuleResolutionHost projection whose exact-parameter arrows call nodeSystem
+as receiver. Optional members are conditionally initialized; absent members remain
+absent. This amends the same whole-owner after pin after ad8ca5a3's require
+result annotation. See [PROOF-resolve-host.md](PROOF-resolve-host.md),
+proofs/resolve-host-contract.cjs, proofs/resolve-host-fixture.cjs and
+resolve-host-mutant.cjs. The path counters for getDirectories, trace and
+getCurrentDirectory are zero; separate direct checks cover those explicitly
+authorized exceptions. The lane never exercises this require path.
