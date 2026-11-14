@@ -3,7 +3,7 @@ import os
 import subprocess
 
 root = Path('/tmp/string-views-mutant')
-source = root / 'internal/native/runtime/string_share.c'
+source = root / 'internal/native_runtime/c/string_share.c'
 original = source.read_text()
 old = 'shared->owner = owner->heap.references == 0 ? NULL : adamic_retain((adamic_string *)owner);'
 new = 'shared->owner = owner->heap.references == 0 ? NULL : (adamic_string *)owner;'

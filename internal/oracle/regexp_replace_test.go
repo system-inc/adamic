@@ -34,7 +34,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 		t.Fatal(err)
 	}
 	expected := onNode(t, path)
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/regexp_replace.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +71,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 
 func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 	t.Parallel()
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/regexp_replace.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

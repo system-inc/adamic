@@ -60,7 +60,7 @@ func requireFailure(t *testing.T, directory, pin, root, pattern string, fragment
 
 // convertedPackages are the converted packages' named roots and the extension each selects.
 var convertedPackages = []struct{ name, root, extension string }{
-	{"scanner", "stage1", ".ts"}, {"scanner/profile-runtime", "internal/native/runtime", ".c"}, {"typeaware", "src/compiler", ".ts"},
+	{"scanner", "stage1", ".ts"}, {"scanner/profile-runtime", "internal/native_runtime/c", ".c"}, {"typeaware", "src/compiler", ".ts"},
 	{"markdowninline", ".", ".md"}, {"yaml", ".github/workflows", ".yml"},
 	{"cssstrings", "internal/format/css/testdata/prettier", ".css"},
 	{"cssnumbers", "internal/format/css/testdata/prettier", ".scss"},

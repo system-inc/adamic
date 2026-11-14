@@ -6,15 +6,15 @@ import sys
 root = pathlib.Path(__file__).resolve().parents[3]
 fixture = ['go', 'test', '-v', '-count=1', '-timeout', '90s', '-run', 'TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a', './internal/oracle']
 mutants = [
- ('native-greedy-as-lazy', 'internal/native/runtime/regexp.c', 'i->greedy', '!i->greedy', fixture, 'node:   exit'),
- ('native-captures-not-reset', 'internal/native/runtime/regexp.c', 'state.captures[2 * i->ids[k]] = -1;', 'state.captures[2 * i->ids[k]] = state.captures[2 * i->ids[k]];', fixture, 'node:   exit'),
+ ('native-greedy-as-lazy', 'internal/native_runtime/c/regexp.c', 'i->greedy', '!i->greedy', fixture, 'node:   exit'),
+ ('native-captures-not-reset', 'internal/native_runtime/c/regexp.c', 'state.captures[2 * i->ids[k]] = -1;', 'state.captures[2 * i->ids[k]] = state.captures[2 * i->ids[k]];', fixture, 'node:   exit'),
  ('native-lookbehind-left-to-right', 'internal/regexp/matcher.go', 'direction = -1', 'direction = 1', fixture, 'node:   exit'),
- ('native-case-fold-without-u-distinction', 'internal/native/runtime/regexp.c', 'flags & 4 ?', 'true ?', fixture, 'node:   exit'),
- ('native-matchall-starts-at-zero', 'internal/native/runtime/regexp.c', 'copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);', 'copy->slots[1].number = 0;', fixture, 'node:   exit'),
- ('native-search-does-not-restore-lastindex', 'internal/native/runtime/regexp.c', 'regex->slots[1].number = previous;', 'regex->slots[1].number = previous + 1;', fixture, 'node:   exit'),
- ('native-result-metadata-leaked', 'internal/native/runtime/heap.c', 'let_go(array->properties);', '(void)array->properties;', fixture, 'leaks:'),
- ('native-budget-becomes-failed-match', 'internal/native/runtime/regexp.c', 'static const char message[] = "regexp: instruction step limit exceeded";\n\t\t\tadamic_panic(message, sizeof message - 1);', 'return false;', ['go','test','-v','-count=1','-timeout','60s','-run','^TestRegExpNativeStepLimit$','./internal/native'], 'native catastrophic backtracking'),
- ('native-iterator-done-is-value-slot', 'internal/native/runtime/regexp.c', 'strcmp(object->shape->names[k], "done")', 'strcmp(object->shape->names[k], "value")', ['go','test','-v','-count=1','-timeout','60s','-run','^TestRegExpIteratorResultShape$','./internal/native'], 'unexpected iterator done'),
+ ('native-case-fold-without-u-distinction', 'internal/native_runtime/c/regexp.c', 'flags & 4 ?', 'true ?', fixture, 'node:   exit'),
+ ('native-matchall-starts-at-zero', 'internal/native_runtime/c/regexp.c', 'copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);', 'copy->slots[1].number = 0;', fixture, 'node:   exit'),
+ ('native-search-does-not-restore-lastindex', 'internal/native_runtime/c/regexp.c', 'regex->slots[1].number = previous;', 'regex->slots[1].number = previous + 1;', fixture, 'node:   exit'),
+ ('native-result-metadata-leaked', 'internal/native_runtime/c/heap.c', 'let_go(array->properties);', '(void)array->properties;', fixture, 'leaks:'),
+ ('native-budget-becomes-failed-match', 'internal/native_runtime/c/regexp.c', 'static const char message[] = "regexp: instruction step limit exceeded";\n\t\t\tadamic_panic(message, sizeof message - 1);', 'return false;', ['go','test','-v','-count=1','-timeout','60s','-run','^TestRegExpNativeStepLimit$','./internal/native'], 'native catastrophic backtracking'),
+ ('native-iterator-done-is-value-slot', 'internal/native_runtime/c/regexp.c', 'strcmp(object->shape->names[k], "done")', 'strcmp(object->shape->names[k], "value")', ['go','test','-v','-count=1','-timeout','60s','-run','^TestRegExpIteratorResultShape$','./internal/native'], 'unexpected iterator done'),
  ('native-match-index-always-present', 'internal/native/regexp.go', 'missing := array + "->properties == NULL"', 'missing := "false"', fixture, 'node:   exit'),
  ('native-source-escapes-class-slash', 'internal/lower/regexp.go', "c == '/' && !escaped && depth == 0", "c == '/' && !escaped", ['go','test','-v','-count=1','-timeout','30s','-run','^TestRegExpSourceNode$','./internal/lower'], 'source differs'),
  ('native-source-changes-utf8-bytes', 'internal/lower/regexp.go', 'result.WriteByte(c)', 'result.WriteRune(rune(c))', ['go','test','-v','-count=1','-timeout','30s','-run','^TestRegExpSourceNode$','./internal/lower'], 'source differs'),

@@ -1,7 +1,7 @@
 # Typed arrays runtime contract
 
 October 7, 2026: Uint8Array, Uint16Array, Int32Array and Float64Array. The C contract is
-`internal/native/runtime/adamic.h`; reads return `adamic_maybe_number`, agreed
+`internal/native_runtime/c/adamic.h`; reads return `adamic_maybe_number`, agreed
 with the compiler so lowering can reuse plain-array read paths.
 
 `adamic_typed_array` begins with `adamic_heap`, followed by element `kind`,

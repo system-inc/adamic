@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -116,7 +117,7 @@ func nodeWASICwdAgreement(t *testing.T, variant int) {
 	helper := ""
 	initializer := "adamic_node_wasi_cwd"
 	if variant >= 3 {
-		data, err := runtime.ReadFile("runtime/node_cwd_wasi.c")
+		data, err := native_runtime.Sources.ReadFile("c/node_cwd_wasi.c")
 		if err != nil {
 			t.Fatal(err)
 		}
