@@ -3,8 +3,11 @@ package lower
 import (
 	"context"
 	"errors"
+	"hash/fnv"
 	"io/fs"
+	"maps"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync/atomic"
 	"testing"
@@ -74,7 +77,8 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 // An access found unchecked is asked again once a key of its name is added: either.b, unchecked at Other's
 // view, is checked through its union once One's view registers One:b, and One's walk registers the union's
 // own key for b, as the whole walk does at that call. Mutant: the dirty-name recheck skipped, so only a name never
-// judged is asked, either.b stays unchecked at One's walk, and this and TestViewWalkIndexedAgreesWithWhole go red.
+// judged is asked, either.b stays unchecked at One's walk, and this and TestViewWalkIndexedAgreesWithWhole_1, the shard
+// holding pins/casts.ts, go red.
 //
 // Not parallel: it lowers with viewWalkCompare on, so One's walk is held to the whole walk's at that call, which
 // tells the recheck was made at the call that owes it, not only that the key exists by the time lowering ends.
@@ -139,19 +143,19 @@ func TestViewRefusesItsFirstSiteInPreorder(t *testing.T) {
 	}
 }
 
-// With viewWalkCompare on, every view under no type mapper runs the whole walk and the indexed walk from
-// one state and panics where their refusal, getters, CheckedFields or PlainReceivers differ. This lowers
-// every .a and .ts program of internal/oracle's corpus, the one internal/split's analysis is exercised
-// over, the widest set of views the repository holds, and the pins' own programs, so a mutant the
-// corpus never meets still meets them.
-//
-// Not parallel: viewWalkCompare changes every view in the package while it's set, and no parallel test
-// runs beside a sequential one. Its subtests are parallel with one another, and the switch goes off only
-// once they're done.
-func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
-	viewWalkCompare.Store(true)
-	t.Cleanup(func() { viewWalkCompare.Store(false) })
-	paths := []string{writeAgreementSource(t, "casts.ts", viewSitesCasts), writeAgreementSource(t, "writes.a", viewSitesTwoWrites)}
+// viewWalkShardCount is how many top-level tests share the view walk comparison. One test lowering every program
+// ran 66.2 s against the 60 s unit budget on a loaded box and turned chg_7mkgh1z5 red, which never touched lowering,
+// so #sq4myx1 split it into four, about 1050 programs and 17 s each by that measure.
+const viewWalkShardCount = 4
+
+// viewWalkPins are the pins' own programs, by the name their shard is chosen by. Their shard writes each to a
+// temporary directory under its base name, and pins/ keeps them apart from the corpus's own casts.ts and writes.a.
+var viewWalkPins = map[string]string{"pins/casts.ts": viewSitesCasts, "pins/writes.a": viewSitesTwoWrites}
+
+// viewWalkPrograms names every program the view walk comparison lowers: the pins', then every .a and .ts program of
+// internal/oracle's corpus by its slash-separated path under internal/oracle/testdata.
+func viewWalkPrograms() ([]string, error) {
+	names := slices.Sorted(maps.Keys(viewWalkPins))
 	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -159,18 +163,55 @@ func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
 		}
 		// A .d.ts is no program, only declarations another file names.
 		if !entry.IsDir() && (filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts")) {
-			paths = append(paths, path)
+			names = append(names, strings.TrimPrefix(filepath.ToSlash(path), "../oracle/testdata/"))
 		}
 		return nil
 	})
+	return names, err
+}
+
+// viewWalkShardPrograms is the programs of names in shard, those whose name's FNV-1a hash falls in it, as
+// cycleComparisonShard divides the cycle finder's inputs, so a program keeps its shard while others come and go.
+func viewWalkShardPrograms(names []string, shard uint64) []string {
+	var selected []string
+	for _, name := range names {
+		hash := fnv.New64a()
+		hash.Write([]byte(name))
+		if hash.Sum64()%viewWalkShardCount == shard {
+			selected = append(selected, name)
+		}
+	}
+	return selected
+}
+
+// With viewWalkCompare on, every view under no type mapper runs the whole walk and the indexed walk from
+// one state and panics where their refusal, getters, CheckedFields or PlainReceivers differ. The comparison
+// lowers every .a and .ts program of internal/oracle's corpus, the one internal/split's analysis is exercised
+// over, the widest set of views the repository holds, and the pins' own programs, so a mutant the corpus never
+// meets still meets them. This lowers one shard's share, for TestViewWalkIndexedAgreesWithWhole_0 to _3 in
+// view_walk_shards_test.go. Each shard logs its own "N of M programs lowered with views", and the four sum to
+// what the one test logged before #sq4myx1 split it, 211 of 4215 programs on chg_7mkgh1z5;
+// TestViewWalkShardsCoverEveryProgram holds the shards to every program exactly once.
+//
+// Its subtests are parallel with one another, and the switch goes off only once they're done.
+func runViewWalkShard(t *testing.T, shard uint64) {
+	t.Helper()
+	viewWalkCompare.Store(true)
+	t.Cleanup(func() { viewWalkCompare.Store(false) })
+	names, err := viewWalkPrograms()
 	if err != nil {
 		t.Fatal(err)
 	}
+	programs := viewWalkShardPrograms(names, shard)
 	var viewed atomic.Int64
 	t.Run("programs", func(t *testing.T) {
-		for _, path := range paths {
-			t.Run(strings.TrimPrefix(filepath.ToSlash(path), "../oracle/testdata/"), func(t *testing.T) {
+		for _, name := range programs {
+			t.Run(name, func(t *testing.T) {
 				t.Parallel()
+				path := filepath.Join("../oracle/testdata", filepath.FromSlash(name))
+				if source, pinned := viewWalkPins[name]; pinned {
+					path = writeAgreementSource(t, filepath.Base(name), source)
+				}
 				loaded, err := load.Load([]string{path})
 				if err != nil {
 					return // A program that doesn't load makes no view.
@@ -187,7 +228,7 @@ func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
 		}
 	})
 	if viewed.Load() == 0 {
-		t.Fatal("no program of the corpus lowered with a view, so nothing was compared")
+		t.Fatalf("no program of shard %d lowered with a view, so nothing was compared", shard)
 	}
-	t.Logf("%d of %d programs lowered with views, each walk compared", viewed.Load(), len(paths))
+	t.Logf("%d of %d programs lowered with views in shard %d of %d, each walk compared", viewed.Load(), len(programs), shard, viewWalkShardCount)
 }
