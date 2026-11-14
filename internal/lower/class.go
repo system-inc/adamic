@@ -485,27 +485,47 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
+	field := l.checker.GetSymbolAtLocation(target.Name())
+	value, _, declared, err := l.fieldWriteValue(target, field, value)
+	if err != nil {
+		return nil, err
+	}
+	if call, handled := l.privateStaticStore(target, object, value, l.fieldNullish(valueNode, value)); handled {
+		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+	}
+	// A #private field is stored under its name, # and all, which nothing else can spell.
+	store := l.fieldStore(target, target.AsPropertyAccessExpression().Expression, valueNode, field, declared, l.fieldName(target.Name()), object, value)
+	if hostMember {
+		l.hostMemberStored(target, store.Site)
+	}
+	return []ir.Statement{store}, nil
+}
+
+// fieldWriteValue is value as a write to field stores it, with the representation the field keeps and the
+// type it's declared with: field may be nil for a write the checker names no symbol for, which keeps what
+// the write's own type says. target is the write, where a value no slot can hold is NotYet.
+func (l *lowering) fieldWriteValue(target *ast.Node, field *ast.Symbol, value ir.Expression) (ir.Expression, ir.Type, *checker.Type, error) {
 	declared := l.checker.GetTypeAtLocation(target)
 	of, err := l.typeOf(target)
-	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
+	if field != nil {
 		declared = l.checker.GetTypeOfSymbol(field)
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
 	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
-		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+		return nil, 0, nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
-	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value, l.fieldNullish(valueNode, value)); handled {
-		return []ir.Statement{ir.Evaluate{Value: call}}, nil
-	}
-	// A #private field is stored under its name, # and all, which nothing else can spell.
-	store := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Nullish: l.fieldNullish(valueNode, value), DeclaredType: l.checker.TypeToString(declared), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, target.AsPropertyAccessExpression().Expression, l.fieldName(target.Name()))}
-	if hostMember {
-		l.hostMemberStored(target, store.Site)
-	}
-	return []ir.Statement{store}, nil
+	return fit(value, of), of, declared, nil
+}
+
+// fieldStore is the SetProperty o.name = value makes, for a receiver and a value already lowered (the value
+// as fieldWriteValue gives it): target is the write, receiver its object's node, valueNode the value's, and
+// field the symbol it names, nil when the checker names none. setProperty makes every named store with it,
+// and finiteElementWrite each arm of a computed one, so a checked view, the cycle finder and Nullish bytes
+// see the two writes alike.
+func (l *lowering) fieldStore(target, receiver, valueNode *ast.Node, field *ast.Symbol, declared *checker.Type, name string, object, value ir.Expression) ir.SetProperty {
+	return ir.SetProperty{Object: object, Name: name, Value: value, Nullish: l.fieldNullish(valueNode, value), DeclaredType: l.checker.TypeToString(declared), Class: l.classOfField(field), Site: l.writeSite(receiver), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, receiver, name)}
 }
 
 // absentOptionalWrite refuses a write to an optional own field of a plain object when some producer left
@@ -518,14 +538,21 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 // keying stops a write to a name some unrelated type left out too; that's the fail-closed price until
 // optional presence lifts this (#r3chqza).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
-	member := l.checker.GetSymbolAtLocation(target)
-	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+	access := target.AsPropertyAccessExpression()
+	return l.absentOptionalFieldWrite(target, access.Expression, l.checker.GetSymbolAtLocation(target), access.Name().Text(), presentBeforeWrite(target))
+}
+
+// absentOptionalFieldWrite is absentOptionalWrite's judgment for a write however it names its field: target
+// is the write, receiver its object's node, member the field's symbol and name its spelling, and present
+// whether a test of the same spelling proved a value there (presentBeforeWrite).
+func (l *lowering) absentOptionalFieldWrite(target, receiver *ast.Node, member *ast.Symbol, name string, present bool) error {
+	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(receiver)) {
 		return nil
 	}
 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
-	if l.omittedOptionals[member.Name] && !presentBeforeWrite(target) && !l.literalGivesField(target) {
+	if l.omittedOptionals[member.Name] && !present && !l.literalReceiverGivesField(receiver, name) {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
 	return nil
@@ -601,13 +628,9 @@ func accessPath(node *ast.Node) string {
 	return ""
 }
 
-// literalGivesField is a write through a const whose initializer is an object literal naming the field.
-func (l *lowering) literalGivesField(target *ast.Node) bool {
-	access := target.AsPropertyAccessExpression()
-	return l.literalReceiverGivesField(access.Expression, access.Name().Text())
-}
-
-// The same literal-field proof serves reads whose field is otherwise phantom.
+// literalReceiverGivesField is a write or read through a const whose initializer is an object literal
+// naming the field: a write's slot is there (absentOptionalFieldWrite), and so is a read's field that's
+// otherwise phantom.
 func (l *lowering) literalReceiverGivesField(receiver *ast.Node, name string) bool {
 	receiver = ast.SkipParentheses(receiver)
 	if receiver.Kind != ast.KindIdentifier {
@@ -796,7 +819,12 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 // type parameters, already lowered, is looked up: one with them has a layout per instantiation, and
 // looking up never lowers a class, so a program that compiled before can't stop compiling here.
 func (l *lowering) classOf(access *ast.Node) int {
-	field := l.checker.GetSymbolAtLocation(access.Name())
+	return l.classOfField(l.checker.GetSymbolAtLocation(access.Name()))
+}
+
+// classOfField is classOf for the field's symbol, nil for none, so a write that names its field by a
+// computed key finds it where the class's layout puts it as a named access does.
+func (l *lowering) classOfField(field *ast.Symbol) int {
 	if field == nil || len(field.Declarations) != 1 || (field.Declarations[0].Kind != ast.KindPropertyDeclaration && !parameterProperty(field.Declarations[0])) {
 		return 0
 	}

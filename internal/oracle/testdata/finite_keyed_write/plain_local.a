@@ -1,0 +1,11 @@
+// A local fixed object written by a key of keyof its interface: p2's shape on #13p3y0c, with every
+// field the literal gives, so the write has its slot.
+interface Levels { Low: number; Medium: number; High: number; }
+function set(level: keyof Levels, value: number): Levels {
+	const levels: Levels = { Low: 0, Medium: 0, High: 0 };
+	levels[level] = value;
+	return levels;
+}
+const medium = set('Medium', 1);
+const high = set('High', 2);
+console.log(`${medium.Low} ${medium.Medium} ${medium.High} | ${high.Low} ${high.Medium} ${high.High}`);

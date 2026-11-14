@@ -1,0 +1,12 @@
+// A class instance's fields, found where the class's layout puts them, as a named write finds them.
+class Levels {
+	Low = 0;
+	High = 0;
+}
+function set(levels: Levels, level: 'Low' | 'High', value: number): void {
+	levels[level] = value;
+}
+const levels = new Levels();
+set(levels, 'High', 5);
+set(levels, 'Low', 7);
+console.log(`${levels.Low} ${levels.High}`);
