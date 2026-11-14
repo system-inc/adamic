@@ -56,11 +56,27 @@ type reusePlan struct {
 
 	// lending are the arrays a variable borrows an element from (planElementBorrows), never moved.
 	lending map[int]bool
+
+	// unconsumable are parameters that are never consumed, whatever their bodies do: every position of
+	// a virtual signature one of whose implementations suspends. A suspending function's entry retains
+	// what it's handed, so it can't take a count over, and implementations share one convention.
+	unconsumable map[int]bool
 }
 
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
+	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending, unconsumable: map[int]bool{}}
+	for signature, targets := range program.MethodTargets {
+		implementations := append([]int{signature}, targets...)
+		if !slices.ContainsFunc(implementations, func(target int) bool { return program.Functions[target].Suspends() }) {
+			continue
+		}
+		for _, target := range implementations {
+			for _, parameter := range program.Functions[target].Parameters {
+				plan.unconsumable[parameter] = true
+			}
+		}
+	}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -82,6 +98,12 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 	}
 	functions := []function{}
 	for index := -1; index < len(program.Functions); index++ {
+		// A suspending body plans nothing: its locals live in frame cells, which the reuse entries
+		// (e.variable) don't name, and asyncBorrowedSlots' uncounted aliases would make a shared object
+		// look unique (#kha2ea0). Leaving it out also leaves its parameters unconsumed.
+		if index >= 0 && program.Functions[index].Suspends() {
+			continue
+		}
 		graph := flow.Build(program, index)
 		functions = append(functions, function{index, graph, flow.LiveOut(graph)})
 	}
@@ -187,7 +209,7 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 	if isParameter(program, source) {
 		// Only a parameter nothing assigns, of a named function its callers call directly, can be
 		// handed over: a closure is called from runtime loops, and a comparator from the sort.
-		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
+		if !local.Borrowed || program.Functions[function].Closure || comparators[function] || plan.unconsumable[source] {
 			return false
 		}
 	} else if local.Borrowed {

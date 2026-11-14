@@ -50,12 +50,14 @@ type regionPlan struct {
 func planRegions(program *ir.Program) *regionPlan {
 	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}, environments: map[*ir.Statement]environmentPlacement{}, environmentArguments: map[int]map[int]bool{}, cleanups: map[string]string{}}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
-	// that escapes, until none changes.
+	// that escapes, until none changes. A suspending function's parameters escape from the start: its
+	// body runs on past the call that handed them over (a generator's from its first next, an async
+	// one's past its first await), long after the caller's statement region has ended (#kha2ea0).
 	for index, function := range program.Functions {
 		plan.escapes[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
 			local := program.Locals[parameter]
-			plan.escapes[index][position] = function.Closure || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
+			plan.escapes[index][position] = function.Closure || function.Suspends() || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
 		}
 	}
 	for changed := true; changed; {
@@ -110,6 +112,11 @@ func planRegions(program *ir.Program) *regionPlan {
 		}
 	}
 	for index := range program.Functions {
+		// A suspending body's statements get no region: its locals live in frame cells, and whether a
+		// region may span a statement there is left to a later step (#kha2ea0, Memory's rule 2).
+		if program.Functions[index].Suspends() {
+			continue
+		}
 		statements(program.Functions[index].Body)
 	}
 	statements(program.Main)

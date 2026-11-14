@@ -27,7 +27,9 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 	lending := map[int]bool{}
 	for index := range program.Functions {
 		function := &program.Functions[index]
-		if function.Closure {
+		// A suspending body keeps its locals in frame cells, and a borrow's binding would be a C local
+		// its reads never see (#kha2ea0).
+		if function.Closure || function.Suspends() {
 			continue
 		}
 		assigned := assignedLocals(function.Body)
