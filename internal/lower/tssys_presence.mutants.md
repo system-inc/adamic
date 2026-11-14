@@ -35,3 +35,5 @@ where the carrier is ClosureSelf, a nested declaration calling a sibling in the 
 doesn't have. wantNestedGetNodeSystemCall logs whether ClosureTargets bounds the call with its Direct taken away, so
 the run says which. Pin 1: nothing. TestTsSysSelfReadingLiteralStops stays green, since tsc's shape stops at
 #dv99xzy, a check made as the literal's capture is lowered, which asks nothing of ClosureTargets.
+Run: survived, as read. Door job J-gxf28yy at 9bd7daa9 (Nov 14, 2026): TestTsSysPresenceLowers stays green in both forms
+with Direct taken away. So M-b isn't a proof T1 offers: Direct guards no call this program makes.
