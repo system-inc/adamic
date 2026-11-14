@@ -50,6 +50,15 @@ static void raise_error(const adamic_shape *shape, const char *name, const char 
     adamic_thrown = error;
 }
 
+// Node validates an explicit interval before starting its stat poller.
+double adamic_fs_file_watch_interval(adamic_maybe_number interval) {
+    if (!interval.present) {
+        raise_error(&coded_error_shape, "TypeError", "ERR_INVALID_ARG_TYPE", "The \"interval\" argument must be of type number. Received undefined");
+        return 0;
+    }
+    return interval.number;
+}
+
 // The code and the reason an errno error carries, one table for system_error and node_system_error.
 static void system_error_words(int error, const char **code, const char **reason) {
     *code = "UNKNOWN"; *reason = "unknown error";

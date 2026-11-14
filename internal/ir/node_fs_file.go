@@ -8,6 +8,7 @@ package ir
 // and true respectively. Every operation except raw output, environment operations and platform
 // reads, exists, the Stats/Date time observations and the timer operations may throw.
 // date_iso_string may throw RangeError for an invalid Date.
+// watchFile also throws a coded type error for an explicitly undefined interval.
 // host_require_missing, a require of a module that isn't installed, always throws: Node's
 // MODULE_NOT_FOUND for its specifier.
 // host_inspector_unavailable also always throws, on every target, including WASI.

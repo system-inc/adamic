@@ -22,7 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-var watchFileFixtures = []string{"missing", "appearance", "mtime", "cancel_one", "cancel_all", "duplicate", "batch", "unref", "listener_throw", "tsc_close"}
+var watchFileFixtures = []string{"missing", "appearance", "mtime", "cancel_one", "cancel_all", "duplicate", "batch", "unref", "listener_throw", "tsc_close", "interval_undefined", "interval_undefined_uncaught"}
 
 func init() {
 	for _, name := range watchFileFixtures {
@@ -356,5 +356,44 @@ func TestWatchFileProductOrderIsCurrent(t *testing.T) {
 	output, err := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
 	if err != nil {
 		t.Fatalf("watchFile product generator: %v\n%s", err, output)
+	}
+}
+
+// Explicit undefined throws at registration, before any listener or poller is retained. The caught
+// row also passes a present number through the same optional parameter. Skipping the native raise
+// reds interval_undefined while the uncaught row holds the runner's exact stderr and exit.
+func TestWatchFileUndefinedIntervalMatchesNode(t *testing.T) {
+	t.Parallel()
+	const message = "The \"interval\" argument must be of type number. Received undefined"
+	const coded = "TypeError [ERR_INVALID_ARG_TYPE]: " + message
+	for _, name := range []string{"interval_undefined", "interval_undefined_uncaught"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := watchFilePath(t, name)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := watchFileNode(t, path)
+			want := run{stdout: []byte("TypeError\nERR_INVALID_ARG_TYPE\n" + message + "\n" + coded + "\naccepted\n")}
+			if name == "interval_undefined_uncaught" {
+				want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + coded + "\n"), exitCode: 70}
+			}
+			if difference := disagreement(want, truth); difference != "" {
+				t.Fatalf("Node: %s; stdout=%q stderr=%q exit=%d", difference, truth.stdout, truth.stderr, truth.exitCode)
+			}
+			sanitized, leaked, comparable := nativelyCheckingLeaks(t, program, truth.exitCode == 0)
+			if leaked != "" {
+				t.Error(leaked)
+			}
+			if !comparable {
+				return
+			}
+			for backend, got := range map[string]run{"native": sanitized, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Errorf("%s: %s; stdout=%q stderr=%q exit=%d", backend, difference, got.stdout, got.stderr, got.exitCode)
+				}
+			}
+		})
 	}
 }
