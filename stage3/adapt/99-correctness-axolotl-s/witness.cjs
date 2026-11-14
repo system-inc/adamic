@@ -37,3 +37,18 @@ const skip=owners.find(p=>p.owner==='skipWhile');const input=[1,'x',2],outputs=[
 for(const text of [skip.before,skip.after])outputs.push(Array.from(load(text,'skipWhile').fn(input,x=>typeof x==='number')));
 assert.deepEqual(outputs,[['x',2],['x',2]]);
 console.log(JSON.stringify({node:process.version,records,queue:{fifo:true,undefinedPayload:true,consumedSlotUndefined:true,compaction:true,sparseInitialSlotReturnsUndefined:true,emptyThrows:true},skipWhile:{input,predicate:'typeof x === "number"',before:outputs[0],after:outputs[1],laterElementSatisfiesPredicate:true}},null,2));
+
+// Sourcemap amendment: exact owner and the 1024-character chunk path.
+const pin=owners.find(p=>p.owner==='flushMappingBuffer');
+function runFlush(owner,sequences){
+ const context={};vm.createContext(context);
+ const source='let mappings = ""; const mappingCharCodes: number[] = [];\n'+owner+'\n'+
+ 'globalThis.run = (sequences: number[][]) => { const lengths: number[] = []; const flush = () => { flushMappingBuffer(); lengths.push(mappingCharCodes.length); }; for (const sequence of sequences) { for (const code of sequence) { mappingCharCodes.push(code); if (mappingCharCodes.length >= 1024) flush(); } flush(); } return {mappings, lengths}; };';
+ vm.runInContext(ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2024}}).outputText,context);
+ return JSON.parse(JSON.stringify(context.run(sequences)));
+}
+const flushRecords=[];
+for(const [name,sequences] of [['empty',[[],[]]],['text',[[65,66],[],[67,68]]],['1024-flush',[Array.from({length:1024},()=>65),[66]]],['beyond-1024',[Array.from({length:2050},(_,i)=>65+i%26)]]]){
+ const before=runFlush(pin.before,sequences),after=runFlush(pin.after,sequences);assert.deepEqual(before,after);assert(before.lengths.every(n=>n===0));flushRecords.push({name,before,after});
+}
+console.log(JSON.stringify({node:process.version,flushRecords},null,2));

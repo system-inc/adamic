@@ -858,3 +858,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   one reader. Adaptation 20's rule still governs every other member. Evidence:
   typescript/sourcefile-like-position-evidence,
   stage3/census/sourcefile-like-position.
+
+- **JavaScript-changing (byte-different, value-identical), 99-correctness-axolotl-s sourcemap amendment (Compiler):** TypeScript 6.0.3 src/compiler/sourcemap.ts:316 clears createSourceMapGenerator.flushMappingBuffer's private mappingCharCodes with `splice(0)` instead of `length = 0`; the ignored splice result changes emitted bytes while preserving mappings and subsequent empty-buffer reads. Evidence: typescript/sourcemap-splice-evidence, stage3/census/sourcemap-splice-evidence.
