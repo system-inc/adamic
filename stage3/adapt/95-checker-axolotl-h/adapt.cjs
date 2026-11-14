@@ -72,7 +72,15 @@ function adapt(tree,check=false){
     const states=owned.map(site=>{const text=site.node.getText(source);assert([site.member.initializer.before,site.member.initializer.after].includes(text),'folded initializer shape');return text===site.member.initializer.after?'after':'before';});
     assert(states.every(value=>value===states[0]),'half-adapted owner: '+row.owner);state=states[0];
     const undo=owned.map(site=>({start:site.node.getStart(source)-owner.getStart(source),end:site.node.end-owner.getStart(source),text:site.member.initializer.before}));
-    if(row.owner==='createProgram'){assert.equal(mm.state,state,'half-adapted MultiMap calls');undo.push(...mm.undo);}
+    if(row.owner==='createProgram'){
+     assert.equal(mm.state,state,'half-adapted MultiMap calls');undo.push(...mm.undo);
+     const amendment=require('./diagnostics-overloads.cjs');
+     const binding=amendment.inspect(ts,source,owner);
+     assert.equal(binding.state,state,'half-adapted diagnostics overload amendment');
+     amendment.ownerText(owner.getText(source),state);
+     if(state==='after')undo.push(binding.undo);
+     else {assert(!check,'missing diagnostics overload amendment');plan(source,binding.edit);}
+    }
     // Parent createProgram owns the nested getEmitHost changes as well. Its
     // original owner pin is checked before its literal, including on replay.
     // The checker owner's literal is checked first on purpose, repeating the
