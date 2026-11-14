@@ -23,7 +23,8 @@ import (
 //
 // Mutants: make noteRecordSlot (internal/lower/graph_records.go) return at once, and the field and
 // element cases lower and leak by the counted build; drop the reassigned cell's stop in graphTypes, and
-// the captured-variable case lowers.
+// the captured-variable case lowers. Make cyclicRecord return nil at once, and the record one field
+// deep and the record a closure captures lower and leak by the counted build (#t5q4prw).
 const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
 const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
 const b: Node = { name: 'b' + '', next: [a], r: {}, rs: [] };
@@ -77,6 +78,55 @@ const b: Node = { name: 'b' + '', next: [a], tags: {} };
 a.next.push(b);
 a.tags = { kind: 'leaf' };
 console.log(` + "`${a.name} ${a.tags['kind']}`" + `);
+`, ""},
+		// A record one field deep on a cycle, which the slot seed doesn't see: the node holds a box, the box
+		// the record, the record the node. 22 of 102 freed on main 8e3a784a (#t5q4prw).
+		{"a record inside an object field on a cycle", `interface Box { r: Record<string, Node> }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { r: {} } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  a.box = { r: { k: a } };
+  total += Object.keys(a.box.r).length;
+}
+console.log(` + "`${total}`" + `);
+`, "a record its own values can reach again"},
+		// A record a closure on the node captures: the node holds the closure, the closure the record's
+		// cell, the record the node. 22 of 92 freed on main 8e3a784a (#t5q4prw).
+		{"a record a closure on the node captures", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  a.count = () => Object.keys(rec).length;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
+`, "a record its own values can reach again"},
+		// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
+		{"the field shape with no record", `interface Box { n: Node | undefined }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { n: undefined } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  a.box = { n: a };
+  total += a.box.n === a ? 1 : 0;
+}
+console.log(` + "`${total}`" + `);
+`, ""},
+		{"the capture shape with no record", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const held: Node[] = [a];
+  a.count = () => held.length;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
 `, ""},
 	}
 	for _, c := range cases {

@@ -317,6 +317,10 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 		return nil, l.notYet(node, "record values with an unsupported slot representation")
 	}
 	result := ir.RecordLiteral{Element: of, Site: l.writeSite(node)}
+	// The one record site graphTypes judges (cyclicRecord). The empty fallback a spread of R | undefined
+	// takes below is a second allocation, but it holds nothing and is only spread into this literal, so
+	// it can't close a cycle by itself (Lower's read on #t5q4prw).
+	l.graphRecords = append(l.graphRecords, graphRecordSite{node: node, record: t})
 	for i, p := range node.AsObjectLiteralExpression().Properties.Nodes {
 		if p.Kind == ast.KindSpreadAssignment {
 			if i != 0 {

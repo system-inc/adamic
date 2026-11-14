@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
@@ -83,4 +84,42 @@ func (f *cycleFinder) reassigned(local int) bool {
 		}
 	}
 	return f.assigned[local]
+}
+
+// graphRecordSite is one record literal: where, and its own record type.
+type graphRecordSite struct {
+	node   *ast.Node
+	record *checker.Type
+}
+
+// cyclicRecord is the first record literal whose own values can reach a record of its type again, or
+// nil. A record is never a graph member (nothing adopts an ir.RecordLiteral), so a cycle through one
+// keeps a counted node inside the cycle and leaks the cycle whole: a record held one field deep, as
+// a.box = { r: { k: a } }, freed 22 of 102 by the counted build, and one a closure on the node
+// captured 22 of 92 (#t5q4prw). The test is the finder's own reaches, from the record's element type
+// back to its type, so it follows what the cycle rule follows: every field, every shape that can be
+// seen as a type (the field a view omits), union members, collections' arguments and the cells
+// function values capture. It's judged at the allocation, by the record's own type, never by how a
+// slot declares what it holds. A record whose element the checker can't name fails closed.
+func (f *cycleFinder) cyclicRecord() *graphRecordSite {
+	// With no graph type selected there's no graph region for a record to be missing from.
+	if len(f.selected) == 0 {
+		return nil
+	}
+	judged := map[*checker.Type]bool{}
+	for index := range f.l.graphRecords {
+		site := &f.l.graphRecords[index]
+		element := f.l.recordElement(site.record)
+		if element == nil {
+			return site
+		}
+		if judged[site.record] {
+			continue
+		}
+		judged[site.record] = true
+		if f.reaches(element, cycleNode{proven: site.record}) {
+			return site
+		}
+	}
+	return nil
 }
