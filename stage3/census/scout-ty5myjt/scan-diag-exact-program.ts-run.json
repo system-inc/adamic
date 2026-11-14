@@ -1,0 +1,14 @@
+{
+  "candidate": "diag-exact",
+  "mode": "scan only",
+  "command": [
+    "/workspace/scratch/scout-ty5myjt/scan-only",
+    "/workspace/scratch/scout-ty5myjt/diag-exact/src/compiler",
+    "/workspace/scratch/scout-ty5myjt/scan-results/diag-exact/program.ts.jsonl"
+  ],
+  "seconds": 24.01801657199985,
+  "exit": 0,
+  "timeout": false,
+  "process_group_bound_seconds": 1500,
+  "binary_sha256": "d4f78de4bbe7f96981508fb65e79fd807b10e14b07e5c5f581abfa13059c87f3"
+}

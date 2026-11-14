@@ -1,0 +1,82 @@
+[
+  {
+    "candidate": "baseline",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 81,
+    "units": 0,
+    "seconds": 20.470556146000035,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-exact",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 81,
+    "units": 0,
+    "seconds": 24.01801657199985,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-intersection",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 81,
+    "units": 0,
+    "seconds": 21.036564473999988,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-overloads",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 79,
+    "units": 0,
+    "seconds": 21.248767858000065,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-readonly",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 83,
+    "units": 0,
+    "seconds": 19.689338227999997,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-readonly-sorter",
+    "file": "program.ts",
+    "mode": "scan only",
+    "findings": 81,
+    "units": 0,
+    "seconds": 27.818752810999968,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "baseline",
+    "file": "utilitiesPublic.ts",
+    "mode": "scan only",
+    "findings": 55,
+    "units": 0,
+    "seconds": 39.61980806099996,
+    "exit": 0,
+    "timeout": false
+  },
+  {
+    "candidate": "diag-readonly-sorter",
+    "file": "utilitiesPublic.ts",
+    "mode": "scan only",
+    "findings": 57,
+    "units": 0,
+    "seconds": 33.41025276000005,
+    "exit": 0,
+    "timeout": false
+  }
+]

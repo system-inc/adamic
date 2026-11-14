@@ -1,0 +1,25 @@
+--- baseline/program.ts
++++ diag-readonly-sorter/program.ts
+@@ -2776,7 +2776,8 @@
+         return filesByName.get(path) || undefined;
+     }
+ 
+-    function getDiagnosticsHelper<T extends Diagnostic>(
++    interface DiagnosticReadView extends Diagnostic { readonly file: SourceFile | undefined; }
++    function getDiagnosticsHelper<T extends DiagnosticReadView>(
+         sourceFile: SourceFile | undefined,
+         getDiagnostics: (sourceFile: SourceFile, cancellationToken: CancellationToken | undefined) => readonly T[],
+         cancellationToken: CancellationToken | undefined,
+--- baseline/utilitiesPublic.ts
++++ diag-readonly-sorter/utilitiesPublic.ts
+@@ -300,7 +300,9 @@
+     return pathIsRelative(moduleName) || isRootedDiskPath(moduleName);
+ }
+ 
+-export function sortAndDeduplicateDiagnostics<T extends Diagnostic>(diagnostics: readonly T[]): SortedReadonlyArray<T> {
++interface DiagnosticReadView extends Diagnostic { readonly file: SourceFile | undefined; }
++
++export function sortAndDeduplicateDiagnostics<T extends DiagnosticReadView>(diagnostics: readonly T[]): SortedReadonlyArray<T> {
+     return sortAndDeduplicate<T>(diagnostics, compareDiagnostics, diagnosticsEqualityComparer);
+ }
+ 

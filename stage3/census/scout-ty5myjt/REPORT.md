@@ -1,24 +1,31 @@
-# Scout ty5myjt — resolution recommendation; diagnostics census stopped
+# Scout ty5myjt — resolution full census; program.ts scan only
 
-| Helper | Recommended shape | Stock tsc 6.0.3, 79 roots | Full single-file census | Emitted JS |
+| Helper | Recommended shape | Stock tsc 6.0.3, 79 roots | Census and mode | Emitted JS |
 | --- | --- | --- | --- | --- |
-| getDiagnosticsHelper | Named readonly `file` view, **provisional only** | 0 diagnostics, 0 new | Baseline timed out; neither target disappearance verified | byte-identical |
-| watchFailedLookupLocationsOfExternalModuleResolutions | Local named readonly `resolvedFileName` constraint view | 0 diagnostics, 0 new | 4 target refusals gone across this helper and the next two; 0 new, 0 changed | byte-identical |
-| stopWatchFailedLookupLocationOfResolution | Same local readonly constraint view | 0 diagnostics, 0 new | Same complete resolutionCache.ts census | byte-identical |
-| removeResolutionsOfFileFromCache | Same local readonly constraint view | 0 diagnostics, 0 new | Same complete resolutionCache.ts census | byte-identical |
+| getDiagnosticsHelper | Non-generic overloads: best measured scan-only candidate | 0 diagnostics, 0 new | **scan only: 81→79; 0 new, 2 gone, 0 changed; both targets clear** | byte-identical |
+| watchFailedLookupLocationsOfExternalModuleResolutions | Local named readonly `resolvedFileName` constraint view | 0 diagnostics, 0 new | full: 4 target refusals gone across this helper and the next two; 0 new, 0 changed | byte-identical |
+| stopWatchFailedLookupLocationOfResolution | Same local readonly constraint view | 0 diagnostics, 0 new | full: same complete resolutionCache.ts census | byte-identical |
+| removeResolutionsOfFileFromCache | Same local readonly constraint view | 0 diagnostics, 0 new | full: same complete resolutionCache.ts census | byte-identical |
 
-**Stopped part:** the full baseline `program.ts` census produced only its header
-in **602 seconds** (13:21 CPU time, 1,739,648 KiB RSS). It was terminated at the
-announced 600-second limit. There is no file record or relation trailer, so no
-baseline count, candidate full census, or finding-disappearance claim is made for
-that file. `program-timeout.json`, `program-baseline-INCOMPLETE.jsonl`, and
-`runs.log.txt` preserve this failure to obtain a complete measurement. No diagnostics
-helper shape is cleared for adaptation. This is a partial scout with a concrete
-stopping reason, not completion of the requested program.ts experiment matrix.
+**Program follow-up is scan only.** All five diagnostics candidates now have
+complete refusal-scan results. The named readonly file view removes the original
+file-reason identities, but leaves numeric-field refusals at both target sites
+and adds two helper→sorter refusals. Applying the same view to the sorter removes
+those handoff refusals, but exposes two new comparator-handoff refusals in the
+sorter's own file. The overload candidate alone clears both target sites with
+zero new program refusal-scan findings and zero stock diagnostics. See
+[PROGRAM-SCAN.md](PROGRAM-SCAN.md) for **every new, gone and changed finding**,
+including the supplementary utilitiesPublic.ts scans.
+
+**Historical full-mode stop retained:** program.ts full census was stopped at
+602 seconds without a complete file record. Its incomplete stream and timeout
+remain archived. This follow-up uses the requested scan-only wrapper instead;
+it does not claim full body-lowering coverage or erase that failed full run.
 
 No adaptation or compiler change is delivered. All candidate edits were confined
 to separate scratch adapted trees. This branch contains reporting and measurement
-artifacts only; no Go files were added.
+artifacts only; no compilable Go files were added. Measurement Go templates end
+in `.go.txt`.
 
 ## Recommended resolution shape
 
@@ -99,27 +106,29 @@ for either family.
 ## Candidate matrix
 
 Each candidate starts from the same finished adapted tree and changes only the
-file named in its patch. Stock results use exactly the 79 compiler roots plus
+files named in its patch. Stock results use exactly the 79 compiler roots plus
 pinned Node ambient declarations. Baseline has **0** diagnostics. All original
 stock libraries are unchanged; options, root names and every diagnostic are in
 `*-stock.json`. The initial ambient-free control had 64 diagnostics; it is not the
 baseline used in this table.
 
-| Scratch candidate | Stock diagnostics / new | Full raw; unique | Full new / gone / changed |
+| Scratch candidate | Stock diagnostics / new | Mode; raw; unique | New / gone / changed |
 | --- | --- | --- | --- |
-| diag-intersection | 0 / 0 | not run: baseline timeout | unmeasured |
-| diag-readonly | 0 / 0 | not run: baseline timeout | unmeasured |
-| diag-exact | 1 / 1 | not run: baseline timeout | unmeasured |
-| diag-overloads | 0 / 0 | not run: baseline timeout | unmeasured |
-| resolution-readonly | 0 / 0 | 221→217; 133→129 | 0 / 4 / 0 |
-| resolution-exact | 2 / 2 | 221→184; 133→121 | 2 / 14 / 0 |
-| resolution-result-view | 0 / 0 | 221→217; 133→129 | 0 / 4 / 0 |
+| diag-intersection | 0 / 0 | scan only; 81→81; 81→81 | 2 / 2 / 0 |
+| diag-readonly | 0 / 0 | scan only; 81→83; 81→83 | 4 / 2 / 0 |
+| diag-readonly-sorter | 0 / 0 | scan only; 81→81; 81→81 | 2 / 2 / 0; plus 2 new in sorter file |
+| diag-exact | 1 / 1 | scan only; 81→81; 81→81 | 2 / 2 / 0 |
+| diag-overloads | 0 / 0 | scan only; 81→79; 81→79 | 0 / 2 / 0 |
+| resolution-readonly | 0 / 0 | full; 221→217; 133→129 | 0 / 4 / 0 |
+| resolution-exact | 2 / 2 | full; 221→184; 133→121 | 2 / 14 / 0 |
+| resolution-result-view | 0 / 0 | full; 221→217; 133→129 | 0 / 4 / 0 |
 
 (a) **Literal intersection control:**
 `T extends Readonly<Pick<Diagnostic, "file">> & Diagnostic`. Stock tsc still
 permits `value.file = undefined`: intersecting with the mutable Diagnostic
 restores a writable member. It does not meet the requirement that the body
-cannot write the field. [readonly-control.json](readonly-control.json) records
+cannot write the field. Its scan only run retains both target sites with the same
+file-width refusal and a newly spelled intersection constraint. [readonly-control.json](readonly-control.json) records
 this alongside the single expected TS2540 for an Omit-and-replace readonly view.
 The named candidate instead uses a local interface extending Diagnostic and
 redeclaring `readonly file: SourceFile | undefined`.
@@ -143,10 +152,10 @@ findings, with no new/changed findings. The readonly-constraint shape is preferr
 because it preserves existing result polymorphism and requires fewer contract
 changes.
 
-**Every full-file new, gone or changed finding** is listed in
+**Every full-mode resolution new, gone or changed finding** is listed in
 [FINDINGS.md](FINDINGS.md) and the three `*-delta.json` files. All three resolution
-streams are archived, including the stock-rejected control. No scan-only run is
-substituted for full mode.
+streams are archived, including the stock-rejected control. Those resolution results remain full mode. Program results are separately and
+explicitly labeled scan only in PROGRAM-SCAN.md and the tables above.
 
 ## JavaScript
 
@@ -155,7 +164,10 @@ All seven candidates were emitted for **both** program.ts and resolutionCache.ts
 CommonJS, comments retained. [javascript.json](javascript.json) gives byte counts
 and SHA256s; each candidate's `.js.diff` is empty. Each `.patch` records the exact
 scratch type changes. This establishes emission identity, not acceptance of the
-stock-rejected controls or unmeasured diagnostics census.
+stock-rejected controls or full body-lowering acceptance of diagnostics shapes.
+The additional helper-plus-sorter candidate is also stock-clean across 79 roots
+and has byte-identical program.ts and utilitiesPublic.ts emissions, recorded in
+diag-readonly-sorter-stock.json and diag-readonly-sorter-javascript.json.
 
 ## Who pins the owners
 
@@ -225,6 +237,89 @@ are counted in raw totals and deduplicated for unique totals.
 The streams retain the tool's literal “measured on a checker-rejected program”
 label, but baseline/readonly/fixed-view headers explicitly say
 `checker_rejected: false`; only the rejected exact control has checker diagnostics.
-No full adaptation oracle or native-output test was run. Full program candidate
-censuses, their complete deltas, and fully non-generic cache-family splits remain
-unmeasured because of the stated stopping point.
+No full adaptation oracle or native-output test was run. Full program body-lowering censuses and fully non-generic cache-family splits
+remain unmeasured. The requested follow-up refusal-scan comparisons are complete;
+they are documented below and in PROGRAM-SCAN.md.
+
+
+## Program continuation — scan only
+
+The wrapper is copied verbatim from the pinned
+`typescript/promise-discard-sites` commit in `scan-wrapper-pin.txt`, path
+`stage3/census/promise-discard-sites/scan-only.go.txt`. Only that measurement
+wrapper was taken; **the compiler stays at base
+7534c1d7575db02bb7b6512119e0685987b7e333**. It invokes the existing latentScan
+visitor and emits zero lowering units. `scan-only.go.txt` and
+`scan-driver.go.txt` preserve the wrapper and driver. The driver keeps both
+no-output guards and calls LatentScanOnly in place of Latent; its header explicitly
+says `latent_mode: "scan only"`. No production file was changed.
+
+Build: start with the existing scratch make_overlay.py overlay, add the wrapper
+as a virtual internal/lower/latent_scan_only.go, and map tool/main.go to the
+scan-only driver. Build with `go build -buildvcs=false -overlay=<scan overlay.json>
+-o <scratch>/scan-only ./stage3/census/latent/tool`, with the same scratch TMPDIR,
+GOTMPDIR and CGO_ENABLED=0 as the full binary. `scan-build.log.txt` is empty,
+status 0. `build_scan.py` reproduces those overlay mappings from the saved sources.
+
+`run_scan.py` selects one absolute LATENT_ONLY_FILE, retains LATENT_FULL=1 and
+LATENT_ASSERT_NO_OUTPUT=1, explicitly selects CommonJSBundle, and uses a 1500-second
+process-group kill bound. Baseline ran first, named readonly view next; the
+helper-plus-sorter candidate was then measured after its handoff refusals were
+observed. All original diagnostics candidates were measured. `scan-runs.json`
+records all eight complete runs (six program runs including baseline, two sorter
+file runs), timings, status 0, no timeouts, and zero units. Every raw stream,
+per-run metadata and log is archived under scan-*. Baseline program took 20.47s;
+all program candidates finished without using the bound.
+
+The two target baseline findings are confirmed present at 2796:16 and 2829:16.
+All counts/deltas cover the entire selected file's emitted refusal scan, not just
+those targets. `scan_delta.py` rejects incomplete streams, nonzero units, or a
+non-refusal-scan phase, and applies the same normalized identity as the resolution
+comparison. Reason changes count as gone plus new, not changed. The original two
+identities disappear in every variant, but site clearance differs; the table in
+PROGRAM-SCAN.md makes that distinction explicit.
+
+The numeric replacement is explained by DiagnosticWithLocation also narrowing
+**start and length**, each `number | undefined` in Diagnostic and `number` in
+DiagnosticWithLocation. A readonly file alone does not remove those write
+capabilities. The emitted reason does not identify which numeric member was
+encountered first. Adding readonly to the sorter constraint carries file through
+the helper handoff, but its comparers still accept mutable Diagnostic. They expose
+new refusals at baseline utilitiesPublic.ts:304:47 and :304:67 (candidate :306:47
+and :306:67). These supplementary **scan only** results are 34→36 unique (55→57 raw), 2 new, 0 gone,
+0 changed, with every finding listed in PROGRAM-SCAN.md.
+
+## Does the sorter or its call chain write file?
+
+**No.** `sorter-call-chain.json` preserves the exact adapted declarations and
+bodies used for this audit:
+
+- sortAndDeduplicateDiagnostics forwards the readonly input array, compareDiagnostics,
+  and diagnosticsEqualityComparer to sortAndDeduplicate.
+- sortAndDeduplicate calls toSorted and deduplicateSorted. toSorted uses
+  array.slice().sort(comparer): it reorders a **copy**. deduplicateSorted appends
+  element references to a new buffer and updates local last/next values. Neither
+  assigns a diagnostic property.
+- compareDiagnostics and diagnosticsEqualityComparer read diagnostic file/path,
+  start, length, code, message text, canonicalHead and relatedInformation. Their
+  reachable diagnostic helpers are getDiagnosticFilePath, getDiagnosticCode,
+  getDiagnosticMessage, compareDiagnosticsSkipRelatedInformation,
+  compareRelatedInformation and compareMessageText; message-chain comparers recurse
+  through message data, and related-information comparisons recurse through the
+  same diagnostic comparator. None assigns file or a diagnostic location field.
+- getDiagnosticFilePath is exactly a file-presence test followed by file.path;
+  primitive string/number comparisons cannot write the diagnostic object.
+
+Thus the current implementations only read these location fields. Their declared
+mutable Diagnostic contracts are the capability obstacle. The measured file-only
+view is insufficient both for start/length and for the sorter→comparer handoff.
+This scout does not propagate new readonly comparator/helper contracts further or
+claim those unmeasured shapes would pass. No adapter/owner pin is changed: the
+existing createProgram enclosing hash still matters, and the direct sorter-name
+search found no active whole-sorter owner pin.
+
+`verify_scan.py` checks all archived scan-only counts, trailers, zero units, target
+presence, wrapper provenance, stock cleanliness and JavaScript identity;
+`scan-verification.json` records its passing result. Normal refusal-scan pruning
+still applies: these are all emitted findings, not independent checks of every
+possible rule after an earlier refusal.

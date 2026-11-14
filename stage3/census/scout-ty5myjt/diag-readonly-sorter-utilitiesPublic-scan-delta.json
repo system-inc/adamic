@@ -1,0 +1,34 @@
+{
+  "candidate": "diag-readonly-sorter",
+  "file": "utilitiesPublic.ts",
+  "before_raw": 55,
+  "after_raw": 57,
+  "before_unique": 34,
+  "after_unique": 36,
+  "new": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:305:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/utilitiesPublic.ts:304:47",
+      "reason": "a value of type (d1: Diagnostic, d2: Diagnostic) => Comparison seen as Comparer<T>, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+      "text": "src/compiler/utilitiesPublic.ts:304:47: Adamic 0.1 refuses a value of type (d1: Diagnostic, d2: Diagnostic) => Comparison seen as Comparer<T>, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:305:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/utilitiesPublic.ts:304:67",
+      "reason": "a value of type (d1: Diagnostic, d2: Diagnostic) => boolean seen as EqualityComparer<T> | undefined, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+      "text": "src/compiler/utilitiesPublic.ts:304:67: Adamic 0.1 refuses a value of type (d1: Diagnostic, d2: Diagnostic) => boolean seen as EqualityComparer<T> | undefined, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  ],
+  "gone": [],
+  "changed": []
+}

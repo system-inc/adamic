@@ -1,0 +1,110 @@
+[
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "sortAndDeduplicateDiagnostics",
+    "line": 303,
+    "text": "export function sortAndDeduplicateDiagnostics<T extends Diagnostic>(diagnostics: readonly T[]): SortedReadonlyArray<T> {\r\n    return sortAndDeduplicate<T>(diagnostics, compareDiagnostics, diagnosticsEqualityComparer);\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getDiagnosticFilePath",
+    "line": 8777,
+    "text": "function getDiagnosticFilePath(diagnostic: Diagnostic): string | undefined {\r\n    return diagnostic.file ? diagnostic.file.path : undefined;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareDiagnostics",
+    "line": 8782,
+    "text": "export function compareDiagnostics(d1: Diagnostic, d2: Diagnostic): Comparison {\r\n    return compareDiagnosticsSkipRelatedInformation(d1, d2) ||\r\n        compareRelatedInformation(d1, d2) ||\r\n        Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareDiagnosticsSkipRelatedInformation",
+    "line": 8788,
+    "text": "function compareDiagnosticsSkipRelatedInformation(d1: Diagnostic, d2: Diagnostic): Comparison {\r\n    const code1 = getDiagnosticCode(d1);\r\n    const code2 = getDiagnosticCode(d2);\r\n    return compareStringsCaseSensitive(getDiagnosticFilePath(d1), getDiagnosticFilePath(d2)) ||\r\n        compareValues(d1.start, d2.start) ||\r\n        compareValues(d1.length, d2.length) ||\r\n        compareValues(code1, code2) ||\r\n        compareMessageText(d1, d2) ||\r\n        Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareRelatedInformation",
+    "line": 8801,
+    "text": "function compareRelatedInformation(d1: Diagnostic, d2: Diagnostic): Comparison {\r\n    if (!d1.relatedInformation && !d2.relatedInformation) {\r\n        return Comparison.EqualTo;\r\n    }\r\n    if (d1.relatedInformation && d2.relatedInformation) {\r\n        return compareValues(d2.relatedInformation.length, d1.relatedInformation.length) || forEach(d1.relatedInformation, (d1i, index) => {\r\n            const d2i = d2.relatedInformation![index]!;\r\n            return compareDiagnostics(d1i, d2i); // EqualTo is 0, so falsy, and will cause the next item to be compared\r\n        }) || Comparison.EqualTo;\r\n    }\r\n    return d1.relatedInformation ? Comparison.LessThan : Comparison.GreaterThan;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareMessageText",
+    "line": 8816,
+    "text": "function compareMessageText(\r\n    d1: Diagnostic,\r\n    d2: Diagnostic,\r\n): Comparison {\r\n    let headMsg1 = getDiagnosticMessage(d1);\r\n    let headMsg2 = getDiagnosticMessage(d2);\r\n    if (typeof headMsg1 !== \"string\") {\r\n        headMsg1 = headMsg1.messageText;\r\n    }\r\n    if (typeof headMsg2 !== \"string\") {\r\n        headMsg2 = headMsg2.messageText;\r\n    }\r\n    const chain1 = typeof d1.messageText !== \"string\" ? d1.messageText.next : undefined;\r\n    const chain2 = typeof d2.messageText !== \"string\" ? d2.messageText.next : undefined;\r\n\r\n    let res = compareStringsCaseSensitive(headMsg1, headMsg2);\r\n    if (res) {\r\n        return res;\r\n    }\r\n\r\n    res = compareMessageChain(chain1, chain2);\r\n    if (res) {\r\n        return res;\r\n    }\r\n\r\n    if (d1.canonicalHead && !d2.canonicalHead) {\r\n        return Comparison.LessThan;\r\n    }\r\n    if (d2.canonicalHead && !d1.canonicalHead) {\r\n        return Comparison.GreaterThan;\r\n    }\r\n\r\n    return Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareMessageChain",
+    "line": 8853,
+    "text": "function compareMessageChain(\r\n    c1: DiagnosticMessageChain[] | undefined,\r\n    c2: DiagnosticMessageChain[] | undefined,\r\n): Comparison {\r\n    if (c1 === undefined && c2 === undefined) {\r\n        return Comparison.EqualTo;\r\n    }\r\n    if (c1 === undefined) {\r\n        return Comparison.GreaterThan;\r\n    }\r\n    if (c2 === undefined) {\r\n        return Comparison.LessThan;\r\n    }\r\n\r\n    return compareMessageChainSize(c1, c2) || compareMessageChainContent(c1, c2);\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareMessageChainSize",
+    "line": 8870,
+    "text": "function compareMessageChainSize(\r\n    c1: DiagnosticMessageChain[] | undefined,\r\n    c2: DiagnosticMessageChain[] | undefined,\r\n): Comparison {\r\n    if (c1 === undefined && c2 === undefined) {\r\n        return Comparison.EqualTo;\r\n    }\r\n    if (c1 === undefined) {\r\n        return Comparison.GreaterThan;\r\n    }\r\n    if (c2 === undefined) {\r\n        return Comparison.LessThan;\r\n    }\r\n\r\n    let res = compareValues(c2.length, c1.length);\r\n    if (res) {\r\n        return res;\r\n    }\r\n\r\n    for (let i = 0; i < c2.length; i++) {\r\n        res = compareMessageChainSize(c1[i]!.next, c2[i]!.next);\r\n        if (res) {\r\n            return res;\r\n        }\r\n    }\r\n\r\n    return Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "compareMessageChainContent",
+    "line": 8900,
+    "text": "function compareMessageChainContent(\r\n    c1: DiagnosticMessageChain[],\r\n    c2: DiagnosticMessageChain[],\r\n): Comparison {\r\n    let res;\r\n    for (let i = 0; i < c2.length; i++) {\r\n        res = compareStringsCaseSensitive(c1[i]!.messageText, c2[i]!.messageText);\r\n        if (res) {\r\n            return res;\r\n        }\r\n        if (c1[i]!.next === undefined) {\r\n            continue;\r\n        }\r\n        res = compareMessageChainContent(c1[i]!.next!, c2[i]!.next!);\r\n        if (res) {\r\n            return res;\r\n        }\r\n    }\r\n    return Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "diagnosticsEqualityComparer",
+    "line": 8922,
+    "text": "export function diagnosticsEqualityComparer(d1: Diagnostic, d2: Diagnostic): boolean {\r\n    const code1 = getDiagnosticCode(d1);\r\n    const code2 = getDiagnosticCode(d2);\r\n    const msg1 = getDiagnosticMessage(d1);\r\n    const msg2 = getDiagnosticMessage(d2);\r\n    return compareStringsCaseSensitive(getDiagnosticFilePath(d1), getDiagnosticFilePath(d2)) === Comparison.EqualTo &&\r\n        compareValues(d1.start, d2.start) === Comparison.EqualTo &&\r\n        compareValues(d1.length, d2.length) === Comparison.EqualTo &&\r\n        compareValues(code1, code2) === Comparison.EqualTo &&\r\n        messageTextEqualityComparer(msg1, msg2);\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getDiagnosticCode",
+    "line": 8934,
+    "text": "function getDiagnosticCode(d: Diagnostic): number {\r\n    return d.canonicalHead?.code || d.code;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getDiagnosticMessage",
+    "line": 8938,
+    "text": "function getDiagnosticMessage(d: Diagnostic): string | DiagnosticMessageChain {\r\n    return d.canonicalHead?.messageText || d.messageText;\r\n}"
+  },
+  {
+    "file": "utilities.ts",
+    "name": "messageTextEqualityComparer",
+    "line": 8942,
+    "text": "function messageTextEqualityComparer(m1: string | DiagnosticMessageChain, m2: string | DiagnosticMessageChain): boolean {\r\n    const t1 = typeof m1 === \"string\" ? m1 : m1.messageText;\r\n    const t2 = typeof m2 === \"string\" ? m2 : m2.messageText;\r\n    return compareStringsCaseSensitive(t1, t2) === Comparison.EqualTo;\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "deduplicateSorted",
+    "line": 735,
+    "text": "function deduplicateSorted<T>(array: SortedReadonlyArray<T>, comparer: EqualityComparer<T> | Comparer<T>): SortedReadonlyArray<T> {\r\n    if (array.length === 0) return emptyArray as unknown as SortedReadonlyArray<T>;\r\n\r\n    let last = array[0]!;\r\n    const deduplicated: T[] = [last];\r\n    for (let i = 1; i < array.length; i++) {\r\n        const next = array[i]!;\r\n        switch (comparer(next, last)) {\r\n            // equality comparison\r\n            case true:\r\n\r\n            // relational comparison\r\n            // falls through\r\n            case Comparison.EqualTo:\r\n                continue;\r\n\r\n            case Comparison.LessThan:\r\n                // If `array` is sorted, `next` should **never** be less than `last`.\r\n                return Debug.fail(\"Array is unsorted.\");\r\n        }\r\n\r\n        deduplicated.push(last = next);\r\n    }\r\n\r\n    return deduplicated as unknown as SortedReadonlyArray<T>;\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "sortAndDeduplicate",
+    "line": 805,
+    "text": "export function sortAndDeduplicate(array: readonly string[]): SortedReadonlyArray<string>;"
+  },
+  {
+    "file": "core.ts",
+    "name": "sortAndDeduplicate",
+    "line": 807,
+    "text": "export function sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T>;"
+  },
+  {
+    "file": "core.ts",
+    "name": "sortAndDeduplicate",
+    "line": 809,
+    "text": "export function sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T> {\r\n    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as unknown as Comparer<T>);\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "toSorted",
+    "line": 1048,
+    "text": "export function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\r\n    return (array.length === 0 ? emptyArray as readonly T[] : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;\r\n}"
+  }
+]

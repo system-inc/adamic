@@ -1,0 +1,57 @@
+{
+  "candidate": "diag-exact",
+  "file": "program.ts",
+  "before_raw": 81,
+  "after_raw": 81,
+  "before_unique": 81,
+  "after_unique": 81,
+  "new": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:2779:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:2785:20",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/program.ts:2785:20: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:2779:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:2787:16",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/program.ts:2787:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    }
+  ],
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:2795:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:2796:16",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:2828:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:2829:16",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    }
+  ],
+  "changed": []
+}
