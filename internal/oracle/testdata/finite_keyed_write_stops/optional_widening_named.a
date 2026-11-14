@@ -1,0 +1,11 @@
+// A Plain under left: Box hides whatever tag it may carry behind Box's optional tag (adamic/no-optional-widening),
+// where the union key's write type is Box & Plain, judged by neither field alone.
+interface Box { size: number; tag?: string; }
+interface Plain { size: number; }
+interface Shelf { left: Box; right: Plain; }
+function shelve(shelf: Shelf, at: 'left' | 'right', value: Plain): void {
+	shelf.left = value;
+}
+const shelf: Shelf = { left: { size: 1 }, right: { size: 2 } };
+shelve(shelf, 'right', { size: 3 });
+console.log(`${shelf.right.size}`);

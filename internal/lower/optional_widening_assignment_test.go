@@ -20,8 +20,9 @@ function setCustomLevel(level: keyof Levels): void {
 console.log(String(getCustomLevels()?.Low));
 `
 
-// The reader clears sys.ts's false refusal. Its element-write representation is
-// a separate gap, so require both this rule's nil and the exact next whole stop.
+// The reader clears sys.ts's false refusal. The element write then lowers as a finite keyed write
+// (#13p3y0c), whose arm meets the absent optional field {} left out, a separate gap, so require both
+// this rule's nil and the exact next whole stop.
 func TestOptionalAssignmentSysBehindElementWrite(t *testing.T) {
 	t.Parallel()
 	finder, _ := cycleIndexTypes(t, optionalAssignmentSys)
@@ -42,7 +43,7 @@ func TestOptionalAssignmentSysBehindElementWrite(t *testing.T) {
 	}
 	for _, extension := range []string{".a", ".ts"} {
 		_, err := lowerSourceAs(t, optionalAssignmentSys, extension)
-		want := "main" + extension + ":6:1: stage 0 can't lower assigning an element of a value yet"
+		want := "main" + extension + ":6:1: stage 0 can't lower writing a possibly absent optional own field yet"
 		var later *NotYet
 		if !errors.As(err, &later) || !strings.HasSuffix(err.Error(), want) {
 			t.Fatalf("got %v, want the next stop ending %q", err, want)
