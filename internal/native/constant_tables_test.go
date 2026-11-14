@@ -372,9 +372,11 @@ func TestConstantRecordsStayOutOfRegions(t *testing.T) {
 		state emitter
 		want  bool
 	}{
-		{"a function's heap version", emitter{function: &ir.Function{}}, true},
-		{"a fresh function's region version", emitter{function: &ir.Function{}, inRegion: true}, false},
-		{"a literal handed a region", emitter{function: &ir.Function{}, regionLiteralDepth: 1}, false},
+		// constantRecords reads no function, so these probe the region state alone; the source halves of
+		// this test and TestConstantRecordsInFunctions pin a real function's emission.
+		{"no region state", emitter{}, true},
+		{"a fresh function's region version", emitter{inRegion: true}, false},
+		{"a literal handed a region", emitter{regionLiteralDepth: 1}, false},
 	} {
 		state := probe.state
 		state.program = &ir.Program{}
