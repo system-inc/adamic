@@ -218,6 +218,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkBoundArguments(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkCheckedPredicateParameters(modules); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}
@@ -408,6 +411,11 @@ type lowering struct {
 	// lowering (overload_result_check.go, #z5d0jye).
 	narrowOverloads map[*ast.Node]bool
 	overloadCalls   map[*ast.Node]bool
+	// predicateParametersAdmitted holds each predicate parameter predicateArgumentProof admitted for its
+	// checked closure, and predicateParametersBuilt each one lowering passed as that closure, which
+	// checkCheckedPredicateParameters holds alike once lowering is done (predicate_parameter_value.go).
+	predicateParametersAdmitted map[*ast.Node]bool
+	predicateParametersBuilt    map[*ast.Node]bool
 	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
 	// view is in (view_optional_writes.go).
 	viewOptionalWrites []viewOptionalWrite
