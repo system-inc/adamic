@@ -1,0 +1,874 @@
+# TypeScript upstream bug ledger
+
+Fork fixes stay separate from soundness adaptations. Kirk decides when to file
+these drafted issues. Nothing in this ledger has been sent upstream.
+
+## 1. Empty single-quoted triple-slash pragma argument throws
+
+Status: fixed in our fork by adaptation 46; draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/parser.ts:10731 selects the argument using
+`matchResult[2] || matchResult[3]`; parser.ts:10737 reads `value.length` and throws.
+The quote-alternative matcher is constructed at parser.ts:10707.
+
+Node counterexample input: `/// <reference path='' />`.
+Before: `createSourceFile` throws
+`TypeError: Cannot read properties of undefined (reading 'length')` in
+extractPragmas. The successful match has group 2 equal to `""` and group 3
+undefined, so truthy selection discards the participating empty capture.
+After: parsing succeeds, referencedFiles has one entry whose fileName is `""`
+and whose capture span has length 0. Nonempty single/double quotes and empty
+double quotes retain their previous results.
+
+Our patch: stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs changes only the
+operator in adaptation 45's checked boundary:
+
+```diff
+- const value = (matchResult[2] || matchResult[3])!;
++ const value = (matchResult[2] ?? matchResult[3])!;
+```
+
+Groups 2 and 3 are alternative quote branches and exactly one participates in
+every successful match. Either participating capture may be empty. Nullish
+selection keeps the empty string, and the entire result is therefore present.
+Neither individual capture is asserted mandatory.
+
+### Draft GitHub issue
+
+Title: Empty single-quoted reference path crashes createSourceFile in TypeScript 6.0.3
+
+Version: TypeScript 6.0.3, reproduced on Node 24.19.0.
+
+Minimal reproduction:
+
+```sh
+mkdir tsc-empty-reference-repro
+cd tsc-empty-reference-repro
+npm install --no-audit --no-fund typescript@6.0.3
+```
+
+Save this as repro.cjs and run `node repro.cjs`:
+
+```js
+const ts = require("typescript");
+const source = ts.createSourceFile("empty.ts", "/// <reference path='' />", ts.ScriptTarget.Latest);
+console.log(JSON.stringify(source.referencedFiles.map(file => file.fileName)));
+console.log(source.referencedFiles[0].end - source.referencedFiles[0].pos);
+```
+
+Expected: the parser completes and represents the empty value consistently
+with a double-quoted empty reference path, printing:
+
+```text
+[""]
+0
+```
+
+Actual: the parser throws
+`TypeError: Cannot read properties of undefined (reading 'length')` in
+extractPragmas. The equivalent `/// <reference path="" />` parses successfully.
+
+Suggested upstream change: use `matchResult[2] ?? matchResult[3]` when choosing
+between the single-quoted and double-quoted argument captures. The `!` in our
+fork patch belongs to our sounder regex declarations; it is not needed in
+upstream's standard string-valued capture declarations.
+
+## 2. Truthiness treats a returned exit code as a watch handle
+
+Status: soundness adaptation 79 under the Oct 19 language-lead ruling for
+#se1zcgr; draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Locations: src/compiler/sys.ts System.exit; src/compiler/executeCommandLine.ts;
+src/testRunner/unittests/helpers/tscWatch.ts:78 and
+tscWatch/incremental.ts:77 (locations in the numbered adapted tree).
+
+System.exit promises void, but test hosts override it with
+`sys.exit = exitCode => sys.exitCode = exitCode`. executeCommandLine forwards
+that value through its void arm. The harness treats the result as void or a
+watch/solution object, and `if (closer) closer.close()` incorrectly excludes
+all numbers using the declared void arm. A nonzero exit code is truthy.
+
+Node 24.19.0 counterexample, using the real built TypeScript compiler:
+
+```js
+const ts = require("./built/local/typescript.js");
+const sys = { ...ts.sys, write() {}, exit(_code) { return 1; } };
+const closer = ts.executeCommandLine(sys, () => {}, ["--invalid-adamic-option"]);
+console.log(closer); // 1
+if (closer) closer.close(); // TypeError: closer.close is not a function
+```
+
+Observed: the invalid-option path calls exit with 1, executeCommandLine returns
+1, and the harness's exact old close statement throws the TypeError above.
+[The runnable proof](../adapt/79-exit-code/proofs/host-witness.cjs) extracts that
+statement from the actual consumer, rather than maintaining a second copy.
+This is a counterexample to the narrowing, not evidence that the unchanged
+upstream suite exercises that invalid-option input in this particular consumer.
+
+Our adaptation declares System.exit as number | undefined, gives the two
+noop-as-exit test hosts dedicated stubs with that signature, and narrows the
+two consumers using `typeof result === "object"`. Compiler JavaScript stays
+byte-identical. The full unchanged upstream suite and its exact passing count
+are the condition on accepting the harness changes; no test or baseline input
+is added, deleted, filtered, or rewritten by adaptation 79.
+
+## 3. Excess JavaScript type argument crashes getTypeArgumentConstraint
+
+Status: fixed in our fork by JavaScript-changing adaptation 95f under the
+November 1 Correctness ruling; draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/checker.ts:42849, getTypeArgumentConstraint calls
+getConstraintOfTypeParameter with typeParameters[typeArgumentPosition] even
+when the argument position exceeds the generic arity.
+
+Node counterexample: a one-parameter JavaScript generic C and JSDoc
+`@type {C<string, number, boolean>}` or `@extends {C<string, number, boolean>}`.
+Querying the second or third argument through TypeChecker.getTypeArgumentConstraint
+throws TypeError reading resolvedBaseConstraint. JavaScript's class-reference
+resolution deliberately continues after invalid arity, so the error-type early
+return used for TypeScript does not establish parameter presence here.
+
+Our patch: stage3/adapt/95-checker-axolotl-f/adapt.cjs inserts only:
+
+```diff
+ const relevantTypeParameter = typeParameters[typeArgumentPosition];
++if (relevantTypeParameter === undefined) return undefined;
+ const constraint = getConstraintOfTypeParameter(relevantTypeParameter);
+```
+
+The API already returns Type | undefined; internal and service callers already
+handle no constraint. This is a crash fix, not a required-value assertion.
+Official typescript-go 89d5d5b2849a0db0957065889ca58536fa6d2e4a and TypeScript
+main 6161772c1370bdd4a82f808e6823bd755eb1870d both return nil past arity in
+the equivalent Go checker function. Evidence is on branch
+typescript/axolotl-checker-f-evidence under stage3/evidence/95-checker-axolotl-f/.
+
+### Draft GitHub issue
+
+Title: getTypeArgumentConstraint crashes on excess JSDoc type arguments in TypeScript 6.0.3
+
+Version: TypeScript 6.0.3 on Node 24.19.0. Current Go main already bounds-checks
+this position; this draft documents the 6.0.3 defect and fork repair.
+
+Save the following as repro.cjs beside an installed typescript@6.0.3 and run
+`node repro.cjs`:
+
+```js
+const ts = require('typescript');
+const file = '/repro.js';
+const text = '/** @template T */ class C {}\n/** @type {C<string, number, boolean>} */ let value;';
+const host = ts.createCompilerHost({allowJs: true, checkJs: true, noEmit: true});
+const original = host.getSourceFile;
+host.getSourceFile = (name, ...args) => name === file
+    ? ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true)
+    : original.call(host, name, ...args);
+const program = ts.createProgram([file], {allowJs: true, checkJs: true, noEmit: true}, host);
+const checker = program.getTypeChecker();
+const source = program.getSourceFile(file);
+const argument = source.statements[1].jsDoc[0].tags[0].typeExpression.type.typeArguments[1];
+console.log(checker.getTypeArgumentConstraint(argument));
+```
+
+Expected: undefined (the excess argument has no corresponding parameter and
+therefore no constraint). Actual: TypeError: Cannot read properties of undefined
+(reading 'resolvedBaseConstraint'). Suggested change: handle the absent local
+before calling getConstraintOfTypeParameter, as the Go checker already does.
+
+This entry and the independent G entry both append to 95a's ledger end. Resolve
+the append conflict when merging the second branch; preserve both issue drafts.
+
+## 4. Missing index declaration crashes getSymbolAtLocation
+
+Status: JavaScript-changing fork fix in 95g, scoped to the previously throwing
+parent fallback. Draft issue, not filed. No public API line is changed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/checker.ts:50153, getApplicableIndexSymbol reads
+copy.declarations[0].parent after mapDefined may remove every declaration.
+
+An augmented CommonJS export of a class with a broad computed static index
+reaches one applicable index with no declaration and neither aliasSymbol nor
+symbol. getSymbolAtLocation(v.xyz) throws reading parent with zero diagnostics,
+at both noImplicitAny settings. The fix keeps the ordered aliasSymbol / symbol /
+fallback selection. Only inside the third arm, a missing first declaration
+returns undefined; every successful arm retains its original result.
+
+This follows the behavior at the throwing arm in
+[typescript-go 89d5d5b2849a0db0957065889ca58536fa6d2e4a, checker.go:32209](https://github.com/microsoft/typescript-go/blob/89d5d5b2849a0db0957065889ca58536fa6d2e4a/internal/checker/checker.go#L32209)
+and [TypeScript main 6161772c1370bdd4a82f808e6823bd755eb1870d, checker.go:32895](https://github.com/microsoft/TypeScript/blob/6161772c1370bdd4a82f808e6823bd755eb1870d/tsc/internal/checker/checker.go#L32895).
+Both Go implementations guard the empty filtered list more broadly. They also
+return no symbol where 6.0.3 successfully returns a zero-declaration __index
+symbol with a known type symbol. 95g deliberately preserves that successful
+6.0.3 path, including Computed.xyz and the unchanged super.xyz implementation
+query (undefined, zero diagnostics).
+
+On an imported derived-class super.xyz witness, getImplementationAtPosition
+already threw in the checker. It now throws reading valueDeclaration in
+services/findAllReferences.ts:580. This is a moved existing crash, not a new
+crash on a successful input; no service edit is included. The FourSlash
+verifySymbolAtLocation assertion likewise now reports its missing-symbol error
+instead of the checker exception. Actual built-compiler service probes preserve
+all 29 successful rows and introduce zero new crashes; 27 formerly throwing
+rows succeed and one moves. Full evidence is on typescript/axolotl-checker-g-evidence
+under stage3/evidence/95-checker-axolotl-g/scoped-final/.
+
+### Draft GitHub issue
+
+Title: getSymbolAtLocation crashes on a declaration-free computed static index in TypeScript 6.0.3
+
+Version: TypeScript 6.0.3 on Node 24.19.0. Current Go implementations already
+return no symbol on the throwing input (references above).
+
+Save exported.js:
+
+```js
+/** @type {string} */
+let key = 'xyz';
+class Computed { static [key] = 1; }
+module.exports = /** @type {typeof Computed} */ (class {});
+module.exports.extra = 2;
+```
+
+Save consumer.ts:
+
+```ts
+import v = require('./exported');
+v.xyz;
+```
+
+Create a program containing consumer.ts using allowJs, checkJs, noEmit and
+CommonJS module resolution. Obtain its checker and call getSymbolAtLocation on
+the second statement's PropertyAccessExpression. Both noImplicitAny settings
+produce zero diagnostics. Actual: TypeError: Cannot read properties of undefined
+(reading 'parent') in getApplicableIndexSymbol. Expected: undefined when neither
+type symbol supplies a parent and the fallback has no declaration, following
+the Go behavior on this input. Preserve successful symbol-supplied parent paths.
+
+Suggested fix: guard the first declaration only in the third parent-selection
+arm. Follow-up: the service super-property implementation reader assumes a
+symbol, so the derived-class variant moves the existing exception there rather
+than completing. Audit that reader independently; it is not changed by 95g.
+
+This entry and F's entry independently append to 95a's ledger end. Resolve the
+append conflict when merging second; preserve both issue drafts and leave
+renumbering to the wave cutter.
+
+## 5. Empty repeated extends clause crashes declaration emit
+
+Status: fixed in our fork by adaptation 99e; draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/transformers/declarations.ts:1678, the heritage callback
+inside transformTopLevelDeclaration's expression-base rewrite.
+
+Node counterexample input: `export class C extends f() extends {}`.
+A further reduced standalone witness is `class C extends 0 extends {}`; it
+also crashes both CLI declaration emit and transpileDeclaration, with TS2507
+for the numeric base and TS1172 for the repeated clause.
+The parser reports no diagnostics and creates heritage type lengths `[1, 0]`.
+Semantic checking reports TS1172, `'extends' clause already seen.`, for the
+second clause. `tsc --declaration`, `ts.transpileDeclaration`, and program.emit
+throw `TypeError: Cannot read properties of undefined (reading 'kind')` in
+isVariableDeclaration, called by createGetSymbolAccessibilityDiagnosticForNode.
+The outer getEffectiveBaseTypeNode guard proves only the first clause's type.
+
+Our patch: stage3/adapt/99-correctness-axolotl-e/adapt.cjs:
+
+```diff
+- const heritageClauses = factory.createNodeArray(map(input.heritageClauses, clause => {
++ const heritageClauses = factory.createNodeArray(mapDefined(input.heritageClauses, clause => {
+      if (clause.token === SyntaxKind.ExtendsKeyword) {
++         const firstType = clause.types[0];
++         if (!firstType) return undefined;
+          const oldDiag = getSymbolAccessibilityDiagnostic;
+-         getSymbolAccessibilityDiagnostic = createGetSymbolAccessibilityDiagnosticForNode(clause.types[0]);
++         getSymbolAccessibilityDiagnostic = createGetSymbolAccessibilityDiagnosticForNode(firstType);
+```
+
+The empty clause is omitted, matching the ordinary heritage transformation's
+empty-clause filtering. Nonempty clauses retain their existing treatment.
+The declaration becomes `declare const C_base: any;` followed by
+`export declare class C extends C_base {}` and `export {};`.
+Node witnesses, full stacks, control equality, diagnostic counts and baseline
+results are recorded in the adaptation's README and proofs.
+
+The pinned native compiler at d92d9bfee114c80be2c375d72edae966176e3a4f
+and TypeScript main at 6161772c1370bdd4a82f808e6823bd755eb1870d use a
+first-effective-base rewrite and elide empty clauses. The legacy release-6.0
+branch still has the unsafe JavaScript transform; no JavaScript fix commit
+is claimed. Both native and fixed JavaScript emit the same declaration for
+the original f() witness. On the reduced numeric witness, native emits a
+literal base type 0 while TypeScript 6 emits number, matching its unchanged
+single-clause control. This patch does not alter type inference.
+
+### Draft GitHub issue
+
+Title: Repeated empty extends clause crashes declaration emit in TypeScript 6.0.3
+
+Version: TypeScript 6.0.3, reproduced on Node 24.19.0.
+
+Minimal reproduction, in a fresh directory without tsconfig.json:
+
+```sh
+npm install --no-audit --no-fund typescript@6.0.3
+printf '%s\n' 'export class C extends f() extends {}' > input.ts
+node node_modules/typescript/lib/tsc.js --declaration input.ts
+```
+
+API reproduction:
+
+```js
+const ts = require("typescript");
+ts.transpileDeclaration("export class C extends f() extends {}", { fileName: "input.ts" });
+```
+
+Expected: report applicable diagnostics and finish declaration emit without an
+exception. The empty repeated clause should be omitted, consistently with the
+ordinary heritage transformer and the native compiler.
+
+Actual: both commands throw a TypeError reading kind on undefined, from
+isVariableDeclaration through createGetSymbolAccessibilityDiagnosticForNode,
+map's heritage callback, and transformTopLevelDeclaration. The source parses
+without errors; semantic checking reports TS1172 for the second extends clause
+and TS2304 for the undeclared f. Declaration emit crashes even though
+noEmitOnError is false, its default.
+
+Suggested upstream change for the legacy implementation: use mapDefined for
+the expression-base heritage mapping, return undefined for an empty extends
+clause, and pass the checked first type to the diagnostic helper. Native main
+already handles this case; this draft concerns the TypeScript 6 JavaScript
+compiler. No claim is made that erroneous input must yield a valid program.
+
+## 6. Init emits an undefined token for an explicitly cleared option
+
+Status: fixed in our fork by adaptation 99g; draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Locations: src/compiler/commandLineParser.ts parseOptionValue:2111 stores
+undefined for a null token; generateTSConfig:2838 retains the own key;
+emitOption:2933 selects options[setting] ?? defaultValue; formatSingleValue:2960
+returns JSON.stringify's undefined result. These are stock source coordinates.
+
+Node counterexample: `tsc --init --outFile null` exits successfully but writes
+`"outFile": undefined,` in tsconfig.json. The token undefined is not valid
+JSON config syntax, so a subsequent invocation cannot read that generated file
+cleanly. The user explicitly cleared this option; retaining it as null both
+preserves that instruction and produces a valid config value.
+
+The pinned Go compiler at system-inc/TypeScript
+d92d9bfee114c80be2c375d72edae966176e3a4f writes `"outFile": null,` for the same
+command. It also writes null for the fixed strict setting. Its Go parser
+stores nil and its config generator serializes that value as JSON null. The
+pinned Go compiler instead panics for a cleared target, because it attempts
+an enum lookup for nil; our fork follows the ruled null-output behavior for
+that setting as well, rather than copying the panic.
+
+Our patch: stage3/adapt/99-correctness-axolotl-g/adapt.cjs changes only
+emitOption's formatting. Read options[setting] once; if it is an own undefined
+value, format it as the literal null. Otherwise use exactly the existing
+nullish default selection and formatting. The active/commented form, option
+ordering and absent-option defaults are preserved. This intentionally changes
+JavaScript behavior only for own undefined option values. No assertion is
+added, no public API is changed, and no test baseline is rewritten.
+
+The executable before/after CLI witnesses, unchanged-output controls, Go
+comparisons and original-function mutant are in
+[99g's witness](../adapt/99-correctness-axolotl-g/witness.cjs). The adapter README
+records the full proof and oracle results. The earlier upstream snapshot at
+Microsoft/TypeScript main 6161772c1370bdd4a82f808e6823bd755eb1870d has an active
+Go init.go identical to the pinned version and retains a TypeScript fixture
+with generateTSConfig unchanged from 6.0.3.
+
+### Draft GitHub issue
+
+Title: tsc --init --outFile null writes an undefined value into tsconfig.json
+
+Version: TypeScript 6.0.3, Node 24.19.0, Linux x64.
+
+Minimal reproduction in a fresh directory, with TypeScript 6.0.3 installed:
+
+```sh
+printf 'export {};\n' > index.ts
+npx tsc --init --outFile null
+npx tsc --showConfig
+```
+
+Expected: init writes `"outFile": null,`, preserving the explicit clearing,
+and the generated file reads back successfully. This matches the native Go
+compiler for outFile and the fixed strict setting.
+
+Actual: init exits 0 but emits `"outFile": undefined,`. The next command exits
+1 and reports:
+
+```text
+tsconfig.json(44,16): error TS5024: Compiler option 'outFile' requires a value of type string.
+```
+
+Suggested upstream change: in generateTSConfig's emitOption, distinguish an
+own undefined value from an absent option. Emit the literal null for the
+former in the same active or commented form already selected for that option.
+Preserve the existing nullish fallback and formatting for every other value.
+This must also apply to preset options such as strict; only changing the
+remaining-options loop would leave those cleared settings using their defaults.
+
+## 7. tsc passes a caught value's message, undefined or a non-string, to a callback declared `(message: string)`
+
+Status: fixed in our fork by JavaScript-changing adaptation 97e, which converts
+the message to text under Adamic's Nov 1 ruling (#axochk); draft issue, not
+filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/program.ts createGetSourceFile and
+createWriteFileMeasuringIO, each `catch (e) { if (onError) { onError(e.message); } }`;
+src/compiler/types.ts's two declarations of that callback,
+WriteFileCallback's `onError?: (message: string) => void` (types.ts:4584) and
+CompilerHost.getSourceFile's (types.ts:8142). Lines are in the adapted tree at
+adaptation 94's tip.
+
+Both functions wrap a supplied callback: readFile for getSourceFile, the
+writer, createDirectory and directoryExists for writeFile. Nothing constrains
+what that callback throws, and the catch hands `e.message` to onError as it
+is. The declared `string` holds only when the thrown value is an object with a
+string message. tsc's own consumers then pass that message to
+formatStringFromArgs, which fills each slot through `Debug.checkDefined`
+(utilities.ts:8584). An undefined message fails there with `Debug Failure.`
+instead of reporting `Cannot read file` or `Could not write file`.
+
+Node 24.14.1 counterexample: a compiler host whose readFile throws
+`{ message: 42 }`, then `{}`.
+Before: onError receives the number 42, then undefined. getSourceFile returns
+the empty source file both times. A thrown string or number also hands onError
+undefined. A thrown null or undefined throws TypeError reading message out of
+getSourceFile instead of calling onError. createWriteFileMeasuringIO's catch
+gives the same results when the writer throws them. Adaptation 47's README
+records these as the counterexamples that declined both sites.
+After: onError receives the string "42", then the string "undefined", and so
+does every other thrown value that reaches it. The consumer's
+`Cannot read file 'a.ts': undefined.` replaces the Debug Failure. A thrown
+null or undefined still throws the same TypeError.
+
+Our patch: stage3/adapt/97-cli-axolotl-e/adapt.cjs, under Adamic's ruling of
+Nov 1 (#axochk), "convert, don't cast". Widening onError to unknown was
+measured and breaks five places in the tree, and a cast to the primitive is
+refused, so the declaration stays `string` and the value is converted:
+
+```diff
++import { propertyOf } from "./hostErrors.js";
+-                onError(e.message);
++                onError(String(propertyOf(e, "message")));
+```
+
+at both sites. propertyOf is adaptation 94's helper. It returns exactly what
+the plain read returns, and it throws V8's own TypeError on null and undefined.
+The global String then turns what it returns into text. JavaScript changes at
+exactly those two lines. A string message, an Error's for instance, passes
+through unchanged, and a null or undefined thrown value throws the same
+TypeError, with propertyOf's frame on top. The conversion keeps the meaning,
+the message as text, and turns the crash into the diagnostic tsc meant. The
+witnesses, the mutant and the transpile diff are in the adaptation's README.
+
+### Draft GitHub issue
+
+Title: getSourceFile and writeFile pass a non-string or undefined message to their `onError(message: string)` callback
+
+Version: TypeScript 6.0.3, reproduced on Node 24.14.1.
+
+Minimal reproduction:
+
+```sh
+mkdir tsc-onerror-message-repro
+cd tsc-onerror-message-repro
+npm install --no-audit --no-fund typescript@6.0.3
+```
+
+Save this as repro.cjs and run `node repro.cjs`:
+
+```js
+const ts = require("typescript");
+const host = ts.createCompilerHost({});
+for (const thrown of [{ message: 42 }, {}]) {
+    host.readFile = () => { throw thrown; };
+    host.getSourceFile("a.ts", ts.ScriptTarget.Latest, message => console.log(typeof message, message));
+}
+```
+
+Expected: onError is declared `(message: string) => void` in CompilerHost
+and WriteFileCallback, so either it receives a string or the declaration says
+it may not.
+
+Actual:
+
+```text
+number 42
+undefined undefined
+```
+
+The compiler host's writeFile has the same catch: replacing `ts.sys.writeFile`
+with a function throwing the same values prints the same two lines. A readFile
+that throws null or undefined makes getSourceFile throw
+`TypeError: Cannot read properties of null (reading 'message')` from inside
+its catch.
+
+Suggested upstream change: either convert the caught value to a string before
+calling onError, for example with a message read that falls back to
+`String(e)`, or declare the callback's parameter as what it receives. Either
+way, the declaration and the call agree. This draft makes no claim about
+which one upstream prefers. Our fork converts the message read with String,
+so tsc's own consumers report `Cannot read file 'a.ts': undefined.` where an
+undefined message used to fail Debug.checkDefined in formatStringFromArgs.
+
+## 8. Raising the assertion level writes a cache entry over the assertion it cached
+
+Status: removed in our fork by JavaScript-changing adaptation
+99-cli-debug-assertion-level, under Adamic's Nov 5 ruling (#0kpp2zc,
+#b1y988t); draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/debug.ts:170, in setAssertionLevel's restore loop,
+`(Debug as any)[key] = cachedFunc;`. The cache is written by
+shouldAssertFunction at debug.ts:189 and 190. These are stock source
+coordinates.
+
+Below its level, shouldAssertFunction stores `{ level, assertion: Debug[name] }`
+in assertionCache and replaces `Debug[name]` with noop. When setAssertionLevel
+raises the level, its loop means to put the assertion back, and its own
+condition compares `Debug[key]` with `cachedFunc.assertion`. It assigns
+`cachedFunc`, the entry, instead. After that, `Debug.assertNode` (or any of the
+six assertion functions) is a plain object, and every call site throws.
+
+tsc itself sets the level once, from `NODE_ENV`, before any assertion runs
+(sys.ts:1973), so the command line never raises it after a cached call. An API
+consumer that calls `ts.Debug.setAssertionLevel` after the compiler has run at
+None does. Debug is internal and absent from typescript.d.ts, but it is on the
+published module object.
+
+Node 24.14.1 counterexample, with `NODE_ENV` unset: call
+`Debug.assertNode(undefined, isIdentifier)`, then
+`Debug.setAssertionLevel(AssertionLevel.Normal)`, then the same call again.
+Before: `Debug.assertNode` is the object with keys `level` and `assertion`, and
+the second call throws `TypeError: Debug.assertNode is not a function`. The
+same holds for assertEachNode, assertNotNode, assertOptionalNode,
+assertOptionalToken and assertMissingNode. After: the second call runs the
+assertion and throws `Debug Failure. False expression: Unexpected node.`, as
+it does when the level was Normal from the start.
+
+Our patch: stage3/adapt/99-cli-debug-assertion-level/adapt.cjs. Adamic refuses
+both namespace writes and ruled adapt, don't lower, so the fork removes the
+patching instead of correcting line 170:
+
+```diff
+-    const assertionCache: Partial<Record<AssertionKeys, { level: AssertionLevel; assertion: AnyFunction; } | undefined>> = {};
+     export function setAssertionLevel(level: AssertionLevel): void {
+-        const prevAssertionLevel = currentAssertionLevel;
+         currentAssertionLevel = level;
+-        ...the restore loop...
+     }
+     function shouldAssertFunction<K extends AssertionKeys>(level: AssertionLevel, name: K): boolean {
+-        if (!shouldAssert(level)) {
+-            assertionCache[name] = { level, assertion: Debug[name] };
+-            (Debug as any)[name] = noop;
+-            return false;
+-        }
+-        return true;
++        return shouldAssert(level);
+     }
+```
+
+The imports of `noop` and `getOwnKeys`, which only those lines named, go too,
+and shouldAssertFunction's JSDoc no longer describes a cache. Each disabled
+assertion now costs a call and a comparison on every call, where upstream paid
+them once. No declaration changes. The witnesses, the mutant and the
+transpile diff are in the adaptation's README.
+
+Oracle counter (Correctness, #0kpp2zc condition 1; typescript/debug-assertion-level-census
+aa84f129, stage3/census/debug-assertion-level): across the whole lane oracle,
+setAssertionLevel was called 9 times, every one from sys.ts's module
+initialization, each from level 0 to 1, and all 9 with an empty
+assertionCache. So no call found a cached assertion to restore, and no noop
+swap ran. The instrumented oracle kept 106,366 passing plus the one sanctioned
+failure, with identities exactly main's: the adaptation is unobservable across
+tsc's baselines.
+
+### Draft GitHub issue
+
+Title: Debug.setAssertionLevel replaces a cached assertion with its cache entry, so the next call throws "is not a function"
+
+Version: TypeScript 6.0.3, reproduced on Node 24.14.1.
+
+Minimal reproduction:
+
+```sh
+mkdir tsc-assertion-level-repro
+cd tsc-assertion-level-repro
+npm install --no-audit --no-fund typescript@6.0.3
+```
+
+Save this as repro.cjs and run `node repro.cjs` with `NODE_ENV` unset:
+
+```js
+const ts = require("typescript");
+// With NODE_ENV unset, loading typescript set the assertion level to None.
+ts.Debug.assertNode(undefined, ts.isIdentifier);
+ts.Debug.setAssertionLevel(ts.AssertionLevel.Normal);
+console.log(typeof ts.Debug.assertNode, JSON.stringify(Object.keys(ts.Debug.assertNode)));
+ts.Debug.assertNode(undefined, ts.isIdentifier);
+```
+
+Expected: raising the level restores the assertion. The log prints
+`function []`, and the last call fails the assertion with
+`Debug Failure. False expression: Unexpected node.`, as it does when
+setAssertionLevel runs before the first call.
+
+Actual:
+
+```text
+object ["level","assertion"]
+TypeError: ts.Debug.assertNode is not a function
+```
+
+Cause: setAssertionLevel's restore loop (src/compiler/debug.ts:170) assigns
+the cache entry, `(Debug as any)[key] = cachedFunc;`, where its condition on
+the line above compares against `cachedFunc.assertion`.
+
+Suggested upstream change: assign `cachedFunc.assertion`. Alternatively, have
+shouldAssertFunction return `shouldAssert(level)` without replacing anything,
+which removes the cache and the restore loop. That is what our fork does. This
+draft makes no claim about which one upstream prefers.
+
+## 9. skipWhile promises that every suffix element fails its predicate
+
+Status: soundness adaptation 99s under Adamic's Nov 5 ruling for #b5w3ycg;
+draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/core.ts:2572-2585, skipWhile's three declarations and
+its returned suffix cast.
+
+The declared `Exclude<T, U>[]` result is false. The loop proves that the first
+returned element fails the predicate, but never tests later returned elements.
+
+Node counterexample, using the actual owner transpiled by witness.cjs:
+
+```js
+skipWhile([1, "x", 2], x => typeof x === "number"); // ["x", 2]
+```
+
+The declared result excludes number, yet the second returned element is 2.
+Before and after our patch Node returns the same array, with length 2.
+No extra predicate call or runtime check is introduced.
+
+Our patch: stage3/adapt/99-correctness-axolotl-s/adapt.cjs changes all three
+return types to `T[]` (retaining `| undefined` in the two optional signatures)
+and removes `as Exclude<T, U>[]` from the returned slice. The only adapted-src
+caller, injectClassTypeMetadata in transformers/ts.ts, filters the result with
+isModifier at its own use and does not read the old exclusion narrowing.
+
+### Draft GitHub issue
+
+Title: skipWhile's type predicate overload incorrectly narrows the entire suffix
+
+Version: TypeScript 6.0.3, reproduced on Node 24.19.0.
+
+Minimal reproduction in an internal compiler test:
+
+```ts
+const values: (number | string)[] = [1, "x", 2];
+const suffix = skipWhile(values, (x): x is number => typeof x === "number");
+// Inferred string[], actual ["x", 2].
+for (const value of suffix) value.toUpperCase(); // throws for 2
+```
+
+Expected: the suffix has type `(number | string)[]`, since skipWhile stops
+checking at the first failed predicate. Actual: the declared result is string[].
+Suggested upstream change: return `T[]`, retaining the undefined result for
+undefined input, and remove the suffix cast. This correction changes types only.
+
+- takeWhile (99-correctness-core-takewhile): Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. JavaScript-changing prefix push loop admitted on the complete 220-call lane count: 0 accepted-range-hole calls, 0 result differences and 0 predicate-sequence differences. An accepted sparse hole is preserved by slice but becomes an own undefined slot with push; this witnessed class occurs 0 times in tsc inputs.
+
+- arrayOf, 99-correctness-core-arrayof: JavaScript-changing; Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole-lane count 860 non-negative integer calls, 0 counterexamples; negative, fractional, NaN and infinite calls each 0. Node -1, 1.5 and NaN differ outside the counted domain; see the adapter README.
+
+- createQueue boxed slots, 99s amendment, F15/F16/F17: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole lane and all 398 bounded units each compare 10041 enqueues, 10123 dequeues and 13660 public isEmpty calls, with 0 differences; sparse initial arrays 0, own iterator overrides 0. Sparse and undefined-payload witnesses match stock. The deliberately changed iterator detector seed is outside the observed own-iterator class (0 calls). [Proof](../adapt/99-correctness-axolotl-s/QUEUE-BOX-PROOF.md).
+
+- levenshteinWithMax filled number rows and six checked indexed reads: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole-lane differential count: 798965 calls, 0 counterexamples. Six assertions use adaptation 30's checked-indexed-read rule class, authorized by the user. See stage3/adapt/99-correctness-core-levenshtein/COUNT.json.
+
+compareComparableValues, 99-correctness-core-compare: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Compiler amendment on b5w3ycg: the mixed arm is Debug.fail("compareComparableValues: a string compared with a number"), reached on 0 of the 144,697,378 calls. The retained whole-lane count has 0 mixed calls and 0 result differences; it was not rerun. Mixed Node witnesses now throw against the original coerced answer.
+
+Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. MultiMap composition split between 94-correctness-multimap, the 95h createProgram amendment and 99-correctness-core-multimap; 4,355,837 original/free helper calls over all 398 lane units, 0 differences, 0 own-key enumerations, 0 sparse or empty buckets and 0 missing-key/absent-value removes (edge witnesses pass); both full applies and semantic checkpoints pass, 79 roots at 0 diagnostics, full oracle passes its 106,366/1/0 expectation, public declarations identical, exactly 3 core sites removed with none added and mutant restores all 3. No upstream issue filed.
+Adamic's ruling (b), task b5w3ycg, Nov 7 11:06Z: getAllKeys moved to its only user, the fourslash harness, retaining Object.getPrototypeOf, which Adamic refuses (rulings.md:83). The harness runs on Node and is never lowered; if stage 3 ever needs it native, it goes back to Adamic. Measured: 6,566 calls, all from fourslashImpl.ts:461, 0 namespace reads.
+99z amendment k220r1g: Compiler accepts the established-shape elementAt function declaration under Adamic's delegation (task b5w3ycg, Nov 7 03:20Z); 11 call sites, 1,936 calls, 0 differences, and 0 each of early reads, new, prototype, name or length reads, value uses, reassignments, and ts.elementAt reads.
+
+Adamic, task b5w3ycg, Nov 7 19:16Z, road (b): 99-correctness-core-debug-messages is JavaScript-changing at four lazy debug.ts assertion failure messages, omitting only the test function name. Baseline whole-lane callback counts are 0/0/0/0 over all 398 units; four forced-failure controls fire before and after, same Error/conditions/throw point. Both full applies/builds, 79-root type checks, paired replay and public declaration byte checks pass; exactly four census sites disappear, none are added, and the restoring mutant brings one back. getFunctionName is unchanged; its standalone census unit remains for Adamic. No upstream issue filed.
+
+Adamic and Compiler, task 1w5bve2, Nov 7 19:51Z: tsc's `or` adapted, replacing the withdrawn rest-packed exemption. 99-correctness-core-or-predicate replaces nineteen predicate callers with orPredicate2/orPredicate3 and removes the two predicate overloads; the retained parameter rule stays. Existing count: 2,018,000 predicate-site closure calls, boolean-only observed, 0 value differences; 168,858 rest-site calls, not boolean-only, 0 value differences. Implementation checkpoint: backend acceptance remains blocked by the retained non-array-rest overload stop and a generic R1 checked-claim NotYet; no successful backend agreement is claimed.
+
+- 99-correctness-core-cast-message: JavaScript-changing. Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts; specific approval Nov 7 22:06:52Z and the subsequent head-2 mutant ruling. cast keeps its condition, Debug.fail call and ${value} (#09dvwny); only the quoted predicate name is removed. The cited and fresh whole-lane failure-message counts are 0, each with a firing control; no real-call counterexample. Restoring the original cast on the moved head-2 tree is rejected by stock tsc and adamic types with missing Debug.getFunctionName, recorded in the adaptation README.
+
+- 99-correctness-core-getfunctionname-move: JavaScript-changing established-shape move, with strict finished-home recognition amendments in 30, 41, 45 and road (b). Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts; specific approval Nov 7 22:06:52Z and the subsequent replay-pin ruling. By Adamic's word: deprecatedCompat ships in typescript.js, not tsc, so when typescript.js comes home after 1.0.0, getFunctionName's reflection (Function.prototype.toString) meets us there. The same body moves byte for byte to its only user; road (b)'s whole-helper guard follows it and still refuses drift. Proof in the adaptation directory.
+
+- 99t debugger-display family amendment, JavaScript-changing, Adamic Nov 10 04:23Z (b5w3ycg): under a JavaScript debugger (VSCODE_INSPECTOR_OPTIONS, --inspect, NODE_INSPECTOR_IPC), Node tsc installs debugger-display getters on flow nodes and NodeArrays, and native tsc does not. Nothing tsc prints changes in the 200-case paired Node witness; only what a JavaScript debugger displays changes, and a native binary has no JavaScript debugger. The same installation body also patches symbols, types, signatures and node constructors. The existing whole-owner enableDebugInfo pin requires this amendment in 99-correctness-axolotl-t. Candidate status: ready to land. Counts are 0/0/0 over 398 accepted lane units, the positive control fires, and the restoring one-line mutant reproduces debug.ts:525:37. Under the authorized transitive-removal rule, all 3206 outside-owner hunks are accounted for: 3204 pure renames, 2 accepted deletion hunks, and 0 class-(c) hunks. The recorded chain is getJSDocModifierFlagsNoCache -> getEffectiveModifierFlagsNoCache -> enableDebugInfo. Runtime module and ts export-key arrays are byte-identical. The amended full apply exits 0; all 746 applied source files match the classified candidate. The complete final 398-unit lane passes its guards with 106366 passes, one sanctioned API failure and zero skips. Final main is 7f2c852df, whose entire stage3 tree is identical to the validated main 95afe50a6.
+- 99t debugger-display Change 2 and 99n graph-home amendment, JavaScript-changing, Adamic Nov 10 05:40Z and 05:41Z (b5w3ycg): under a JavaScript debugger (VSCODE_INSPECTOR_OPTIONS, --inspect, NODE_INSPECTOR_IPC), Node tsc installs debugger-display getters on flow nodes and NodeArrays, and native tsc does not. Nothing tsc prints changes in the same 200-case paired Node witness; only what a JavaScript debugger displays changes, and a native binary has no JavaScript debugger. Change 1 already emptied both workers and removed enableDebugInfo patching of symbols, types, signatures and node constructors; this amendment also removes mapper prototype attachment. Road R moves the same printControlFlowGraph and formatControlFlowGraph bodies to src/deprecatedCompat/controlFlowGraph.ts, outside all 79 compiler-root import closures and type-checked by the normal Node build; a standalone Node load is verified. Exactly those two keys leave ts.Debug. Module-object and ts keys and both public declaration files are unchanged; the internal declaration loses only the two graph lines. The exact 99n hasNode and 99t hasAntecedents pins still verify the moved home. Counts for both workers, the mapper past its isDebugging test and enable patching are 0/0/0/0 across all 398 accepted lane units, with forced-debug controls 1/1/1/1. All guards pass with 106366 passes, one sanctioned API failure and zero skips. The mapper-restoring mutant returns Refused Object.setPrototypeOf at adapted debug.ts:861:20; the graph-restoring mutant returns upstream rows buildGraphNode 1014:29, renderGraph 1133:48 and computeColumnWidths 1057:39 (adapted 1021:29, 1140:48 and 1064:39). Both ordinary binder.ts and core.ts now first stop at semver.ts:287:34, a cast the runtime cannot check. All 526 outside-owner emitted hunks are pure identifier renames, with zero extra removals and zero unexplained hunks. The fresh full apply exits 0; all 747 source files and 47 build inputs match the measured candidate, and both amended pin adapters replay with zero edits. Complete evidence is attached to b5w3ycg as debug-display-2-evidence.tar.gz (typescript/debug-display-2 8c2439b4); 99-correctness-axolotl-t/debug-display-2-README.md describes it.
+
+## parseRange whitespace split allocation (adaptation 45 amendment)
+
+Adamic's Nov 10 05:40Z ruling, #b5w3ycg row 4: write `range.split(/\s+/)`
+at the call, retaining the capture-free `as string[]` proof. This allocates a
+new RegExp object per executed split where upstream shared one. `split` ignores
+lastIndex, and the pattern has no flags, so no state carries between calls.
+The shared declaration is removed because its only other occurrence was this
+call; leaving it would violate upstream's noUnusedLocals.
+
+- baobab, `99-correctness-tracing-assert`: stopTracing passes Debug.assert a
+  boolean (`!!tracing`) where upstream passed the namespace object or undefined.
+  The asserts-expression narrowing of tracing is lost; nothing after the call
+  reads tracing, and its next occurrence assigns undefined. The assertion message
+  and all other stopTracing bytes are preserved. Both 79-root type checks and
+  the complete sharded lane pass; the lane records 0 assertion calls and 0 outcome
+  differences, with positive Node controls. See the adaptation PROOF.md.
+
+Adamic, task 8n7eet3, Nov 10 22:01Z, site 2: 99-correctness-core-each-node is JavaScript-changing. assertEachNode's test no longer receives every's index, and a throw from test has no every frame. The exact ruled direct const for-of loop stays inside the existing Normal gate; message, lazy callback and stack mark stay byte for byte. Whole-lane second-argument exposure count 0 over 1,086,412 calls with test defined, 398 units and 797 processes; throws from test 0; two-parameter control 1 before and 1 after. Road (b) recognizes only the exact finished owner and still refuses drift. Main still meets the overload-1 callback contract in both forms; the Optimizer pairing remains required. No upstream issue filed.
+
+LineMapSource (Adamic, baobab, Nov 11, 11:28Z; accepted by Compiler): amend
+adaptation 71 with measured variant (e), an internal first overload for
+getLineAndCharacterOfPosition and the internal getLineStarts view. Precedent:
+getPositionOfLineAndCharacter's internal overload. SourceFileLike and the public
+signature stay unchanged; JavaScript bytes and public API require no sanction.
+
+Task dp24r5m: 99-correctness-tracing-dumptypes replaces two explicit-any reads
+with getObjectFlags and an Intrinsic flag guard plus checked IntrinsicType read.
+The whole lane records 0 calls across 398 shards and 797 Node processes; three
+generateTrace projects visit 84,642 types, including 46 real objectFlags values
+outside ObjectFlagsType, with 0 differences at all five masks or intrinsicName.
+Written types are byte-identical, 79 roots have 0 diagnostics, both restoring
+mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+2,256 runtime export keys are identical. See its PROOF.md. No upstream issue filed.
+
+- ff5eddz, adaptation 47 amendment: startTracing's three metadata literals build
+  from explicit reads of the fresh local meta where upstream spread it after a
+  field. They retain the same keys, in the same order, with the same values;
+  the browser record's timeline category retains the position of meta's cat.
+  The meta declaration and its single timestamp() call remain unchanged.
+  The same JavaScript-changing amendment replaces typeCatalog.length = 0 with
+  typeCatalog.splice(0), under rulings.md:306-307: the private dense array keeps
+  its identity and becomes empty; the returned removed-elements array is unused.
+  The newly visible JSON.stringify object references stop at 104:46 belongs
+  to Compiler's #d9ep7de head 1; this amendment does not remove it.
+  The complete combined 398-shard lane observes 0 startTracing runs; the
+  positive control observes catalog length 3 before reset and 0 after, and
+  meta own keys cat,ph,ts,pid,tid in that order.
+
+- ff5eddz, `99-correctness-tracing-length`, JavaScript-changing under docs/rulings.md:306 and :307: replace only pop's eventStack.length-- and popAll's eventStack.length = 0 with splice truncations, pinning both complete owners and refusing drift. Keep an explicit RangeError("Invalid array length") guard before pop's splice: although an empty entry throws earlier, JSON.stringify(args) can reenter popAll through a getter and empty the stack before the decrement. startTracing and its typeCatalog length write are left to the concurrent adaptation 47 amendment. See the adaptation README and the proof on typescript/tracing-length-evidence.
+
+- #baobab, Nov 11 2026 23:29Z, Adamic: retire 62 and 63's widened fs views
+  using `fs.writeSync(typesFd, JSON.stringify(descriptor)!)` and
+  `fs.writeFileSync(legendPath, JSON.stringify(legend)!)`. This applies the
+  established postfix non-null check ruling (docs/rulings.md:50): evaluate once,
+  reject only null and undefined, exit 70, counted. Whole-owner pins and literal
+  guards require the const descriptor object and namespace-level const legend
+  array, with no declared toJSON and no binding reassignment. Amend 99's
+  dumpTypes pins to the new spelling; its subtype read changes are preserved.
+  Evidence is on typescript/tracing-fs-views-evidence, outside stage3/adapt.
+
+- #nqp4p7g, amendments to 47 and 65: under Adamic's #00qn5az ruling,
+  tracing.ts loads fs through a qualified module-scope node:fs namespace
+  import, following adaptation 93's builtin-import precedent. This is
+  JavaScript-changing. Removing the sole lazy require leaves an empty try;
+  its original "tracing requires having fs" rethrow is unreachable, so the
+  complete empty loader guard is removed. 47 pins the new finished owner
+  and validates all qualified bindings; 65 stops adding ambient require
+  and keeps the readonly process.pid declaration. Evidence belongs on
+  typescript/tracing-fs-import-evidence.
+
+- `99-correctness-path-from-components`, type-only: replace internal getPathFromPathComponents's generic result casts with Path/string overloads and a string implementation, pinning the complete owner before and after and preserving emitted comments. Measured source instantiations are string 13, Path 2. Leave forEachAncestorDirectory unchanged: its string implementation candidate fails TS2394 for the Path callback overload. Proof and seam results are on typescript/path-from-components-evidence, outside stage3/adapt; see the adaptation README.
+
+- 99q require-test amendment, #nqp4p7g and #00qn5az, Adamic ruling (1):
+  JavaScript-changing. isNodeLikeSystem drops only its typeof require test;
+  ES-module oracle owner witnesses change false to true and performanceCore
+  takes the landed node:perf_hooks path. Whole-lane measurement: one generated
+  showConfig input case parses --generateCpuProfile and returns without calling
+  executeCommandLine, zero enableCPUProfiler entries, nine firing getNodeSystem
+  control entries. A real CLI invocation with both flags does reach the bare
+  inspector require; its ES-module ReferenceError is covered by
+  backend_divergences.json rows 2 and 3, node-without-inspector, #cn4yapb.
+  The count is enforced on every lane run once #syqrshq lands, and is retained
+  evidence until then. Main and tip have identical 106366/1/0 title/outcome multisets and 60933
+  identical reference reads over 60931 files; both lane checkers pass. Both
+  public declarations are byte-identical, 79 roots have zero type diagnostics,
+  applies and zero-edit replay pass, generate_shards --check passes, the
+  unfiltered stage3/lane Go test passes all 398 shards, and the restoring mutant
+  returns false. See 99-correctness-axolotl-q/require-drop-PROOF.md.
+
+- getSupportedExtensions (`src/compiler/utilities.ts`): replace `flatBuiltins.includes(x.extension as Extension)` with `(flatBuiltins as readonly string[]).includes(x.extension)`. Widening the readonly receiver removes an unchecked enum downcast without changing the SameValueZero comparison or emitted JavaScript. Whole-owner pins: `99-correctness-supported-extensions`; proof records: branch `typescript/supported-extensions-evidence`.
+
+- z5d0jye, Nov 12 2026, type-only: amend 40-explicit-any rule 103 to emit
+  `interface PathPathComponents<T extends Path = Path> extends Array<T>` with
+  the existing undefined phantom marker. Its type argument is the base's own;
+  all 13 uses remain bare through the default. The type is internal;
+  no API sanction row is added. Refresh sanctioned-api.json’s class-rules proof
+  hash and shard-plan.json’s runtime hash; the sanction count remains 267.
+  Ten JavaScript outputs and both public
+  declaration files are byte-identical; Adamic types and stock tsc have zero
+  diagnostics on all 79 roots. Full apply passes, 40's post-stage replay makes
+  zero edits, and restoring the non-generic interface fails 40's check.
+  The path.ts full
+  latent site totals are unchanged: 20 NotYet, 6 Refused, 32 Boundary. Eleven
+  identities change only the displayed type to PathPathComponents<Path>.
+  The existing getPathComponents overload-result refusal remains for
+  Optimizer's follow-up. Evidence: typescript/path-components-evidence.
+
+- **99-correctness-for-each-ancestor**: forEachAncestorDirectory drops its internal
+  Path overload and uses the string overload/callback contract in a cast-free
+  string implementation. The watchUtilities.ts:296 cache callback and
+  typingsInstaller.ts:258 installPackage callback require only string; their
+  bodies and runtime JavaScript are unchanged. Whole-owner exact text/SHA pins,
+  drift/no-write contracts and zero-edit replay guard the adaptation. Evidence:
+  typescript/for-each-ancestor-evidence, stage3/census/for-each-ancestor-adapt.
+
+- **JavaScript-changing, 99-correctness-timer-closures (Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z):** changes the earlier C-noinfer-b ruling to concrete timer slots: `setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown` and `clearTimeout?(timeoutId: unknown): void`. All forwarding slots change together. The count at a3a5bb70 found 19 calls, 10 with tails, 13 supplier sites, 0 implementers that read the callback's arguments, and 5,948 tailed calls at run time. Every tail is captured once at scheduling, in original evaluation order, and supplied by a zero-parameter closure; the first captured tail remains the optional label with the same value and identity, preserving TestServerHost's baseline logging. System, WatchHost and ServerHost's emitted member changes are declared in api-sanctions.json. An external caller passing extra arguments beyond the single label to WatchHost.setTimeout stops type-checking; an external implementer with a variadic setTimeout still fits. No generic, NoInfer or TypeScript 5.4 reader note remains. Amendments to 41 retain its ambient pair, to 93 and 99-wasm-crypto-import cover getNodeSystem, and to 99-correctness-axolotl-x cover createWatchProgram. The temporal and label witnesses, four red mutants, lane, type and full sys.ts census receipts are on typescript/timer-closures-evidence-2.
+
+- **41 timer ambient deletion, road 5 (Adamic, task 995spev, Nov 13 07:51:37Z):** deletes the paired ambient timer declarations atomically. 93's getNodeSystem clearTimeout forwarders take `Parameters<typeof clearTimeout>[0]`; their block bodies call cancellation as a statement. Scheduling forwarders still return the handle, and System's `unknown` method slot is unchanged. Stock tsc's acceptance rests on method-parameter bivariance at that System slot; Adamic's relation is exact under its existing `unknown` global provider. A property-style `clearTimeout?: (timeoutId: unknown) => void` slot fails TS2322 in the lane; re-check this premise if the slot changes. The Node witness checks cancellation of a real handle and ignored string, plain-object and undefined values before/after. Evidence: typescript/timer-ambient-delete-evidence-3, stage3/census/timer-ambient-delete-3.
+
+- **2026-11-13, 30-indexed-reads, task 93w9rtz**: drop only the unread ambient
+  require declaration from core's inserted header; keep process exactly unchanged.
+  The Nov 8 amendment at docs/rulings.md:220 allowed that row only until its test
+  disappeared; 99q dropped the test in 529705a1. Workers' checker survey found no
+  reader across 79 roots. Adamic ruled Nov 13 09:08Z. Amend 32's embedded core
+  measurement sources and hashes; add 30's check-mode guard and restoring mutant.
+  internal/load/host_bindings.json's require row and all internal/ fixtures stay.
+
+- **JavaScript-changing, 99-correctness-polling-no-enum-write (Adamic, task baobab, Nov 13, 2026):** With TSC_WATCHFILE=DynamicPriorityPolling and
+  TSC_WATCH_POLLINGINTERVAL_LOW/MEDIUM/HIGH=17/41/89, TypeScript 6.0.3's shipped
+  _tsc.js schedules 250/500/2000 and throws on a configured caller (17/41/89).
+  Its source, transpiled without bundle enum inlining, schedules 17/41/89 and
+  throws on a default caller (250/500/2000). The bundle inlines enum reads while
+  setCustomPollingValues mutates the runtime enum object. Adapted tsc instead
+  keeps the enum immutable: defaults are scheduled and default callers throw
+  nothing. Chunk-size and unchanged-threshold customization retain their existing
+  computation and assignments. Adamic ruled road (1), task baobab, November 13;
+  docs/rulings.md:249 refuses writes into enum objects. Whole owner:
+  99-correctness-polling-no-enum-write. Evidence and unfiled upstream issue draft:
+  typescript/polling-no-enum-write-evidence, stage3/census/polling-no-enum-write.
+
+- **99-correctness-sourcefile-like-position (Adamic, task gqxd8v4, Nov 13
+  22:09Z), type-only:** SourceFileLike's `@internal` member
+  getPositionOfLineAndCharacter becomes an optional function-valued property,
+  `((line: number, character: number, allowEdits?: true) => number) | undefined`,
+  so scanner.ts:469's presence test reads a property, not a method as a value.
+  This extends Adamic's Nov 1 sanction on #axochk, which superseded adaptation
+  20's "no method-to-property conversion" for exactly 19 public members by name
+  in adaptation 32's idiom (97d), to this one further member, by name, in a plain
+  arrow type. The Nov 1 limit exists because a plain arrow drops method
+  bivariance, which can move public relations and the declarations. Here neither
+  moves: upstream's own hereby dts gives byte-identical typescript.d.ts and
+  tsserverlibrary.d.ts, a SourceFile passed as SourceFileLike (utilities.ts:7959)
+  gains no refusal, JavaScript is identical over 604 files, and the member has
+  one reader. Adaptation 20's rule still governs every other member. Evidence:
+  typescript/sourcefile-like-position-evidence,
+  stage3/census/sourcefile-like-position.
+
+- **JavaScript-changing (byte-different, value-identical), 99-correctness-axolotl-s sourcemap amendment (Compiler):** TypeScript 6.0.3 src/compiler/sourcemap.ts:316 clears createSourceMapGenerator.flushMappingBuffer's private mappingCharCodes with `splice(0)` instead of `length = 0`; the ignored splice result changes emitted bytes while preserving mappings and subsequent empty-buffer reads. Evidence: typescript/sourcemap-splice-evidence, stage3/census/sourcemap-splice-evidence.
+
+- **JavaScript-changing, timer receiver calls (Adamic and Compiler, #0gj665k, Nov 14 00:59Z; #5vc7nbf):** the nine timer-closures blocks call timerHost.setTimeout on its receiver after the captures, reordering the member read after argument evaluation. Timer accessors: 0 across source/harness/tests and 0 at run time; argument expressions writing the receiver's setTimeout or clearTimeout: 0 statically and 0 at run time (5,865 observed forwarder calls). Guards and receiver non-null assertions remain. Evidence: typescript/timer-call-queue-evidence, stage3/census/timer-call-queue/.
+
+- **JavaScript-changing, value-identical polling queue composition (Adamic and Compiler, #0gj665k, Nov 14 00:59Z):** PollingIntervalQueue holds files: (WatchedFileWithUnchangedPolls | undefined)[] and its existing metadata, retaining pollScheduled: unknown; factory initialization returns the object and the three array uses select files. NodeArray's fixed metadata layout does not admit this queue. Full sys.ts census removes 272:23, five queue value/return NotYets and their associated stops, with no new finding or reader needing narrowing. Evidence: typescript/timer-call-queue-evidence, stage3/census/timer-call-queue/.
+
+- **JavaScript-changing, value-identical single-watcher forwarders (Adamic, #1vkqj9w, Nov 14 09:09Z, Road C):** 99-correctness-single-watcher-forwarder keeps createSingleWatcherPerName's one cache/close implementation and accepts a typed forwarder factory. The three-parameter forwarder's code moves from the helper into its two callers, pollingWatchFile (FileWatcherCallback) and fsWatch (FsWatchCallback); lookup and callback snapshot still occur at dispatch and all three values are forwarded in order. This resolves adaptation 40's two declined sys.ts:516 any parameters. The optional call in the getter remains #036ve6w's. Evidence: typescript/single-watcher-forwarder-evidence, stage3/census/single-watcher-forwarder/.
+
+- **Type-only, resolution binding view (#ty5myjt):** 99-correctness-binding-views uses an `@internal` exported readonly ResolutionReadView for R constraints and the GetResolutionWithResolvedFileName default, clearing only resolutionCache.ts:774, 1053, 1056 and 1471. The original interface and runtime JavaScript are unchanged; no diagnostics-helper or program.ts change is included. Evidence: typescript/binding-views-resolution-evidence, stage3/census/binding-views-resolution/.
+
+- **Type-only, canonical Path result mints (#xn6fj0p):** 99-correctness-timer-closures amends createDirectoryWatcherSupportingRecursive to retain its string-returning canonicalizer without a function cast and apply `as Path` at exactly four Path-consuming calls, following typescript/scout-618 road (b); no runtime operation or normalization changes. Evidence: typescript/path-mint-618-evidence, stage3/census/path-mint-618/.
+
+- **Type-only, diagnostic binding read view (#ty5myjt):** 99-correctness-binding-views adds an `@internal` exported DiagnosticReadView with readonly `file`, `start` and `length`; changes getDiagnosticsHelper's constraint to T extends DiagnosticReadView; gives sortAndDeduplicateDiagnostics an internal overload with its public signature unchanged; and retypes the diagnostic parameters of compareDiagnostics, compareDiagnosticsSkipRelatedInformation, compareRelatedInformation, compareMessageText, diagnosticsEqualityComparer, getDiagnosticFilePath, getDiagnosticCode and getDiagnosticMessage. The two utilities.ts:8808:39 and 8808:44 changes are accepted as the same pre-existing refusal with its target type renamed from Diagnostic to DiagnosticReadView. The 95-checker-axolotl-h createProgram pin and 99-correctness-core-multimap utilities.ts namespace-import pin amendments retain their owner contracts. Runtime JavaScript is unchanged. Evidence: typescript/diag-read-view-evidence, stage3/census/diag-read-view-3/.

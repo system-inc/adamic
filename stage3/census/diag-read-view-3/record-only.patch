@@ -1,0 +1,26 @@
+diff --git a/stage3/adapt/99-correctness-binding-views/README.md b/stage3/adapt/99-correctness-binding-views/README.md
+index 87e99e87a..d60f8073f 100644
+--- a/stage3/adapt/99-correctness-binding-views/README.md
++++ b/stage3/adapt/99-correctness-binding-views/README.md
+@@ -56,8 +56,9 @@ compareDiagnostics, compareDiagnosticsSkipRelatedInformation,
+ compareRelatedInformation, compareMessageText, diagnosticsEqualityComparer,
+ getDiagnosticFilePath, getDiagnosticCode and getDiagnosticMessage. Bodies are
+ unchanged. The v1 full census demonstrated readonly-to-writable refusals through
+-the inner helper chain. The v2 user ruling authorizes completing all six remaining
+-substitutions. Results and complete raw censuses live on
++the inner helper chain. Correctness's ruling on the v1 stop authorizes completing all six remaining
++substitutions, and accepts the two utilities.ts:8808 changes as the same
++pre-existing refusal with its target type renamed. Results and complete raw censuses live on
+ typescript/diag-read-view-evidence, under stage3/census/diag-read-view-2.
+ Diagnostic owners and complete edited import declarations are pinned whole, as text
+ and SHA-256. diagnostic-engine.cjs plans every file before writing, rejects
+diff --git a/stage3/upstream/LEDGER.md b/stage3/upstream/LEDGER.md
+index 2e72fc22a..1b0cbf7d5 100644
+--- a/stage3/upstream/LEDGER.md
++++ b/stage3/upstream/LEDGER.md
+@@ -870,3 +870,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+ - **Type-only, resolution binding view (#ty5myjt):** 99-correctness-binding-views uses an `@internal` exported readonly ResolutionReadView for R constraints and the GetResolutionWithResolvedFileName default, clearing only resolutionCache.ts:774, 1053, 1056 and 1471. The original interface and runtime JavaScript are unchanged; no diagnostics-helper or program.ts change is included. Evidence: typescript/binding-views-resolution-evidence, stage3/census/binding-views-resolution/.
+ 
+ - **Type-only, canonical Path result mints (#xn6fj0p):** 99-correctness-timer-closures amends createDirectoryWatcherSupportingRecursive to retain its string-returning canonicalizer without a function cast and apply `as Path` at exactly four Path-consuming calls, following typescript/scout-618 road (b); no runtime operation or normalization changes. Evidence: typescript/path-mint-618-evidence, stage3/census/path-mint-618/.
++
++- **Type-only, diagnostic binding read view (#ty5myjt):** 99-correctness-binding-views adds an `@internal` exported DiagnosticReadView with readonly `file`, `start` and `length`; changes getDiagnosticsHelper's constraint to T extends DiagnosticReadView; gives sortAndDeduplicateDiagnostics an internal overload with its public signature unchanged; and retypes the diagnostic parameters of compareDiagnostics, compareDiagnosticsSkipRelatedInformation, compareRelatedInformation, compareMessageText, diagnosticsEqualityComparer, getDiagnosticFilePath, getDiagnosticCode and getDiagnosticMessage. The two utilities.ts:8808:39 and 8808:44 changes are accepted as the same pre-existing refusal with its target type renamed from Diagnostic to DiagnosticReadView. The 95-checker-axolotl-h createProgram pin and 99-correctness-core-multimap utilities.ts namespace-import pin amendments retain their owner contracts. Runtime JavaScript is unchanged. Evidence: typescript/diag-read-view-evidence, stage3/census/diag-read-view-3/.

@@ -1,0 +1,10 @@
+{
+  "baseLedgerPrefixUnchanged": true,
+  "newLedgerLines": 1,
+  "changedFilesVsV2": [
+    "stage3/adapt/99-correctness-binding-views/README.md",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "readmeReplacement": "Correctness's ruling on the v1 stop authorizes completing all six remaining substitutions, and accepts the two utilities.ts:8808 changes as the same pre-existing refusal with its target type renamed.",
+  "ledgerAppend": "- **Type-only, diagnostic binding read view (#ty5myjt):** 99-correctness-binding-views adds an `@internal` exported DiagnosticReadView with readonly `file`, `start` and `length`; changes getDiagnosticsHelper's constraint to T extends DiagnosticReadView; gives sortAndDeduplicateDiagnostics an internal overload with its public signature unchanged; and retypes the diagnostic parameters of compareDiagnostics, compareDiagnosticsSkipRelatedInformation, compareRelatedInformation, compareMessageText, diagnosticsEqualityComparer, getDiagnosticFilePath, getDiagnosticCode and getDiagnosticMessage. The two utilities.ts:8808:39 and 8808:44 changes are accepted as the same pre-existing refusal with its target type renamed from Diagnostic to DiagnosticReadView. The 95-checker-axolotl-h createProgram pin and 99-correctness-core-multimap utilities.ts namespace-import pin amendments retain their owner contracts. Runtime JavaScript is unchanged. Evidence: typescript/diag-read-view-evidence, stage3/census/diag-read-view-3/."
+}
