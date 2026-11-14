@@ -1386,6 +1386,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	checkedDefault := l.numericEnum(identity) && l.enumSwitchCovered(node) && !l.enumDefaultUnreachable(node)
 	var neverCheck ir.Statement
 	if checkedDefault {
+		if err := l.enumSwitchScrutineeGap(statement.Expression); err != nil {
+			return nil, err
+		}
 		// The unmatched edge is never to the checker, including an implicit default. Hold the
 		// scrutinee once so the check names the original value without repeating its effects.
 		local := len(l.result.Locals)
@@ -2033,6 +2036,9 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
 	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
+		if err := l.enumNeverReadGap(property.Name()); err != nil {
+			return nil, err
+		}
 		return l.enumNeverCheck(property.Name(), read, identity), nil
 	}
 	making, err := l.neverRead(property.Name())

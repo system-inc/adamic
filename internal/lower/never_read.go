@@ -59,6 +59,25 @@ func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil, nil
 	}
+	return l.neverJudged(node)
+}
+
+// enumNeverReadGap judges a numeric enum's never read, which enum_never.go traps, by the same test
+// (#afs4xvb): its trap is a never read's too, so it holds only when nothing that can write the place
+// runs between the earliest narrowing and the read, and is not yet otherwise. holder.e checked against
+// E.A, then a call that puts E.A back, then checked against E.B, holds E.A where the checker says never,
+// and the trap stopped a valid run. A write's own read, value++, isn't a read here, and keeps the trap.
+func (l *lowering) enumNeverReadGap(node *ast.Node) error {
+	node = ast.SkipParentheses(node)
+	if !l.neverReadPosition(node) {
+		return nil
+	}
+	_, err := l.neverJudged(node)
+	return err
+}
+
+// neverJudged is neverRead's judgment of a read the checker types never, an enum's included.
+func (l *lowering) neverJudged(node *ast.Node) (*neverMaking, error) {
 	stop := l.notYet(node, "a read the checker narrowed to never across code that may write it")
 	data := node.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
@@ -296,11 +315,68 @@ func (l *lowering) neverPlaceWrittenBetween(read *ast.Node, from int, observed *
 		default:
 			return true
 		}
-		if l.propertyWritesOf().accessors || l.accessorName(name) || l.propertyWriteMayRunBetween(read, name, numeric, from, observed, nil) {
+		if l.propertyWritesOf().accessors || l.accessorName(name) || l.propertyWriteMayRunBetween(read, name, numeric, from, observed, l.elementReadsBetween(from, read)) {
 			return true
 		}
 		reference = reference.Expression()
 	}
+}
+
+// elementReadsBetween is the element reads between from and the read that codeBetween needn't count,
+// when no getter can serve one (elementReadRunsNothing), as reachBetween doesn't: values[0] checked three
+// times before its never read reads only the array each time. A write through one is its assignment's,
+// which codeBetween counts on its own. Nil when a getter could.
+func (l *lowering) elementReadsBetween(from int, read *ast.Node) map[*ast.Node]bool {
+	if !l.elementReadRunsNothing() {
+		return nil
+	}
+	exempt := map[*ast.Node]bool{}
+	l.visitBetween(from, read, func(node *ast.Node) {
+		if node.Kind == ast.KindElementAccessExpression {
+			exempt[node] = true
+		}
+	})
+	return exempt
+}
+
+// enumSwitchScrutineeGap judges the unmatched case of a switch on a numeric enum, which object.go's
+// checkedDefault traps as never (#afs4xvb), by never_read.go's test: the scrutinee's narrowing holds
+// only when nothing that can write its place runs between the earliest narrowing and the switch.
+//
+//	if (holder.e === E.A) return 'a';
+//	flip(holder);                     // puts E.A back
+//	switch (holder.e) { case E.B: return 'b'; }
+//
+// The checker reads holder.e as E.B there, so the unmatched edge is never, and Node runs past the switch
+// with E.A. A scrutinee that isn't a reference is evaluated there, and one whose type there is its
+// declared type, or a binding only its own function writes, holds what the checker says, so each keeps
+// the trap. Anything the walk can't place is not yet.
+func (l *lowering) enumSwitchScrutineeGap(scrutinee *ast.Node) error {
+	node := ast.SkipParentheses(scrutinee)
+	switch node.Kind {
+	case ast.KindIdentifier, ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+	default:
+		return nil
+	}
+	stop := l.notYet(node, "a switch's unmatched case on a value the checker narrowed across code that may write it")
+	declared := l.enumStoredType(node)
+	data := node.FlowNodeData()
+	if declared == nil || data == nil || data.FlowNode == nil {
+		return stop
+	}
+	if l.checker.IsTypeAssignableTo(declared, l.checker.GetTypeAtLocation(node)) {
+		return nil
+	}
+	if node.Kind == ast.KindIdentifier {
+		if symbol := l.bindingNamed(node); symbol != nil && !l.writtenAcrossFunctions(symbol) {
+			return nil
+		}
+	}
+	making := l.neverMakingAlong(node, declared, data.FlowNode, 0, map[*ast.FlowNode]*neverMaking{})
+	if making == nil || making.placeholder || l.neverPlaceWrittenBetween(node, making.earliest.from, making.earliest.observed) {
+		return stop
+	}
+	return nil
 }
 
 // neverReadEvaluated is what a trusted never read evaluates before the trap: a binding's read, at its
