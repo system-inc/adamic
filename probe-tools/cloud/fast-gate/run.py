@@ -1,0 +1,3546 @@
+#!/usr/bin/env python3
+"""The fast gate, run on the gate box against a checkout of the candidate.
+
+It builds and vets the whole repository, tests every package affected by the candidate (reverse imports and declared compiler
+dependencies, from its diff against the base), and checks the skip census over the run's log. It
+stops at the first failure: the first failing test or package build is printed first, every other
+step is killed, and status.txt goes red naming it. Tests always run with -count=1; only compiles
+are reused, from Go's build cache.
+
+Usage: run.py --tree <checkout of the candidate> --sha <candidate> --base <main sha>
+              --tools <tools checkout> --out <directory>
+
+For pool work, --phase <name> runs one non-test stage, and --phases build,vet,census
+writes one record of those stages. Pass --census <pool test.jsonl> to include the pool's tests in
+that census. --list-units --tree <tree> lists the unconditional fast units; supply --base, --sha
+and --tools (as for --select) to include this change's conditional executors.
+Add --with-inputs for JSON lines with the exact unit line and its package/path inputs.
+Package roots include test imports for commands that compile tests; paths are content inputs.
+Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
+A phase whose work reads the base tree beside the candidate's (catalog-apply) says so in inputs.readsBase, true.
+coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
+--darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
+leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
+.a files its aCheck must cover, one a line.
+Merged logs, Git history/branch state, toolchain and external spool identity still belong
+in the pool's verdict key: repository content alone cannot identify those inputs.
+
+With --full it is the whole uncached gate of main instead, run after landing: every package, the
+oracle whole, TestWASI with the WASI SDK's clang first. The first failure turns status.txt red at
+once (landings pause on it) and the rest keeps running for triage only; full.json is written when
+the run ends.
+"""
+
+from concurrent.futures import ThreadPoolExecutor
+import fcntl
+import heapq
+import math
+import tempfile
+import argparse
+import base64
+import fnmatch
+import glob
+import hashlib
+import shlex
+import json
+import re
+import os
+import shutil
+import signal
+import socket
+import subprocess
+import sys
+import threading
+import time
+import datetime
+import traceback
+
+module = "github.com/system-inc/adamic"
+# What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
+gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1",
+                   "GOFLAGS": "-buildvcs=false -trimpath"}
+# Every go command the gate runs builds without the commit stamp or the checkout path (@system_adamic, Oct 9 16:33Z): a
+# product's bytes must be a function of its build cache key, and neither is in a key, so main's product fetched at a
+# candidate's commit or another machine's path differed from the candidate's own fresh build in 12 ranges (stage 0,
+# floor1's identity check) and the rebuild audit would call it poisoning. A phase that sets its own go flags keeps them.
+gateGoFlags = gateEnvironment["GOFLAGS"].split()
+
+
+def withGateGoFlags(variables):
+    flags = variables.get("GOFLAGS", "").split()
+    variables["GOFLAGS"] = " ".join(flags + [flag for flag in gateGoFlags if flag not in flags])
+    return variables
+fullPackageTimeout = "3h"
+slowPackageSeconds = 3600
+# Kirk's hard constraint (Oct 8): no test unit runs longer than this, so every unit can go to any of a hundred
+# 4-CPU Codex instances. Each gate publishes its ledger of units over it (long-tests.tsv), and a unit over it
+# that isn't on the burn-down (cloud/fast-gate/budget-burndown.tsv, main's units over it when the rule came,
+# shrinking only) is red at 'budget' when it is new, its test absent from the base. An existing unit drifting over
+# on a loaded gate box is named, not red: replayed over Oct 8's last 28 fast gates, red for every unit over would
+# have failed 8, all on box load (TestInspectRequestRefusals took 147 to 265 s in 12-CPU slots). The gate measures
+# on its own box until Loom's Codex tier measures every unit on the reference shape, and the verdict names it.
+longTestSeconds = 30
+unitKillSeconds = 90
+# Products run to completion under a ten-minute ceiling; only test units get the 90 s kill, and a product over the
+# budget is listed beside the verdict, never red (@system_adamic, Oct 9 00:41 MDT, live on Loom's pool first: the boxes'
+# 90 s product kill at load 53 redded every candidate on main's own products).
+productKillSeconds = 600
+oracle = module + "/internal/oracle"
+# A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
+toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
+toolLiteralSearch = r'exec\.(Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"[^"]+"'  # the same, for git grep -E
+# The oracle's lanes: every test that runs each registered fixture as a subtest named by its path.
+# A test found ranging over the fixtures that isn't listed here makes any oracle change whole.
+oracleLanes = {"TestNativeAgreesWithNode": [], "TestWASIAgreesWithNode": [], "TestWASIEmission": [], "TestCountsAreRecorded": ["fixtures"]}
+fixtureEntry = re.compile(r'^\s*\}?\{?"(internal/oracle/testdata/[^"]+)", (true|false), (true|false)\}?\)?,?\s*$')
+
+
+# Variables that narrow what a gate's tests check; any of them set refuses the gate.
+scopingEnvironment = ("ADAMIC_LINT_RULES",)
+
+
+def boxLoad():
+    """The box's 1-minute load average and core count, the whole box's and not the gate's slot: what the record
+    keeps at a gate's start, its first failure and its end (@system_adamic, from the witness, Oct 9 00:30Z: about six
+    of Oct 8's reds and stalls were load, not bugs, each diagnosed by hand)."""
+    return {"load_1m": round(os.getloadavg()[0], 1), "cores": os.cpu_count() or 1}
+
+
+def underLoad(reading):
+    return reading is not None and reading["load_1m"] > reading["cores"]
+
+
+def loadWords(reading):
+    return "load %.1f on %d cores" % (reading["load_1m"], reading["cores"])
+
+
+class TestSeconds:
+    def __init__(self, path=None):
+        self.path = path or os.path.expanduser("~/fast-gate/test-seconds.tsv")
+
+    def read(self):
+        try:
+            rows = {}
+            with open(self.path) as handle:
+                for line in handle:
+                    package, name, seconds, parallel = line.rstrip("\n").split("\t")
+                    seconds = float(seconds)
+                    if not math.isfinite(seconds) or seconds < 0 or parallel not in ("0", "1"):
+                        return {}
+                    rows[package, name] = (seconds, parallel == "1")
+            return rows
+        except (OSError, ValueError):
+            return {}
+
+    def update(self, observations):
+        if not observations:
+            return
+        temporary = None
+        try:
+            os.makedirs(os.path.dirname(self.path), exist_ok=True)
+            # Lock a stable sibling: locking the replaced inode would lose mutual exclusion.
+            with open(self.path + ".lock", "a") as lock:
+                fcntl.flock(lock, fcntl.LOCK_EX)
+                rows = self.read()
+                for key, (seconds, parallel) in observations.items():
+                    rows[key] = (max(rows.get(key, (0, False))[0] * 0.8, seconds), parallel)
+                with tempfile.NamedTemporaryFile(mode="w", dir=os.path.dirname(self.path), delete=False) as handle:
+                    temporary = handle.name
+                    for (package, name), (seconds, parallel) in sorted(rows.items()):
+                        handle.write("%s\t%s\t%.9g\t%d\n" % (package, name, seconds, parallel))
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                os.replace(temporary, self.path)
+                temporary = None
+        except OSError:
+            pass  # History is a hint, never a gate failure.
+        finally:
+            if temporary is not None:
+                os.unlink(temporary)
+
+
+class TestQueue:
+    def __init__(self, slots):
+        self.free = slots
+        self.pending = []
+        self.closed = False
+        self.condition = threading.Condition()
+
+    def add(self, tests):
+        """(seconds, parallel, package, name, command) for each test of one package, at once."""
+        with self.condition:
+            for seconds, parallel, package, name, command in tests:
+                heapq.heappush(self.pending, (-seconds, package, name, parallel, command))
+            self.condition.notify_all()
+
+    def close(self):
+        """Every package is built and listed: nothing more will be added."""
+        with self.condition:
+            self.closed = True
+            self.condition.notify_all()
+
+    def take(self):
+        with self.condition:
+            while (not self.pending and not self.closed) or (self.pending and not self.free):
+                self.condition.wait()
+            if not self.pending:
+                return None
+            negative, package, name, parallel, command = heapq.heappop(self.pending)
+            permits = 4 if parallel and -negative > 300 and self.free >= 4 else 1
+            self.free -= permits
+            return package, name, -negative, permits, command
+
+    def release(self, permits):
+        with self.condition:
+            self.free += permits
+            self.condition.notify_all()
+
+
+# Input providers live with their stage implementations. Command inventories below are
+# shared by execution and enumeration; an unaudited runtime reader fails closed.
+phaseInputProviders = {}
+
+
+def declaresInputs(phase, provider):
+    def decorate(method):
+        phaseInputProviders[phase] = provider
+        return method
+    return decorate
+
+
+# toolsSourcePathspec is what the tools phase reads of the tree, the tracked Go sources outside cohere and the upstream
+# corpus, as one list its git grep searches and its declared inputs name (#gw93f6b, Node's ruling): the planner keys the
+# phase on these paths' content (git ls-files -s), so a README change leaves it still and any .go file added, removed or
+# edited moves it. tools.txt is the gate tools', already in the key.
+toolsSourcePathspec = ["*.go", ":!cohere", ":!stage3/upstream"]
+
+# toolsAttributesPathspec is every .gitattributes in the tree, which git grep reads beside each file it searches (a traced
+# run on Pupa, Oct 29, opened 9 and probed 304): an attribute that makes a .go file binary turns its matches into "Binary
+# file ... matches", so the phase's answer moves with them, and so must its key.
+toolsAttributesPathspec = [":(glob)**/.gitattributes"]
+
+
+def treeInputs(note):
+    return {"packages": [], "paths": ["."], "note": note}
+
+
+def goPhaseCommand(phase):
+    return ["go", phase, "./..."]
+
+
+def goCommandInputs(tree, command):
+    # Import paths, never patterns: the consumer computes each go list -deps closure.
+    patterns = [arg for arg in command[2:] if arg.startswith(("./", module))]
+    # build's and vet's ask the same listing of ./..., and a listing pass runs it once for both (listedGoList).
+    result = listedGoList(tree, goPackageListCommand(patterns), 90)
+    result.check_returncode()
+    packages = set()
+    for package in goListRecords(result.stdout):
+        packages.add(package["ImportPath"])
+        if command[1] in ("test", "vet"):
+            # go list -deps on a root alone omits the test imports vet/go test compile.
+            packages.update(package.get("TestImports", []) + package.get("XTestImports", []))
+    return {"packages": sorted(packages), "paths": []}
+
+
+# goListWhitespace is what go list -json writes between its records, as str.lstrip reads it.
+goListWhitespace = re.compile(r"\s*")
+
+
+def goListRecords(text):
+    """The records of a go list -json answer, in order, decoded where each starts. Slicing off each record decoded copied
+    the rest of the answer once a record: about 0.48 s a parse of adamic's 3.9 MB package graph (777 records, Pupa, Oct
+    31), which a listing pass parses three times, against 0.01 s read in place."""
+    decoder, index = json.JSONDecoder(), goListWhitespace.match(text).end()
+    while index < len(text):
+        record, index = decoder.raw_decode(text, index)
+        index = goListWhitespace.match(text, index).end()
+        yield record
+
+
+def productListingCommand():
+    return ["go", "list", "-f", "{{.ImportPath}}\t{{.Dir}}", "./..."]
+
+
+def productInputSources(tree):
+    listing = subprocess.run(productListingCommand(), cwd=tree, capture_output=True,
+                             text=True, check=True, timeout=90).stdout.splitlines()
+    directories = dict(line.split("\t", 1) for line in listing)
+    sources = [os.path.relpath(path, tree) for directory in directories.values()
+               for path in glob.glob(os.path.join(directory, "*_test.go"))]
+    return sources, any(productDeclarations(directories).values())
+
+
+def catalogEntries(tree):
+    with open(os.path.join(tree, "verify/catalog/catalog.json")) as handle:
+        return json.load(handle)
+
+
+def wasiCommands(names):
+    return [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
+             "-p", "1", "-parallel", "1", "-skip", "^TestProduct_", "-run",
+             "^%s$" % name if wasiUnit.fullmatch(name) else fixturePattern(["TestWASI"], [name]),
+             "./internal/native"] for name in names]
+
+
+def wasiInputs(tree, unit, full, change):
+    names = wasiFixtures(tree)
+    if unit and unit not in names:
+        raise ValueError("unknown WASI unit " + unit)
+    chosen = [unit] if unit else names
+    inputs = goCommandInputs(tree, wasiCommands(chosen)[0])
+    inputs["packages"].append(module + "/cmd/adamic")  # wasm_test.go builds the stage 0 executable.
+    # The fixture may import siblings; the Node oracle reads its runtime and hooks,
+    # and read_files.a runs from the oracle testdata directory. Include entire fixture
+    # directories, not only their entry points. requests reads the wasm ABI and hosts.
+    inputs["paths"] += ["oracle", "internal/native/wasm", "internal/oracle/testdata"]
+    for name in chosen:
+        if wasiUnit.fullmatch(name):
+            return treeInputs("top-level WASI unit's fixture slice is not yet bounded")
+        if "/" in name:
+            inputs["paths"].append(os.path.dirname(name))
+    return inputs
+
+
+def catalogInputs(tree, unit, full, change):
+    if not full:
+        return {"packages": [], "paths": ["verify/catalog/check.sh"]}
+    entries = [entry for entry in catalogEntries(tree) if not unit or str(entry["number"]) == unit]
+    if not entries:
+        raise ValueError("unknown catalog entry " + str(unit))
+    inputs = treeInputs("catalog runs arbitrary named Go tests in a root working directory; their runtime reads are not yet bounded")
+    for entry in entries:
+        if entry.get("command"):
+            inputs["packages"] += goCommandInputs(tree, shlex.split(entry["command"]))["packages"]
+        if entry.get("patch"):
+            inputs["paths"].append("verify/catalog/" + entry["patch"])
+        if entry.get("fixture"):
+            inputs["paths"].append(entry["fixture"])
+    inputs["paths"].append("verify/catalog")
+    return inputs
+
+
+def executorMap(tools):
+    """The tools checkout's cloud/fast-gate/executors.txt, read once for cover() and coverageReduced(): its executor rules
+    in file order, its reads lines, whether it enforces, and the a-check exemption globs (never executors, so never rules)."""
+    rules, readers, enforce = [], [], True
+    with open(os.path.join(tools, "cloud/fast-gate/executors.txt")) as handle:
+        for number, line in enumerate(handle, 1):
+            fields = line.split()
+            if fields[:2] == ["mode", "report"]:
+                enforce = False  # record uncovered paths without failing, until the rulings are in
+            elif fields and fields[0] == "reads":
+                # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
+                # (gitignore walks the whole tree), so only an added or deleted path changes its input.
+                # "reads <package> <list> generated": the test walks what a generated.json names
+                # (generatedReach), so the list bounds what it reads.
+                if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] not in ("paths", "generated")):
+                    raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
+                readers.append((number, fields[1], fields[2], fields[3] if len(fields) == 4 else ""))
+            elif fields and not fields[0].startswith("#") and fields[0] != "mode":
+                rules.append((fields[0], fields[1]))
+    # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
+    exempt = [glob for name, glob in rules if name == "a-check-exempt"]
+    return [rule for rule in rules if rule[0] != "a-check-exempt"], readers, enforce, exempt
+
+
+def firstExecutor(rules, path):
+    """A path's executor: the first rule, in file order, whose glob fits it (fnmatch, so * spans directories), or None."""
+    return next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
+
+
+# darwinLegsDirectory holds the recorded darwin legs, each a pool Mac's (Shackler's) go test ./internal/apple/... at one
+# tip, as <tip>.json. The gate reads it from the tools checkout, never the candidate's tree and never fetched, so a change
+# can't vouch for itself; records enter only through promote (darwin-legs/README.md).
+darwinLegsDirectory = "cloud/fast-gate/darwin-legs"
+lowercaseHex40 = re.compile(r"[0-9a-f]{40}")
+lowercaseHex64 = re.compile(r"[0-9a-f]{64}")
+# adamic's toolchain.PlatformMissingExitCode, which only the typed PlatformMissing stop exits with: a .a whose program
+# needs a platform this box can't provide, never a refusal of the program.
+platformMissingExit = 5
+
+
+def commitEntries(tree, commit):
+    """Every entry of commit's tree (git ls-tree -r), its blobs and its gitlinks, as (mode, type, object, path)."""
+    entries = []
+    for entry in git(tree, "ls-tree", "-r", "-z", "--full-tree", commit).split("\0"):
+        if not entry:
+            continue
+        described, path = entry.split("\t", 1)
+        mode, kind, objectName = described.split(" ")
+        entries.append((mode, kind, objectName, path))
+    return entries
+
+
+def darwinEntries(entries, rules):
+    """The entries of commitEntries whose first rule in rules is darwin, as (mode, type, object, path)."""
+    return [entry for entry in entries if firstExecutor(rules, entry[3]) == "darwin"]
+
+
+# darwinClosureEnvironment is the build a darwin leg's go test makes on the Mac, darwin on arm64 with cgo on, so go list
+# names the packages that build reads and not this box's: a file's build constraints pick it by GOOS, GOARCH and cgo.
+# -mod=readonly keeps the listing from writing go.mod or go.sum, so it reads the module state as committed.
+darwinClosureEnvironment = {"GOOS": "darwin", "GOARCH": "arm64", "CGO_ENABLED": "1", "GOFLAGS": "-mod=readonly"}
+# darwinModuleFiles are the root's module files, which pick the version of every module outside the tree the leg builds
+# against, so a module outside the tree is keyed by them and never by its directory.
+darwinModuleFiles = ("go.mod", "go.sum", "go.work", "go.work.sum")
+
+
+def darwinClosureCommand():
+    return ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/..."]
+
+
+def darwinClosureWords():
+    """darwinClosureCommand as a hand would type it, its environment first, for a refusal to name."""
+    return " ".join(["%s=%s" % pair for pair in darwinClosureEnvironment.items()] + darwinClosureCommand())
+
+
+def darwinClosureListing(tree):
+    """darwinClosureCommand's answer in tree, in darwinClosureEnvironment over this process's: the one place the leg's
+    closure is listed, so a test stubs it here and needs no go."""
+    return listedGoList(tree, darwinClosureCommand(), 300, dict(os.environ, **darwinClosureEnvironment))
+
+
+def firstLinesOf(text, count=5):
+    """text's first count lines that aren't blank, each stripped, joined with "; " for a one-line refusal; "no stderr" for
+    none."""
+    return "; ".join([line.strip() for line in text.splitlines() if line.strip()][:count]) or "no stderr"
+
+
+class DarwinPathsRefusal(ValueError):
+    """Why darwinPathsDigest can't name what a darwin leg vouches for at a commit. It's never a digest, so no record
+    matches it: each reader of the digest fails closed on it, the gate's darwin phase red and a-check's darwin path red."""
+
+
+def darwinPathsDigest(tree, commit, tools):
+    """What a darwin leg vouches for, as one sha256 over the sorted lines naming each input of the leg's go test
+    ./internal/apple/... and its git object at commit, so an equal digest means equal inputs (Adamic Loom's ruling):
+    "dir <path> <object>\\n" for each directory inside tree that go list -deps -test names for the Mac's build
+    (darwinClosureCommand in darwinClosureEnvironment), the package's in-module dependency closure (internal/lower,
+    internal/ir, internal/native and more) with its tests' imports, each by its tree object, or a gitlink's commit object
+    for a directory at or inside a submodule; "file <path> <blob>\\n" for each darwinModuleFiles present at commit; and
+    "<mode> <object> <path>\\n" for each entry whose first rule in tools' executors.txt is darwin. A directory's tree
+    object takes its subdirectories too, conservatively: a main that moved a package's testdata, or a package below one
+    the closure names, moves the digest though go may read neither. The gate can't see a change's own tip, since a
+    candidate is rebased onto main with one parent, so it matches a record by this content instead: a main that moved
+    outside the leg's inputs keeps the digest, and one that moved inside them changes it.
+
+    go list reads the files on disk, so tree must be checked out at commit: a digest of another checkout would be a lie.
+    The gate's tree is the candidate's checkout, which run() holds at its sha, and a hand writing a record runs
+    --darwin-paths-digest in a checkout at the record's tip. Raises DarwinPathsRefusal when the checkout isn't at commit,
+    or when go list fails, names nothing, or names a directory inside tree that commit doesn't hold."""
+    try:
+        head = git(tree, "rev-parse", "HEAD")
+        sha = git(tree, "rev-parse", "--verify", commit + "^{commit}")
+    except subprocess.CalledProcessError as error:
+        raise DarwinPathsRefusal("%s isn't a commit %s can name: %s" % (commit, tree, firstLinesOf(error.stderr or "")))
+    if head != sha:
+        raise DarwinPathsRefusal("%s is checked out at %s, not at %s, and go list reads the checkout's files, so its darwinPaths "
+                                 "would be another commit's" % (tree, head, sha))
+    try:
+        listing = darwinClosureListing(tree)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise DarwinPathsRefusal("%s didn't run in %s: %s" % (darwinClosureWords(), tree, error))
+    if listing.returncode != 0:
+        raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (darwinClosureWords(), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
+    root = os.path.realpath(tree)
+    directories = set()
+    for line in listing.stdout.splitlines():
+        if not line.strip():
+            continue
+        real = os.path.realpath(line)
+        # The standard library and the modules outside the tree drop out: go.mod and go.sum below pin those.
+        if real == root or real.startswith(root + os.sep):
+            directories.add(os.path.relpath(real, root).replace(os.sep, "/"))
+    if not directories:
+        # internal/apple's own packages are in the tree, so a listing without one is no listing of the leg.
+        raise DarwinPathsRefusal("%s named no directory inside %s: %s" % (darwinClosureWords(), tree, firstLinesOf(listing.stderr or "")))
+    entries = commitEntries(tree, sha)
+    gitlinks = {path: objectName for _, kind, objectName, path in entries if kind == "commit"}
+    lines, trees = set(), []
+    for directory in sorted(directories):
+        # commit's tree holds nothing below a gitlink, so a directory at or inside a submodule is its commit object.
+        link = next((path for path in sorted(gitlinks) if directory == path or directory.startswith(path + "/")), None)
+        if link is None:
+            trees.append(directory)
+        else:
+            lines.add("dir %s %s\n" % (link, gitlinks[link]))
+    if trees:
+        try:
+            objects = git(tree, "rev-parse", *["%s:%s" % (sha, "" if directory == "." else directory) for directory in trees]).split("\n")
+        except subprocess.CalledProcessError as error:
+            raise DarwinPathsRefusal("go list names a directory %s's tree doesn't hold, so the checkout isn't the commit alone: %s" % (
+                sha, firstLinesOf(error.stderr or "")))
+        # One object a directory, each a full sha, or the answer isn't the one asked for.
+        if len(objects) != len(trees) or not all(lowercaseHex40.fullmatch(objectName) for objectName in objects):
+            raise DarwinPathsRefusal("git rev-parse of %d directories at %s answered %r" % (len(trees), sha, objects[:5]))
+        lines.update("dir %s %s\n" % (directory, objectName) for directory, objectName in zip(trees, objects))
+    blobs = {path: objectName for _, kind, objectName, path in entries if kind == "blob"}
+    lines.update("file %s %s\n" % (path, blobs[path]) for path in darwinModuleFiles if path in blobs)
+    lines.update("%s %s %s\n" % (mode, objectName, path) for mode, _, objectName, path in darwinEntries(entries, executorMap(tools)[0]))
+    return hashlib.sha256("".join(sorted(lines)).encode()).hexdigest()
+
+
+def darwinAPaths(tree, commit, tools):
+    """The .a files a darwin leg's record must carry adamic c's result for (its aCheck), sorted: every darwin blob of
+    commit's tree ending .a that no a-check-exempt glob in tools' executors.txt names. That's every darwin .a a-check
+    could be handed, a package's own among them (only go list tells those apart), so the Mac runs a superset, never less."""
+    rules, _, _, exempt = executorMap(tools)
+    return sorted(path for _, kind, _, path in darwinEntries(commitEntries(tree, commit), rules)
+                  if kind == "blob" and path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt))
+
+
+def wholeNumber(value):
+    """Whether a JSON value is a whole number: json reads true as a bool, and a bool is an int to Python."""
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def darwinLegRefusal(name, record):
+    """Why the darwin leg record read from darwin-legs/<name> isn't green, or None when it is. Any field out of shape is
+    a reason, so a malformed record can never make the gate pass."""
+    if not isinstance(record, dict):
+        return "not a JSON object"
+    if not isinstance(record.get("tip"), str) or not lowercaseHex40.fullmatch(record["tip"]):
+        return "tip isn't 40 lowercase hex"
+    if name != record["tip"] + ".json":
+        return "tip %s isn't its file name" % record["tip"]
+    named = [key for key in ("claim", "job") if key in record]
+    if len(named) != 1:
+        return "names %s, not exactly one of claim and job" % (" and ".join(named) or "neither")
+    if not isinstance(record[named[0]], str) or not record[named[0]].strip():
+        return "%s isn't a non-empty string" % named[0]
+    if not isinstance(record.get("log"), dict) or not isinstance(record["log"].get("sha256"), str) \
+            or not lowercaseHex64.fullmatch(record["log"]["sha256"]):
+        return "log.sha256 isn't 64 lowercase hex"
+    if not wholeNumber(record.get("exit")) or record["exit"] != 0:
+        return "exit is %r, not 0" % (record.get("exit"),)
+    if not isinstance(record.get("counts"), dict):
+        return "counts isn't an object"
+    if not wholeNumber(record["counts"].get("failed")) or record["counts"]["failed"] != 0:
+        return "counts.failed is %r, not 0" % (record["counts"].get("failed"),)
+    if not wholeNumber(record["counts"].get("passed")) or record["counts"]["passed"] <= 0:
+        return "counts.passed is %r, not above 0" % (record["counts"].get("passed"),)
+    if not isinstance(record.get("darwinPaths"), str) or not lowercaseHex64.fullmatch(record["darwinPaths"]):
+        return "darwinPaths isn't 64 lowercase hex"
+    # aCheck is what adamic c said on the Mac for each darwin .a, which a-check judges by its own rules. A leg of a
+    # change with no darwin .a may leave it out; one present is read whole or the record isn't green.
+    if "aCheck" in record:
+        if not isinstance(record["aCheck"], dict):
+            return "aCheck isn't an object"
+        for path, recorded in record["aCheck"].items():
+            if not isinstance(path, str) or not isinstance(recorded, dict) or not wholeNumber(recorded.get("exit")) \
+                    or not isinstance(recorded.get("errors"), str):
+                return "aCheck %s isn't an object of a whole number exit and a string errors" % path
+    return None
+
+
+def darwinLegFor(tree, sha, tools, digest=None):
+    """The recorded darwin leg sha's content passes on: (its record's file name, the record) for the first green record, in
+    file name order, whose darwinPaths is darwinPathsDigest's at sha (digest, when the caller computed it already), or
+    (None, why), why naming what it looked for or the first reason a record at that digest isn't green. A file that can't
+    be read or parsed holds no digest to match. darwinPathsDigest's DarwinPathsRefusal passes through to the caller."""
+    digest = darwinPathsDigest(tree, sha, tools) if digest is None else digest
+    directory = os.path.join(tools, darwinLegsDirectory)
+    names = sorted(name for name in os.listdir(directory) if name.endswith(".json")) if os.path.isdir(directory) else []
+    why = None
+    for name in names:
+        try:
+            with open(os.path.join(directory, name)) as handle:
+                record = json.load(handle)
+        except (OSError, ValueError):
+            continue
+        if not isinstance(record, dict) or record.get("darwinPaths") != digest:
+            continue
+        refusal = darwinLegRefusal(name, record)
+        if refusal is None:
+            return name, record
+        why = why or "%s isn't green: %s" % (name, refusal)
+    return None, why or "no darwin leg recorded for darwinPaths %s" % digest
+
+
+def darwinLegSummary(name, record):
+    """What a gate's record keeps of the darwin leg it passed on: enough to find the leg's log and check its digest."""
+    summary = {"record": name, "tip": record["tip"], "host": record.get("host")}
+    for key in ("claim", "job"):
+        if key in record:
+            summary[key] = record[key]
+    summary.update({"log": record["log"]["sha256"], "darwinPaths": record["darwinPaths"]})
+    return summary
+
+
+def darwinMain():
+    """run.py --darwin-paths-digest --tree <checkout> --sha <tip> --tools <gate tools>: the darwinPaths a hand writes into
+    a darwin leg's record at that tip, the same digest the gate matches the candidate by. With --darwin-a-paths instead,
+    the .a files the record's aCheck must cover (darwinAPaths), one a line, so the Mac runs adamic c on exactly those. A
+    digest that can't be computed (DarwinPathsRefusal) prints nothing on stdout and exits 1, saying why on stderr."""
+    lister = argparse.ArgumentParser()
+    modes = lister.add_mutually_exclusive_group(required=True)
+    modes.add_argument("--darwin-paths-digest", action="store_true")
+    modes.add_argument("--darwin-a-paths", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--sha", required=True)
+    lister.add_argument("--tools", required=True)
+    arguments = lister.parse_args()
+    if arguments.darwin_paths_digest:
+        try:
+            digest = darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools)
+        except DarwinPathsRefusal as refusal:
+            sys.exit("no darwinPaths: %s" % refusal)
+        print(digest)
+    else:
+        for path in darwinAPaths(arguments.tree, arguments.sha, arguments.tools):
+            print(path)
+
+
+def aCheckOutcome(returncode, errors):
+    """What one adamic c run of a .a said, whether it ran here or a darwin leg recorded it: a clean result or a "can't
+    lower ... yet" stop is checked, since nothing was refused; then a refusal, a type error, or any other failure."""
+    if returncode == 0 or ("can't lower" in errors and " yet" in errors):
+        return "checked"
+    if "Adamic 0.1 refuses" in errors:
+        return "refused"
+    if " error TS" in errors:
+        return "type error"
+    return "failed"
+
+
+def aCheckMeets(expect, outcome, errors):
+    """Whether an outcome meets a .a's header: "refused <rule>" must be refused naming the rule, "type error <code>" a
+    type error with that code (any, without one), and no header must be checked. One rule for live and recorded runs."""
+    if expect.startswith("refused"):
+        return outcome == "refused" and expect[len("refused"):].strip() in errors
+    if expect.startswith("type error"):
+        code = expect[len("type error"):].strip()
+        return outcome == "type error" and (not code or ("error " + code) in errors)
+    return outcome == "checked"
+
+
+# goListFields are the fields of a go list record that its readers read, goPackages and goCommandInputs, and all go list
+# writes of one: asked by name, go list leaves out what nothing reads, staleness above all, which it works out against the
+# build cache for every package (about 0.7 s of adamic's package graph on Pupa at load 117, Oct 31). A reader that reads
+# another field names it here, or reads it missing: GoListFieldsHoldEveryRead holds the list to what the readers read.
+goListFields = ["Dir", "EmbedFiles", "ForTest", "ImportPath", "Imports", "Name", "TestEmbedFiles", "TestImports",
+                "XTestEmbedFiles", "XTestImports"]
+
+
+def goPackageListCommand(patterns):
+    return ["go", "list", "-json=" + ",".join(goListFields)] + list(patterns)
+
+
+def packageGraphCommand():
+    return ["go", "list", "-deps", "-test", "-json=" + ",".join(goListFields), "./..."]
+
+
+def goPackages(tree, listing):
+    """packageGraphCommand's records of tree, for touched() and coverageReduced(): each module package's directory (relative
+    to tree) and the files it embeds (real and test embeds apart), the reverse production and test import edges, and each
+    module package's directory as go list names it."""
+    directories, embedded, reverse, testReverse, packageDirectories = {}, {}, {}, {}, {}
+    testEmbedded, realEmbedded = set(), set()
+    tree = os.path.realpath(tree)
+    for package in goListRecords(listing):
+        # go list -test emits synthetic test binaries and annotated package variants.
+        # A variant's Imports are test edges, never production edges.
+        importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
+        if package.get("Name") == "main" and importPath.endswith(".test"):
+            continue
+        variant = bool(package.get("ForTest")) or " [" in package["ImportPath"]
+        for dependency in package.get("Imports", []):
+            edges = testReverse if variant else reverse
+            edges.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+        for dependency in set(package.get("TestImports", []) + package.get("XTestImports", [])):
+            testReverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+        directory = package.get("Dir")
+        if not directory or not (importPath == module or importPath.startswith(module + "/")):
+            continue
+        relative = os.path.relpath(os.path.realpath(directory), tree)
+        directories[relative] = importPath
+        packageDirectories[importPath] = directory
+        for field in ("EmbedFiles", "TestEmbedFiles", "XTestEmbedFiles"):
+            for name in package.get(field, []):
+                path = os.path.normpath(os.path.join(relative, name))
+                embedded[path] = importPath
+                if field == "EmbedFiles" and not variant:
+                    realEmbedded.add(path)
+                else:
+                    testEmbedded.add(path)
+    return directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, packageDirectories
+
+
+def packageOwner(directories, embedded, path):
+    """A path's package: its own directory's, one that embeds it, or the nearest package directory above it. None is unowned."""
+    directory = os.path.dirname(path) or "."
+    owner = directories.get(directory) or embedded.get(path)
+    ancestor = directory
+    while owner is None and ancestor not in (".", ""):
+        ancestor = os.path.dirname(ancestor) or "."
+        owner = directories.get(ancestor) if ancestor != "." else None
+    return owner
+
+
+def unownedPaths(directories, embedded, changed):
+    """The changed paths outside every Go package, which cover() maps to executors. compiler-dependencies.json is never
+    among them: touched() runs every package it declares when it changes."""
+    return [path for path in changed
+            if path != "cloud/fast-gate/compiler-dependencies.json" and packageOwner(directories, embedded, path) is None]
+
+
+# listedGoLists holds each go list a --list-units pass ran, by tree and command (listUnits sets it to a dict, and None
+# outside one): a listing reads one checkout that nothing moves, and its askers ask the same listings of it, touched()
+# and coverage's provider packageGraphCommand's, build's and vet's providers go list -json ./... (Hotty's
+# measures on #q11k6k6 and #cb8bpe7: about 10 s on adamic once, then 1.5 to 1.8 s and about 1 s a repeat). Outside a
+# listing every caller runs its own, since a caller there (a test, a gate) may move the checkout between asks. Each
+# command runs in one environment wherever it's asked, so the command names its answer.
+listedGoLists = None
+
+
+def listedGoList(tree, command, timeout, environment=None):
+    """command's answer in tree, run once a tree for a listing pass (listedGoLists) and every time outside one. A failed
+    run is kept too, so a listing's callers all read the same failure."""
+    key = (os.path.realpath(tree), tuple(command))
+    if listedGoLists is not None and key in listedGoLists:
+        return listedGoLists[key]
+    listing = subprocess.run(command, cwd=tree, capture_output=True, text=True, timeout=timeout, env=environment)
+    if listedGoLists is not None:
+        listedGoLists[key] = listing
+    return listing
+
+
+def packageGraph(tree):
+    """packageGraphCommand's answer in tree, in the environment the gate runs it in (Gate.spawn's go flags), so touched()
+    in a listing and coverage's provider read one listing. The flags moved only go list's Stale and
+    StaleReason (Pupa, Oct 31, adamic bdbea3709a: the two listings equal but for those lines), which goListFields no
+    longer asks."""
+    return listedGoList(tree, packageGraphCommand(), 300, dict(os.environ, **gateEnvironment))
+
+
+def coverageReduced(tree, tools, changed, unowned=None):
+    """The changed paths the coverage phase judges, sorted (#gw93f6b, Node's ruling): each neither owned, inside a Go package
+    as touched() decides, nor inert, its first rule in tools' executors.txt being inert. The phase is red only for one of
+    these that no rule matches, so a change that leaves this empty (a README alone) gives coverage nothing to judge. A
+    deleted path is judged as any other. cover() passes the unowned paths touched() already found; the listing finds them
+    here, with the same go list and ownership."""
+    if unowned is None:
+        listing = packageGraph(tree)
+        if listing.returncode != 0:
+            raise SystemExit("go list failed: " + listing.stderr)
+        directories, embedded = goPackages(tree, listing.stdout)[:2]
+        unowned = unownedPaths(directories, embedded, changed)
+    rules = executorMap(tools)[0]
+    return sorted(path for path in unowned if firstExecutor(rules, path) != "inert")
+
+
+def coverageRevisions(tree, change, full):
+    """The revisions the coverage phase reads its diff between: a fast gate's base...sha (fastPhaseInputs), a whole gate's
+    sha against its first parent (executePhase), or None for a root commit, which changes nothing."""
+    if full:
+        parents = git(tree, "rev-list", "--parents", "-n", "1", change["sha"]).split()[1:]
+        return [parents[0], change["sha"]] if parents else None
+    return ["%s...%s" % (change["base"], change["sha"])]
+
+
+def coverageChanged(tree, change, full):
+    """The paths the coverage phase reads its diff as, unquoted, as the gate reads them; none for a root commit."""
+    revisions = coverageRevisions(tree, change, full)
+    if revisions is None:
+        return []
+    return [path for path in git(tree, "-c", "core.quotePath=false", "diff", "--name-only", *revisions).split("\n") if path]
+
+
+# coverageGoStatePathspec is what coverage reads of the tree at any change (#gw93f6b, #gamwqs2, Node's rulings), traced
+# whole on Pupa: at a README edit (Oct 29, adamic cad2afb1c7,
+# Pupa:~/scratch/judge-tools-trace/trace8.txt) and at Go changes (Oct 31, trace-go-coverage-*.txt: Optimizer's
+# internal/lower and catalog change de5c28cc11, and three more), every tracked file coverage opened was in it or the
+# phases' setup. go list -deps -test -json ./... (touched() and coverageReduced()) reads go.work and every module it
+# names, cohere's among them, opens each package's .go files and the C-family sources it checks build constraints in, and
+# probes a go.mod in every directory for a nested module; memoryFloors opens every tracked .go file;
+# compilerDependencies opens the stage3/drivers scripts and the tree's compiler-dependencies.json; cover()'s mapChanged
+# reads whether the tree's executors.txt changed. phaseInputs adds cloud/fast-gate (the maps, unit-needs.json among
+# them), npmPackages' stage3/api files, and the root go.mod and go.sum. A change to any of those functions in run.py
+# retraces before it's trusted again.
+coverageGoStatePathspec = ["*.go", ":(glob)**/go.mod", ":(glob)**/go.sum", ":(glob)**/go.work", ":(glob)**/go.work.sum",
+                           "*.c", "*.cc", "*.cpp", "*.cxx", "*.h", "*.hh", "*.hpp", "*.hxx", "*.m", "*.s", "*.S", "*.sx",
+                           "*.f", "*.F", "*.for", "*.f90", "*.syso", "*.swig", "*.swigcxx", "cohere", "stage3/drivers"]
+
+
+# phaseSetupPaths are what every bounded phase reads beside its own inputs (phaseInputs adds them): runPhase's npm setup
+# and this runner and its maps.
+phaseSetupPaths = ["cloud/fast-gate", "cloud/markdown-width/npm-bootstrap.json", "stage3/api/package.json",
+                   "stage3/api/package-lock.json", "go.mod", "go.sum"]
+
+
+def phaseUnreadMode(mode):
+    """Whether a file of this git mode can be phase-unread: a plain file, 100644, alone, as Node ruled on 426b75d6. The
+    phases key a file by its mode and blob (git ls-files -s), and the lookup decides only a plain file modified as one."""
+    return mode == "100644"
+
+
+def phaseSetupPath(path):
+    """Whether path is one of the phases' setup (phaseSetupPaths) or inside one."""
+    return any(path == setup or path.startswith(setup + "/") for setup in phaseSetupPaths)
+
+
+def phaseSelectsNone(path, rules, catalogTargets):
+    """Whether a change to path alone selects no phase of its own (#nz7hm5j): its first rule in tools' executors.txt is
+    inert, so cover() runs no executor for it (workers, catalog, darwin), it's no .a, which a-check runs for wherever it
+    sits, and no file a catalog undo patch edits, which catalog-apply runs for (catalogPatchTargets)."""
+    return firstExecutor(rules, path) == "inert" and not path.endswith(".a") and path not in catalogTargets
+
+
+def phaseUnread(tree, tools):
+    """Every tracked plain file of tree (phaseUnreadMode) no phase reads when it alone is modified, sorted: the set Loom's
+    no-move check matches a change's paths against, kept per base tree and gate tools commit (#nz7hm5j). It's derived from
+    the base phases' own declared inputs, the one reading their keys hash (phaseInputs, #tqxm4fa's rule, Node's ruling on
+    #gamwqs2), never from a list of its own: a file is read when a phase's declared paths name it (git ls-files of them,
+    the phases' setup among them), or it sits in the directory of a package a phase declares (its closure is that
+    package's files, so every file there reads as read), or a change to it
+    would select a phase of its own (phaseSelectsNone). A phase whose inputs are the whole tree leaves nothing unread.
+    census is the judge's step, never planned; gofmt, the planner's, reads only the change's own .go files, all in the Go
+    state. Raises when a declaration doesn't read, so a caller never takes a partial set."""
+    declared = [phaseInputs(tree, phase)["inputs"] for phase in fastBasePhases if phase != "census"]
+    if any("." in inputs["paths"] for inputs in declared):
+        return []
+    read = set()
+    for inputs in declared:
+        read.update(path for path in git(tree, "ls-files", "-z", "--", *inputs["paths"]).split("\0") if path)
+    listing = packageGraph(tree)
+    if listing.returncode != 0:
+        raise ValueError("go list of %s doesn't read: %s" % (tree, listing.stderr.strip()[:300]))
+    directories = {importPath: directory for directory, importPath in goPackages(tree, listing.stdout)[0].items()}
+    owned = {directories[package] for inputs in declared for package in inputs["packages"] if package in directories}
+    rules, targets = executorMap(tools)[0], set().union(*catalogPatchTargets(tree).values())
+    unread = []
+    for entry in git(tree, "ls-files", "-s", "-z").split("\0"):
+        if not entry:
+            continue
+        mode, path = entry.split(" ", 1)[0], entry.split("\t", 1)[1]
+        if phaseUnreadMode(mode) and path not in read and (os.path.dirname(path) or ".") not in owned \
+                and phaseSelectsNone(path, rules, targets):
+            unread.append(path)
+    return sorted(unread)
+
+
+def phaseUnreadMain():
+    """run.py --phase-unread --tree <base> --tools <gate tools>: phaseUnread's set as one JSON object, {"unread": [...]}.
+    Any failure exits nonzero with nothing on stdout, and the planner reads the phases as reading anything."""
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--phase-unread", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--tools", required=True)
+    arguments = lister.parse_args()
+    print(json.dumps({"unread": phaseUnread(arguments.tree, arguments.tools)}))
+
+
+def coverageInputs(tree, unit, full, change):
+    """coverage's declared inputs at any change (#gamwqs2): the Go state (coverageGoStatePathspec), and the changed paths it
+    judges, those neither in a Go package nor inert (coverageReduced, the one classification cover() decides its red
+    from), by name and by content: none at a change of inert files alone, and none with no change to classify (--base
+    for a fast gate, --sha for the whole). Their content keys them too because a compare lists the change's base and its
+    tree from the same change, so the names alone are alike on both sides: an edit, an add or a delete of a path no rule
+    covers would leave the key where its base's was, plan nothing, and land with the red coverage owes it unrun. A change
+    that selects the darwin executor keys on every darwin path too, by the map's own globs (a git pathspec's * spans
+    directories as fnmatch's does): cover() passes darwin on the recorded leg whose darwinPaths digests all of them, so a
+    main that moved inside them, outside the change's own diff, must move the key. darwinPaths also digests the leg's
+    in-module closure (its dir lines), which this key follows only through the Go state's files; the darwin unit, keyed on
+    the whole tree, judges the closure at every change that selects it."""
+    names, darwinGlobs = [], []
+    if change is not None:
+        changed = coverageChanged(tree, change, full)
+        names = coverageReduced(tree, change["tools"], changed)
+        rules = executorMap(change["tools"])[0]
+        # The same selection as cover(): a changed path whose first rule is darwin, or the map itself changed.
+        if "cloud/fast-gate/executors.txt" in changed or any(firstExecutor(rules, path) == "darwin" for path in changed):
+            darwinGlobs = [glob for name, glob in rules if name == "darwin"]
+    return {"packages": [], "paths": coverageGoStatePathspec + darwinGlobs + [":(literal)" + path for path in names], "names": names,
+            "note": "coverage reads the tree's Go, module, driver and census state, and the changed paths it judges"}
+
+
+def catalogPatchTargets(tree):
+    """Each bug catalog undo patch's name, in order, and the files it edits (its +++ b/ lines): catalog-apply runs for a
+    change to one of them (Gate.catalogEntriesTouched), so no phase-unread file is one (phaseSelectsNone)."""
+    directory = os.path.join(tree, "verify/catalog")
+    if not os.path.isdir(directory):
+        return {}
+    targets = {}
+    for name in sorted(os.listdir(directory)):
+        if name.endswith(".patch"):
+            with open(os.path.join(directory, name), errors="replace") as handle:
+                targets[name] = set(re.findall(r"^\+\+\+ b/(\S+)", handle.read(), re.M))
+    return targets
+
+
+def phaseInputs(tree, line, full=False, products=None, change=None):
+    phase, _, unit = line.partition(" ")
+    provider = phaseInputProviders.get(phase)
+    inputs = (provider(tree, unit, full, change) if provider else
+              treeInputs("phase has no bounded input provider"))
+    if "." not in inputs["paths"]:
+        # Every phase enters runPhase's npm setup, and runs this runner/config.
+        inputs["paths"] += phaseSetupPaths
+        if full and phase in ("wasi", "catalog", "products"):
+            # Same source discovery as wholeProducts. A newly added declaration is
+            # visible on the next enumeration. Existing products need a runtime-read audit.
+            sources, declared = products if products is not None else productInputSources(tree)
+            inputs["paths"] += sources
+            if declared:
+                inputs["paths"].append(".")
+                inputs["note"] = "whole phase runs declared products first; product runtime reads are not yet bounded"
+    inputs["packages"] = sorted(set(inputs["packages"]))
+    inputs["paths"] = sorted(set(inputs["paths"]))
+    return {"unit": line, "inputs": inputs}
+
+
+def listUnits():
+    # The pool's planner reads the units from here, from a plain checkout, so it never parses what run.py owns.
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--full", action="store_true")
+    lister.add_argument("--list-units", action="store_true")
+    lister.add_argument("--with-inputs", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
+    lister.add_argument("--sha")
+    lister.add_argument("--tools")
+    arguments = lister.parse_args()
+    global listedGoLists
+    listedGoLists = {}
+    units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
+    if arguments.with_inputs:
+        products = productInputSources(arguments.tree) if arguments.full else None
+        # The change a provider may classify: a fast gate's --base against --sha (HEAD without it, as fastUnits), a whole
+        # gate's --sha against its first parent. None without them.
+        change = None
+        if (arguments.sha if arguments.full else arguments.base) is not None:
+            change = {"base": arguments.base, "sha": arguments.sha or git(arguments.tree, "rev-parse", "HEAD"),
+                      "tools": arguments.tools or arguments.tree}
+        for unit in units:
+            print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products, change)))
+    else:
+        print("\n".join(units))
+
+
+def goCode(source, strings=True):
+    """source with its comments blanked, and with strings=False its string and rune literals' contents too, newlines
+    kept, so a launch read from it is code and its line and offset are source's."""
+    out, index, length = [], 0, len(source)
+    while index < length:
+        if source.startswith("//", index):
+            end = source.find("\n", index)
+            end = length if end < 0 else end
+            out.append(" " * (end - index))
+        elif source.startswith("/*", index):
+            end = source.find("*/", index + 2)
+            end = length if end < 0 else end + 2
+            out.append(re.sub(r"[^\n]", " ", source[index:end]))
+        elif source[index] in "\"'`":
+            end = goLiteralEnd(source, index)
+            out.append(source[index:end] if strings else source[index] + re.sub(r"[^\n]", " ", source[index + 1:end - 1]) + source[end - 1])
+        else:
+            end = index + 1
+            out.append(source[index])
+        index = end
+    return "".join(out)
+
+
+def goLiteralEnd(source, index):
+    """The index just past the Go string or rune literal opening at index."""
+    quote, position = source[index], index + 1
+    while position < len(source) and source[position] != quote:
+        if quote != "`" and source[position] == "\\":
+            position += 1
+        elif quote != "`" and source[position] == "\n":
+            return position
+        position += 1
+    return min(position + 1, len(source))
+
+
+def goArguments(code, index, count):
+    """The first count arguments of the call whose open parenthesis is at code[index - 1], as written."""
+    arguments, depth, start, position = [], 0, index, index
+    while position < len(code) and len(arguments) < count:
+        character = code[position]
+        if character in "\"'`":
+            position = goLiteralEnd(code, position)
+            continue
+        if character in "([{":
+            depth += 1
+        elif character in ")]}" and depth:
+            depth -= 1
+        elif character in ",)" and not depth:
+            arguments.append(code[start:position].strip())
+            if character == ")":
+                break
+            start = position + 1
+        position += 1
+    return arguments
+
+
+# A declared launcher's file is read for what it launches, and a launch it can't read refuses the file, naming its
+# line: the compiler-reference rule is per file, so a launcher that computed its executable could run the compiler
+# from a path built elsewhere and pass (system_adamic's review of #9qqvs57). So every exec.Command, exec.CommandContext
+# and CommandIn (internal/toolchain's) names its executable as a literal, and os.StartProcess, syscall.Exec,
+# syscall.ForkExec and a hand-built exec.Cmd, whose path is always computed, refuse. A file that hands a computed path
+# to a helper in another package isn't a launcher at all; the helper package is what gets declared.
+launchCall = re.compile(r'(?<![\w.])(?:(?P<package>\w+)\.)?(?P<function>CommandContext|Command|CommandIn)\(')
+computedLaunch = re.compile(r'\bos\.StartProcess\b|\bsyscall\.(?:Exec|ForkExec)\b')
+literalName = re.compile(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`')
+
+
+def launcherRefusal(source, runs):
+    """Why a declared launcher's Go file, running only runs, can't pass, as "line N: why", or None when it can."""
+    code, calls = goCode(source), goCode(source, strings=False)
+    line = lambda index: "line %d" % (code.count("\n", 0, index) + 1)
+    found = compilerMarker.search(source)
+    if found:
+        return "%s: references the compiler (%s)" % (line(found.start()), found.group(0))
+    execNames = {"exec"}
+    for alias in re.finditer(r'(?:^|[\s(])([\w.]+)\s+"os/exec"', code):
+        if alias.group(1) in (".", "_"):
+            return "%s: imports os/exec as %s, so its launches can't be read" % (line(alias.start(1)), alias.group(1))
+        execNames.add(alias.group(1))
+    found = computedLaunch.search(calls)
+    if found:
+        return "%s: launches by a computed path (%s)" % (line(found.start()), found.group(0))
+    for name in execNames:
+        # A composite literal as gofmt writes it, never a func's *exec.Cmd result before its body.
+        found = re.search(r'(?<![\w.*])' + re.escape(name) + r'\.Cmd\{', calls)
+        if found:
+            return "%s: builds an %s.Cmd by hand, a computed path" % (line(found.start()), name)
+    for call in launchCall.finditer(calls):
+        package, function = call.group("package"), call.group("function")
+        if function == "CommandIn" or package in execNames:
+            if re.search(r'\bfunc\s*(?:\([^)]*\)\s*)?$', calls[calls.rfind("\n", 0, call.start()) + 1:call.start()]):
+                continue  # A definition, not a launch.
+        else:
+            continue
+        arguments = goArguments(code, call.end(), 1 if function == "Command" else 2)
+        executable = arguments[-1] if len(arguments) == (1 if function == "Command" else 2) else ""
+        literal = literalName.fullmatch(executable)
+        if not literal:
+            return "%s: launches a computed executable, %s(%s)" % (line(call.start()), call.group(0)[:-1], executable or "...")
+        launched = literal.group(1) if literal.group(1) is not None else literal.group(2)
+        if os.path.basename(launched) not in runs:
+            return "%s: launches %s, which its declaration's runs don't name" % (line(call.start()), launched)
+    return None
+
+
+# A reference to the compiler itself, one kind of the census's evidence; launching a process is the other. cmd/adamic is
+# bounded at its name, so cohere's own harness commands (cmd/adamic_path and its siblings, which markdownblocks' oracles
+# run) are no reference to it, while `./cmd/adamic`, `cmd/adamic/...` and `go run ./cmd/adamic c x.ts` still are
+# (Cohere's finding on #1byp10f, Loom's ruling).
+compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_])|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
+launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
+
+# The package whose MemoryLimit reads the unit's cgroup limit, the share a test sizes itself from (the memory floor census).
+testguardImport = "github.com/system-inc/adamic/internal/testguard"
+
+
+def memoryReader(source):
+    """Whether a Go file calls internal/testguard's MemoryLimit, by the name it imports the package as: testguard, its
+    alias, or bare under a dot import. A comment or a string naming the call is no read."""
+    if "MemoryLimit" not in source:
+        return False  # Every call names it, so a file without the word reads nothing, and the census costs no parse.
+    code, calls = goCode(source), goCode(source, strings=False)
+    for imported in re.finditer(r'(?:^|[\s(])(?:([\w.]+)\s+)?"' + re.escape(testguardImport) + '"', code):
+        # A single import line's `import` keyword sits where an alias would; the package's own name is testguard.
+        name = imported.group(1) if imported.group(1) not in (None, "import") else "testguard"
+        qualifier = "" if name == "." else re.escape(name) + r"\s*\.\s*"
+        if re.search(r"(?<![\w.])" + qualifier + r"MemoryLimit\s*\(", calls):
+            return True
+    return False
+
+
+def unitFloors(text, name):
+    """Each package's memory floor, its memoryMegabytes under units, in a unit-needs table read from name. A table that
+    can't be read raises ValueError, never reads as no floors, since every reader would then pass the census."""
+    try:
+        needs = json.loads(text)
+    except ValueError:
+        raise ValueError("invalid unit needs: " + name + " is not JSON")
+    if not isinstance(needs, dict) or needs.get("version") != 1 or not isinstance(needs.get("units"), list):
+        raise ValueError("invalid unit needs: " + name)
+    floors = {}
+    for unit in needs["units"]:
+        if not isinstance(unit, dict):
+            raise ValueError("invalid unit needs: " + name + ": a unit that isn't an object")
+        # A need may name a test unit (name) rather than a package; only a package's floor is a reader's.
+        if "package" not in unit or "memoryMegabytes" not in unit:
+            continue
+        floor = unit["memoryMegabytes"]
+        if not isinstance(unit["package"], str) or not unit["package"] or isinstance(floor, bool) or not isinstance(floor, int) or floor <= 0:
+            raise ValueError("invalid unit needs: " + name + ": %r needs a package and a positive whole memoryMegabytes" % unit.get("package"))
+        floors[unit["package"]] = floor
+    return floors
+
+
+class ChangeRefusal(ValueError):
+    """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's, and the memory
+    floor census's (MemoryFloorRefusal). The gate reds the change with it; --list-units exits RefusalExit with its line,
+    so the planner sends it to the change's owner as a red (Queue's unplannable, Loom's ruling of Oct 14) instead of
+    failing every plan of it."""
+
+    def hint(self):
+        return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: under packages, its "
+                "package, then the compiler packages it exercises; or, for a package that launches processes and never "
+                "the compiler, under launchers, its package with the executables it runs and why (entries there add to "
+                "the gate tools' map)." % self)
+
+
+class MemoryFloorRefusal(ChangeRefusal):
+    """The memory floor census's refusal, whose fix is a floor, never a compiler declaration."""
+
+    def hint(self):
+        return ("%s. A package whose tests read their memory limit holds a floor the planner's fit (--fit-memory) never "
+                "shares it under: under units in the gate tools' cloud/fast-gate/unit-needs.json, its package with the "
+                "memoryMegabytes its tests need to start." % self)
+
+
+# The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
+# "refused: <why>". Every other failure keeps its traceback and exit 1, so a crash is never read as the change's red.
+RefusalExit = 3
+
+
+def main():
+    if "--phase-unread" in sys.argv:
+        phaseUnreadMain()
+        return
+    if "--darwin-paths-digest" in sys.argv or "--darwin-a-paths" in sys.argv:
+        darwinMain()
+        return
+    if "--list-units" in sys.argv:
+        try:
+            listUnits()
+        except ChangeRefusal as refusal:
+            print("refused: " + refusal.hint(), file=sys.stderr)
+            sys.exit(RefusalExit)
+        return
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tree", required=True)
+    parser.add_argument("--sha", required=True)
+    parser.add_argument("--base", required=True)
+    # What the base sha is: main, or the area a worker's branch was cut from (gateBase in fast-gate-classify.sh).
+    parser.add_argument("--base-name", default="main")
+    parser.add_argument("--tools", required=True)
+    parser.add_argument("--out", required=True)
+    # The gate's CPUs come from its affinity (cloud/fast-gate.sh pins a slot, full-gate-main.sh the full
+    # gate). Half of them run test processes, each at most two parallel subtests, since each subtest
+    # also runs clang and Node: a slot that oversubscribed itself sent a 150 s node deadline red.
+    parser.add_argument("--parallel", type=int, default=max(1, len(os.sched_getaffinity(0)) // 2))
+    parser.add_argument("--full", action="store_true")
+    # A whole gate that is also a parity proof runs to the end after its first failure, so every test can be
+    # compared with the pool's run (@system_adamic, Oct 9 00:12Z). Its red still blocks landing.
+    parser.add_argument("--run-to-end", action="store_true")
+    # Landing and area gates (@system_adamic, Oct 8 09:43): run every test and fixture and report every
+    # failure in one pass, failing at the end; area-next found its moved fixtures one per gate.
+    parser.add_argument("--complete", action="store_true", help="fast gate that runs on after a failure and names every failed test")
+    parser.add_argument("--branch", default="")
+    parser.add_argument("--branch-source", default="")
+    parser.add_argument("--session", default="")
+    parser.add_argument("--session-source", default="")
+    parser.add_argument("--weights", help="package seconds, longest first, to order the full gate's packages")
+    # Side work's fast gates on Loom's pool (#xt96xyp): the pool runs this selection where the tree is whole, so one
+    # selection decides what a fast gate tests wherever it runs. It writes select.json and runs nothing.
+    parser.add_argument("--select", action="store_true", help="write the fast gate's package selection to <out>/select.json and stop")
+    # Loom's pool runs the whole gate as units (Oct 9): one phase of it, optionally one unit of that phase, or the census
+    # over the record the pool merged, each with this gate's own logic and record shape, so the pool never forks it.
+    phases = parser.add_mutually_exclusive_group()
+    phases.add_argument("--phase", help="run only this non-test phase of the selected gate")
+    phases.add_argument("--phases", help="run comma-separated non-test phases into one gate record")
+    parser.add_argument("--unit", help="with --phase wasi or catalog: run only this unit (a fixture or a catalog entry number)")
+    parser.add_argument("--census", metavar="TEST_JSONL", help="the census and deferred checks over a merged test.jsonl; may accompany --phases")
+    arguments = parser.parse_args()
+    os.makedirs(arguments.out, exist_ok=True)
+    gate = Gate(arguments)
+    if arguments.select:
+        try:
+            gate.run()
+        except BaseException:
+            gate.fail("runner", traceback.format_exc())
+        sys.exit(0 if gate.failure is None and os.path.exists(os.path.join(arguments.out, "select.json")) else 1)
+    signal.signal(signal.SIGTERM, gate.stop)
+    try:
+        gate.run()
+    except BaseException:
+        gate.fail("runner", traceback.format_exc())
+    finally:
+        gate.finish()
+    sys.exit(0 if gate.failure is None and not gate.stopped else 1)
+
+
+class Gate:
+    def __init__(self, arguments):
+        self.arguments = arguments
+        # Queue ownership follows this run, not the user's shared cache. Keep these
+        # beside the slot tree so publishing gate artifacts never publishes products.
+        queueRoot = tempfile.mkdtemp(prefix="build-store-", dir=os.path.dirname(os.path.abspath(arguments.tree)))
+        self.buildStoreEnvironment = {
+            "ADAMIC_BUILD_STORE_SPOOL": os.path.join(queueRoot, "spool"),
+            "ADAMIC_BUILD_STORE_AUDITS": os.path.join(queueRoot, "audits"),
+        }
+        for directory in self.buildStoreEnvironment.values():
+            os.mkdir(directory)
+        self.started = time.monotonic()
+        self.failure = None
+        self.stopped = None
+        self.stopThread = None
+        self.killedByStop = set()
+        self.lock = threading.Lock()
+        self.processes = []
+        self.steps = {}
+        self.counts = {"pass": 0, "fail": 0, "skip": 0}
+        self.complete = vars(arguments).get("complete") is True
+        self.failedTests = []
+        self.skipped = []
+        self.census = {"required_input": [], "unclassified": []}
+        # Fail closed: green needs every planned stage to have recorded exit 0, not just no failure,
+        # so a stage that died without reporting (an exception, a process that never started) is red.
+        self.exits = {}
+        self.watchers = []
+        self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "catalog", "census"] if arguments.full
+                        else ["coverage", "tools", "build", "vet", "tests", "census"])
+        if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
+            index = self.planned.index("tests") + 1
+            self.planned[index:index] = ["audit", "upload"]
+        selected = vars(arguments).get("phases")
+        phase = vars(arguments).get("phase")
+        if selected is not None:
+            self.planned = list(dict.fromkeys(selected.split(",")))
+        elif phase is not None:
+            self.planned = [phase]
+        elif vars(arguments).get("census"):
+            self.planned = ["census"]
+        self.result = {
+            "sha": arguments.sha,
+            "branch": arguments.branch,
+            "branch_source": arguments.branch_source,
+            "session": arguments.session,
+            "session_source": arguments.session_source,
+            "base": arguments.base,
+            "base_name": vars(arguments).get("base_name") or "main",
+            "tools_sha": self.git(arguments.tools, "rev-parse", "HEAD"),
+            "machine": {"hostname": socket.gethostname(), "nproc": os.cpu_count()},
+            "uncached_tests": True,
+            "build_ok": False,
+            "vet_ok": False,
+            "box_load": {"start": boxLoad()},
+        }
+        self.kind = "full" if arguments.full else "fast"
+        self.status("running: %s gate of %s against %s" % (self.kind, arguments.sha, arguments.base))
+
+    def stop(self, signum=None, frame=None):
+        # The signal can interrupt code holding self.lock; drain in another thread.
+        if self.stopped:
+            return
+        reason = os.environ.get("ADAMIC_FAST_GATE_STOP_REASON", "stopped")
+        try:
+            with open(self.arguments.out + ".stop-reason") as handle:
+                reason = handle.read().strip() or reason
+        except OSError:
+            pass
+        self.stopped = {"reason": reason, "at_seconds": round(time.monotonic() - self.started, 1)}
+        def drain():
+            with self.lock:
+                self.killedByStop.update(id(p) for p in self.processes if p.poll() is None)
+                self.killSessions()
+        self.stopThread = threading.Thread(target=drain)
+        self.stopThread.start()
+
+    def run(self):
+        # A scoped run skips corpus-wide tests by name, so a gate that can land anything on main refuses
+        # to run scoped (#60hxabf, cohere's rule-scoped lint): push-main.sh lands only a clean scoped_env.
+        self.result["scoped_env"] = sorted(name for name in scopingEnvironment if os.environ.get(name) is not None)
+        if self.result["scoped_env"]:
+            self.fail("environment", "refused: a gate that can land on main never runs scoped, and %s is set" % ", ".join(self.result["scoped_env"]))
+            return
+        tree = self.arguments.tree
+        head = self.git(tree, "rev-parse", "HEAD")
+        if head != self.arguments.sha:
+            self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
+            return
+        selecting = vars(self.arguments).get("select") is True
+        if vars(self.arguments).get("phase") is not None or vars(self.arguments).get("phases") is not None or vars(self.arguments).get("census"):
+            self.runPhase()
+            return
+        if not selecting:
+            self.npmCli()
+            if not self.npmPackages():
+                return
+        if self.arguments.full:
+            self.runFull()
+            return
+        self.deferred = self.deferredList()
+        self.runRequested()
+        # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
+        changed = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
+        changed = [path for path in changed if path]
+        try:
+            packages, unowned = self.touched(changed)
+        except ChangeRefusal as refusal:
+            # A red the change can fix itself, never a gate-tool crash (developer tools, Oct 9).
+            self.fail("census", refusal.hint())
+            return
+        # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
+        # with @system_cohere_adamic): the main sha the gate diffs against sets the stride's offset, and the
+        # changed paths name the corpus files that always run. The full gate sets neither, so it runs all.
+        changedList = os.path.join(os.path.abspath(self.arguments.out), "changed-paths.txt")
+        with open(changedList, "w") as handle:
+            handle.write("".join(path + "\n" for path in changed))
+        self.sampling = {"ADAMIC_GATE_SAMPLE": self.arguments.base, "ADAMIC_GATE_CHANGED": changedList}
+        # Paths the change adds or deletes (renames as both): a "reads ... paths" line fires only on these.
+        pathSetChanged = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
+        executors = self.cover(unowned, changed, [path for path in pathSetChanged if path])
+        if executors is None:
+            return
+        if "cohere" in executors:
+            packages = sorted(set(packages) | set(self.goList("./stage1/cohere/...")))
+        packages = sorted(set(packages) | set(self.extraPackages))
+        # A requested deferred test in a package the change doesn't touch runs alone in it.
+        self.onlyTests = {}
+        for importPath, names in getattr(self, "requested", {}).items():
+            if importPath not in packages:
+                packages = sorted(set(packages) | {importPath})
+                self.onlyTests[importPath] = set(names)
+                self.packageDirectories.setdefault(importPath, os.path.join(tree, importPath[len(module) + 1:]))
+        if selecting:
+            # What the pool can run is the Go tests; every other executor this change needs is named, so a pool
+            # verdict says what it didn't cover.
+            selection = {"sha": self.arguments.sha, "base": self.arguments.base, "packages": packages,
+                         "env": dict(gateEnvironment, **self.sampling),
+                         "deferred": {package: sorted(names) for package, names in sorted(self.deferred.items()) if package in packages},
+                         "only_tests": {package: sorted(names) for package, names in sorted(self.onlyTests.items())},
+                         "executors_beyond_go_tests": sorted(executors)}
+            with open(os.path.join(self.arguments.out, "select.json"), "w") as handle:
+                json.dump(selection, handle, indent=2)
+                handle.write("\n")
+            return
+        self.result.update({
+            "changed_files": changed,
+            "packages": packages,
+            "unowned_files": unowned,
+        })
+        # Everything starts at once: the tests compile what they need through the same build cache,
+        # and the first failure of any step still stops all of them.
+        log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
+        threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
+                   self.guarded("tests", self.testSplit, packages, log)]
+        if executors & {"workers", "bench-workers"}:
+            self.planned.append("workers")
+            threads.append(self.guarded("workers", self.workers, executors))
+        if "a-check" in executors and self.result.get("unchecked_a_files"):
+            self.planned.append("a-check")
+            threads.append(self.guarded("a-check", self.aCheck, self.result["unchecked_a_files"]))
+        staling = self.catalogEntriesTouched(changed)
+        if staling:
+            self.planned.append("catalog-apply")
+            threads.append(self.guarded("catalog-apply", self.catalogApply, staling))
+        if "catalog" in executors:
+            self.planned.append("catalog")
+            threads.append(self.guarded("catalog", self.step, "catalog", ["bash", "-n", "verify/catalog/check.sh"]))
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        log.close()
+        self.cacheDrains()
+        if self.failure is not None:
+            return
+        # The skip census first, then the requested deferred tests: each records its own verdict, and a deferred red no
+        # longer leaves the record without a census (trio 114a6439, Oct 9: its census never ran behind a deferred red).
+        self.checkCensus()
+        self.requestedRan()
+
+    def fastPhaseInputs(self, recordCoverage=False):
+        """The same base diff and executor map as a fast run, without running coverage as an extra phase."""
+        tree = self.arguments.tree
+        revision = "%s...%s" % (self.arguments.base, self.arguments.sha)
+        changed = [path for path in self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n") if path]
+        _, unowned = self.touched(changed)
+        pathSetChanged = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", revision).split("\n")
+        planned = list(self.planned)
+        executors = self.cover(unowned, changed, pathSetChanged, record=recordCoverage)
+        self.planned = planned
+        if recordCoverage and "darwin" not in planned and "darwin" in self.exits:
+            # Coverage alone plans no darwin stage, so darwin's verdict is coverage's: a recorded leg it passed on leaves
+            # coverage green, and only one it couldn't find turns coverage red.
+            self.steps.pop("darwin", None)
+            if self.exits.pop("darwin") != 0:
+                self.exits["coverage"] = 1
+        self.result["changed_files"] = changed
+        self.result["unowned_files"] = unowned
+        return changed, executors or set()
+
+    def runPhase(self):
+        """Pool phases share the gate's stage implementations and fail-closed record writer.
+
+        A supplied pool log is copied before a test phase (wasi, products) appends to it; census runs last so it sees both.
+        """
+        census = vars(self.arguments).get("census")
+        allowed = wholePhases + ["products", "census"] if self.arguments.full else fastPhases
+        for phase in self.planned:
+            if phase not in allowed:
+                self.fail(phase or "phase", "%s gate has no phase %r" % (self.kind, phase))
+                return
+        unit = vars(self.arguments).get("unit")
+        if unit and (len(self.planned) != 1 or self.planned[0] not in ("wasi", "catalog") or
+                     (not self.arguments.full and self.planned[0] == "catalog")):
+            self.fail(self.planned[0], "--unit is unsupported for these phases")
+            return
+        self.npmCli()
+        if not self.npmPackages():
+            return
+        logPath = os.path.join(self.arguments.out, "test.jsonl")
+        if census:
+            if "census" not in self.planned:
+                self.fail("census", "--census requires census in --phases")
+                return
+            try:
+                if os.path.abspath(census) != os.path.abspath(logPath):
+                    shutil.copyfile(census, logPath)
+            except OSError:
+                self.fail("census", traceback.format_exc())
+                return
+        elif "wasi" in self.planned:
+            # A reused output directory must not carry a previous run's test verdicts into this census.
+            with open(logPath, "w"):
+                pass
+        ordered = [phase for phase in self.planned if phase != "census"] + (["census"] if "census" in self.planned else [])
+        for phase in ordered:
+            if self.failure is not None:
+                break
+            try:
+                # A pool phase unit takes the products as given: Loom's planner runs every TestProduct_ as its own unit
+                # first, and the phases fetch them by hash. Rebuilding them inside each phase cost every unit about 100 s
+                # cold on 4 CPUs (main b5245943's phases, Oct 9 07:43Z). Only the products phase builds them.
+                if self.arguments.full and phase == "products":
+                    with open(logPath, "a") as log:
+                        if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):
+                            break
+                    if phase == "products":
+                        self.steps.setdefault("products", 0.0)
+                        self.exits.setdefault("products", 0)
+                        continue
+                self.executePhase(phase, logPath)
+            except BaseException:
+                self.fail(phase, traceback.format_exc())
+
+    def executePhase(self, phase, logPath):
+        if phase == "coverage":
+            if self.arguments.full:
+                parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+                changed = [path for path in (self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []) if path]
+                _, unowned = self.touched(changed)
+                self.cover(unowned, changed)
+            else:
+                self.fastPhaseInputs(recordCoverage=True)
+        elif phase == "tools":
+            self.toolsDeclared()
+        elif phase == "build":
+            self.build()
+        elif phase == "vet":
+            self.vet()
+        elif phase == "wasi":
+            environment = None
+            if os.environ.get("WASI_SYSROOT"):
+                environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+            with open(logPath, "a") as log:
+                self.wasiSplit(log, environment)
+        elif phase == "catalog":
+            if self.arguments.full:
+                self.catalogFull()
+            else:
+                self.step("catalog", ["bash", "-n", "verify/catalog/check.sh"])
+        elif phase == "census":
+            if not os.path.isfile(logPath):
+                self.fail("census", "no test.jsonl: supply the pool's merged log with --census")
+                return
+            if self.arguments.full:
+                self.checkCensus()
+                self.deferredRanWhole()
+            else:
+                self.deferred = self.deferredList()
+                self.runRequested()
+                self.checkCensus()
+                self.requestedRan()
+        elif phase in ("workers", "a-check", "catalog-apply"):
+            changed, executors = self.fastPhaseInputs()
+            if phase == "workers":
+                if not executors & {"workers", "bench-workers"}:
+                    raise ValueError("workers has no work for this change")
+                self.workers(executors)
+            elif phase == "a-check":
+                paths = self.result.get("unchecked_a_files", [])
+                if not paths:
+                    raise ValueError("a-check has no work for this change")
+                self.aCheck(paths)
+            else:
+                patches = self.catalogEntriesTouched(changed)
+                if not patches:
+                    raise ValueError("catalog-apply has no work for this change")
+                self.catalogApply(patches)
+        elif phase == "darwin":
+            # The paths cover() would name, the changed ones whose first rule is darwin, without the go list it needs.
+            rules = executorMap(self.arguments.tools)[0]
+            revision = "%s...%s" % (self.arguments.base, self.arguments.sha)
+            self.darwinLeg([path for path in self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n")
+                            if path and firstExecutor(rules, path) == "darwin"])
+
+    def selectedUnits(self, phase, names):
+        """The units of a phase this run takes: all of them, or the one --unit names (a catalog entry by its number).
+        A --unit no unit answers to is an error, never an empty green."""
+        unit = vars(self.arguments).get("unit")
+        if not unit:
+            return list(names)
+        chosen = [name for name in names if name == unit or (phase == "catalog" and unit.isdigit() and name.startswith("%02d " % int(unit)))]
+        if not chosen:
+            raise ValueError("%s has no unit %r (units: %s)" % (phase, unit, ", ".join(names)))
+        self.result["unit"] = unit
+        return chosen
+
+    @declaresInputs("products", lambda tree, unit, full, change: treeInputs("products run arbitrary declared tests; runtime reads are not yet bounded"))
+    def wholeProducts(self, log):
+        if getattr(self, "wholeProductsDone", False):
+            return self.exits.get("products", 0) == 0
+        self.wholeProductsDone = True
+        listing = self.command(productListingCommand(),
+                               cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.splitlines()
+        directories = {}
+        for line in listing:
+            package, directory = line.split("\t", 1)
+            directories[package] = directory
+        self.packageDirectories = directories
+        # Only the packages whose source declares a product compile here: compiling every test binary first would
+        # hold the whole gate's tests behind hundreds of builds. testSplit still checks each one's -test.list.
+        declaring = [package for package, names in productDeclarations(directories, list(directories)).items() if names]
+        if not declaring:
+            return True
+        return self.testSplit(declaring, log, productsOnly=True)
+
+    def runFull(self):
+        listing = self.command(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
+        order = []
+        if self.arguments.weights and os.path.exists(self.arguments.weights):
+            with open(self.arguments.weights) as handle:
+                weighed = [line.split() for line in handle if line.strip()]
+            order = [name for _, name in sorted(weighed, key=lambda row: -float(row[0])) if name in listing]
+        packages = order + [name for name in listing if name not in order]
+        self.result.update({"packages": "all", "package_list": packages})
+        # The no-executor check holds on main too: what this main changed against its first parent.
+        parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+        changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
+        _, unowned = self.touched([path for path in changed if path])
+        self.cover(unowned, [path for path in changed if path])
+        try:
+            self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
+        except BaseException:
+            self.fail("build", traceback.format_exc())
+        log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
+        # A parity run (--run-to-end) keeps going past a failed product: its tests build what they need on a miss, so
+        # the record still holds every red (Oct 9 07:23Z: library's area stopped at TestProduct_suite with no red list).
+        if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):
+            log.close()
+            return
+        # Never more runnable threads than the box has cores (@system_adamic, Oct 9 00:11Z: -p of half the CPUs, each
+        # test binary on every core, put Home at load 178 and the Threadripper at 81 to 145, and a wall-clock stall
+        # guard failed V1 on it): a package's test binary gets GOMAXPROCS cores, and -p packages run at once, so the
+        # two multiply to about the box. ADAMIC_FULL_GATE_PACKAGES overrides the package count. cores/4 packages (16 at
+        # GOMAXPROCS 4 on 64 cores, @system_adamic, Oct 9 01:22Z): cores/8 peaked at load 29.2 on the Threadripper
+        # (6b2c73f9, 50.5 min), half the box idle; back to cores/8 if a whole gate's peak crosses the core count.
+        cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
+        packagesAtOnce = int(os.environ.get("ADAMIC_FULL_GATE_PACKAGES", max(1, cpus // 4)))
+        threadsEach = max(2, cpus // packagesAtOnce)
+        self.result["parallelism"] = {"cpus": cpus, "packages_at_once": packagesAtOnce, "gomaxprocs_each": threadsEach}
+        wasi = None
+        if os.environ.get("WASI_SYSROOT"):
+            wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+        threads = [self.guarded("tools", self.toolsDeclared), self.guarded("vet", self.vet),
+                   # Three hours a package (@system_adamic, Oct 8 00:08): the whole gate's 16 CPUs are slower
+                   # on purpose, and a wall-clock package timeout there is the per-test fragility at a larger
+                   # size. Hangs belong to stall guards that count from output; a package over an hour is
+                   # named in the status line as slow, so it never reads as a quiet pass.
+                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", "^TestProduct_|" + wasiSkip] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
+                   self.guarded("wasi", self.wasiSplit, log, wasi),
+                   # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
+                   self.guarded("catalog", self.catalogFull)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        log.close()
+        self.cacheDrains()
+        try:
+            self.checkCensus()
+            self.deferredRanWhole()
+        except BaseException:
+            self.fail("census", traceback.format_exc())
+
+    def deferredRanWhole(self):
+        """The whole gate is where deferred tests run, so each must reach pass or fail here: a deferred test the
+        whole gate skips or never runs is a void (@system_adamic, Oct 8, after TestProfileSnapshotsAgree, a
+        measurement on the list, skipped in both gates). A row the census classes measurement or opt-in-lane is
+        refused outright, since no gate gives it its input."""
+        deferred = self.deferredList()
+        outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
+        # A family split into shards is judged over its shards, as the fast gate judges a requested one (familyOutcome,
+        # 7adc5bf9): matched by exact name, five internal/native families read missing on main 20d538c0's whole log with
+        # every shard passing.
+        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
+                   for importPath, names in deferred.items() for name in sorted(names)}
+        self.result["deferred_whole_results"] = results
+        refused = deferredClassedOut(self.arguments.tools, deferred)
+        unrun = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
+        if refused or unrun:
+            self.fail("census", "cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:\n" +
+                      "\n".join(["%s: census class %s, refused" % row for row in refused] + unrun))
+
+    @declaresInputs("coverage", coverageInputs)
+    def cover(self, unowned, changed=(), pathSetChanged=None, record=True):
+        """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
+        tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
+        with none turns the gate red before anything runs. Reads rules independently add tests for
+        matching changed paths, including package-owned paths. Returns executors, or None."""
+        rules, readers, enforce, exempt = executorMap(self.arguments.tools)
+        executors, covered, unchecked = set(), {}, []
+        self.result["reads"] = []
+        readerPackages = set()
+        mapChanged = "cloud/fast-gate/executors.txt" in changed
+        for number, package, pattern, mode in readers:
+            if mode == "generated":
+                # The list's bound, read from the candidate's tree; a list the reader can't read is the whole tree.
+                reach = generatedReach(self.arguments.tree, pattern)
+                paths = [path for path in changed if reach is None or path in reach[0] or path.startswith(reach[1])]
+            else:
+                # Without the added and deleted list (a caller that didn't compute it), every match fires.
+                paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern) and (mode != "paths" or pathSetChanged is None or path in pathSetChanged)]
+            if paths or mapChanged:
+                readerPackages.add(module + "/" + package)
+                self.result["reads"].append({"line": number, "package": package, "glob": pattern,
+                                             "paths": paths, "map_changed": mapChanged})
+        if "cloud/fast-gate/executors.txt" in changed:
+            # The map itself changed: every executor it names runs, so it can't quietly lose a path.
+            executors.update(name for name, _ in rules if name not in ("inert", "build"))
+        # Script executors also run for paths a package owns (bench/workers lives in bench's tree).
+        scripted = ("cohere", "workers", "bench-workers", "catalog", "darwin")
+        self.scriptedPaths = {}
+        for path in changed:
+            executor = firstExecutor(rules, path)
+            if executor in scripted:
+                executors.add(executor)
+                self.scriptedPaths.setdefault(executor, []).append(path)
+        for path in unowned:
+            executor = firstExecutor(rules, path)
+            if executor is not None:
+                executors.add(executor)
+                covered[executor] = covered.get(executor, 0) + 1
+
+                if executor == "darwin" and path not in self.result.get("needs_darwin", []):
+                    self.result.setdefault("needs_darwin", []).append(path)
+        # Red is a path the listing's coverage names hold, neither owned nor inert (coverageReduced, one classification for
+        # both), that no rule matches; in the order touched() found them.
+        reduced = set(coverageReduced(self.arguments.tree, self.arguments.tools, changed, unowned))
+        uncovered = [path for path in unowned if path in reduced and firstExecutor(rules, path) is None]
+        # Every changed .a outside a package gets a-check, beside whatever else runs for it (stage3's
+        # probes too): the extension promises proven types wherever the file sits.
+        # A ruled exemption is named in the result, never dropped silently.
+        unchecked = [path for path in unowned if path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt)]
+        if unchecked:
+            executors.add("a-check")
+        self.result["unchecked_a_files"] = unchecked
+        self.result["a_check_exempt"] = [path for path in unowned if path.endswith(".a") and path not in unchecked]
+        # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
+        self.extraPackages = sorted(readerPackages | {module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:")})
+        self.result["executors"] = covered
+        self.result["uncovered_files"] = uncovered
+        self.result["coverage_enforced"] = enforce
+        if not record:
+            return executors
+        self.steps["coverage"] = 0.0
+        if uncovered and enforce:
+            self.exits["coverage"] = 1
+            self.fail("coverage", "no gate covers %d changed path%s:\n%s" % (len(uncovered), "" if len(uncovered) == 1 else "s", "\n".join(uncovered[:200])))
+            return None
+        self.exits["coverage"] = 0
+        for path in self.scriptedPaths.get("darwin", []):
+            if path not in self.result.get("needs_darwin", []):
+                self.result.setdefault("needs_darwin", []).append(path)
+        if "darwin" in executors:
+            # This box never builds for darwin: the leg ran on a pool Mac, and the gate passes on its record.
+            self.planned.append("darwin")
+            if not self.darwinLeg(self.result.get("needs_darwin", [])):
+                return None
+        return executors
+
+    def darwinLeg(self, paths):
+        """The darwin executor's verdict for paths: green on the recorded leg whose darwinPaths matches the candidate's
+        (darwinLegFor), named in the record as darwin_leg, and red without one, saying what it looked for. Returns
+        whether it passed. A darwinPaths that can't be computed is no darwin leg, red with the refusal as its why."""
+        self.steps["darwin"] = 0.0
+        named = ", ".join(paths or ["the executor map's change"])
+        try:
+            digest = darwinPathsDigest(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+        except DarwinPathsRefusal as refusal:
+            # No digest matches no record: a leg can't vouch for inputs the gate couldn't name, so this is red, never green.
+            self.exits["darwin"] = 1
+            self.fail("darwin", "no darwin leg can match %s, since its darwinPaths can't be computed, for %s: %s" % (
+                self.arguments.sha, named, refusal))
+            return False
+        name, leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools, digest)
+        if name is None:
+            self.exits["darwin"] = 1
+            self.fail("darwin", "needs a darwin leg on a pool Mac (Shackler), recorded in %s/<tip>.json at darwinPaths %s, for %s: %s" % (
+                darwinLegsDirectory, digest, named, leg))
+            return False
+        self.exits["darwin"] = 0
+        self.result["darwin_leg"] = darwinLegSummary(name, leg)
+        return True
+
+    def goList(self, pattern):
+        listing = self.command(["go", "list", pattern], cwd=self.arguments.tree, capture_output=True, text=True)
+        return listing.stdout.split() if listing.returncode == 0 else []
+
+    @declaresInputs("workers", lambda tree, unit, full, change: treeInputs("conditional scripts and their runtime reads are not yet bounded"))
+    def workers(self, executors):
+        """Platforms' executors for Cloudflare Workers (their inventory, Oct 7 20:59), each from the
+        repository root on Node 24, and node --check for the workerd-only measurement harnesses."""
+        started = time.monotonic()
+        node = ["node", "--disable-warning=ExperimentalWarning"]
+        commands = []
+        if "workers" in executors:
+            adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic"
+            commands += [("workers-build-adamic", ["go", "build", "-o", adamic, "./cmd/adamic"]),
+                         ("workers-verify", node + ["workers/compute/verify.mjs"]),
+                         ("workers-replay-all", node + ["workers/replay-all.mjs"]),
+                         ("workers-verify-handler", node + ["workers/compute/verify-handler.mjs", adamic])]
+            if set(self.scriptedPaths.get("workers", [])) & {"workers/replay.mjs", "workers/compute/verify-url.mjs"}:
+                commands.append(("workers-verify-url", node + ["workers/compute/verify-url.mjs"]))
+        for path in self.scriptedPaths.get("bench-workers", []):
+            if os.path.exists(os.path.join(self.arguments.tree, path)):
+                commands.append(("bench-workers-check-" + path.replace("/", "_"), ["node", "--check", path]))
+        codes = {}
+        # The handler check needs the adamic it builds first; the rest run in order too, to keep it simple.
+        for name, command in commands:
+            with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
+                codes[name] = self.spawn(command, output).wait()
+            if codes[name] != 0:
+                break
+        self.steps["workers"] = round(time.monotonic() - started, 1)
+        self.result["workers_exits"] = codes
+        failed = [name for name, _ in commands if codes.get(name) != 0]
+        self.exits["workers"] = 1 if failed else 0
+        if failed:
+            self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
+
+    @declaresInputs("a-check", lambda tree, unit, full, change: treeInputs("conditional source programs may import outside their directories"))
+    def aCheck(self, paths):
+        """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
+        types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
+        passes, since nothing was refused. A file whose first line is "// a-check: refused <rule>" or
+        "// a-check: type error <code>" must fail exactly that way instead. A darwin path stopped only because this box
+        has no darwin platform (the typed PlatformMissing stop, at load, before the checker or the refusal pass runs) is
+        judged instead on what adamic c said for it on the pool Mac, as the candidate's recorded leg (darwinLegFor) holds
+        it in aCheck, by the same rules and header; a leg that recorded nothing for it, or no leg, leaves it red."""
+        started = time.monotonic()
+        adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic-acheck"
+        if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
+            self.exits["a-check"] = 1
+            return
+        results, failed = {}, []
+        # Read only when a path stops on the platform, so a check with no darwin path never reads the map or the legs.
+        rules, leg = None, None
+        for path in paths:
+            # A change that deletes a .a has nothing left to check there (views slice 1, Oct 8, deleted five).
+            if not os.path.isfile(os.path.join(self.arguments.tree, path)):
+                results[path] = {"outcome": "deleted", "expected": "deleted", "first": ""}
+                continue
+            with open(os.path.join(self.arguments.tree, path), errors="replace") as handle:
+                header = handle.readline().strip()
+            expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
+            process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
+            _, errors = process.communicate()
+            outcome = aCheckOutcome(process.returncode, errors)
+            row = {}
+            if outcome == "failed" and process.returncode == platformMissingExit and "darwin platform missing" in errors:
+                rules = executorMap(self.arguments.tools)[0] if rules is None else rules
+                if firstExecutor(rules, path) == "darwin":
+                    if leg is None:
+                        try:
+                            leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+                        except DarwinPathsRefusal as refusal:
+                            # No digest is no leg, so the path keeps its live red; the darwin phase names why.
+                            leg = (None, str(refusal))
+                    if leg[0] is not None:
+                        # The stop came at load, so nothing here checked the program: the Mac's run of it is the verdict.
+                        row = {"source": "darwin leg " + leg[0]}
+                        recorded = leg[1].get("aCheck", {}).get(path)
+                        if recorded is None:
+                            errors = "the darwin leg %s recorded no adamic c for this path" % leg[0]
+                        else:
+                            errors = recorded["errors"]
+                            # A recorded platform stop is the Mac lacking the platform too, never a check of the program.
+                            outcome = "failed" if recorded["exit"] == platformMissingExit else aCheckOutcome(recorded["exit"], errors)
+            first = errors.strip().splitlines()[0] if errors.strip() else ""
+            ok = aCheckMeets(expect, outcome, errors)
+            results[path] = dict({"outcome": outcome, "expected": expect or "checked", "first": first[:300]}, **row)
+            if not ok:
+                failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
+        self.result["a_check"] = results
+        self.steps["a-check"] = round(time.monotonic() - started, 1)
+        self.exits["a-check"] = 1 if failed else 0
+        if failed:
+            self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])))
+
+    def catalogEntriesTouched(self, changed):
+        """The bug catalog's entries whose undo patch edits a file this change touches."""
+        return [name for name, files in catalogPatchTargets(self.arguments.tree).items() if files & set(changed)]
+
+    # readsBase is the typed word that this phase's key reads the base tree beside the candidate's, so a witness of one sha,
+    # whose diff is empty and never lists it, can't vouch for it (#witnessmain, Node's rule 1): the planner carries it onto
+    # the planned unit, and the witness compare counts it apart, never from the note's words.
+    @declaresInputs("catalog-apply", lambda tree, unit, full, change: dict(treeInputs("patch application reads candidate and base trees"), readsBase=True))
+    def catalogApply(self, patches):
+        """Staling moves to where it's cheap to fix (@system_adamic, Oct 7 21:28): an entry's undo patch
+        that applied to main and no longer applies with this change makes the change red, naming the
+        entry, so the landing that stales it refreshes it. One already stale on main stays a warning."""
+        started = time.monotonic()
+        stale, staled = [], []
+        for name in patches:
+            patch = os.path.join(self.arguments.tree, "verify/catalog", name)
+            onCandidate = self.spawn(["git", "apply", "--check", patch], subprocess.DEVNULL, subprocess.DEVNULL).wait() == 0
+            index = os.path.join(self.arguments.out, "catalog-base.index")
+            environment = {"GIT_INDEX_FILE": index}
+            self.spawn(["git", "read-tree", self.arguments.base], subprocess.DEVNULL, subprocess.DEVNULL, None, environment).wait()
+            onBase = self.spawn(["git", "apply", "--check", "--cached", patch], subprocess.DEVNULL, subprocess.DEVNULL, None, environment).wait() == 0
+            if onBase and not onCandidate:
+                staled.append(name)
+            elif not onCandidate:
+                stale.append(name)
+        self.result["catalog_apply"] = {"checked": patches, "staled_by_this_change": staled, "already_stale": stale}
+        self.steps["catalog-apply"] = round(time.monotonic() - started, 1)
+        self.exits["catalog-apply"] = 1 if staled else 0
+        if staled:
+            self.fail("catalog-apply", "this change stops the bug catalog's undo patch from applying: %s. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)" % ", ".join(staled))
+
+    @declaresInputs("catalog", catalogInputs)
+    def catalogFull(self):
+        if not os.path.exists(os.path.join(self.arguments.tree, "verify/catalog/check.sh")):
+            self.exits["catalog"] = 0
+            self.steps["catalog"] = 0.0
+            self.result["catalog"] = "not in this tree"
+            return
+        entries = catalogEntries(self.arguments.tree)
+        names = ["%02d %s" % (entry["number"], entry["name"]) for entry in entries]
+        if not names or len(set(names)) != len(names) or len({entry["number"] for entry in entries}) != len(entries):
+            raise ValueError("empty or duplicate catalog entries")
+        chosen = self.selectedUnits("catalog", names)
+        entries = [entry for entry, name in zip(entries, names) if name in chosen]
+        names = chosen
+        commands = [["bash", "verify/catalog/check.sh", "--entry", str(entry["number"]),
+                     "--jobs", "1", self.arguments.sha] for entry in entries]
+        def execute(name, command, scratch):
+            path = os.path.join(scratch, "catalog.log")
+            with open(path, "w") as output:
+                code = self.spawn(command, output, environment={"TMPDIR": scratch,
+                    "GOMAXPROCS": "1", "GOFLAGS": "-p=1"}).wait()
+            with open(path) as handle:
+                lines = handle.read().splitlines()
+            verdicts = [line for line in lines if line.startswith(name + ": ")]
+            caught = any("applies-and-fails-as-recorded" in line for line in verdicts)
+            stale = any("no-longer-applies" in line for line in verdicts)
+            skipped = any(": skipped (" in line for line in verdicts)
+            # A stale patch is upkeep; an error or a missing verdict is always red.
+            ok = (caught and code == 0) or (stale and code == 1) or (skipped and code == 0)
+            return {"exit": code, "ok": ok, "caught": caught, "stale": stale,
+                    "skipped": skipped, "verdicts": verdicts, "log": path}
+        self.phaseUnits("catalog", names, commands, execute)
+        rows = self.result["catalog_units"]
+        # At least one entry must catch its bug, over the whole catalog: a single unit (--unit) is judged by its own
+        # verdict alone, since one entry may rightly be skipped or stale (Loom, Oct 9: entry 10 green alone, its phase red).
+        if not vars(self.arguments).get("unit") and not any(row.get("caught") and row.get("ok") for row in rows):
+            self.exits["catalog"] = 1
+            self.fail("catalog", "no catalog entry caught its mutation (see catalog_units)")
+        self.result["catalog"] = {"exit": self.exits["catalog"],
+            "caught": sum(row.get("caught", False) for row in rows),
+            "stale": [row["name"] for row in rows if row.get("stale")],
+            "uncaught": [row["name"] for row in rows if not row.get("ok")]}
+        with open(os.path.join(self.arguments.out, "catalog.log"), "w") as output:
+            for row in rows:
+                output.write("%s wall=%.3fs\n" % (row["name"], row["wall_seconds"]))
+                if row.get("log"):
+                    with open(row["log"]) as handle:
+                        shutil.copyfileobj(handle, output)
+
+    @declaresInputs("wasi", wasiInputs)
+    def wasiSplit(self, log, environment=None):
+        names = self.selectedUnits("wasi", wasiFixtures(self.arguments.tree))
+        commands = wasiCommands(names)
+        def execute(name, command, scratch):
+            events = []
+            class UnitLog:
+                def write(self, line):
+                    log.write(line)
+                    try:
+                        events.append(json.loads(line))
+                    except ValueError:
+                        pass
+            variables = dict(environment or {}, TMPDIR=scratch, GOMAXPROCS="1", GOFLAGS="-p=1")
+            code = self.stream("wasi/" + name, command, UnitLog(), environment=variables)
+            wanted = name if wasiUnit.fullmatch(name) else "TestWASI/" + name
+            passed = any(event.get("Test") == wanted and event.get("Action") == "pass" for event in events)
+            unexpected = sorted({event["Test"] for event in events if event.get("Action") == "run"
+                                 and (event.get("Test", "").startswith("TestWASI/") or wasiUnit.fullmatch(event.get("Test", "").split("/")[0]))
+                                 and event["Test"] != wanted and not wanted.startswith(event["Test"] + "/")
+                                 and not event["Test"].startswith(wanted + "/")})
+            return {"exit": code, "ok": code == 0 and passed and not unexpected, "test": wanted,
+                    "unexpected": unexpected,
+                    "passed": passed}
+        self.phaseUnits("wasi", names, commands, execute)
+
+    def phaseUnits(self, phase, names, commands, execute):
+        """One scratch and result per unit, with at most the slot's CPUs in flight.
+
+        Wall includes process startup and compilation. A unit over the 30 s budget is recorded (over_budget, and
+        the phase's slowest unit) and never disappears into an aggregate timing, but it isn't red: the budget's
+        ruling makes only a new unit over it red, and these phases' units are over it until their builds are
+        products by hash (#2q61kg9: the first catalog and WASI units pay the compiler's cold build).
+        """
+        started = time.monotonic()
+        slots = max(1, min(self.arguments.parallel, slotCPUs()))
+        rows = [{"name": name, "command": command, "status": "not run"}
+                for name, command in zip(names, commands)]
+        self.result[phase + "_units"] = rows
+        self.result[phase + "_unit_count"] = len(rows)
+        self.result[phase + "_unit_budget_seconds"] = 30
+        root = os.path.join(os.path.abspath(self.arguments.out), phase + "-units")
+        os.makedirs(root, exist_ok=True)
+        def work(item):
+            index, row = item
+            before = time.monotonic()
+            scratch = tempfile.mkdtemp(prefix="%02d-" % index, dir=root)
+            row["scratch"] = scratch
+            try:
+                row.update(execute(row["name"], row["command"], scratch))
+            except BaseException:
+                row.update(ok=False, error=traceback.format_exc())
+            elapsed = time.monotonic() - before
+            row["wall_seconds"] = round(elapsed, 6)
+            row["over_budget"] = elapsed > 30
+            row["status"] = "passed" if row["ok"] else "failed"
+            if row["status"] == "failed":
+                self.fail(phase + "/" + row["name"], json.dumps(row))
+        with ThreadPoolExecutor(max_workers=slots) as pool:
+            list(pool.map(work, enumerate(rows)))
+        self.result[phase + "_slowest_unit_seconds"] = max((row["wall_seconds"] for row in rows), default=0)
+        self.steps[phase] = round(time.monotonic() - started, 3)
+        self.exits[phase] = 0 if rows and all(row["status"] == "passed" for row in rows) else 1
+
+    def npmPackages(self):
+        """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
+        installed with npm ci from its lockfile, once per lockfile: the install lives in a cache keyed
+        by the lockfile's hash and hardlinked into the tree, so an unchanged lockfile costs nothing and a
+        changed one gets a fresh install."""
+        for directory in ("stage3/api",):
+            lockfile = os.path.join(self.arguments.tree, directory, "package-lock.json")
+            if not os.path.exists(lockfile):
+                continue
+            started = time.monotonic()
+            with open(lockfile, "rb") as handle:
+                key = hashlib.sha256(handle.read()).hexdigest()
+            cache = os.path.join(os.path.expanduser("~/fast-gate/npm"), key)
+            if not os.path.isdir(os.path.join(cache, "node_modules")):
+                staging = cache + ".staging-%d" % os.getpid()
+                os.makedirs(staging)
+                for name in ("package.json", "package-lock.json"):
+                    with open(os.path.join(self.arguments.tree, directory, name), "rb") as source, open(os.path.join(staging, name), "wb") as target:
+                        target.write(source.read())
+                process = self.command(["node", self.npmCli(), "ci", "--ignore-scripts", "--no-audit", "--no-fund", "--install-strategy=hoisted",
+                                          "--registry=https://registry.npmjs.org", "--cache", os.path.join(staging, ".npm-cache")],
+                                         cwd=staging, capture_output=True, text=True, env=dict(os.environ, npm_config_update_notifier="false"))
+                if process.returncode != 0:
+                    self.fail("setup", "npm ci for %s failed:\n%s" % (directory, (process.stdout + process.stderr)[-4000:]))
+                    return False
+                try:
+                    os.rename(staging, cache)
+                except OSError:
+                    pass  # another gate published the same lockfile's install first; its bytes are the same
+            # A real directory, as npm would leave it (git ignores node_modules/ only as a directory, and
+            # tests that list files must not see a stray link): a hardlink copy of the cached install,
+            # kept while its marker names this lockfile. Anything else there moves aside, never deleted.
+            target = os.path.join(self.arguments.tree, directory, "node_modules")
+            marker = os.path.join(target, ".fast-gate-lockfile-sha256")
+            current = open(marker).read().strip() if os.path.isfile(marker) and not os.path.islink(target) else ""
+            if current != key:
+                if os.path.lexists(target):
+                    os.rename(target, os.path.join(os.path.expanduser("~/fast-gate/npm"), "replaced-%d-%d" % (time.time(), os.getpid())))
+                self.command(["cp", "-al", os.path.join(cache, "node_modules"), target], check=True)
+                with open(marker, "w") as handle:
+                    handle.write(key + "\n")
+            self.result.setdefault("npm", {})[directory] = {"lockfile_sha256": key, "seconds": round(time.monotonic() - started, 1)}
+        return True
+
+    def npmCli(self):
+        """The box has Node but no npm, so the npm that setup pins (cloud/markdown-width/npm-bootstrap.json,
+        from the tools checkout) is fetched once, its sha512 integrity checked, and kept by that hash."""
+        with open(os.path.join(self.arguments.tools, "cloud/markdown-width/npm-bootstrap.json")) as handle:
+            pin = json.load(handle)
+        home = os.path.join(os.path.expanduser("~/fast-gate/npm"), "npm-" + hashlib.sha256(pin["integrity"].encode()).hexdigest()[:16])
+        cli = os.path.join(home, "package/bin/npm-cli.js")
+        if not os.path.exists(cli):
+            staging = home + ".staging-%d" % os.getpid()
+            os.makedirs(staging)
+            archive = os.path.join(staging, "npm.tgz")
+            self.command(["curl", "-fsSL", pin["url"], "-o", archive], check=True)
+            with open(archive, "rb") as handle:
+                algorithm, expected = pin["integrity"].split("-", 1)
+                if algorithm != "sha512" or base64.b64encode(hashlib.sha512(handle.read()).digest()).decode() != expected:
+                    raise ValueError("npm bootstrap integrity mismatch for %s" % pin["url"])
+            self.command(["tar", "--no-same-owner", "-xzf", archive, "-C", staging], check=True)
+            try:
+                os.rename(staging, home)
+            except OSError:
+                pass  # another gate published the same pinned npm first
+        shim = os.path.expanduser("~/fast-gate/npm/bin/npm")
+        text = "#!/bin/sh\n# The gates' pinned npm (cloud/markdown-width/npm-bootstrap.json), integrity-checked when fetched.\nexec node %s \"$@\"\n" % cli
+        if not os.path.exists(shim) or open(shim).read() != text:
+            os.makedirs(os.path.dirname(shim), exist_ok=True)
+            with open(shim + ".%d" % os.getpid(), "w") as handle:
+                handle.write(text)
+            os.chmod(shim + ".%d" % os.getpid(), 0o755)
+            os.replace(shim + ".%d" % os.getpid(), shim)
+        return cli
+
+    def guarded(self, stage, target, *arguments):
+        """A thread whose any exception (a process that can't start for want of file descriptors, a
+        missing binary, a bug here) fails the gate at that stage instead of vanishing with the thread."""
+        def body():
+            try:
+                target(*arguments)
+            except BaseException:
+                self.fail(stage, traceback.format_exc())
+        return threading.Thread(target=body)
+
+    def deferredList(self):
+        """Tests the landing gate leaves to the full gate on main (cloud/fast-gate/deferred.txt, by
+        @system_adamic's ruling): each over 15 s warm and a mutant test, a randomized or differential
+        sweep, or a whole external suite. Read from the gated tree first, and from the tools checkout when the tree
+        has none."""
+        for root in (self.arguments.tree, self.arguments.tools):
+            path = os.path.join(root, "cloud/fast-gate/deferred.txt")
+            if os.path.exists(path):
+                deferred = {}
+                with open(path) as handle:
+                    for line in handle:
+                        fields = line.split()
+                        if fields and not fields[0].startswith("#"):
+                            deferred.setdefault(module + "/" + fields[0], set()).add(fields[1])
+                # A plain read, not self.git: the whole gate checks its deferred list after the census, and a census red
+                # has cancelled the run by then, so spawning refuses (main 20d538c0's record had no deferred verdict).
+                self.result["deferred_list_blob"] = git(root, "hash-object", path)
+                return deferred
+        return {}
+
+    def runRequested(self):
+        """A change may ask its fast gate to run a deferred test anyway (@system_adamic, Oct 8, for 04's
+        split-build fix-forward): a "Gate-runs: <package> <Test>" trailer on any commit since the base
+        takes that test off the deferred list for this gate, when its package is gated. Recorded in
+        fast.json as deferred_run_by_request."""
+        text = self.git(self.arguments.tree, "log", "--format=%(trailers:key=Gate-runs,valueonly)", "%s..%s" % (self.arguments.base, self.arguments.sha))
+        self.requested = {}
+        for line in text.splitlines():
+            fields = line.split()
+            if fields == ["deferred"]:
+                # "Gate-runs: deferred" runs every deferred test, in its package whether or not the change
+                # touches it (@system_adamic, Oct 8: a landing that changes emitted C or the runtime, or
+                # carries more than one area's commits, proves the full gate's deferred tests before main).
+                self.result["deferred_all_requested"] = True
+                for importPath, names in self.deferred.items():
+                    self.requested.setdefault(importPath, set()).update(names)
+                    self.result.setdefault("deferred_run_by_request", []).extend(importPath + " " + name for name in sorted(names))
+                self.deferred = {}
+                continue
+            if len(fields) != 2:
+                continue
+            importPath = module + "/" + fields[0].strip("/")
+            if fields[1] in self.deferred.get(importPath, set()):
+                self.deferred[importPath].discard(fields[1])
+                self.requested.setdefault(importPath, set()).add(fields[1])
+                self.result.setdefault("deferred_run_by_request", []).append(importPath + " " + fields[1])
+
+    def requestedRan(self):
+        """Every requested deferred test ran to a verdict rather than skipping (a skipped or missing one
+        would let a void pass for a proof): fast.json's deferred_run_results names each one's outcome."""
+        requested = getattr(self, "requested", {})
+        if not requested:
+            return
+        outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
+        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
+                   for importPath, names in requested.items() for name in sorted(names)}
+        self.result["deferred_run_results"] = results
+        unproven = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
+        if unproven:
+            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven))
+
+    def touched(self, changed):
+        """Each changed file's package: its own directory's, one that embeds it, or the nearest package
+        directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
+        a package's tree is that package's to test). Reverse imports and compiler declarations then
+        expand production owners transitively; test imports are followed only once at the end.
+        Test source and data edits select their owners only. Anything unowned goes to cover()."""
+        if listedGoLists is not None:
+            # A listing pass: the one listing coverage's provider reads too, run in this gate's environment.
+            listing = packageGraph(self.arguments.tree)
+        else:
+            listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
+        if listing.returncode != 0:
+            raise SystemExit("go list failed: " + listing.stderr)
+        directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, self.packageDirectories = goPackages(self.arguments.tree, listing.stdout)
+        dependencies = self.compilerDependencies(directories, changed)
+        self.memoryFloors(changed)
+        for package, inputs in dependencies.items():
+            for dependency in inputs:
+                reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
+        packages, testsOnly = set(), set()
+        # Another package's tests may read this package's testdata by path; test-reads.json names those readers. A tree
+        # without it can't say, so its testdata edits keep seeding the whole closure. A _test.go edit is its own
+        # package's alone either way: no other package can import a test file.
+        readersDeclared = any(os.path.exists(os.path.join(root, "cloud/fast-gate/test-reads.json"))
+                              for root in (self.arguments.tools, self.arguments.tree))
+        for path in changed:
+            owner = packageOwner(directories, embedded, path)
+            if owner is None:
+                continue
+            if path in realEmbedded:
+                packages.add(owner)
+            elif path.endswith("_test.go") or (readersDeclared and ("testdata" in path.split("/") or path in testEmbedded)):
+                testsOnly.add(owner)
+            else:
+                packages.add(owner)
+        # The same walk as coverageReduced's, so what coverage judges is what reaches cover() from here.
+        unowned = unownedPaths(directories, embedded, changed)
+        # Optional explicit test-input readers; these name tests, not closure seeds.
+        for root in dict.fromkeys((self.arguments.tools, self.arguments.tree)):
+            name = os.path.join(root, "cloud/fast-gate/test-reads.json")
+            if not os.path.exists(name):
+                continue
+            with open(name) as handle:
+                readers = json.load(handle)
+            for reader, inputs in readers.items():
+                if any(path == prefix or path.startswith(prefix.rstrip("/") + "/") or prefix == "."
+                       for path in changed for prefix in inputs):
+                    testsOnly.add(module + "/" + reader)
+        if "cloud/fast-gate/compiler-dependencies.json" in changed:
+            packages.update(module + "/" + package for package in dependencies if package in directories)
+        changedPackages = packages | testsOnly
+        pending = list(packages)
+        while pending:
+            for dependent in reverse.get(pending.pop(), ()):
+                if dependent not in packages:
+                    packages.add(dependent)
+                    pending.append(dependent)
+        realClosure = set(packages)
+        packages.update(testsOnly)
+        for dependency in realClosure:
+            packages.update(testReverse.get(dependency, ()))
+        self.result["selected_compiler_drivers"] = sorted(
+            driver for driver, declaration in getattr(self, "compilerDrivers", {}).items()
+            if any(module + "/" + dependency in packages for dependency in declaration["dependencies"])
+            or any(path.startswith(driver + "/") for path in changed)
+            or "cloud/fast-gate/compiler-dependencies.json" in changed)
+        packages.intersection_update(self.packageDirectories)
+        compilerChanged = any(path.startswith(("internal/load/", "internal/lower/", "internal/native/", "internal/javascript/", "internal/ir/", "internal/flow/", "cmd/adamic/")) for path in changed)
+        if compilerChanged:
+            # No affected check is dropped to meet the fast gate's budget.
+            self.deferred = {}
+        if oracle in packages:
+            self.oracleSelection = ({"whole": True, "reason": "compiler dependency changed"}
+                                    if compilerChanged or oracle not in changedPackages else self.selectOracle())
+            self.result["oracle_selection"] = self.oracleSelection
+        self.result["direct_packages"] = sorted(changedPackages)
+        return sorted(packages), unowned
+
+    def compilerDependencies(self, directories, changed=()):
+        """Package-level declarations cover helpers as well as their callers.
+
+        The census scans all tracked Go package sources. A process-launching package must
+        declare dependencies even when the executable name is computed: it may run the compiler.
+        A missing package declaration fails selection before any tests start.
+        """
+        name = "cloud/fast-gate/compiler-dependencies.json"
+        # The gate tools' map, with the candidate's own entries added over it: a branch that adds a compiler
+        # consumer declares it itself (developer tools, Oct 9).
+        declarations, root = None, None
+        for source in (self.arguments.tools, self.arguments.tree):
+            if not os.path.exists(os.path.join(source, name)):
+                continue
+            with open(os.path.join(source, name)) as handle:
+                layer = json.load(handle)
+            if declarations is None:
+                declarations, root = layer, source
+                continue
+            if layer.get("version") != declarations.get("version"):
+                raise ValueError("invalid compiler dependency map: " + name + " in " + source)
+            for field in ("packages", "drivers", "launchers"):
+                if isinstance(layer.get(field), dict):
+                    declarations.setdefault(field, {}).update(layer[field])
+            root = root + " + " + source
+        if declarations is None:
+            raise ValueError("invalid compiler dependency map: no " + name)
+        if declarations.get("version") != 1 or not isinstance(declarations.get("packages"), dict):
+            raise ValueError("invalid compiler dependency map: " + name)
+        packages = declarations["packages"]
+        for package, inputs in packages.items():
+            if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
+                raise ValueError("invalid compiler dependencies for " + package)
+        # Two kinds of evidence: a reference to the compiler itself, and launching a process, which may run it. A package
+        # the map declares a launcher (launchers) answers the second alone: it names what it runs and asserts none of it
+        # is the compiler, so a file of it that also references the compiler still needs a compiler declaration.
+        launchers = declarations.get("launchers", {})
+        if not isinstance(launchers, dict):
+            raise ValueError("invalid compiler dependency map: launchers")
+        for package, declaration in launchers.items():
+            runs = declaration.get("runs") if isinstance(declaration, dict) else None
+            if (package not in directories or not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
+                    or not isinstance(declaration.get("why"), str) or not declaration["why"].strip()):
+                raise ValueError("invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why")
+
+        def marked(source):
+            return compilerMarker.search(source) or launchMarker.search(source)
+        self.compilerDrivers = declarations.get("drivers", {})
+        if not isinstance(self.compilerDrivers, dict):
+            raise ValueError("invalid compiler driver declarations")
+        for driver, declaration in self.compilerDrivers.items():
+            inputs = declaration.get("dependencies") if isinstance(declaration, dict) else None
+            if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(value not in directories for value in inputs):
+                raise ValueError("invalid compiler driver dependencies for " + driver)
+        missing, touchedFiles = [], set(changed)
+        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+            if path.startswith("stage3/drivers/") and path.endswith((".py", ".sh", ".cjs", ".mjs")):
+                with open(os.path.join(self.arguments.tree, path)) as handle:
+                    source = handle.read()
+                if re.search(r"subprocess|child_process|\badamic\b|\bcompiler\b|ADAMIC", source) and not any(path.startswith(driver + "/") for driver in self.compilerDrivers):
+                    missing.append((path, path))
+                continue
+            if not path.endswith(".go"):
+                continue
+            with open(os.path.join(self.arguments.tree, path)) as handle:
+                source = handle.read()
+            package = os.path.dirname(path)
+            while package and package not in directories and package not in packages:
+                package = os.path.dirname(package)
+            if not package:
+                if marked(source) and path.endswith("_test.go"):
+                    missing.append((path, path))
+                elif marked(source):
+                    self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
+                continue
+            if not marked(source) or package in packages:
+                continue
+            if package in launchers:
+                refusal = launcherRefusal(source, launchers[package]["runs"])
+                if not refusal:
+                    continue  # A declared launcher: it runs only what it names, and nothing here references the compiler.
+                missing.append((path, path + " (" + package + " is a declared launcher, refused at " + refusal + ")"))
+                continue
+            missing.append((path, path))
+        # Only consumers this change adds or edits can turn its gate red; any already on the base are named, so one
+        # undeclared package never reds every worker's gate.
+        onBase = [named for path, named in missing if path not in touchedFiles]
+        if onBase:
+            self.result["compiler_consumers_undeclared_on_base"] = onBase
+        missing = [named for path, named in missing if path in touchedFiles]
+        if missing:
+            raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+        self.result["compiler_dependency_map"] = {"root": root, "path": name}
+        return packages
+
+    # The memory floor census (the planner's --fit-memory, Node's ruling): it finds the files that call testguard's
+    # MemoryLimit by name. It doesn't chase a call through a func value (f := testguard.MemoryLimit), MemoryLimit
+    # re-exported from another package, or a cgroup read by hand outside internal/testguard: each reads its limit unseen.
+    def memoryFloors(self, changed=()):
+        """A package whose tests size themselves from the unit's memory limit refuses to start under what they need, so
+        the planner's fit to a measured peak must never share it under a floor its unit needs declare. A reader with no
+        floor fails selection before any tests start, and so does a change that lowers or removes a reader's floor.
+        """
+        name = "cloud/fast-gate/unit-needs.json"
+        tools = os.path.join(self.arguments.tools, name)
+        if not os.path.exists(tools):
+            raise ValueError("invalid unit needs: no " + tools)
+        with open(tools) as handle:
+            floors = unitFloors(handle.read(), tools)
+        readers = {}
+        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+            if not path.endswith(".go") or path.startswith("internal/testguard/"):
+                continue  # testguard's own MemoryLimit and its tests are the reading, not a reader of it.
+            with open(os.path.join(self.arguments.tree, path)) as handle:
+                if memoryReader(handle.read()):
+                    readers.setdefault(os.path.dirname(path), []).append(path)
+        touchedFiles, refusals = set(changed), []
+        undeclared = [(path, package) for package, paths in sorted(readers.items()) if package not in floors for path in paths]
+        # As the compiler census: only readers this change adds or edits can refuse it; any already on the base are named.
+        onBase = [path for path, package in undeclared if path not in touchedFiles]
+        if onBase:
+            self.result["memory_readers_undeclared_on_base"] = onBase
+        refusals += ["%s reads its memory limit (testguard.MemoryLimit) and %s declares no memoryMegabytes in %s" % (path, package, name)
+                     for path, package in undeclared if path in touchedFiles]
+        # Once the gate tools live on adamic main the tree carries the floors too, and a change to them is the change's:
+        # one that lowers or removes a reader's floor lets the fit share it under what its tests need.
+        if name in touchedFiles and os.path.exists(os.path.join(self.arguments.tree, name)):
+            with open(os.path.join(self.arguments.tree, name)) as handle:
+                text = handle.read()
+            try:
+                proposed = unitFloors(text, name + " in this change")
+            except ValueError as invalid:
+                raise MemoryFloorRefusal("memory floor census: " + str(invalid))
+            onBaseTree = self.git(self.arguments.tree, "ls-tree", "--name-only", self.arguments.base, "--", name)
+            based = unitFloors(self.git(self.arguments.tree, "show", "%s:%s" % (self.arguments.base, name)), name + " on the base") if onBaseTree else {}
+            for package in sorted(readers):
+                if package not in based or proposed.get(package, 0) >= based[package]:
+                    continue
+                change = "lowers its memoryMegabytes to %d" % proposed[package] if package in proposed else "removes its memoryMegabytes"
+                refusals.append("%s reads its memory limit (testguard.MemoryLimit) and this change %s in %s (%d on the base)"
+                                % (package, change, name, based[package]))
+        if refusals:
+            raise MemoryFloorRefusal("memory floor census: " + "; ".join(refusals))
+
+    def selectOracle(self):
+        """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed
+        fixture in every lane, the Test functions of test files it adds (their init registers the
+        fixture), and TestCountsAreRecorded whole when counts.md changed. The
+        same coverage as the whole package for such a change, since nothing else in the package moved.
+        Anything it can't classify (a changed helper, a deleted file, any other file) runs it whole."""
+        tree, base, sha = self.arguments.tree, self.arguments.base, self.arguments.sha
+        whole = lambda reason: {"whole": True, "reason": reason}
+        statuses = [line.split("\t") for line in self.git(tree, "diff", "--name-status", "%s...%s" % (base, sha), "--", "internal/oracle").splitlines() if line]
+        fixtures, tests = set(), set()
+        directory = os.path.join(tree, "internal/oracle")
+        for status, *paths in statuses:
+            path = paths[-1]
+            name = path[len("internal/oracle/"):]
+            if status[0] not in "AM":
+                return whole("%s %s" % (status, path))
+            if name.startswith("testdata/") and path.endswith(".a"):
+                fixtures.add(path)
+            elif name == "counts.md":
+                tests.add("TestCountsAreRecorded")
+            elif name.endswith("_test.go") and "/" not in name and status[0] == "A":
+                with open(os.path.join(tree, path)) as handle:
+                    source = handle.read()
+                tests.update(re.findall(r"^func (Test\w+)\(t \*testing\.T\)", source, re.M))
+                fixtures.update(re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source))
+            elif name.endswith("_test.go") and "/" not in name:
+                for line in self.git(tree, "diff", "-U0", "%s...%s" % (base, sha), "--", path).splitlines():
+                    if line.startswith(("+++", "---", "@@")) or not line.startswith(("+", "-")):
+                        continue
+                    entry = fixtureEntry.match(line[1:])
+                    if not entry:
+                        return whole("%s changes more than fixture entries" % path)
+                    fixtures.add(entry.group(1))
+            else:
+                return whole("%s is not a fixture, a fixture registration or counts.md" % path)
+        registered, inputs, tables, sources = set(), set(), {}, []
+        for name in os.listdir(directory):
+            if name.endswith("_test.go"):
+                with open(os.path.join(directory, name)) as handle:
+                    source = handle.read()
+                sources.append(source)
+                literals = re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source)
+                registered.update(literals)
+                if "inputFixtures" in source:
+                    # Input fixtures have lanes of their own (TestInputAgreesWithNode and kin); a changed
+                    # one runs the package whole rather than be held to the fixtures' lanes alone.
+                    inputs.update(literals)
+                for function in re.split(r"\nfunc ", source)[1:]:
+                    lane = re.match(r"(Test\w+)\(", function)
+                    for table in re.findall(r"range (\w*[Ff]ixtures)\b", function):
+                        if lane and table == "fixtures" and lane.group(1) not in oracleLanes:
+                            return whole("%s ranges over the fixtures and isn't a known lane" % lane.group(1))
+                        if lane and table not in ("fixtures", "inputFixtures"):
+                            tables.setdefault(table, set()).add(lane.group(1))
+        # A test over a table of its own (checkedCastFixtures, typeofNullFixtures) runs whole when a changed
+        # fixture is one of its entries, named by path or by bare name, and not at all otherwise: nothing
+        # else it reads changed. A table filled anywhere but its own literal runs the package whole.
+        source = "\n".join(sources)
+        for table, lanes in sorted(tables.items()):
+            declaration = re.search(r"^var %s = (.*?)^\}" % table, source, re.M | re.S)
+            if not declaration or re.search(r"\b%s\s*(=|\[[^]]*\]\s*=)" % table, source[:declaration.start()] + source[declaration.end():]):
+                return whole("%s ranges over %s, a fixture table the selection can't read whole" % (sorted(lanes)[0], table))
+            entries = set(re.findall(r'"([^"]+)"', declaration.group(1)))
+            if any(path in entries or path[len("internal/oracle/"):] in entries or os.path.basename(path)[:-len(".a")] in entries for path in fixtures):
+                tests.update(lanes)
+        if fixtures & inputs:
+            return whole("an input fixture changed: %s" % ", ".join(sorted(fixtures & inputs)))
+        unregistered = sorted(fixtures - registered)
+        if unregistered:
+            # A changed .a no table names (a module a fixture imports, say): which fixture reads it isn't known here.
+            return whole("not a registered fixture: %s" % ", ".join(unregistered))
+        return {"whole": False, "fixtures": sorted(fixtures), "tests": sorted(tests - set(oracleLanes) | (tests & {"TestCountsAreRecorded"})), "lanes": sorted(oracleLanes)}
+
+    def step(self, name, command):
+        started = time.monotonic()
+        with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
+            process = self.spawn(command, output)
+            code = process.wait()
+        self.steps[name] = round(time.monotonic() - started, 1)
+        self.exits[name] = code
+        if code != 0 and self.failure is None:
+            with open(os.path.join(self.arguments.out, name + ".log")) as handle:
+                self.fail(name, handle.read()[-4000:])
+        return code == 0
+
+    @declaresInputs("tools", lambda tree, unit, full, change: {"packages": [], "paths": toolsSourcePathspec + toolsAttributesPathspec})
+    def toolsDeclared(self):
+        """Every command the repository's Go code runs by literal name is declared in the tools checkout's
+        cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
+        A change that reaches for a new tool without declaring it is red here, naming the file and line,
+        instead of red on every box that lacks it (library's stock tsc, Oct 8 11:2xZ)."""
+        started = time.monotonic()
+        with open(os.path.join(self.arguments.tools, "cloud/fast-gate/tools.txt")) as handle:
+            declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
+        found = self.command(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec,
+                               capture_output=True, text=True)
+        if found.returncode not in (0, 1):
+            raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
+        undeclared = []
+        for line in found.stdout.splitlines():
+            path, number, text = line.split(":", 2)
+            for name in toolLiteral.findall(text):
+                if name not in declared:
+                    undeclared.append("%s:%s runs %s, which cloud/fast-gate/tools.txt doesn't declare" % (path, number, name))
+        self.steps["tools"] = round(time.monotonic() - started, 1)
+        self.result["undeclared_tools"] = undeclared
+        self.exits["tools"] = 1 if undeclared else 0
+        if undeclared:
+            self.fail("tools", "\n".join(undeclared) + "\nDeclare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.")
+
+    @declaresInputs("build", lambda tree, unit, full, change: goCommandInputs(tree, goPhaseCommand("build")))
+    def build(self):
+        self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
+
+    @declaresInputs("vet", lambda tree, unit, full, change: goCommandInputs(tree, goPhaseCommand("vet")))
+    def vet(self):
+        self.result["vet_ok"] = self.step("vet", goPhaseCommand("vet"))
+
+    def testSplit(self, packages, log, productsOnly=False):
+        """Compile and list selected packages, build their products, then run ordinary test units.
+
+        Product discovery precedes ordinary-test selection, so even a requested-only package
+        builds every declared product. No tests start until all products have passed.
+        """
+        started = time.monotonic()
+        # Beside the slot's tree, never in the out directory: everything there is published, and a test
+        # binary is tens of megabytes. One slot runs one gate at a time, so each run overwrites its own.
+        binaries = os.path.realpath(self.arguments.tree) + "-binaries"
+        os.makedirs(binaries, exist_ok=True)
+        record = TestSeconds()
+        history = record.read()
+        observations, paused = {}, set()
+
+        def watch(line):
+            try:
+                event = json.loads(line)
+            except ValueError:
+                return
+            name = event.get("Test") or ""
+            if not name:
+                return
+            key = (event.get("Package"), name.split("/", 1)[0])
+            with self.lock:
+                if "=== PAUSE" in event.get("Output", "") or event.get("Action") == "pause":
+                    paused.add(key)
+                if "/" not in name and event.get("Action") in ("pass", "fail", "skip") and "Elapsed" in event:
+                    observations[key] = (event["Elapsed"], key in paused)
+
+        self.watchers.append(watch)
+        slots = threading.Semaphore(self.arguments.parallel)
+        queue = TestQueue(self.arguments.parallel)
+        self.result["test_outcomes"] = []
+        self.result["test_starts"] = []
+        self.testStartDetails = {}
+        self.testsStarted = started
+        self.testLaunchLock = threading.Lock()
+        # At most two test binaries build at once: each go test -c runs its own pool of compile processes as
+        # wide as the slot, so a big gate building one per test slot ran hundreds of compiles in a 12-CPU
+        # slot, and three such gates took Cloud to load 900 and Workshop to 10 GB free (Oct 8 11:2xZ).
+        builds = threading.Semaphore(2)
+        threads = []
+        declared = productDeclarations(self.packageDirectories, packages)
+        productsReady = threading.Event()
+        productsFailed = threading.Event()
+        buildsDone = threading.Event()
+        productRows = [{"package": package, "test": name, "product": True, "status": "not run"}
+                       for package in sorted(declared) for name in sorted(declared[package])]
+        productsRemaining = len(productRows)
+        productStarted = time.monotonic()
+        if productRows:
+            self.planned = getattr(self, "planned", ["tests"])
+            if "products" not in self.planned:
+                self.planned.insert(self.planned.index("tests") if "tests" in self.planned else 0, "products")
+            self.result["product_units"] = productRows
+        else:
+            productsReady.set()
+        productPool = ThreadPoolExecutor(max_workers=max(1, slotCPUs() // 4))
+
+        def runProduct(row, binary):
+            self.productUnit(row, binary, log)
+            nonlocal productsRemaining
+            with self.lock:
+                if row["status"] == "passed":
+                    productsRemaining -= 1
+                    if productsRemaining == 0 and not productsFailed.is_set():
+                        self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                        self.exits["products"] = 0
+                        productsReady.set()
+                else:
+                    self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                    self.exits["products"] = 1
+                    productsFailed.set()
+
+        def checkProducts(package, names):
+            listed = {name for name in names if name.startswith("TestProduct_")}
+            if listed != declared[package]:
+                productsFailed.set()
+                self.exits["products"] = 1
+                self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+                if "products" not in getattr(self, "planned", []):
+                    self.planned = getattr(self, "planned", ["tests"])
+                    self.planned.insert(self.planned.index("tests") if "tests" in self.planned else 0, "products")
+                self.fail("products", "%s product scan/list mismatch: source=%s listed=%s" %
+                          (package, sorted(declared[package]), sorted(listed)))
+                return False
+            return True
+        # Every package compiled and listed, and every test process it planned exited 0: counted, so a
+        # process that never ran can't pass for one that did.
+        tally = {"packages": 0, "planned": 0, "passed": 0}
+
+        def runPackage(importPath):
+            binary = os.path.join(binaries, importPath.replace("/", "_") + ".test")
+            with slots:
+                if os.path.exists(binary):
+                    os.rename(binary, binary + ".previous")
+                with builds:
+                    built = self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None)
+                if built != 0:
+                    return
+                if not os.path.exists(binary):
+                    # go test -c succeeded and wrote nothing: the package has no test files.
+                    if not checkProducts(importPath, []):
+                        return
+                    with self.lock:
+                        tally["packages"] += 1
+                    self.result.setdefault("split_tests", {})[importPath] = 0
+                    return
+                listing = self.capture([binary, "-test.list", "."], self.packageDirectories[importPath])
+            if listing is None:
+                return
+            with self.lock:
+                tally["packages"] += 1
+            names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            if not checkProducts(importPath, names):
+                return
+            for row in productRows:
+                if row["package"] == importPath:
+                    productPool.submit(runProduct, row, binary)
+            names = [] if productsOnly else [name for name in names if not name.startswith("TestProduct_")]
+            if importPath in getattr(self, "onlyTests", {}):
+                names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
+                if not names:
+                    # A package gated only for requested tests that selects none of them proves nothing: red, never a pass.
+                    self.fail("requested", "requested tests ran: 0 in %s: %s match no test in its -test.list" % (importPath, ", ".join(sorted(self.onlyTests[importPath]))))
+                    return
+            selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
+            patterns = {}
+            if not selection["whole"]:
+                # The lanes run only the changed fixtures; the selected tests run whole.
+                for lane in oracleLanes:
+                    if lane in names and selection["fixtures"] and lane not in selection["tests"]:
+                        patterns[lane] = fixturePattern([lane] + oracleLanes[lane], selection["fixtures"])
+                for test in selection["tests"]:
+                    if test in names:
+                        patterns[test] = "^%s$" % test
+                names = sorted(patterns)
+            deferred = sorted(set(names) & getattr(self, "deferred", {}).get(importPath, set()))
+            if deferred:
+                with self.lock:
+                    self.result.setdefault("deferred_to_full_gate", []).extend(importPath + " " + name for name in deferred)
+                names = [name for name in names if name not in deferred]
+            self.result.setdefault("split_tests", {})[importPath] = len(names)
+            with self.lock:
+                tally["planned"] += len(names)
+                self.result["test_outcomes"].extend({"package": importPath, "test": name, "status": "not run"} for name in names)
+            ready = []
+            for name in names:
+                command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
+                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.skip", "^TestProduct_", "-test.run", patterns.get(name, "^%s$" % name)]
+                seconds, parallel = history.get((importPath, name), (60, False))
+                ready.append((seconds, parallel, importPath, name, command))
+            # A package's tests arrive together, so a waiting worker can't take its short one before its long one.
+            queue.add(ready)
+
+        def packageWeight(package):
+            known = [seconds for (path, _), (seconds, _) in history.items() if path == package]
+            if not known:
+                return (60, 1)
+            return (max(known), 0)
+
+        remaining = sorted(packages, key=lambda package: (not bool(declared[package]), -packageWeight(package)[0], -packageWeight(package)[1], package))
+
+        def buildWorker():
+            while True:
+                with self.lock:
+                    if not remaining or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                        return
+                    package = remaining.pop(0)
+                try:
+                    runPackage(package)
+                except BaseException:
+                    self.fail("tests", traceback.format_exc())
+
+        def testWorker():
+            while True:
+                self.testLaunchLock.acquire()
+                launched = threading.Event()
+                item = queue.take()
+                if item is None:
+                    self.testLaunchLock.release()
+                    return
+                package, name, seconds, permits, command = item
+                try:
+                    while not productsReady.wait(0.05):
+                        if productsFailed.is_set() or buildsDone.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                            return
+                    if productsFailed.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                        return
+                    if permits == 4:
+                        command = ["-test.parallel=8" if part == "-test.parallel=2" else part for part in command]
+                    with self.lock:
+                        self.testStartDetails[tuple(command)] = {"package": package, "test": name,
+                            "expected_seconds": seconds, "slots": permits, "launched": launched}
+                    self.slotted(command, log, package, name, tally)
+                except BaseException:
+                    self.fail("tests", traceback.format_exc())
+                finally:
+                    if not launched.is_set():
+                        self.testLaunchLock.release()
+                    queue.release(permits)
+
+        # Start tests immediately; only their launches wait for products, while builds stream in.
+        testers = [] if productsOnly else [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
+        for thread in testers:
+            thread.start()
+        for _ in range(min(2, self.arguments.parallel)):
+            thread = self.guarded("tests", buildWorker)
+            thread.start()
+            threads.append(thread)
+        for thread in threads:
+            thread.join()
+        productPool.shutdown(wait=True)
+        if productRows:
+            self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+            self.exits["products"] = 0 if productsReady.is_set() and not productsFailed.is_set() else 1
+        buildsDone.set()
+        queue.close()
+        for thread in testers:
+            thread.join()
+
+        self.watchers.remove(watch)
+        record.update(observations)
+        if productsOnly:
+            return tally["packages"] == len(packages) and (not productRows or self.exits.get("products") == 0) and self.failure is None
+        self.steps["tests"] = round(time.monotonic() - started, 1)
+        complete = tally["packages"] == len(packages) and tally["passed"] == tally["planned"]
+        self.exits["tests"] = 0 if complete and self.failure is None else 1
+        self.result["split_tally"] = dict(tally, touched=len(packages))
+
+    def productUnit(self, row, binary, log):
+        """A declared build, including setup, on the four-CPU reference shape."""
+        if self.failure is not None or getattr(self, "stopped", None):
+            return
+        package, name = row["package"], row["test"]
+        command = ["go", "tool", "test2json", "-t", "-p", package, binary,
+                   "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=%ds" % productKillSeconds,
+                   "-test.parallel=4", "-test.run", "^%s$" % re.escape(name)]
+        before = time.monotonic()
+        try:
+            code = self.stream("products", command, log, self.packageDirectories[package], {"GOMAXPROCS": "4"})
+        except BaseException:
+            code = None
+            self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
+        row.update(seconds=round(time.monotonic() - before, 6), status="passed" if code == 0 else "failed")
+        if code != 0:
+            self.fail("products", "%s %s failed or was killed" % (package, name))
+
+    def slotted(self, command, log, importPath, name, tally):
+        environment = None
+        if (name == "TestWASI" or wasiUnit.fullmatch(name)) and importPath == module + "/internal/native" and os.environ.get("WASI_SYSROOT"):
+            # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
+            environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+        code = self.stream("tests", command, log, self.packageDirectories[importPath], environment)
+        with self.lock:
+            row = next(row for row in self.result["test_outcomes"] if row["package"] == importPath and row["test"] == name)
+            row["status"] = "not run" if code is None else ("passed" if code == 0 else "failed")
+        if code == 0:
+            with self.lock:
+                tally["passed"] += 1
+
+    def capture(self, command, directory):
+        process = self.spawn(command, subprocess.PIPE, subprocess.PIPE, directory)
+        output, errors = process.communicate()
+        if process.returncode != 0:
+            self.fail("tests", "%s exited %d\n%s" % (" ".join(command), process.returncode, (output + errors)[-4000:]))
+            return None
+        return output
+
+    def test(self, name, command, log, environment=None):
+        started = time.monotonic()
+        code = self.stream(name, command, log, None, environment)
+        self.exits[name] = 1 if code is None else code
+        self.steps[name] = round(time.monotonic() - started, 1)
+
+    def cacheDrains(self):
+        # Both gates drain after their test threads join. The candidate owns the publisher;
+        # older trees have neither stage. Pool scheduling is managed separately by Loom.
+        if "audit" not in self.planned or self.stopped or getattr(self, "cancelled", False):
+            return
+        if self.failure is not None and not self.arguments.full and not self.complete:
+            return
+        self.cacheDrain("audit")
+        if self.failure is None:
+            self.cacheDrain("upload")
+
+    @declaresInputs("upload", lambda tree, unit, full, change: treeInputs("publisher reads externally generated spool records; repository inputs alone do not identify the verdict"))
+    @declaresInputs("audit", lambda tree, unit, full, change: treeInputs("publisher reads externally generated audit/spool records; repository inputs alone do not identify the verdict"))
+    def cacheDrain(self, name):
+        required = name == "audit"
+        command = ["go", "run", "./internal/buildcache/cmd/buildcache-publish"]
+        if required:
+            command.append("-audit")
+        started = time.monotonic()
+        row = {"package": module + "/internal/buildcache/cmd/buildcache-publish",
+               "test": name, "command": command, "required": required}
+        self.result.setdefault("cache_drain_units", []).append(row)
+        try:
+            with open(os.path.join(self.arguments.out, name + ".log"), "w") as log:
+                code = self.stream(name, command, log, fatal=required)
+            code = 1 if code is None else code
+        except BaseException:
+            code = 1
+            self.result.setdefault("cache_drain_output", {})[name] = traceback.format_exc()
+            if required:
+                self.fail(name, self.result["cache_drain_output"][name])
+        seconds = round(time.monotonic() - started, 1)
+        row.update(seconds=seconds, exit=code, status="passed" if code == 0 else "failed",
+                   detail=self.result.get("cache_drain_output", {}).get(name, ""))
+        # Publishing is the store's gain: record its actual exit in the unit, while the
+        # optional stage completes successfully even when the store is unavailable.
+        self.exits[name] = code if required else 0
+        self.steps[name] = seconds
+
+    def stream(self, name, command, log, directory=None, environment=None, fatal=True):
+        """Runs one go test (or test2json) process, copying its events to the log; the first failing
+        event fails the gate. Returns the exit code, or None if the gate failed."""
+        stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (re.sub(r"[^A-Za-z0-9_.-]", "_", name), threading.get_ident()))
+        stderr = open(stderrPath, "w")
+        try:
+            process = self.spawn(command, subprocess.PIPE, stderr, directory, environment)
+        except BaseException:
+            stderr.close()
+            raise
+        deadline = None
+        drained = threading.Event()
+        drain = name in ("audit", "upload")
+        transcript = []
+        if drain or (name == "products" and "test2json" in command):
+            def expired():
+                if not drained.is_set():
+                    seconds = unitKillSeconds if drain else productKillSeconds
+                    identity = name if drain else "%s %s" % (command[command.index("-p") + 1], command[command.index("-test.run") + 1])
+                    transcript.append("%s killed at %d s\n" % (identity, seconds))
+                    if fatal:
+                        self.fail(name, "%s killed at %d s" % (identity, seconds))
+                    with self.lock:
+                        self.killSessions({process.pid})
+            deadline = threading.Timer(unitKillSeconds if drain else productKillSeconds, expired)
+            deadline.daemon = True
+            deadline.start()
+        output = {}
+        for line in process.stdout:
+            if drain:
+                transcript.append(line)
+            if log is not None:
+                with self.lock:
+                    log.write(line)
+            if id(process) in getattr(self, "killedByStop", set()):
+                continue
+            if drain:
+                continue
+            for watch in self.watchers:
+                watch(line)
+            if "gate-sample: " in line:
+                # A corpus test's sample, for status.txt and fast.json: what this landing didn't check.
+                try:
+                    sampled = json.loads(line).get("Output", "")
+                except ValueError:
+                    sampled = line
+                with self.lock:
+                    self.result.setdefault("gate_samples", []).append(sampled.split("gate-sample: ", 1)[1].strip())
+            try:
+                event = json.loads(line)
+            except ValueError:
+                continue
+            key = (event.get("Package"), event.get("Test"))
+            if event.get("Action") == "output":
+                output.setdefault(key, []).append(event.get("Output", ""))
+                continue
+            if event.get("Test") is None and event.get("Action") in ("pass", "fail") and event.get("Elapsed", 0) > slowPackageSeconds:
+                with self.lock:
+                    self.result.setdefault("slow_packages", {})[event.get("Package")] = event["Elapsed"]
+            if event.get("Test") is not None and event.get("Action") in self.counts:
+                with self.lock:
+                    self.counts[event["Action"]] += 1
+                    if event["Action"] == "skip":
+                        self.skipped.append(key)
+                    if event["Action"] == "fail":
+                        self.failedTests.append("%s %s" % (event.get("Package"), event.get("Test")))
+            if event.get("Action") == "fail" or event.get("Action") == "build-fail":
+                text = "".join(output.get(key, [])) or "".join(output.get((event.get("Package"), None), []))
+                self.fail(name, "%s %s\n%s" % (event.get("Package"), event.get("Test") or "(package)", text[-4000:]))
+        code = process.wait()
+        drained.set()
+        if deadline is not None:
+            deadline.cancel()
+        process.stdout.close()
+        stderr.close()
+        if id(process) in getattr(self, "killedByStop", set()):
+            return None
+        if drain:
+            with open(stderrPath) as handle:
+                text = "".join(transcript) + handle.read()
+            self.result.setdefault("cache_drain_output", {})[name] = text
+            if code != 0 and fatal and self.failure is None:
+                detail = text if len(text) <= 4000 else text[:2000] + "\n...\n" + text[-2000:]
+                self.fail(name, "%s exited %d\n%s" % (" ".join(command), code, detail))
+        if not drain and code != 0 and fatal and self.failure is None:
+            with open(stderrPath) as handle:
+                identity = " ".join(command[:4])
+                if "test2json" in command and "-test.run" in command:
+                    identity = "%s %s" % (command[command.index("-p") + 1], command[command.index("-test.run") + 1])
+                self.fail(name, "%s exited %d\n%s" % (identity, code, handle.read()[-4000:]))
+        return None if fatal and self.failure is not None and not self.arguments.full and not self.complete else code
+
+    @declaresInputs("census", lambda tree, unit, full, change: treeInputs("skip census walks the whole repository and reads the supplied merged log and Git branch state"))
+    def checkCensus(self):
+        started = time.monotonic()
+        tools = self.arguments.tools
+        logPath = os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")
+        censusPath = os.path.join(os.path.abspath(self.arguments.out), "census-tests.jsonl")
+        try:
+            heavy, unknown = heavyCensus(logPath, censusPath, heavyUnits(tools), self.arguments.full)
+        except (OSError, ValueError) as error:
+            self.exits["census"] = 1
+            self.fail("census", "heavy census: %s" % error)
+            return
+        self.census["heavy"] = heavy
+        self.census["unclassified"] += unknown
+        self.result["heavy_skips"] = heavy
+        # census-extra.json: skips in main the tools tree doesn't have yet, classified, checked against the log only.
+        # -git: a pending skip passes only while the branch it awaits is off main (asked of the candidate's origin).
+        process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, "-extra", os.path.join(tools, "cloud/fast-gate/census-extra.json"),
+                              "-git", os.path.abspath(self.arguments.tree),
+                              censusPath],
+                             subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
+        stdout, stderr = process.communicate()
+        heavyReport = "".join("heavy\t%s\t%s\t%s\t%.1f s\t%s\n" %
+                              (row["package"], row["test"], row["owner"], row["budget_seconds"], row["why"]) for row in heavy)
+        heavyReport += "".join("unknown\t%s\t%s\n" % tuple(key.split(" ", 1)) for key in unknown)
+        with open(os.path.join(self.arguments.out, "census.log"), "w") as handle:
+            handle.write(heavyReport + stdout + stderr)
+        self.steps["census"] = round(time.monotonic() - started, 1)
+        self.exits["census"] = process.returncode or (1 if unknown else 0)
+        for line in stdout.splitlines():
+            fields = line.split("\t")
+            if len(fields) == 3 and fields[0] == "required-input":
+                self.census["required_input"].append(fields[1] + " " + fields[2])
+            if len(fields) == 3 and fields[0] in ("unknown", "unclassified"):
+                self.census["unclassified"].append(fields[1] + " " + fields[2])
+            if len(fields) == 5 and fields[0] in ("pending", "pending-landed", "pending-unknown"):
+                self.census.setdefault("pending", []).append("%s %s (%s)" % (fields[1].rsplit("/", 1)[-1], fields[2], fields[4]))
+        if self.exits["census"] != 0:
+            self.fail("census", (heavyReport + stdout + stderr)[-4000:])
+
+    def git(self, directory, *arguments):
+        return self.command(["git", "-C", directory] + list(arguments),
+                            capture_output=True, text=True, check=True).stdout.strip()
+
+    def command(self, command, cwd=None, capture_output=False, text=True, check=False, env=None):
+        process = self.spawn(command, subprocess.PIPE if capture_output else None,
+                             subprocess.PIPE if capture_output else None, cwd, env)
+        stdout, stderr = process.communicate()
+        result = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+        if check:
+            result.check_returncode()
+        return result
+
+    def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
+        with self.lock:
+            if getattr(self, "stopped", None) or getattr(self, "cancelled", False) or (self.failure is not None and not self.arguments.full and not self.complete):
+                raise SystemExit(1)
+            # Uncached: the oracle's result caches would otherwise answer a test without running it.
+            variables = dict(os.environ, **gateEnvironment)
+            if not self.arguments.full:
+                variables.update(getattr(self, "sampling", {}))
+            # The box has Node but no npm; stage 3's apply runs npm ci, so the gates' pinned npm is on PATH.
+            variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
+            variables.update(environment or {})
+            variables.update(self.buildStoreEnvironment)
+            withGateGoFlags(variables)
+            process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
+            self.processes.append(process)
+            self.recordTestStart(command)
+        return process
+
+    def recordTestStart(self, command):
+        # Called under self.lock immediately after Popen, so the artifact is launch order.
+        details = getattr(self, "testStartDetails", {}).get(tuple(command))
+        if details is not None:
+            row = {key: value for key, value in details.items() if key != "launched"}
+            self.result["test_starts"].append(dict(row,
+                after_seconds=round(time.monotonic() - self.testsStarted, 3)))
+            details["launched"].set()
+            self.testLaunchLock.release()
+
+    def fail(self, step, detail):
+        with self.lock:
+            if self.failure is not None or getattr(self, "stopped", None):
+                return
+            self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
+            reading = boxLoad()
+            getattr(self, "result", {}).setdefault("box_load", {})["first_failure"] = reading
+            self.failure["under_load"] = underLoad(reading)
+            loaded = (", under load (%s at first failure)" % loadWords(reading)) if self.failure["under_load"] else ""
+            detail = "%s\n(box %s at first failure)" % (detail, loadWords(reading))
+            # A Python traceback is the gate tool's own exception, not the change's verdict: a complete or
+            # whole run goes no further on broken tools, since it would teach nothing (@system_adamic, Oct 8,
+            # after a-check crashed on views slice 1 and its complete run went on for minutes).
+            crashed = detail.lstrip().startswith("Traceback (most recent call last)")
+            if crashed:
+                self.failure["tool_crash"] = True
+            print("FIRST FAILURE (%s%s, at %.1f s):\n%s" % (step, ", the gate tool crashed" if crashed else "", self.failure["after_seconds"], detail), flush=True)
+            if crashed:
+                if self.arguments.full:
+                    with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                        handle.write(detail + "\n")
+                self.killSessions()
+                return
+            if self.arguments.full and getattr(self.arguments, "run_to_end", False):
+                with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                    handle.write(detail + "\n")
+                self.status("red: %s first failure at %s after %.1f s%s (parity: running to the end)" % (self.arguments.sha, step, self.failure["after_seconds"], loaded))
+                return
+            if self.arguments.full:
+                # A whole gate fails fast and frees its box (Kirk, Oct 8: "all tests should fail fast and loud and
+                # immediately give feedback and cancel themselves to free for next run"): the first failure is
+                # published, the run is cancelled, and its record says so. Triage is the pool's job, where units run
+                # in parallel and every red comes back at once.
+                with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                    handle.write(detail + "\n")
+                self.status("red: %s first failure at %s after %.1f s%s (cancelled after first failure)" % (self.arguments.sha, step, self.failure["after_seconds"], loaded))
+                self.cancelled = True
+                self.killSessions()
+                return
+            if self.complete:
+                # Nothing is stopped: every test and fixture still runs, and the verdict names them all.
+                return
+            self.killSessions()
+
+    def killSessions(self, sessions=None):
+        """Drain our sessions even after a leader exited and children were reparented.
+
+        Setpgid cannot escape a session. Zombies cannot run or fork and must be
+        reaped by their new parent; waiting for those would hang on a slow init.
+        Call under self.lock so spawn cannot register a new session mid-drain.
+        """
+        if sessions is None:
+            sessions = {process.pid for process in self.processes if process.pid > 0}
+        while sessions:
+            live = []
+            for path in glob.glob("/proc/[0-9]*/stat"):
+                try:
+                    with open(path) as handle:
+                        # comm may contain spaces and ')'; fields after its final ')' start at 3.
+                        fields = handle.read().rsplit(")", 1)[1].split()
+                    if int(fields[3]) in sessions and fields[0] not in ("Z", "X"):
+                        live.append(int(path.split("/")[2]))
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+            if not live:
+                return
+            for pid in live:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            time.sleep(0.01)
+
+    def budget(self, ledger, units):
+        """Red at 'budget' for every new unit over longTestSeconds (its test isn't in the base) that the burn-down
+        doesn't hold, naming each one, its seconds and the box that measured it. Existing units over it are named
+        as drift, and burn-down units this run measured under the line too (budget_can_leave_burndown), so the
+        record shrinks."""
+        burndown = set()
+        try:
+            with open(os.path.join(self.arguments.tools, "cloud/fast-gate/budget-burndown.tsv")) as handle:
+                for line in handle:
+                    fields = line.rstrip("\n").split("\t")
+                    if len(fields) >= 2 and not line.startswith("#"):
+                        if not fields[1].startswith("TestProduct_"):
+                            burndown.add((fields[0], fields[1]))
+        except OSError:
+            pass
+        try:
+            declarations = heavyUnits(self.arguments.tools)
+            heavy = []
+            for (package, name), (seconds, action) in sorted(units.items()):
+                declared = heavyUnit(declarations, package, name)
+                if declared is not None:
+                    heavy.append(dict(declared, test=name, seconds=seconds, action=action,
+                                      **{"class": "heavy", "over_budget": seconds > declared["budget_seconds"]}))
+        except (OSError, ValueError) as error:
+            self.fail("budget", "heavy declarations: %s" % error)
+            return
+        self.result["heavy_units"] = heavy
+        heavyKeys = {(row["package"], row["test"]) for row in heavy}
+        ledger = [row for row in ledger if (row[0], row[1]) not in heavyKeys]
+        heavyOver = [row for row in heavy if row["over_budget"]]
+        if heavyOver and self.failure is None and not getattr(self, "stopped", None):
+            self.fail("budget", "heavy units over their own budget:\n" + "\n".join(
+                "heavy %s %s %.1f s > %.1f s; owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"]) for row in heavyOver))
+        over = {(package, name) for package, name, _, _ in ledger}
+        listed = sorted("%s %s" % key for key in over & burndown)
+        offBurndown = [row for row in ledger if (row[0], row[1]) not in burndown]
+        # New means added by this change: absent where the candidate forked from main, not from main's tip. A candidate
+        # cut from an older main otherwise reads main's later renames as its own new tests (Oct 9 05:13Z: gocacheprog
+        # 90b10e95 red at budget on 113 of main's own units, stage 3's fixture shards and TestOwnedWitnesses).
+        found = subprocess.run(["git", "-C", self.arguments.tree, "merge-base", self.arguments.base, self.arguments.sha],
+                               capture_output=True, text=True)
+        fork = found.stdout.strip() if found.returncode == 0 and found.stdout.strip() else self.arguments.base
+        products = [row for row in offBurndown if row[1].startswith("TestProduct_")]
+        offBurndown = [row for row in offBurndown if row not in products]
+        unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, fork, row[0], row[1])]
+        drift = [row for row in offBurndown if row not in unlisted]
+        def unitWords(package, name, seconds):
+            return ("product " if name.startswith("TestProduct_") else "") + "%s %s %.1f s" % (package, name, seconds)
+        # A census over another run's merged log (--census) measured nothing here: its seconds are where that log's units
+        # ran, so the record names the log, never this box (Oct 9 12:56Z: the trio's pool times read 'measured on Workshop').
+        census = getattr(self.arguments, "census", None)
+        instrument = ({"box": "the units of %s" % census, "cpus": None, "load": None, "reference": "where the merged log's units ran"}
+                      if isinstance(census, str) else
+                      {"box": os.uname().nodename, "cpus": os.cpu_count(), "load": [round(value, 1) for value in os.getloadavg()],
+                       "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"})
+        self.result.update({
+            "budget_seconds": longTestSeconds,
+            "budget_instrument": instrument,
+            "budget_burndown_units": listed,
+            "budget_over": [unitWords(package, name, seconds) for package, name, seconds, _ in unlisted],
+            "budget_drift": [unitWords(package, name, seconds) for package, name, seconds, _ in drift],
+            "budget_can_leave_burndown": sorted("%s %s" % key for key in (burndown & set(units)) - over),
+            "products_over_budget": [unitWords(package, name, seconds) for package, name, seconds, _ in products],
+        })
+        if unlisted and self.failure is None and not getattr(self, "stopped", None):
+            measured = ("measured on %s, %d CPUs, load %s" % (instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]))
+                        if instrument["cpus"] else "measured by " + instrument["box"])
+            self.fail("budget", "%d new test units over the %d s budget (%s; split each into units under %d s):\n%s" % (
+                len(unlisted), longTestSeconds, measured, longTestSeconds,
+                "\n".join("  %s (%s)" % (unitWords(package, name, seconds), action) for package, name, seconds, action in unlisted)))
+
+    def status(self, line):
+        with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
+            handle.write(line + "\n")
+
+    def finish(self):
+        if getattr(self, "stopThread", None):
+            self.stopThread.join()
+        with self.lock:
+            self.killSessions()
+        wall = round(time.monotonic() - self.started, 1)
+        self.result.setdefault("box_load", {})["end"] = boxLoad()
+        units = testUnits(os.path.join(self.arguments.out, "test.jsonl"))
+        for row in self.result.get("product_units", []):
+            key = row["package"], row["test"]
+            units = {unit: value for unit, value in units.items()
+                     if not (unit[0] == key[0] and (unit[1] == key[1] or unit[1].startswith(key[1] + "/") or unit[1] == key[1] + " (setup)"))}
+            if "seconds" in row:
+                units[key] = (row["seconds"], "pass" if row["status"] == "passed" else "fail")
+        # Drains have a 90 s wall deadline, not the tests' 30 s budget.
+        self.budget(longTests(units), units)
+        for row in self.result.get("cache_drain_units", []):
+            units[row["package"], row["test"]] = (row["seconds"], "pass" if row["exit"] == 0 else "fail")
+        heavyRows = {(row["package"], row["test"]): row for row in self.result.get("heavy_units", [])}
+        self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
+                                 "product": name.startswith("TestProduct_"),
+                                 **({"class": "heavy", "owner": heavyRows[package, name]["owner"],
+                                     "budget_seconds": heavyRows[package, name]["budget_seconds"]}
+                                    if (package, name) in heavyRows else {})}
+                                for (package, name), (seconds, action) in sorted(units.items())]
+        ledger = longTests(units)
+        unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
+        if unfinished and self.failure is None and not getattr(self, "stopped", None):
+            self.fail(unfinished[0], "planned stages without a recorded exit 0: %s (exits %s)" % (", ".join(unfinished), self.exits))
+        green = self.failure is None and not unfinished and not getattr(self, "stopped", None)
+        self.result.update({
+            "wall_seconds": wall,
+            "steps_seconds": self.steps,
+            "pass": self.counts["pass"],
+            "fail": self.counts["fail"],
+            "failed_tests": self.failedTests,
+            "complete": self.complete,
+            "skip": self.counts["skip"],
+            "required_input_skips": self.census["required_input"],
+            "unclassified_skips": self.census["unclassified"],
+            "pending_skips": self.census.get("pending", []),
+            "failure": self.failure,
+            "planned_stages": self.planned,
+            "stages_exit": self.exits,
+            "cancelled_after_first_failure": bool(getattr(self, "cancelled", False)),
+            "finished": True,
+        })
+        if getattr(self, "stopped", None):
+            self.result["stopped"] = self.stopped
+        with open(os.path.join(self.arguments.out, "long-tests.tsv"), "w") as handle:
+            for package, name, seconds, action in ledger:
+                handle.write("%s\t%s\t%.2f\t%s\n" % (package, name, seconds, action))
+        self.result.update({"long_test_threshold_seconds": longTestSeconds, "long_tests": len(ledger),
+                            "long_test_seconds": round(sum(row[2] for row in ledger), 1)})
+        outcomes = self.result.get("test_outcomes", [])
+        self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
+                                               for status in ("passed", "failed", "not run")}
+        self.result["gate_kind"] = self.kind
+        with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
+            json.dump(self.result, handle, indent=2)
+            handle.write("\n")
+        steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
+        if self.result.get("slow_packages"):
+            steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
+        steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
+        if self.result.get("products_over_budget"):
+            steps += "; products over %d s, listed not red: %s" % (longTestSeconds, "; ".join(self.result["products_over_budget"]))
+        if self.result.get("heavy_units"):
+            steps += "; heavy: " + "; ".join("%s %s %.1fs/%.1fs owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"])
+                for row in self.result["heavy_units"])
+        if self.census.get("pending"):
+            steps += "; pending skips: %s" % "; ".join(self.census["pending"])
+        steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))
+                                      for moment in ("start", "first_failure", "end") if moment in self.result["box_load"])
+        deferred = self.result.get("deferred_to_full_gate", [])
+        if not self.arguments.full:
+            steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
+            steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
+            if self.result.get("gate_samples"):
+                steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
+            if self.result.get("a_check_exempt"):
+                steps += "; a-check exempt by ruling: %d .a files (fast.json a_check_exempt)" % len(self.result["a_check_exempt"])
+            if self.result.get("unchecked_a_files") and "a_check" not in self.result:
+                steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
+        if getattr(self, "stopped", None) and self.failure is None:
+            self.status("void: stopped before a verdict: " + self.stopped["reason"])
+        elif green:
+            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"]))
+        else:
+            crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
+            cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
+            # A red whose first failure ran above the box's core count says so itself, so a page reads it as load first.
+            loaded = ", under load (%s at first failure)" % loadWords(self.result["box_load"]["first_failure"]) if self.failure.get("under_load") else ""
+            # A deferred red names the requested tests it lacked, so a page reads what didn't run (trio 114a6439, Oct 9
+            # 10:50Z: "first failure at deferred" with nothing named, and five internal/native tests behind it).
+            unproven = sorted(test.rsplit("/", 1)[-1] + " " + outcome for test, outcome in self.result.get("deferred_run_results", {}).items()
+                              if outcome not in ("pass", "fail")) if self.failure["step"] == "deferred" else []
+            if unproven:
+                crash += " (%d requested deferred tests unproven: %s%s)" % (len(unproven), ", ".join(unproven[:5]), ", ..." if len(unproven) > 5 else "")
+            self.status("red: %s %s gate, first failure at %s%s after %.1f s%s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], loaded, cancelled, steps, self.counts["fail"], self.counts["pass"]))
+        if getattr(self, "stopped", None) and self.failure is not None:
+            with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
+                handle.write("stopped: " + self.stopped["reason"] + "\n")
+        with open(os.path.join(self.arguments.out, "status.txt")) as handle:
+            print(handle.read(), end="", flush=True)
+
+
+def eventTime(value):
+    """A test2json Time (RFC 3339, nanoseconds) as epoch seconds, or None."""
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.datetime.fromisoformat(re.sub(r"(\.\d{6})\d+", r"\1", value.replace("Z", "+00:00"))).timestamp()
+    except ValueError:
+        return None
+
+
+def testUnits(path):
+    """The test units in a go test -json log that passed or failed, as {(package, unit): (seconds, action)}. A
+    test without subtests is one unit. A test with subtests is split: each subtest is a unit (recursively), and
+    so is the test's own time outside them, '<test> (setup)': from its start to its first subtest's start, plus
+    from its last subtest's end to its own end, by the events' times (cohere, Oct 8: shards run in parallel, so a
+    build before them would hide inside 'elapsed less the subtests''). Without times, its elapsed less its
+    subtests'. A missing log has no units."""
+    tests, started, ended = {}, {}, {}
+    try:
+        with open(path) as handle:
+            for line in handle:
+                try:
+                    event = json.loads(line)
+                except ValueError:
+                    continue
+                if not isinstance(event, dict):
+                    continue
+                name, seconds = event.get("Test"), event.get("Elapsed")
+                if not isinstance(name, str) or not name:
+                    continue
+                key = (event.get("Package", ""), name)
+                if event.get("Action") == "run" and eventTime(event.get("Time")) is not None:
+                    started.setdefault(key, eventTime(event.get("Time")))
+                if event.get("Action") not in ("pass", "fail") or not isinstance(seconds, (int, float)):
+                    continue
+                tests[key] = (seconds, event["Action"])
+                if eventTime(event.get("Time")) is not None:
+                    ended[key] = eventTime(event.get("Time"))
+    except OSError:
+        return {}
+    children = {}
+    for package, name in tests:
+        if "/" in name:
+            children.setdefault((package, name.rsplit("/", 1)[0]), []).append((package, name))
+    units = {}
+    for key, (seconds, action) in tests.items():
+        if key not in children:
+            units[key] = (seconds, action)
+            continue
+        kids = children[key]
+        if key in started and key in ended and all(child in started and child in ended for child in kids):
+            setup = (min(started[child] for child in kids) - started[key]) + (ended[key] - max(ended[child] for child in kids))
+        else:
+            setup = seconds - sum(tests[child][0] for child in kids)
+        if setup > 0:
+            units[key[0], key[1] + " (setup)"] = (round(setup, 2), action)
+    return units
+
+
+def familyMember(name, requested):
+    """Whether a top-level test is a requested name or one of its split's generated shards: the name followed by
+    Unit<n>, Points<n> or _<n> (@system_adamic, Oct 9 12:19Z). Never a bare prefix: TestWASIRefusesUnsupportedOptions
+    is not TestWASI run, while TestNormalizeMatchesNodePoints00 is TestNormalizeMatchesNode."""
+    return name == requested or re.fullmatch(re.escape(requested) + r"(Unit\d+|Points\d+|_\d+)", name) is not None
+
+
+def inFamily(name, requested):
+    """A requested test name selects itself and its split's shards: a family split into shards is requested by its
+    name, and an exact anchor selected none of it, so a requested set ran nothing and read as passed (@system_adamic,
+    Oct 9 11:01Z)."""
+    return any(familyMember(name, prefix) for prefix in requested)
+
+
+def familyOutcome(outcomes, package, name):
+    """A requested name's outcome in topLevelOutcomes: the test's own when it ran under its name, else over its split's
+    shards, fail if any failed, pass if any passed, and missing when none did (shards that all skipped proved nothing)."""
+    exact = outcomes.get(package + " " + name)
+    if exact:
+        return exact
+    members = [outcome for key, outcome in outcomes.items()
+               if key.startswith(package + " ") and familyMember(key[len(package) + 1:], name)]
+    for outcome in ("fail", "pass"):
+        if outcome in members:
+            return outcome
+    return "missing"
+
+
+def topLevelOutcomes(path):
+    """Each top-level test's last pass, fail or skip in a go test -json log, by "<package> <test>"."""
+    outcomes = {}
+    try:
+        with open(path) as handle:
+            for line in handle:
+                try:
+                    event = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(event, dict) and event.get("Test") and "/" not in event["Test"] and event.get("Action") in ("pass", "fail", "skip"):
+                    outcomes[event.get("Package", "") + " " + event["Test"]] = event["Action"]
+    except OSError:
+        pass
+    return outcomes
+
+
+def generatedReach(tree, listPath):
+    """What a test that walks a generated.json's entries reads, as loom's planner keys it (planner/reads.go
+    generatedReads; both readers test against testdata/generated-reads.json): the list itself and each path it names,
+    as a set of paths, and each under, as a tuple of prefixes every path below it starts with. None when the list can't be
+    read as the reader knows it: missing, not one JSON value of the shape cloud/generated_test.go's checkGenerated
+    decodes strictly, an entry naming both a path and an under or neither, a path that isn't clean inside the tree, or an
+    under that isn't a clean directory ending in a slash. The caller then reads the whole tree, never less."""
+    try:
+        with open(os.path.join(tree, listPath)) as handle:
+            declared = json.load(handle)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(declared, dict) or not set(declared) <= {"maxFiles", "files"}:
+        return None
+    if declared.get("maxFiles") is not None and (type(declared["maxFiles"]) is not int):
+        return None
+    files = declared.get("files") or []
+    if not isinstance(files, list):
+        return None
+
+    def clean(name):
+        return name != "" and os.path.isabs(name) is False and os.path.normpath(name) == name and name != ".." and not name.startswith("../")
+
+    paths, unders = {listPath}, []
+    for entry in files:
+        if not isinstance(entry, dict) or not set(entry) <= {"path", "under", "suffix", "command", "maxBytes"}:
+            return None
+        for field in ("path", "under", "suffix"):
+            if entry.get(field) is not None and not isinstance(entry[field], str):
+                return None
+        if entry.get("command") is not None and not (isinstance(entry["command"], list) and all(isinstance(word, str) for word in entry["command"])):
+            return None
+        if entry.get("maxBytes") is not None and type(entry["maxBytes"]) is not int:
+            return None
+        path, under = entry.get("path") or "", entry.get("under") or ""
+        if (path == "") == (under == ""):
+            return None
+        if path:
+            if not clean(path):
+                return None
+            paths.add(path)
+        else:
+            if not under.endswith("/") or under == "./" or not clean(under[:-1]):
+                return None
+            unders.append(under)
+    return paths, tuple(unders)
+
+
+def deferredClassedOut(tools, deferred):
+    """Deferred tests the skip census classes measurement or opt-in-lane (internal/skipcensus/testdata/skips.json
+    and cloud/fast-gate/census-extra.json), as ("<package> <test>", class): no gate gives them their input."""
+    rows = []
+    for name in ("internal/skipcensus/testdata/skips.json", "cloud/fast-gate/census-extra.json"):
+        try:
+            with open(os.path.join(tools, name)) as handle:
+                rows += json.load(handle)
+        except (OSError, ValueError):
+            continue
+    classed = {}
+    for row in rows:
+        if row.get("class") not in ("measurement", "opt-in-lane"):
+            continue
+        if not row.get("file"):
+            continue
+        for test in [row.get("test", "")] + list(row.get("callers") or []):
+            classed[module + "/" + os.path.dirname(row["file"]), test] = row["class"]
+    return sorted(("%s %s" % (importPath, name), classed[importPath, name])
+                  for importPath, names in deferred.items() for name in names if (importPath, name) in classed)
+
+
+def testInBase(tree, base, package, unit):
+    """Whether the unit's top-level test function is defined in the package's tests at base. A unit is new
+    when it isn't: added with this change."""
+    test = unit.split("/", 1)[0].split(" ", 1)[0]
+    directory = package[len(module) + 1:] if package.startswith(module + "/") else "."
+    found = subprocess.run(["git", "-C", tree, "grep", "-q", "-E", r"^func %s\(" % re.escape(test), base, "--", ":(glob)" + directory + "/*_test.go"],
+                           capture_output=True)
+    return found.returncode == 0
+
+
+def heavyUnits(tools):
+    """Explicit exemptions only. Missing inventory means none; malformed rows fail closed.
+
+    Names select an exact test/subtest and its descendants, or the generated shards
+    recognized by familyMember. No regex, glob or bare-prefix exemptions.
+    """
+    path = os.path.join(tools, "cloud/fast-gate/heavy-units.tsv")
+    try:
+        with open(path) as handle:
+            lines = handle.readlines()
+    except FileNotFoundError:
+        return []
+    rows, seen = [], set()
+    for number, line in enumerate(lines, 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        fields = line.rstrip("\n").split("\t")
+        if len(fields) != 5 or any(not field.strip() for field in fields):
+            raise ValueError("%s:%d: heavy unit needs package, test/family, owner, seconds, why" % (path, number))
+        package, name, owner, budget, why = fields
+        seconds = float(budget)
+        if not math.isfinite(seconds) or seconds <= 0 or not name.startswith("Test") or any(c in name for c in "*?[]"):
+            raise ValueError("%s:%d: invalid heavy unit name or budget" % (path, number))
+        key = package, name
+        if key in seen:
+            raise ValueError("%s:%d: duplicate heavy unit %s %s" % (path, number, package, name))
+        seen.add(key)
+        rows.append({"package": package, "test": name, "owner": owner, "budget_seconds": seconds, "why": why})
+    return rows
+
+
+def heavyUnit(rows, package, name):
+    name = name.removesuffix(" (setup)")
+    matches = [row for row in rows if row["package"] == package and
+               (name == row["test"] or name.startswith(row["test"] + "/") or
+                familyMember(name.split("/", 1)[0], row["test"]))]
+    if len(matches) > 1:
+        raise ValueError("ambiguous heavy declarations for %s %s" % (package, name))
+    return matches[0] if matches else None
+
+
+def heavyCensus(path, destination, declarations, full):
+    """Class explicit 'heavy: deferred ...' skips at the gate boundary.
+
+    Preserve the original log and every non-deferral skip for the existing AST and
+    input census. Whole gates may not defer heavy coverage. A declaration never
+    excuses a required-input skip just because it belongs to the same test.
+    """
+    messages, classed, unknown = {}, [], []
+    with open(path) as source, open(destination, "w") as output:
+        for line in source:
+            event = json.loads(line)
+            key = event.get("Package", ""), event.get("Test", "")
+            if event.get("Action") == "run":
+                messages[key] = ""
+            if event.get("Action") == "output":
+                messages[key] = messages.get(key, "") + event.get("Output", "")
+            if event.get("Action") == "skip" and key[1] and re.search(r"heavy: deferred\b", messages.get(key, "")):
+                declared = heavyUnit(declarations, *key)
+                if declared is not None and not full:
+                    classed.append(dict(declared, test=key[1], **{"class": "heavy"}))
+                else:
+                    unknown.append("%s %s" % key)
+                continue
+            output.write(line)
+    return classed, unknown
+
+
+def longTests(units):
+    """The units (testUnits) over longTestSeconds, longest first: (package, unit, seconds, action)."""
+    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > longTestSeconds),
+                  key=lambda row: (-row[2], row[0], row[1]))
+
+
+# The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
+wholePhases = ["coverage", "tools", "build", "vet", "wasi", "catalog"]
+# The unconditional non-test units; conditional executors are listed with --base.
+fastBasePhases = ["coverage", "tools", "build", "vet", "census"]
+fastPhases = fastBasePhases + ["workers", "a-check", "catalog-apply", "catalog", "darwin"]
+
+
+def fastUnits(tree, base=None, sha=None, tools=None):
+    """Fast non-test phases, adding change-dependent executors when --base is supplied.
+
+    The planner supplies the same base, sha and tools as --select to enumerate the exact stage set.
+    Enumeration reads the gate's executor map and catalog; it installs nothing and runs no stages.
+    """
+    units = list(fastBasePhases)
+    if base is None:
+        return units
+    with tempfile.TemporaryDirectory() as out:
+        gate = Gate(argparse.Namespace(tree=tree, base=base, sha=sha or git(tree, "rev-parse", "HEAD"),
+                                       tools=tools or tree, out=out, full=False, branch="", branch_source="",
+                                       session="", session_source=""))
+        changed, executors = gate.fastPhaseInputs()
+        if executors & {"workers", "bench-workers"}:
+            units.append("workers")
+        if "a-check" in executors and gate.result.get("unchecked_a_files"):
+            units.append("a-check")
+        if gate.catalogEntriesTouched(changed):
+            units.append("catalog-apply")
+        if "catalog" in executors:
+            units.append("catalog")
+        if "darwin" in executors:
+            units.append("darwin")
+    return units
+
+
+def productDeclarations(directories, packages=None):
+    """Source inventory, verified against the compiled binary before any product is run."""
+    declared = {}
+    for package in directories if packages is None else packages:
+        names = set()
+        for path in glob.glob(os.path.join(directories[package], "*_test.go")):
+            with open(path) as source:
+                names.update(re.findall(r"^func\s+(TestProduct_\w+)\s*\(\s*\w+\s+\*testing\.T\s*\)", source.read(), re.M))
+        declared[package] = names
+    return declared
+
+
+def wholeUnits(tree):
+    """Every pool unit of the whole gate, as '<phase>' or '<phase> <unit>' (run.py --full --list-units): each wasi
+    fixture, each catalog entry by number, and the other phases whole."""
+    units = []
+    for phase in wholePhases:
+        if phase == "wasi":
+            units += ["wasi " + name for name in wasiFixtures(tree)]
+        elif phase == "catalog" and os.path.exists(os.path.join(tree, "verify/catalog/check.sh")):
+            units += ["catalog %d" % entry["number"] for entry in catalogEntries(tree)]
+        elif phase != "catalog":
+            units.append(phase)
+    return units
+
+
+def slotCPUs():
+    cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
+    try:
+        with open("/sys/fs/cgroup/cpu.max") as handle:
+            quota, period = handle.read().split()
+        if quota != "max":
+            cpus = min(cpus, max(1, int(quota) // int(period)))
+    except (OSError, ValueError):
+        pass
+    return cpus
+
+
+def wasiFixtures(tree):
+    """Read the compiler-owned fixture inventory; refuse changes we cannot enumerate. Since main 7e403e44 the
+    fixtures are top-level units (TestWASIUnit00 and on, each a slice of the inventory): those are the phase's
+    units, run by name, and the tests stage skips them (wasiSkip)."""
+    with open(os.path.join(tree, "internal/native/wasm_test.go")) as handle:
+        source = handle.read()
+    if "func TestWASI(t *testing.T) {" not in source:
+        units = re.findall(r"^func (TestWASIUnit[0-9]+)\(t \*testing\.T\) \{", source, re.M)
+        if not units or len(set(units)) != len(units):
+            raise ValueError("cannot enumerate TestWASI fixtures or TestWASIUnit units")
+        return units
+    body = source.split("func TestWASI(t *testing.T) {", 1)[1].split("\nfunc ", 1)[0]
+    inventory = re.search(r'fixtures := \[\]string\{(.*?)\n\t\}', body, re.S)
+    if inventory is None:
+        raise ValueError("cannot enumerate TestWASI fixtures")
+    fixtures = re.findall(r'"([^"\n]+)"', inventory[1])
+    remainder = re.sub(r'"[^"\n]*"|\s|,', '', inventory[1])
+    runs = re.findall(r't\.Run\(([^,]+),', body)
+    if remainder or runs.count("fixture") != 1 or any(
+            name != "fixture" and not re.fullmatch(r'"[^"\n]+"', name) for name in runs):
+        raise ValueError("unrecognized TestWASI fixture registration")
+    fixtures += [json.loads(name) for name in runs if name != "fixture"]
+    if not fixtures or len(set(fixtures)) != len(fixtures):
+        raise ValueError("empty or duplicate TestWASI fixtures")
+    return fixtures
+
+
+# TestWASI's fixtures as top-level units (main 7e403e44 on), and the tests stage's skip that leaves them to the wasi phase.
+wasiUnit = re.compile(r"TestWASIUnit[0-9]+")
+wasiSkip = "^TestWASI(Unit[0-9]+)?$"
+
+
+def fixturePattern(prefix, fixtures):
+    """A -run pattern for these fixtures' subtests under the test and parent subtests in prefix,
+    level by level: Go splits both the pattern and each subtest name on '/' and matches level by level,
+    so alternation can't span a slash, and each level gets its own."""
+    levels = [[part] for part in prefix]
+    for fixture in fixtures:
+        for depth, part in enumerate(fixture.split("/"), start=len(prefix)):
+            if len(levels) <= depth:
+                levels.append([])
+            if part not in levels[depth]:
+                levels[depth].append(part)
+    return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
+
+
+def git(directory, *arguments):
+    return subprocess.run(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip()
+
+
+if __name__ == "__main__":
+    main()
