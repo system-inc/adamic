@@ -20,5 +20,7 @@ for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|'
 s+=['','## Adapted source at stops','']
 for e in read('source-evidence.json'):
  if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','']
+for e in read('source-evidence.json'):
+ if e.get('expression_change_reach'):s+=['### expression.go reach: '+e['where'],'',e['expression_change_reach'],'']
 s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from measured stage3/meter/owners.json or the emitting method.']
 (out/'REPORT.md').write_text('\n'.join(s)+'\n')

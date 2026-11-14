@@ -30,9 +30,9 @@ for g in result:
  key=(g['where'],g['kind'],g['reason'])
  assert key in known, 'New stop needs emitting-source review: '+str(key)
  for k in ['phase','owner']:g[k]=known[key][k]
- for k in ['emitter','owner_basis']:
+ for k in ['emitter','owner_basis','expression_change_reach']:
   if k in known[key]:g[k]=known[key][k]
- e={k:g[k] for k in ['where','kind','reason','phase','owner','emitter','owner_basis'] if k in g}
+ e={k:g[k] for k in ['where','kind','reason','phase','owner','emitter','owner_basis','expression_change_reach'] if k in g}
  if g['where']!='-':
   file,line,col=g['where'].rsplit(':',2);lines=(tree/'src/compiler'/file).read_text().splitlines();n=int(line)
   e['adapted_line']=lines[n-1]
