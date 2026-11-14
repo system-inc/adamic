@@ -1,0 +1,19 @@
+{
+  "file": "transformers/legacyDecorators.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 29.284684043000198,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/61.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 18,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "4c2bfb1c81a5235ed89e9e3555c61e12220e7d07eaba3e38fcc6c5aac07ffb04",
+  ".log_sha256": "35203a8eb75a7604b3ee786956893c88ebbefd1ffa4291e0be29ee3c1a554c81"
+}

@@ -1,0 +1,19 @@
+{
+  "file": "transformers/typeSerializer.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 23.08706234300007,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/69.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 9,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "0bf396638b7f0359b98257a22219557e56edd83bd3c9dd0eee5530bc2d6e70bd",
+  ".log_sha256": "9b7f54bf25142f39d539f78423696233bc86fa7fdb4845fddf2d35c6899651d7"
+}

@@ -1,0 +1,19 @@
+{
+  "file": "transformers/taggedTemplate.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 17.482866653999736,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/67.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 1,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "1c8239bfff8ab36d7644a8c7bc7d81eab0e64d53dde3f9c3fcd0202badae2ad7",
+  ".log_sha256": "2ff189a0d2219cb74dde35ddf6e74f331efb8be5bcceeee719141cca1faece9e"
+}

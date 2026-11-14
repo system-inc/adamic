@@ -1,0 +1,19 @@
+{
+  "file": "transformers/ts.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 35.08463346799999,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/68.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 70,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "df988fd26d45d8ea831ecc1c27accf3a5b2394126c0def854ec171de0ba1fb1d",
+  ".log_sha256": "747a9aaf05a1a208e6736938914cf9348a93cbbab8365e09875e7a18afcdb963"
+}

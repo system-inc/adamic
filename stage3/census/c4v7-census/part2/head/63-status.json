@@ -1,0 +1,19 @@
+{
+  "file": "transformers/module/impliedNodeFormatDependent.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 16.949738233000062,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/63.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 1,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "d814947180a1acfc1795cdcce45576f21ae5dad627cca26e7a4feac68b42e2a1",
+  ".log_sha256": "f1e2b075d70237b962b73c2c63bd78f604ffd52647be619ee69110f0e5881ff1"
+}
