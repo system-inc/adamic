@@ -158,6 +158,19 @@
       "unit_first_stop_changes": 0,
       "regressions": 0,
       "new_process_findings": []
+    },
+    {
+      "pair": "B",
+      "group": 0,
+      "files": [
+        "src/compiler/checker.ts"
+      ],
+      "deadline_seconds": 3600,
+      "complete": true,
+      "seconds": 292.25586443300017,
+      "unit_first_stop_changes": 0,
+      "regressions": 0,
+      "new_process_findings": []
     }
   ]
 }

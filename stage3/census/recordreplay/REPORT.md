@@ -86,3 +86,8 @@ and measurement commands use the scratch cache. The default cache was left
 untouched after discovery; no source checkout outside scratch was edited. Upstream is v6.0.3 at
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Neither requested branch was present
 before creation; all pushes are ordinary non-force pushes.
+
+The complete stock tsc entry is also checked with TypeScript 6.0.3 and pinned
+Node types: all 81 resolved implementation files are covered, with zero diagnostics
+for the control and both candidates and byte-identical JavaScript for all 81.
+See `gate/complete-entry-stock.json` and the complete diagnostic/hash records.
