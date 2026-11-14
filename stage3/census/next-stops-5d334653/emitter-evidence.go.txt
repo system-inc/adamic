@@ -1,0 +1,41 @@
+1138: func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+1139: 	if found.declaredKey != "" {
+1140: 		return l.declaredKeyRefusal(node, own, contextual, found)
+1141: 	}
+1142: 	if found.genericMethod != "" {
+1143: 		return l.notYet(node, "a generic method "+found.genericMethod+" of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target))
+1144: 	}
+1145: 	if found.unfixedGeneric {
+1146: 		return l.notYet(node, "a generic function of type "+l.checker.TypeToString(found.source)+" seen as "+l.checker.TypeToString(found.target)+", which doesn't fix every type parameter it's instantiated with, so one falls back to a constraint holding any")
+1147: 	}
+1148: 	if found.enum {
+1149: 		if enumObjectSymbol(found.target) != nil {
+1150: 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+1151: 		}
+1152: 		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
+1153: 			return l.flagWriteRefusal(node, found.target)
+1154: 		}
+1155: 		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
+1156: 			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+1157: 		}
+1158: 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+1159: 	}
+1160: 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+1161: 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+1162: 	if found.parameter {
+1163: 		what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+1164: 		fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+1165: 	}
+1166: 	if found.methodField != "" {
+1167: 		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose method " + found.methodField + " becomes a writable field: a write of " + l.checker.TypeToString(found.target) + " would replace a method of type " + l.checker.TypeToString(found.source)
+1168: 		fix = "make " + found.methodField + " readonly in the type it's seen as (readonly " + found.methodField + ": ...), or declare it there as a method, which isn't written (adamic/invariant-mutable)"
+1169: 	}
+1170: 	if found.readonlyField != "" {
+1171: 		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
+1172: 		fix = "keep " + found.readonlyField + " readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+1173: 	}
+1174: 	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
+1175: 		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
+1176: 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
+1177: 	}
+1178: 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
