@@ -24,5 +24,7 @@ outputs record these checks. Baseline stock/declaration/witness/contract
 artifacts from the identical main and toolchain remain in this directory's
 parent; those established baseline bytes are reused for the combined comparison.
 
-Independent full restoring mutants and fresh whole unfiltered lane are running.
-Final receipts will be appended. No Loom submission.
+Both independent restoring mutants pass: each brings back exactly its own
+refusal_scan site, with no other new, gone or changed finding. The combined
+source is restored and only sys.ts differs in the source hashes.
+Fresh whole unfiltered lane is running; final receipts will be appended. No Loom submission.

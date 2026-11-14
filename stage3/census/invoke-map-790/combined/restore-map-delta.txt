@@ -1,0 +1,4 @@
+new: 1
+{"depth": 0, "kind": "Refused", "measurement": "measured on a checker-rejected program", "phase": "refusal_scan", "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read", "root_kind": "", "text": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87: Adamic 0.1 refuses a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)", "unit": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:776:5", "where": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87"}
+gone: 0
+changed: 0
