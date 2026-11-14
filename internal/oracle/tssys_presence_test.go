@@ -19,7 +19,7 @@ func TestTsSysPresenceAgreesWithNode(t *testing.T) {
 	const want = "tryEnableSourceMapsForHost\nsetBlocking\n" +
 		"direct: writeOutputIsTTY false\ndirect: no getMemoryUsage\ndirect: memory -1, base64encode function, clearScreen undefined\nencoded direct\ncreateDirectory out\ndirect: tsconfig.json {}\n" +
 		"arrow: writeOutputIsTTY false\narrow: no getMemoryUsage\narrow: memory -1, base64encode function, clearScreen undefined\nencoded arrow\ncreateDirectory out\narrow: tsconfig.json {}\n" +
-		"patched writeFile out.js emitted\n"
+		"writeFile out.js emitted\n"
 	for _, entry := range []string{"main.a", "main.ts"} {
 		t.Run(entry, func(t *testing.T) {
 			t.Parallel()

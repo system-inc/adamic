@@ -17,11 +17,12 @@ import (
 var tsSysPresenceMembers = []string{"tryEnableSourceMapsForHost", "setBlocking", "writeOutputIsTTY", "getMemoryUsage", "base64encode", "clearScreen"}
 
 // tsc's ts.sys as tsc builds it (#p2n17c4 T1): an exported let made by an arrow called where it's
-// written, which nests getNodeSystem and fills its own let from it, stores a field onto it and hands it
+// written, which nests getNodeSystem and fills its own let from it and hands it
 // back with !, beside a setSys nothing calls; read through a barrel's namespace and handed down a chain
 // of plain calls, one from an arrow. reachSystem (reach_roads_test.go) pins the reach of a flatter twin;
 // this is the shape tsc has, with getNodeSystem nested, a literal whose method shorthand reads the
-// literal, the patch's store and the chain, and its presence tests: every one lowers, which is
+// literal and the chain, and its presence tests (tsc's patch of writeFile is left out: it reads the
+// method as a value first, which stays refused, so tsc stops there anyway): every one lowers, which is
 // checkOptionalMemberPresence admitting it, a known reach of plain literals, and each tested member is
 // read off its slot as it runs. setBlocking is the 15th site (tsc.ts:20), judged by the check as the
 // others are, since its receiver is ts.sys, not stdout's handle. The oracle holds what it runs to

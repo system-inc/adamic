@@ -1,8 +1,8 @@
 /*
  * tsc.ts (src/tsc/tsc.ts:16-24), for the presence tests read off ts.sys (#p2n17c4 T1): ts.sys's optional
  * members tested straight off the barrel's namespace, tryEnableSourceMapsForHost on the left of && and
- * setBlocking in a condition, each guarding its call, then the system handed to the entry, and the field
- * the arrow's patch stored called.
+ * setBlocking in a condition, each guarding its call, then the system handed to the entry, and its
+ * writeFile called.
  */
 import * as ts from './barrel.a';
 
