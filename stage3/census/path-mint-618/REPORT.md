@@ -21,3 +21,11 @@ scratch using env.sh. This is a setup deviation from the all-writes-in-scratch
 instruction; the shared checkout's source files were not changed.
 
 No Loom submission was made.
+
+## Second checkpoint
+
+Fresh amendment apply passes. Stock TypeScript 6.0.3: 0 diagnostics on all 79
+roots for both trees (0 new). All 604 emitted JavaScript files have identical
+SHA-256 values, with no added or removed output file. Upstream baseline `hereby
+dts` passes. Amendment census, mutant, declarations, types and whole lane are
+still pending; this checkpoint is not acceptance.
