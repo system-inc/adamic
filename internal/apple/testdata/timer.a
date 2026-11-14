@@ -1,0 +1,21 @@
+// timer.a: a timer's block whose closure reads how many arguments it was handed, the one thing that
+// makes a closure take the count main's closure convention carries: Apple hands it the timer, one. A
+// default parameter alone doesn't read the count (only undefined does), so arguments is what observes
+// it. timer.m is the same timer in Objective-C.
+
+import { RunLoop } from 'apple/corefoundation/run-loop';
+import { Timer } from 'apple/foundation/timer';
+
+let fired = 0;
+const timer = Timer.scheduledTimer({
+	with: 0,
+	repeats: false,
+	block: function (given: Timer) {
+		fired += 1;
+		console.log(`fired: ${given === undefined ? 'no timer' : 'a timer'}, handed ${arguments.length}`);
+		RunLoop.main.stop();
+	},
+});
+RunLoop.run();
+timer.invalidate();
+console.log(`fired ${fired}`);

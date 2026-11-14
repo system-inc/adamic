@@ -22,6 +22,13 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // "--version" or "-v"), with or without a --target= before it, or buildcache.CompilerReport(name), passes without a
 // reason (versionQuery).
 var compilerSites = map[string]string{
+	"bench/apple/run.go:main":                                            "compiles the Objective-C benchmark witness into a scratch directory; Adamic products use native.BuildApple",
+	"cmd/adamic-apple-bindings/main.go:run":                              "selects clang for SDK header inspection and binding generation; builds no executable product",
+	"internal/apple/generate/generate_test.go:clangPath":                 "finds clang for fixture header syntax and AST inspection; builds no executable product",
+	"internal/apple/generate/sdk.go:FromSDK":                             "resolves the SDK clang for header AST inspection and binding generation; builds no executable product",
+	"internal/apple/generate/sdk.go:CheckSDK":                            "syntax-checks generated binding declarations against SDK headers; builds no executable product",
+	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses": "compiles independent Objective-C witnesses into t.TempDir(); Adamic programs use native.BuildApple",
+
 	"internal/worker/json_decode_test.go:runWorkerDecodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
 	"internal/worker/json_encode_test.go:runWorkerEncodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
 
@@ -151,6 +158,8 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 // names its target (#5xsd2ha), the build's triple through native.Flags, SourceFlags or LinkFlags, which resolve it, or
 // native.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
 var targetedSites = []string{
+	"bench/apple/run.go:main",
+	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses",
 	"internal/oracle/release_stack_test.go:reservationProbe",
 	"cmd/adamic-test262/run.go:attempt",
 	"cmd/adamic-test262/run_test.go:TestProgramCPUDeadline",
