@@ -1,0 +1,18 @@
+{
+  "file": "factory/emitHelpers.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 18.998471749999908,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/19.jsonl"
+  ],
+  "findings": 7,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "987776a5d553f969653a64262fe76bc8b1264136420535e13dba037aa619191c",
+  ".log_sha256": "48901b9859842ae662c25956558a382b0424e308eaf9f966f742e8521a63a8e1"
+}

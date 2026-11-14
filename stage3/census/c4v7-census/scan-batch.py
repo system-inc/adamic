@@ -44,5 +44,5 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
  codes=list(pool.map(run,[(label,i) for i in range(first,last+1) for label in ('main','head')]))
 assert all(x==0 for x in codes),codes
 subprocess.run(['git','add',str(OUT)],check=True)
-subprocess.run(['git','commit','-m',f'census: refusal scan paired batch {first}-{last}'],check=True)
+subprocess.run(['git','commit','--quiet','-m',f'census: refusal scan paired batch {first}-{last}'],check=True)
 subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/c4v7-census'],check=True)

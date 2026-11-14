@@ -1,0 +1,18 @@
+{
+  "file": "factory/emitNode.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 14.074961700999893,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/20.jsonl"
+  ],
+  "findings": 8,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "e1e197e281b77aa5660de4d1950e1ddaa80398f3d05e74d59351ca2bda9b29a1",
+  ".log_sha256": "b282e880b4dc515392ad26e3d9759903af157740630d6ac4e83f5b9cdd67adb6"
+}

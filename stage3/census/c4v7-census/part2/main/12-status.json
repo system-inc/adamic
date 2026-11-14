@@ -1,0 +1,18 @@
+{
+  "file": "corePublic.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 19.724779186999967,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/12.jsonl"
+  ],
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "0b734651c67e2bcc6120f11f8d6142556cbbe9b2a73e3457d7fdcd000517bedf",
+  ".log_sha256": "f88f6a9bf83aaca5f054877fa8eb1e93181516288b937022b94bbbb06396332b"
+}

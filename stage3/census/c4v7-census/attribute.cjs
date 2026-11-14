@@ -37,6 +37,9 @@ for (const f of findings) {
   }
  }
  f.rule=(f.text.match(/\((adamic\/[^)]+)\)\s*$/)||[])[1]||null;
+ if(f.reason.startsWith('an element of an array literal a type argument is inferred from')) {
+  f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'judgeBoundArray',emitter_source:'internal/lower/constraint_relation.go:356'};
+ }
  f.source_line=sf.text.split(/\r?\n/)[line-1];f.enclosing_function=functions[0]||null;f.enclosing_functions=functions;f.generic_bodies=generics;f.slot=slot;
 }
 fs.writeFileSync(path.join(base,'new-findings-attributed.json'),JSON.stringify(findings,null,2)+'\n');

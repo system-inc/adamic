@@ -1,0 +1,18 @@
+{
+  "file": "diagnosticInformationMap.generated.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 16.12112864100004,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/14.jsonl"
+  ],
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "4d3c93ed40fac6a24265cee1952c6735fca3fe9f554b726fd7b6440d409202e6",
+  ".log_sha256": "68d6f639a127f698c9b91985123e2ae145649918d8245e842f96620925998621"
+}
