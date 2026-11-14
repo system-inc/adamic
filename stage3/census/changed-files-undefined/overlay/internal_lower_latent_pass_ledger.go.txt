@@ -1,0 +1,71 @@
+// Compiled only in the measurement overlay. The table also selects opt-in scoped observations.
+package lower
+
+import "github.com/system-inc/adamic/stage3/census/latent"
+
+// The one ordered step list. Whole-program conditional blocks remain omissions:
+// independent body lowering cannot establish their applicability.
+var latentPostLoweringSteps = []latent.PassStep{
+	{Name: "checkOverloadResults"},
+	{Name: "forwarderValues", Scoped: true, Production: "lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)"},
+	{Name: "finishClassCalls", Scoped: true},
+	{Name: "finishAccessors", Scoped: true},
+	{Name: "finishToPrimitive", Scoped: true},
+	{Name: "checkIterableViews"},
+	{Name: "exceptions"},
+	{Name: "checkLibrarySpreads"},
+	{Name: "checkAccessorSpreads"},
+	{Name: "checkRecordGuardedReads", Scoped: true},
+	{Name: "checkDynamicKeyedGetters"},
+	{Name: "checkGeneratorRoads"},
+	{Name: "flow.NormalizeAsync", Scoped: true},
+	{Name: "asyncEntrySource", Scoped: true, Production: "if lowering.result.AsyncEntry > 0 [calls:modulePath,len]"},
+	{Name: "findCycles", WholeProgram: true},
+	{Name: "checkBoundArguments"},
+	{Name: "checkViewOptionalWrites", Scoped: true},
+	// checkOptionalMemberPresence judges shape 1's presence reads by the whole program's allocation graph
+	// (#p2n17c4 shape 1): it reads the IR and rewrites nothing, so a body lowered on its own is recorded as
+	// not run.
+	{Name: "checkOptionalMemberPresence"},
+	{Name: "checkViewCopies"},
+	{Name: "checkViewWidenedReads"},
+	{Name: "checkHostMemberWrites", Scoped: true},
+	{Name: "asyncPayloadFailures", Scoped: true, Production: "if len(lowering.asyncPayloadFailures) > 0 [calls:]"},
+	{Name: "checkPromiseConsumption"},
+	{Name: "checkViewLogicalWrites", Scoped: true},
+	{Name: "programRegion", WholeProgram: true, Production: "if discovery || plan != nil [calls:result.HasAsync,program.Where,entry.AsNode]"},
+	{Name: "applyProgramMetadata", WholeProgram: true, Production: "if plan != nil [calls:applyProgramMetadata]"},
+	{Name: "ownershipQuery", WholeProgram: true, Production: "if len(ownershipQuery) > 0 && ownershipQuery[0] && lowering.hasMovedParallelMap [calls:fresh.QueryOwnershipTransfers,moveRefused,transfer.Answer.Verdict.String,fmt.Sprint]"},
+	{Name: "readiness"},
+	{Name: "borrow", Scoped: true},
+	{Name: "counters", Scoped: true},
+	{Name: "voidDiscards"},
+	{Name: "checkInspectorDoomedContracts"},
+	// checkFlowLiveness judges, once nothing more changes the program, that no function a flow graph
+	// took to never run is named after (#p2n17c4 H3): it reads the IR and rewrites nothing, so a body
+	// lowered on its own has no graph to hold and the latent census records it as not run, as it does
+	// every judging pass.
+	{Name: "checkFlowLiveness"},
+}
+
+// Finalized with the unit status and instantiation metadata, once all modes have
+// returned their records. Scan findings alone are not body-lowering stops.
+func latentAttachPassLedger(record *LatentFile) {
+	for i := range record.Units {
+		unit := &record.Units[i]
+		switch unit.Status {
+		case "attempted", "panic", "speculative":
+		default:
+			continue // A deferred or checker-excluded body was not attempted independently.
+		}
+		stopped := unit.Status == "panic"
+		for _, finding := range record.Findings {
+			if finding.Unit == unit.Where && (finding.Phase == "lowering" || finding.Phase == "deferred" || finding.Phase == "registration" || finding.Phase == "prepass") {
+				stopped = true
+			}
+		}
+		if stopped || len(unit.PassLedger) == 0 {
+			unit.PassLedger = latent.OmittedPassLedger(latentPostLoweringSteps, stopped)
+		}
+	}
+}

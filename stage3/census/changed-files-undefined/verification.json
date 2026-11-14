@@ -1,0 +1,47 @@
+{
+  "feature": "d33cec09b75dbd817e35aabaef56a280da14247b",
+  "base": "5d334653fa9ce301738e9eb2ef016c99da4589b8",
+  "main_apply_exit": 0,
+  "amended_apply_exit": 0,
+  "apply_source_manifest_matches_census": true,
+  "lane": {
+    "command": "go test -json -count=1 -parallel=2 -timeout=45m ./stage3/lane",
+    "exit": 0,
+    "elapsed": 1329.997,
+    "passed_tests": 430,
+    "manifest_shards": 398,
+    "failed_tests": [],
+    "skipped_tests": []
+  },
+  "census": {
+    "main_events": 191,
+    "after_events": 190,
+    "removed": [
+      "sys.ts:290:19"
+    ],
+    "new": [],
+    "changed": [],
+    "mutant_exactly_restores_main": true
+  },
+  "javascript": {
+    "typescript": "6.0.3",
+    "target": "ES2024",
+    "module": "ESNext",
+    "sourceMap": false,
+    "bytes": 69813,
+    "sha256": "cf08cbdf623dbf88c3d2bdfe4d121aea81cf552ba8169c2cd4a76c09ffa41eab",
+    "byteIdentical": true
+  },
+  "types": {
+    "main": 0,
+    "after": 0,
+    "roots": 79
+  },
+  "contract": {
+    "exit": 0,
+    "owners": 13,
+    "files": 9
+  },
+  "lane_generated_files_changed": false,
+  "loom_submitted": false
+}

@@ -1,0 +1,45 @@
+{
+  "base": "5d334653fa9ce301738e9eb2ef016c99da4589b8",
+  "submodules": " 5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e1)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (remotes/origin/adamic)\n",
+  "owner_inputs": {
+    "stage3/adapt/99-correctness-timer-closures/calls.json": "2c8d702bf7c5ea570a300b9df4fd2b3fd5c956fd7a71dbd12984ee7b8254899f",
+    "stage3/adapt/99-correctness-timer-closures/PROOF.md": "4e1029e13cf6b242f04e92e3db3b653283d59ee3e01ab6b654a78fea1cc4b1b8",
+    "stage3/adapt/99-correctness-timer-closures/adapt.cjs": "33f3d49d77dc920e03fa5832da5e24a03726cb21567647d0a7ab806ebd3ac186",
+    "stage3/adapt/99-correctness-timer-closures/witness.cjs": "562a8b26a3997c501875d8b315746d103e720e022f15556b6dc36f301b3d65d3",
+    "stage3/adapt/99-correctness-timer-closures/README.md": "481c9f5df32258d9dd0fb80a5d6fff95df19c1f5eaa2f6e14eed0b253b048bc7",
+    "stage3/adapt/99-correctness-timer-closures/api-sanctions.json": "abd191d026f96adb68cc23122087d3218a30bc3621f6d60c559cfe350c2780c2",
+    "stage3/adapt/99-correctness-timer-closures/contract.cjs": "47400bc9113fa977e9b50aa05e27e7a7ff859b8447a64d2d2decae382e318fd1",
+    "stage3/adapt/99-correctness-timer-closures/owners.json": "963f37a20ca708affd34af195a7d2de7cc54058adb381fc07c040297f10a23c6"
+  },
+  "prior_amendments": {
+    "typescript/polling-queue-composition-2": "5d334653fa9ce301738e9eb2ef016c99da4589b8",
+    "typescript/timer-call-receiver-2": "8fe3dc44147e54180612ef4713196d40f02f384e"
+  },
+  "tools": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.1 linux/amd64",
+    "git": "git version 2.52.0",
+    "python": "Python 3.12.14"
+  },
+  "typescript": {
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "tag": "v6.0.3",
+    "version": "6.0.3"
+  },
+  "binaries": {
+    "adamic": "d9b126b8b9d6ea3bd3c696ad1a3e5fc41cda1c221a166ee85fc1ac4b8a599f9d",
+    "latent-census": "ff56897f4378db463b79d204ed771fdb556395b8d4340121e3baaf0b080459d5"
+  },
+  "amended_owner_inputs": {
+    "stage3/adapt/99-correctness-timer-closures/calls.json": "2c8d702bf7c5ea570a300b9df4fd2b3fd5c956fd7a71dbd12984ee7b8254899f",
+    "stage3/adapt/99-correctness-timer-closures/PROOF.md": "4e1029e13cf6b242f04e92e3db3b653283d59ee3e01ab6b654a78fea1cc4b1b8",
+    "stage3/adapt/99-correctness-timer-closures/adapt.cjs": "33f3d49d77dc920e03fa5832da5e24a03726cb21567647d0a7ab806ebd3ac186",
+    "stage3/adapt/99-correctness-timer-closures/witness.cjs": "562a8b26a3997c501875d8b315746d103e720e022f15556b6dc36f301b3d65d3",
+    "stage3/adapt/99-correctness-timer-closures/README.md": "a7970668bce6f5222b556b6ef6ee11285d95231b33b09373b4500fac55ef59a7",
+    "stage3/adapt/99-correctness-timer-closures/api-sanctions.json": "abd191d026f96adb68cc23122087d3218a30bc3621f6d60c559cfe350c2780c2",
+    "stage3/adapt/99-correctness-timer-closures/contract.cjs": "47400bc9113fa977e9b50aa05e27e7a7ff859b8447a64d2d2decae382e318fd1",
+    "stage3/adapt/99-correctness-timer-closures/owners.json": "7f649dcc6ff68dbc15e64cbd4f1abdd5b444f7eb2bee1425c59f516b45cc3d0d"
+  },
+  "excluded_preview": "invalid-lf-preview: snapshot mistakenly normalized CRLF; terminated with -15, excluded. Corrected snapshot preserves CRLF; exact amendment is 14 bytes."
+}

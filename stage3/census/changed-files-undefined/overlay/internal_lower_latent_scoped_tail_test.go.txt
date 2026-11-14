@@ -1,0 +1,111 @@
+// Compiled against production lowering by the measurement overlay; no go build.
+package lower
+
+import (
+	"context"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+func TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg(t *testing.T) {
+	t.Parallel()
+	// The census globals and environment belong to this fresh test process only.
+	if os.Getenv("LATENT_TAIL_GUARD_CHILD") != "1" {
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		defer cancel()
+		child := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestLatentScopedTailRecordStopOwnsSnapshotLoom03dg$", "-test.timeout=19s")
+		for _, value := range os.Environ() {
+			if !strings.HasPrefix(value, "LATENT_TAIL=") && !strings.HasPrefix(value, "LATENT_TAIL_GUARD_CHILD=") {
+				child.Env = append(child.Env, value)
+			}
+		}
+		child.Env = append(child.Env, "LATENT_TAIL=1", "LATENT_TAIL_GUARD_CHILD=1")
+		output, err := child.CombinedOutput()
+		if err != nil {
+			t.Fatalf("guard child exit: %v\n%s", err, output)
+		}
+		return
+	}
+	path := filepath.Join(t.TempDir(), "main.ts")
+	source := `const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface A { readonly kind: 1; readonly label: string | number }
+interface B { readonly kind: 2; readonly other: string }
+function probe(n: A | B): void { const s = n as A; console.log(String(s.label)); }
+`
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.LatentLoad([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if diagnostics := program.LatentDiagnostics(); len(diagnostics) > 0 {
+		t.Fatal(diagnostics)
+	}
+	file := program.Files()[0]
+	checker, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	modules, err := l.latentPrepassModules()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := l.collectViewedElements(modules); err != nil {
+		t.Fatal(err)
+	}
+	l.noteInheritance(modules)
+	l.noteAccessorNames(modules)
+	l.noteOmittedOptionals(modules)
+	l.latentRegister(program.Files())
+	var facts *latentProgramFacts
+	l.latentUseProgramFacts(&facts)
+	var node *ast.Node
+	for _, n := range file.Statements.Nodes {
+		if n.Kind == ast.KindFunctionDeclaration {
+			node = n
+		}
+	}
+	if node == nil {
+		t.Fatal("missing probe unit")
+	}
+	index := l.functions[l.symbol(node.Name())]
+	if err := l.lowerFunction(index, node, -1); err != nil {
+		t.Fatal(err)
+	}
+	if l.unlowerable != nil {
+		t.Fatal(l.unlowerable)
+	}
+	if len(l.recordGuardedReads) == 0 || len(l.result.CheckedFields) == 0 {
+		t.Fatalf("fixture lacks guarded read or checked field: reads=%d fields=%v", len(l.recordGuardedReads), l.result.CheckedFields)
+	}
+	before := l.latentSnapshot()
+	unit := LatentUnit{Where: program.Where(node), Status: "attempted"}
+	l.latentFinishUnit(&unit, node)
+	if len(latentFindings) != 1 || latentFindings[0].Phase != "tail" || latentFindings[0].Pass != "checkRecordGuardedReads" || latentFindings[0].Reason != "a union or optional field read in a program with record storage" {
+		t.Fatalf("missing tail finding: %+v", latentFindings)
+	}
+	for _, step := range unit.PassLedger {
+		if step.Name == "checkRecordGuardedReads" && step.Status != "stopped_scoped" {
+			t.Fatalf("stop ledger: %+v", step)
+		}
+		if step.Name == "finishAccessors" && step.Status != "executed_scoped" {
+			t.Fatalf("execution ledger: %+v", step)
+		}
+		if step.Name == "borrow" && step.Status != "not_reached_earlier_pass_stop" {
+			t.Fatalf("censor ledger: %+v", step)
+		}
+	}
+	if !reflect.DeepEqual(l, before) {
+		t.Fatal("tail copied mutations into unit/base state")
+	}
+}

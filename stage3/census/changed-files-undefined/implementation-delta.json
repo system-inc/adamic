@@ -1,0 +1,14 @@
+{
+  "files": [
+    "stage3/adapt/99-correctness-timer-closures/README.md",
+    "stage3/adapt/99-correctness-timer-closures/owners.json"
+  ],
+  "owner": "createDynamicPriorityPollingWatchFile",
+  "old_declaration": "const changedFilesInLastPoll: WatchedFileWithUnchangedPolls[] = [];",
+  "new_declaration": "const changedFilesInLastPoll: (WatchedFileWithUnchangedPolls | undefined)[] = [];",
+  "before_pin_unchanged": true,
+  "other_owners_unchanged": true,
+  "all_owner_hashes_valid": true,
+  "old_after_sha256": "282e9c8a1919293af43dc058a2afdd483f278a77c4438227cf5afe2fccc9cf49",
+  "new_after_sha256": "25297fd35aea631bdcc99da77465ddbb9c90f33267433667838d218a75e6eb94"
+}

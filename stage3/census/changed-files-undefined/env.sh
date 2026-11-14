@@ -1,0 +1,11 @@
+source /workspace/adamic-tools/env.sh
+export TMPDIR=/workspace/scratch/changed-files-proof/tmp
+export STAGE3_CACHE=/workspace/scratch/changed-files-proof/cache
+export GOCACHE=/workspace/scratch/changed-files-proof/gocache
+export GOMODCACHE=/workspace/scratch/changed-files-proof/gomodcache
+export GOPATH=/workspace/scratch/changed-files-proof/gopath
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/changed-files-typescript-603
+export NODE_PATH=/workspace/scratch/changed-files-undefined-1/stage3/api/node_modules
+export PYTHONDONTWRITEBYTECODE=1
+export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/changed-files-proof/buildcache
+export npm_config_cache=/workspace/scratch/changed-files-proof/npm-cache

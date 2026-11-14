@@ -1,0 +1,70 @@
+{
+  "normalization": "Only tree-path prefixes and the exact 14-byte sys.ts span relocation after the declaration; no reason, text, unit or phase is ignored. Boundary events listed separately.",
+  "source_byte_delta": 14,
+  "raw_counts": {
+    "main": 191,
+    "after": 190
+  },
+  "sites": {
+    "gone": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "<TREE>/src/compiler/sys.ts:288:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "<TREE>/src/compiler/sys.ts:290:19",
+        "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+        "text": "<TREE>/src/compiler/sys.ts:290:19: Adamic 0.1 refuses a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    ],
+    "new": [],
+    "unchanged": 63
+  },
+  "all_events": {
+    "gone": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "<TREE>/src/compiler/sys.ts:288:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "<TREE>/src/compiler/sys.ts:290:19",
+        "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+        "text": "<TREE>/src/compiler/sys.ts:290:19: Adamic 0.1 refuses a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    ],
+    "new": [],
+    "unchanged": 118
+  },
+  "observations": {
+    "gone": [
+      {
+        "count": 1,
+        "finding": {
+          "depth": 0,
+          "kind": "Refused",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "refusal_scan",
+          "reason": "a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read",
+          "root_kind": "",
+          "text": "<TREE>/src/compiler/sys.ts:290:19: Adamic 0.1 refuses a value of type WatchedFileWithUnchangedPolls[] seen as (WatchedFileWithUnchangedPolls | undefined)[], which can write WatchedFileWithUnchangedPolls | undefined where WatchedFileWithUnchangedPolls is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+          "unit": "<TREE>/src/compiler/sys.ts:288:5",
+          "where": "<TREE>/src/compiler/sys.ts:290:19"
+        }
+      }
+    ],
+    "new": []
+  },
+  "mutant_sites_vs_main": {
+    "gone": [],
+    "new": [],
+    "unchanged": 119
+  },
+  "mutant_observations_vs_main": {
+    "gone": [],
+    "new": []
+  }
+}

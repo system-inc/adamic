@@ -1,0 +1,44 @@
+[
+  {
+    "line": 246,
+    "column": 11,
+    "role": "declaration",
+    "text": "changedFilesInLastPoll: (WatchedFileWithUnchangedPolls | undefined)[] = []"
+  },
+  {
+    "line": 290,
+    "column": 19,
+    "role": "pollQueue argument",
+    "text": "pollQueue(changedFilesInLastPoll, PollingInterval.Low, /*pollIndex*/ 0, changedFilesInLastPoll.length)"
+  },
+  {
+    "line": 290,
+    "column": 81,
+    "role": "length",
+    "text": "changedFilesInLastPoll.length"
+  },
+  {
+    "line": 296,
+    "column": 37,
+    "role": "length",
+    "text": "changedFilesInLastPoll.length"
+  },
+  {
+    "line": 314,
+    "column": 31,
+    "role": "identity comparison",
+    "text": "queue !== changedFilesInLastPoll"
+  },
+  {
+    "line": 322,
+    "column": 32,
+    "role": "identity comparison",
+    "text": "queue === changedFilesInLastPoll"
+  },
+  {
+    "line": 353,
+    "column": 9,
+    "role": "push",
+    "text": "changedFilesInLastPoll.push"
+  }
+]
