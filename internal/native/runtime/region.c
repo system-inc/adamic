@@ -19,6 +19,11 @@
 // ends, and a parallelMap task, a closure, is never handed its caller's region (only a direct call's
 // region version takes one). The cache is off under AddressSanitizer, so a use after a region ends is
 // still a use after free there.
+//
+// Past 1 MB a region grows by 2 MB blocks, each aligned to 2 MB and madvised for a huge page, on
+// Linux (#cgn2cwt): trees' regions took 1,969 more 1 MB blocks after the ladder, about 2.3 GB that
+// faulted in a 4 KB page at a time, 626K faults and most of its system time. One fault backs a whole
+// huge block. A huge block is never cached, so what a thread keeps idle is still the cap.
 
 // mmap's MAP_ANONYMOUS under -std=c11 on glibc (the block cache below).
 #define _DEFAULT_SOURCE
@@ -30,9 +35,9 @@
 #include <string.h>
 
 // size is what the block holds for objects and used how much of it is taken. turn is the standard
-// size, 4 KB doubling to 1 MB, of the turn the block was made in, header included, which the next
-// turn doubles whether the block was mapped or malloc's. mapping is the whole mapping a mapped block
-// is, its turn, or 0 for a block malloc made.
+// size, 4 KB doubling to 1 MB and then 2 MB where huge blocks are, of the turn the block was made in,
+// header included, which the next turn doubles whether the block was mapped or malloc's. mapping is
+// the whole mapping a mapped block is, its turn, or 0 for a block malloc made.
 struct adamic_region_block {
 	struct adamic_region_block *next;
 	size_t size;
@@ -77,10 +82,27 @@ static size_t object_size(size_t count) {
 #include <sys/mman.h>
 #endif
 
+// Huge blocks use Linux's transparent huge pages, which the house boxes give only to a mapping that
+// asks for them (THP at madvise). Not under any sanitizer, so a sanitized build runs the blocks it
+// always has; AddressSanitizer already turns the cache off.
+#if defined(__has_feature)
+#if __has_feature(thread_sanitizer) || __has_feature(memory_sanitizer)
+#define REGION_BLOCK_HUGE_OFF 1
+#endif
+#endif
+#if defined(__SANITIZE_THREAD__)
+#define REGION_BLOCK_HUGE_OFF 1
+#endif
+#if defined(__linux__) && !defined(__wasm32__) && !defined(REGION_BLOCK_CACHE_OFF) && !defined(REGION_BLOCK_HUGE_OFF) && defined(MADV_HUGEPAGE)
+#define REGION_BLOCK_HUGE 1
+#endif
+
 // One list per standard block size, a mapping of 4 KB doubling to 1 MB. A block made for an object
 // bigger than its turn's size is malloc's, and goes back to it.
 #define BLOCK_SIZES 9
 #define BLOCK_LARGEST ((size_t)1048576)
+// BLOCK_HUGE, the turn after BLOCK_LARGEST, is one huge page on x86-64 and on arm64 with 4 KB pages.
+#define BLOCK_HUGE ((size_t)2097152)
 static _Thread_local adamic_region_block *cached[BLOCK_SIZES];
 static _Thread_local size_t cached_bytes;
 
@@ -101,10 +123,40 @@ static int size_index(size_t mapping) {
 }
 #endif
 
+#ifdef REGION_BLOCK_HUGE
+// huge_map is a BLOCK_HUGE mapping aligned to BLOCK_HUGE, or NULL. The kernel backs only an aligned
+// 2 MB stretch with a huge page, so twice the size is mapped, which holds one such stretch, and the
+// head and tail around it are unmapped. The madvise asks for the huge page; where the kernel can't
+// give one, the block is still ordinary memory.
+static void *huge_map(void) {
+	unsigned char *mapped = mmap(NULL, 2 * BLOCK_HUGE, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if (mapped == MAP_FAILED) { return NULL; }
+	uintptr_t start = (uintptr_t)mapped;
+	size_t head = (size_t)(((start + BLOCK_HUGE - 1) & ~(uintptr_t)(BLOCK_HUGE - 1)) - start);
+	if (head != 0) { munmap(mapped, head); }
+	munmap(mapped + head + BLOCK_HUGE, BLOCK_HUGE - head);
+	madvise(mapped + head, BLOCK_HUGE, MADV_HUGEPAGE);
+	return mapped + head;
+}
+#endif
+
 // block_take is a block for at least size bytes of objects, whose turn is a mapping of total bytes:
 // the cache's, a new mapping, or, for an object bigger than the turn holds, malloc's.
 static adamic_region_block *block_take(size_t total, size_t size) {
 	adamic_region_block *block;
+#ifdef REGION_BLOCK_HUGE
+	if (total == BLOCK_HUGE && total - sizeof *block >= size) {
+		void *mapped = huge_map();
+		// As for a standard block, a failed mapping leaves this one to malloc.
+		if (mapped != NULL) {
+			block = mapped;
+			block->turn = block->mapping = total;
+			block->size = total - sizeof *block;
+			count_block(true);
+			return block;
+		}
+	}
+#endif
 #ifndef REGION_BLOCK_CACHE_OFF
 	int index = size_index(total);
 	if (index >= 0 && total - sizeof *block >= size) {
@@ -147,10 +199,12 @@ static void block_free(adamic_region_block *block) {
 	free(block);
 }
 
+// block_give keeps a standard mapped block within the cap and frees the rest. A huge block has no
+// list, so it's unmapped whatever the cap, as is a malloc block (mapping 0, no size of its own).
 static void block_give(adamic_region_block *block) {
 #ifndef REGION_BLOCK_CACHE_OFF
-	if (block->mapping != 0 && cached_bytes + block->mapping <= ADAMIC_REGION_BLOCK_CACHE) {
-		int index = size_index(block->mapping);
+	int index = size_index(block->mapping);
+	if (index >= 0 && cached_bytes + block->mapping <= ADAMIC_REGION_BLOCK_CACHE) {
 		block->next = cached[index];
 		cached[index] = block;
 		cached_bytes += block->mapping;
@@ -178,11 +232,15 @@ void adamic_region_thread_end(void) {
 static inline void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
-		// Each turn twice the last, 4 KB up to 1 MB, header included, and a block holds at least the
-		// object: one bigger than its turn is malloc's, made to fit.
+		// Each turn twice the last, 4 KB up to 1 MB, header included, and 2 MB from then on where huge
+		// blocks are. A block holds at least the object: one bigger than its turn is malloc's, made to fit.
 		size_t total = block == NULL ? 4096 : block->turn * 2;
 		if (total > BLOCK_LARGEST) {
+#ifdef REGION_BLOCK_HUGE
+			total = BLOCK_HUGE;
+#else
 			total = BLOCK_LARGEST;
+#endif
 		}
 		adamic_region_block *fresh = block_take(total, size);
 		if (fresh == NULL) {
