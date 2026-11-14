@@ -64,7 +64,7 @@ func rulesAgreeSourceInputs(t *testing.T) []string {
 	// Reads: stage1/typescript/scanner/scanner.ts
 	// Reads: stage1/typescript/scanner/tokens.ts
 	// Reads: internal/load/prelude.d.ts
-	// Reads: internal/native/runtime/*.[ch]
+	// Reads: internal/native_runtime/c/*.[ch]
 	return rulesAgreeSourceInputsAt(t, filepath.Clean(repository))
 }
 
@@ -114,7 +114,7 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	sources := []string{"go.mod", "go.work", "stage1/cohere/lint/main.a", "stage1/cohere/lint/rules/probe/rule.ts", "stage1/cohere/lint/.generated/registry.ts", "stage1/cohere/lint/rules/probe/rule.json", "internal/lower/lower.go", "internal/native/runtime/heap.h", "internal/load/prelude.d.ts", "cohere/TypeScript/tsc/checker.go"}
+	sources := []string{"go.mod", "go.work", "stage1/cohere/lint/main.a", "stage1/cohere/lint/rules/probe/rule.ts", "stage1/cohere/lint/.generated/registry.ts", "stage1/cohere/lint/rules/probe/rule.json", "internal/lower/lower.go", "internal/native_runtime/c/heap.h", "internal/load/prelude.d.ts", "cohere/TypeScript/tsc/checker.go"}
 	write := func(name, content string) {
 		path := filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {

@@ -1,6 +1,6 @@
 from pathlib import Path
 import shutil,sys
-root=Path('/workspace/adamic'); target=Path(sys.argv[1]); shutil.copytree(root/'internal/native/runtime',target,dirs_exist_ok=True)
+root=Path('/workspace/adamic'); target=Path(sys.argv[1]); shutil.copytree(root/'internal/native_runtime/c',target,dirs_exist_ok=True)
 heap=target/'heap.c'; text=heap.read_text(); text=text.replace('#include <stdlib.h>','#include <stdlib.h>\n#include <stdio.h>\nstatic size_t profile_kinds[32];\nsize_t profile_slices, profile_concat, profile_numbers, profile_append;\nstatic void profile_dump(void) {\nfor(size_t i=0;i<32;i++) if(profile_kinds[i]) fprintf(stderr,"kind %zu %zu\\n",i,profile_kinds[i]);\nfprintf(stderr,"categories %zu %zu %zu %zu\\n",profile_slices,profile_concat,profile_numbers,profile_append);\n}')
 text=text.replace('void *adamic_allocate(size_t size, enum adamic_kind kind) {','void *adamic_allocate(size_t size, enum adamic_kind kind) {\n static bool registered; if(!registered) {atexit(profile_dump);registered=true;}\n profile_kinds[kind]++;');heap.write_text(text)
 p=target/'string_share.c'; text=p.read_text(); text='#include <stddef.h>\nextern size_t profile_slices;\n'+text; text=text.replace('\n\tsize_t storage =','\n\tprofile_slices++;\n\tsize_t storage =') if '\n\tsize_t storage =' in text else text.replace('\n\tconst adamic_string *owner =','\n\tprofile_slices++;\n\tconst adamic_string *owner =');p.write_text(text)

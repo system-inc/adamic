@@ -15,8 +15,9 @@ import (
 )
 
 // Compiler is the compiler's packages, by repository directory: what a compiler consumer depends on. A change to any
-// of them selects every consumer.
-var Compiler = []string{"internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"}
+// of them selects every consumer. internal/native_runtime is the C runtime every native program links, so a change to
+// its C selects them too.
+var Compiler = []string{"internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"}
 
 // The census's two kinds of evidence, as the gate tools' run.py reads them (compilerMarker and launchMarker): a
 // reference to the compiler itself, and launching a process, which may run it. cmd/adamic is bounded at its name

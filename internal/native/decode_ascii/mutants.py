@@ -2,7 +2,7 @@
 """Build each input.c mutant in scratch; never mutate the checkout."""
 import json, pathlib, shutil, subprocess, sys
 root=pathlib.Path.cwd(); scratch=pathlib.Path(sys.argv[1] if len(sys.argv)>1 else '/tmp/decode-ascii/mutants');scratch.mkdir(parents=True,exist_ok=True)
-runtime=root/'internal/native/runtime'; text=(runtime/'input.c').read_text()
+runtime=root/'internal/native_runtime/c'; text=(runtime/'input.c').read_text()
 mutants={
  'byte-80-ascii':text.replace('bytes[offset] < 0x80','bytes[offset] <= 0x80'),
  'boundary-one-late':text.replace('\treturn offset;\n}', '\tif (offset < length) { offset++; }\n\treturn offset;\n}',1),

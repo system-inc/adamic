@@ -259,7 +259,7 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 	if err != nil {
 		t.Fatal(err)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_process.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -427,7 +427,7 @@ int main(void) {
 	for _, mutant := range []bool{false, true} {
 		implementation := code + "\n"
 		if mutant {
-			data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+			data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_process.c"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -560,7 +560,7 @@ func TestNodeProcessRawWriteFileModeMutant(t *testing.T) {
 	if string(truth.stdout) != "raw|line\n9\n" || len(truth.stderr) != 0 {
 		t.Fatalf("unexpected Node file observation: %+v", truth)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/adamic.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

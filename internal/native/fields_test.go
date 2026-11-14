@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Uniform slots hold across structural literals, extra fields, and generic representations.
@@ -126,7 +127,7 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 	shapePattern := regexp.MustCompile(`static const adamic_shape \w+(?:\[\])? = \{([^;]*)\};`)
 	fieldPattern := regexp.MustCompile(`"([^"]*)"`)
 	offsets := uniformFieldOffsets(&ir.Program{})
-	files, err := runtime.ReadDir("runtime")
+	files, err := native_runtime.Sources.ReadDir("c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,7 +137,7 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 		if !strings.HasSuffix(file.Name(), ".c") && !strings.HasSuffix(file.Name(), ".h") {
 			continue
 		}
-		contents, err := runtime.ReadFile("runtime/" + file.Name())
+		contents, err := native_runtime.Sources.ReadFile("c/" + file.Name())
 		if err != nil {
 			t.Fatal(err)
 		}

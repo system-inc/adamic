@@ -50,7 +50,7 @@ func TestWASIErrnoIsNodesOnLinux(t *testing.T) {
 	}
 	// EXDEV is a code system_error_words doesn't name, so it reads UNKNOWN there and -4094 here.
 	source := fmt.Sprintf("#include <stdio.h>\n#include %q\nint main(void) {\n%s    printf(\"UNKNOWN %%.0f\\n\", adamic_node_errno(EXDEV));\n    return 0;\n}\n",
-		filepath.Join(root, "internal/native/runtime/node_errno.h"), lines.String())
+		filepath.Join(root, "internal/native_runtime/c/node_errno.h"), lines.String())
 	wasm := onWASI(t, source)
 	if difference := disagreement(node, wasm); difference != "" {
 		t.Fatalf("%s: Node %q, wasm32 %q", difference, node.stdout, wasm.stdout)
