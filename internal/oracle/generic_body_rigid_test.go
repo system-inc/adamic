@@ -24,8 +24,8 @@ import (
 // method taking {}, the one target tsc relates bivariantly), a generic class's field in a method, a
 // nested closure, and T extends U seen as U. q01 to q03 are sys.ts:304's pollWatchedFileQueue<T extends
 // WatchedFileWithIsClosed> handed a queue of a subtype, which reads T out of the queue and writes it
-// back: q01 alone, q02 with sys.ts's host and its callbackOnWatchFileStat?.(...), which stops at the
-// optional call, and q03 with that call written as a checked one. Each program's stop is pinned in its
+// back: q01 alone, q02 with sys.ts's host and its callbackOnWatchFileStat?.(...), which lowers since a
+// function value called through ?. lowers (#036ve6w), and q03 with that call written as a checked one. Each program's stop is pinned in its
 // .stop file as its wall, Refused or NotYet, where it stops, and the rule's tag when the stop names one,
 // never another rule's words; or "lowers", and a lowering one is held to Node on release, sanitized
 // native and JavaScript. internal/lower/generic-body-rigid.mutants.md has the mutants.

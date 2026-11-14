@@ -31,6 +31,7 @@ var targetReaders = map[string]targetReader{
 	"internal/lower/iterable_views.go:handNextReceiver:CallClosure.Closure":                           {"compiler", "inspects the property spelling to recognize a hand-driven next() on a parameter, not its function targets"},
 	"internal/lower/view_flow.go:closureCallsOf:CallClosure.Closure":                                  {"compiler", "asks whether a closure value is the callee operand, to tell a direct call of it from an escape; the call's targets come from ClosureTargets"},
 	"internal/lower/optional_method_call.go:optionalMethodCall:CallClosure.Closure":                   {"compiler", "checks the interface callee it just lowered is a method read, not its function targets"},
+	"internal/lower/optional_method_call.go:optionalValueCall:CallClosure.Closure":                    {"compiler", "checks the plain callee it just lowered is a function value, not a method read, not its function targets"},
 	"internal/lower/view_lazy.go:unemittableCheckedViewRead:CallClosure.Closure":                      {"compiler", "finds the checked view read an optional call makes, not its function targets"},
 	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
 	"internal/flow/build.go:canThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},

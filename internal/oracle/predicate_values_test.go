@@ -16,15 +16,21 @@ import (
 // shape, through an argument, a field, an element, a return, an alias and === identity. Four of
 // Language's controls the checker narrows nothing by (#1761dah) were stopped at "an indirect call
 // of a checked predicate" until the value carried its check; they lower now and agree with Node.
-// The other three stay in predicate_false_flow_stopped: c33, isS.call, at its unbound-method
-// refusal, and c24 and c45 at lowering's optional call, which no value reaches yet.
+// c24 and c45 call isS through test?.(n), and stopped at lowering's optional call until a function
+// value called through ?. lowered (#036ve6w): the checker types n at its declared Node on the false
+// side of an optional call (J-d1kkqy2), so nothing is believed there, and both agree with Node.
+// optional_absent is the short-circuit: test is absent, the if goes false, and n is read at Node.
+// c33, isS.call, stays in predicate_false_flow_stopped at its unbound-method refusal.
 func init() {
 	names := []string{
 		"predicate_values/visitor.ts",
+		"predicate_values/control_c24_optional.ts",
 		"predicate_values/control_c34_satisfies.ts",
 		"predicate_values/control_c44_inner_switch.ts",
 		"predicate_values/control_c46_logical_assign.ts",
+		"predicate_values/control_c45_nullish.ts",
 		"predicate_values/control_c53_inner_decl.ts",
+		"predicate_values/optional_absent.ts",
 	}
 	for _, name := range names {
 		fixtures = append(fixtures, struct {
@@ -37,9 +43,9 @@ func init() {
 
 // Each program lies on its predicate's true side (an asserts one returns for an Expression), and
 // reaches the lie by one road: an argument in tsc's visitor shape, a field, a let alias, a returned
-// function, an array element, an asserts value passed in, and a claim on the second parameter. Two
-// roads stop short of a value: an optional call through one isn't lowered yet, and bind is refused
-// as an unbound method. Node reads the missing field as undefined. As .ts, every road stops at the
+// function, an array element, an asserts value passed in, a claim on the second parameter, and an
+// optional call, test?.(node), whose true side is the check's (#036ve6w). One road stops short of a
+// value: bind is refused as an unbound method. Node reads the missing field as undefined. As .ts, every road stops at the
 // forwarder's check on sanitized and released native and the JavaScript backend, its message
 // located at the predicate's declaration (12:1 in each), never at a call: one forwarder serves
 // every call through the value (Optimizer's should). As .a, the unproven predicate stays refused.
@@ -55,6 +61,7 @@ var predicateValueFixtures = []struct {
 	{"element", "isS", "undefined\n", "", "true", "Node"},
 	{"asserts", "assertS", "undefined\n", "", "asserts", "Node"},
 	{"second_parameter", "isS", "undefined\n", "", "true", "Node"},
+	{"optional", "isS", "undefined\n", "", "true", "Node"},
 }
 
 func TestPredicateValuesCheckTheirClaim(t *testing.T) {
