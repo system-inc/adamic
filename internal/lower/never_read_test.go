@@ -155,3 +155,66 @@ func TestNeverReadTscShapesStopAtTheCondition(t *testing.T) {
 		}
 	}
 }
+
+// neverReadOwnShape is a local its own function narrows to never by two checks: writer is the statement
+// after its declaration, and between the one between the two checks.
+func neverReadOwnShape(writer, between string) string {
+	return "type Shape = \"circle\" | \"square\";\nfunction stray(value: unknown): string { return \"stray \" + String(value); }\nconst source: { v: Shape; shape: Shape } = { v: \"circle\", shape: \"circle\" };\nconst pair: [Shape] = [\"circle\"];\nfunction describe(start: Shape): string {\n\tlet shape: Shape = start;\n\t" + writer + "\n\tif (shape === \"circle\") return \"circle\";\n\t" + between + "\n\tif (shape === \"square\") return \"square\";\n\t{ const seen: unknown = shape; return stray(seen); }\n}\nconsole.log(describe(\"square\"));\n"
+}
+
+// neverReadOwnCount is neverReadOwnShape for ++ and --: a number or string local typeof checks exhaust.
+func neverReadOwnCount(update string) string {
+	return "function stray(value: unknown): string { return \"stray \" + String(value); }\nfunction describe(start: number | string): string {\n\tlet count: number | string = start;\n\tconst bump = (): void => { if (typeof count === \"number\") " + update + "; };\n\tif (typeof count === \"string\") return \"string\";\n\tbump();\n\tif (typeof count === \"number\") return \"number\";\n\t{ const seen: unknown = count; return stray(seen); }\n}\nconsole.log(describe(1));\n"
+}
+
+// The edges of "only its own function writes" (Adamic on #p6vawef, counted by references with
+// IsAssignmentTarget as rulings.md:338 does, writtenAcrossFunctions): a local its own function narrows
+// to never is trusted only when no other code writes it. An arrow declared in that function that writes
+// it and runs between the checks, a destructuring write in one (an object pattern, a shorthand and an
+// array), and ++ or -- in one are each another function's write, so each read stops as not yet at the
+// read, in .ts and .a, never a trap on a valid run (Node prints stray circle for the first five). The
+// control writes the same local by a destructuring in its own function, which the checker's flow sees:
+// between the checks the never vanishes and the read lowers as a read, and before them the never holds
+// and lowers to the trap.
+func TestNeverReadOwnFunctionEdges(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, read string }{
+		{"arrow", neverReadOwnShape("const flip = (): void => { shape = \"circle\"; };", "flip();"), "shape; return"},
+		{"destructured_object", neverReadOwnShape("const flip = (): void => { ({ v: shape } = source); };", "flip();"), "shape; return"},
+		{"destructured_shorthand", neverReadOwnShape("const flip = (): void => { ({ shape } = source); };", "flip();"), "shape; return"},
+		{"destructured_array", neverReadOwnShape("const flip = (): void => { [shape] = pair; };", "flip();"), "shape; return"},
+		{"increment", neverReadOwnCount("count++"), "count; return"},
+		{"decrement", neverReadOwnCount("count--"), "count; return"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var notYet *NotYet
+				if want := strings.Replace(neverReadWhere(t, probe.source, probe.read), "main.ts", "main"+extension, 1); !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, want) {
+					t.Fatalf("got %v, want a not yet at %s", err, want)
+				}
+			})
+		}
+	}
+	for _, control := range []struct {
+		name, source string
+		traps        bool
+	}{
+		{"control_between", neverReadOwnShape("", "({ v: shape } = source);"), false},
+		{"control_before", neverReadOwnShape("({ v: shape } = source);", ""), true},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(control.name+extension, func(t *testing.T) {
+				t.Parallel()
+				program, err := lowerSourceAs(t, control.source, extension)
+				if err != nil {
+					t.Fatalf("want it to lower, got %v", err)
+				}
+				if neverReadTraps(program) != control.traps {
+					t.Fatalf("trapped %v, want %v", neverReadTraps(program), control.traps)
+				}
+			})
+		}
+	}
+}
