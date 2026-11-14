@@ -540,5 +540,115 @@
     "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
     "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
     "seconds": 18.921402293
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.451511396
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.974992423
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 25.802329544
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.641893414
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.56152141
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.902739251
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.30581334
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 23.060063764
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 22.780894491
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 18.650997821
   }
 ]
