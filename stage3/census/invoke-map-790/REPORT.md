@@ -15,7 +15,9 @@ Upstream hereby dts succeeds on each side; typescript.d.ts and
 tsserverlibrary.d.ts are byte-identical. Existing witnesses and whole-owner
 contract outputs are byte-identical. comparisons.json records these assertions.
 
-Restoring mutant and full unfiltered lane are running; final receipts will follow.
+Restoring mutant passes: its entire full census equals main byte-for-byte,
+including the 790:87 refusal_scan observation. The amendment is restored.
+Full unfiltered lane is running; final receipts will follow.
 
 The supplemental legacy census audit passes. The supplemental full_audit.py
 fixture fails on unchanged main because it expects string/number condition

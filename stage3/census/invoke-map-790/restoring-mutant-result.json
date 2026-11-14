@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "full_stream_byte_identical_to_main": true,
+  "stream_sha256": "d02fde412da00b35877abc0e0b75b9d8f130f61bb7060991b5f6bf85bf0e5860",
+  "restored_findings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:776:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87",
+      "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+      "text": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87: Adamic 0.1 refuses a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    }
+  ],
+  "amendment_restored": true
+}
