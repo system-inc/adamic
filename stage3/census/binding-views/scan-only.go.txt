@@ -1,0 +1,35 @@
+// Measurement-only wrapper around the existing latentScan helper. No body lowering.
+package lower
+
+import (
+    "context"
+    "github.com/system-inc/adamic/internal/ir"
+    "github.com/system-inc/adamic/internal/load"
+    "github.com/system-inc/adamic/stage3/census/moduleformat"
+)
+
+func LatentScanOnly(ctx context.Context, program *load.Program, emit func(LatentFile)) LatentRelationReport {
+    relations := latentRelationReport(ctx, program)
+    records := []LatentFile{}
+    for _, file := range program.Files() {
+        if !latentFileSelected(program.FileName(file)) { continue }
+        latentFindings = nil
+        latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
+        record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
+        typeChecker, release := program.Checker(ctx, file)
+        l := &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+        l.latentScan(file)
+        seen := map[LatentFinding]bool{}
+        record.Findings = []LatentFinding{}
+        for _, finding := range latentFindings {
+            if !seen[finding] { record.Findings = append(record.Findings, finding); seen[finding] = true }
+        }
+        release()
+        records = append(records, record)
+    }
+    relations.End = latentReadRelationOverflow(ctx, program)
+    relations.CacheSizes = latentRelationCacheSizes(ctx, program)
+    relations.Complete(records)
+    for _, record := range records { emit(record) }
+    return relations
+}

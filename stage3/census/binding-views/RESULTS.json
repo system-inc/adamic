@@ -1,0 +1,55 @@
+{
+  "status": "STOP",
+  "reason": "Required byte-identical upstream declaration gate failed",
+  "baseline_apply": "PASS",
+  "upstream_npm_ci": {
+    "baseline": 0,
+    "candidate": 0
+  },
+  "upstream_hereby_dts": {
+    "baseline": 0,
+    "candidate": 0
+  },
+  "declarations": {
+    "status": "STOP: public declaration output differs",
+    "baseline_dts_exit": 0,
+    "candidate_dts_exit": 0,
+    "rows": [
+      {
+        "file": "typescript.d.ts",
+        "identical": false,
+        "before_sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+        "after_sha256": "bfe13d0ab8055d651cff6bf4fe322d8fc8c7c923892108cf062a822c9ae8ab12",
+        "before_bytes": 593536,
+        "after_bytes": 602650,
+        "diff_lines": 5691
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "identical": true,
+        "before_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+        "after_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+        "before_bytes": 866,
+        "after_bytes": 866
+      }
+    ]
+  },
+  "exact_diff": {
+    "file": "typescript.d.ts.diff",
+    "sha256": "0087ce6cfae5b0397a59fd23b8e11ac916d26822f01c2bf3cb8a082c822b6c8c",
+    "changed_lines": 1302,
+    "description": "All 1302 changed lines only insert export modifiers; same 11530 lines."
+  },
+  "adapter_contracts": "PASS: see contracts.json; includes exact mutant restoration but not refusal-return measurement",
+  "census": "STOPPED after declaration gate failed; both resolution full streams incomplete, exit -15; program scan not started",
+  "stock_tsc": "NOT RUN",
+  "adamic_types": "NOT RUN (executable build succeeded)",
+  "all_file_javascript": "NOT RUN; edited-file comparisons in both comment modes passed within contract checks",
+  "mutant_six_refusals": "NOT RUN",
+  "candidate_apply": "NOT RUN",
+  "lane": "NOT RUN",
+  "generated_files": "NOT REGENERATED",
+  "ledger": "NONE",
+  "implementation_branch": "NOT CREATED OR PUSHED",
+  "loom": "Never submitted"
+}

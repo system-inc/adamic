@@ -1,0 +1,24 @@
+{
+  "status": "STOP: public declaration output differs",
+  "baseline_dts_exit": 0,
+  "candidate_dts_exit": 0,
+  "rows": [
+    {
+      "file": "typescript.d.ts",
+      "identical": false,
+      "before_sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+      "after_sha256": "bfe13d0ab8055d651cff6bf4fe322d8fc8c7c923892108cf062a822c9ae8ab12",
+      "before_bytes": 593536,
+      "after_bytes": 602650,
+      "diff_lines": 5691
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "identical": true,
+      "before_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "after_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "before_bytes": 866,
+      "after_bytes": 866
+    }
+  ]
+}
