@@ -1,0 +1,12 @@
+// An Other under names: Point is no Point, whose method native would run on it (adamic/nominal-class),
+// where the union key's write type is Point & Shape, judged by neither field alone.
+class Point { x = 1; describe(): string { return 'point'; } }
+class Other { x = 2; label = 'other'; describe(): string { return this.label; } }
+interface Shape { x: number; describe(): string; }
+interface Places { names: Point; spare: Shape; }
+function place(places: Places, at: 'names' | 'spare', value: Other): void {
+	places[at] = value;
+}
+const places: Places = { names: new Point(), spare: new Point() };
+place(places, 'spare', new Other());
+console.log(places.spare.describe());

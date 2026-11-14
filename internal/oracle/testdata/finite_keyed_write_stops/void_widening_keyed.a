@@ -1,0 +1,10 @@
+// A () => void under names: () => unknown would be read as the value it never promised, where the union
+// key's write type intersects the two signatures, judged by neither field alone.
+interface Handlers { names: () => unknown; spare: () => void; }
+function handle(handlers: Handlers, at: 'names' | 'spare', value: () => void): void {
+	handlers[at] = value;
+}
+const quiet: () => void = () => { console.log('quiet'); };
+const handlers: Handlers = { names: () => 1, spare: quiet };
+handle(handlers, 'spare', quiet);
+handlers.spare();
