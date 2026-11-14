@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('assert'),fs=require('fs'),crypto=require('crypto');
+const ts=require('/workspace/scratch/receiver-split/built/local/typescript.js');
+const names=['hasGlobalName','onEmitNode','isEmitNotificationEnabled','substituteNode','onBeforeEmitNode','onAfterEmitNode','onBeforeEmitNodeArray','onAfterEmitNodeArray','onBeforeEmitToken','onAfterEmitToken'];
+const file=ts.createSourceFile('answer.ts','const answer = 42;',ts.ScriptTarget.Latest,true),expected='const answer = 42;\n';
+const reads={},order=[],handlers={};for(const name of names)Object.defineProperty(handlers,name,{get(){assert.strictEqual(this,handlers);reads[name]=(reads[name]||0)+1;order.push(name);return undefined;}});
+const printer=ts.createPrinter({newLine:ts.NewLineKind.LineFeed},handlers);assert.strictEqual(printer.printFile(file),expected);assert.deepStrictEqual(order,names);assert(names.every(name=>reads[name]===1));
+let notifications=0;const supplied={onEmitNode:function(hint,node,emit){assert.strictEqual(this,undefined);notifications++;emit(hint,node);}};
+assert.strictEqual(ts.createPrinter({newLine:ts.NewLineKind.LineFeed},supplied).printFile(file),expected);assert(notifications>0);
+assert.strictEqual(typeof ts.noEmitNotification,'function');assert.strictEqual(typeof ts.noEmitSubstitution,'function');
+const sentinelHandlers={onEmitNode:ts.noEmitNotification,substituteNode:ts.noEmitSubstitution};assert.strictEqual(ts.createPrinter({newLine:ts.NewLineKind.LineFeed},sentinelHandlers).printFile(file),expected);
+const result={pass:true,defaultGettersReadOnce:reads,getterOrder:order,sameReceiverInGetters:true,suppliedHandlerBareThisPreserved:true,suppliedNotifications:notifications,explicitSentinelFunctionsPreserved:true,printed:expected,printedSha256:crypto.createHash('sha256').update(expected).digest('hex')};fs.writeFileSync('/workspace/scratch/receiver-split-results/printer-controls.json',JSON.stringify(result,null,2)+'\n');console.log('PASS: readonly aliases resolve once, retain getter receiver and bare handler this, and preserve defaults/sentinels');

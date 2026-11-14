@@ -1,0 +1,36 @@
+{
+  "pass": true,
+  "exit": 2,
+  "sourceWrites": 0,
+  "reportedAllFiveCases": true,
+  "failures": [
+    {
+      "where": "src/compiler/parser.ts:1500:36",
+      "local": "factoryCreateIdentifier",
+      "reason": "local used other than as a direct callee",
+      "syntax": "ShorthandPropertyAssignment"
+    },
+    {
+      "where": "src/compiler/parser.ts:1501:1",
+      "local": "factoryCreateIdentifier",
+      "reason": "local used other than as a direct callee",
+      "syntax": "BinaryExpression"
+    },
+    {
+      "where": "src/compiler/parser.ts:1501:27",
+      "local": "factoryCreateIdentifier",
+      "reason": "local used other than as a direct callee",
+      "syntax": "BinaryExpression"
+    },
+    {
+      "where": "src/compiler/parser.ts:1503:62",
+      "local": "factoryCreateIdentifier",
+      "reason": "receiver is shadowed"
+    },
+    {
+      "where": "src/compiler/parser.ts:1502:24",
+      "local": "factoryCreateToken",
+      "reason": "shadowed local declaration"
+    }
+  ]
+}

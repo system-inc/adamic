@@ -3,6 +3,7 @@ import argparse,json,os,pathlib,subprocess,sys,time
 p=argparse.ArgumentParser();p.add_argument('road');p.add_argument('tree',type=pathlib.Path);p.add_argument('output',type=pathlib.Path);p.add_argument('--file');a=p.parse_args()
 heat=json.loads(pathlib.Path('/workspace/scratch/receiver-heat.json').read_text())
 files=[a.file] if a.file else list(dict.fromkeys(s['file'] for s in heat['sites'] if s['public']))
+if a.road=='split' and not a.file:files.sort(key=lambda file:file=='src/compiler/parser.ts')
 a.output.mkdir(parents=True,exist_ok=True)
 for file in files:
  while (a.output/'.pause').exists():time.sleep(1)

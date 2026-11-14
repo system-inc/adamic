@@ -1,0 +1,21 @@
+{
+  "changedParserRecords": 23,
+  "removedParserRecords": 25,
+  "newUnitPhaseKindReasonCombinations": 0,
+  "removedKindsAndReasons": [
+    {
+      "unit": "src/compiler/parser.ts:1437:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/parser.ts:1437:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "reason": "a method in object destructuring",
+      "count": 1
+    }
+  ]
+}

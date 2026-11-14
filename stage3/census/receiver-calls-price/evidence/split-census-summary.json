@@ -1,0 +1,781 @@
+[
+  {
+    "file": "src/compiler/parser.ts",
+    "baselineFindings": 3184,
+    "prototypeFindings": 3182,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__parser.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 691.907,
+      "peak_process_tree_rss_kib": 2156092,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3402,
+      "max_descendant_rss_kib": 2155624
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__parser.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 665.501,
+      "peak_process_tree_rss_kib": 2244936,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3262,
+      "max_descendant_rss_kib": 2244516
+    },
+    "added": 23,
+    "removed": 25,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "baselineFindings": 678,
+    "prototypeFindings": 678,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 146.109,
+      "peak_process_tree_rss_kib": 1137276,
+      "sampling_interval_seconds": 0.2,
+      "samples": 721,
+      "max_descendant_rss_kib": 1136772
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 141.147,
+      "peak_process_tree_rss_kib": 1177680,
+      "sampling_interval_seconds": 0.2,
+      "samples": 695,
+      "max_descendant_rss_kib": 1177204
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "baselineFindings": 639,
+    "prototypeFindings": 639,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__classFields.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 143.486,
+      "peak_process_tree_rss_kib": 1140920,
+      "sampling_interval_seconds": 0.2,
+      "samples": 708,
+      "max_descendant_rss_kib": 1140384
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__classFields.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 143.546,
+      "peak_process_tree_rss_kib": 1131048,
+      "sampling_interval_seconds": 0.2,
+      "samples": 706,
+      "max_descendant_rss_kib": 1130580
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "baselineFindings": 97,
+    "prototypeFindings": 95,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__typeSerializer.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 50.6,
+      "peak_process_tree_rss_kib": 993560,
+      "sampling_interval_seconds": 0.2,
+      "samples": 250,
+      "max_descendant_rss_kib": 992768
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__typeSerializer.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 49.06,
+      "peak_process_tree_rss_kib": 997964,
+      "sampling_interval_seconds": 0.2,
+      "samples": 242,
+      "max_descendant_rss_kib": 997756
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "baselineFindings": 300,
+    "prototypeFindings": 298,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__legacyDecorators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 87.943,
+      "peak_process_tree_rss_kib": 1012732,
+      "sampling_interval_seconds": 0.2,
+      "samples": 434,
+      "max_descendant_rss_kib": 1012032
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__legacyDecorators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 89.193,
+      "peak_process_tree_rss_kib": 1049836,
+      "sampling_interval_seconds": 0.2,
+      "samples": 439,
+      "max_descendant_rss_kib": 1049308
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "baselineFindings": 572,
+    "prototypeFindings": 572,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__esDecorators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 111.682,
+      "peak_process_tree_rss_kib": 1058760,
+      "sampling_interval_seconds": 0.2,
+      "samples": 551,
+      "max_descendant_rss_kib": 1058416
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__esDecorators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 105.88,
+      "peak_process_tree_rss_kib": 1086980,
+      "sampling_interval_seconds": 0.2,
+      "samples": 521,
+      "max_descendant_rss_kib": 1086820
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "baselineFindings": 392,
+    "prototypeFindings": 390,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2017.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 110.523,
+      "peak_process_tree_rss_kib": 1126440,
+      "sampling_interval_seconds": 0.2,
+      "samples": 543,
+      "max_descendant_rss_kib": 1126036
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2017.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 106.636,
+      "peak_process_tree_rss_kib": 1134848,
+      "sampling_interval_seconds": 0.2,
+      "samples": 523,
+      "max_descendant_rss_kib": 1134488
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2018.ts",
+    "baselineFindings": 497,
+    "prototypeFindings": 497,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2018.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 115.344,
+      "peak_process_tree_rss_kib": 1127932,
+      "sampling_interval_seconds": 0.2,
+      "samples": 567,
+      "max_descendant_rss_kib": 1127608
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2018.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 117.06,
+      "peak_process_tree_rss_kib": 1134616,
+      "sampling_interval_seconds": 0.2,
+      "samples": 574,
+      "max_descendant_rss_kib": 1134056
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2020.ts",
+    "baselineFindings": 152,
+    "prototypeFindings": 150,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2020.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 50.24,
+      "peak_process_tree_rss_kib": 941972,
+      "sampling_interval_seconds": 0.2,
+      "samples": 248,
+      "max_descendant_rss_kib": 941412
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2020.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 49.845,
+      "peak_process_tree_rss_kib": 953228,
+      "sampling_interval_seconds": 0.2,
+      "samples": 245,
+      "max_descendant_rss_kib": 956256
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2021.ts",
+    "baselineFindings": 27,
+    "prototypeFindings": 25,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2021.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 22.0,
+      "peak_process_tree_rss_kib": 879056,
+      "sampling_interval_seconds": 0.2,
+      "samples": 109,
+      "max_descendant_rss_kib": 878712
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2021.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 22.611,
+      "peak_process_tree_rss_kib": 895152,
+      "sampling_interval_seconds": 0.2,
+      "samples": 112,
+      "max_descendant_rss_kib": 894652
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/esnext.ts",
+    "baselineFindings": 256,
+    "prototypeFindings": 254,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__esnext.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 74.622,
+      "peak_process_tree_rss_kib": 1052028,
+      "sampling_interval_seconds": 0.2,
+      "samples": 368,
+      "max_descendant_rss_kib": 1051448
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__esnext.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 77.89,
+      "peak_process_tree_rss_kib": 1035544,
+      "sampling_interval_seconds": 0.2,
+      "samples": 384,
+      "max_descendant_rss_kib": 1035252
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "baselineFindings": 211,
+    "prototypeFindings": 209,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__jsx.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 72.206,
+      "peak_process_tree_rss_kib": 1039464,
+      "sampling_interval_seconds": 0.2,
+      "samples": 356,
+      "max_descendant_rss_kib": 1038876
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__jsx.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 78.867,
+      "peak_process_tree_rss_kib": 1054896,
+      "sampling_interval_seconds": 0.2,
+      "samples": 386,
+      "max_descendant_rss_kib": 1054516
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2016.ts",
+    "baselineFindings": 57,
+    "prototypeFindings": 55,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2016.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 26.568,
+      "peak_process_tree_rss_kib": 899388,
+      "sampling_interval_seconds": 0.2,
+      "samples": 132,
+      "max_descendant_rss_kib": 898772
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2016.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 29.061,
+      "peak_process_tree_rss_kib": 914112,
+      "sampling_interval_seconds": 0.2,
+      "samples": 144,
+      "max_descendant_rss_kib": 913704
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "baselineFindings": 1118,
+    "prototypeFindings": 1118,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__es2015.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 201.207,
+      "peak_process_tree_rss_kib": 1351540,
+      "sampling_interval_seconds": 0.2,
+      "samples": 990,
+      "max_descendant_rss_kib": 1350936
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__es2015.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 205.496,
+      "peak_process_tree_rss_kib": 1378376,
+      "sampling_interval_seconds": 0.2,
+      "samples": 1010,
+      "max_descendant_rss_kib": 1377904
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "baselineFindings": 528,
+    "prototypeFindings": 528,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__generators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 115.938,
+      "peak_process_tree_rss_kib": 1141716,
+      "sampling_interval_seconds": 0.2,
+      "samples": 570,
+      "max_descendant_rss_kib": 1141108
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__generators.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 116.798,
+      "peak_process_tree_rss_kib": 1145608,
+      "sampling_interval_seconds": 0.2,
+      "samples": 574,
+      "max_descendant_rss_kib": 1145220
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "baselineFindings": 411,
+    "prototypeFindings": 411,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__module__module.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 94.748,
+      "peak_process_tree_rss_kib": 1135692,
+      "sampling_interval_seconds": 0.2,
+      "samples": 466,
+      "max_descendant_rss_kib": 1135140
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__module__module.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 96.348,
+      "peak_process_tree_rss_kib": 1124744,
+      "sampling_interval_seconds": 0.2,
+      "samples": 473,
+      "max_descendant_rss_kib": 1124304
+    },
+    "added": 0,
+    "removed": 0,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "baselineFindings": 419,
+    "prototypeFindings": 417,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__module__system.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 138.973,
+      "peak_process_tree_rss_kib": 1282420,
+      "sampling_interval_seconds": 0.2,
+      "samples": 683,
+      "max_descendant_rss_kib": 1281976
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__module__system.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 141.39,
+      "peak_process_tree_rss_kib": 1318800,
+      "sampling_interval_seconds": 0.2,
+      "samples": 694,
+      "max_descendant_rss_kib": 1318524
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "baselineFindings": 122,
+    "prototypeFindings": 120,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__transformers__module__esnextAnd2015.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 73.241,
+      "peak_process_tree_rss_kib": 1026564,
+      "sampling_interval_seconds": 0.2,
+      "samples": 360,
+      "max_descendant_rss_kib": 1026028
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__transformers__module__esnextAnd2015.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 64.184,
+      "peak_process_tree_rss_kib": 1051476,
+      "sampling_interval_seconds": 0.2,
+      "samples": 315,
+      "max_descendant_rss_kib": 1050868
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 1,
+    "prototypeMethodDestructures": 0
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "baselineFindings": 1455,
+    "prototypeFindings": 1453,
+    "baselineMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-baseline/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/baseline__emitter.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 724.741,
+      "peak_process_tree_rss_kib": 1613280,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3559,
+      "max_descendant_rss_kib": 1612688
+    },
+    "prototypeMeasurement": {
+      "command": [
+        "/workspace/scratch/receiver-latent",
+        "/workspace/scratch/receiver-split/src/compiler",
+        "/workspace/scratch/receiver-split-results/census/split__emitter.jsonl"
+      ],
+      "cwd": "/workspace/scratch/receiver-calls-price",
+      "exit": 0,
+      "timeout": false,
+      "limit_seconds": 3600,
+      "wall_seconds": 722.635,
+      "peak_process_tree_rss_kib": 1643548,
+      "sampling_interval_seconds": 0.2,
+      "samples": 3569,
+      "max_descendant_rss_kib": 1643084
+    },
+    "added": 0,
+    "removed": 2,
+    "baselineMethodDestructures": 0,
+    "prototypeMethodDestructures": 0
+  }
+]

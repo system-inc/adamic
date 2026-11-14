@@ -6,7 +6,8 @@ def run(name,cmd,cwd=repo,env=None,allow=()):
  code=subprocess.run([sys.executable,str(scratch/'receiver-measure.py'),'--out',str(out/name),'--cwd',str(cwd),'--',*map(str,cmd)],env=env).returncode;print(json.dumps({'phase':name,'exit':code}),flush=True)
  if code and code not in allow:raise SystemExit(code)
 if not tree.exists():shutil.copytree(source,tree,ignore=lambda directory,names:[n for n in names if pathlib.Path(directory)==source and n in ('node_modules','built','.parallelperf.json')])
-run('instrument-attribution',['node',scripts/'split-instrument-attribution.cjs',tree,scratch/'receiver-heat.json',out/'instrument-attribution-inventory.json'])
+if not (out/'instrument-attribution-inventory.json').exists():run('instrument-attribution',['node',scripts/'split-instrument-attribution.cjs',tree,scratch/'receiver-heat.json',out/'instrument-attribution-inventory.json'])
+run('install-attribution',['npm','ci','--no-audit','--no-fund'],tree)
 run('stock-attribution',['node',repo/'stage3/api/node_modules/typescript/lib/tsc.js','--project','src/compiler/tsconfig.json','--noEmit','--strictFunctionTypes','true','--incremental','false','--composite','false','--pretty','false'],tree)
 inventory={}
 for folder in ['tests/cases','tests/baselines/reference']:
@@ -25,3 +26,8 @@ result={'lengthReadsByImplementation':dict(length),'lengthReadSamples':samples,'
 old=json.loads((out/'counts-valid-full.json').read_text())['totals'];new=json.loads((out/'counts-attribution-full.json').read_text())['totals']
 for k in ['parserPropertyReads','transformerArrowCalls','printerAliases','printerEntries']:assert old[k]==new[k],(k,old[k],new[k])
 run('stock79-final-audit',['node',scripts/'split-final-audit.cjs'])
+# The prototype also gets its own uninstrumented, unfiltered lane.
+run('prototype-lane',[sys.executable,repo/'stage3/oracle/run.py',source,out/'oracle-prototype'],allow=(1,))
+pristine=json.loads((out/'oracle-prototype/report.json').read_text());assert pristine['counts']=={'passing':106366,'failing':1,'pending':0} and pristine['baseline_diffs']==['api/typescript.d.ts'],pristine
+run('printer-semantic-controls',['node',scripts/'split-printer-controls.cjs'])
+run('codemod-reproduction',['node',scripts/'split-codemod.cjs',scratch/'receiver-baseline',scratch/'receiver-heat.json',out/'codemod-reproduction.json','--verify',source])
