@@ -19,3 +19,11 @@ or predicate import amendment (task 1w5bve2, Adamic and Compiler, Nov 7
 orPredicate3, retaining or for its six-predicate rest call. The import's before
 pin and all MultiMap owner pins are unchanged. The helpers, overload deletion
 and nineteen caller rewrites belong to 99-correctness-core-or-predicate.
+
+Diagnostic read-view import amendment (base 8e3a784aa): the whole utilities.ts
+namespace import before/after pins now retain type DiagnosticReadView.
+diagnostic-owners.json pins the complete old/new import at both this adaptation
+input and output. Binding-views invokes these owner pins atomically with the
+other diagnostic edits; no import pin is bypassed. The paired variants preserve
+the correct MultiMap runtime imports on replay and restoration. No MultiMap
+runtime owner, body or call changes. Proofs: typescript/diag-read-view-evidence.

@@ -5,6 +5,7 @@ const ts=require(process.env.CENSUS_TYPESCRIPT||'typescript');
 const {compiler,nodes}=require('../47-host-errors/adapt.cjs');
 const inventory=require('./sites.json');
 const multimap=require('./multimap.cjs');
+const diagnosticOwner=require('./diagnostic-owner.cjs');
 const {slice,records,importEdit,javascriptEdits}=require('./fold.cjs');
 const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
 const hasUndefined=type=>!!(type.flags&ts.TypeFlags.Undefined)||type.isUnion()&&type.types.some(t=>!!(t.flags&ts.TypeFlags.Undefined));
@@ -72,7 +73,8 @@ function adapt(tree,check=false){
     const states=owned.map(site=>{const text=site.node.getText(source);assert([site.member.initializer.before,site.member.initializer.after].includes(text),'folded initializer shape');return text===site.member.initializer.after?'after':'before';});
     assert(states.every(value=>value===states[0]),'half-adapted owner: '+row.owner);state=states[0];
     const undo=owned.map(site=>({start:site.node.getStart(source)-owner.getStart(source),end:site.node.end-owner.getStart(source),text:site.member.initializer.before}));
-    if(row.owner==='createProgram'){assert.equal(mm.state,state,'half-adapted MultiMap calls');undo.push(...mm.undo);}
+    let diagnosticState;
+    if(row.owner==='createProgram'){assert.equal(mm.state,state,'half-adapted MultiMap calls');undo.push(...mm.undo);diagnosticState=diagnosticOwner.inspect(ts,source,owner);if(diagnosticState.amended)undo.push(diagnosticState.undo);}
     // Parent createProgram owns the nested getEmitHost changes as well. Its
     // original owner pin is checked before its literal, including on replay.
     // The checker owner's literal is checked first on purpose, repeating the
@@ -80,7 +82,7 @@ function adapt(tree,check=false){
     // literal before the writer owner (the checker-third-member mutant needs it).
     if(row.owner==='createBasicNodeBuilderModuleSpecifierResolutionHost')assert.equal(hash(literal.getText(source)),state==='after'?row.literalAfterSha256:row.literalBeforeSha256,'whole literal shape: '+row.owner);
     assert.equal(hash(slice(owner.getText(source),undo)),row.ownerBeforeSha256,'writer owner shape: '+row.owner);
-    assert.equal(hash(owner.getText(source)),state==='after'?row.ownerAfterSha256:row.ownerBeforeSha256,'writer owner state: '+row.owner);
+    assert.equal(hash(owner.getText(source)),diagnosticState?.amended ? diagnosticState.sha256 : state==='after'?row.ownerAfterSha256:row.ownerBeforeSha256,'writer owner state: '+row.owner);
     assert.equal(hash(literal.getText(source)),state==='after'?row.literalAfterSha256:row.literalBeforeSha256,'whole literal shape: '+row.owner);
     if(row.owner==='createProgram'){const edit=multimap.importEdit(ts,mm.source,state);if(edit){assert(!check,'missing MultiMap import');plan(mm.source,edit);}}
     if(row.file===inventory.importRemoval.file){

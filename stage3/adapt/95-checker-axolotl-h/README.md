@@ -238,3 +238,14 @@ file count, below 300. Historical two-site evidence is retained separately.
 MultiMap amendment (task b5w3ycg, wave row 7): 94-correctness-multimap first exports multiMapAddValue and multiMapRemoveValue. 95h owns the two createProgram calls in findSourceFileWorker and addFileIncludeReason and rewrites them to multiMapAddValue; its whole createProgram after-pin includes both calls. The pinned import gap adds multiMapAddValue. Other calls and the final plain Map representation belong to 99-correctness-core-multimap. The interim names remain because a later rename would touch this pinned owner.
 
 verify.cjs independently reconstructs the two MultiMap calls and pinned import gap, and contract.cjs checks the three partial MultiMap states with refusal reasons, zero writes and unchanged file hashes ([mutant evidence](tooling-mutant-evidence.json)).
+
+Diagnostic read-view amendment (base 8e3a784aa): diagnostic-owners.json pins the
+whole createProgram declaration group and its complete namespace import,
+before and after getDiagnosticsHelper's constraint becomes DiagnosticReadView.
+99-correctness-binding-views invokes these pins atomically with its view and
+sorter pins; the edit remains an amendment of this owner. diagnostic-owner.cjs
+admits precisely this amended whole implementation on replay and supplies the
+constraint undo to the existing original-owner hash proof. Existing before/after
+fold pins, six folds, MultiMap changes and 95h's own historical intermediate
+remain unchanged. See typescript/diag-read-view-evidence for the diagnostic
+amendment proofs. No Loom submission.

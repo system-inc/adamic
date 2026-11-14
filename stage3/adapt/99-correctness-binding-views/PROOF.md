@@ -29,3 +29,33 @@ Generated files are refreshed only if their canonical hashed inputs move. One
 type-only ledger line cites #ty5myjt for the four resolution sites. No amendment
 to 95-checker-axolotl-h is allowed. No source change follows the tested commit.
 Nothing is submitted to Loom.
+
+## Diagnostic amendment protocol
+
+Base: 8e3a784aa5a601f57342c07b68f145fe56252c21; same upstream pin.
+Evidence: typescript/diag-read-view-evidence, stage3/census/diag-read-view-2.
+All four complete main/candidate censuses (program.ts, utilitiesPublic.ts,
+utilities.ts, types.ts) use LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1,
+LATENT_ONLY_FILE=<absolute adapted file>, CENSUS_MODULE_FORMAT=CommonJSBundle,
+and a 6000-second per-file limit. Pair by phase, kind, mapped where and reason;
+retain complete added/changed findings. Both program callers at baseline
+2796:16 and 2829:16 must disappear. All four files require zero new findings.
+program.ts, utilitiesPublic.ts and types.ts require zero changed findings.
+utilities.ts permits exactly the refusal_scan/Refused pair at mapped 8808:39
+and 8808:44, classified "changed: target type renamed, pre-existing refusal":
+"optional property reportsUnnecessary in Diagnostic absent from structural
+source DiagnosticRelatedInformation, which can hide fields" becomes "optional
+property reportsUnnecessary in DiagnosticReadView absent from structural
+source DiagnosticRelatedInformation, which can hide fields". This explicit user
+ruling accepts neither another site nor another reason change. A new refusal outside the specified shape stops the amendment.
+
+The restoring mutant returns the exact original diagnostics files and the
+resolution half's original file; a full program census must return both target
+refusals. Verify zero new stock TypeScript 6.0.3 diagnostics over 79 roots,
+zero Adamic types diagnostics, normal apply, every source's transpiled JavaScript
+in both comment modes, rejection controls and zero-write replay. Upstream npm ci
+and node_modules/.bin/hereby dts run in both adapted checkouts. Both public
+declarations must be byte-identical; a diff stops the amendment as an API question.
+Run the whole unfiltered stage3/lane with 106,366 passing and only the sanctioned
+API row. Refresh generated lane inputs only if their listed proof inputs move.
+The exact tested implementation commit and all results are recorded in evidence.
