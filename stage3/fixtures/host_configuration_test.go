@@ -16,7 +16,7 @@ func TestHostConfigurationFixtureReaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Fetch the existing product before starting a 30-second child proof. A runner
+	// Fetch the existing product before starting the child proofs. A runner
 	// supplies it, while a fresh local proof may need to compile the oracle first.
 	fixtureOracleHook(t, repository)
 	executable, err := os.Executable()
@@ -107,7 +107,8 @@ func TestHostConfigurationFixtureReaders(t *testing.T) {
 				if reader == "directories" {
 					selector = "^TestFixtureDirectoriesHaveTopLevelTests$"
 				}
-				cmd := exec.Command(executable, "-test.run="+selector, "-test.count=1", "-test.v", "-test.timeout=30s", "-fixtures="+root)
+				arguments := append([]string{"-test.run=" + selector, "-test.count=1", "-test.v", "-fixtures=" + root}, childTestTimeout(t)...)
+				cmd := exec.Command(executable, arguments...)
 				selected := ""
 				if mode == "selected" {
 					selected = stub
