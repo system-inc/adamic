@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -356,8 +358,29 @@ func (l *lowering) boundKeyedLength(node *ast.Node) bool {
 
 func init() { refusalRules.register(2890, "boundObservation", (*lowering).boundObservation) }
 
+// declaresBeyond is whether candidate declares more parameters than a call passing passed arguments
+// fills: a value held as a narrower type, `(shape: Shape, index?: number) => boolean` held as
+// `(shape: Shape) => boolean`, is called with the type's arguments alone, while JavaScript hands it
+// every argument its caller passed (#04f5s0s, #jqf1drp). Parameters holds the declared parameters in
+// order (a destructured or defaulted one arrives as one incoming local), behind a method's leading
+// receiver, which Receiver marks and no argument fills, so it's left out of the count. The environment
+// is Environment, never Parameters. A lone this parameter is counted, which can only stop more.
+func declaresBeyond(candidate ir.Function, passed int) bool {
+	return declaredParameters(candidate) > passed
+}
+
+// declaredParameters is how many parameters candidate declares, its leading receiver left out
+// (declaresBeyond).
+func declaredParameters(candidate ir.Function) int {
+	if candidate.Receiver {
+		return len(candidate.Parameters) - 1
+	}
+	return len(candidate.Parameters)
+}
+
 // Until bound adapters forward an unbounded argument vector, fail closed when a
-// possible implementation observes its exact count or collects a rest tail.
+// possible implementation observes its exact count, collects a rest tail or
+// declares more parameters than the type it's bound as names (declaresBeyond).
 func (l *lowering) checkBoundArguments() error {
 	for _, record := range l.closureRecords {
 		function := l.result.Functions[record.function]
@@ -373,8 +396,11 @@ func (l *lowering) checkBoundArguments() error {
 				}
 				for _, target := range candidates {
 					candidate := l.result.Functions[target]
+					// The count's stop gives way to the arguments and rest one, whose words stay as pinned.
 					if candidate.ReadsArguments || candidate.RestElement != 0 {
 						found = l.notYet(record.node, "bind of a function that observes its argument count or collects rest arguments")
+					} else if found == nil && declaresBeyond(candidate, len(call.Arguments)) {
+						found = l.notYet(record.node, fmt.Sprintf("bind of a function that declares %d parameters where the type it's bound as names %d", declaredParameters(candidate), len(call.Arguments)))
 					}
 				}
 			}
