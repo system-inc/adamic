@@ -25,7 +25,7 @@ func TestZZProbeRestHide(t *testing.T) {
 			}
 			absolute, _ := filepath.Abs(filepath.Join(repository, directory, entry.Name()))
 			truth := onNode(t, absolute)
-			line := fmt.Sprintf("R %s node=%d %q", entry.Name(), truth.exitCode, strings.TrimSpace(truth.stdout))
+			line := fmt.Sprintf("R %s node=%d %q", entry.Name(), truth.exitCode, strings.TrimSpace(string(truth.stdout)))
 			program, err := lowered(t, absolute)
 			var notYet *lower.NotYet
 			if errors.As(err, &notYet) {
@@ -47,7 +47,7 @@ func TestZZProbeRestHide(t *testing.T) {
 			sanitized, _ := natively(t, program)
 			released := released(t, program)
 			javascript := onJavaScriptBackend(t, program)
-			fmt.Println(line, "LOWERS", "rel", released.exitCode, disagreement(truth, released) == "", "san", sanitized.exitCode, disagreement(truth, sanitized) == "", strings.ReplaceAll(strings.TrimSpace(sanitized.stderr), "\n", " ")[:min(90, len(strings.TrimSpace(sanitized.stderr)))], "js", disagreement(truth, javascript) == "")
+			fmt.Println(line, "LOWERS", "rel", released.exitCode, disagreement(truth, released) == "", "san", sanitized.exitCode, disagreement(truth, sanitized) == "", strings.ReplaceAll(strings.TrimSpace(string(sanitized.stderr)), "\n", " ")[:min(90, len(strings.TrimSpace(string(sanitized.stderr))))], "js", disagreement(truth, javascript) == "")
 		}
 	}
 }
