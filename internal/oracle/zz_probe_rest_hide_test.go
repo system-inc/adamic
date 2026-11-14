@@ -23,6 +23,7 @@ func TestZZProbeRestHide(t *testing.T) {
 			if extension != ".a" && extension != ".ts" {
 				continue
 			}
+			t.Run(entry.Name(), func(t *testing.T) {
 			absolute, _ := filepath.Abs(filepath.Join(repository, directory, entry.Name()))
 			truth := onNode(t, absolute)
 			line := fmt.Sprintf("R %s node=%d %q", entry.Name(), truth.exitCode, strings.TrimSpace(string(truth.stdout)))
@@ -38,16 +39,17 @@ func TestZZProbeRestHide(t *testing.T) {
 					message = message[len(message)-110:]
 				}
 				fmt.Println(line, "NOTYET", where, message)
-				continue
+				return
 			}
 			if err != nil {
 				fmt.Println(line, "ERR", strings.ReplaceAll(err.Error(), "\n", " ")[:min(160, len(err.Error()))])
-				continue
+				return
 			}
 			sanitized, _ := natively(t, program)
 			released := released(t, program)
 			javascript := onJavaScriptBackend(t, program)
 			fmt.Println(line, "LOWERS", "rel", released.exitCode, disagreement(truth, released) == "", "san", sanitized.exitCode, disagreement(truth, sanitized) == "", strings.ReplaceAll(strings.TrimSpace(string(sanitized.stderr)), "\n", " ")[:min(90, len(strings.TrimSpace(string(sanitized.stderr))))], "js", disagreement(truth, javascript) == "")
+			})
 		}
 	}
 }
