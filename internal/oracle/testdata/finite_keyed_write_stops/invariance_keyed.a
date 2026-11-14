@@ -1,0 +1,11 @@
+// A Dog[] under pets: Animal[] could be written an Animal the dogs are read as (adamic/invariant-mutable),
+// where the union key's write type, Animal[] & readonly Animal[], is judged by neither field alone.
+class Animal { name = 'a'; }
+class Dog extends Animal { bark(): string { return 'woof'; } }
+interface Kennels { pets: Animal[]; spare: readonly Animal[]; }
+function house(kennels: Kennels, at: 'pets' | 'spare', dogs: Dog[]): void {
+	kennels[at] = dogs;
+}
+const kennels: Kennels = { pets: [], spare: [] };
+house(kennels, 'spare', [new Dog()]);
+console.log(`${kennels.spare.length}`);

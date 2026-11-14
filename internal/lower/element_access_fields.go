@@ -180,6 +180,19 @@ func (l *lowering) finiteElementWrite(target *ast.Node, object ir.Expression, va
 		if err := l.absentOptionalFieldWrite(target, access.Expression, field, names[index], false); err != nil {
 			return nil, err
 		}
+		// The registry judges o.name = value against the name's own declared type, where the value's slot
+		// here is what tsc writes through a union key, the named fields' types intersected. So each named
+		// field is judged as its own slot, the whole registry (refuseInSlot) and lowering's own slot checks
+		// (valueSlotStops), as namedWriteStop judges a record's declared property (#b6m00y7). A value whose
+		// representation isn't known is judged as a reference, so this never leans on a later stop.
+		slot := l.checker.GetNonMissingTypeOfSymbol(field)
+		if err := l.refuseInSlot(valueNode, slot); err != nil {
+			return nil, err
+		}
+		held, known := l.representation(l.checker.GetTypeAtLocation(valueNode))
+		if err := l.valueSlotStops(valueNode, slot, !known || held.IsReference()); err != nil {
+			return nil, err
+		}
 		if stored[index], err = l.typeOfSymbol(target, field); err != nil {
 			return nil, err
 		}

@@ -142,3 +142,23 @@ New:
 Red: `TestFiniteKeyedWriteStops/placeholder_keyed.a`. This stop on main, before setIndex, is what keeps
 `slots[side] = undefined!` out of finiteElementWrite, which would lower `undefined!` as an ordinary value
 where its named twin, `slots.left = undefined!`, is a placeholder reset with setProperty's own checks.
+
+## (h) each named field's slot judgment dropped
+
+internal/lower/element_access_fields.go, finiteElementWrite. Old:
+
+```go
+		if err := l.refuseInSlot(valueNode, slot); err != nil {
+```
+
+New:
+
+```go
+		if err := l.refuseInSlot(valueNode, slot); err != nil && false {
+```
+
+Red: `TestFiniteKeyedWriteStops/nominal_keyed.a`, whose keyed write then lowers: the union key's write
+type, Point & Shape, hides adamic/nominal-class, which the named twin's Point doesn't. The other three
+registry twins (invariance, void widening, optional widening) stay green under it: the registry judges the
+intersection too, by the same rule in words that name it, so the per-field judgment is their second
+guard there, and nominal_keyed.a its only one. Measured by J-3zegbfq at cb9f3769 on Lunatic.
