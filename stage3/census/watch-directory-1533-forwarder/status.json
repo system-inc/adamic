@@ -1,11 +1,20 @@
 {
   "task": "#cyjqp5f",
-  "base": "e1161aed0f021d0bfdf8bc744c72d6ba537bc392",
-  "implementation_local_commit": "b9f3938c6fd6ae1fdb7096048f2039a217966bf3",
-  "implementation_parent_count": 1,
-  "status": "PROOFS_RUNNING_NOT_PUBLISHED",
-  "change": "Exact System.watchDirectory forwarder normalizes !!recursive; inner factory boolean contract unchanged",
-  "amended_pin": "99-wasm-crypto-import getNodeSystem after text and SHA-256, after the require-result and resolve-host amendments",
-  "raw_policy": "Scratch only; publish summaries, receipts, SHA-256 and byte sizes",
+  "status": "COMPLETE",
+  "implementation_branch": "typescript/watch-directory-1533-1",
+  "implementation_sha": "e94db5d4b44873f03e3c091a1e6067feb45a9aed",
+  "implementation_parent": "e1161aed0f021d0bfdf8bc744c72d6ba537bc392",
+  "one_commit_on_base": true,
+  "all_requested_proofs_reported": true,
+  "counter_values": {
+    "undefined": 0,
+    "true": 0,
+    "false": 0,
+    "other": 0
+  },
+  "lane_coverage": "No calls to the real Node watchDirectory boundary in the whole lane; three values are covered by the concrete Node witnesses.",
+  "raw_files_retained": 211,
+  "raw_policy": "Summaries and receipts only; exact SHA-256 and byte sizes in report and RAW-MANIFEST.json",
+  "no_force": true,
   "loom_submissions": 0
 }

@@ -1,9 +1,145 @@
 {
   "task": "#cyjqp5f",
-  "base": "e1161aed0f021d0bfdf8bc744c72d6ba537bc392",
-  "local_implementation": "b9f3938c6fd6ae1fdb7096048f2039a217966bf3",
-  "status": "CORE_PROOFS_PASS_LANES_PENDING",
+  "status": "PASS",
+  "implementation": {
+    "branch": "typescript/watch-directory-1533-1",
+    "sha": "e94db5d4b44873f03e3c091a1e6067feb45a9aed",
+    "parent": "e1161aed0f021d0bfdf8bc744c72d6ba537bc392",
+    "commits_on_base": 1,
+    "tree": "a4739c82d3763e8646e68a23e2efa3b8d4bb9e4b",
+    "tree_byte_identical_to_tested_commit": true,
+    "tested_local_commit": "b9f3938c6fd6ae1fdb7096048f2039a217966bf3",
+    "force": false
+  },
+  "pins": {
+    "amended": "99-wasm-crypto-import getNodeSystem after pin",
+    "before_sha256_unchanged": "e45365ef731d397bee5f07cce554f8fc745c5028e614115ede71dfdbb4552941",
+    "previous_after_sha256": "d45d9bcd92b0de37cc6bf5d221c5292cdc1e1a349ea84a0c85ee92d3f48c7652",
+    "after_sha256": "56dd252d2d6fdfcc264111196b92b5ca6a8567df4375ac70f3a91dbe887b18b8",
+    "earlier_pins_92_93_unchanged": true,
+    "prior_timer_require_result_resolve_host_amendments_preserved": true
+  },
+  "read_gate": {
+    "status": "PASS",
+    "sites": [
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1111,
+        "candidate_line": 1111,
+        "upstream_line": 1108,
+        "semantics": "pass to fsWatch",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1129,
+        "candidate_line": 1129,
+        "upstream_line": 1126,
+        "semantics": "pass to hostRecursiveDirectoryWatcher",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 621,
+        "candidate_line": 621,
+        "upstream_line": 623,
+        "semantics": "truthiness branch",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 623,
+        "candidate_line": 623,
+        "upstream_line": 625,
+        "semantics": "pass to nonRecursiveWatchDirectory",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1133,
+        "candidate_line": 1133,
+        "upstream_line": 1130,
+        "semantics": "!recursive assertion",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1163,
+        "candidate_line": 1163,
+        "upstream_line": 1160,
+        "semantics": "pass to fsWatch",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1211,
+        "candidate_line": 1211,
+        "upstream_line": 1207,
+        "semantics": "truthiness selects watcher map",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1215,
+        "candidate_line": 1215,
+        "upstream_line": 1211,
+        "semantics": "pass to fsWatchHandlingExistenceOnHost",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1269,
+        "candidate_line": 1269,
+        "upstream_line": 1264,
+        "semantics": "pass to worker or timestamp worker",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1367,
+        "candidate_line": 1367,
+        "upstream_line": 1362,
+        "semantics": "pass to worker",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "adapted_line": 1802,
+        "candidate_line": 1802,
+        "upstream_line": 1782,
+        "semantics": "!!recursive normalizes before Node",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+        "adapted_line": 889,
+        "candidate_line": 889,
+        "upstream_line": 889,
+        "semantics": "pass to watchUtils.fsWatch",
+        "undefined_equals_false": true
+      },
+      {
+        "file": "src/harness/watchUtils.ts",
+        "adapted_line": 184,
+        "candidate_line": 184,
+        "upstream_line": 182,
+        "semantics": "truthiness selects watcher map",
+        "undefined_equals_false": true
+      }
+    ]
+  },
   "census": {
+    "module_format": "CommonJSBundle",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "exact adapted src/compiler/sys.ts for each run",
+    "compiler_roots": 79,
+    "main_units": 136,
+    "candidate_units": 136,
+    "main_findings": 181,
+    "candidate_findings": 180,
+    "main_diagnostics": 0,
+    "candidate_diagnostics": 0,
     "counts": {
       "contextual_new": 0,
       "contextual_gone": 1,
@@ -24,31 +160,75 @@
         "text": "<tree>/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
       }
     ],
-    "restoring_matches_main": true,
+    "new": [],
+    "changed": [],
     "targets": {
       "watchFile": {
         "historical_line": 1532,
-        "actual_line": 1547
+        "actual_line": 1547,
+        "column": 13
       },
       "watchDirectory": {
         "historical_line": 1533,
-        "actual_line": 1548
+        "actual_line": 1548,
+        "column": 13
       }
-    }
+    },
+    "historical_1532_unchanged": true,
+    "restoring_matches_main": true,
+    "relation_overflow_after_load_and_end": ""
   },
-  "stock": {
+  "mutants": {
+    "optional_contract_mutant": {
+      "diagnostics": [],
+      "captured_optional_boolean": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/compiler/sys.ts:1202:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/compiler/sys.ts:1215:82",
+          "reason": "a boolean | undefined variable a function value captures",
+          "text": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/compiler/sys.ts:1215:82: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+        }
+      ],
+      "parameter_contracts_widened": true
+    },
+    "single_token_mutant": {
+      "diagnostics": [
+        "/workspace/scratch/watch-directory-1533-forwarder/unnormalized/src/compiler/sys.ts:1548:159: error TS2345: Argument of type 'boolean | undefined' is not assignable to parameter of type 'boolean'.\n  Type 'undefined' is not assignable to type 'boolean'."
+      ],
+      "parameter_contracts_widened": false
+    },
+    "restoring_equal_main": true
+  },
+  "stock_tsc": {
+    "version": "6.0.3",
     "roots": 79,
     "main_diagnostics": 0,
-    "candidate_diagnostics": 0
+    "candidate_diagnostics": 0,
+    "new_diagnostics": 0
   },
-  "adamic_types_exit": 0,
+  "adamic_types": {
+    "roots": 79,
+    "exit": 0
+  },
+  "apply": {
+    "main_exit": 0,
+    "candidate_exit": 0,
+    "normal_lane_apply_exit": 0,
+    "private_lane_apply_exit": 0
+  },
   "javascript": {
-    "files": 604,
-    "different_files": [
+    "source_files": 747,
+    "emitted_files": 604,
+    "different_outputs": [
       "src/compiler/sys.ts"
     ],
-    "only_forwarder": true,
-    "inner_factory_identical": true
+    "only_forwarder_diff": true,
+    "inner_factory_byte_identical": true
   },
   "declarations": {
     "upstream_own_npm_ci": true,
@@ -73,13 +253,41 @@
     ]
   },
   "node_witness": {
-    "cases": 6,
-    "values": [
-      "undefined",
-      "true",
-      "false"
-    ],
-    "all_equal": true
+    "status": "PASS",
+    "actual_stock_emitted_factory": true,
+    "actual_node_fsWatchWorker": true,
+    "cases": [
+      {
+        "recursive": "undefined",
+        "native_recursive_watch": true,
+        "identical_registration_callback_close_trace": true
+      },
+      {
+        "recursive": "undefined",
+        "native_recursive_watch": false,
+        "identical_registration_callback_close_trace": true
+      },
+      {
+        "recursive": "true",
+        "native_recursive_watch": true,
+        "identical_registration_callback_close_trace": true
+      },
+      {
+        "recursive": "true",
+        "native_recursive_watch": false,
+        "identical_registration_callback_close_trace": true
+      },
+      {
+        "recursive": "false",
+        "native_recursive_watch": true,
+        "identical_registration_callback_close_trace": true
+      },
+      {
+        "recursive": "false",
+        "native_recursive_watch": false,
+        "identical_registration_callback_close_trace": true
+      }
+    ]
   },
   "contracts": {
     "watch-directory-contract": 0,
@@ -87,138 +295,127 @@
     "resolve-host-contract": 0,
     "crypto-chain-scope": 0
   },
-  "read_table": [
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1111,
-      "upstream_line": 1108,
-      "read": "recursive,",
-      "upstream_read": "recursive,",
-      "semantics": "pass to fsWatch",
-      "undefined_equals_false": true,
-      "candidate_line": 1111
+  "lane_and_counter": {
+    "whole_unfiltered_control": {
+      "status": "pass",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ]
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1129,
-      "upstream_line": 1126,
-      "read": "return hostRecursiveDirectoryWatcher(directoryName, callback, recursive, options);",
-      "upstream_read": "return hostRecursiveDirectoryWatcher(directoryName, callback, recursive, options);",
-      "semantics": "pass to hostRecursiveDirectoryWatcher",
-      "undefined_equals_false": true,
-      "candidate_line": 1129
+    "whole_unfiltered_count_copy": {
+      "status": "pass",
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ]
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 621,
-      "upstream_line": 623,
-      "read": "recursive ?",
-      "upstream_read": "recursive ?",
-      "semantics": "truthiness branch",
-      "undefined_equals_false": true,
-      "candidate_line": 621
+    "counter_values": {
+      "undefined": 0,
+      "true": 0,
+      "false": 0,
+      "other": 0
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 623,
-      "upstream_line": 625,
-      "read": "watchDirectory(dirName, callback, recursive, options);",
-      "upstream_read": "watchDirectory(dirName, callback, recursive, options);",
-      "semantics": "pass to nonRecursiveWatchDirectory",
-      "undefined_equals_false": true,
-      "candidate_line": 623
+    "loaded_compiler_copies": 9,
+    "test_parent_and_workers": 9,
+    "process_thread_receipts": 30,
+    "selftest": {
+      "eachValueDetected": true,
+      "disabledControlZero": true,
+      "originalAndBundledAliases": true,
+      "forwardedValuesUnchanged": true,
+      "perProcessAndThreadFiles": true
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1133,
-      "upstream_line": 1130,
-      "read": "Debug.assert(!recursive);",
-      "upstream_read": "Debug.assert(!recursive);",
-      "semantics": "!recursive assertion",
-      "undefined_equals_false": true,
-      "candidate_line": 1133
+    "identical_sanctioned_diff": {
+      "bytes": 71315,
+      "sha256": "e990045d4345f8de90d253f87d432bc19ffe274e4deaee90e4ab81eeb97e5c34"
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1163,
-      "upstream_line": 1160,
-      "read": "recursive,",
-      "upstream_read": "recursive,",
-      "semantics": "pass to fsWatch",
-      "undefined_equals_false": true,
-      "candidate_line": 1163
+    "interpretation": "No value reached the real getNodeSystem.watchDirectory boundary in the full lane. Three-value behavior is covered by the six concrete Node witnesses, not by lane execution."
+  },
+  "lane_source_identity": {
+    "source_files": 747,
+    "candidate_control_count_identical": true,
+    "aggregate_sha256": "adf73e2f84f1007049dd17ee3887160c1c1645a615b77b47017b487977bf4a00"
+  },
+  "command_receipts": {
+    "adamic-types": {
+      "exit": 0,
+      "seconds": 18.273
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1211,
-      "upstream_line": 1207,
-      "read": "recursive ? fsWatchesRecursive : fsWatches,",
-      "upstream_read": "recursive ? fsWatchesRecursive : fsWatches,",
-      "semantics": "truthiness selects watcher map",
-      "undefined_equals_false": true,
-      "candidate_line": 1211
+    "change": {
+      "exit": 0,
+      "seconds": 498.94
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1215,
-      "upstream_line": 1211,
-      "read": "cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),",
-      "upstream_read": "cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions),",
-      "semantics": "pass to fsWatchHandlingExistenceOnHost",
-      "undefined_equals_false": true,
-      "candidate_line": 1215
+    "crypto-chain-scope": {
+      "exit": 0,
+      "seconds": 9.417
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1269,
-      "upstream_line": 1264,
-      "read": "recursive,",
-      "upstream_read": "recursive,",
-      "semantics": "pass to worker or timestamp worker",
-      "undefined_equals_false": true,
-      "candidate_line": 1269
+    "dts-change-npm-ci": {
+      "exit": 0,
+      "seconds": 17.147
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1367,
-      "upstream_line": 1362,
-      "read": "return fsWatchWorker(fileOrDirectory, recursive, (eventName, relativeFileName, currentModifiedTime) => {",
-      "upstream_read": "return fsWatchWorker(fileOrDirectory, recursive, (eventName, relativeFileName, currentModifiedTime) => {",
-      "semantics": "pass to worker",
-      "undefined_equals_false": true,
-      "candidate_line": 1367
+    "dts-change": {
+      "exit": 0,
+      "seconds": 106.466
     },
-    {
-      "file": "src/compiler/sys.ts",
-      "adapted_line": 1802,
-      "upstream_line": 1782,
-      "read": "{ persistent: true, recursive: !!recursive } : { persistent: true },",
-      "upstream_read": "{ persistent: true, recursive: !!recursive } : { persistent: true },",
-      "semantics": "!!recursive normalizes before Node",
-      "undefined_equals_false": true,
-      "candidate_line": 1802
+    "javascript": {
+      "exit": 0,
+      "seconds": 32.514
     },
-    {
-      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
-      "adapted_line": 889,
-      "upstream_line": 889,
-      "read": "recursive,",
-      "upstream_read": "recursive,",
-      "semantics": "pass to watchUtils.fsWatch",
-      "undefined_equals_false": true,
-      "candidate_line": 889
+    "lane-count": {
+      "exit": 0,
+      "seconds": 586.084
     },
-    {
-      "file": "src/harness/watchUtils.ts",
-      "adapted_line": 184,
-      "upstream_line": 182,
-      "read": "recursive ? fsWatchesRecursive : fsWatches,",
-      "upstream_read": "recursive ? fsWatchesRecursive : fsWatches,",
-      "semantics": "truthiness selects watcher map",
-      "undefined_equals_false": true,
-      "candidate_line": 184
+    "lane": {
+      "exit": 0,
+      "seconds": 875.656
+    },
+    "node-witness": {
+      "exit": 0,
+      "seconds": 3.728
+    },
+    "optional-contract": {
+      "exit": 0,
+      "seconds": 509.221
+    },
+    "require-result-contract": {
+      "exit": 0,
+      "seconds": 103.948
+    },
+    "resolve-host-contract": {
+      "exit": 0,
+      "seconds": 2.201
+    },
+    "restoring": {
+      "exit": 0,
+      "seconds": 524.24
+    },
+    "stock-change": {
+      "exit": 0,
+      "seconds": 27.498
+    },
+    "unnormalized": {
+      "exit": 0,
+      "seconds": 458.645
+    },
+    "watch-directory-contract": {
+      "exit": 0,
+      "seconds": 74.369
     }
-  ],
-  "raw_policy": "Scratch only; final report records SHA-256 and sizes",
+  },
+  "ledger": {
+    "kind": "JavaScript-changing, value-identical",
+    "task": "#cyjqp5f",
+    "lines": 1
+  },
+  "raw_policy": "Publish summaries and receipts only. Raw files stay in scratch with SHA-256 and exact byte size in RAW-MANIFEST.json.",
   "loom_submissions": 0
 }

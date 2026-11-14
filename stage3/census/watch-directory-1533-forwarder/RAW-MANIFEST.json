@@ -1,0 +1,1273 @@
+{
+  "raw_policy": "SCRATCH ONLY; metadata is published, file contents are not.",
+  "scratch_root": "/workspace/scratch/watch-directory-1533-forwarder",
+  "scope": "All scratch-root proof files (including local proof programs), generated measurement overlay, private process/thread counts and counter preflights, lane/oracle receipts and raw logs excluding adapted-tree dependency/build outputs, selected exact source snapshots on every measured/mutant tree, both declaration pairs, and the pre-crypto source archive. Dependency checkouts, npm/Go/Node caches and disposable worker workspaces are excluded execution inputs. Publication summaries and this manifest are excluded to avoid self-reference.",
+  "files": [
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/PROGRESS.json",
+      "relative_to_scratch": "PROGRESS.json",
+      "size_bytes": 773,
+      "sha256": "111853d1b6428e867873f785c0aae8156b5c6a682c29263fa4cf8d989fd7f823"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/adamic",
+      "relative_to_scratch": "adamic",
+      "size_bytes": 44160020,
+      "sha256": "e724ecfbb0d77497303f3d34b305d821fdea40617b732d368db7fc9af3265ab5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/adamic-build.log",
+      "relative_to_scratch": "adamic-build.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/adamic-types-receipt.json",
+      "relative_to_scratch": "adamic-types-receipt.json",
+      "size_bytes": 8602,
+      "sha256": "7216d30e34f37cdcc6bea032085a3a6fc7c876c63d71f7e2d3b86d9b43d0ba62"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/adamic-types.log",
+      "relative_to_scratch": "adamic-types.log",
+      "size_bytes": 8382588,
+      "sha256": "690345a3dca619e6e566b9605865a03fb1c2e873d13bb3c853cebe01e21e7e1b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/api-npm-ci.log",
+      "relative_to_scratch": "api-npm-ci.log",
+      "size_bytes": 232,
+      "sha256": "312abe6df6d367f5fdddce4ca41919fed54c934bb1b0beecc01997274fe7535b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/apply-change.log",
+      "relative_to_scratch": "apply-change.log",
+      "size_bytes": 844523,
+      "sha256": "1131e7d177afc6d351915e6e6fa1578561717ca693aefccbe6dd6fd869ad0757"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/apply-main.log",
+      "relative_to_scratch": "apply-main.log",
+      "size_bytes": 843972,
+      "sha256": "1600ec1a4bcf3dba6252309ff60b6b144c150ff9d3b139ff51034de0ed0f8491"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/base-worktree.log",
+      "relative_to_scratch": "base-worktree.log",
+      "size_bytes": 2773,
+      "sha256": "42058945ce2d3ec6f26c9c15d001faacaccbbcf1e5c8e460a06b9c08ffb6d9f7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/built/local/tsserverlibrary.d.ts",
+      "relative_to_scratch": "baseline/built/local/tsserverlibrary.d.ts",
+      "size_bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/built/local/typescript.d.ts",
+      "relative_to_scratch": "baseline/built/local/typescript.d.ts",
+      "size_bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/src/compiler/core.ts",
+      "relative_to_scratch": "baseline/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/src/compiler/sys.ts",
+      "relative_to_scratch": "baseline/src/compiler/sys.ts",
+      "size_bytes": 89088,
+      "sha256": "a8a76f3bcca5ab8f670a7b89377531f85df078d96210ac0b429c5c3ca76c4669"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/src/harness/watchUtils.ts",
+      "relative_to_scratch": "baseline/src/harness/watchUtils.ts",
+      "size_bytes": 9363,
+      "sha256": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/baseline/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "baseline/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57410,
+      "sha256": "3467c9e18da5fd3563d0af02d2d4041e6dff63dbb3594f356fcb0ff02ee04c57"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/built/local/tsserverlibrary.d.ts",
+      "relative_to_scratch": "candidate/built/local/tsserverlibrary.d.ts",
+      "size_bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/built/local/typescript.d.ts",
+      "relative_to_scratch": "candidate/built/local/typescript.d.ts",
+      "size_bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/src/compiler/core.ts",
+      "relative_to_scratch": "candidate/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/src/compiler/sys.ts",
+      "relative_to_scratch": "candidate/src/compiler/sys.ts",
+      "size_bytes": 89241,
+      "sha256": "78a61566d287c8349c378f9765a6d5e938d39d038192093a3c68b989174eba77"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/src/harness/watchUtils.ts",
+      "relative_to_scratch": "candidate/src/harness/watchUtils.ts",
+      "size_bytes": 9363,
+      "sha256": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/candidate/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "candidate/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57410,
+      "sha256": "3467c9e18da5fd3563d0af02d2d4041e6dff63dbb3594f356fcb0ff02ee04c57"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/census",
+      "relative_to_scratch": "census",
+      "size_bytes": 37038553,
+      "sha256": "8efe35639edf121f2cd2be7ae0d1ec5786ec8f757f3a4d82085b970ead9dc9aa"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/census-build.log",
+      "relative_to_scratch": "census-build.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/change-receipt.json",
+      "relative_to_scratch": "change-receipt.json",
+      "size_bytes": 750,
+      "sha256": "9cfc8c8f02041f9cc0e52e19bb7a30f859faf92f0814c4efc76f0718afa3155e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/change.jsonl",
+      "relative_to_scratch": "change.jsonl",
+      "size_bytes": 628729,
+      "sha256": "7f5e607bf4e60587731f912d082a4ef8bad6b412ad5e11014450612eca1a506d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/change.log",
+      "relative_to_scratch": "change.log",
+      "size_bytes": 127,
+      "sha256": "6d4194befd2da1e58a28db845369b19a18d8c7a7cd54d5c561579e52c65b121d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/count-hook.cjs",
+      "relative_to_scratch": "count-hook.cjs",
+      "size_bytes": 1763,
+      "sha256": "7c4c89c553fb27db9124169ad5ad7c5d493ca88991514b4455913afd8bfe19de"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-load-audit.json",
+      "relative_to_scratch": "counter-load-audit.json",
+      "size_bytes": 613,
+      "sha256": "b7392b17f1c6afa42f6a9afb34fdb039be53062d5d1b8af2f6d8caecde765894"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest/control/19476.json",
+      "relative_to_scratch": "counter-selftest/control/19476.json",
+      "size_bytes": 170,
+      "sha256": "ce767fd0a4ce50e8f1ccc04c25adcb0384adb83252917335a59122acaa6ee746"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest/count/19465.json",
+      "relative_to_scratch": "counter-selftest/count/19465.json",
+      "size_bytes": 168,
+      "sha256": "4d090ec3ccb289996bb86b6584d1c4944b638d621911942a445003658c785ab7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest/receipt.json",
+      "relative_to_scratch": "counter-selftest/receipt.json",
+      "size_bytes": 99,
+      "sha256": "7c21089b874c7512db7a41f4420853127a794081db86d93efbac97be5f08bbdb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-final/control/26512-0.json",
+      "relative_to_scratch": "counter-selftest-final/control/26512-0.json",
+      "size_bytes": 262,
+      "sha256": "eb802c46f608fd9fe91e193785c2afea2e55a758aa6fb8f9bf3753361646b43b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-final/count/26505-0.json",
+      "relative_to_scratch": "counter-selftest-final/count/26505-0.json",
+      "size_bytes": 260,
+      "sha256": "139dee51885bce05d431b5207f02a5d07529944ddfb5770a8077e6f8b62101d3"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-final/receipt.json",
+      "relative_to_scratch": "counter-selftest-final/receipt.json",
+      "size_bytes": 172,
+      "sha256": "a618ca9995c9abfdca25940a07fc35979dd09a47484e1d7192c9a98cf6320beb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-v2/control/26238.json",
+      "relative_to_scratch": "counter-selftest-v2/control/26238.json",
+      "size_bytes": 103,
+      "sha256": "bfa3ab04e7eeb44dd66513cbe9d37f401e2ff9d3fb96868d7c94caf6d6c392dc"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-v2/count/26231.json",
+      "relative_to_scratch": "counter-selftest-v2/count/26231.json",
+      "size_bytes": 101,
+      "sha256": "40b38407e2b2db36bb7226626b8b38dab809ae477b8205171e0c0599dd554eb0"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-v3/control/26257.json",
+      "relative_to_scratch": "counter-selftest-v3/control/26257.json",
+      "size_bytes": 249,
+      "sha256": "e1429098a8c95a5d30e23dcd2fe9e6fce37680812b9c872ea09ed685c16ad6f4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-v3/count/26250.json",
+      "relative_to_scratch": "counter-selftest-v3/count/26250.json",
+      "size_bytes": 247,
+      "sha256": "25b7a0fe8b8bbf76a732a3901ffa0e0ebe16e8a2c0650e02e4d09bce15cf2894"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest-v3/receipt.json",
+      "relative_to_scratch": "counter-selftest-v3/receipt.json",
+      "size_bytes": 136,
+      "sha256": "2b4635aa0faaeac4526836663a7c76286e55028262345e744ea02a637e53027a"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/counter-selftest.cjs",
+      "relative_to_scratch": "counter-selftest.cjs",
+      "size_bytes": 567,
+      "sha256": "06df04a293e9b11acc85bbe853f8651e67a25de41b4419f200a7232f9d7145cd"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/crypto-chain-scope-receipt.json",
+      "relative_to_scratch": "crypto-chain-scope-receipt.json",
+      "size_bytes": 834,
+      "sha256": "7b9704d12d272de85ff5adb8d805f4440ac2c02c5632648e64d0572340174323"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/crypto-chain-scope.json",
+      "relative_to_scratch": "crypto-chain-scope.json",
+      "size_bytes": 186004,
+      "sha256": "436aa462d09c82fdf909eeb1e9048c9931dac6526e9c82b1e90a4aa159f371c4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/crypto-chain-scope.log",
+      "relative_to_scratch": "crypto-chain-scope.log",
+      "size_bytes": 716,
+      "sha256": "747f1b07537c990bc531e6368aa4a69a798ac6bc1e279fdc37ad77f6588eddc9"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/declarations.diff",
+      "relative_to_scratch": "declarations.diff",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/declarations.json",
+      "relative_to_scratch": "declarations.json",
+      "size_bytes": 668,
+      "sha256": "886a36584823bd11e644e4b6dd3232a455b2bf9693fbaeb40f563948f52e3433"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/delta.json",
+      "relative_to_scratch": "delta.json",
+      "size_bytes": 7114,
+      "sha256": "d3ba99d8d2a21a7c09402d1a6164e7cdffbfb6cc11ef350063857f0c54f699da"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/delta.log",
+      "relative_to_scratch": "delta.log",
+      "size_bytes": 948,
+      "sha256": "2662751fc122771eeab7bfedda85b003271f99075ccda113a6fa8162083ce43c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/delta.py",
+      "relative_to_scratch": "delta.py",
+      "size_bytes": 2544,
+      "sha256": "8adbe17f1c83e3185abc884b76914095942f452a6df1c704f668b156a77973ae"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-change-npm-ci-receipt.json",
+      "relative_to_scratch": "dts-change-npm-ci-receipt.json",
+      "size_bytes": 573,
+      "sha256": "a54d96f588387e2e3eae575e88a1466d1b2f7566baba4cb2a6e93e4d121536cf"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-change-npm-ci.log",
+      "relative_to_scratch": "dts-change-npm-ci.log",
+      "size_bytes": 823,
+      "sha256": "c23f5fa6cdf2f8e545d5644d1a8cee43839adb640cc8858ff2bb3d784c7d27a8"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-change-receipt.json",
+      "relative_to_scratch": "dts-change-receipt.json",
+      "size_bytes": 589,
+      "sha256": "429f0a351a482d0dc9eda343ae47c4a9c20ac6b165288ab2909a3003ca70e920"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-change.log",
+      "relative_to_scratch": "dts-change.log",
+      "size_bytes": 867,
+      "sha256": "9148bbe6ae5e75b26ece007db015d8ce7528c6bf8836a0ebbc2f25845f8c71b9"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-main-npm-ci.log",
+      "relative_to_scratch": "dts-main-npm-ci.log",
+      "size_bytes": 823,
+      "sha256": "2b16d9870ff33e18e2f9fe6f2afa91f09252d22709c6bb0202052a743603e476"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/dts-main.log",
+      "relative_to_scratch": "dts-main.log",
+      "size_bytes": 859,
+      "sha256": "1f8c351ac22b3b7f03904ceb73b237c311d22fc01aad8fcb8079ea33286fab5d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/env.sh",
+      "relative_to_scratch": "env.sh",
+      "size_bytes": 583,
+      "sha256": "4e1d9d9ec93f0ee855cafc6692294f4ba43634c53bfccd607b7887ddc86dcae3"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/implementation-publication.json",
+      "relative_to_scratch": "implementation-publication.json",
+      "size_bytes": 374,
+      "sha256": "4e0ea21e1a64e8c0d8d1be4ce9ab4c0b24f08ff14617aaa6a75d92f9196146ac"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/implementation.diff",
+      "relative_to_scratch": "implementation.diff",
+      "size_bytes": 92771,
+      "sha256": "93901563504828914d3d08960ef22b8a2a23e4ff46d65360fc9b4ad2e7a342de"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/javascript-receipt.json",
+      "relative_to_scratch": "javascript-receipt.json",
+      "size_bytes": 619,
+      "sha256": "dbff47e7df3757d38e65518be6b351a89bc667b17af8603ded336c034e0d0644"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/javascript.json",
+      "relative_to_scratch": "javascript.json",
+      "size_bytes": 158142,
+      "sha256": "e3f530fa73cb1461c2156f76b88c4cb9335ed4e59a8510a6fd2c41043d5039d2"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/javascript.log",
+      "relative_to_scratch": "javascript.log",
+      "size_bytes": 142,
+      "sha256": "f51b6ccf1c0ebe11273b2e96940eb7139ecc8474cb964c04a7d8f449e38f906a"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/apply.log",
+      "relative_to_scratch": "lane/apply.log",
+      "size_bytes": 68,
+      "sha256": "b56a9ba8803c52940bc5789fc310ec43b91786ee9b8a9e8bd68a1a2793dd44e8"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/execution.json",
+      "relative_to_scratch": "lane/execution.json",
+      "size_bytes": 207,
+      "sha256": "db898ada302f11c70377dad4936b31be02205247b7064c1d203b1cf87f975bfb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/failures.md",
+      "relative_to_scratch": "lane/failures.md",
+      "size_bytes": 82183,
+      "sha256": "0805022c81a0234975e15db8eb2818e8e45886de8dcff04a732baf9bc24dd3a2"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/baseline.diff",
+      "relative_to_scratch": "lane/oracle/baseline.diff",
+      "size_bytes": 71315,
+      "sha256": "e990045d4345f8de90d253f87d432bc19ffe274e4deaee90e4ab81eeb97e5c34"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/build.log",
+      "relative_to_scratch": "lane/oracle/build.log",
+      "size_bytes": 2856,
+      "sha256": "5fc6044ddd659953a4521800bd0f46ec8d789a2990c3e23104f5dcc9142de3bb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/failures.md",
+      "relative_to_scratch": "lane/oracle/failures.md",
+      "size_bytes": 82183,
+      "sha256": "0805022c81a0234975e15db8eb2818e8e45886de8dcff04a732baf9bc24dd3a2"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/install.log",
+      "relative_to_scratch": "lane/oracle/install.log",
+      "size_bytes": 822,
+      "sha256": "a357a0c5f25c663f2b739c7f8f04cfcc20aa4dd13ad50ee06beb370806a65669"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/mocha-errors/26098.jsonl",
+      "relative_to_scratch": "lane/oracle/mocha-errors/26098.jsonl",
+      "size_bytes": 165257,
+      "sha256": "9f0d20c4a5f84828cca4dd69c11739432009accc81b14cf4fcad8271bb73a7af"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/report.json",
+      "relative_to_scratch": "lane/oracle/report.json",
+      "size_bytes": 169526,
+      "sha256": "c492eed22a0c4f70c2433ad1f32c95d263adf50818ebd659f853afa9ff9b98cf"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle/tests.log",
+      "relative_to_scratch": "lane/oracle/tests.log",
+      "size_bytes": 82857,
+      "sha256": "5a7e42fdb5f5fc898c7b3b75c8c4429daa084fae31f62ab1cdda24ccc51c2555"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/oracle.log",
+      "relative_to_scratch": "lane/oracle.log",
+      "size_bytes": 169526,
+      "sha256": "c492eed22a0c4f70c2433ad1f32c95d263adf50818ebd659f853afa9ff9b98cf"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/patch-set.md",
+      "relative_to_scratch": "lane/patch-set.md",
+      "size_bytes": 4850,
+      "sha256": "214e931c5194f2d32543553a5cc30879293949b67d7c6752c3137f44e13f1012"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/report.json",
+      "relative_to_scratch": "lane/report.json",
+      "size_bytes": 169623,
+      "sha256": "25a0dba7ca03025447cfb0ecc5f781d256eebc8210f98c759d4d5d39488464bc"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/verdict.json",
+      "relative_to_scratch": "lane/verdict.json",
+      "size_bytes": 168797,
+      "sha256": "67c6c55606382403fda63010334e6eed122014b1eedddff1634931b0c79b1729"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane/verdict.txt",
+      "relative_to_scratch": "lane/verdict.txt",
+      "size_bytes": 107,
+      "sha256": "b9ae60564612ebd5a95341f85a73da2667f23c5f91d7b6cd5db80c6dd5f22f89"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/apply.log",
+      "relative_to_scratch": "lane-count/apply.log",
+      "size_bytes": 74,
+      "sha256": "efc691787fa054957dc1e9e2bb62ca822a509f8d6585ff3edcf83e8bac0dad05"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/execution.json",
+      "relative_to_scratch": "lane-count/execution.json",
+      "size_bytes": 207,
+      "sha256": "cd0879c6e580e3e089a0904711a78092362470d7265adace7d31ef17b44af682"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/failures.md",
+      "relative_to_scratch": "lane-count/failures.md",
+      "size_bytes": 82183,
+      "sha256": "0d8a8ea3cc06790af6f36ec35ca6cfcdcb90e76bb5f14def5d183689c69095c5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/baseline.diff",
+      "relative_to_scratch": "lane-count/oracle/baseline.diff",
+      "size_bytes": 71315,
+      "sha256": "e990045d4345f8de90d253f87d432bc19ffe274e4deaee90e4ab81eeb97e5c34"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/build.log",
+      "relative_to_scratch": "lane-count/oracle/build.log",
+      "size_bytes": 2858,
+      "sha256": "c6116046250687a709d5f3016af4980b5922eaf52d0fe77a61d3c3c2e173ce2c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/failures.md",
+      "relative_to_scratch": "lane-count/oracle/failures.md",
+      "size_bytes": 82183,
+      "sha256": "0d8a8ea3cc06790af6f36ec35ca6cfcdcb90e76bb5f14def5d183689c69095c5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/install.log",
+      "relative_to_scratch": "lane-count/oracle/install.log",
+      "size_bytes": 822,
+      "sha256": "a7559adff83103c8eb61f1d959aee27962f2048ad1b4fe6aac124cfdf4457266"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/mocha-errors/26812.jsonl",
+      "relative_to_scratch": "lane-count/oracle/mocha-errors/26812.jsonl",
+      "size_bytes": 165257,
+      "sha256": "7e050fa3101699fab3ef93d9d77e9f5e846584b51c501f938b5b0a464a278a99"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/report.json",
+      "relative_to_scratch": "lane-count/oracle/report.json",
+      "size_bytes": 169530,
+      "sha256": "dc57954f390544b4e31380ccd9f4f395bd06da3fffb9962dd0fe117bf80dd40e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle/tests.log",
+      "relative_to_scratch": "lane-count/oracle/tests.log",
+      "size_bytes": 82859,
+      "sha256": "06dbd02ad75f8e26f2f9d871d1d8f5ab71536d1f81b41e28f34b07d75e1d56d9"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/oracle.log",
+      "relative_to_scratch": "lane-count/oracle.log",
+      "size_bytes": 169530,
+      "sha256": "dc57954f390544b4e31380ccd9f4f395bd06da3fffb9962dd0fe117bf80dd40e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/patch-set.md",
+      "relative_to_scratch": "lane-count/patch-set.md",
+      "size_bytes": 4850,
+      "sha256": "214e931c5194f2d32543553a5cc30879293949b67d7c6752c3137f44e13f1012"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/report.json",
+      "relative_to_scratch": "lane-count/report.json",
+      "size_bytes": 169629,
+      "sha256": "35298b985f70c57b25ccdcc03a42cf4834dac4a83b61c5552dc3641cb15b2218"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/verdict.json",
+      "relative_to_scratch": "lane-count/verdict.json",
+      "size_bytes": 168797,
+      "sha256": "f47046165449d05805ff09e0da7d42cb2bbb57ba2b8253fa20cfe2ab83bd47fd"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count/verdict.txt",
+      "relative_to_scratch": "lane-count/verdict.txt",
+      "size_bytes": 107,
+      "sha256": "b9ae60564612ebd5a95341f85a73da2667f23c5f91d7b6cd5db80c6dd5f22f89"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count-receipt.json",
+      "relative_to_scratch": "lane-count-receipt.json",
+      "size_bytes": 863,
+      "sha256": "b21f27e1ec840d29750efaef3378aff03054fc4c501350d049a67f4da91147cc"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count-summary.json",
+      "relative_to_scratch": "lane-count-summary.json",
+      "size_bytes": 1137,
+      "sha256": "32c90787b7cb53960d27028fb724fd7861e3a2dda44dcf0d9422dff7619eeac7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-count.log",
+      "relative_to_scratch": "lane-count.log",
+      "size_bytes": 168,
+      "sha256": "cd75d890f24cf84ba64a8a986322e6f99731fc8b08fc858b3754460605b9cd87"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-receipt.json",
+      "relative_to_scratch": "lane-receipt.json",
+      "size_bytes": 623,
+      "sha256": "84c6fad27fa7523aae6e53fe3317971e28adddf56c30baf9dcc46f0844a5f7b5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane-source-identity.json",
+      "relative_to_scratch": "lane-source-identity.json",
+      "size_bytes": 161,
+      "sha256": "01111f3258e441213b2a1c518c1afb61c7dded0e9456bb9dff9bc61263ced97f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/lane.log",
+      "relative_to_scratch": "lane.log",
+      "size_bytes": 162,
+      "sha256": "fe3e729c8da4f818230a9ab16baa39902daae45957703224cf007fada0e01eb3"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/main.jsonl",
+      "relative_to_scratch": "main.jsonl",
+      "size_bytes": 627063,
+      "sha256": "b2d337de98916d63c3881d9e02d136e8056be74dc2fb762dcd092b403c00f6c5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/main.log",
+      "relative_to_scratch": "main.log",
+      "size_bytes": 126,
+      "sha256": "3af0b34cf9707d2549eb061ccf13a86a2addd1a307b63dce867d6634969c37fd"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/mutants.json",
+      "relative_to_scratch": "mutants.json",
+      "size_bytes": 1224,
+      "sha256": "1d6a33bf2a7700fc82d7fc862d4f91d481d7741d6a12ee158f0f3c1f8e2e4e88"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/node-witness-receipt.json",
+      "relative_to_scratch": "node-witness-receipt.json",
+      "size_bytes": 697,
+      "sha256": "4c04d4215792a18f01b9d3805db461228052216229a3a99aa85d812e0b12900a"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/node-witness.log",
+      "relative_to_scratch": "node-witness.log",
+      "size_bytes": 2542,
+      "sha256": "f735ed73697723f845bce2d385d7eff2e7fce154640bc253c1c86bc60c794e8f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/compiler/core.ts",
+      "relative_to_scratch": "optional-contract/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/compiler/sys.ts",
+      "relative_to_scratch": "optional-contract/src/compiler/sys.ts",
+      "size_bytes": 89347,
+      "sha256": "026642c93ffe772d8521a3ad116703e8c7ec82845c3933c1b5d141af1265acba"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/harness/watchUtils.ts",
+      "relative_to_scratch": "optional-contract/src/harness/watchUtils.ts",
+      "size_bytes": 9387,
+      "sha256": "ab2ce0d341edb50bbf32634607a2efb251c0b9e3a80fe29ea68048169e932dd4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "optional-contract/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57422,
+      "sha256": "1ee73230ceebb962384b8d0fd2f3b474e85d66083e9a6ac1c8577250bc053ddb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract-mutation.json",
+      "relative_to_scratch": "optional-contract-mutation.json",
+      "size_bytes": 97,
+      "sha256": "76a4191fc37dd5265bef349ad538f72d234060bf80220d2d29007f798a28ba27"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract-receipt.json",
+      "relative_to_scratch": "optional-contract-receipt.json",
+      "size_bytes": 781,
+      "sha256": "937b4ddb49484dbd05aa82cdbe2838fa2373cd0cf0c6248edf8980de69417d6e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract.jsonl",
+      "relative_to_scratch": "optional-contract.jsonl",
+      "size_bytes": 645320,
+      "sha256": "5e7d6580cda0dc4f4cdf3970389e302ed66f62579603e0ead96924d5a20f8093"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/optional-contract.log",
+      "relative_to_scratch": "optional-contract.log",
+      "size_bytes": 135,
+      "sha256": "8eba83ff818889058a03f56c7cd8fa5f6680b6eddb122dbb4c8d4f2466a6c471"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_load_latent_hook.go",
+      "relative_to_scratch": "overlay/internal_load_latent_hook.go",
+      "size_bytes": 3179,
+      "sha256": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_load_load.go",
+      "relative_to_scratch": "overlay/internal_load_load.go",
+      "size_bytes": 13520,
+      "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_entries_records.go",
+      "relative_to_scratch": "overlay/internal_lower_entries_records.go",
+      "size_bytes": 32835,
+      "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_expression.go",
+      "relative_to_scratch": "overlay/internal_lower_expression.go",
+      "size_bytes": 96659,
+      "sha256": "7eb1c5c94bef9b6ee6db36983061bcec4bdf92d3e662f2c9a86c02c796498259"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_functions.go",
+      "relative_to_scratch": "overlay/internal_lower_functions.go",
+      "size_bytes": 23616,
+      "sha256": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_generic.go",
+      "relative_to_scratch": "overlay/internal_lower_generic.go",
+      "size_bytes": 18709,
+      "sha256": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_deferred_probe_test.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_deferred_probe_test.go",
+      "size_bytes": 2438,
+      "sha256": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_full.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_full.go",
+      "size_bytes": 7833,
+      "sha256": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_hook.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_hook.go",
+      "size_bytes": 23881,
+      "sha256": "abd73e4a70cdaf0f8fccb857e434a92d43bef69864e982ea841ebafde74df830"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_pass_ledger.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_pass_ledger.go",
+      "size_bytes": 3933,
+      "sha256": "14b593e1b2c84ae6f14e290ae3d6c6fd0cdf3be5abcf4cb2cfde75bb1e49f41e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_piece.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_piece.go",
+      "size_bytes": 4991,
+      "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_progress.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_progress.go",
+      "size_bytes": 3587,
+      "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_relation_overflow.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_relation_overflow.go",
+      "size_bytes": 8424,
+      "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_replay.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_replay.go",
+      "size_bytes": 4197,
+      "sha256": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_scoped_tail.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_scoped_tail.go",
+      "size_bytes": 4617,
+      "sha256": "4c84db89648acc9407962025de626bf06615cd7061da57b86628e0ad5c99767d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_scoped_tail_test.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_scoped_tail_test.go",
+      "size_bytes": 3804,
+      "sha256": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_speculative.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_speculative.go",
+      "size_bytes": 21161,
+      "sha256": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_state.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_state.go",
+      "size_bytes": 83465,
+      "sha256": "83e4abdb5ba91f54ce9d19c390687332f82f69f89cbfdab5bf68b6bb1904d9c0"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_timing.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_timing.go",
+      "size_bytes": 1241,
+      "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_latent_units.go",
+      "relative_to_scratch": "overlay/internal_lower_latent_units.go",
+      "size_bytes": 11056,
+      "sha256": "fa099b0021a1541d6969d797274f8709b12d03356429adb5a9a692a45d685b11"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_locals.go",
+      "relative_to_scratch": "overlay/internal_lower_locals.go",
+      "size_bytes": 17723,
+      "sha256": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_lower.go",
+      "relative_to_scratch": "overlay/internal_lower_lower.go",
+      "size_bytes": 23464,
+      "sha256": "dc835339aba092d393011ce9d338afe632c0df03c74767def36e5c8fc93a2c36"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_refusals.go",
+      "relative_to_scratch": "overlay/internal_lower_refusals.go",
+      "size_bytes": 15071,
+      "sha256": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/internal_lower_statements.go",
+      "relative_to_scratch": "overlay/internal_lower_statements.go",
+      "size_bytes": 14567,
+      "sha256": "bcfc857a47f0257238d3d3a39096d7aead73f8021c2344c077f2923691be365f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/overlay.json",
+      "relative_to_scratch": "overlay/overlay.json",
+      "size_bytes": 5131,
+      "sha256": "d87d38c509a38f77640a26fd077c1203b6862f450adf056d42ad834232d8f108"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/stage3_census_latent_replay_worker_main.go",
+      "relative_to_scratch": "overlay/stage3_census_latent_replay_worker_main.go",
+      "size_bytes": 3270,
+      "sha256": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/stage3_census_latent_tool_main.go",
+      "relative_to_scratch": "overlay/stage3_census_latent_tool_main.go",
+      "size_bytes": 3263,
+      "sha256": "64647fa6e6113201cd276b12011b8c6760926061759545e30e7277a3108f6966"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "relative_to_scratch": "overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "size_bytes": 7735,
+      "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/overlay.log",
+      "relative_to_scratch": "overlay.log",
+      "size_bytes": 71,
+      "sha256": "54f9437b5337d1dc0715afb32e110e262d4e023aa882482d441b99fa6d5a5849"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/owner-search.json",
+      "relative_to_scratch": "owner-search.json",
+      "size_bytes": 61456,
+      "sha256": "5583d8cd1c8b9815ff202b8b5a819b655c82119366eec0c6ff65bff744011cfb"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/pre-crypto/src/compiler/core.ts",
+      "relative_to_scratch": "pre-crypto/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/pre-crypto/src/compiler/sys.ts",
+      "relative_to_scratch": "pre-crypto/src/compiler/sys.ts",
+      "size_bytes": 87217,
+      "sha256": "99054c5bc079cc046dee7ada45a3bbda9a59e2fdc66c56b194461b9a336ba5e4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/pre-crypto/src/harness/watchUtils.ts",
+      "relative_to_scratch": "pre-crypto/src/harness/watchUtils.ts",
+      "size_bytes": 9363,
+      "sha256": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/pre-crypto/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "pre-crypto/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57410,
+      "sha256": "3467c9e18da5fd3563d0af02d2d4041e6dff63dbb3594f356fcb0ff02ee04c57"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/pre-crypto-src.tar",
+      "relative_to_scratch": "pre-crypto-src.tar",
+      "size_bytes": 37488640,
+      "sha256": "fead84e129670ee48e085d2a1dccf16de434d890049b2885e8426799f8731041"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/primary-census-summary.json",
+      "relative_to_scratch": "primary-census-summary.json",
+      "size_bytes": 778,
+      "sha256": "7d7433677b2db2080375da9dffdf635c0c920eaccf9aaab669dcca1978499a44"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26524-0.json",
+      "relative_to_scratch": "private-counts/26524-0.json",
+      "size_bytes": 114,
+      "sha256": "88f9c59a05396e1dc3180f10aba2b001aeb4919cf8901851e7bbea7b995bff5c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26561-0.json",
+      "relative_to_scratch": "private-counts/26561-0.json",
+      "size_bytes": 114,
+      "sha256": "7250687d3988e9ba0fbb4f80708537040c0bd650301632a87f538ffd1fa9a68b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26574-0.json",
+      "relative_to_scratch": "private-counts/26574-0.json",
+      "size_bytes": 114,
+      "sha256": "3e9f1a0b3328b14d2ea6bc3194682e99c8eebb54ff7bba1abd96f014072301a7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26576-0.json",
+      "relative_to_scratch": "private-counts/26576-0.json",
+      "size_bytes": 114,
+      "sha256": "2dea7821bee7f5373bc7036a7b72240770dac184f2a9c556e6498056e98d949e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26598-0.json",
+      "relative_to_scratch": "private-counts/26598-0.json",
+      "size_bytes": 114,
+      "sha256": "f151c19a371429ff3a85b16aed2fdeb9c2a0d2aa3977f64a202a191d4f672a15"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26610-0.json",
+      "relative_to_scratch": "private-counts/26610-0.json",
+      "size_bytes": 114,
+      "sha256": "6b11fadfb630ec105bfe79a353a65490228e3fd557b0b7e5d23dae44435a7e07"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26622-0.json",
+      "relative_to_scratch": "private-counts/26622-0.json",
+      "size_bytes": 114,
+      "sha256": "c23af5237d35030ef480862cc0bd9b165727408043aeb84ed03f34945e5e1294"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26629-0.json",
+      "relative_to_scratch": "private-counts/26629-0.json",
+      "size_bytes": 114,
+      "sha256": "76b90a8a492501822a71b1b57170a1547ea1e7dc363a827f60d11f6e884027c4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26651-0.json",
+      "relative_to_scratch": "private-counts/26651-0.json",
+      "size_bytes": 114,
+      "sha256": "f549c31d9aaa95b9219ecb415b17055227cfb0a733d508f204a439d9e86c46e8"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26657-0.json",
+      "relative_to_scratch": "private-counts/26657-0.json",
+      "size_bytes": 114,
+      "sha256": "4f6ec3d1aae13d8ea78d2132680eeb737d2402f8e27ba9c20f7a54aa509a0b5f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26668-0.json",
+      "relative_to_scratch": "private-counts/26668-0.json",
+      "size_bytes": 114,
+      "sha256": "1430549ca81f7a41418b44433d64db4332c70de2bdde2765be323b7e9bd54ca7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26697-0.json",
+      "relative_to_scratch": "private-counts/26697-0.json",
+      "size_bytes": 114,
+      "sha256": "97a747cad658bf90e90c86c950e74fc6981a3f596e11bc3318e02b515faee164"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26704-0.json",
+      "relative_to_scratch": "private-counts/26704-0.json",
+      "size_bytes": 114,
+      "sha256": "2ec348172d02715eb5387c2a29fe2b79c5c29054d654a6432f3fafd34a585e1b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26716-0.json",
+      "relative_to_scratch": "private-counts/26716-0.json",
+      "size_bytes": 114,
+      "sha256": "851b2c1962bd01c0169cbabde6cb4905f621bef3b32ef7cab91ffe6cc0eadd90"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26727-0.json",
+      "relative_to_scratch": "private-counts/26727-0.json",
+      "size_bytes": 114,
+      "sha256": "df9599320faa58413509e8c93c223336c201ed660961d273240111c40d28f039"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26747-0.json",
+      "relative_to_scratch": "private-counts/26747-0.json",
+      "size_bytes": 114,
+      "sha256": "a7e4dfcd036f29244f73ec3c5880da596e833bd485714b5fcde636f06482efef"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26755-0.json",
+      "relative_to_scratch": "private-counts/26755-0.json",
+      "size_bytes": 114,
+      "sha256": "72aea072ca802ae18c54f341af4a7ca398001469ebe8dd5bc69be8b23b0df93c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26767-0.json",
+      "relative_to_scratch": "private-counts/26767-0.json",
+      "size_bytes": 114,
+      "sha256": "63cc2433cf6f301799e42e62673c3be62dd420204f9b010efb04f9a5c7f33d87"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26778-0.json",
+      "relative_to_scratch": "private-counts/26778-0.json",
+      "size_bytes": 114,
+      "sha256": "e1f1a086701d87cb4f80c89a5eff07e3a107aff4803587980feb982dde377c42"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26798-0.json",
+      "relative_to_scratch": "private-counts/26798-0.json",
+      "size_bytes": 114,
+      "sha256": "1a1b35e1e6fe1d3ee86e6edacf644c432edb75c59acd452da9111de957406ec8"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26805-0.json",
+      "relative_to_scratch": "private-counts/26805-0.json",
+      "size_bytes": 233,
+      "sha256": "97bd3943bf4ac0786ebfc09dde2c21f392f4a3c7b815bcb6602ee9c2387d8720"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26812-0.json",
+      "relative_to_scratch": "private-counts/26812-0.json",
+      "size_bytes": 233,
+      "sha256": "fc966c985201fd76d0472c37c0a9ebaea99e85f128dad171d5b0b019d7459445"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26813-0.json",
+      "relative_to_scratch": "private-counts/26813-0.json",
+      "size_bytes": 233,
+      "sha256": "be64068e9818c24a3d55224e0268302198eefb436cd2eac0481b0d2fdcde3e50"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26815-0.json",
+      "relative_to_scratch": "private-counts/26815-0.json",
+      "size_bytes": 233,
+      "sha256": "3ab4cff1402cd3fe5d0041672fdec12144ea9be2b90680727b5c733ca46ced90"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26820-0.json",
+      "relative_to_scratch": "private-counts/26820-0.json",
+      "size_bytes": 233,
+      "sha256": "a0f3430c812700fb26fb6d63204c664f6c35da643fc98d3a053b94598b7e5932"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26826-0.json",
+      "relative_to_scratch": "private-counts/26826-0.json",
+      "size_bytes": 233,
+      "sha256": "e088ee5075d3f94a8ebd56397396cbd62f7cf9ba51eb3b866aec21d42e4822a4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26827-0.json",
+      "relative_to_scratch": "private-counts/26827-0.json",
+      "size_bytes": 233,
+      "sha256": "6039b7db5c7473833b94c63035fa0f40e59faa904344fcd5d956bf0a0a064e00"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26833-0.json",
+      "relative_to_scratch": "private-counts/26833-0.json",
+      "size_bytes": 233,
+      "sha256": "bf40c52ea95f22c0505099e3810ea106e99b5ea01351234b4289b35450dbb8e5"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/26834-0.json",
+      "relative_to_scratch": "private-counts/26834-0.json",
+      "size_bytes": 233,
+      "sha256": "f0f66063691e895c07a09b0ade0472ab5caac8c281fbd42ade268956552b5f03"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/private-counts/27051-0.json",
+      "relative_to_scratch": "private-counts/27051-0.json",
+      "size_bytes": 114,
+      "sha256": "ad551b570f09e68146e50797ddbb82def672b8657c39fccf8749ce55a338c125"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/proofs-receipt.json",
+      "relative_to_scratch": "proofs-receipt.json",
+      "size_bytes": 12614,
+      "sha256": "0ee882c16f397991319d699c0a81b8f0bd19de728b71b360cf757e677266dd13"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/read-table.log",
+      "relative_to_scratch": "read-table.log",
+      "size_bytes": 4454,
+      "sha256": "ab13054eb05752947556e6dbd3e9a5a7db4b08a264229e7d06e8ab11222ea324"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/read-table.py",
+      "relative_to_scratch": "read-table.py",
+      "size_bytes": 869,
+      "sha256": "68bc1eb5b665f57a59d2c463c0f4c0bf37b722699d3f6067be45b3d57e56f586"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/reads.json",
+      "relative_to_scratch": "reads.json",
+      "size_bytes": 4454,
+      "sha256": "ab13054eb05752947556e6dbd3e9a5a7db4b08a264229e7d06e8ab11222ea324"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/require-result-contract-receipt.json",
+      "relative_to_scratch": "require-result-contract-receipt.json",
+      "size_bytes": 710,
+      "sha256": "84722303466b8308f577b51fb4b616d4dce9f00f3ba7e33b08170dbe6e7a8561"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/require-result-contract.log",
+      "relative_to_scratch": "require-result-contract.log",
+      "size_bytes": 349,
+      "sha256": "d9a9dd78d1e426d2fae3b37ef491df1d99d754fc53e1e738066596d22f213db0"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/resolve-host-contract-receipt.json",
+      "relative_to_scratch": "resolve-host-contract-receipt.json",
+      "size_bytes": 637,
+      "sha256": "c1d214c91eda9ef02e5a54106ff011da88f29f9e6626ea3b129152ce25a0278d"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/resolve-host-contract.log",
+      "relative_to_scratch": "resolve-host-contract.log",
+      "size_bytes": 363,
+      "sha256": "5ec5ff96a0ba2c60ed880335372e95a675bd711ef38aaac1f73ba5eb9f6eff60"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring/src/compiler/core.ts",
+      "relative_to_scratch": "restoring/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring/src/compiler/sys.ts",
+      "relative_to_scratch": "restoring/src/compiler/sys.ts",
+      "size_bytes": 89088,
+      "sha256": "a8a76f3bcca5ab8f670a7b89377531f85df078d96210ac0b429c5c3ca76c4669"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring/src/harness/watchUtils.ts",
+      "relative_to_scratch": "restoring/src/harness/watchUtils.ts",
+      "size_bytes": 9363,
+      "sha256": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "restoring/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57410,
+      "sha256": "3467c9e18da5fd3563d0af02d2d4041e6dff63dbb3594f356fcb0ff02ee04c57"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring-mutation.json",
+      "relative_to_scratch": "restoring-mutation.json",
+      "size_bytes": 89,
+      "sha256": "b1dc7a27b0a3952363b85198db7b584e542c776624ccb609727885f1c10d5ad6"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring-receipt.json",
+      "relative_to_scratch": "restoring-receipt.json",
+      "size_bytes": 756,
+      "sha256": "398a6b33c76db0d9f04bd05a7927fe3881dafe580029def928aaae808931b1d7"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring.jsonl",
+      "relative_to_scratch": "restoring.jsonl",
+      "size_bytes": 628767,
+      "sha256": "800b87cc35b0589d97aa92dd22fe3f0831d5b547082c0ae752bf30e174d08b15"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/restoring.log",
+      "relative_to_scratch": "restoring.log",
+      "size_bytes": 127,
+      "sha256": "2db42c7d42c57f4c0ba953984f3b690362b016ed443170cacbcbaaed8096546c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/run_receipt.py",
+      "relative_to_scratch": "run_receipt.py",
+      "size_bytes": 826,
+      "sha256": "a3235bfdbadd643cb9f1bd26cd35124906adb71a4cd091ee2224b8a2c0ea5d07"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/scope.cjs",
+      "relative_to_scratch": "scope.cjs",
+      "size_bytes": 2383,
+      "sha256": "d253229bc380875a342e9505e34fbbcbdca9a536d53d65e644c0d1c0336412c2"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/setup.json",
+      "relative_to_scratch": "setup.json",
+      "size_bytes": 676,
+      "sha256": "4c643b617b04f733bc01fb39cf59eea6b2b1233652b8ac60ebb3e3d784f5452f"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/stock-change-receipt.json",
+      "relative_to_scratch": "stock-change-receipt.json",
+      "size_bytes": 763,
+      "sha256": "66d9c0155120aea0024dabde4cd8e90136a65110ed7425c55bdaa41b1978d253"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/stock-change.json",
+      "relative_to_scratch": "stock-change.json",
+      "size_bytes": 64,
+      "sha256": "471dc276402b70481156d8842a952f2781d0541d42ede4c430f6069c19613b2c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/stock-change.log",
+      "relative_to_scratch": "stock-change.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/stock-main.json",
+      "relative_to_scratch": "stock-main.json",
+      "size_bytes": 64,
+      "sha256": "471dc276402b70481156d8842a952f2781d0541d42ede4c430f6069c19613b2c"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/stock.cjs",
+      "relative_to_scratch": "stock.cjs",
+      "size_bytes": 1051,
+      "sha256": "69035e7593418400bd8ae82275129b488ef9a3a82a6ee0ccc09b8debbb8c69d4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/submodules.log",
+      "relative_to_scratch": "submodules.log",
+      "size_bytes": 696,
+      "sha256": "0bcbfb90d9512fe6157d83dfbd083d6f28548aabc16ff00afefaa93895e4acc4"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/targets.json",
+      "relative_to_scratch": "targets.json",
+      "size_bytes": 194,
+      "sha256": "bc55bb4a3089ccb3f23b1d61addcb9392373013bd4d2c7d36f6f8c6989a118ca"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized/src/compiler/core.ts",
+      "relative_to_scratch": "unnormalized/src/compiler/core.ts",
+      "size_bytes": 93355,
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized/src/compiler/sys.ts",
+      "relative_to_scratch": "unnormalized/src/compiler/sys.ts",
+      "size_bytes": 89239,
+      "sha256": "eb2bcb8bd1b063fb0e2251072bc1dab365ab2e9fceb4a22171036f739d768cb2"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized/src/harness/watchUtils.ts",
+      "relative_to_scratch": "unnormalized/src/harness/watchUtils.ts",
+      "size_bytes": 9363,
+      "sha256": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "relative_to_scratch": "unnormalized/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "size_bytes": 57410,
+      "sha256": "3467c9e18da5fd3563d0af02d2d4041e6dff63dbb3594f356fcb0ff02ee04c57"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized-mutation.json",
+      "relative_to_scratch": "unnormalized-mutation.json",
+      "size_bytes": 93,
+      "sha256": "c4c89fd4b671c9cfa240b9a7cbb70e499f05af5d8f5c81e3bb425abea539ff51"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized-receipt.json",
+      "relative_to_scratch": "unnormalized-receipt.json",
+      "size_bytes": 766,
+      "sha256": "2a06f5196d649530960bf6b5e30132646bffcd6f20d43575c2e52d6aadba5418"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized.jsonl",
+      "relative_to_scratch": "unnormalized.jsonl",
+      "size_bytes": 611703,
+      "sha256": "7e6480540c5bc3bf4795981a13cc2813475fabf6a999836f228db8ff0ff3e246"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/unnormalized.log",
+      "relative_to_scratch": "unnormalized.log",
+      "size_bytes": 130,
+      "sha256": "b7ade2b65fd8d6ff4681d06fd3d174643255ff31901a0c4fd0169eddb11f6f61"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/watch-directory-contract-receipt.json",
+      "relative_to_scratch": "watch-directory-contract-receipt.json",
+      "size_bytes": 711,
+      "sha256": "ad727e54074710350cb40ee812a518d436f8e3ac151bdd76d640b567ece71266"
+    },
+    {
+      "scratch_path": "/workspace/scratch/watch-directory-1533-forwarder/watch-directory-contract.log",
+      "relative_to_scratch": "watch-directory-contract.log",
+      "size_bytes": 365,
+      "sha256": "23056317afa84db5ff583351cd3c743272ae40e9956841f5a8cbbf89a69fc597"
+    }
+  ]
+}

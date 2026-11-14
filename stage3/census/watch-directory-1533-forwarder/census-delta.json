@@ -1,0 +1,124 @@
+{
+  "module_format": "CommonJSBundle",
+  "full": true,
+  "no_output_assertions": true,
+  "contextual_new": [],
+  "contextual_gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "<tree>/src/compiler/sys.ts:1473:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/sys.ts:1548:13",
+      "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "<tree>/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+    }
+  ],
+  "site_new": [],
+  "site_gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "<tree>/src/compiler/sys.ts:1473:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/sys.ts:1548:13",
+      "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "<tree>/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+    }
+  ],
+  "changed": [],
+  "counts": {
+    "contextual_new": 0,
+    "contextual_gone": 1,
+    "site_new": 0,
+    "site_gone": 1,
+    "changed": 0
+  },
+  "restoring_mutant_contextual_findings_equal_main": true,
+  "targets": {
+    "watchFile": {
+      "historical_line": 1532,
+      "actual_line": 1547,
+      "column": 13,
+      "findings": {
+        "main": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "<tree>/src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/sys.ts:1547:13",
+            "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+            "text": "<tree>/src/compiler/sys.ts:1547:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+          }
+        ],
+        "change": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "<tree>/src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/sys.ts:1547:13",
+            "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+            "text": "<tree>/src/compiler/sys.ts:1547:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+          }
+        ],
+        "mutant": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "<tree>/src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/sys.ts:1547:13",
+            "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+            "text": "<tree>/src/compiler/sys.ts:1547:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+          }
+        ]
+      }
+    },
+    "watchDirectory": {
+      "historical_line": 1533,
+      "actual_line": 1548,
+      "column": 13,
+      "findings": {
+        "main": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "<tree>/src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/sys.ts:1548:13",
+            "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+            "text": "<tree>/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+          }
+        ],
+        "change": [],
+        "mutant": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "<tree>/src/compiler/sys.ts:1473:5",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "<tree>/src/compiler/sys.ts:1548:13",
+            "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+            "text": "<tree>/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+          }
+        ]
+      }
+    }
+  }
+}

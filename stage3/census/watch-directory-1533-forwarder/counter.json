@@ -1,0 +1,45 @@
+{
+  "whole_unfiltered_control": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ]
+  },
+  "whole_unfiltered_count_copy": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ]
+  },
+  "counter_values": {
+    "undefined": 0,
+    "true": 0,
+    "false": 0,
+    "other": 0
+  },
+  "loaded_compiler_copies": 9,
+  "test_parent_and_workers": 9,
+  "process_thread_receipts": 30,
+  "selftest": {
+    "eachValueDetected": true,
+    "disabledControlZero": true,
+    "originalAndBundledAliases": true,
+    "forwardedValuesUnchanged": true,
+    "perProcessAndThreadFiles": true
+  },
+  "identical_sanctioned_diff": {
+    "bytes": 71315,
+    "sha256": "e990045d4345f8de90d253f87d432bc19ffe274e4deaee90e4ab81eeb97e5c34"
+  },
+  "interpretation": "No value reached the real getNodeSystem.watchDirectory boundary in the full lane. Three-value behavior is covered by the six concrete Node witnesses, not by lane execution."
+}
