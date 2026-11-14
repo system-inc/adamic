@@ -1,0 +1,11 @@
+[
+  {
+    "where": "sys.ts:304:13",
+    "kind": "Refused",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "phase": "refusal_scan",
+    "owner": "adaptation 99-correctness-timer-closures (createDynamicPriorityPollingWatchFile)",
+    "emitter": "internal/lower/invariance.go: (*lowering).wideningRefusal (via refuseWidening and stringWideningRefusal, rule 3100)",
+    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins createDynamicPriorityPollingWatchFile; nested pollQueue contains the stop"
+  }
+]
