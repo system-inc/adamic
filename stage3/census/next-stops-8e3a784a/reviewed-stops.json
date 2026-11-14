@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "where": "sys.ts:790:87",
+    "kind": "Refused",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "phase": "refusal_scan (mutable invariance)",
+    "owner": "internal/lower/invariance.go: (*lowering).wideningRefusal (onTimerToUpdateChildWatches, nested in createDirectoryWatcherSupportingRecursive)",
+    "emitter": "internal/lower/invariance.go:1178",
+    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive (ownerAfterSha256 fc2cddfdae88032897bb5bf01255c880b34685e5e37cb899caf4a7430b9cbdf2); onTimerToUpdateChildWatches is nested inside it. Mutable widening is checked in refusal_scan before declareModule or body lowering (internal/lower/lower.go:141-152), so sys.ts:790:87 preempts both sys.ts:515:39 (#036ve6w) optionalCall and sys.ts:594:5 (#trxxkge) destructuredField. Neither candidate is reached first"
+  }
+]
