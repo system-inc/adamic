@@ -185,3 +185,13 @@ function-cast mutant, whole-owner contract, 79-root stock and Adamic checks,
 per-file emitted JavaScript comparison, upstream `hereby dts` comparison, and
 whole unfiltered lane receipts belong on `typescript/path-mint-618-evidence`,
 under `stage3/census/path-mint-618/`.
+
+## Retired poller control
+
+The `poller` red control is retired: after `99-correctness-polling-no-enum-write`,
+`pollingInterval` is an unreassigned parameter, the three queue bindings are
+`const`, and no source, harness or test writes `PollingInterval` members.
+The capture keeps tsc's argument evaluation order, but for this argument that
+order is not observable while the queues are const and the enum is unwritten.
+The label and `['/probe.ts']` queue-visit assertions remain behavior checks.
+If a later change makes selection observable, a red control returns with it.

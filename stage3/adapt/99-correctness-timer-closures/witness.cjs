@@ -33,7 +33,6 @@ function run(source, context = {}) {
 function replace(text, before, after, name) { assert.equal(text.split(before).length, 2, name + ': mutant target'); return text.replace(before, after); }
 const sys = read('compiler/sys.ts');
 let poller = fn(sys, 'createDynamicPriorityPollingWatchFile');
-if (mutant === 'poller') poller = replace(poller, 'callback(t1, t2)', 'callback(t1, pollingIntervalQueue(pollingInterval))', 'poller-schedule-capture');
 if (mutant === 'label') poller = replace(poller, 'timeoutDelay, t1);', 'timeoutDelay);', 'timer-label-baseline');
 const pollingDeclarations = sys.slice(sys.indexOf('export enum PollingInterval'), sys.indexOf('function setCustomPollingValues'));
 // Only the enum, level helper and level variables are needed from this region.
@@ -82,7 +81,7 @@ const chosen = run(`${fixture}\n${pollingSetup}\n${poller}
     getModifiedTime: (host, name) => host.getModifiedTime(name),
     pollWatchedFileQueue: (host, queue) => { for (const file of queue) if (file) host.visited.push(file.fileName); queue.length = 0; return 0; },
 });
-assert.deepEqual(chosen, ['/probe.ts'], 'poller-schedule-capture');
+assert.deepEqual(chosen, ['/probe.ts'], 'poller-queue-visit');
 let requestMethod = method(read('server/typingInstallerAdapter.ts'), 'scheduleRequest');
 if (mutant === 'request') requestMethod = replace(requestMethod, 'callback(t1)', 'callback(`${request.projectName}::${request.kind}`)', 'request-schedule-capture');
 const requestResult = run(`${fixture}\nclass Adapter {
