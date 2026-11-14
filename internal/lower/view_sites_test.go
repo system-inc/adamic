@@ -15,7 +15,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// viewSitesCasts makes three casts into checked views, Other's first. read's x.b has the union One | Two
+// viewSitesCasts makes three casts into checked views, Other's first, in .ts, which keeps a cast's first tag checked
+// where .a refuses a downcast whose checks no proof erases. read's x.b has the union One | Two
 // for its receiver, which no view registers until One's: Other's walk finds it unchecked, and One's
 // viewSchema then adds One:b, so One's walk must ask x.b again and register the union's key for b.
 const viewSitesCasts = `interface Base {readonly kind:'one'|'two'|'other'}
@@ -55,7 +56,7 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 	var builds atomic.Int64
 	viewSiteIndexBuilds.Store(&builds)
 	defer viewSiteIndexBuilds.Store(nil)
-	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.a", viewSitesCasts))
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", viewSitesCasts))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +74,7 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 // judged is asked, x.b stays unchecked, and this and TestViewWalkIndexedAgreesWithWhole go red.
 func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
 	t.Parallel()
-	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.a", viewSitesCasts))
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", viewSitesCasts))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -134,7 +135,7 @@ func TestViewRefusesItsFirstSiteInPreorder(t *testing.T) {
 func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
 	viewWalkCompare.Store(true)
 	t.Cleanup(func() { viewWalkCompare.Store(false) })
-	paths := []string{writeAgreementSource(t, "casts.a", viewSitesCasts), writeAgreementSource(t, "writes.a", viewSitesTwoWrites)}
+	paths := []string{writeAgreementSource(t, "casts.ts", viewSitesCasts), writeAgreementSource(t, "writes.a", viewSitesTwoWrites)}
 	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
