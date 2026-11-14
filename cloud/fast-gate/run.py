@@ -19,9 +19,9 @@ Package roots include test imports for commands that compile tests; paths are co
 Unbounded runtime readers declare paths ["."] with an inputs.note explaining the limit.
 A phase whose work reads the base tree beside the candidate's (catalog-apply) says so in inputs.readsBase, true.
 coverage's inputs also carry names, the changed paths it judges (coverageReduced), empty without --base (or --sha with --full).
---darwin-paths-digest --tree <checkout> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin leg's record
-at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the .a files its
-aCheck must cover, one a line.
+--darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
+leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
+.a files its aCheck must cover, one a line.
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -360,25 +360,124 @@ lowercaseHex64 = re.compile(r"[0-9a-f]{64}")
 platformMissingExit = 5
 
 
-def darwinEntries(tree, commit, rules):
-    """Every entry of commit's tree (git ls-tree -r) whose first rule in rules is darwin, as (mode, type, object, path)."""
+def commitEntries(tree, commit):
+    """Every entry of commit's tree (git ls-tree -r), its blobs and its gitlinks, as (mode, type, object, path)."""
     entries = []
     for entry in git(tree, "ls-tree", "-r", "-z", "--full-tree", commit).split("\0"):
         if not entry:
             continue
         described, path = entry.split("\t", 1)
         mode, kind, objectName = described.split(" ")
-        if firstExecutor(rules, path) == "darwin":
-            entries.append((mode, kind, objectName, path))
+        entries.append((mode, kind, objectName, path))
     return entries
 
 
+def darwinEntries(entries, rules):
+    """The entries of commitEntries whose first rule in rules is darwin, as (mode, type, object, path)."""
+    return [entry for entry in entries if firstExecutor(rules, entry[3]) == "darwin"]
+
+
+# darwinClosureEnvironment is the build a darwin leg's go test makes on the Mac, darwin on arm64 with cgo on, so go list
+# names the packages that build reads and not this box's: a file's build constraints pick it by GOOS, GOARCH and cgo.
+# -mod=readonly keeps the listing from writing go.mod or go.sum, so it reads the module state as committed.
+darwinClosureEnvironment = {"GOOS": "darwin", "GOARCH": "arm64", "CGO_ENABLED": "1", "GOFLAGS": "-mod=readonly"}
+# darwinModuleFiles are the root's module files, which pick the version of every module outside the tree the leg builds
+# against, so a module outside the tree is keyed by them and never by its directory.
+darwinModuleFiles = ("go.mod", "go.sum", "go.work", "go.work.sum")
+
+
+def darwinClosureCommand():
+    return ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/..."]
+
+
+def darwinClosureWords():
+    """darwinClosureCommand as a hand would type it, its environment first, for a refusal to name."""
+    return " ".join(["%s=%s" % pair for pair in darwinClosureEnvironment.items()] + darwinClosureCommand())
+
+
+def darwinClosureListing(tree):
+    """darwinClosureCommand's answer in tree, in darwinClosureEnvironment over this process's: the one place the leg's
+    closure is listed, so a test stubs it here and needs no go."""
+    return listedGoList(tree, darwinClosureCommand(), 300, dict(os.environ, **darwinClosureEnvironment))
+
+
+def firstLinesOf(text, count=5):
+    """text's first count lines that aren't blank, each stripped, joined with "; " for a one-line refusal; "no stderr" for
+    none."""
+    return "; ".join([line.strip() for line in text.splitlines() if line.strip()][:count]) or "no stderr"
+
+
+class DarwinPathsRefusal(ValueError):
+    """Why darwinPathsDigest can't name what a darwin leg vouches for at a commit. It's never a digest, so no record
+    matches it: each reader of the digest fails closed on it, the gate's darwin phase red and a-check's darwin path red."""
+
+
 def darwinPathsDigest(tree, commit, tools):
-    """What a darwin leg vouches for, as one sha256: over the sorted lines "<mode> <object> <path>\\n" of every entry of
-    commit's tree (git ls-tree -r) whose first rule in tools' executors.txt is darwin. The gate can't see a change's own
-    tip, since a candidate is rebased onto main with one parent, so it matches a record by this content instead: a main
-    that moved elsewhere keeps the digest, and one that moved inside the darwin paths changes it."""
-    lines = ["%s %s %s\n" % (mode, objectName, path) for mode, _, objectName, path in darwinEntries(tree, commit, executorMap(tools)[0])]
+    """What a darwin leg vouches for, as one sha256 over the sorted lines naming each input of the leg's go test
+    ./internal/apple/... and its git object at commit, so an equal digest means equal inputs (Adamic Loom's ruling):
+    "dir <path> <object>\\n" for each directory inside tree that go list -deps -test names for the Mac's build
+    (darwinClosureCommand in darwinClosureEnvironment), the package's in-module dependency closure (internal/lower,
+    internal/ir, internal/native and more) with its tests' imports, each by its tree object, or a gitlink's commit object
+    for a directory at or inside a submodule; "file <path> <blob>\\n" for each darwinModuleFiles present at commit; and
+    "<mode> <object> <path>\\n" for each entry whose first rule in tools' executors.txt is darwin. A directory's tree
+    object takes its subdirectories too, conservatively: a main that moved a package's testdata, or a package below one
+    the closure names, moves the digest though go may read neither. The gate can't see a change's own tip, since a
+    candidate is rebased onto main with one parent, so it matches a record by this content instead: a main that moved
+    outside the leg's inputs keeps the digest, and one that moved inside them changes it.
+
+    go list reads the files on disk, so tree must be checked out at commit: a digest of another checkout would be a lie.
+    The gate's tree is the candidate's checkout, which run() holds at its sha, and a hand writing a record runs
+    --darwin-paths-digest in a checkout at the record's tip. Raises DarwinPathsRefusal when the checkout isn't at commit,
+    or when go list fails, names nothing, or names a directory inside tree that commit doesn't hold."""
+    try:
+        head = git(tree, "rev-parse", "HEAD")
+        sha = git(tree, "rev-parse", "--verify", commit + "^{commit}")
+    except subprocess.CalledProcessError as error:
+        raise DarwinPathsRefusal("%s isn't a commit %s can name: %s" % (commit, tree, firstLinesOf(error.stderr or "")))
+    if head != sha:
+        raise DarwinPathsRefusal("%s is checked out at %s, not at %s, and go list reads the checkout's files, so its darwinPaths "
+                                 "would be another commit's" % (tree, head, sha))
+    try:
+        listing = darwinClosureListing(tree)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise DarwinPathsRefusal("%s didn't run in %s: %s" % (darwinClosureWords(), tree, error))
+    if listing.returncode != 0:
+        raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (darwinClosureWords(), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
+    root = os.path.realpath(tree)
+    directories = set()
+    for line in listing.stdout.splitlines():
+        if not line.strip():
+            continue
+        real = os.path.realpath(line)
+        # The standard library and the modules outside the tree drop out: go.mod and go.sum below pin those.
+        if real == root or real.startswith(root + os.sep):
+            directories.add(os.path.relpath(real, root).replace(os.sep, "/"))
+    if not directories:
+        # internal/apple's own packages are in the tree, so a listing without one is no listing of the leg.
+        raise DarwinPathsRefusal("%s named no directory inside %s: %s" % (darwinClosureWords(), tree, firstLinesOf(listing.stderr or "")))
+    entries = commitEntries(tree, sha)
+    gitlinks = {path: objectName for _, kind, objectName, path in entries if kind == "commit"}
+    lines, trees = set(), []
+    for directory in sorted(directories):
+        # commit's tree holds nothing below a gitlink, so a directory at or inside a submodule is its commit object.
+        link = next((path for path in sorted(gitlinks) if directory == path or directory.startswith(path + "/")), None)
+        if link is None:
+            trees.append(directory)
+        else:
+            lines.add("dir %s %s\n" % (link, gitlinks[link]))
+    if trees:
+        try:
+            objects = git(tree, "rev-parse", *["%s:%s" % (sha, "" if directory == "." else directory) for directory in trees]).split("\n")
+        except subprocess.CalledProcessError as error:
+            raise DarwinPathsRefusal("go list names a directory %s's tree doesn't hold, so the checkout isn't the commit alone: %s" % (
+                sha, firstLinesOf(error.stderr or "")))
+        # One object a directory, each a full sha, or the answer isn't the one asked for.
+        if len(objects) != len(trees) or not all(lowercaseHex40.fullmatch(objectName) for objectName in objects):
+            raise DarwinPathsRefusal("git rev-parse of %d directories at %s answered %r" % (len(trees), sha, objects[:5]))
+        lines.update("dir %s %s\n" % (directory, objectName) for directory, objectName in zip(trees, objects))
+    blobs = {path: objectName for _, kind, objectName, path in entries if kind == "blob"}
+    lines.update("file %s %s\n" % (path, blobs[path]) for path in darwinModuleFiles if path in blobs)
+    lines.update("%s %s %s\n" % (mode, objectName, path) for mode, _, objectName, path in darwinEntries(entries, executorMap(tools)[0]))
     return hashlib.sha256("".join(sorted(lines)).encode()).hexdigest()
 
 
@@ -387,7 +486,7 @@ def darwinAPaths(tree, commit, tools):
     commit's tree ending .a that no a-check-exempt glob in tools' executors.txt names. That's every darwin .a a-check
     could be handed, a package's own among them (only go list tells those apart), so the Mac runs a superset, never less."""
     rules, _, _, exempt = executorMap(tools)
-    return sorted(path for _, kind, _, path in darwinEntries(tree, commit, rules)
+    return sorted(path for _, kind, _, path in darwinEntries(commitEntries(tree, commit), rules)
                   if kind == "blob" and path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt))
 
 
@@ -435,11 +534,12 @@ def darwinLegRefusal(name, record):
     return None
 
 
-def darwinLegFor(tree, sha, tools):
+def darwinLegFor(tree, sha, tools, digest=None):
     """The recorded darwin leg sha's content passes on: (its record's file name, the record) for the first green record, in
-    file name order, whose darwinPaths is darwinPathsDigest's at sha, or (None, why), why naming what it looked for or the
-    first reason a record at that digest isn't green. A file that can't be read or parsed holds no digest to match."""
-    digest = darwinPathsDigest(tree, sha, tools)
+    file name order, whose darwinPaths is darwinPathsDigest's at sha (digest, when the caller computed it already), or
+    (None, why), why naming what it looked for or the first reason a record at that digest isn't green. A file that can't
+    be read or parsed holds no digest to match. darwinPathsDigest's DarwinPathsRefusal passes through to the caller."""
+    digest = darwinPathsDigest(tree, sha, tools) if digest is None else digest
     directory = os.path.join(tools, darwinLegsDirectory)
     names = sorted(name for name in os.listdir(directory) if name.endswith(".json")) if os.path.isdir(directory) else []
     why = None
@@ -471,7 +571,8 @@ def darwinLegSummary(name, record):
 def darwinMain():
     """run.py --darwin-paths-digest --tree <checkout> --sha <tip> --tools <gate tools>: the darwinPaths a hand writes into
     a darwin leg's record at that tip, the same digest the gate matches the candidate by. With --darwin-a-paths instead,
-    the .a files the record's aCheck must cover (darwinAPaths), one a line, so the Mac runs adamic c on exactly those."""
+    the .a files the record's aCheck must cover (darwinAPaths), one a line, so the Mac runs adamic c on exactly those. A
+    digest that can't be computed (DarwinPathsRefusal) prints nothing on stdout and exits 1, saying why on stderr."""
     lister = argparse.ArgumentParser()
     modes = lister.add_mutually_exclusive_group(required=True)
     modes.add_argument("--darwin-paths-digest", action="store_true")
@@ -481,7 +582,11 @@ def darwinMain():
     lister.add_argument("--tools", required=True)
     arguments = lister.parse_args()
     if arguments.darwin_paths_digest:
-        print(darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools))
+        try:
+            digest = darwinPathsDigest(arguments.tree, arguments.sha, arguments.tools)
+        except DarwinPathsRefusal as refusal:
+            sys.exit("no darwinPaths: %s" % refusal)
+        print(digest)
     else:
         for path in darwinAPaths(arguments.tree, arguments.sha, arguments.tools):
             print(path)
@@ -735,7 +840,9 @@ def coverageInputs(tree, unit, full, change):
     covers would leave the key where its base's was, plan nothing, and land with the red coverage owes it unrun. A change
     that selects the darwin executor keys on every darwin path too, by the map's own globs (a git pathspec's * spans
     directories as fnmatch's does): cover() passes darwin on the recorded leg whose darwinPaths digests all of them, so a
-    main that moved inside them, outside the change's own diff, must move the key."""
+    main that moved inside them, outside the change's own diff, must move the key. darwinPaths also digests the leg's
+    in-module closure (its dir lines), which this key follows only through the Go state's files; the darwin unit, keyed on
+    the whole tree, judges the closure at every change that selects it."""
     names, darwinGlobs = [], []
     if change is not None:
         changed = coverageChanged(tree, change, full)
@@ -1564,14 +1671,22 @@ class Gate:
     def darwinLeg(self, paths):
         """The darwin executor's verdict for paths: green on the recorded leg whose darwinPaths matches the candidate's
         (darwinLegFor), named in the record as darwin_leg, and red without one, saying what it looked for. Returns
-        whether it passed."""
+        whether it passed. A darwinPaths that can't be computed is no darwin leg, red with the refusal as its why."""
         self.steps["darwin"] = 0.0
-        name, leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+        named = ", ".join(paths or ["the executor map's change"])
+        try:
+            digest = darwinPathsDigest(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+        except DarwinPathsRefusal as refusal:
+            # No digest matches no record: a leg can't vouch for inputs the gate couldn't name, so this is red, never green.
+            self.exits["darwin"] = 1
+            self.fail("darwin", "no darwin leg can match %s, since its darwinPaths can't be computed, for %s: %s" % (
+                self.arguments.sha, named, refusal))
+            return False
+        name, leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools, digest)
         if name is None:
             self.exits["darwin"] = 1
             self.fail("darwin", "needs a darwin leg on a pool Mac (Shackler), recorded in %s/<tip>.json at darwinPaths %s, for %s: %s" % (
-                darwinLegsDirectory, darwinPathsDigest(self.arguments.tree, self.arguments.sha, self.arguments.tools),
-                ", ".join(paths or ["the executor map's change"]), leg))
+                darwinLegsDirectory, digest, named, leg))
             return False
         self.exits["darwin"] = 0
         self.result["darwin_leg"] = darwinLegSummary(name, leg)
@@ -1645,7 +1760,12 @@ class Gate:
             if outcome == "failed" and process.returncode == platformMissingExit and "darwin platform missing" in errors:
                 rules = executorMap(self.arguments.tools)[0] if rules is None else rules
                 if firstExecutor(rules, path) == "darwin":
-                    leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools) if leg is None else leg
+                    if leg is None:
+                        try:
+                            leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+                        except DarwinPathsRefusal as refusal:
+                            # No digest is no leg, so the path keeps its live red; the darwin phase names why.
+                            leg = (None, str(refusal))
                     if leg[0] is not None:
                         # The stop came at load, so nothing here checked the program: the Mac's run of it is the verdict.
                         row = {"source": "darwin leg " + leg[0]}
