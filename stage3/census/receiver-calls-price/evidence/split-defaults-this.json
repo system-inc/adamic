@@ -1,0 +1,17 @@
+{
+  "method": "AST over the two default implementations, including nested arrows",
+  "implementations": [
+    {
+      "name": "noEmitSubstitution",
+      "file": "src/compiler/transformer.ts",
+      "line": 227,
+      "thisReads": 0
+    },
+    {
+      "name": "noEmitNotification",
+      "file": "src/compiler/transformer.ts",
+      "line": 232,
+      "thisReads": 0
+    }
+  ]
+}

@@ -14,6 +14,7 @@ function kind(type){const name=type?.aliasSymbol?.name||type?.symbol?.name;retur
 for(const sf of program.getSourceFiles()){if(!sf.fileName.startsWith(root+'/src/')||sf.isDeclarationFile)continue;const edits=[];function insert(pos,text){edits.push({start:pos,end:pos,text});}function wrap(n,before,after){insert(n.getStart(),before);insert(n.end,after);}
 function tick(n,key){wrap(n,`(${hook}.tick(${JSON.stringify(key)}), `,')');}
 walk(sf,n=>{
+ if(ts.isArrowFunction(n)&&ts.isVariableDeclaration(n.parent)&&arrowKeys.has(path.relative(root,sf.fileName)+':'+n.parent.name.getText(sf))){const type='('+n.parameters.map(p=>p.getText(sf)).join(', ')+') => '+n.type.getText(sf);insert(n.parent.name.end, ': '+type);wrap(n,`${hook}.arrow(`,`, ${JSON.stringify(n.parent.name.getText(sf))})`);}
  if(ts.isObjectLiteralExpression(n)){const k=kind(checker.getContextualType(n));if(k){const modulePath=path.relative(path.dirname(sf.fileName),root+'/src/compiler/_namespaces/ts.js').split(path.sep).join('/');wrap(n,`${hook}.watch((`, ` satisfies import(${JSON.stringify(modulePath.startsWith('.')?modulePath:'./'+modulePath)}).${k}), ${JSON.stringify(k)}, ${JSON.stringify(names[k])})`);inventory.push({file:path.relative(root,sf.fileName),kind:k,position:n.getStart()});}}
  if(ts.isCallExpression(n)&&ts.isPropertyAccessExpression(n.expression)){
   const access=n.expression;
@@ -21,7 +22,7 @@ walk(sf,n=>{
   if(ts.isIdentifier(access.expression)&&access.expression.text==='context'&&names.TransformationContext.includes(access.name.text)&&ts.isArrowFunction(n.parent)&&ts.isVariableDeclaration(n.parent.parent)&&(arrowKeys.has(path.relative(root,sf.fileName)+':'+n.parent.parent.name.getText(sf))))tick(n,'transformerCalls.'+path.basename(sf.fileName)+'.'+access.name.text);
   if(access.expression.getText(sf)==='Object'&&access.name.text==='defineProperty')edits.push({start:access.getStart(),end:access.end,text:hook+'.define'});
  }
- if(ts.isFunctionDeclaration(n)&&n.name?.text==='createPrinter'&&n.body){insert(n.body.getStart()+1,`\n ${hook}.tick("printerEntries"); ${hook}.watch(handlers, "PrintHandlers", ${JSON.stringify(names.PrintHandlers)});\n`);}
+ if(ts.isFunctionDeclaration(n)&&n.name?.text==='createPrinter'&&n.body){insert(n.body.getStart()+1,`\n ${hook}.tick("printerEntries"); ${hook}.watch(handlers, "PrintHandlers", ${JSON.stringify(names.PrintHandlers)}, true);\n`);}
  if(ts.isVariableDeclaration(n)&&n.initializer&&ts.isPropertyAccessExpression(n.initializer)&&n.initializer.expression.getText(sf)==='handlersView')tick(n.initializer,'printerAliases.'+n.name.getText(sf));
  if(ts.isVariableDeclaration(n)&&n.initializer&&ts.isBinaryExpression(n.initializer)&&n.initializer.operatorToken.kind===ts.SyntaxKind.QuestionQuestionToken&&ts.isPropertyAccessExpression(n.initializer.left)&&n.initializer.left.expression.getText(sf)==='handlersView')tick(n.initializer.left,'printerAliases.'+n.name.getText(sf));
  if(ts.isBinaryExpression(n)&&n.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&n.operatorToken.kind<=ts.SyntaxKind.LastAssignment&&ts.isPropertyAccessExpression(n.left)){const k=kind(checker.getTypeAtLocation(n.left.expression));if(k&&(k!=='TransformationContext'||names[k].includes(n.left.name.text)))tick(n,'astWrites.'+k+'.'+n.left.name.text);}
@@ -29,7 +30,10 @@ walk(sf,n=>{
   const operands=[n.left,n.right],direct=operands.some(x=>ts.isPropertyAccessExpression(x)&&names[kind(checker.getTypeAtLocation(x.expression))]?.includes(x.name.text));
   const sentinel=sf.fileName.endsWith('/compiler/emitter.ts')&&operands.some(x=>ts.isIdentifier(x)&&['onEmitNode','substituteNode'].includes(x.text));
   const callable=operands.some(x=>{const t=checker.getNonNullableType(checker.getTypeAtLocation(x));return !!t.getCallSignatures().length||!!(t.flags&(ts.TypeFlags.Any|ts.TypeFlags.Unknown));});
-  if(direct||sentinel||callable){const p=sf.getLineAndCharacterOfPosition(n.getStart());insert(n.getStart(),`${hook}.identity(`);edits.push({start:n.left.end,end:n.right.getStart(),text:', '});insert(n.end,`, ${JSON.stringify(ts.tokenToString(n.operatorToken.kind))}, ${JSON.stringify(path.relative(root,sf.fileName)+':'+(p.line+1)+':'+(p.character+1))}, ${direct}, ${sentinel})`);}
+  if(direct||sentinel||callable){const p=sf.getLineAndCharacterOfPosition(n.getStart()),site=path.relative(root,sf.fileName)+':'+(p.line+1)+':'+(p.character+1);const safe=x=>ts.isIdentifier(x)||ts.isLiteralExpression(x)||x.kind===ts.SyntaxKind.NullKeyword;
+   if(safe(n.left)&&safe(n.right))wrap(n,`(${hook}.identity(${n.left.getText(sf)}, ${n.right.getText(sf)}, ${JSON.stringify(ts.tokenToString(n.operatorToken.kind))}, ${JSON.stringify(site)}, ${direct}, ${sentinel}), `,')');
+   else {if(direct)tick(n,'receiverIdentity');if(sentinel)tick(n,'printerAliasSentinelIdentity');}
+  }
  }
  if(ts.isPropertyAccessExpression(n)&&n.name.text==='length'&&ts.isPropertyAccessExpression(n.expression)&&names[kind(checker.getTypeAtLocation(n.expression.expression))]?.includes(n.expression.name.text))tick(n,'receiverLength');
 });

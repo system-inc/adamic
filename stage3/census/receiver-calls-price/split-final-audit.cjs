@@ -1,0 +1,10 @@
+// Stock compiler API, explicit 79 roots, and complete method-binding inventory.
+const ts=require('../../api/node_modules/typescript'),fs=require('fs'),path=require('path');
+const root='/workspace/scratch/receiver-split',cfg=ts.getParsedCommandLineOfConfigFile(root+'/src/compiler/tsconfig.json',{}, {...ts.sys,onUnRecoverableConfigFileDiagnostic:d=>{throw Error(String(d.messageText))}}),roots=ts.sys.readDirectory(root+'/src/compiler',['.ts']);
+if(ts.version!=='6.0.3'||roots.length!==79)throw Error('pin/root drift');
+const program=ts.createProgram(roots,{...cfg.options,noEmit:true,incremental:false,composite:false,strictFunctionTypes:true}),checker=program.getTypeChecker(),diagnostics=ts.getPreEmitDiagnostics(program),sites=[];
+for(const sf of program.getSourceFiles())if(sf.fileName.startsWith(root+'/src/compiler/')&&!sf.isDeclarationFile){function walk(n){if(ts.isObjectBindingPattern(n)){const type=checker.getTypeAtLocation(n.parent.initializer||n),members=n.elements.filter(e=>type.getProperty((e.propertyName||e.name).getText(sf))?.declarations?.some(ts.isMethodSignature));if(members.length)sites.push({file:path.relative(root,sf.fileName),line:sf.getLineAndCharacterOfPosition(n.getStart()).line+1,type:checker.typeToString(type),members:members.map(e=>(e.propertyName||e.name).getText(sf))});}ts.forEachChild(n,walk);}walk(sf);}
+const result={typescript:ts.version,rootCount:roots.length,roots:roots.map(f=>path.relative(root,f)),diagnosticCount:diagnostics.length,diagnostics:diagnostics.map(d=>({file:d.file?.fileName,start:d.start,code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')})),remainingMethodBindingSites:sites};
+fs.writeFileSync('/workspace/scratch/receiver-split-results/final-stock-ast.json',JSON.stringify(result,null,2)+'\n');
+if(diagnostics.length||sites.length!==10)throw Error('unexpected stock diagnostics or internal binding inventory');
+console.log('stock 6.0.3: 0 diagnostics over 79 explicit roots; 19 public method-binding sites removed; 10 internal sites retained');

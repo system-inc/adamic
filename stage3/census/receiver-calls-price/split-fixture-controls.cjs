@@ -9,6 +9,7 @@ const factory: NodeFactory = {createIdentifier(a) { return a; }};
 const original = factory.createIdentifier;
 factory.createIdentifier('ok');
 factory.createIdentifier === original;
+original === original;
 factory.createIdentifier.length;
 factory.createIdentifier = original;
 Object.defineProperty(factory, 'createIdentifier', {value: original, configurable: true});

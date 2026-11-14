@@ -1,10 +1,11 @@
 """One full file at a time, CommonJSBundle, 60-minute ceiling, no output."""
-import argparse,json,os,pathlib,subprocess,sys
+import argparse,json,os,pathlib,subprocess,sys,time
 p=argparse.ArgumentParser();p.add_argument('road');p.add_argument('tree',type=pathlib.Path);p.add_argument('output',type=pathlib.Path);p.add_argument('--file');a=p.parse_args()
 heat=json.loads(pathlib.Path('/workspace/scratch/receiver-heat.json').read_text())
 files=[a.file] if a.file else list(dict.fromkeys(s['file'] for s in heat['sites'] if s['public']))
 a.output.mkdir(parents=True,exist_ok=True)
 for file in files:
+ while (a.output/'.pause').exists():time.sleep(1)
  key=file.removeprefix('src/compiler/').removesuffix('.ts').replace('/','__');stem=a.output/(a.road+'__'+key)
  if stem.with_suffix('.json').exists() and json.loads(stem.with_suffix('.json').read_text())['exit']==0:continue
  env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_ONLY_FILE=str(a.tree/file))
