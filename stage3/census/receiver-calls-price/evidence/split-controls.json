@@ -1,0 +1,40 @@
+{
+  "pass": true,
+  "counts": {
+    "reads.NodeFactory.createIdentifier": 4,
+    "parserCalls.createIdentifier": 1,
+    "receiverIdentity": 1,
+    "memberIdentityComparisons": 2,
+    "memberIdentityOperands": 4,
+    "memberIdentitySite.src/compiler/parser.ts:5:1": 1,
+    "receiverLength": 1,
+    "functionLength": 1,
+    "astWrites.NodeFactory.createIdentifier": 1,
+    "writes.NodeFactory.createIdentifier": 1,
+    "defineWrites.createIdentifier": 1,
+    "printerEntries": 1,
+    "printerAliases.onEmitNode": 1,
+    "reads.PrintHandlers.onEmitNode": 1,
+    "printerAliasSentinelIdentity": 1,
+    "memberIdentitySite.src/compiler/emitter.ts:6:2": 1,
+    "transformerCalls.es2020.ts.hoistVariableDeclaration": 1,
+    "reads.TransformationContext.hoistVariableDeclaration": 1
+  },
+  "failures": [],
+  "sources": {
+    "f8b9bc168d3a07fd4986363ce8c1b27732f6767c4105a9b9c3d6ab166bce3e12": "createIdentifier(a) { return a; }",
+    "4d5ca52066e61495b18ce4d1f552f1767f4af2e4efa2ab529a0a51d18080287d": "function noEmitNotification(x) { void x; }",
+    "46bbdecf015bffbabaa1ae9950283ad6d4e9cdf64762f94f8c307d70a49a5fe0": "hoistVariableDeclaration(node) { if (this.flag)\n        void node; }"
+  },
+  "providers": {
+    "NodeFactory.createIdentifier": {
+      "f8b9bc168d3a07fd4986363ce8c1b27732f6767c4105a9b9c3d6ab166bce3e12": true
+    },
+    "PrintHandlers.onEmitNode": {
+      "4d5ca52066e61495b18ce4d1f552f1767f4af2e4efa2ab529a0a51d18080287d": true
+    },
+    "TransformationContext.hoistVariableDeclaration": {
+      "46bbdecf015bffbabaa1ae9950283ad6d4e9cdf64762f94f8c307d70a49a5fe0": true
+    }
+  }
+}

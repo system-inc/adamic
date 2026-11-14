@@ -11,8 +11,8 @@ def run(name,cmd,cwd=repo,env=None,allow=()):
 run('controls',['node',scripts/'split-fixture-controls.cjs'])
 control_dir=out/'control-snapshots';control_dir.mkdir(exist_ok=True)
 shutil.copyfile(scratch/'split-fixture-controls.json',control_dir/'control.json')
-run('this-controls',['node',scripts/'split-aggregate.cjs',control_dir,out/'this-controls.json'])
-this_control=json.loads((out/'this-controls.json').read_text())['implementationThis']
+run('this-controls',['node',scripts/'split-aggregate.cjs',control_dir,out/'this-controls-result.json'])
+this_control=json.loads((out/'this-controls-result.json').read_text())['implementationThis']
 assert this_control['reads']==1 and this_control['parseFailures']==0,this_control
 # A link shares only locked dependencies, not generated declaration outputs.
 if not (base/'node_modules').exists():(base/'node_modules').symlink_to(split/'node_modules',target_is_directory=True)

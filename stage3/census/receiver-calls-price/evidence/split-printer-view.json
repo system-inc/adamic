@@ -1,0 +1,20 @@
+{
+  "measurement": {
+    "command": [
+      "/workspace/scratch/receiver-latent",
+      "/workspace/scratch/receiver-split/src/compiler",
+      "/workspace/scratch/receiver-split-results/census/split__emitter.jsonl"
+    ],
+    "cwd": "/workspace/scratch/receiver-calls-price",
+    "exit": 0,
+    "timeout": false,
+    "limit_seconds": 3600,
+    "wall_seconds": 722.635,
+    "peak_process_tree_rss_kib": 1643548,
+    "sampling_interval_seconds": 0.2,
+    "samples": 3569,
+    "max_descendant_rss_kib": 1643084
+  },
+  "aliasRegionFindings": [],
+  "methodRefusals": []
+}
