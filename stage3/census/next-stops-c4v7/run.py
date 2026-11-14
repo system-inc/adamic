@@ -5,7 +5,7 @@ out=Path(__file__).resolve().parent/os.environ.get("CENSUS_MODULE_FORMAT","Commo
 out.mkdir(exist_ok=True)
 repo=Path('/workspace/scratch/c4v7-census/head')
 scratch=Path('/workspace/scratch/c4v7-census')
-tree=scratch/'next-stops-c4v7-adapted'
+tree=scratch/'adapted-head'
 def run(name,args,limit=1780):
     start=time.monotonic()
     with (out/(name+'.log')).open('wb') as log:

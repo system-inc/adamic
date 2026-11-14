@@ -34,6 +34,7 @@ for m in modes:
   if k not in newkeys or k in seen:continue
   seen.add(k)
   s += ['#### '+e['where'],'','```typescript',e.get('adapted_line','(no source line)'), '```','','Context:','','```typescript',e.get('adapted_excerpt',''),'```','','Kind: `'+e['kind']+'`. Reason: '+e['reason']+'. Phase: '+e['phase']+'. Emitter: '+e.get('emitter','not applicable')+'. Owner: '+e['owner']+'.']
+  if e.get('owner_basis'):s+=['','Source attribution: '+e['owner_basis'],'']
   s += ['','This is an existing main refusal-scan finding newly reached as a first stop.' if k in mainkeys else 'This tuple is not present in the main refusal-scan ledger; consult its phase above.','']
 s+=['### Lowering-phase first stops','']
 for m in modes:

@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "where": "sys.ts:514:17",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan",
+    "owner": "createSingleWatcherPerName in adapted upstream sys.ts",
+    "emitter": "internal/lower/cast_proof.go:155 castRefusal (rule 1900), castProof refusal at line 195",
+    "owner_basis": "Inside generic body createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback> at sys.ts:498. The callback expression is cast as T in createWatcher argument 1 (whose parameter is callback: T). The same finding is already present in both main and head scan-only streams."
+  }
+]

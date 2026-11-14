@@ -1,0 +1,15 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-o",
+    "/workspace/scratch/c4v7-census/ordinary-head",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 32.287963080999816,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
