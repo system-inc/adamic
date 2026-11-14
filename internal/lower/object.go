@@ -2030,6 +2030,9 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
 	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
+		if err := l.enumNeverReadGap(property.Name()); err != nil {
+			return nil, err
+		}
 		return l.enumNeverCheck(property.Name(), read, identity), nil
 	}
 	making, err := l.neverRead(property.Name())

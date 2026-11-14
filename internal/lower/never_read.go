@@ -59,6 +59,25 @@ func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil, nil
 	}
+	return l.neverJudged(node)
+}
+
+// enumNeverReadGap judges a numeric enum's never read, which enum_never.go traps, by the same test
+// (#afs4xvb): its trap is a never read's too, so it holds only when nothing that can write the place
+// runs between the earliest narrowing and the read, and is not yet otherwise. holder.e checked against
+// E.A, then a call that puts E.A back, then checked against E.B, holds E.A where the checker says never,
+// and the trap stopped a valid run. A write's own read, value++, isn't a read here, and keeps the trap.
+func (l *lowering) enumNeverReadGap(node *ast.Node) error {
+	node = ast.SkipParentheses(node)
+	if !l.neverReadPosition(node) {
+		return nil
+	}
+	_, err := l.neverJudged(node)
+	return err
+}
+
+// neverJudged is neverRead's judgment of a read the checker types never, an enum's included.
+func (l *lowering) neverJudged(node *ast.Node) (*neverMaking, error) {
 	stop := l.notYet(node, "a read the checker narrowed to never across code that may write it")
 	data := node.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
