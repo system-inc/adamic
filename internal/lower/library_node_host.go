@@ -624,7 +624,11 @@ func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 			if index == 1 {
 				expected = ir.Number
 			}
-			if value.Type() != expected {
+			if index == 1 && l.checker.GetTypeAtLocation(field.AsPropertyAssignment().Initializer).Flags()&checker.TypeFlagsUndefined != 0 && value.Type() != ir.MaybeNumber {
+				// Preserve evaluation of an undefined-only expression, with optional numeric storage.
+				value = ir.Void{Value: value, Of: ir.MaybeNumber}
+			}
+			if value.Type() != expected && !(index == 1 && value.Type() == ir.MaybeNumber) {
 				return refuse("with a non-" + typeName(expected) + " " + key)
 			}
 			arguments = append(arguments, value)

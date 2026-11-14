@@ -58,6 +58,8 @@ void adamic_fs_file_realpath_error(const adamic_string *);
 
 void adamic_fs_file_realpath_walk_error(const adamic_string *, int, const char *);
 
+// An undefined interval leaves a coded type error pending; the emitter checks before registering.
+double adamic_fs_file_watch_interval(adamic_maybe_number);
 // Polling registrations retain listeners until unwatch or loop shutdown.
 double adamic_fs_file_watch(const adamic_string *, bool, double, adamic_closure *);
 double adamic_fs_file_unwatch(const adamic_string *, adamic_closure *);
