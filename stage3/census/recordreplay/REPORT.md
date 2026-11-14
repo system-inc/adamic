@@ -12,8 +12,9 @@ claimed. Never submitted to Loom.
 The read gate holds for the declaration-file form. The one-commit amendment is
 pushed to `typescript/recordreplay-amend-1` at `e00ce47c6`, directly on `7ccad5b5`.
 It changes only 99-wasm-crypto-import. Its scoped getNodeSystem before pin and
-both node: import pins stay fixed; the after owner pin is recut. 93 runs before
-99 and is unchanged. The fresh official apply's pre-99 snapshot, replayed through
+both node: import pins stay fixed; the after owner pin is recut. 93 also pins getNodeSystem whole; it runs before
+99 and is unchanged. `gate/owner-pins.json` verifies both owners and import pins
+against the fresh official snapshots, and verifies that 99 is the last adapter. The fresh official apply's pre-99 snapshot, replayed through
 the amended adapter, matches the gate source byte for byte. Source scope,
 no-write rerun and owner/declaration/out-of-scope mutation checks pass.
 
@@ -62,7 +63,11 @@ It exposes `sys.ts:1613:46: reading modulePath` and two continuation boundaries,
 with **zero new findings naming process**. No unit's earlier first stop moves.
 The main compiler's B control is run on the same amended bytes as the head:
 `stage3/census/pair` requires identical adapted source and unit eligibility.
-A uses the original adapted source on both compilers. The adaptation inputs at
+The ordinary B table retains original main source on its baseline side; the
+native source-changing full comparison is also retained in
+`full-sys/B-native-every-change.md`. The same-input B latent comparison is an
+additional controlled observation, not a replacement for the source-changing
+observations. A uses the original adapted source on both compilers. The adaptation inputs at
 main and CLI head are identical, so the one fresh official control tree supplies
 both sides of A. The amended adapter's exact output supplies both sides of B.
 

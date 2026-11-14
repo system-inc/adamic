@@ -1,0 +1,322 @@
+# B native source-changing full sys.ts comparison
+
+existing declaration file/line/column identities, preserved by this amendment; exact raw finding context; no synthetic same-input stream
+
+## gone
+
+```json
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1517:9",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+    "start": 68114,
+    "end": 72545
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1517:9",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+    "start": 68114,
+    "end": 72545
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1588:191",
+    "reason": "process.recordreplay as a value (use its supported process operation directly)",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1588:191",
+    "reason": "process.recordreplay as a value (use its supported process operation directly)",
+    "text": "src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1588:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "text": "src/compiler/sys.ts:1588:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+  }
+]
+```
+
+## new
+
+```json
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1612:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1517:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+    "start": 72216,
+    "end": 72306
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1613:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet",
+    "start": 72306,
+    "end": 72397
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1467:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1613:46",
+    "reason": "reading modulePath",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "src/compiler/sys.ts:1613:46",
+    "reason": "reading modulePath",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1612:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1517:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+    "start": 72216,
+    "end": 72306
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "src/compiler/sys.ts:1473:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "src/compiler/sys.ts:1613:21",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "src/compiler/sys.ts:1613:46: stage 0 can't lower reading modulePath yet",
+    "start": 72306,
+    "end": 72397
+  }
+]
+```
+
+## unit_first_stop_delta
+
+```json
+[]
+```
+
+## added_units
+
+```json
+[
+  {
+    "pass_ledger": [
+      {
+        "name": "checkOverloadResults",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "forwarderValues",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "finishClassCalls",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "certifySourceSlots",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "finishAccessors",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "finishToPrimitive",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkIterableViews",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "exceptions",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkLibrarySpreads",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkAccessorSpreads",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkRecordGuardedReads",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkDynamicKeyedGetters",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkGeneratorRoads",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "flow.NormalizeAsync",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "asyncEntrySource",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "findCycles",
+        "status": "not_run_whole_program"
+      },
+      {
+        "name": "checkBoundArguments",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkViewOptionalWrites",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkOptionalMemberPresence",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkViewCopies",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkViewWidenedReads",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkHostMemberWrites",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "asyncPayloadFailures",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkPromiseConsumption",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkViewLogicalWrites",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "programRegion",
+        "status": "not_run_whole_program"
+      },
+      {
+        "name": "applyProgramMetadata",
+        "status": "not_run_whole_program"
+      },
+      {
+        "name": "ownershipQuery",
+        "status": "not_run_whole_program"
+      },
+      {
+        "name": "readiness",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "borrow",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "counters",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "voidDiscards",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkInspectorDoomedContracts",
+        "status": "not_run_scoped"
+      },
+      {
+        "name": "checkFlowLiveness",
+        "status": "not_run_scoped"
+      }
+    ],
+    "measurement": "measured on a checker-rejected program",
+    "where": "src/compiler/sys.ts:56:1",
+    "kind": "KindImportDeclaration",
+    "instantiated": false,
+    "status": "attempted",
+    "checker_diagnostics": [],
+    "top": "src/compiler/sys.ts:56:1"
+  }
+]
+```
+
+## removed_units
+
+```json
+[]
+```
+
+## new_process_findings
+
+```json
+[]
+```

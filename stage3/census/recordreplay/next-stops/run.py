@@ -6,6 +6,8 @@ out.mkdir(parents=True,exist_ok=True)
 repo=Path(os.environ['CENSUS_REPO'])
 scratch=Path('/workspace/scratch/recordreplay')
 tree=Path(os.environ['CENSUS_TREE'])
+# Both native main controls retain main's original adaptation.
+if os.environ['CENSUS_LABEL'].startswith('B-main-'): tree=Path('/workspace/scratch/recordreplay/control')
 def run(name,args,limit=1780):
     start=time.monotonic()
     with (out/(name+'.log')).open('wb') as log:

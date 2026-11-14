@@ -27,7 +27,7 @@ for pair,tree in [('A',D/'control'),('B',D/'candidate2')]:
   label=pair+'-'+side
   for mode in ['CommonJSBundle','EcmaScript']:
    dest=O/'ordinary'/label/mode;dest.mkdir(parents=True,exist_ok=True)
-   env=dict(os.environ,CENSUS_MODULE_FORMAT=mode,CENSUS_REPO=str(R),CENSUS_TREE=str(tree),CENSUS_OUTPUT=str(dest),CENSUS_BINARY=str(binary),CENSUS_LABEL=label+'-'+mode,RUN_LIMIT='1700')
+   env=dict(os.environ,CENSUS_MODULE_FORMAT=mode,CENSUS_REPO=str(R),CENSUS_TREE=str(D/'control' if side=='main' else tree),CENSUS_OUTPUT=str(dest),CENSUS_BINARY=str(binary),CENSUS_LABEL=label+'-'+mode,RUN_LIMIT='1700')
    for first in range(1,80,10):
     last=min(first+9,79)
     for i in range(first,last+1):
