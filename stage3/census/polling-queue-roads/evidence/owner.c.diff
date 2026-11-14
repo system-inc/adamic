@@ -1,0 +1,33 @@
+--- owner.original.ts
++++ owner.c.ts
+@@ -2,10 +2,14 @@
+     getModifiedTime: NonNullable<System["getModifiedTime"]>;
+     setTimeout: NonNullable<System["setTimeout"]>;
+ }): HostWatchFile {
+-    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {
++    class PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {
+         pollingInterval: PollingInterval;
+-        pollIndex: number;
+-        pollScheduled: unknown;
++        pollIndex = 0;
++        pollScheduled: unknown = false;
++        constructor(pollingInterval: PollingInterval) {
++            super();
++            this.pollingInterval = pollingInterval;
++        }
+     }
+ 
+     const watchedFiles: WatchedFileWithUnchangedPolls[] = [];
+@@ -36,11 +40,7 @@
+     }
+ 
+     function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
+-        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
+-        return queue;
++        return new PollingIntervalQueue(pollingInterval);
+     }
+ 
+     function pollPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {

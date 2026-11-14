@@ -1,0 +1,23 @@
+{
+  "omitted_fixture_directories_restored": [
+    "tests/cases/projects/projectOption/SpecifyExcludeWithOutUsingRelativePathWithAllowJS/node_modules",
+    "tests/cases/projects/projectOption/SpecifyExcludeWithOutUsingRelativePath/node_modules",
+    "tests/cases/projects/projectOption/SpecifyExcludeUsingRelativePathWithAllowJS/node_modules",
+    "tests/cases/projects/projectOption/SpecifyExcludeUsingRelativePath/node_modules",
+    "tests/cases/projects/projectOption/DefaultExcludeOnlyNodeModules/node_modules",
+    "tests/cases/projects/projectOption/DefaultExcludeNodeModulesAndRelativePathOutDirWithAllowJS/node_modules",
+    "tests/cases/projects/projectOption/DefaultExcludeNodeModulesAndRelativePathOutDir/node_modules",
+    "tests/cases/projects/projectOption/DefaultExcludeNodeModulesAndOutDirWithAllowJS/node_modules",
+    "tests/cases/projects/projectOption/DefaultExcludeNodeModulesAndOutDir/node_modules",
+    "tests/cases/projects/NodeModulesSearch/maxDepthIncreased/node_modules",
+    "tests/cases/projects/NodeModulesSearch/maxDepthExceeded/node_modules",
+    "tests/cases/projects/NodeModulesSearch/importHigher/node_modules",
+    "tests/cases/projects/NodeModulesSearch/maxDepthIncreased/node_modules/m2/node_modules",
+    "tests/cases/projects/NodeModulesSearch/maxDepthExceeded/node_modules/m2/node_modules",
+    "tests/cases/projects/NodeModulesSearch/importHigher/node_modules/m2/node_modules",
+    "tests/baselines/reference/project/nodeModulesMaxDepthExceeded/node/maxDepthExceeded/built/node_modules",
+    "tests/baselines/reference/project/nodeModulesMaxDepthExceeded/amd/maxDepthExceeded/built/node_modules"
+  ],
+  "superseded_run": "/tmp/polling-oracle-results",
+  "reason": "Initial copy erroneously ignored node_modules at every depth; fixture files were omitted. Its counts and verdict are not used."
+}

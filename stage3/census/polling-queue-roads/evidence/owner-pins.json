@@ -1,0 +1,80 @@
+[
+  {
+    "file": "src/compiler/sys.ts",
+    "owner": "createDynamicPriorityPollingWatchFile",
+    "ownerBeforeSha256": "1c3f5c520588ec9d2bee51db225ee3fe3d23c74bd6ff3f1155b6fc0cef85a69f",
+    "ownerAfterSha256": "4872c7772b7a19e2438ec392bce88c5d6f8b9e2494bfe8e8202d5265d8288168"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "owner": "createFixedChunkSizePollingWatchFile",
+    "ownerBeforeSha256": "f548d0579f9ddb433cca0ce69a1d679806962e3660248a1120f8a387e3f4eeb7",
+    "ownerAfterSha256": "62cbe3288dcc83f26cd6dcdcb7b8254775372dff80c7f26f43c6e9c5957c6b56"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "owner": "createDirectoryWatcherSupportingRecursive",
+    "ownerBeforeSha256": "4d0ec18e0c033af43e186b99cb77c80c1eccbf540df9f9ff106e7fdc170235ba",
+    "ownerAfterSha256": "80ea20beb005a41aa64929a736f6d632e236409cc5dea84f4c499d56263c6ce1"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "owner": "System",
+    "ownerBeforeSha256": "9bc1f568f26f7cbe4eee7102f6b06b0487a2d0ef1a2cd81f928ab1a6f428a100",
+    "ownerAfterSha256": "d81501788e981b02ec97aab31f072333e4c47a39f403417dacbf89d30e68a49c"
+  },
+  {
+    "file": "src/compiler/watchPublic.ts",
+    "owner": "WatchHost",
+    "ownerBeforeSha256": "64357165d9c9be797c2d1c81f23dbb50bc0094837d757fad27a5432459302878",
+    "ownerAfterSha256": "15132f8dd9676d6aca2453a61e2ec0d82fae6b3800aa30ae38a9c94556cc5453"
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "owner": "scheduleBuildInvalidatedProject",
+    "ownerBeforeSha256": "aeb0a747c5f604eecc5370eddccef640968d0a81f936efef1681bf581d29f7f6",
+    "ownerAfterSha256": "2f821c14043924f162130ddde4650f15bc4c825198ee1b3a590c6beb9e8fe6a1"
+  },
+  {
+    "file": "src/server/types.ts",
+    "owner": "ServerHost",
+    "ownerBeforeSha256": "5e83b05abbcada386d4cf104a5f36e204ba50a26aa681ae5c2b781d6dd08b6b6",
+    "ownerAfterSha256": "3c8b12f31903ad9cb2de58ab56ddb7096f2f1bb4c4cccdf73b390238ccc1f5d7"
+  },
+  {
+    "file": "src/server/utilities.ts",
+    "owner": "ThrottledOperations",
+    "ownerBeforeSha256": "f2665840c152943bdc40890435a1da5c4003a36a9ba93bfa771dee2d5ecdf2db",
+    "ownerAfterSha256": "e0c0ee58bd7683aff0eb032a93c751d4d03dbec1d77e3925daef19563f871af5"
+  },
+  {
+    "file": "src/server/utilities.ts",
+    "owner": "GcTimer",
+    "ownerBeforeSha256": "455ccdd6a6d1c31ae00205415925b671add60515debb26ad2946ef8702e975b0",
+    "ownerAfterSha256": "a0feeb7b88c26c6d1a85883dfa195a25533af73849bd0d79e15653e02693d83f"
+  },
+  {
+    "file": "src/server/session.ts",
+    "owner": "MultistepOperation",
+    "ownerBeforeSha256": "0bbd20a75b117d2c19032718001c7d724d37e571b309e3ec422e6d57d3612213",
+    "ownerAfterSha256": "8080d2f9657eb2bdd0093ebc3462c9a43188bcd935694c4d4973fc37b3e77dcd"
+  },
+  {
+    "file": "src/server/typingInstallerAdapter.ts",
+    "owner": "TypingsInstallerAdapter",
+    "ownerBeforeSha256": "09d79c8d103111da8b9750c180eb343e35ebb0aa6f3b5cf842c0fe71ae5bcced",
+    "ownerAfterSha256": "57904ed2802162b685c5d6ea49ca22940663988df2cb7e0f0c6051e0e65603ce"
+  },
+  {
+    "file": "src/harness/harnessLanguageService.ts",
+    "owner": "SessionServerHost",
+    "ownerBeforeSha256": "9762897aa86fe78e8d16a19a5adb9bae36967a5e56c94a1d03627b0219f352c9",
+    "ownerAfterSha256": "14180b38f441c3a6aaeae4f5cb57990b1167432d7745f0c9e84c518d8e1bd136"
+  },
+  {
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "owner": "TestServerHost",
+    "ownerBeforeSha256": "48441019f33aeed8772cc108622d14aa3f9dbb652c9fb426fe13c4b8debafe85",
+    "ownerAfterSha256": "51cb505ad809f25bafac4e39d627181b77ce1c601757552690c252515142ded9"
+  }
+]

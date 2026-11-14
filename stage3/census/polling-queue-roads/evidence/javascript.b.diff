@@ -1,0 +1,14 @@
+--- sys.original.js
++++ sys.b.js
+@@ -159,10 +159,7 @@
+         };
+     }
+     function createPollingIntervalQueue(pollingInterval) {
+-        const queue = [];
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
++        const queue = Object.assign([], { pollingInterval, pollIndex: 0, pollScheduled: false });
+         return queue;
+     }
+     function pollPollingIntervalQueue(_timeoutType, queue) {

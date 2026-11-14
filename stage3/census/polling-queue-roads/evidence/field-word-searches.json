@@ -1,0 +1,27 @@
+{
+  "tracked-field-words.txt.gz": {
+    "command": [
+      "git",
+      "grep",
+      "--recurse-submodules",
+      "-n",
+      "-w",
+      "-E",
+      "PollingIntervalQueue|pollScheduled|pollIndex|pollingInterval",
+      "HEAD"
+    ],
+    "lines": 1248,
+    "uncompressed_bytes": 4538509
+  },
+  "adapted-field-words.txt.gz": {
+    "command": [
+      "rg",
+      "-n",
+      "\\b(PollingIntervalQueue|pollScheduled|pollIndex|pollingInterval)\\b",
+      "/tmp/polling-adapted/src",
+      "/tmp/polling-adapted/tests"
+    ],
+    "lines": 10988,
+    "uncompressed_bytes": 1667028
+  }
+}

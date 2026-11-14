@@ -1,0 +1,14 @@
+--- owner.original.ts
++++ owner.b.ts
+@@ -36,10 +36,7 @@
+     }
+ 
+     function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
+-        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
++        const queue: PollingIntervalQueue = Object.assign([] as WatchedFileWithUnchangedPolls[], { pollingInterval, pollIndex: 0, pollScheduled: false });
+         return queue;
+     }
+ 

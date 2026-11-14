@@ -1,0 +1,31 @@
+--- sys.original.js
++++ sys.a.js
+@@ -159,16 +159,12 @@
+         };
+     }
+     function createPollingIntervalQueue(pollingInterval) {
+-        const queue = [];
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
+-        return queue;
++        return { files: [], pollingInterval, pollIndex: 0, pollScheduled: false };
+     }
+     function pollPollingIntervalQueue(_timeoutType, queue) {
+-        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);
++        queue.pollIndex = pollQueue(queue.files, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);
+         // Set the next polling index and timeout
+-        if (queue.length) {
++        if (queue.files.length) {
+             scheduleNextPoll(queue.pollingInterval);
+         }
+         else {
+@@ -225,7 +221,7 @@
+         }
+     }
+     function addToPollingIntervalQueue(file, pollingInterval) {
+-        pollingIntervalQueue(pollingInterval).push(file);
++        pollingIntervalQueue(pollingInterval).files.push(file);
+         scheduleNextPollIfNotAlreadyScheduled(pollingInterval);
+     }
+     function addChangedFileToLowPollingIntervalQueue(file) {

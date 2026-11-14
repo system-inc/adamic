@@ -1,0 +1,73 @@
+{
+  "oracle": {
+    "status": "fail",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "workers": 8,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 6.296
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 46.213
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 557.666
+      }
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ]
+  },
+  "matches_expected_lane_oracle_outcome": true,
+  "recorded_processes": 28,
+  "test_bundle_processes": 9,
+  "factory_calls": 9,
+  "queue_operations": 3234,
+  "byProperty": {
+    "set:pollingInterval": 9,
+    "set:pollIndex": 271,
+    "set:pollScheduled": 313,
+    "get:push": 12,
+    "get:length": 834,
+    "set:0": 11,
+    "set:length": 18,
+    "get:pollScheduled": 113,
+    "set:1": 9,
+    "get:pollingInterval": 749,
+    "get:pollIndex": 299,
+    "get:0": 458,
+    "get:1": 138
+  },
+  "test_factory_calls": 9,
+  "test_queue_operations": 3234,
+  "definition": "Every queue string-key get/set, including initialization, push lookup and its internal index/length operations; excludes identity tests and passing/returning/binding a queue."
+}

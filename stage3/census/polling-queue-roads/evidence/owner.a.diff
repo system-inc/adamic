@@ -1,0 +1,42 @@
+--- owner.original.ts
++++ owner.a.ts
+@@ -2,7 +2,8 @@
+     getModifiedTime: NonNullable<System["getModifiedTime"]>;
+     setTimeout: NonNullable<System["setTimeout"]>;
+ }): HostWatchFile {
+-    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {
++    interface PollingIntervalQueue {
++        files: WatchedFileWithUnchangedPolls[];
+         pollingInterval: PollingInterval;
+         pollIndex: number;
+         pollScheduled: unknown;
+@@ -36,17 +37,13 @@
+     }
+ 
+     function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
+-        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
+-        return queue;
++        return { files: [] as WatchedFileWithUnchangedPolls[], pollingInterval, pollIndex: 0, pollScheduled: false };
+     }
+ 
+     function pollPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {
+-        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);
++        queue.pollIndex = pollQueue(queue.files, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);
+         // Set the next polling index and timeout
+-        if (queue.length) {
++        if (queue.files.length) {
+             scheduleNextPoll(queue.pollingInterval);
+         }
+         else {
+@@ -115,7 +112,7 @@
+     }
+ 
+     function addToPollingIntervalQueue(file: WatchedFileWithUnchangedPolls, pollingInterval: PollingInterval) {
+-        pollingIntervalQueue(pollingInterval).push(file);
++        pollingIntervalQueue(pollingInterval).files.push(file);
+         scheduleNextPollIfNotAlreadyScheduled(pollingInterval);
+     }
+ 

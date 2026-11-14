@@ -1,0 +1,563 @@
+/tmp/polling-adapted/src/compiler/sys.ts:238:    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {
+/tmp/polling-adapted/src/compiler/sys.ts:246:    const lowPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Low);
+/tmp/polling-adapted/src/compiler/sys.ts:247:    const mediumPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Medium);
+/tmp/polling-adapted/src/compiler/sys.ts:248:    const highPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.High);
+/tmp/polling-adapted/src/compiler/sys.ts:260:        addToPollingIntervalQueue(file, defaultPollingInterval);
+/tmp/polling-adapted/src/compiler/sys.ts:271:    function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {
+/tmp/polling-adapted/src/compiler/sys.ts:272:        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;
+/tmp/polling-adapted/src/compiler/sys.ts:273:        queue.pollingInterval = pollingInterval;
+/tmp/polling-adapted/src/compiler/sys.ts:274:        queue.pollIndex = 0;
+/tmp/polling-adapted/src/compiler/sys.ts:275:        queue.pollScheduled = false;
+/tmp/polling-adapted/src/compiler/sys.ts:279:    function pollPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {
+/tmp/polling-adapted/src/compiler/sys.ts:280:        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);
+/tmp/polling-adapted/src/compiler/sys.ts:283:            scheduleNextPoll(queue.pollingInterval);
+/tmp/polling-adapted/src/compiler/sys.ts:286:            Debug.assert(queue.pollIndex === 0);
+/tmp/polling-adapted/src/compiler/sys.ts:287:            queue.pollScheduled = false;
+/tmp/polling-adapted/src/compiler/sys.ts:291:    function pollLowPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {
+/tmp/polling-adapted/src/compiler/sys.ts:296:        pollPollingIntervalQueue(_timeoutType, queue);
+/tmp/polling-adapted/src/compiler/sys.ts:298:        // as pollPollingIntervalQueue wont schedule for next poll
+/tmp/polling-adapted/src/compiler/sys.ts:299:        if (!queue.pollScheduled && changedFilesInLastPoll.length) {
+/tmp/polling-adapted/src/compiler/sys.ts:319:                    addChangedFileToLowPollingIntervalQueue(watchedFile);
+/tmp/polling-adapted/src/compiler/sys.ts:329:                addToPollingIntervalQueue(watchedFile, PollingInterval.Low);
+/tmp/polling-adapted/src/compiler/sys.ts:334:                addToPollingIntervalQueue(watchedFile, pollingInterval === PollingInterval.Low ? PollingInterval.Medium : PollingInterval.High);
+/tmp/polling-adapted/src/compiler/sys.ts:342:                return lowPollingIntervalQueue;
+/tmp/polling-adapted/src/compiler/sys.ts:344:                return mediumPollingIntervalQueue;
+/tmp/polling-adapted/src/compiler/sys.ts:346:                return highPollingIntervalQueue;
+/tmp/polling-adapted/src/compiler/sys.ts:350:    function addToPollingIntervalQueue(file: WatchedFileWithUnchangedPolls, pollingInterval: PollingInterval) {
+/tmp/polling-adapted/src/compiler/sys.ts:355:    function addChangedFileToLowPollingIntervalQueue(file: WatchedFileWithUnchangedPolls) {
+/tmp/polling-adapted/src/compiler/sys.ts:361:        if (!pollingIntervalQueue(pollingInterval).pollScheduled) {
+/tmp/polling-adapted/src/compiler/sys.ts:367:        pollingIntervalQueue(pollingInterval).pollScheduled = (() => {
+/tmp/polling-adapted/src/compiler/sys.ts:370:            const callback = pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue;
+/tmp/polling-adapted/src/compiler/sys.ts:372:            const t1 = pollingInterval === PollingInterval.Low ? "pollLowPollingIntervalQueue" : "pollPollingIntervalQueue";
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:186:1: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:242:1: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:263:7: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:264:8: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:367:7: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tsserver/watchEnvironment/uses-dynamic-polling-when-file-is-added-to-subfolder.js:368:8: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:53:1: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:104:1: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:108:1: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:116:4: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:117:5: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:121:4: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:122:5: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:153:7: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchDirectories/uses-non-recursive-dynamic-polling-when-renaming-file-in-subfolder.js:154:8: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:39:1: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:67:1: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:72:2: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:75:2: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:81:3: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:84:3: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:90:4: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:93:4: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:99:5: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:102:5: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:108:6: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:111:6: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:117:7: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:120:7: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:126:8: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:129:8: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:135:9: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:138:9: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:144:10: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:147:10: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:153:11: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:156:11: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:162:12: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:165:12: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:171:13: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:174:13: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:180:14: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:183:14: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:189:15: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:192:15: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:198:16: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:201:16: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:207:17: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:210:17: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:216:18: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:219:18: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:225:19: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:228:19: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:234:20: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:237:20: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:243:21: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:246:21: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:252:22: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:255:22: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:261:23: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:264:23: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:270:24: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:273:24: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:279:25: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:282:25: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:288:26: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:291:26: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:297:27: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:300:27: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:306:28: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:309:28: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:315:29: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:318:29: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:324:30: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:327:30: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:333:31: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:336:31: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:342:32: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:345:32: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:351:33: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:354:33: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:360:34: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:363:34: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:369:35: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:372:35: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:378:36: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:381:36: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:387:37: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:390:37: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:396:38: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:399:38: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:405:39: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:408:39: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:414:40: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:417:40: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:423:41: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:426:41: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:432:42: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:435:42: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:441:43: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:444:43: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:450:44: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:453:44: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:459:45: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:462:45: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:468:46: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:471:46: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:477:47: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:480:47: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:486:48: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:489:48: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:495:49: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:498:49: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:504:50: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:507:50: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:513:51: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:516:51: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:522:52: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:525:52: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:531:53: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:534:53: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:540:54: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:543:54: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:549:55: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:552:55: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:558:56: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:561:56: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:567:57: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:570:57: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:576:58: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:579:58: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:585:59: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:588:59: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:594:60: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:597:60: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:603:61: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:606:61: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:612:62: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:615:62: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:621:63: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:624:63: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:630:64: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:633:64: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:639:65: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:652:65: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:658:67: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:659:68: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:670:67: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:671:68: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:690:69: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:691:70: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:719:69: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:720:70: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:727:71: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:728:72: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:731:71: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:732:72: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:738:73: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:739:74: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:742:73: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:743:74: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:749:75: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:750:76: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:753:75: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:754:76: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:760:77: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:761:78: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:764:77: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:765:78: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:771:79: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:772:80: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:775:79: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:776:80: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:782:81: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:783:82: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:786:81: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:787:82: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:793:83: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:794:84: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:797:83: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:798:84: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:804:85: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:805:86: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:808:85: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:809:86: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:815:87: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:816:88: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:819:87: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:820:88: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:826:89: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:827:90: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:830:89: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:831:90: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:837:91: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:838:92: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:841:91: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:842:92: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:848:93: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:849:94: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:852:93: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:853:94: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:859:95: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:860:96: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:863:95: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:864:96: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:870:97: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:871:98: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:874:97: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:875:98: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:881:99: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:882:100: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:885:99: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:886:100: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:892:101: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:893:102: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:896:101: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:897:102: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:903:103: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:904:104: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:907:103: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:908:104: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:914:105: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:915:106: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:918:105: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:919:106: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:925:107: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:926:108: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:929:107: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:930:108: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:936:109: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:937:110: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:940:109: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:941:110: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:947:111: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:948:112: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:951:111: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:952:112: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:958:113: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:959:114: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:962:113: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:963:114: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:969:115: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:970:116: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:973:115: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:974:116: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:980:117: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:981:118: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:984:117: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:985:118: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:991:119: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:992:120: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:995:119: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:996:120: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1002:121: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1003:122: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1006:121: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1007:122: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1013:123: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1014:124: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1017:123: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1018:124: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1024:125: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1025:126: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1028:125: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1029:126: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1035:127: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1036:128: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1039:127: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1040:128: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1046:129: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1047:130: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1050:129: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1051:130: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1057:131: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1058:132: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1061:131: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1062:132: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1068:133: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1069:134: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1072:133: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1073:134: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1079:135: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1080:136: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1083:135: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1084:136: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1090:137: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1091:138: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1094:137: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1095:138: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1101:139: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1102:140: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1105:139: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1106:140: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1112:141: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1113:142: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1116:141: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1117:142: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1123:143: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1124:144: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1127:143: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1128:144: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1134:145: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1135:146: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1138:145: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1139:146: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1145:147: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1146:148: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1149:147: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1150:148: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1156:149: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1157:150: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1160:149: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1161:150: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1167:151: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1168:152: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1171:151: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1172:152: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1178:153: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1179:154: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1182:153: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1183:154: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1189:155: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1190:156: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1193:155: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1194:156: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1200:157: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1201:158: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1204:157: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1205:158: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1211:159: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1212:160: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1215:159: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1216:160: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1222:161: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1223:162: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1226:161: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1227:162: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1233:163: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1234:164: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1237:163: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1238:164: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1244:165: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1245:166: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1248:165: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1249:166: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1255:167: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1256:168: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1259:167: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1260:168: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1266:169: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1267:170: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1270:169: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1271:170: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1277:171: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1278:172: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1281:171: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1282:172: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1288:173: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1289:174: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1292:173: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1293:174: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1299:175: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1300:176: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1303:175: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1304:176: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1310:177: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1311:178: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1314:177: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1315:178: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1321:179: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1322:180: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1325:179: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1326:180: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1332:181: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1333:182: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1336:181: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1337:182: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1343:183: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1344:184: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1347:183: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1348:184: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1354:185: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1355:186: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1358:185: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1359:186: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1365:187: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1366:188: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1369:187: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1370:188: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1376:189: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1377:190: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1380:189: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1381:190: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1387:191: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1388:192: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1391:191: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1392:192: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1398:193: pollLowPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1399:194: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1402:193: pollLowPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1403:194: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1409:195: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1410:196: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1413:195: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1414:196: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1420:197: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1421:198: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1424:197: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1425:198: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1431:199: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1432:200: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1435:199: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1436:200: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1442:201: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1443:202: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1446:201: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1447:202: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1453:203: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1454:204: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1457:203: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1458:204: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1464:205: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1465:206: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1468:205: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1469:206: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1475:207: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1476:208: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1479:207: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1480:208: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1486:209: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1487:210: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1490:209: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1491:210: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1497:211: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1498:212: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1501:211: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1502:212: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1508:213: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1509:214: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1512:213: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1513:214: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1519:215: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1520:216: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1523:215: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1524:216: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1530:217: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1531:218: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1534:217: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1535:218: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1541:219: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1542:220: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1545:219: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1546:220: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1552:221: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1553:222: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1556:221: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1557:222: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1563:223: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1564:224: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1567:223: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1568:224: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1574:225: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1575:226: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1578:225: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1579:226: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1585:227: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1586:228: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1589:227: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1590:228: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1596:229: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1597:230: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1600:229: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1601:230: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1607:231: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1608:232: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1611:231: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1612:232: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1618:233: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1619:234: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1622:233: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1623:234: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1629:235: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1630:236: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1633:235: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1634:236: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1640:237: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1641:238: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1644:237: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1645:238: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1651:239: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1652:240: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1655:239: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1656:240: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1662:241: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1663:242: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1666:241: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1667:242: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1673:243: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1674:244: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1677:243: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1678:244: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1684:245: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1685:246: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1688:245: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1689:246: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1695:247: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1696:248: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1699:247: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1700:248: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1706:249: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1707:250: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1710:249: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1711:250: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1717:251: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1718:252: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1721:251: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1722:252: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1728:253: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1729:254: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1732:253: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1733:254: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1739:255: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1740:256: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1743:255: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1744:256: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1750:257: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1751:258: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1754:257: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1755:258: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1761:259: pollPollingIntervalQueue *new*
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1764:259: pollPollingIntervalQueue
+/tmp/polling-adapted/tests/baselines/reference/tscWatch/watchEnvironment/watchFile/using-dynamic-priority-polling.js:1770:260: pollPollingIntervalQueue *new*

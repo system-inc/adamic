@@ -1,0 +1,67 @@
+[
+  {
+    "line": 40,
+    "text": "queue.pollingInterval",
+    "use": "write"
+  },
+  {
+    "line": 41,
+    "text": "queue.pollIndex",
+    "use": "write"
+  },
+  {
+    "line": 42,
+    "text": "queue.pollScheduled",
+    "use": "write"
+  },
+  {
+    "line": 47,
+    "text": "queue.pollIndex",
+    "use": "write"
+  },
+  {
+    "line": 47,
+    "text": "queue.pollingInterval",
+    "use": "read"
+  },
+  {
+    "line": 47,
+    "text": "queue.pollIndex",
+    "use": "read"
+  },
+  {
+    "line": 47,
+    "text": "queue.pollingInterval",
+    "use": "read"
+  },
+  {
+    "line": 50,
+    "text": "queue.pollingInterval",
+    "use": "read"
+  },
+  {
+    "line": 53,
+    "text": "queue.pollIndex",
+    "use": "read"
+  },
+  {
+    "line": 54,
+    "text": "queue.pollScheduled",
+    "use": "write"
+  },
+  {
+    "line": 66,
+    "text": "queue.pollScheduled",
+    "use": "read"
+  },
+  {
+    "line": 128,
+    "text": "pollingIntervalQueue(pollingInterval).pollScheduled",
+    "use": "read"
+  },
+  {
+    "line": 134,
+    "text": "pollingIntervalQueue(pollingInterval).pollScheduled",
+    "use": "write"
+  }
+]

@@ -1,0 +1,31 @@
+--- sys.original.js
++++ sys.c.js
+@@ -134,6 +134,15 @@
+     }
+ }
+ function createDynamicPriorityPollingWatchFile(host) {
++    class PollingIntervalQueue extends Array {
++        pollingInterval;
++        pollIndex = 0;
++        pollScheduled = false;
++        constructor(pollingInterval) {
++            super();
++            this.pollingInterval = pollingInterval;
++        }
++    }
+     const watchedFiles = [];
+     const changedFilesInLastPoll = [];
+     const lowPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Low);
+@@ -159,11 +168,7 @@
+         };
+     }
+     function createPollingIntervalQueue(pollingInterval) {
+-        const queue = [];
+-        queue.pollingInterval = pollingInterval;
+-        queue.pollIndex = 0;
+-        queue.pollScheduled = false;
+-        return queue;
++        return new PollingIntervalQueue(pollingInterval);
+     }
+     function pollPollingIntervalQueue(_timeoutType, queue) {
+         queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);

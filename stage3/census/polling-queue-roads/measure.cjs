@@ -1,0 +1,17 @@
+'use strict';
+const fs=require('fs'),path=require('path'),ts=require('../../api/node_modules/typescript'),assert=require('assert/strict');
+const {roads,replace}=require('./roads.cjs');
+const {compiler}=require('../../adapt/47-host-errors/adapt.cjs');
+const [tree,road]=process.argv.slice(2), out=path.join(__dirname,'evidence'),sys=path.join(tree,'src/compiler/sys.ts');
+assert.equal(ts.version,'6.0.3');
+let text=fs.readFileSync(sys,'utf8').replace(/\r\n/g,'\n');
+if(road==='original')fs.writeFileSync(path.join(out,'sys.original.ts'),text);
+else text=replace(fs.readFileSync(path.join(out,'sys.original.ts'),'utf8'),roads.original,roads[road]);
+fs.writeFileSync(sys,text);
+fs.writeFileSync(path.join(out,`sys.${road}.ts`),text);
+fs.writeFileSync(path.join(out,`sys.${road}.js`),ts.transpileModule(text,{fileName:sys,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext}}).outputText);
+const configured=compiler(tree,ts);
+const p=ts.createProgram(configured.getRootFileNames(),{...configured.getCompilerOptions(),lib:['lib.es2024.d.ts'],typeRoots:[path.resolve(__dirname,'../../api/node_modules/@types')]});
+const diagnostics=ts.getPreEmitDiagnostics(p).map(d=>({file:d.file?path.relative(tree,d.file.fileName):null,start:d.start,code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')}));
+fs.writeFileSync(path.join(out,`typecheck.${road}.json`),JSON.stringify({typescript:ts.version,roots:p.getRootFileNames(),options:p.getCompilerOptions(),diagnostics},null,2)+'\n');
+console.log(road,diagnostics.length);
