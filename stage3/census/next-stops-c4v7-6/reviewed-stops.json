@@ -8,5 +8,15 @@
     "emitter": "internal/lower/cast_proof.go: (*lowering).castRefusal -> castProof (rule 1900)",
     "owner_basis": "grep stage3/adapt/**/owners.json for createSingleWatcherPerName returns no match; no adaptation pins this function",
     "expression_change_reach": "No: rule 1900 castRefusal/castProof refuses this as T cast during refusal_scan; castValue would call sameKeeping only after castProof succeeds. The a7d47283 expression.go rest-view checks are downstream and cannot emit this refusal."
+  },
+  {
+    "where": "utilitiesPublic.ts:1280:52",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan (predicate contracts)",
+    "owner": "internal/lower/predicates.go: (*lowering).predicateArgumentProof (getFirstJSDocTag)",
+    "emitter": "internal/lower/refusals.go: (*lowering).refuse contract walk -> predicateArguments -> predicateArgumentProof; also registered rule 1700",
+    "owner_basis": "grep stage3/adapt/**/owners.json for getFirstJSDocTag returns no match; no adaptation pins this function",
+    "expression_change_reach": "No: predicateArguments/predicateArgumentProof rejects the forwarded predicate parameter in the refusal-scan contract pass. This is a type-predicate proof requirement, not a rest-element or hidden-rest representation check; the changed sameKeeping/valueSlotKeeps paths do not emit this stop."
   }
 ]
