@@ -102,14 +102,14 @@ func TestWorkerLazyFallback(t *testing.T) {
 func TestLoweringSourceEdit(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
-	runtime, err := filepath.Abs("../../internal/native/runtime")
+	runtime, err := filepath.Abs("../../internal/native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.MkdirAll(filepath.Join(root, "internal", "native"), 0700); err != nil {
+	if err := os.MkdirAll(filepath.Join(root, "internal", "native_runtime"), 0700); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.Symlink(runtime, filepath.Join(root, "internal", "native", "runtime")); err != nil {
+	if err := os.Symlink(runtime, filepath.Join(root, "internal", "native_runtime", "c")); err != nil {
 		t.Fatal(err)
 	}
 	lower := filepath.Join(root, "internal", "lower")

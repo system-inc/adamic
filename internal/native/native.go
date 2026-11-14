@@ -7,7 +7,6 @@
 package native
 
 import (
-	"embed"
 	"fmt"
 	"os"
 	"os/exec"
@@ -16,9 +15,6 @@ import (
 	"strings"
 	"time"
 )
-
-//go:embed runtime/*.c runtime/*.h
-var runtime embed.FS
 
 // cString is a NUL-terminated C expression. Long names use a compound literal,
 // with static storage at file scope and block storage through a call.

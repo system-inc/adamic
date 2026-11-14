@@ -13,7 +13,7 @@ import (
 func jsonEncoderSource(t *testing.T) string {
 	t.Helper()
 	var code strings.Builder
-	for _, path := range []string{"internal/native/runtime/json_stringify.c", "internal/oracle/testdata/json_encoder_contract/runtime.c"} {
+	for _, path := range []string{"internal/native_runtime/c/json_stringify.c", "internal/oracle/testdata/json_encoder_contract/runtime.c"} {
 		data, err := os.ReadFile(filepath.Join(repository, path))
 		if err != nil {
 			t.Fatal(err)

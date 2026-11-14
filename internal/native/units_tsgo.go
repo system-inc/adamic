@@ -2,6 +2,7 @@ package native
 
 import (
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -23,7 +24,7 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 // plus the program's features in its flags. The ordinary runtime's empty tsgo.c object cannot
 // satisfy these calls, and a runtime built without the features has other layouts than the units.
 func splitTSGoRuntime(source string, options Options) (string, error) {
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		return "", err
 	}

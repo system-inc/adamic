@@ -73,7 +73,7 @@ func compilerExpressionsLower(t *testing.T, absolute string) string {
 func compilerExpressionsNative(t *testing.T, absolute string) string {
 	t.Helper()
 	lowered := compilerExpressionsLower(t, absolute)
-	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
+	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "internal/native_runtime", "cohere", "go.mod"}
 	tools := []string{buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}
 	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-native", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {

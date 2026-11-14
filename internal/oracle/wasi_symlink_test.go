@@ -59,7 +59,7 @@ int main(void) {
     adamic_release(thrown);
     return 0;
 }
-`, filepath.Join(root, "internal/native/runtime/node_errno.h"), filepath.Join(root, "internal/native/runtime/node_fs_wasi.h"))
+`, filepath.Join(root, "internal/native_runtime/c/node_errno.h"), filepath.Join(root, "internal/native_runtime/c/node_fs_wasi.h"))
 	if index < 2 {
 		for _, target := range []string{"", "wasm32-wasi"}[index : index+1] {
 			t.Run("control/"+target, func(t *testing.T) {

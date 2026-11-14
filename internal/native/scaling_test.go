@@ -8,6 +8,8 @@ import (
 	goruntime "runtime"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Partition by build so the two worker counts and pointer guard share one binary.
@@ -63,12 +65,12 @@ func TestParallelScaling_tsan(t *testing.T) {
 func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) string, options Options) string {
 	t.Helper()
 	directory := t.TempDir()
-	files, err := fs.ReadDir(runtime, "runtime")
+	files, err := fs.ReadDir(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, entry := range files {
-		data, err := fs.ReadFile(runtime, "runtime/"+entry.Name())
+		data, err := fs.ReadFile(native_runtime.Sources, "c/"+entry.Name())
 		if err != nil {
 			t.Fatal(err)
 		}

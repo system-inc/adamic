@@ -1760,5 +1760,5 @@ func (e *emitter) allocateEnvironment(cells []int) {
 	}
 }
 
-// stackOverflowMessage is the terminal guard in internal/native/runtime/stack.c.
+// stackOverflowMessage is the terminal guard in internal/native_runtime/c/stack.c.
 const stackOverflowMessage = "RangeError: Maximum call stack size exceeded"

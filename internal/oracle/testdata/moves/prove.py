@@ -43,7 +43,7 @@ def main():
     if result.returncode != 0:
         raise RuntimeError(f'alias mutant did not lower: {directory}/alias-lower.log')
     binary = directory / 'alias'
-    runtime = ROOT / 'internal/native/runtime'
+    runtime = ROOT / 'internal/native_runtime/c'
     flags = ['-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
              '-Wno-unused-variable', '-Wno-unused-but-set-variable',
              '-Wno-unused-function', '-Wno-unused-parameter', '-Wno-self-assign',

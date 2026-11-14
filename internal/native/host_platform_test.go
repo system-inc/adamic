@@ -16,7 +16,7 @@ import (
 // answers linux for Android and goes red; a target's row removed reaches the #error and goes red.
 func TestHostPlatformNames(t *testing.T) {
 	t.Parallel()
-	header, err := filepath.Abs(filepath.Join("runtime", "host_platform.h"))
+	header, err := filepath.Abs(filepath.Join("../native_runtime/c", "host_platform.h"))
 	if err != nil {
 		t.Fatal(err)
 	}

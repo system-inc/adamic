@@ -13,6 +13,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Build a real shared string and remove one owner before reading the other.
@@ -35,7 +36,7 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 	}
 	for _, mutant := range []bool{false, true} {
 		directory := t.TempDir()
-		files, err := readRuntime(runtime, "runtime")
+		files, err := readRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -90,7 +91,7 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 func TestOwnershipInlining(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -12,4 +12,4 @@ for go, c in [('simpleCaseFold', 'regex_unicode_fold'), ('legacyUppercase', 'reg
     output.extend('{' + a + ',' + b + '},' for a, b in pairs if c != 'regex_legacy_fold' or int(a, 16) <= 65535)
     output.append('};')
 output.append('#endif')
-(root / 'internal/native/runtime/regexp_fold.h').write_text('\n'.join(output) + '\n')
+(root / 'internal/native_runtime/c/regexp_fold.h').write_text('\n'.join(output) + '\n')

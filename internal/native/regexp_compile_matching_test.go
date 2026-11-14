@@ -88,7 +88,7 @@ func runtimeCompilerMatching(t *testing.T, wasm bool) {
 	if wasm {
 		options = Options{Target: "wasm32-wasi"}
 	}
-	runtimeDirectory := "runtime"
+	runtimeDirectory := "../native_runtime/c"
 	if path := os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME"); path != "" {
 		runtimeDirectory = path
 	}

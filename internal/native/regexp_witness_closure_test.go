@@ -15,6 +15,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -113,7 +114,7 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 	libraries := regexpClosureLibraries(t, compiler)
 	inputs := buildcache.Inputs{
 		Name:      "regexp-witness-closure-inventory",
-		Files:     []string{"internal/native/regexp_witness_closure_test.go", "internal/native/regexp_test.go", "internal/native/library.go", "internal/native/jobserver.go", "internal/native/native.go", "internal/native/target.go", "internal/native/runtime"},
+		Files:     []string{"internal/native/regexp_witness_closure_test.go", "internal/native/regexp_test.go", "internal/native/library.go", "internal/native/jobserver.go", "internal/native/native.go", "internal/native/target.go", "internal/native_runtime/c"},
 		Flags:     slices.Clone(request.Portable),
 		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("nm", "--version")},
 	}
@@ -148,7 +149,7 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 				inventory.Members[name] = symbols
 			}
 		}
-		all, err := readRuntime(runtime, "runtime")
+		all, err := readRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			return err
 		}

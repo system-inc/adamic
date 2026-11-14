@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // ieee754Harness applies one Math function per line: its name, how many operands, then each operand
@@ -104,7 +106,7 @@ var ieee754Unary = []string{"sin", "cos", "tan", "asin", "acos", "atan", "sinh",
 // and just over it are tried, with both signs. Decimal thresholds (exp's overflow at
 // 709.78...) are found the same way, with their neighbors a few ulps out.
 func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
-	source, err := runtime.ReadFile("runtime/ieee754.c")
+	source, err := native_runtime.Sources.ReadFile("c/ieee754.c")
 	if err != nil {
 		t.Fatal(err)
 	}

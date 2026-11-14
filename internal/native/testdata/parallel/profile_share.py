@@ -42,7 +42,7 @@ with tempfile.TemporaryDirectory(prefix='adamic-share-profile-') as temporary:
     for version in ('before', 'after'):
         root = roots[version]
         snapshot = temporary / (version + '-runtime')
-        shutil.copytree(root / 'internal/native/runtime', snapshot)
+        shutil.copytree(root / 'internal/native_runtime/c', snapshot)
         parallel = snapshot / 'parallel.c'
         source = parallel.read_text()
         seam = 'adamic_share(items);\n\tadamic_share(work);'

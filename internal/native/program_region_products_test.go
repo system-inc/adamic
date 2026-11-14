@@ -58,7 +58,7 @@ func programCoreProduct(t *testing.T, index int) string {
 	}
 	inputs := buildcache.Inputs{
 		Name:      fmt.Sprintf("program-region-core-%d", index),
-		Files:     []string{"internal/native/runtime", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
 		Flags:     portableKeyParts(files, flags, compiler, headers),
 		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")},
 	}
