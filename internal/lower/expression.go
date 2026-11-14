@@ -428,6 +428,24 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 				return false
 			}
 		}
+		// A rest parameter collects every argument at and past its position into its array, each copied
+		// from the caller's own slot with no conversion to the element's representation (ClosureArgumentLayout,
+		// copyRest). So the rest's element is judged against each view parameter it collects, and against
+		// a view rest's element, as a fixed parameter is: (...items: (string | number)[]) seen as
+		// (a: string, b: number) packed b's raw double where a boxed union goes, and clang refused the C
+		// (#2t3h708). Converting each element at the call is #8q1pjsp.
+		if rest := len(fromParameters) - 1; len(toParameters) > 0 && fromSignatures[0].HasRestParameter() && l.isArrayType(l.checker.GetTypeOfSymbol(fromParameters[rest])) {
+			collected := len(toParameters)
+			if toSignatures[0].HasRestParameter() {
+				// A view rest before the function's own hands it that rest's element at every position.
+				collected = max(collected, len(fromParameters))
+			}
+			for position := rest; position < collected; position++ {
+				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
+					return false
+				}
+			}
+		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
