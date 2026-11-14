@@ -4,8 +4,8 @@ import os
 import subprocess
 
 root = Path(__file__).resolve().parents[4]
-runtime = root / 'internal/native/runtime/typed_array.c'
-heap = root / 'internal/native/runtime/heap.c'
+runtime = root / 'internal/native_runtime/c/typed_array.c'
+heap = root / 'internal/native_runtime/c/heap.c'
 logs = Path('/tmp/adamic-typed-array-mutants')
 logs.mkdir(exist_ok=True)
 originals = {runtime: runtime.read_text(), heap: heap.read_text()}

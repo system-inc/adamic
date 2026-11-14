@@ -163,12 +163,13 @@ func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 }
 
 // runtimeFiles are what an archive's build reads and runs of internal/native, which its lean set keys as files
-// (buildcache.LeanProduct, #earlycut): the runtime's sources, and the files defining all the build reaches from
-// native.RuntimeRequest.Build, which TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them. Its lean recipe keys
+// (buildcache.LeanProduct, #earlycut): the runtime's sources (internal/native_runtime, its C and the Go file that embeds
+// them), and the files defining all the build reaches from native.RuntimeRequest.Build, which
+// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them. Its lean recipe keys
 // the rest of internal/native too, the compiler with it, as it keys every package runtimeproducts imports (buildcache's
 // leanRecipeOf, Node's must 1 on #gr5y0yf item 1): a change to the tree outside that import closure leaves an archive's
 // key alone.
-var runtimeFiles = []string{"internal/native/runtime", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
+var runtimeFiles = []string{"internal/native_runtime", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
 
 // Build builds ahead the archives of the sets group owns (every third, from group) with the named variant's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives

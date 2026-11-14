@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -314,7 +315,7 @@ func caseMappingHarness(t *testing.T) (binary, oracle string) {
 	// Build reads ADAMIC_NATIVE_SPLIT, and the source's bytes, alphabet and all, key it beside the flags.
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "case-mapping-probe",
-		Files:     []string{"internal/native"},
+		Files:     []string{"internal/native", "internal/native_runtime"},
 		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
@@ -423,7 +424,7 @@ func TestCaseTablesMatchNodesUnicode(t *testing.T) {
 		{"case_tables.h", "CASE_UNICODE_VERSION", "case_generate.go"},
 		{"normalize_tables.h", "NORMALIZE_UNICODE_VERSION", "normalize_generate.go"},
 	} {
-		contents, err := runtime.ReadFile("runtime/" + tables.file)
+		contents, err := native_runtime.Sources.ReadFile("c/" + tables.file)
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 type inlineArrayResult struct {
@@ -64,7 +65,7 @@ func typedArrayInlineCheck(t *testing.T, mode, helper, before, after, diagnostic
 	} else if actual.exit != 0 || !bytes.Equal(actual.stdout, node.stdout) || !strings.HasPrefix(string(actual.stderr), "adamic: counts:") {
 		t.Fatalf("control differs from Node: Node %+v native %+v", node, actual)
 	}
-	header, err := runtime.ReadFile("runtime/adamic.h")
+	header, err := native_runtime.Sources.ReadFile("c/adamic.h")
 	if err != nil {
 		t.Fatal(err)
 	}

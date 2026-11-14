@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Diagnostics remain nonfatal for mutants: the warning assertions, rather than
@@ -47,7 +48,7 @@ func portabilityConstants() string {
 func portabilityHeaders(t *testing.T) string {
 	t.Helper()
 	directory := t.TempDir()
-	entries, err := runtime.ReadDir("runtime")
+	entries, err := native_runtime.Sources.ReadDir("c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +56,7 @@ func portabilityHeaders(t *testing.T) string {
 		if !strings.HasSuffix(entry.Name(), ".h") {
 			continue
 		}
-		data, err := runtime.ReadFile("runtime/" + entry.Name())
+		data, err := native_runtime.Sources.ReadFile("c/" + entry.Name())
 		if err != nil {
 			t.Fatal(err)
 		}

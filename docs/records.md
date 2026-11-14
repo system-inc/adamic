@@ -512,7 +512,7 @@ and n is live keys. It does not sort ordinary strings.
 
 ## Counting and C interface
 
-The declarations are in `internal/native/runtime/adamic.h`:
+The declarations are in `internal/native_runtime/c/adamic.h`:
 
 ```c
 typedef adamic_object adamic_record;

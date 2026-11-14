@@ -314,7 +314,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		return run(command("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", destination, pkg)...))
 	}
 	if name == "region-stage0" || name == "linkage.test" {
-		path, before, after := "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)"
+		path, before, after := "internal/native_runtime/c/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)"
 		if name == "linkage.test" {
 			path, before, after = "internal/lower/tsgo.go", "if !l.program.TSGoEnabled() {", "if false {"
 		}

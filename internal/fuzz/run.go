@@ -64,7 +64,7 @@ func PrepareBuilt(root string, adamic string, directory string) (*Checkout, erro
 	}
 	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
 	// TSan is a separate build. A machine without it still runs; the report says so.
-	tsanRuntime, tsanErr := native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{ThreadSanitize: true})
+	tsanRuntime, tsanErr := native.RuntimeLibrary(filepath.Join(root, "internal", "native_runtime", "c"), native.Options{ThreadSanitize: true})
 	if tsanErr != nil {
 		checkout.TSan = tsanErr.Error()
 	} else {
@@ -465,7 +465,7 @@ func (c *Checkout) runtimeFor(directory string, options native.Options, prebuilt
 	if prebuilt != "" && len(native.Features(string(source))) == 0 {
 		return prebuilt, nil
 	}
-	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(source), options)
+	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native_runtime", "c"), string(source), options)
 }
 
 func (c *Checkout) link(binary string, directory string, options native.Options, runtime string) error {

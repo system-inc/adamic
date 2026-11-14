@@ -285,7 +285,7 @@ func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) st
 			t.Fatal(err)
 		}
 		options := native.Options{Sanitize: true}
-		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: []string{"internal/native", "cohere", "internal/load"},
+		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: []string{"internal/native", "internal/native_runtime", "cohere", "internal/load"},
 			Flags:     append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 		binary := buildcache.Product(t, inputs, func(destination string) error {

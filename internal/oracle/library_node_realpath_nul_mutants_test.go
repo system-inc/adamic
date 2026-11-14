@@ -27,7 +27,7 @@ func realpathNULRuntimeMutant(t *testing.T, file, before, after string) {
 	}
 	source := native.C(program)
 	directory := t.TempDir()
-	entries, err := os.ReadDir("../native/runtime")
+	entries, err := os.ReadDir("../native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func realpathNULRuntimeMutant(t *testing.T, file, before, after string) {
 		if entry.IsDir() {
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
+		data, err := os.ReadFile(filepath.Join("../native_runtime/c", entry.Name()))
 		if err != nil {
 			t.Fatal(err)
 		}

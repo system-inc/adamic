@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A collator's two run-time NotYets (#zjndrx5) are said natively in internal/ir's words, which the
@@ -15,7 +16,7 @@ import (
 // of library_intl.c's compare message changed.
 func TestIntlCollatorStopsAreIRsWords(t *testing.T) {
 	t.Parallel()
-	source, err := runtime.ReadFile("runtime/library_intl.c")
+	source, err := native_runtime.Sources.ReadFile("c/library_intl.c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +35,7 @@ func TestIntlCollatorStopsAreIRsWords(t *testing.T) {
 // 0 where Node throws and prints -1.
 func TestIntlCollatorShapeNamesNoCompare(t *testing.T) {
 	t.Parallel()
-	source, err := runtime.ReadFile("runtime/library_intl.c")
+	source, err := native_runtime.Sources.ReadFile("c/library_intl.c")
 	if err != nil {
 		t.Fatal(err)
 	}

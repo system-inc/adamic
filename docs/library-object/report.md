@@ -22,7 +22,7 @@ Observed: 11 newly passing, every one agreed with Node, no disagreements or cras
 
 **Freeze enforcement is at runtime**, not a proof from readonly types. Objects carry a frozen flag. Every emitted field store and assign checks it, including updates and mutable aliases of a readonly freeze result. The write fixture creates such a mutable alias and agrees with Node on its TypeError. Nested objects remain writable: freezing is shallow. A spread must copy a frozen source instead of reusing it; a mutant proves that guard matters.
 
-New implementation is in `internal/lower/library_object.go`, `internal/native/runtime/library_object.c`, and slice-specific IR, native emission and cycle-analysis files. Existing files have small dispatch, scalar-intersection representation, frozen-state initialization, write-check and reuse hooks. `internal/native/native.go` and `internal/lower/lower.go` were not edited. Six fixtures are registered in `internal/oracle/oracle_test.go` and recorded in `counts.md`.
+New implementation is in `internal/lower/library_object.go`, `internal/native_runtime/c/library_object.c`, and slice-specific IR, native emission and cycle-analysis files. Existing files have small dispatch, scalar-intersection representation, frozen-state initialization, write-check and reuse hooks. `internal/native/native.go` and `internal/lower/lower.go` were not edited. Six fixtures are registered in `internal/oracle/oracle_test.go` and recorded in `counts.md`.
 
 ## Explicit refusals and remaining coverage
 

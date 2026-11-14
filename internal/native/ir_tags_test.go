@@ -7,11 +7,12 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestIRTypeTags(t *testing.T) {
 	t.Parallel()
-	contents, err := runtime.ReadFile("runtime/adamic.h")
+	contents, err := native_runtime.Sources.ReadFile("c/adamic.h")
 	if err != nil {
 		t.Fatal(err)
 	}
