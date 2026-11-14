@@ -937,7 +937,13 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		return l.localRead(node, local)
+		read, err := l.localRead(node, local)
+		if err != nil {
+			return nil, err
+		}
+		// A predicate parameter passed where the program takes a narrowing predicate is passed as its
+		// checked closure (predicate_parameter_value.go, #jqf1drp).
+		return l.checkedPredicateParameterValue(node, read)
 	case ast.KindVoidExpression:
 		operand, err := l.discardedValue(node.AsVoidExpression().Expression)
 		if err != nil {
