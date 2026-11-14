@@ -124,13 +124,51 @@ func TestNodeWatchFileOptionTypeRefusals(t *testing.T) {
 	prefix := `import * as fs from 'node:fs'; function observe(_curr:fs.Stats,_prev:fs.Stats):void{}`
 	for _, probe := range []struct{ name, code, want string }{
 		{"persistent", `fs.watchFile('x',{persistent:undefined,interval:5},observe);`, "node:fs.watchFile with a non-boolean persistent"},
-		{"interval", `fs.watchFile('x',{persistent:true,interval:undefined},observe);`, "node:fs.watchFile with a non-number interval"},
+		{"interval", `function start(interval:any):void {fs.watchFile('x',{persistent:true,interval:interval},observe);} start('x');`, "a member typed any (interval) related to number | undefined at the argument site"},
+		{"absent", `fs.watchFile('x',{persistent:true},observe);`, "node:fs.watchFile outside {persistent, interval} options"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, prefix+probe.code)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || notYet.What != probe.want {
 				t.Fatalf("want exact NotYet %q, got %v", probe.want, err)
+			}
+		})
+	}
+}
+
+// Literal undefined and a live optional number both reach the throwing host call.
+func TestNodeWatchFileOptionalInterval(t *testing.T) {
+	t.Parallel()
+	prefix := `import * as fs from 'node:fs'; function observe(_curr:fs.Stats,_prev:fs.Stats):void{}`
+	for _, probe := range []struct{ name, code string }{
+		{"undefined", `fs.watchFile('x',{persistent:true,interval:undefined},observe);`},
+		{"binding", `const interval:undefined = undefined; fs.watchFile('x',{persistent:true,interval:interval},observe);`},
+		{"optional", `function start(interval:number|undefined):void {fs.watchFile('x',{persistent:true,interval:interval},observe);} start(undefined);start(10);`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSource(t, prefix+probe.code)
+			if err != nil {
+				t.Fatal(err)
+			}
+			found := false
+			visit := func(node any) bool {
+				if call, ok := node.(ir.NodeFSFile); ok && call.Operation == "host_watch_file" {
+					found = true
+					if call.Arguments[2].Type() != ir.MaybeNumber || !call.MayThrow() {
+						t.Fatalf("optional interval must stay optional and throwing: %+v", call)
+					}
+				}
+				return true
+			}
+			walk(program.Main, visit)
+			for _, function := range program.Functions {
+				walk(function.Body, visit)
+			}
+			if !found {
+				t.Fatal("watchFile call missing")
 			}
 		})
 	}
