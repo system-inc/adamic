@@ -26,6 +26,6 @@ assert all(n.startswith('stage3/census/next-stops-ff4ce03f/') for n in subproces
 assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_000_000]
 statuses={str(p.relative_to(base)):json.loads(p.read_text()) for p in base.rglob('*-status.json')}
 assert all(isinstance(s['exit_code'],int) and s['seconds']<1800 and s['process_group_cleaned'] for s in statuses.values())
-processes=subprocess.check_output(['ps','-eo','stat=,comm='],text=True).splitlines();assert not [line for line in processes if 'next-stops-ff4ce03f-census' in line and not line.split()[0].startswith('Z')]
+processes=subprocess.check_output(['ps','-eo','stat=,comm='],text=True).splitlines();assert not [line for line in processes if Path(binary['path']).name[:15] in line and not line.split()[0].startswith('Z')]
 result=dict(roots=79,observations=158,duplicates_agree=True,root_exits_zero=True,source_clean_outside_evidence=True,all_child_exits={n:s['exit_code'] for n,s in statuses.items()},all_child_durations_below_1800=True,adapted_source_hashes_verified=True,no_live_census_children=True)
 (out/'validation.json').write_text(json.dumps(result,indent=2)+'\n');print('validation passed')
