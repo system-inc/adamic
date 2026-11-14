@@ -6,7 +6,8 @@ darwin executor on that leg's record here: phase `darwin` and coverage's darwin 
 darwin .a that stops only because the box has no darwin platform (the typed PlatformMissing stop, exit 5) on what the
 leg recorded `adamic c` saying for it on the Mac (`aCheck`, below). Without a matching green record phase `darwin` and
 coverage fail with "needs a darwin leg on a pool Mac (Shackler)", naming the darwinPaths digest they looked for, and
-a-check stays red as it always was.
+a-check stays red as it always was. When the gate can't compute the candidate's darwinPaths (below), they fail with "no
+darwin leg can match", naming why, and a-check stays red the same way; no record can pass a digest that doesn't exist.
 
 The gate reads these records from its tools checkout, never from the candidate's tree and never fetched, so a change
 can't vouch for itself.
@@ -17,7 +18,7 @@ Records enter only through promote, Node's reviewed act; nothing else writes her
 named by the full sha of the tip the leg ran at. Promote checks, before a record lands:
 
 - the tip resolves in adamic;
-- its darwinPaths recomputes equal with `--darwin-paths-digest` at the tip (below);
+- its darwinPaths recomputes equal with `--darwin-paths-digest`, run in a checkout at the tip (below);
 - its `aCheck` names every darwin .a in the tip's tree, the list `--darwin-a-paths` prints at the tip.
 
 ## The record
@@ -60,27 +61,45 @@ makes the gate pass. `host`, `command`, `tools`, `counts.skipped` and `log.kept`
 ## darwinPaths
 
 The gate can't see a change's own tip: a candidate is rebased onto main with one parent. So it matches a record by
-content. darwinPaths is the sha256 of the sorted lines
+content, every input the leg's `go test ./internal/apple/...` builds from, so an equal digest means equal inputs (Adamic
+Loom's ruling). darwinPaths is the sha256 of the sorted lines
 
 ```
+dir <path> <object sha>\n
+file <path> <blob sha>\n
 <mode> <object sha> <path>\n
 ```
 
-one for every entry of `git ls-tree -r --full-tree <commit>` whose first rule in the tools checkout's `executors.txt`
-is `darwin`. A record matches a candidate when it is green and its darwinPaths equals the candidate's. A main that moved
-elsewhere still matches; a main that moved inside the darwin paths doesn't, and the leg runs again at the new content.
+- `dir`: one for every directory inside the checkout that
+  `GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 GOFLAGS=-mod=readonly go list -deps -test -f '{{.Dir}}' ./internal/apple/...`
+  names, the Mac's build of the package with its tests' imports, so its whole in-module dependency closure
+  (internal/lower, internal/ir, internal/native and more). Each is the path relative to the checkout, listed once, and
+  `git rev-parse <commit>:<path>`, its tree object. A directory at or inside a gitlink (a submodule) is the gitlink's
+  path and its commit object instead. The standard library and modules outside the checkout drop out; the module files
+  pin those. A tree object takes the directory's subdirectories too, conservatively: a main that moved a listed
+  package's testdata, or a package below one, moves the digest though go may read neither.
+- `file`: one for each of `go.mod`, `go.sum`, `go.work` and `go.work.sum` present at the commit's root.
+- `<mode>`: one for every entry of `git ls-tree -r --full-tree <commit>` whose first rule in the tools checkout's
+  `executors.txt` is `darwin`.
 
-Compute it at the leg's tip with the gate's own code, never by hand:
+A record matches a candidate when it is green and its darwinPaths equals the candidate's. A main that moved outside the
+leg's inputs still matches; a main that moved inside them, a darwin path or any directory of the closure, doesn't, and
+the leg runs again at the new content.
+
+go list reads the files on disk, so the digest is computed only in a checkout at the commit: `git rev-parse HEAD` there
+must be the full sha of the commit `--sha` names, or it's refused. The gate's tree is the candidate's checkout, so this
+holds there. A go list that fails, names nothing, names no directory inside the checkout, or names one the commit's tree
+doesn't hold (an untracked one) is refused too, never a digest.
+
+Compute it in a checkout at the leg's tip with the gate's own code, never by hand:
 
 ```sh
+git -C <checkout> checkout --detach <tip>
 python3 cloud/fast-gate/run.py --darwin-paths-digest --tree <checkout> --sha <tip> --tools <tools checkout>
 ```
 
-It prints the digest and exits 0. When several records match, the gate takes the first green one in file name order.
-
-The digest is the darwin paths alone, an accepted gap (Adamic Loom's ruling (ii)): `go test ./internal/apple/...` reads
-packages outside the darwin globs too (internal/lower, internal/ir, internal/native and others), and a main that moved
-only there keeps the digest, so the record still matches.
+It prints the digest and exits 0, or prints nothing and exits 1 saying why on stderr. When several records match, the
+gate takes the first green one in file name order.
 
 ## aCheck
 
