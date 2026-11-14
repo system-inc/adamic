@@ -1,0 +1,14 @@
+const ts=require('typescript'),fs=require('fs'),path=require('path'),crypto=require('crypto');
+const [tree,out]=process.argv.slice(2); fs.mkdirSync(out,{recursive:true});
+const roots=fs.readdirSync(path.join(tree,'src/compiler'),{recursive:true}).filter(f=>f.endsWith('.ts')).sort().map(f=>path.join(tree,'src/compiler',f));
+if(roots.length!==79)throw Error('roots '+roots.length);
+const config=ts.readConfigFile(path.join(tree,'src/compiler/tsconfig.json'),ts.sys.readFile); if(config.error)throw Error('config');
+const parsed=ts.parseJsonConfigFileContent(config.config,ts.sys,path.join(tree,'src/compiler'),{},path.join(tree,'src/compiler/tsconfig.json'));
+const options={...parsed.options,noEmit:false,emitDeclarationOnly:false,declaration:false,declarationMap:false,sourceMap:false,inlineSourceMap:false,incremental:false,composite:false,isolatedDeclarations:false};
+const host=ts.createCompilerHost(options); const emitted=[];
+host.writeFile=(name,text)=>{if(!name.endsWith('.js'))return;const relative=path.relative(tree,name);if(relative.startsWith('..'))throw Error(name);const target=path.join(out,'js',relative);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,text);emitted.push({file:relative,sha256:crypto.createHash('sha256').update(text).digest('hex')});};
+const program=ts.createProgram(roots,options,host);
+const {compiler}=require('/tmp/invoke-map-4pc8wd8/repo/stage3/adapt/47-host-errors/adapt.cjs');
+const diagnosticProgram=compiler(tree,ts);
+const diagnostics=ts.getPreEmitDiagnostics(diagnosticProgram).map(d=>({file:d.file?path.relative(tree,d.file.fileName):null,start:d.start,length:d.length,code:d.code,category:d.category,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')}));
+program.emit();fs.writeFileSync(path.join(out,'diagnostics.json'),JSON.stringify(diagnostics,null,2)+'\n');fs.writeFileSync(path.join(out,'emitted.json'),JSON.stringify(emitted.sort((a,b)=>a.file.localeCompare(b.file)),null,2)+'\n');fs.writeFileSync(path.join(out,'roots.json'),JSON.stringify(roots.map(f=>path.relative(tree,f)),null,2)+'\n');console.log(JSON.stringify({version:ts.version,roots:roots.length,diagnostics:diagnostics.length,emitted:emitted.length}));

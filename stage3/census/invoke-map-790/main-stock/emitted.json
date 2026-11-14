@@ -1,0 +1,318 @@
+[
+  {
+    "file": "built/local/compiler/_namespaces/ts.js",
+    "sha256": "c451849a1c9e5e2aa997d37a714ef8c51abc2d9a75aea92b3500d9c931131324"
+  },
+  {
+    "file": "built/local/compiler/_namespaces/ts.moduleSpecifiers.js",
+    "sha256": "994b188dce9f3e4b905b9e4b0934e18f2c8ab56f9a1419dbd2727aaa3de76d6e"
+  },
+  {
+    "file": "built/local/compiler/_namespaces/ts.performance.js",
+    "sha256": "08bfadb284a8e8602404fdbe2c82918179afa6ff2617e9c13b4c2fb4a0c7c552"
+  },
+  {
+    "file": "built/local/compiler/binder.js",
+    "sha256": "6962473af9bfb82fc26610e675c03933a4cece8a9b0ce64bef1bd27a46910009"
+  },
+  {
+    "file": "built/local/compiler/builder.js",
+    "sha256": "2a500293e1378a03ecaec07331805fe099671f1c27b19fba88483b566b2e63f1"
+  },
+  {
+    "file": "built/local/compiler/builderPublic.js",
+    "sha256": "287f93a6f1aa26523f36fdc123b9c5d3e5cd49e8844178f12e580edf48f6a535"
+  },
+  {
+    "file": "built/local/compiler/builderState.js",
+    "sha256": "d7953d134c0ea64099daa02c9cd1fa3394e8bab617b11e4e653f633a1d437d88"
+  },
+  {
+    "file": "built/local/compiler/builderStatePublic.js",
+    "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+  },
+  {
+    "file": "built/local/compiler/checker.js",
+    "sha256": "d3c064693abcedb3bf036af25380cd2f704d5527d3f1352346fd4f2f2d2a08f5"
+  },
+  {
+    "file": "built/local/compiler/commandLineParser.js",
+    "sha256": "94c01e2a30f4a4badc62dfdeb200e3905aaa93b1e77d7382aa764df8b68562a0"
+  },
+  {
+    "file": "built/local/compiler/core.js",
+    "sha256": "4ddc491f91c163b93259ff1376efb850a08f7381046b79007f1863b92815f666"
+  },
+  {
+    "file": "built/local/compiler/corePublic.js",
+    "sha256": "74142b3522e0e62dee6c93501444942720ea0e079d103632b371d8f3dcad7f12"
+  },
+  {
+    "file": "built/local/compiler/debug.js",
+    "sha256": "acc4b020d3aef6cedbce2ea9ba4a68f388e153a5bbb300d03e82c4a2ff85bfe2"
+  },
+  {
+    "file": "built/local/compiler/diagnosticInformationMap.generated.js",
+    "sha256": "9a4847b5023e561e963571e25cba2182d52f4fc1c12d59471fc7c5c8bf40692b"
+  },
+  {
+    "file": "built/local/compiler/emitter.js",
+    "sha256": "0179def5d799481ffd6598774106efed4daa3b9d09321529697e81bf4526f580"
+  },
+  {
+    "file": "built/local/compiler/executeCommandLine.js",
+    "sha256": "34cf708b0e24f2ffefd9bbf5b690d8853c8a920f3a03f06b798e49fc9a72c586"
+  },
+  {
+    "file": "built/local/compiler/expressionToTypeNode.js",
+    "sha256": "d69c830ba626f2880d71989457930eedba141c6afcb49197b72856f0d6b87299"
+  },
+  {
+    "file": "built/local/compiler/factory/baseNodeFactory.js",
+    "sha256": "024d8c2763d6592d6e2eb488823009bf47e2404ed5caeff4db463f17e423756c"
+  },
+  {
+    "file": "built/local/compiler/factory/emitHelpers.js",
+    "sha256": "1d226b35a38809115d985af3aff472fa9ef309cfec09377ceae87b408360f601"
+  },
+  {
+    "file": "built/local/compiler/factory/emitNode.js",
+    "sha256": "302a27977fd92a99ff197c5c80d5b39208c9129e05c914e86d277f780b960ff0"
+  },
+  {
+    "file": "built/local/compiler/factory/nodeChildren.js",
+    "sha256": "3a58d2b8548ab92ee7deb5e97bb41a22d10a7c51a6a269c12eea8b988a0c7add"
+  },
+  {
+    "file": "built/local/compiler/factory/nodeConverters.js",
+    "sha256": "b10b213550dc381e8708f3238bb5e966892fb601d7af3fb8968cc2937485be81"
+  },
+  {
+    "file": "built/local/compiler/factory/nodeFactory.js",
+    "sha256": "7b1413137fff9078157d44c4af77f3805c99ce51c854c101e44cca8977fa1ea5"
+  },
+  {
+    "file": "built/local/compiler/factory/nodeTests.js",
+    "sha256": "382386c8e138aee5658e4b6ff98233d9f08de7ed627a010d410409db50991a1c"
+  },
+  {
+    "file": "built/local/compiler/factory/parenthesizerRules.js",
+    "sha256": "fb9629df6b5fb72da771fe6cc0f507cafc035344909f861667418a3b9208e0ab"
+  },
+  {
+    "file": "built/local/compiler/factory/utilities.js",
+    "sha256": "fcc0b0356716ed33325bfde39a50c1c28643419c319e199e8f78a0d72dc4c61b"
+  },
+  {
+    "file": "built/local/compiler/factory/utilitiesPublic.js",
+    "sha256": "006526cacbd9a23c165d734eef120267d8b6b88acccf627ba18a5e627e04dffa"
+  },
+  {
+    "file": "built/local/compiler/hostErrors.js",
+    "sha256": "bc80709b0532fa413c80d4af1052c01cab1040c8d979aba1b208cd8294cd255b"
+  },
+  {
+    "file": "built/local/compiler/moduleNameResolver.js",
+    "sha256": "1be5030f15f3b90c15d45a9b7f52acbd0c4336b93ee9645d66c0a5ca2dfdec91"
+  },
+  {
+    "file": "built/local/compiler/moduleSpecifiers.js",
+    "sha256": "da2990a0233ba9e9616d5f95f86eed670bb619066e4cf95eb450e9d2d4b70252"
+  },
+  {
+    "file": "built/local/compiler/parser.js",
+    "sha256": "a15b47e15bd1e4bd3371a52ddcc80394bfcad168c656235a0b395a863c62ec97"
+  },
+  {
+    "file": "built/local/compiler/path.js",
+    "sha256": "9be17f7d41172923d13715c2704d72aa9f590a679d7b29ad99a2ca557cc10e38"
+  },
+  {
+    "file": "built/local/compiler/performance.js",
+    "sha256": "a807f5f960454c2ec74993a38d1cb6af7f17c358c2a2ee0a86df96a0c4cd22aa"
+  },
+  {
+    "file": "built/local/compiler/performanceCore.js",
+    "sha256": "e605a23a257eb3b120b4188a2f773d988318dfe84069a1b3876a58f86fe8c086"
+  },
+  {
+    "file": "built/local/compiler/program.js",
+    "sha256": "cc08bb55175a5181795509878788f2fb8f11de6a911d6b80d5317e076651adb7"
+  },
+  {
+    "file": "built/local/compiler/programDiagnostics.js",
+    "sha256": "6997b2cd6a7596406ffb3c6b863bebbd8884c75447701ed0872fe7350e1f3ca1"
+  },
+  {
+    "file": "built/local/compiler/resolutionCache.js",
+    "sha256": "3a309f514fd7db5cd24fc27016469021ffb80ff47fc01c9e667031d2a7efcc9f"
+  },
+  {
+    "file": "built/local/compiler/scanner.js",
+    "sha256": "b09e46b4e84010815247114864f2a5188eb9dfb700571fb1dcfb608f06964c46"
+  },
+  {
+    "file": "built/local/compiler/semver.js",
+    "sha256": "210da84481be1de1532e9ed084239c789b529940d5d018e869889ef8ad56574b"
+  },
+  {
+    "file": "built/local/compiler/sourcemap.js",
+    "sha256": "58882baa1f50bdd24d908c9436b1d3bff93c7d655ddd3d1e23c17d925e1475c0"
+  },
+  {
+    "file": "built/local/compiler/symbolWalker.js",
+    "sha256": "7d67f21dbccce2c0985a6aef3e5398a922c7f3d1641c779d08eb8b0ef900ee33"
+  },
+  {
+    "file": "built/local/compiler/sys.js",
+    "sha256": "dcb8eadad0dab02d0c8ac89711d7f765a0a9e0bbad2c7f1e51736abc25c10b8b"
+  },
+  {
+    "file": "built/local/compiler/tracing.js",
+    "sha256": "f61996d372554d89f0912143cefae83dc112113e39aa1af1efd33ef85e3371c8"
+  },
+  {
+    "file": "built/local/compiler/transformer.js",
+    "sha256": "0d3d8cd35b0430a1149629522b42526670d90f1e273ed09bbf27af20afe96a77"
+  },
+  {
+    "file": "built/local/compiler/transformers/classFields.js",
+    "sha256": "7580109950c8ccebc61888bb7a5a62fb38aca17d72ac6911406efddfc65e895c"
+  },
+  {
+    "file": "built/local/compiler/transformers/classThis.js",
+    "sha256": "0a338d85fc4fe1f9aaa021b83ccaad87d3a8ede42d227e50902fe58c251476c4"
+  },
+  {
+    "file": "built/local/compiler/transformers/declarations.js",
+    "sha256": "fe0ae09ad3f24f039cc1800c83b1fe56dcdfda98a4e9039065f939c66c14d607"
+  },
+  {
+    "file": "built/local/compiler/transformers/declarations/diagnostics.js",
+    "sha256": "e93d7c11ff12351b3c656ac46da6ba4cf6712a0df3fcba3ec6f9ece117748cbc"
+  },
+  {
+    "file": "built/local/compiler/transformers/destructuring.js",
+    "sha256": "04547e02a60ff10bc9c85a7f02d4c8d7a40260edfb7c7c09e35547a198138730"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2015.js",
+    "sha256": "3a99dc878653b52c0b4d929c5f87a73d58a8b0a60834c870cae9f0a945a068cd"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2016.js",
+    "sha256": "4f60a77a3eb65cab8766cc238bda1808c813125c57f231a06ca6984a2de1bcda"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2017.js",
+    "sha256": "90f14210479d75903ad9403c133829e0a4bfa91b6aed632c2e9db67a509fedd7"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2018.js",
+    "sha256": "6784bd3d0422e5a860a5ecba1ba61843bbb4ef0bda655609e0453003acbb5c90"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2019.js",
+    "sha256": "cc18861ba3f2405f026d415e70f3884ccca563fbd0f713cbfe90d33e461e9c21"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2020.js",
+    "sha256": "1dbd1f03cd95f8c1cce7a7e03c1a1d39e2ebe9ab82c42514e16e6989d98041c5"
+  },
+  {
+    "file": "built/local/compiler/transformers/es2021.js",
+    "sha256": "cf1649acd2055104181996ee87a32d50332afea2975d6aa51315db51eded819b"
+  },
+  {
+    "file": "built/local/compiler/transformers/esDecorators.js",
+    "sha256": "463b9af2869c52eecdef0d9dfb957aa9c5cb9b8da4b427cb917131d26b195ce2"
+  },
+  {
+    "file": "built/local/compiler/transformers/esnext.js",
+    "sha256": "462bfe30f6fec7e83c0cf7372ace84a0ab41d90b7ce1bd10de4fc675bc2b12e2"
+  },
+  {
+    "file": "built/local/compiler/transformers/generators.js",
+    "sha256": "ceb93a38dd81bb6039ad43231a57362a05e97608c3aed13bdda08535add0d4e1"
+  },
+  {
+    "file": "built/local/compiler/transformers/jsx.js",
+    "sha256": "d1f6f64de71d5b39e46383c639710a949af4854e17e2db70c3f36ec152858fe5"
+  },
+  {
+    "file": "built/local/compiler/transformers/legacyDecorators.js",
+    "sha256": "79899f9c82ec1e0630e620d6ff723e5a5b1a10d3e965bcfdded04e030145ba18"
+  },
+  {
+    "file": "built/local/compiler/transformers/module/esnextAnd2015.js",
+    "sha256": "9b45ec8fa992ad3e52176451877af80eba1ee0f6173af370a7a227c2152f7904"
+  },
+  {
+    "file": "built/local/compiler/transformers/module/impliedNodeFormatDependent.js",
+    "sha256": "ec63a556f151a9adcc40ff4f60c486b832d81969d959bd7c09b8423adf72350c"
+  },
+  {
+    "file": "built/local/compiler/transformers/module/module.js",
+    "sha256": "05a907ce259957c57c6f40b6561f4baec35216e7a2da0ba1b077bf09b9c84794"
+  },
+  {
+    "file": "built/local/compiler/transformers/module/system.js",
+    "sha256": "f95f129c113ad35e031f1fed0059c7b9f08fdd316f858d8d1908811a84b164aa"
+  },
+  {
+    "file": "built/local/compiler/transformers/namedEvaluation.js",
+    "sha256": "bab7bc8d58385f2d57e380f46073de18e42557d10cd126b9b6c0597c7feff6e7"
+  },
+  {
+    "file": "built/local/compiler/transformers/taggedTemplate.js",
+    "sha256": "85b04daccc3a1c70d986e13132b0b38ba5be92d82e2186aad2a83be8976c74f1"
+  },
+  {
+    "file": "built/local/compiler/transformers/ts.js",
+    "sha256": "f808e7a9d9f469695bfbc647d7b82ac7f3707ed28a3eaa0f1e067e760684b0a7"
+  },
+  {
+    "file": "built/local/compiler/transformers/typeSerializer.js",
+    "sha256": "02f92f1525236bc67ceff4590d92931a2856f35786601bc926a2f4b0fb79ae2d"
+  },
+  {
+    "file": "built/local/compiler/transformers/utilities.js",
+    "sha256": "8cf03cbe49972bd529522ef2f1f25754e885c73a33c1dc79d85213c593710f4d"
+  },
+  {
+    "file": "built/local/compiler/tsbuild.js",
+    "sha256": "364ad00f370f65912639acc3757292e36558833598d46f0e737e589ba099a17e"
+  },
+  {
+    "file": "built/local/compiler/tsbuildPublic.js",
+    "sha256": "4bbe20c88803bac7ef315a0c9d0a4d84facbfa03c7943f224dfd115445782795"
+  },
+  {
+    "file": "built/local/compiler/types.js",
+    "sha256": "2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1"
+  },
+  {
+    "file": "built/local/compiler/utilities.js",
+    "sha256": "748e7ac503384a21ccc53dee8bf77f8c55580120e3715794a4c580df85498be6"
+  },
+  {
+    "file": "built/local/compiler/utilitiesPublic.js",
+    "sha256": "04649f9fb901dfa3b097d27671ee67ddb8f02c7ccc9a28fa3438c5fb7cec7052"
+  },
+  {
+    "file": "built/local/compiler/visitorPublic.js",
+    "sha256": "19bf0b9d4fba9d0da9d849a2a1e201076535882511c2c0ccac4662c6ba3a5cea"
+  },
+  {
+    "file": "built/local/compiler/watch.js",
+    "sha256": "379127ad701221115eebda59df23937dcbce0e683d341951524a3ef80e82885a"
+  },
+  {
+    "file": "built/local/compiler/watchPublic.js",
+    "sha256": "9cb8a187015f5dbd0d570660d0d3dae9d72cf1b0e66e6486053a71dad45c36c4"
+  },
+  {
+    "file": "built/local/compiler/watchUtilities.js",
+    "sha256": "5ad8356a7c3b7f34df7f5c2b3e3a04e7f876da9fbad5781b50ce1a9c13f53486"
+  }
+]

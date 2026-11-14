@@ -1,0 +1,10 @@
+source /workspace/adamic-tools/env.sh
+export TMPDIR=/tmp/invoke-map-4pc8wd8/tmp
+export GOTMPDIR=$TMPDIR
+export GOCACHE=/tmp/invoke-map-4pc8wd8/gocache
+export GOMODCACHE=/tmp/invoke-map-4pc8wd8/gomodcache
+export npm_config_cache=/tmp/invoke-map-4pc8wd8/npmcache
+export ADAMIC_BUILD_CACHE_DIR=/tmp/invoke-map-4pc8wd8/cache
+export STAGE3_CACHE=/tmp/invoke-map-4pc8wd8/stage3cache
+export ADAMIC_TYPESCRIPT_SOURCE=/tmp/invoke-map-4pc8wd8/TypeScript
+export NODE_PATH=/tmp/invoke-map-4pc8wd8/repo/stage3/api/node_modules
