@@ -514,9 +514,8 @@ type restHiddenPair struct {
 // value's (flipped): setTimeout's own callback `(...args) => void` seen as `(label?: unknown) => void`
 // takes the program's fixed callback, which is safe, while a source taking `(a: string) => void` seen
 // as taking `(...items: string[]) => void` would call a rest closure through a fixed type. Every pair
-// of call signatures is judged, overloads included, except a pair the library declares on both sides,
-// its own member seen through its own type (an array's splice overloads against a tuple's), which the
-// runtime dispatches by name and never as a program closure.
+// of call signatures is judged, overloads included. Only a method the library declares on both sides
+// is passed over, its member read off its own object, which the runtime dispatches by name.
 func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visited map[restHiddenPair]bool) bool {
 	from, to = l.present(from), l.present(to)
 	if from == nil || to == nil || from == to || visited[restHiddenPair{from, to, flipped}] {
@@ -532,9 +531,6 @@ func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visite
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
 		for _, source := range fromSignatures {
 			for _, view := range toSignatures {
-				if librarySignature(source) && librarySignature(view) {
-					continue
-				}
 				if flipped && l.restHiddenByView(view, source, from) || !flipped && l.restHiddenByView(source, view, to) {
 					return true
 				}
@@ -558,7 +554,14 @@ func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visite
 		}
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
-			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && l.restHiddenWithin(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), flipped, visited) {
+			inside := l.checker.GetPropertyOfType(from, viewed.Name)
+			if inside == nil || libraryDeclaredMethod(inside) && libraryDeclaredMethod(viewed) {
+				// A method the library declares on both sides is its member read off its own object (an
+				// array's splice overloads against a tuple's), which the runtime dispatches by name. A
+				// function value is never let through this way, whatever types it was seen through.
+				continue
+			}
+			if l.restHiddenWithin(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), flipped, visited) {
 				return true
 			}
 		}
@@ -566,10 +569,18 @@ func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visite
 	return false
 }
 
-// librarySignature reports whether a signature is declared in TypeScript's bundled library.
-func librarySignature(signature *checker.Signature) bool {
-	declaration := signature.Declaration()
-	return declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration))
+// libraryDeclaredMethod reports whether a property is a method every declaration of which is in TypeScript's
+// bundled library.
+func libraryDeclaredMethod(property *ast.Symbol) bool {
+	if property.Flags&ast.SymbolFlagsMethod == 0 || len(property.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range property.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
+		}
+	}
+	return true
 }
 
 // tupleSeenAsArray finds, in a value of type from seen as type to, the first tuple seen as an array:
