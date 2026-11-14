@@ -1,0 +1,18 @@
+{
+  "main": {
+    "roots": 79,
+    "diagnostics": []
+  },
+  "result-only": {
+    "roots": 79,
+    "diagnostics": [
+      {
+        "file": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+        "line": 1021,
+        "column": 9,
+        "code": 2322,
+        "message": "Type '(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher' is not assignable to type '(fileName: string, callback: FileWatcherCallback, pollingInterval?: number | undefined, options?: WatchOptions | undefined) => FileWatcher'.\n  Types of parameters 'pollingInterval' and 'pollingInterval' are incompatible.\n    Type 'number | undefined' is not assignable to type 'PollingInterval'.\n      Type 'undefined' is not assignable to type 'PollingInterval'."
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+--- main/sys.ts
++++ result-only/sys.ts
+@@ -1008,7 +1008,7 @@
+     inodeWatching,
+     fsWatchWithTimestamp,
+     sysLog,
+-}: CreateSystemWatchFunctions): { watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; } {
++}: CreateSystemWatchFunctions): { watchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval?: number, options?: WatchOptions) => FileWatcher; watchDirectory: HostWatchDirectory; } {
+     const pollingWatches = new Map<string, SingleFileWatcher<FileWatcherCallback>>();
+     const fsWatches = new Map<string, SingleFileWatcher<FsWatchCallback>>();
+     const fsWatchesRecursive = new Map<string, SingleFileWatcher<FsWatchCallback>>();

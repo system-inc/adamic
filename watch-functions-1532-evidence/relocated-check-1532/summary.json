@@ -1,0 +1,26 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "task": "#cyjqp5f",
+  "verdict": "STOP: widened interval exposes a new lowering NotYet at the Node fs.watchFile boundary",
+  "stockTsc603": {
+    "roots": 79,
+    "baselineDiagnostics": 0,
+    "propagatedProbeDiagnostics": 0
+  },
+  "census": {
+    "format": "CommonJSBundle",
+    "LATENT_FULL": 1,
+    "LATENT_ASSERT_NO_OUTPUT": 1,
+    "newUniqueFindings": 2,
+    "goneUniqueFindings": 1,
+    "changedUniqueFindings": 0,
+    "target1532Gone": true,
+    "sibling1533Unchanged": true
+  },
+  "dynamicSiteHistogram": null,
+  "dynamicSiteHistogramStatus": "not measured: mandatory lowering stop gate failed before counting",
+  "candidateImplementationBranchCreated": false,
+  "ledgerChanged": false,
+  "loomSubmitted": false
+}

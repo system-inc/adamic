@@ -1,0 +1,86 @@
+--- main/sys.ts
++++ propagated/sys.ts
+@@ -104,7 +104,7 @@
+ }
+ 
+ /** @internal */
+-export type HostWatchFile = (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher;
++export type HostWatchFile = (fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined, options: WatchOptions | undefined) => FileWatcher;
+ /** @internal */
+ export type HostWatchDirectory = (fileName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher;
+ 
+@@ -249,7 +249,10 @@
+     const highPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.High);
+     return watchFile;
+ 
+-    function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval): FileWatcher {
++    function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: number | undefined): FileWatcher {
++        if (defaultPollingInterval !== PollingInterval.Low && defaultPollingInterval !== PollingInterval.Medium && defaultPollingInterval !== PollingInterval.High) {
++            return Debug.fail(`Invalid dynamic polling interval: ${defaultPollingInterval}`);
++        }
+         const file: WatchedFileWithUnchangedPolls = {
+             fileName,
+             callback,
+@@ -385,7 +388,7 @@
+     const toCanonicalName = createGetCanonicalFileName(useCaseSensitiveFileNames);
+     return nonPollingWatchFile;
+ 
+-    function nonPollingWatchFile(fileName: string, callback: FileWatcherCallback, _pollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined): FileWatcher {
++    function nonPollingWatchFile(fileName: string, callback: FileWatcherCallback, _pollingInterval: number | undefined, fallbackOptions: WatchOptions | undefined): FileWatcher {
+         const filePath = toCanonicalName(fileName);
+         if (multiMapAddValue(fileWatcherCallbacks, filePath, callback).length === 1 && fileTimestamps) {
+             fileTimestamps.set(filePath, getModifiedTime(fileName) || missingFileModifiedTime);
+@@ -893,7 +896,7 @@
+ /** @internal */
+ export type FsWatchCallback = (eventName: "rename" | "change", relativeFileName: string | undefined | null, modifiedTime?: Date) => void; // eslint-disable-line no-restricted-syntax
+ /** @internal */
+-export type FsWatch = (fileOrDirectory: string, entryKind: FileSystemEntryKind, callback: FsWatchCallback, recursive: boolean, fallbackPollingInterval: PollingInterval, fallbackOptions: WatchOptions | undefined) => FileWatcher;
++export type FsWatch = (fileOrDirectory: string, entryKind: FileSystemEntryKind, callback: FsWatchCallback, recursive: boolean, fallbackPollingInterval: number | undefined, fallbackOptions: WatchOptions | undefined) => FileWatcher;
+ /** @internal */
+ export interface FsWatchWorkerWatcher extends FileWatcher {
+     on(eventName: string, listener: () => void): void;
+@@ -1022,7 +1025,7 @@
+         watchDirectory,
+     };
+ 
+-    function watchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined): FileWatcher {
++    function watchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined, options: WatchOptions | undefined): FileWatcher {
+         options = updateOptionsForWatchFile(options, useNonPollingWatchers);
+         const watchFileKind = Debug.checkDefined(options.watchFile);
+         switch (watchFileKind) {
+@@ -1189,7 +1192,7 @@
+         }
+     }
+ 
+-    function pollingWatchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) {
++    function pollingWatchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined, options: WatchOptions | undefined) {
+         return createSingleWatcherPerName(
+             pollingWatches,
+             useCaseSensitiveFileNames,
+@@ -1204,7 +1207,7 @@
+         entryKind: FileSystemEntryKind,
+         callback: FsWatchCallback,
+         recursive: boolean,
+-        fallbackPollingInterval: PollingInterval,
++        fallbackPollingInterval: number | undefined,
+         fallbackOptions: WatchOptions | undefined,
+     ): FileWatcher {
+         return createSingleWatcherPerName(
+@@ -1222,7 +1225,7 @@
+         entryKind: FileSystemEntryKind,
+         callback: FsWatchCallback,
+         recursive: boolean,
+-        fallbackPollingInterval: PollingInterval,
++        fallbackPollingInterval: number | undefined,
+         fallbackOptions: WatchOptions | undefined,
+     ): FileWatcher {
+         let lastDirectoryPartWithDirectorySeparator: string | undefined;
+@@ -1730,7 +1733,7 @@
+             });
+         }
+ 
+-        function fsWatchFileWorker(fileName: string, callback: FileWatcherCallback, pollingInterval: number): FileWatcher {
++        function fsWatchFileWorker(fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined): FileWatcher {
+             _fs.watchFile(fileName, { persistent: true, interval: pollingInterval }, fileChanged);
+             let eventKind: FileWatcherEventKind;
+             return {

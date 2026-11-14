@@ -1,0 +1,18 @@
+{
+  "guard-probe": {
+    "exit": 0,
+    "seconds": 119.73856473400019,
+    "command": [
+      "/tmp/watch-file-check-1532/latent",
+      "/tmp/watch-functions-1532/main-tree/src/compiler",
+      "/tmp/watch-file-check-1532/census-guard-probe/raw.jsonl"
+    ],
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_ONLY_FILE": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+      "LATENT_TIMES": "/tmp/watch-file-check-1532/census-guard-probe/unit-times.jsonl"
+    },
+    "sourceSha256": "181035962f636ba80ee01c281511d82d05662dde453d5ae3321790423a56c886"
+  }
+}

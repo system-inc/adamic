@@ -1,0 +1,30 @@
+--- main/sys.ts
++++ guard-probe/sys.ts
+@@ -1008,7 +1008,7 @@
+     inodeWatching,
+     fsWatchWithTimestamp,
+     sysLog,
+-}: CreateSystemWatchFunctions): { watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; } {
++}: CreateSystemWatchFunctions): { watchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval?: number, options?: WatchOptions) => FileWatcher; watchDirectory: HostWatchDirectory; } {
+     const pollingWatches = new Map<string, SingleFileWatcher<FileWatcherCallback>>();
+     const fsWatches = new Map<string, SingleFileWatcher<FsWatchCallback>>();
+     const fsWatchesRecursive = new Map<string, SingleFileWatcher<FsWatchCallback>>();
+@@ -1022,7 +1022,7 @@
+         watchDirectory,
+     };
+ 
+-    function watchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined): FileWatcher {
++    function watchFile(fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined, options: WatchOptions | undefined): FileWatcher {
+         options = updateOptionsForWatchFile(options, useNonPollingWatchers);
+         const watchFileKind = Debug.checkDefined(options.watchFile);
+         switch (watchFileKind) {
+@@ -1031,6 +1031,9 @@
+             case WatchFileKind.PriorityPollingInterval:
+                 return pollingWatchFile(fileName, callback, pollingInterval, /*options*/ undefined);
+             case WatchFileKind.DynamicPriorityPolling:
++                if (pollingInterval !== PollingInterval.Low && pollingInterval !== PollingInterval.Medium && pollingInterval !== PollingInterval.High) {
++                    return Debug.fail(`Invalid dynamic polling interval: ${pollingInterval}`);
++                }
+                 return ensureDynamicPollingWatchFile()(fileName, callback, pollingInterval, /*options*/ undefined);
+             case WatchFileKind.FixedChunkSizePolling:
+                 return ensureFixedChunkSizePollingWatchFile()(fileName, callback, /* pollingInterval */ undefined!, /*options*/ undefined);

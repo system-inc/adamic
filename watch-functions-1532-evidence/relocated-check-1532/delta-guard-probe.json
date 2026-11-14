@@ -1,0 +1,183 @@
+{
+  "variant": "guard-probe",
+  "uniqueBefore": 114,
+  "uniqueAfter": 108,
+  "new": [],
+  "gone": [
+    {
+      "normalized": {
+        "where": "sys.ts:1026:54",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "text": "sys.ts:1026:54: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1025:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1026:54",
+          "reason": "a boolean | undefined variable a function value captures",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1026:54: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1048:140",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "reason": "a boolean | undefined variable a function value captures",
+        "text": "sys.ts:1048:140: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1025:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1048:140",
+          "reason": "a boolean | undefined variable a function value captures",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1048:140: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1026:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1026:54: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1025:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1026:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1026:54: stage 0 can't lower a boolean | undefined variable a function value captures yet",
+          "start": 42419,
+          "end": 42497
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1532:13",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1532:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1473:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1532:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1532:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1052:17",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "debug.ts:251:33: stage 0 can't lower a value of type never yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1025:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1052:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/debug.ts:251:33: stage 0 can't lower a value of type never yet",
+          "start": 44120,
+          "end": 44171
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1048:21",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1048:140: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1025:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1048:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1048:140: stage 0 can't lower a boolean | undefined variable a function value captures yet",
+          "start": 43805,
+          "end": 43968
+        }
+      ]
+    }
+  ],
+  "changed": [],
+  "target1532Gone": true,
+  "sibling1533Unchanged": true,
+  "checkerDiagnostics": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+      "start": 42984,
+      "end": 42999,
+      "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1032:61: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'PollingInterval'.\n  Type 'undefined' is not assignable to type 'PollingInterval'."
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+      "start": 43985,
+      "end": 44000,
+      "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1046:21: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'PollingInterval'.\n  Type 'undefined' is not assignable to type 'PollingInterval'."
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "file": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+      "start": 44425,
+      "end": 44440,
+      "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1053:64: error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'PollingInterval'.\n  Type 'undefined' is not assignable to type 'PollingInterval'."
+    }
+  ],
+  "unitStatuses": {
+    "before": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    },
+    "after": {
+      "attempted": 132,
+      "deferred_generic_instantiation": 3,
+      "split_checker_body": 1
+    }
+  }
+}

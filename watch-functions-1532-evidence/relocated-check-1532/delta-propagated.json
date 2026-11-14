@@ -1,0 +1,139 @@
+{
+  "variant": "propagated",
+  "uniqueBefore": 114,
+  "uniqueAfter": 115,
+  "new": [
+    {
+      "normalized": {
+        "where": "sys.ts:1734:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "sys.ts:1734:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1470:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet",
+          "start": 78014,
+          "end": 78114
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1476:5",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet",
+          "start": 78014,
+          "end": 78114
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1736:9",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet",
+          "start": 78014,
+          "end": 78114
+        }
+      ]
+    },
+    {
+      "normalized": {
+        "where": "sys.ts:1734:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "reason": "node:fs.watchFile with a non-number interval",
+        "text": "sys.ts:1734:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1470:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "node:fs.watchFile with a non-number interval",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1476:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "node:fs.watchFile with a non-number interval",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet"
+        },
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1736:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13",
+          "reason": "node:fs.watchFile with a non-number interval",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1737:13: stage 0 can't lower node:fs.watchFile with a non-number interval yet"
+        }
+      ]
+    }
+  ],
+  "gone": [
+    {
+      "normalized": {
+        "where": "sys.ts:1532:13",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "sys.ts:1532:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      "observations": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1473:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "where": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1532:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "text": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts:1532:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        }
+      ]
+    }
+  ],
+  "changed": [],
+  "target1532Gone": true,
+  "sibling1533Unchanged": true,
+  "checkerDiagnostics": [],
+  "unitStatuses": {
+    "before": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    },
+    "after": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  }
+}
