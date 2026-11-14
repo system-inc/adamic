@@ -1,0 +1,126 @@
+{
+  "parser": {
+    "creation": {
+      "files": 1,
+      "writes": 1,
+      "owners": 1,
+      "javascriptChanging": true
+    },
+    "replay": {
+      "files": 0,
+      "writes": 0,
+      "owners": 0,
+      "javascriptChanging": true
+    },
+    "restore": {
+      "files": 1,
+      "writes": 1,
+      "owners": 1,
+      "javascriptChanging": true
+    },
+    "mutantRestoresExactBytes": true,
+    "normalizedGeneratedFilesIdentical": true,
+    "controls": {
+      "mixedLineEndings": {
+        "refused": true,
+        "writes": 0
+      },
+      "drift": {
+        "refused": true,
+        "writes": 0
+      },
+      "duplicate": {
+        "refused": true,
+        "writes": 0
+      },
+      "partialOwner": {
+        "refused": true,
+        "writes": 0
+      }
+    }
+  },
+  "transformers": {
+    "creation": {
+      "files": 17,
+      "writes": 17,
+      "owners": 32,
+      "javascriptChanging": true
+    },
+    "replay": {
+      "files": 0,
+      "writes": 0,
+      "owners": 0,
+      "javascriptChanging": true
+    },
+    "restore": {
+      "files": 17,
+      "writes": 17,
+      "owners": 32,
+      "javascriptChanging": true
+    },
+    "mutantRestoresExactBytes": true,
+    "normalizedGeneratedFilesIdentical": true,
+    "controls": {
+      "mixedLineEndings": {
+        "refused": true,
+        "writes": 0
+      },
+      "drift": {
+        "refused": true,
+        "writes": 0
+      },
+      "duplicate": {
+        "refused": true,
+        "writes": 0
+      },
+      "partialOwner": {
+        "refused": true,
+        "writes": 0
+      },
+      "halfAdaptedTree": {
+        "refused": true,
+        "writes": 0
+      }
+    }
+  },
+  "printer": {
+    "creation": {
+      "files": 1,
+      "writes": 1,
+      "owners": 1,
+      "javascriptChanging": true
+    },
+    "replay": {
+      "files": 0,
+      "writes": 0,
+      "owners": 0,
+      "javascriptChanging": true
+    },
+    "restore": {
+      "files": 1,
+      "writes": 1,
+      "owners": 1,
+      "javascriptChanging": true
+    },
+    "mutantRestoresExactBytes": true,
+    "normalizedGeneratedFilesIdentical": true,
+    "controls": {
+      "mixedLineEndings": {
+        "refused": true,
+        "writes": 0
+      },
+      "drift": {
+        "refused": true,
+        "writes": 0
+      },
+      "duplicate": {
+        "refused": true,
+        "writes": 0
+      },
+      "partialOwner": {
+        "refused": true,
+        "writes": 0
+      }
+    }
+  }
+}

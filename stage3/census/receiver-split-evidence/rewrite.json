@@ -1,0 +1,1031 @@
+{
+  "roots": 79,
+  "sites": 19,
+  "parserUses": 46,
+  "transformerArrows": 52,
+  "files": [
+    {
+      "file": "src/compiler/parser.ts",
+      "site": 1472,
+      "kind": "NodeFactory",
+      "members": [
+        {
+          "name": "createNodeArray",
+          "local": "factoryCreateNodeArray",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createNumericLiteral",
+          "local": "factoryCreateNumericLiteral",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createStringLiteral",
+          "local": "factoryCreateStringLiteral",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createLiteralLikeNode",
+          "local": "factoryCreateLiteralLikeNode",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createIdentifier",
+          "local": "factoryCreateIdentifier",
+          "rewrittenUses": 5
+        },
+        {
+          "name": "createPrivateIdentifier",
+          "local": "factoryCreatePrivateIdentifier",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createToken",
+          "local": "factoryCreateToken",
+          "rewrittenUses": 7
+        },
+        {
+          "name": "createArrayLiteralExpression",
+          "local": "factoryCreateArrayLiteralExpression",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createObjectLiteralExpression",
+          "local": "factoryCreateObjectLiteralExpression",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createPropertyAccessExpression",
+          "local": "factoryCreatePropertyAccessExpression",
+          "rewrittenUses": 4
+        },
+        {
+          "name": "createPropertyAccessChain",
+          "local": "factoryCreatePropertyAccessChain",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createElementAccessExpression",
+          "local": "factoryCreateElementAccessExpression",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createElementAccessChain",
+          "local": "factoryCreateElementAccessChain",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createCallExpression",
+          "local": "factoryCreateCallExpression",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createCallChain",
+          "local": "factoryCreateCallChain",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createNewExpression",
+          "local": "factoryCreateNewExpression",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createParenthesizedExpression",
+          "local": "factoryCreateParenthesizedExpression",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createBlock",
+          "local": "factoryCreateBlock",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createVariableStatement",
+          "local": "factoryCreateVariableStatement",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createExpressionStatement",
+          "local": "factoryCreateExpressionStatement",
+          "rewrittenUses": 2
+        },
+        {
+          "name": "createIfStatement",
+          "local": "factoryCreateIfStatement",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createWhileStatement",
+          "local": "factoryCreateWhileStatement",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createForStatement",
+          "local": "factoryCreateForStatement",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createForOfStatement",
+          "local": "factoryCreateForOfStatement",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createVariableDeclaration",
+          "local": "factoryCreateVariableDeclaration",
+          "rewrittenUses": 1
+        },
+        {
+          "name": "createVariableDeclarationList",
+          "local": "factoryCreateVariableDeclarationList",
+          "rewrittenUses": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "site": 236,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 4,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 3,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/ts.ts:236:37",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/ts.ts:236:37",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/ts.ts:236:37",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/ts.ts:236:37",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/ts.ts:236:37",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "site": 355,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 7,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 16
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "addBlockScopedVariable",
+          "local": "addBlockScopedVariable",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 1
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        },
+        {
+          "arrow": "addBlockScopedVariable",
+          "contextParameter": "src/compiler/transformers/classFields.ts:355:38",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "site": 133,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 0,
+          "valueUses": 2
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/typeSerializer.ts:132:45",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "site": 89,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 3,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/legacyDecorators.ts:89:43",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/legacyDecorators.ts:89:43",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "site": 296,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 11,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 7
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/esDecorators.ts:296:39",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/esDecorators.ts:296:39",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/esDecorators.ts:296:39",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/esDecorators.ts:296:39",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "site": 120,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/es2017.ts:120:33",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2017.ts:120:33",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2017.ts:120:33",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2017.ts:120:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "site": 155,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 9,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 2
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/es2018.ts:155:33",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2018.ts:155:33",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2018.ts:155:33",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2018.ts:155:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "site": 43,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 0,
+          "valueUses": 4
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2020.ts:43:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "site": 26,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 0,
+          "valueUses": 2
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2021.ts:26:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "site": 77,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 3,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 1,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/esnext.ts:72:33",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/esnext.ts:72:33",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/esnext.ts:72:33",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/esnext.ts:72:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "site": 99,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 1,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/jsx.ts:93:30",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "site": 22,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 0,
+          "valueUses": 3
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2016.ts:22:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "site": 489,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 4,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 3,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 3,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 6,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 3
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/es2015.ts:489:33",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2015.ts:489:33",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2015.ts:489:33",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/es2015.ts:489:33",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/es2015.ts:489:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "site": 337,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistFunctionDeclaration",
+          "local": "hoistFunctionDeclaration",
+          "parameters": "node: FunctionDeclaration",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 8,
+          "valueUses": 3
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/generators.ts:337:37",
+          "verified": true
+        },
+        {
+          "arrow": "resumeLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/generators.ts:337:37",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/generators.ts:337:37",
+          "verified": true
+        },
+        {
+          "arrow": "hoistFunctionDeclaration",
+          "contextParameter": "src/compiler/transformers/generators.ts:337:37",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/generators.ts:337:37",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "site": 192,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 9,
+          "valueUses": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 2,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 0,
+          "valueUses": 2
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/module/module.ts:175:33",
+          "verified": true
+        },
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/module/module.ts:175:33",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/module/module.ts:175:33",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/module/module.ts:175:33",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "site": 143,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "parameters": "",
+          "returns": "void",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "parameters": "",
+          "returns": "Statement[] | undefined",
+          "directUses": 1,
+          "valueUses": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "parameters": "node: Identifier",
+          "returns": "void",
+          "directUses": 5,
+          "valueUses": 1
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "startLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/module/system.ts:137:39",
+          "verified": true
+        },
+        {
+          "arrow": "endLexicalEnvironment",
+          "contextParameter": "src/compiler/transformers/module/system.ts:137:39",
+          "verified": true
+        },
+        {
+          "arrow": "hoistVariableDeclaration",
+          "contextParameter": "src/compiler/transformers/module/system.ts:137:39",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "site": 68,
+      "kind": "TransformationContext",
+      "members": [
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "parameters": "",
+          "returns": "EmitHelperFactory",
+          "directUses": 2,
+          "valueUses": 0
+        }
+      ],
+      "bindingChecks": [
+        {
+          "arrow": "emitHelpers",
+          "contextParameter": "src/compiler/transformers/module/esnextAnd2015.ts:68:43",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "site": 1215,
+      "kind": "PrintHandlers",
+      "members": [
+        {
+          "name": "hasGlobalName",
+          "local": "hasGlobalName",
+          "default": null
+        },
+        {
+          "name": "onEmitNode",
+          "local": "onEmitNode",
+          "default": "noEmitNotification"
+        },
+        {
+          "name": "isEmitNotificationEnabled",
+          "local": "isEmitNotificationEnabled",
+          "default": null
+        },
+        {
+          "name": "substituteNode",
+          "local": "substituteNode",
+          "default": "noEmitSubstitution"
+        },
+        {
+          "name": "onBeforeEmitNode",
+          "local": "onBeforeEmitNode",
+          "default": null
+        },
+        {
+          "name": "onAfterEmitNode",
+          "local": "onAfterEmitNode",
+          "default": null
+        },
+        {
+          "name": "onBeforeEmitNodeArray",
+          "local": "onBeforeEmitNodeArray",
+          "default": null
+        },
+        {
+          "name": "onAfterEmitNodeArray",
+          "local": "onAfterEmitNodeArray",
+          "default": null
+        },
+        {
+          "name": "onBeforeEmitToken",
+          "local": "onBeforeEmitToken",
+          "default": null
+        },
+        {
+          "name": "onAfterEmitToken",
+          "local": "onAfterEmitToken",
+          "default": null
+        }
+      ]
+    }
+  ]
+}

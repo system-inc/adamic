@@ -1,0 +1,88 @@
+{
+  "Parser": [
+    "stage3/adapt/64-temporary-parser-range-read/README.md",
+    "stage3/adapt/75-optional-widening/README.md",
+    "stage3/adapt/30-indexed-reads/README.md",
+    "stage3/adapt/41-explicit-any-remaining/evidence/any-after-census.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/void-mutant-census.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/before-census.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/timers/mutant.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/timers/after.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/any-mutant-census.json",
+    "stage3/adapt/41-explicit-any-remaining/evidence/final-census.json",
+    "stage3/adapt/32-indexed-reads-program/proof/method-restoration/README.md",
+    "stage3/adapt/ACHECK.md",
+    "stage3/adapt/65-temporary-node-builtins/evidence/previous-process-README.md"
+  ],
+  "transformTypeScript": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json"
+  ],
+  "transformClassFields": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json",
+    "stage3/adapt/71-writable-views/probe.py"
+  ],
+  "createRuntimeTypeSerializer": [],
+  "transformLegacyDecorators": [],
+  "transformESDecorators": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json"
+  ],
+  "transformES2017": [
+    "stage3/adapt/90-void-widening/targets.json"
+  ],
+  "transformES2018": [],
+  "transformES2020": [],
+  "transformES2021": [],
+  "transformESNext": [],
+  "transformJsx": [
+    "stage3/adapt/47-host-errors/evidence/optional-owners.json"
+  ],
+  "transformES2016": [],
+  "transformES2015": [
+    "stage3/adapt/71-writable-views/probe.py"
+  ],
+  "transformGenerators": [
+    "stage3/adapt/99-correctness-axolotl-j/CENSUS.md",
+    "stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+    "stage3/adapt/99-correctness-axolotl-j/census-delta.json"
+  ],
+  "transformModule": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json",
+    "stage3/adapt/33-indexed-reads-emit/proof/whole-files/module-close/README.md",
+    "stage3/adapt/33-indexed-reads-emit/verify-context.cjs"
+  ],
+  "transformSystemModule": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json"
+  ],
+  "transformECMAScriptModule": [
+    "stage3/adapt/75-optional-widening/coverage/sites.json",
+    "stage3/adapt/75-optional-widening/coverage/guards.json"
+  ],
+  "createPrinter": [
+    "stage3/adapt/75-optional-widening/probe-ruling.cjs",
+    "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-compare.cjs",
+    "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+    "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+    "stage3/adapt/99-correctness-core-or-predicate/compare.cjs",
+    "stage3/adapt/48-memoize/evidence/callers.json",
+    "stage3/adapt/48-memoize/evidence/node-proof.json",
+    "stage3/adapt/47-host-errors/adapt.cjs",
+    "stage3/adapt/48-memoize/evidence/applied-a/node-proof.json",
+    "stage3/adapt/48-memoize/evidence/p2-repeat/node-proof.json",
+    "stage3/adapt/99-correctness-axolotl-x/compare.cjs",
+    "stage3/adapt/40-explicit-any/class-proof.cjs",
+    "stage3/adapt/71-writable-views/probe.py",
+    "stage3/adapt/70-readonly-views/mutant.cjs",
+    "stage3/adapt/90-void-widening/targets.json",
+    "stage3/adapt/49-honest-optionals/lifecycle.cjs",
+    "stage3/adapt/49-honest-optionals/read-probe.cjs",
+    "stage3/adapt/49-honest-optionals/sites.json",
+    "stage3/adapt/49-honest-optionals/disposition.json",
+    "stage3/adapt/49-honest-optionals/plan.cjs",
+    "stage3/adapt/99-correctness-core-multimap/owners.json"
+  ]
+}
