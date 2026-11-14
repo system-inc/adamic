@@ -1,0 +1,1 @@
+internal/oracle/testdata/inferred_binding/p05_unconstrained.ts:9:12: Adamic 0.1 refuses a value of type Tagged[] seen as (Tagged | { kind: string; })[], which can write Tagged | { kind: string; } where Tagged is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
