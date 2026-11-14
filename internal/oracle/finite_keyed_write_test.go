@@ -61,6 +61,7 @@ var finiteKeyedWriteStops = []struct {
 	{"index_signature_union.a", false, 8, "a computed field write to an object with an index signature", ""},
 	{"literal_key.a", true, 6, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"or_temporary.a", true, 5, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
+	{"placeholder_keyed.a", false, 5, "a placeholder reset without a represented variable or field slot", ""},
 	{"readonly_constructor.a", false, 8, "a computed write to readonly field Low", ""},
 	{"receiver_alternatives.a", false, 7, "a computed field stored differently across receiver alternatives", ""},
 	{"tsc_custom_levels.a", true, 14, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
