@@ -1,0 +1,13 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "stage3/census/next-stops-c4v7/group.py",
+    "31",
+    "40"
+  ],
+  "exit_code": 0,
+  "seconds": 152.21349892800026,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
