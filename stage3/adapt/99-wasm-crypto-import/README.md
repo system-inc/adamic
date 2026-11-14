@@ -283,3 +283,88 @@ proofs/resolve-host-contract.cjs, proofs/resolve-host-fixture.cjs and
 resolve-host-mutant.cjs. The path counters for getDirectories, trace and
 getCurrentDirectory are zero; separate direct checks cover those explicitly
 authorized exceptions. The lane never exercises this require path.
+
+## Recordreplay amendment, task #b7phwab
+
+Amendment 1 is based on CLI `7ccad5b52`, whose compiler owns the optional
+`recordreplay?: unknown` absent member. The final adapter also removes only
+`as any` and its parentheses from nodeSystem's debugMode read. It fills one
+existing blank import line with `import type {} from "../recordreplay.js";`
+and creates `src/recordreplay.d.ts`, an exact type-only global Process
+augmentation. Every later sys.ts line number stays fixed. No runtime value,
+cast, later view, write, reflection or spread is added.
+
+The augmentation in an ordinary `.ts` module was measured and rejected: its
+full sys.ts census adds `Refused: a global augmentation`. The selected declaration
+file is loaded by stock TypeScript and Adamic's checker through the erased import;
+it adds no runtime module. The 79 compiler implementation roots are unchanged.
+
+The read gate passes stock TypeScript 6.0.3 with pinned @types/node: zero
+before and after diagnostics, 79 byte-identical transpiled JavaScript products,
+Adamic types exit 0, and successful fresh `hereby dts` builds. Both public bundles
+are byte-identical: typescript.d.ts is 593,536 bytes, SHA-256
+`f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516`;
+tsserverlibrary.d.ts is 866 bytes, SHA-256
+`cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd`.
+The full stacked sys.ts census clears the recordreplay scan/lowering findings
+and reaches `sys.ts:1613:46: reading modulePath`; no new finding names process.
+
+99 pins getNodeSystem whole; its before hash stays fixed and its after hash is
+recut for the bare read. The node: import block hashes stay fixed. 93 runs before
+this last adapter and its owned bytes and pins are unchanged. The new helper
+pins the declaration bytes, the erased import, its reserved blank line, the one
+cast read, and the direct final receiver typed unknown. A virtual compiler host
+loads the declaration before any write. Both files are validated before their
+conditional writes; rerunning writes neither.
+
+`proofs/recordreplay/check.py SCRATCH` replays scope, exact gate-output identity,
+idempotence and owner/declaration/out-of-scope edit mutants. Its results are in
+`proofs/recordreplay/results.json`. The proof input sys.ts is the fresh official
+apply's `refs/stage3/99-wasm-crypto-import-before` snapshot; running the amended
+last adapter produces the gate tree exactly. The rest of the earlier official
+apply is unchanged. The original crypto evidence and its historical reproduction
+scripts below predate this amendment. Current gate inputs, commands, full census
+streams and declaration diffs are retained on `typescript/recordreplay-census`
+under `stage3/census/recordreplay`. No Loom submission was made.
+
+
+## Recordreplay inventory follow-up
+
+The current pre-99 tree has 747 source files, including
+`src/deprecatedCompat/controlFlowGraph.ts`; the amended tree has 748. Archived
+746-file proof records describe the older run and are retained as history.
+`proofs/check.cjs` now requires exactly the input inventory plus
+`src/recordreplay.d.ts`, checks the declaration's canonical bytes, hashes every
+source, and reverses the erased edits before checking crypto scope.
+`proofs/scoped.py` plans the two erased sys edits and declaration, compares the
+complete dynamic source map, and updates its two-file and mutation expectations.
+No foreign proof or production manifest was changed.
+
+The new `proofs/recordreplay/inventory-*.json` records are current observations.
+The complete source checker passes and rejects declaration/extra-file mutants.
+The scoped driver's actual planning/inventory segment passes; its historical
+full apply/build/lane pipeline was not rerun. Adapted source bytes are unchanged
+from the accepted read gate.
+
+## Re-cut on current main
+
+This composition is based on main `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825`. Main's require-result
+and fresh resolution-host edits remain in the adapter and exact source undo
+proof. The directory pin generator now retains their exact owner texts and
+normalizes owner line endings as the adapter does. Its pins are generated from
+main's official pre-99 snapshot and the composed output. The require-result
+fixture supplies pinned Node declarations and expects the additional declaration
+file. The erased-type scope mutant supports main's current timer signature as
+well as its historical ambient declaration. Recordreplay proof results can be
+written to scratch, and each of its mutant subprocess exits is reported.
+
+The continuation fixes validation on the official dependency-free clone. The
+read is selected by the getNodeSystem nodeSystem.debugMode AST; its receiver
+must bind to the pinned ambient NodeJS.Process. The virtual validation host
+resolves Node declarations from the API lockfile instead of relying on an
+upstream node_modules directory. The emitted sys.ts and recordreplay.d.ts bytes
+are unchanged. proofs/recordreplay-contract.cjs checks the dependency-free path,
+AST relocation and unrelated members, shadow rejection, replay and a disabled
+Node-resolution mutant. The added census records are classified by whether
+their units already stopped on main; a revealed later stop is kept distinct
+from a newly stopped unit.
