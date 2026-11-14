@@ -48,16 +48,21 @@ func TestMethodDestructuringFixesAgree(t *testing.T) {
 // detach. Keep this premise even if its present NotYet becomes a Refused.
 func TestClassMethodInFunctionPropertyDoesNotLower(t *testing.T) {
 	t.Parallel()
-	const source = "class C { x = 1; f(): number { return this.x; } }\nconst p: { f: () => number } = new C();\nconst { f } = p;\nconsole.log(String(f()));\n"
-	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			var refused *Refused
-			var later *NotYet
-			if !errors.As(err, &refused) && !errors.As(err, &later) {
-				t.Fatalf("class method behind a function-typed property must stop, got %v", err)
-			}
-		})
+	for _, probe := range []struct{ name, source string }{
+		{"declaration", "class C { x = 1; f(): number { return this.x; } }\nconst p: { f: () => number } = new C();\nconst { f } = p;\nconsole.log(String(f()));\n"},
+		{"parameter", "class C { x = 1; f(): number { return this.x; } }\nfunction g({ f }: { f: () => number }): number { return f(); }\nconsole.log(String(g(new C())));\n"},
+		{"read-across-call", "class C { x = 1; f(): number { return this.x; } }\nfunction h(p: { f: () => number }): number { const k = p.f; return k(); }\nconsole.log(String(h(new C())));\n"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				var later *NotYet
+				if !errors.As(err, &refused) && !errors.As(err, &later) {
+					t.Fatalf("class method behind a function-typed property must stop, got %v", err)
+				}
+			})
+		}
 	}
 }
