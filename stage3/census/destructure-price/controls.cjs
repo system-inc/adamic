@@ -1,0 +1,13 @@
+const assert=require('assert'),fs=require('fs');
+let { f = () => 42 } = { f: undefined };
+f=globalThis.__dpCount('default-control::f',f);
+assert.equal(f(),42);
+let { supplied }={supplied:x=>x+1};supplied=globalThis.__dpCount('supplied-control::supplied',supplied);assert.equal(supplied(41),42);
+assert.equal(globalThis.__dpCount('optional-control::missing',undefined),undefined);
+assert.equal(globalThis.__dpSnapshot().calls['default-control::f'],1);
+assert.equal(globalThis.__dpSnapshot().calls['supplied-control::supplied'],1);
+const ts=require('/workspace/scratch/destructure-price-f2989762/counting/built/local/typescript.js');
+const sf=ts.createSourceFile('counter-control.ts','const answer = 42;',ts.ScriptTarget.ES2020,true);
+const output=ts.createPrinter().printFile(sf);assert.equal(output.trim(),'const answer = 42;');
+const snapshot=globalThis.__dpSnapshot();assert.equal(snapshot.calls['src/compiler/emitter.ts:1215::onEmitNode']||0,0,'default notification sentinel must remain skipped');assert.equal(snapshot.calls['src/compiler/emitter.ts:1215::substituteNode']||0,0,'default substitution sentinel must remain skipped');assert(snapshot.enter['src/compiler/parser.ts:1472']>0);assert(snapshot.enter['src/compiler/emitter.ts:1215']>0);assert(snapshot.calls['src/compiler/parser.ts:1472::createIdentifier']>0);assert(snapshot.calls['src/compiler/parser.ts:1472::createNumericLiteral']>0);
+fs.writeFileSync('/workspace/scratch/destructure-price-f2989762/r2/controls-result.json',JSON.stringify({defaultCallback:{expected:1,observed:snapshot.calls['default-control::f'],pass:true},suppliedCallback:{expected:1,observed:snapshot.calls['supplied-control::supplied'],pass:true},sentinelIdentity:{defaultNotificationCalls:snapshot.calls['src/compiler/emitter.ts:1215::onEmitNode']||0,defaultSubstitutionCalls:snapshot.calls['src/compiler/emitter.ts:1215::substituteNode']||0,pass:true},parserPrinter:{output:output.trim(),pass:true},snapshot},null,2));console.log('PASS default-callback control; PASS parser/printer positive control; PASS sentinel identity control');

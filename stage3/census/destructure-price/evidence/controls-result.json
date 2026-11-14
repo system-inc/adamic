@@ -1,0 +1,42 @@
+{
+  "defaultCallback": {
+    "expected": 1,
+    "observed": 1,
+    "pass": true
+  },
+  "suppliedCallback": {
+    "expected": 1,
+    "observed": 1,
+    "pass": true
+  },
+  "sentinelIdentity": {
+    "defaultNotificationCalls": 0,
+    "defaultSubstitutionCalls": 0,
+    "pass": true
+  },
+  "parserPrinter": {
+    "output": "const answer = 42;",
+    "pass": true
+  },
+  "snapshot": {
+    "enter": {
+      "src/compiler/sys.ts:993": 1,
+      "src/compiler/parser.ts:1472": 1,
+      "src/compiler/emitter.ts:1275": 1,
+      "src/compiler/emitter.ts:1215": 1
+    },
+    "calls": {
+      "default-control::f": 1,
+      "supplied-control::supplied": 1,
+      "src/compiler/parser.ts:1472::createIdentifier": 1,
+      "src/compiler/parser.ts:1472::createNumericLiteral": 1,
+      "src/compiler/parser.ts:1472::createVariableDeclaration": 1,
+      "src/compiler/parser.ts:1472::createNodeArray": 2,
+      "src/compiler/parser.ts:1472::createVariableDeclarationList": 1,
+      "src/compiler/parser.ts:1472::createVariableStatement": 1,
+      "src/compiler/parser.ts:1472::createToken": 1,
+      "src/compiler/emitter.ts:1275::enter": 14,
+      "src/compiler/emitter.ts:1275::exit": 14
+    }
+  }
+}

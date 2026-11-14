@@ -30,7 +30,13 @@
 | src/compiler/emitter.ts:1275 | Timer | Internal / anonymous | enter*, exit* | Not certified |
 | src/compiler/expressionToTypeNode.ts:199 | Recovery boundary (anonymous) | Internal / anonymous | finalizeBoundary*, startRecoveryScope*, hadError*, markError* | Not certified |
 
-## Stopped: no certified hybrid price
+## Resume checkpoint
+
+The replacement counter wraps local bindings after destructuring, including defaults. Both required controls pass: default callback expected 1 / observed 1; parser/printer output is `const answer = 42;`. An additional sentinel-identity control confirms that default printer callbacks remain skipped, as in the baseline. Symbol-resolved identity tests use saved original locals; callable locals themselves are wrapped. The earlier counter and lane attempt are discarded.
+
+The corrected full lane is running alone. Next are 24 single-file full censuses, each limited to 60 minutes, followed by sequential type experiments. The leading heat table remains uncertified until that lane completes. See evidence/controls-result.json and the replacement measurement scripts.
+
+## Prior stop (historical; superseded counter)
 
 The runtime counter failed a default-callback control. A supplied function is proxied and counted, but a destructuring default runs after that proxy has returned undefined. The control executed the default callback once and observed **zero** counted calls, where **one** was required. This affects the actual PrintHandlers bindings: onEmitNode defaults to noEmitNotification, and substituteNode defaults to noEmitSubstitution. The current counter cannot certify per-member heat. No extra-call price is extrapolated from its partial data.
 
