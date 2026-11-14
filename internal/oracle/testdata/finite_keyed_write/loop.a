@@ -1,0 +1,10 @@
+// Every key of the union written in turn, from a (keyof Levels)[] array.
+interface Levels { Low: number; Medium: number; High: number; }
+const order: (keyof Levels)[] = ['High', 'Low', 'Medium'];
+const levels: Levels = { Low: 0, Medium: 0, High: 0 };
+let step = 0;
+for (const level of order) {
+	step += 1;
+	levels[level] = step * 10;
+}
+console.log(`${levels.Low} ${levels.Medium} ${levels.High}`);
