@@ -18,8 +18,8 @@ import (
 // viewSitesCasts makes three casts into checked views, Other's first, in .ts, which keeps a cast's first tag checked
 // where .a refuses a downcast whose checks no proof erases. either.b, read at the top level after them, has the
 // union One | Two for its receiver, and nothing lowers it before One's view: Other's walk judges it unchecked, One's
-// viewSchema then adds One:b, and One's walk must ask it again and register the union's key for b. A function body
-// holding the read wouldn't do: bodies are lowered before the top level's casts, and the read itself registers it.
+// viewSchema then adds One:b, and One's walk must ask it again and register the union's key for b, as job J-rs9qqfx's
+// probe showed: at One's view the whole walk adds the union's b with b written once and last judged at none.
 const viewSitesCasts = `interface Base {readonly kind:'one'|'two'|'other'}
 interface One extends Base {readonly kind:'one';readonly b:number}
 interface Two extends Base {readonly kind:'two';readonly b:number}
@@ -73,11 +73,10 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 // An access found unchecked is asked again once a key of its name is added: either.b, unchecked at Other's
 // view, is checked through its union once One's view registers One:b, and One's walk registers the union's
 // own key for b, as the whole walk does at that call. Mutant: the dirty-name recheck skipped, so only a name never
-// judged is asked, x.b stays unchecked, and this and TestViewWalkIndexedAgreesWithWhole go red.
+// judged is asked, either.b stays unchecked at One's walk, and this and TestViewWalkIndexedAgreesWithWhole go red.
 //
-// Not parallel: it lowers with viewWalkCompare on, so One's walk is held to the whole walk's at that call. The key
-// would be registered by the time lowering ends either way, since either.b's own lowering registers it, so only the
-// call-by-call comparison can tell the recheck was made.
+// Not parallel: it lowers with viewWalkCompare on, so One's walk is held to the whole walk's at that call, which
+// tells the recheck was made at the call that owes it, not only that the key exists by the time lowering ends.
 func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
 	viewWalkCompare.Store(true)
 	defer viewWalkCompare.Store(false)
