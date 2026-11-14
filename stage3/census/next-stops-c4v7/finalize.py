@@ -41,13 +41,14 @@ for m in modes:
  roots=[r for g in groups[m] if g['phase'].startswith('lowering') for r in g['roots']]
  s += ['- '+m+': '+(', '.join('`'+r+'`' for r in roots) if roots else 'none')+'.']
 s+=['','Scan-only does not see these lowering-phase first stops. Complete source excerpts, paired root observations, process bounds, actual exits, grouped tuples and validations are under `../next-stops-c4v7/`. This is first-stop measurement, not successful native compilation or execution.','','### Validation and provenance','','Both formats passed the copied and retargeted validator. All child exits were zero; durations were below 1,800 seconds (process limits 1,780 seconds). Adapted source hashes and the ordinary binary hash were rechecked. All tracked changes relative to c4v-7 are in the two census evidence directories; no compiler or adaptation source changed. The requested branch was created under a new name and all pushes were non-forced.']
-part2=(primary/'REPORT.md').read_text().split('\n## Part 1\n')[0]
+part2=(primary/'REPORT.md').read_text().split('\n## Part 1')[0]
 lines=part2.splitlines();lines[2]=lead
 (primary/'REPORT.md').write_text('\n'.join(lines)+'\n\n'+'\n'.join(s)+'\n')
 (base/'REPORT.md').write_text('# Next stops on c4v-7\n\n'+lead+'\n\nFull combined report: [c4v7-census/REPORT.md](../c4v7-census/REPORT.md).\n\n'+'\n'.join(s)+'\n')
 statuses=[read(p) for p in base.rglob('*-status.json')]
 result=dict(roots_per_format=79,observations=316,duplicates_agree=True,matching_first_stop_tuples=matching,cleared=clear,new_refusal_scan_findings=pairing['new'],maximum_child_seconds=max(s['seconds'] for s in statuses),commonjs_complete_commit=read(base/'bundle-complete.json')['commit'])
 (base/'final-validation.json').write_text(json.dumps(result,indent=2)+'\n')
+subprocess.run(['python3',str(primary/'audit.py')],check=True)
 for root in [base,primary]:
  manifest={str(p.relative_to(root)):{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(root.rglob('*')) if p.is_file() and p.name!='artifact-manifest.json'}
  assert all(x['bytes']<=20_000_000 for x in manifest.values())
