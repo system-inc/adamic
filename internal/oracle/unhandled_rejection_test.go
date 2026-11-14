@@ -21,7 +21,7 @@ func unhandledRejectionPath(name string) string {
 
 func init() {
 	// Keep the handled-later agreement and its ordinary count record. The old
-	// void views are now exact refusal pins; the runtime backstop needs its own harness.
+	// void views are exact refusal pins; internal/native holds the runtime harness.
 	for _, fixture := range unhandledRejectionFixtures {
 		path := unhandledRejectionPath(fixture.name)
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) {
@@ -31,7 +31,10 @@ func init() {
 }
 
 // Omitting await's handled bit reds
-// TestUnhandledRejectionAgreesWithNode/handled_later/sanitized.
+// TestUnhandledRejectionAgreesWithNode/handled_later/sanitized. The checkpoint
+// and retain mutants now red internal/native's TestAsyncUnhandledRejections
+// unhandled/sanitized and chained/sanitized cases, with a sanitizer failure for
+// the dropped retain in unhandled/sanitized.
 func TestUnhandledRejectionAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range unhandledRejectionFixtures {
