@@ -1,3 +1,4 @@
+import 'node:timers';
 type Ruled = (callback: (label?: unknown) => void, ms: number, label?: unknown) => unknown;
 type Wider = (callback: (label?: unknown) => void, ms: number, label?: unknown, extra?: unknown) => unknown;
 const ruled: Ruled = setTimeout;

@@ -479,15 +479,13 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // rest, while the closure underneath still collects every argument raw (copyRest). So the rest is
 // judged only while the type still shows it, and a view that hides it is NotYet: Language's h1 to h3 on
 // #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function pointer.
-// A library view is exempt, since its intrinsic adapter calls the source signature, and so is a host
-// function's own rest (setTimeout's, declared in Node's types or the prelude), whose value is a host
-// lowering's closure with its own layout, never a program closure copyRest packs. Calling through the
-// callee's own layout is #8q1pjsp's lift.
+// A library view hides the rest too: a rest function handed to map's callback reached clang as C it
+// refuses, since the intrinsic adapter calls it with the view's slots (r19). A host function's own rest
+// (setTimeout's, declared in TypeScript's library, Node's types or the prelude) is exempt, since its
+// value is a host lowering's closure with its own layout, never a program closure copyRest packs.
+// Calling through the callee's own layout is #8q1pjsp's lift.
 func (l *lowering) restHiddenByView(from, to *checker.Signature) bool {
 	if !from.HasRestParameter() || to.HasRestParameter() {
-		return false
-	}
-	if declaration := to.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 		return false
 	}
 	if declaration := from.Declaration(); declaration != nil {

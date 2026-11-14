@@ -53,18 +53,19 @@ func TestRestThroughFixedView(t *testing.T) {
 		// by arity, a relation of two fixed types that no longer shows the rest. Each stops at the
 		// first view (r15 two declarations, r16 the second hop an argument, r17 a zero-parameter view,
 		// which reached the closure through a mismatched function pointer under UBSan). A view with a
-		// rest of its own (r14), a fixed function widened (r18) and a rest function handed to a library
-		// callback, whose adapter calls the source signature (r19, Language's union element covering
-		// map's three parameters), lower and agree. A class method with a rest seen through a method
-		// with none (r20) is the same hidden rest, which reached the method through a mismatched
-		// function pointer on main. A host function's own rest (setTimeout's, r21) is exempt, since its
-		// value is a host lowering's closure, and seen through a narrower view and then widened it agrees.
+		// rest of its own (r14) and a fixed function widened (r18) lower and agree. A class method with a
+		// rest seen through a method with none (r20) is the same hidden rest, which reached the method
+		// through a mismatched function pointer on main. A library callback hides it too: a rest
+		// function handed to map's callback (r19, Language's union element covering map's three
+		// parameters) reached clang as C it refuses, so it stops at the argument. A host function's own
+		// rest (setTimeout's, r21) is exempt, since its value is a host lowering's closure, and seen
+		// through a narrower view and then widened it agrees.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
 		"r17_hidden_zero_hop":             ":2:28",
 		"r18_fixed_widened_control":       "",
-		"r19_library_callback_union_rest": "",
+		"r19_library_callback_union_rest": ":2:28",
 		"r20_hidden_class_method":         ":2:42",
 		"r21_host_rest_widened":           "",
 	}
