@@ -77,10 +77,16 @@ func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 	if declared.Flags()&checker.TypeFlagsNever != 0 {
 		return nil, nil // Declared never: no narrowing made it, and what passes it there lied first.
 	}
-	// A binding only its own function writes can't change behind anything between: each of its writes is
-	// in the flow the checker read, so its never is the checker's proof wherever the walk ends, as
-	// narrowedNeverReadGap reads it. A const an aliased condition narrows (const flag = big === 'x', then
-	// flag's false side) is one the walk can't place. The walk still names the narrowing when it finds one.
+	// A binding only its own function writes is trusted wherever the walk ends, for two reasons, and this
+	// leans on each. No write reaches the binding unseen: each of its writes is in the flow the checker
+	// read (narrowedNeverReadGap's reading, writtenAcrossFunctions' count, TestNeverReadOwnFunctionEdges).
+	// And the facts a never is made of beyond the binding itself stay true behind a call with no write to
+	// it: H1 refuses a write of a discriminant through a union and invariance a widening of one, so no
+	// callee flips node.kind; a literal-typed getter answers only its literal; and #w7w2asn refuses every
+	// road from a number into an enum-literal slot, while an open enum's never is enum_never.go's
+	// (TestNeverReadOwnFunctionPremises, Language on #p6vawef). Whoever loosens one of those loosens this.
+	// A const an aliased condition narrows (const flag = big === 'x', then flag's false side) is one the
+	// walk can't place. The walk still names the narrowing when it finds one.
 	own := false
 	if node.Kind == ast.KindIdentifier {
 		symbol := l.bindingNamed(node)

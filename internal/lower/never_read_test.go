@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"os"
 	"strconv"
 	"strings"
 	"testing"
@@ -213,6 +214,64 @@ func TestNeverReadOwnFunctionEdges(t *testing.T) {
 				}
 				if neverReadTraps(program) != control.traps {
 					t.Fatalf("trapped %v, want %v", neverReadTraps(program), control.traps)
+				}
+			})
+		}
+	}
+}
+
+// neverReadTouched is Language's first road (#p6vawef): a parameter only its own function writes, narrowed
+// to never by its discriminant, which touch, called between the checks, may change with no write to the
+// binding.
+const neverReadTouched = "function stray(value: unknown): string { return \"stray \" + String(value); }\ninterface NodeA { kind: \"a\"; a: number }\ninterface NodeB { kind: \"b\"; b: number }\ntype N = NodeA | NodeB;\n"
+
+const neverReadTouchedDescribe = "function describe(node: N): string {\n\tif (node.kind === \"a\") return \"a\";\n\ttouch(node);\n\tif (node.kind === \"b\") return \"b\";\n\t{ const seen: unknown = node; return stray(seen); }\n}\nconsole.log(describe({ kind: \"b\", b: 2 }));\n"
+
+// The facts beyond the binding that the own-function trust leans on (never_read.go, Language on
+// #p6vawef), in .ts and .a. A callee that would flip the discriminant behind the call is refused: a write
+// of "a" through the union, at touch's write (H1), or the node handed on as { kind: string }, at the
+// argument (invariance). A literal-typed getter of the kind lowers, its never read trapped, and
+// TestNeverReadLiteralGetterAgreesWithNode holds it to Node. An open numeric enum parameter a switch
+// exhausts lowers with its default read held by enum_never.go's trap, not never_read.go's, and
+// TestNeverReadOpenEnumInRangeAgreesWithNode holds it to Node with each member.
+func TestNeverReadOwnFunctionPremises(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, at string }{
+		{"union_write", neverReadTouched + "function touch(node: N): void { node.kind = \"a\"; }\n" + neverReadTouchedDescribe, "node.kind = \"a\""},
+		{"widened", neverReadTouched + "function touch(node: { kind: string }): void { node.kind = \"a\"; }\n" + neverReadTouchedDescribe, "node);"},
+	} {
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				if want := strings.Replace(neverReadWhere(t, probe.source, probe.at), "main.ts", "main"+extension, 1); !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, want) {
+					t.Fatalf("got %v, want a refusal at %s", err, want)
+				}
+			})
+		}
+	}
+	for _, probe := range []struct{ name, path, trap string }{
+		{"getter", "../oracle/testdata/never_read/getter.ts", "never_read"},
+		{"open_enum", "../oracle/testdata/never_read/enum_in_range.ts", "enum_never"},
+	} {
+		source, err := os.ReadFile(probe.path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, extension := range []string{".ts", ".a"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				program, err := lowerSourceAs(t, string(source), extension)
+				if err != nil {
+					t.Fatalf("want it to lower, got %v", err)
+				}
+				traps := map[string]bool{}
+				for _, function := range program.Functions {
+					traps[function.Name] = true
+				}
+				if !traps[probe.trap] || probe.trap == "enum_never" && traps["never_read"] {
+					t.Fatalf("want the never read held by %s, got functions %v", probe.trap, traps)
 				}
 			})
 		}

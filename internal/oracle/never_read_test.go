@@ -11,7 +11,29 @@ import (
 // release build and the JavaScript backend each print what Node does.
 func TestNeverReadTrustedAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/never_read/trusted.ts"))
+	neverReadAgreesWithNode(t, "trusted.ts", "0 4\n")
+}
+
+// Two of the premises the own-function trust leans on (never_read.go, Language on #p6vawef), held to Node:
+// a class serving the union's member through a literal-typed getter answers only its literal, so the
+// never read past both checks is trapped and never reached (never_read/getter.ts); and an open numeric
+// enum parameter a switch exhausts, run with each member, agrees too, its default held by enum_never.go's
+// trap (never_read/enum_in_range.ts).
+func TestNeverReadLiteralGetterAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	neverReadAgreesWithNode(t, "getter.ts", "circle 2 square\n")
+}
+
+func TestNeverReadOpenEnumInRangeAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	neverReadAgreesWithNode(t, "enum_in_range.ts", "a b\n")
+}
+
+// neverReadAgreesWithNode holds testdata/never_read/name, which Node runs to stdout, to Node on the
+// sanitized build, the release build and the JavaScript backend.
+func neverReadAgreesWithNode(t *testing.T, name, stdout string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/never_read", name))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -20,8 +42,8 @@ func TestNeverReadTrustedAgreesWithNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := onNode(t, path)
-	if want.exitCode != 0 || string(want.stdout) != "0 4\n" {
-		t.Fatalf("Node must print 0 4: %+v", want)
+	if want.exitCode != 0 || string(want.stdout) != stdout {
+		t.Fatalf("Node must print %q: exit %d, stdout %q, stderr %q", stdout, want.exitCode, want.stdout, want.stderr)
 	}
 	sanitized, _ := natively(t, program)
 	for backend, got := range map[string]run{"native": sanitized, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
