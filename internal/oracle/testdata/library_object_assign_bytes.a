@@ -1,0 +1,7 @@
+// The target starts with an undefined byte; assign replaces it with a nullable string's byte.
+function maybe(): string | undefined {
+	return 'new';
+}
+const target = { s: undefined as string | undefined };
+Object.assign(target, { s: maybe() });
+console.log(String(JSON.stringify(target)));
