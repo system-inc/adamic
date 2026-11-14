@@ -24,3 +24,26 @@ function start(interval: number | undefined): void {
 }
 start(undefined);
 start(10);
+
+// Both calls run before an undefined interval throws ERR_INVALID_ARG_TYPE. The path is an owned
+// string, so the sanitized leak check and balanced counts also hold its release into the catch.
+function name(n: number): string {
+	console.log('path');
+	return 'x' + String(n);
+}
+function flag(): boolean {
+	console.log('persistent');
+	return true;
+}
+try {
+	fs.watchFile(name(1), {persistent:flag(), interval:undefined}, observe);
+	fs.unwatchFile('x1', observe);
+	console.log('unexpected acceptance');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(errorCode(error) ?? '<undefined>');
+		console.log(error.message);
+		console.log(errorText(error));
+	}
+}
