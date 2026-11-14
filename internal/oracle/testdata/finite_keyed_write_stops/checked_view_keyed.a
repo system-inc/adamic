@@ -1,0 +1,13 @@
+// The key a union naming child and spare, through a checked view of Box, which checks both, object fields: the
+// write stops at the view (judgeViewKeyedWrite). Since Rule C (#2msw6t8) the plain write, checked_view_named.a, is
+// admitted there by its source-slot certificate, which doesn't reach a keyed write, so this one stays stricter.
+interface Base { readonly kind: 'box' | 'other'; }
+interface Box extends Base { readonly kind: 'box'; child: { ready: boolean }; spare: { ready: boolean }; }
+function pick(first: boolean): 'child' | 'spare' {
+	return first ? 'child' : 'spare';
+}
+const raw = { kind: 'box' as const, child: { ready: true, other: 42 }, spare: { ready: false } };
+const held: Base = raw;
+const view = held as Box;
+view[pick(true)] = { ready: true };
+console.log(String(raw.child.other));

@@ -1,0 +1,8 @@
+// p4 on #13p3y0c: the receiver made by ?? instead of ||. Refused at the {} until #7n03qzg lands.
+interface Levels { Low: number; Medium: number; High: number; }
+function set(level: keyof Levels): Partial<Levels> | undefined {
+	let c: Partial<Levels> | undefined;
+	(c ?? (c = {}))[level] = 3;
+	return c;
+}
+console.log(String(set('Low')?.Low));

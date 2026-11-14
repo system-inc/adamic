@@ -1,0 +1,19 @@
+// tsc's sys.ts:160 shape (p1 on #13p3y0c). The {} that becomes the receiver is refused first, a
+// structural source missing Partial<Levels>' optional fields (no-optional-widening), which #7n03qzg is
+// lifting; pinned at that refusal until it lands. The write itself then meets absentOptionalFieldWrite,
+// since {} leaves every field out, unless optional presence (#r3chqza) has landed by then.
+interface Levels { Low: number; Medium: number; High: number; }
+function getCustomLevels(base: string): Partial<Levels> | undefined {
+	let customLevels: Partial<Levels> | undefined;
+	setCustomLevel('Low');
+	setCustomLevel('High');
+	return customLevels;
+	function setCustomLevel(level: keyof Levels): void {
+		const customLevel = base.length > 0 ? `${String(base.length)}0` : '';
+		if (customLevel) {
+			(customLevels || (customLevels = {}))[level] = Number(customLevel);
+		}
+	}
+}
+const levels = getCustomLevels(`ab${String(1)}`);
+console.log(String(levels?.Low) + ' ' + String(levels?.Medium) + ' ' + String(levels?.High));
