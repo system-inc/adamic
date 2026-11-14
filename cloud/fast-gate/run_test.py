@@ -938,7 +938,8 @@ class DarwinLegs(unittest.TestCase):
     every path; the dir lines dropped, or a directory outside the tree or a sibling of it kept; a gitlink keyed by
     anything but its commit; the checkout check dropped; the declared compilers left out of the listing, read from the
     tools' map alone, or taken from a package outside internal/apple; a map that can't be read listed without them; a
-    failed or empty go list read as a digest, or crashing the gate rather than reding darwin; a-check passing a darwin .a on any matching leg rather than on the
+    failed or empty go list read as a digest, or crashing the gate rather than reding darwin; a record's tools unchecked,
+    checked a key short, or against a tools.json that isn't exactly four strings; a-check passing a darwin .a on any matching leg rather than on the
     run of it the leg recorded, or ignoring its header there; a-check reading the leg for a live refusal, an untyped stop
     or a path that isn't darwin's."""
     gate = FailClosed.gate
@@ -948,6 +949,8 @@ class DarwinLegs(unittest.TestCase):
     closure = ("internal/apple", "internal/lower")
     # The listing the setUp map makes: ./internal/apple/..., then the compilers it declares for internal/apple, sorted.
     declaredCommand = ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/...", "./cmd/adamic", "./internal/lower"]
+    # The pool Mac's tools as the gate tools' darwin-legs/tools.json declares them, the spellings the records carry.
+    declaredTools = {"xcode": "Xcode 27.2 (27B52)", "sdk": "macOS 27.2 (26B118)", "go": "go1.27.1 darwin/arm64", "node": "v24.19.0"}
 
     def setUp(self):
         FailClosed.setUp(self)
@@ -967,6 +970,8 @@ class DarwinLegs(unittest.TestCase):
         realRun(["git", "-C", self.tree, "add", "."], check=True)
         self.main = self.commit("the darwin map")
         self.legs = os.path.join(self.tree, run.darwinLegsDirectory)
+        # The gate tools' tools.json beside the records, untracked as they are, its keys in another order than a record's.
+        self.declareTools(json.dumps(self.declaredTools))
         self.listed, self.commands = None, []
         stub = mock.patch.object(run, "darwinClosureListing", side_effect=self.listing)
         stub.start()
@@ -1060,7 +1065,7 @@ class DarwinLegs(unittest.TestCase):
         """A green record of the leg at commit at, at its darwinPaths (computed in a checkout at it), with fields over
         it (None drops one), as darwin-legs/name (<at>.json unless given)."""
         record = {"tip": at, "host": "Shackler", "claim": "C-probe", "log": {"sha256": "a" * 64, "kept": "Shackler:~/legs/probe.log"},
-                  "command": "go test ./internal/apple/...", "tools": {"go": "go1.24", "node": "v24", "xcode": "16", "sdk": "macosx15"},
+                  "command": "go test ./internal/apple/...", "tools": dict(reversed(list(self.declaredTools.items()))),
                   "counts": {"passed": 12, "failed": 0, "skipped": 1}, "exit": 0, "darwinPaths": self.digestAt(at)}
         record = {key: value for key, value in dict(record, **fields).items() if value is not None}
         os.makedirs(self.legs, exist_ok=True)
@@ -1070,8 +1075,20 @@ class DarwinLegs(unittest.TestCase):
         return name
 
     def clearLegs(self):
+        """Every record gone; the gate tools' tools.json stays."""
         for name in os.listdir(self.legs) if os.path.isdir(self.legs) else []:
-            os.remove(os.path.join(self.legs, name))
+            if name != run.darwinToolsName:
+                os.remove(os.path.join(self.legs, name))
+
+    def declareTools(self, source):
+        """The gate tools' darwin-legs/tools.json as source, or none at all for None."""
+        path = os.path.join(self.tree, run.darwinToolsPath)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        if source is None:
+            os.remove(path)
+        else:
+            with open(path, "w") as handle:
+                handle.write(source)
 
     def assertNeedsLeg(self, gate, status, digest, why):
         self.assertTrue(status.startswith("red:"), status)
@@ -1153,6 +1170,16 @@ class DarwinLegs(unittest.TestCase):
                 ("no log", {"log": None}, "log.sha256 isn't 64 lowercase hex"),
                 ("an uppercase tip", {"tip": tip.upper(), "name": tip + ".json"}, "tip isn't 40 lowercase hex"),
                 ("a tip that isn't its file name", {"name": "b" * 40 + ".json"}, "tip %s isn't its file name" % tip),
+                # The tools check against tools.json (darwinTools): equal values, key by key, every key present and no other.
+                ("an sdk the gate tools don't declare", {"tools": dict(self.declaredTools, sdk="macOS 27.1 (26A1)")},
+                 "tools.sdk is 'macOS 27.1 (26A1)', the gate tools declare 'macOS 27.2 (26B118)'"),
+                ("an xcode the gate tools don't declare", {"tools": dict(self.declaredTools, xcode="Xcode 27.1 (27A1)")},
+                 "tools.xcode is 'Xcode 27.1 (27A1)', the gate tools declare 'Xcode 27.2 (27B52)'"),
+                ("no tools", {"tools": None}, "tools isn't an object"),
+                ("tools as a list", {"tools": list(self.declaredTools.values())}, "tools isn't an object"),
+                ("a tool missing", {"tools": {key: value for key, value in self.declaredTools.items() if key != "node"}},
+                 "tools.node is missing, the gate tools declare 'v24.19.0'"),
+                ("a tool the gate tools don't name", {"tools": dict(self.declaredTools, cpu="M4")}, "tools.cpu is 'M4', which the gate tools don't declare"),
                 ("aCheck as a list", {"aCheck": [{"exit": 0, "errors": ""}]}, "aCheck isn't an object"),
                 ("an aCheck entry without exit", {"aCheck": {"examples/apple/app.a": {"errors": ""}}},
                  "aCheck examples/apple/app.a isn't an object of a whole number exit and a string errors"),
@@ -1186,7 +1213,7 @@ class DarwinLegs(unittest.TestCase):
     def test_no_record_is_red_naming_the_pool_mac(self):
         base, tip = self.candidate()
         digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
-        self.assertFalse(os.path.exists(self.legs))
+        self.assertEqual(os.listdir(self.legs), [run.darwinToolsName])
         for full in (False, True):
             with self.subTest(full=full):
                 gate, status, result = self.gate(base=base, full=full)
@@ -1405,6 +1432,57 @@ class DarwinLegs(unittest.TestCase):
                 gate, status, result = self.gate(base=base, extra=extra)
                 self.assertNoDigest(gate, status, str(raised.exception))
                 self.assertEqual(self.commands, [])
+
+    def test_a_record_matches_the_gate_tools_tools_json_in_any_key_order(self):
+        # The tools check, order aside: a record's tools equal to tools.json pass whichever order either file writes.
+        base, tip = self.candidate()
+        orders = (list(self.declaredTools), list(reversed(list(self.declaredTools))), ["go", "xcode", "node", "sdk"])
+        for declaredOrder in orders:
+            for recordOrder in orders:
+                with self.subTest(declared=declaredOrder, record=recordOrder):
+                    self.clearLegs()
+                    self.declareTools(json.dumps({key: self.declaredTools[key] for key in declaredOrder}))
+                    self.record(tip, tools={key: self.declaredTools[key] for key in recordOrder})
+                    self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], tip + ".json")
+        gate, status, result = self.gate(base=base, extra={"phase": "darwin"})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["darwin_leg"]["record"], tip + ".json")
+
+    def test_tools_json_that_doesn_t_declare_four_strings_leaves_no_record_green(self):
+        # darwinTools, read once a darwinLegFor: when the gate tools can't say what tools a record must match, no record
+        # is green, the darwin phase is red naming why, and a-check keeps its live red.
+        base, tip = self.candidate()
+        self.record(tip)
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], tip + ".json")
+        path = run.darwinToolsPath
+        for why, source, refusal in (
+                ("tools.json missing", None, "%s can't be read: No such file or directory" % path),
+                ("an extra key", json.dumps(dict(self.declaredTools, cpu="M4")), "%s names cpu, go, node, sdk, xcode, not exactly xcode, sdk, go and node" % path),
+                ("a key missing", json.dumps({key: value for key, value in self.declaredTools.items() if key != "sdk"}),
+                 "%s names go, node, xcode, not exactly xcode, sdk, go and node" % path),
+                ("a value that isn't a string", json.dumps(dict(self.declaredTools, go=1.27)), "%s's go isn't a non-empty string" % path),
+                ("an empty value", json.dumps(dict(self.declaredTools, node=" ")), "%s's node isn't a non-empty string" % path),
+                ("a list", json.dumps(list(self.declaredTools.values())), "%s isn't a JSON object" % path),
+                ("not JSON", "{", "%s isn't JSON: " % path)):
+            with self.subTest(why):
+                self.declareTools(source)
+                with self.assertRaises(ValueError) as raised:
+                    run.darwinTools(self.tree)
+                self.assertTrue(str(raised.exception).startswith(refusal), raised.exception)
+                expected = "no darwin leg record can be green: %s" % raised.exception
+                self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree), (None, expected))
+                for extra in ({}, {"phase": "coverage"}, {"phase": "darwin"}):
+                    with self.subTest(extra=extra):
+                        gate, status, result = self.gate(base=base, extra=extra)
+                        self.assertNeedsLeg(gate, status, digest, expected)
+                        self.assertNotIn("darwin_leg", result)
+                gate = self.aCheck("examples/apple/app.a")
+                self.assertEqual(gate.exits["a-check"], 1)
+                self.assertEqual(gate.result["a_check"]["examples/apple/app.a"], {"outcome": "failed", "expected": "checked", "first": self.missing.strip()})
+                self.declareTools(json.dumps(self.declaredTools))
+        # The control: the same record against the declared tools again is green.
+        self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], tip + ".json")
 
     missing = "adamic: load: darwin platform missing: Xcode SDK\n"
 
