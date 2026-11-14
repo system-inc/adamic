@@ -1,9 +1,14 @@
 package oracle
 
 import (
+	"errors"
+	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 var methodBindFixtures = []string{"method_bind.a", "method_bind_lifetime.a", "bind_cycle_fixed_arrow.a", "bind_cycle_fixed_bound.a", "bind_cycle_host_arrow.a", "bind_cycle_host_bound.a", "bind_cycle_cache_arrow.a", "bind_cycle_cache_bound.a"}
@@ -222,5 +227,83 @@ func TestMethodBindRecordNonfunction(t *testing.T) {
 		if diff := disagreement(want, got); diff != "" {
 			t.Fatalf("%s: %+v", diff, got)
 		}
+	}
+}
+
+// A bound closure calls its target with the arguments its bound type names, while JavaScript's bind hands
+// on every argument the bound function receives (#04f5s0s, Language's J-xet5sem). seen declares an index,
+// and held as (shape) => boolean, then bound, find's index never reached it: narrow_type printed "seen at
+// undefined" twice on both backends where Node prints "seen at 0" and "seen at 1", and narrow_default,
+// its defaulted twin, prints -1. Each stops at the bind, naming both counts, until the bound closure
+// forwards every argument.
+// own_type, bound as seen's own type, and narrow_direct, passed with no bind, agree with Node natively
+// under the sanitizers, released, and on the JavaScript backend. The stored .a is Node's source, and its
+// .ts copy is what lowers, as predicate_parameter's pins do: the .a refuses find's `array[i]!` first.
+// The count asks only the functions the allocation flow says can be the bound value, so a bind whose
+// reach names its functions counts those alone. absent_property, present_property, absent_fixed_property
+// and null_property are function_bind.a's honest optional-property binds, moved out one to a fixture,
+// since a fixture reports only its first stop: each field read's reach is unknown, so every function of
+// the bound type counts, defaulted or withDefault's bound wrapper among them, and each stops, a known
+// over-refusal that #x909e6q lifts. Each one's words here are measured; one whose reach comes back known
+// alone would agree instead. known_reach binds a Unary whose reach
+// names only one, a one-parameter function, beside two, a two-parameter function also held as Unary: it
+// lowers and agrees, and with the reach's narrowing removed it would stop. Mutants
+// (internal/lower/function_bind_extra_parameters.mutants.md).
+func TestFunctionBindExtraParameters(t *testing.T) {
+	t.Parallel()
+	const seen = "seen at 0\nseen at 1\ncircle\n"
+	const narrowCount = "bind of a function that declares 2 parameters where the type it's bound as names 1"
+	const nullaryCount = "bind of a function that declares 1 parameter where the type it's bound as names 0"
+	for _, probe := range []struct{ name, nodeOut, site, what string }{
+		{"narrow_type", seen, "narrow.bind(undefined)", narrowCount},
+		{"narrow_default", seen, "narrow.bind(undefined)", narrowCount},
+		{"own_type", seen, "", ""},
+		{"narrow_direct", seen, "", ""},
+		{"known_reach", "2\n2\n", "", ""},
+		{"absent_property", "10\nundefined\n", "absentProperty.f?.bind(otherReceiver)", nullaryCount},
+		{"present_property", "10\nfunction\n42\n", "presentProperty.f?.bind(otherReceiver)", nullaryCount},
+		{"absent_fixed_property", "10\nundefined\n", "absentFixedProperty.f?.bind(otherReceiver, propertyFixed())", narrowCount},
+		{"null_property", "10\nundefined\n", "nullProperty.f?.bind(otherReceiver, propertyFixed())", narrowCount},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			witness, checked := predicateInputFrom(t, "internal/oracle/testdata/bind_extra_parameters", probe.name)
+			node := onNode(t, witness)
+			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
+				t.Fatalf("source Node: %s, stdout %q", difference, node.stdout)
+			}
+			program, err := lowered(t, checked)
+			if probe.what == "" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				sanitized, _ := nativelyUncached(t, program)
+				for index, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if difference := disagreement(node, got); difference != "" {
+						t.Fatalf("%s on %s: exit %d, stdout %q, stderr %q", difference, []string{"sanitized native", "release native", "the JavaScript backend"}[index], got.exitCode, got.stdout, got.stderr)
+					}
+				}
+				return
+			}
+			if err == nil {
+				sanitized, _ := nativelyUncached(t, program)
+				javaScript := onJavaScriptBackend(t, program)
+				t.Fatalf("lowered: sanitized native stdout %q (%s), the JavaScript backend stdout %q (%s)", sanitized.stdout, disagreement(node, sanitized), javaScript.stdout, disagreement(node, javaScript))
+			}
+			source, readErr := os.ReadFile(checked)
+			if readErr != nil {
+				t.Fatal(readErr)
+			}
+			site := ""
+			for number, line := range strings.Split(string(source), "\n") {
+				if column := strings.Index(line, probe.site); column >= 0 {
+					site = fmt.Sprintf("%s:%d:%d", checked, number+1, column+1)
+				}
+			}
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || notYet.What != probe.what || notYet.Where != site {
+				t.Fatalf("want NotYet %q at %s, got %v", probe.what, site, err)
+			}
+		})
 	}
 }
