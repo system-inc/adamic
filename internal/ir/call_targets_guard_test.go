@@ -47,6 +47,7 @@ var targetReaders = map[string]targetReader{
 	"internal/native/emit_functions.go:calledThrough:CallClosure.Closure":                             {"runtime", "names the function to call"},
 	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function":                     {"runtime", "names the function under test"},
 	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":                          {"runtime", "names the function under test"},
+	"internal/native/optional_value_call_test.go:optionalValueCallProgram:CallClosure.Closure":        {"runtime", "rewrites the callee of the call it lowered into the optional call under test, not its function targets"},
 }
 
 func checkCallTargetReaders(t *testing.T, selected string) {
