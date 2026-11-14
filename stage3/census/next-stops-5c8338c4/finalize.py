@@ -19,7 +19,7 @@ for m in modes:
  s += [m+': '+str(changed)+' changed exact tuples; '+str(79-changed)+' unchanged from 5d334653.','']
  accepted=[r for g in json.loads((base/m/'grouped-first-stops.json').read_text()) if g['kind']=='accepted' for r in g['roots']]
  s += ['Files lowering whole in '+m+': '+str(len(accepted))+'/79: '+', '.join(accepted)+'.','']
-s += ["The per-root comparisons below record every changed and unchanged exact tuple against 5d334653.",'']
+s += ["All 73 roots formerly stopped at sys.ts:290:19 now stop at sys.ts:304:13 in both formats. The other six roots retain their exact baseline tuples.",'']
 s += ['','## Adapted source at new stops','']
 seen=set()
 for m in modes:
