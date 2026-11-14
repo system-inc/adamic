@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "roots": 79,
+  "stock_bare": {
+    "before": 64,
+    "after": 64,
+    "new": 0,
+    "identical": true,
+    "note": "No Node ambient roots; retained as supplementary comparison"
+  },
+  "stock_node": {
+    "before": 0,
+    "after": 0,
+    "new": 0,
+    "ambient": "Scout pinned @types/node plus ledger require shim"
+  },
+  "adamic_types": {
+    "exit": 0,
+    "diagnostics": 0
+  },
+  "javascript": {
+    "files": 604,
+    "emits": 1208,
+    "identical": true
+  }
+}
