@@ -29,6 +29,18 @@ focused)
 whole)
   step lower go test -count=1 -timeout 40m ./internal/lower/
   ;;
+fixtures-control)
+  # TestHostConfigurationFixtureReaders needs ADAMIC_HOST_NODE_WITHOUT_INSPECTOR (J-avaja81): the rest at the head, then
+  # that one test at the head and at main 7534c1d7, so a box's gap reads the same on both.
+  t='^TestHostConfigurationFixtureReaders$'
+  step fixtures-rest go test -count=1 -timeout 40m -skip "$t" ./stage3/fixtures/...
+  grep -E '^(ok|FAIL|---)' /tmp/q1-fixtures-rest.log | head -8
+  go test -count=1 -run "$t" ./stage3/fixtures/ > /tmp/q1-host-head.log 2>&1; echo "host test at head exit $?: $(grep -m1 -oE 'needs [a-z-]+|^ok' /tmp/q1-host-head.log)"
+  h=$(git log --format=%H -1 --invert-grep --grep='^proof: ' HEAD)
+  git diff --name-status 7534c1d7575d "$h" | while read -r status path; do case $status in A) rm -f "$path" ;; M) git show "7534c1d7575d:$path" > "$path" ;; esac; done
+  go test -count=1 -run "$t" ./stage3/fixtures/ > /tmp/q1-host-base.log 2>&1; echo "host test at main exit $?: $(grep -m1 -oE 'needs [a-z-]+|^ok' /tmp/q1-host-base.log)"
+  git checkout -q HEAD -- internal stage3
+  ;;
 fixtures)
   step fixtures go test -count=1 -timeout 40m ./stage3/fixtures/...
   grep -E '^(ok|FAIL|---)' /tmp/q1-fixtures.log | head -12
