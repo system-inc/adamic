@@ -132,6 +132,32 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 				}
 			}
 		}
+		// A computed write to a fixed object stores each field its key's literals name (finiteElementWrite),
+		// so each is judged as the named write above is. Only setIndex's fixed objects are asked, so an
+		// array's or a tuple's element write registers no receiver here.
+		if part.Kind == ast.KindElementAccessExpression && ast.IsAssignmentTarget(part) {
+			access := part.AsElementAccessExpression()
+			receiver := l.checker.GetTypeAtLocation(access.Expression)
+			if base, _ := l.representation(receiver); base == ir.Object && !checker.IsTupleType(receiver) {
+				keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+				members := []*checker.Type{keyType}
+				if keyType.Flags()&checker.TypeFlagsUnion != 0 {
+					members = keyType.Types()
+				}
+				for _, member := range members {
+					name, named := literalKeyName(member)
+					if !named || !l.checkedViewReceiverField(part, receiver, name) {
+						continue
+					}
+					if field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(receiver), name); field != nil {
+						if of, _ := l.representation(l.checker.GetTypeOfSymbol(field)); of == ir.Object {
+							refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+							break
+						}
+					}
+				}
+			}
+		}
 		// A getter named as a contract field is judged by what can reach this view, once lowering
 		// is done (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
 		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
