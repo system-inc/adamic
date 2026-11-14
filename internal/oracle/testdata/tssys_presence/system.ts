@@ -5,7 +5,7 @@
  * getNodeSystem (sys.ts:1468), whose const literal holds method shorthands, shorthand properties of
  * functions declared after its return, and one shorthand that reads the literal itself (createDirectory,
  * sys.ts:1546). The arrow's own let is undefined until getNodeSystem fills it, a later call stores a
- * field onto it (patchWriteFileEnsuringDirectory, sys.ts:1376-1381), and it's handed back with !
+ * field onto it in tsc (patchWriteFileEnsuringDirectory, sys.ts:1376-1381), and it's handed back with !
  * (sys.ts:1955-1963). setSys writes the export, and nothing calls it (sys.ts:1966-1969).
  */
 export interface System {
@@ -28,12 +28,10 @@ function isNodeLikeSystem(): boolean {
 	return true;
 }
 
-export function patchWriteFileEnsuringDirectory(sys: System): void {
-	sys.writeFile = (path: string, data: string): void => {
-		console.log(`patched writeFile ${path} ${data}`);
-	};
-}
-
+// tsc's patchWriteFileEnsuringDirectory (sys.ts:1376-1381) is left out: it begins with
+// `const originalWriteFile = sys.writeFile`, a method read as a value, which stays refused under the
+// ruling, so tsc stops on that line before the store after it, whatever this head proves (#p2n17c4 T1,
+// Compiler's and Lower's ruling; a store through a parameter is #fj0vqtf's follow-up).
 export let sys: System = (() => {
 	function getNodeSystem(): System {
 		const useCaseSensitiveFileNames = true;
@@ -78,9 +76,6 @@ export let sys: System = (() => {
 	let sys: System | undefined;
 	if (isNodeLikeSystem()) {
 		sys = getNodeSystem();
-	}
-	if (sys) {
-		patchWriteFileEnsuringDirectory(sys);
 	}
 	return sys!;
 })();
