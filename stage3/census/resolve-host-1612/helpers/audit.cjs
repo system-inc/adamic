@@ -11,7 +11,7 @@ function functionForDeclaration(d){
  return undefined;
 }
 function label(n){const sf=n.getSourceFile(),pos=sf.getLineAndCharacterOfPosition(n.getStart(sf));return path.relative(tree,sf.fileName)+':'+(pos.line+1)+':'+(n.name?.getText(sf)||n.parent?.name?.getText(sf)||'<anonymous>');}
-const queue=[seed],seen=new Set(),edges=[],accesses=new Map();
+const queue=[seed],seen=new Set(),edges=[],accesses=new Map(),computedHostReads=[],hostReflection=[],memberLengthReads=[],hostDestructuring=[];
 const members=new Set(['fileExists','readFile','directoryExists','realpath','getCurrentDirectory','getDirectories','trace','getGlobalTypingsCacheLocation','useCaseSensitiveFileNames']);
 while(queue.length){const fn=queue.shift();if(seen.has(fn))continue;seen.add(fn);const targets=new Set();
  function visit(n){
@@ -21,6 +21,11 @@ while(queue.length){const fn=queue.shift();if(seen.has(fn))continue;seen.add(fn)
    if(symbol?.flags&ts.SymbolFlags.Alias)symbol=checker.getAliasedSymbol(symbol);
    for(const d of symbol?.declarations||[]){const f=functionForDeclaration(d);if(f&&!f.getSourceFile().isDeclarationFile)targets.add(f);}
   }
+  const hostReceiver=x=>['host','state.host','hostOrText'].includes(x?.getText());
+  if(ts.isElementAccessExpression(n)&&hostReceiver(n.expression))computedHostReads.push(n.getText());
+  if(ts.isCallExpression(n)&&/^(Object|Reflect)\./.test(n.expression.getText())&&n.arguments.some(hostReceiver))hostReflection.push(n.getText());
+  if(ts.isPropertyAccessExpression(n)&&n.name.text==='length'&&ts.isPropertyAccessExpression(n.expression)&&members.has(n.expression.name.text)&&hostReceiver(n.expression.expression))memberLengthReads.push(n.getText());
+  if(ts.isVariableDeclaration(n)&&ts.isObjectBindingPattern(n.name)&&hostReceiver(n.initializer))hostDestructuring.push(n.getText());
   if(ts.isPropertyAccessExpression(n)&&members.has(n.name.text)){
    const sf=n.getSourceFile(),pos=sf.getLineAndCharacterOfPosition(n.getStart(sf));
    const key=sf.fileName+':'+n.pos;
@@ -38,5 +43,6 @@ const sys=program.getSourceFile(tree+'/src/compiler/sys.ts');
 const decl=nodes(ts,sys,n=>ts.isVariableDeclaration(n)&&n.name.getText(sys)==='nodeSystem');assert.equal(decl.length,1);
 const sym=checker.getSymbolAtLocation(decl[0].name);const refs=nodes(ts,sys,n=>ts.isIdentifier(n)&&n!==decl[0].name&&checker.getSymbolAtLocation(n)===sym);
 const sysWrites=refs.filter(n=>{let p=n.parent; if(ts.isPropertyAccessExpression(p)||ts.isElementAccessExpression(p))p=p.parent;return ts.isBinaryExpression(p)&&p.left.getStart(sys)===n.getStart(sys)&&p.operatorToken.kind>=ts.SyntaxKind.FirstAssignment&&p.operatorToken.kind<=ts.SyntaxKind.LastAssignment||ts.isDeleteExpression(p);});assert.equal(sysWrites.length,0);
-const result={upstream:'050880ce59e30b356b686bd3144efe24f875ebc8',graphKind:'conservative symbol-bound call/reference closure; includes dead conditional bodies and nested closures',functions:[...seen].map(label).sort(),edges:edges.sort(),accesses:[...accesses.values()].sort((a,b)=>a.file.localeCompare(b.file)||a.line-b.line),nodeSystemReferences:refs.map(n=>({line:sys.getLineAndCharacterOfPosition(n.getStart(sys)).line+1,text:n.parent.getText(sys)})),nodeSystemWritesAfterConstruction:sysWrites.length};
+assert.equal(computedHostReads.length,0);assert.equal(hostReflection.length,0);assert.equal(memberLengthReads.length,0);assert.equal(hostDestructuring.length,0);
+const result={computedHostReads,hostReflection,memberLengthReads,hostDestructuring,upstream:'050880ce59e30b356b686bd3144efe24f875ebc8',graphKind:'conservative symbol-bound call/reference closure; includes dead conditional bodies and nested closures',functions:[...seen].map(label).sort(),edges:edges.sort(),accesses:[...accesses.values()].sort((a,b)=>a.file.localeCompare(b.file)||a.line-b.line),nodeSystemReferences:refs.map(n=>({line:sys.getLineAndCharacterOfPosition(n.getStart(sys)).line+1,text:n.parent.getText(sys)})),nodeSystemWritesAfterConstruction:sysWrites.length};
 fs.writeFileSync(s+'/evidence/resolver-audit.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({functions:seen.size,edges:edges.length,memberAccesses:accesses.size,nodeSystemWritesAfterConstruction:sysWrites.length}));

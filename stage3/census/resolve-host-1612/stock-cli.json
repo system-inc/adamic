@@ -1,0 +1,14 @@
+{
+  "compiler": "typescript@6.0.3",
+  "command": [
+    "node",
+    "stage3/api/node_modules/typescript/bin/tsc",
+    "--project",
+    "/tmp/resolve-host-1612/evidence/tsconfig.stock.json",
+    "--pretty",
+    "false"
+  ],
+  "roots": 79,
+  "exit": 0,
+  "diagnosticsBytes": 0
+}

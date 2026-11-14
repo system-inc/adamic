@@ -1,0 +1,24 @@
+{
+  "initialSearch": "rg -n getNodeSystem stage3/adapt/*/adapt.cjs",
+  "wholeOwnerPins": [
+    {
+      "adapter": "93-builtin-imports",
+      "wholeGetNodeSystemOwnerPin": true,
+      "beforeOwnerSHA256": "7972e490bba24e7c05fa84c6129730a8bfe54d7b8e54bbb3e1830b7810c43205",
+      "afterOwnerSHA256": "01b52254c05b5a6543eb21acdec54405c36bbc7f728582ba073f2fcf3eea9acc",
+      "unchangedFromParent": true
+    },
+    {
+      "adapter": "99-wasm-crypto-import",
+      "wholeGetNodeSystemOwnerPin": true,
+      "beforeOwnerSHA256": "e45365ef731d397bee5f07cce554f8fc745c5028e614115ede71dfdbb4552941",
+      "afterOwnerSHA256": "d45d9bcd92b0de37cc6bf5d221c5292cdc1e1a349ea84a0c85ee92d3f48c7652",
+      "unchangedFromParent": false
+    }
+  ],
+  "narrowerOwnerChecks": [
+    "92-tty-host-results (two tty methods)"
+  ],
+  "sourceCommit": "635baacb5dfa6c4d61aa6fb9f26d720552b1520e",
+  "fullApplyProvesStack": true
+}

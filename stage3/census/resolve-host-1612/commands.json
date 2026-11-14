@@ -1,0 +1,144 @@
+{
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/resolve-host-1612/TypeScript",
+    "GOTMPDIR": "/tmp/resolve-host-1612/tmp",
+    "TMPDIR": "/tmp/resolve-host-1612/tmp",
+    "GOCACHE": "/tmp/resolve-host-1612/gocache",
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/resolve-host-1612/cache",
+    "NODE_PATH": "/tmp/resolve-host-1612/work/stage3/api/node_modules"
+  },
+  "commands": [
+    {
+      "command": "git worktree add --detach /tmp/resolve-host-1612/work ad8ca5a3801d979ca8486b73f3b0ea3cbec0b7d8",
+      "exit": 0
+    },
+    {
+      "command": "git submodule update --init --recursive --depth 1",
+      "cwd": "/tmp/resolve-host-1612/work",
+      "exit": 0
+    },
+    {
+      "command": "git clone https://github.com/microsoft/TypeScript.git --depth 1 --branch v6.0.3 /tmp/resolve-host-1612/TypeScript",
+      "exit": 0,
+      "confirmedHEAD": "050880ce59e30b356b686bd3144efe24f875ebc8"
+    },
+    {
+      "command": "npm ci",
+      "cwd": "/tmp/resolve-host-1612/work/stage3/api",
+      "exit": 0
+    },
+    {
+      "command": "go build -overlay=/tmp/resolve-host-1612/overlay/overlay.json -o /tmp/resolve-host-1612/census ./stage3/census/latent/tool",
+      "exit": 0
+    },
+    {
+      "command": "LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_ONLY_FILE=<tree>/src/compiler/sys.ts /tmp/resolve-host-1612/census <tree>/src/compiler <stream>",
+      "exit": 0,
+      "trees": [
+        "base-tree (parent bytes)",
+        "build-change (candidate bytes)",
+        "build-mutant (actual restoring mutant)"
+      ],
+      "raw": [
+        "census-base.jsonl.gz",
+        "census-fields.jsonl.gz",
+        "census-mutant-accepted.jsonl.gz"
+      ]
+    },
+    {
+      "command": "python3 delta.py",
+      "exit": 0,
+      "result": "184 -> 183, exactly 1612:77 gone, new 0, changed 0; restoring mutant 184 identical"
+    },
+    {
+      "command": "node verify.cjs",
+      "exit": 0,
+      "result": "747 source files, 604 emitted files, 1208 comparisons; only sys.ts differs, at the host site; zero diagnostics over 79 roots for both inputs"
+    },
+    {
+      "command": "node stage3/api/node_modules/typescript/bin/tsc --project /tmp/resolve-host-1612/evidence/tsconfig.stock.json --pretty false",
+      "exit": 0,
+      "roots": 79
+    },
+    {
+      "command": "/tmp/resolve-host-1612/adamic types <79 compiler roots>",
+      "exit": 0,
+      "exactCommand": "adamic-types-final.json"
+    },
+    {
+      "command": "node proofs/resolve-host-contract.cjs",
+      "exit": 0,
+      "result": "8 exact-parameter forwarders, no hidden rest; 128 optional-presence combinations"
+    },
+    {
+      "command": "node proofs/require-result-contract.cjs /tmp/resolve-host-1612/build-change /tmp/resolve-host-1612/base-tree",
+      "exit": 0,
+      "result": "LF/CRLF, owner drift/half-state/duplicates/mixed-ending refusals; zero-write replay"
+    },
+    {
+      "command": "node proofs/check.cjs /tmp/resolve-host-1612/crypto-before /tmp/resolve-host-1612/build-change <checks.json>",
+      "exit": 0
+    },
+    {
+      "command": "npm ci",
+      "cwd": "/tmp/resolve-host-1612/TypeScript",
+      "exit": 0,
+      "note": "Build-base/build-change reuse these exact locked dependencies through a node_modules symlink; the whole lane independently installs its own locked dependencies."
+    },
+    {
+      "command": "node node_modules/hereby/bin/hereby.js dts; node node_modules/hereby/bin/hereby.js services",
+      "cwd": [
+        "build-base",
+        "build-change"
+      ],
+      "exit": 0,
+      "result": "all 391 generated declarations byte-identical; actual bundle differs only at host site"
+    },
+    {
+      "command": "node proofs/resolve-host-fixture.cjs <built base bundle> <built candidate bundle> <fixture root>",
+      "exit": 0,
+      "runtime": "Node v24.19.0",
+      "result": "both optional cases byte-identical; three direct forwarder checks; receiver mutant fails specifically receiver: readFile"
+    },
+    {
+      "command": "node resolve-host-mutant.cjs /tmp/resolve-host-1612/build-mutant",
+      "exit": 0,
+      "result": "exact parent bytes, sibling result annotation retained"
+    },
+    {
+      "command": "node audit.cjs; node system-writes.cjs",
+      "exit": 0,
+      "result": "zero production System-slot writes, zero identity/.length/dynamic host/reflection/destructuring observations"
+    },
+    {
+      "command": "stage3/lane/run.sh /tmp/resolve-host-1612/lane",
+      "exit": 0,
+      "commit": "635baacb5dfa6c4d61aa6fb9f26d720552b1520e",
+      "whole": true,
+      "unfiltered": true,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "note": "apply 0, install 0, build 0; oracle/test exit 1 is the unchanged sanctioned API baseline failure; landing lane PASS"
+    },
+    {
+      "command": "node final-source.cjs",
+      "exit": 0,
+      "result": "747 exact measured files, fixture and lane bundles byte-identical, 0 replay writes, sys.ts bytes/mtime unchanged"
+    },
+    {
+      "command": "git push origin refs/heads/typescript/resolve-host-1612-1:refs/heads/typescript/resolve-host-1612-1",
+      "exit": 0,
+      "force": false
+    },
+    {
+      "command": "git push origin HEAD:refs/heads/typescript/resolve-host-1612-evidence",
+      "exit": 0,
+      "force": false,
+      "phase": "checkpoint; final append follows"
+    }
+  ],
+  "LoomSubmissions": 0
+}

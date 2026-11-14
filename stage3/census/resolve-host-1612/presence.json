@@ -1,0 +1,112 @@
+{
+  "definition": "Syntactic presence tests (truthiness/undefined checks on optional callbacks) and optional-call tests; ordinary callee reads are separate. Boolean type/value observations are explicit in their row. Whole-module sites outside the call closure are included and marked unreachable below.",
+  "rows": [
+    {
+      "member": "fileExists",
+      "modulePresenceSites": [],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 0,
+      "modulePresenceReads": 0,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "readFile",
+      "modulePresenceSites": [],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 0,
+      "modulePresenceReads": 0,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "directoryExists",
+      "modulePresenceSites": [
+        820
+      ],
+      "additionalClosurePresenceSites": [
+        "utilities.ts:7819"
+      ],
+      "feasibleRequirePresenceSites": 1,
+      "modulePresenceReads": 1,
+      "additionalClosurePresenceReads": 1
+    },
+    {
+      "member": "realpath",
+      "modulePresenceSites": [
+        1975
+      ],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 1,
+      "modulePresenceReads": 1,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "getDirectories",
+      "modulePresenceSites": [
+        820
+      ],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 0,
+      "modulePresenceReads": 1,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "trace",
+      "modulePresenceSites": [
+        124
+      ],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 0,
+      "modulePresenceReads": 1,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "getCurrentDirectory",
+      "modulePresenceSites": [
+        488,
+        2331,
+        2582,
+        2663,
+        2870,
+        2898,
+        2924,
+        2974
+      ],
+      "additionalClosurePresenceSites": [
+        "utilities.ts:6609"
+      ],
+      "feasibleRequirePresenceSites": 0,
+      "modulePresenceReads": 8,
+      "additionalClosurePresenceReads": 1
+    },
+    {
+      "member": "getGlobalTypingsCacheLocation",
+      "modulePresenceSites": [
+        3056
+      ],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 1,
+      "modulePresenceReads": 1,
+      "additionalClosurePresenceReads": 0
+    },
+    {
+      "member": "useCaseSensitiveFileNames",
+      "modulePresenceSites": [],
+      "additionalClosurePresenceSites": [],
+      "feasibleRequirePresenceSites": 0,
+      "typeAndTruthinessTests": [
+        "moduleNameResolver.ts:512",
+        "moduleNameResolver.ts:3425",
+        "moduleNameResolver.ts:3426",
+        "utilities.ts:6482 (callback adapter, not this host)"
+      ],
+      "feasibleValueOrTypeReads": [
+        "moduleNameResolver.ts:512 (type test plus selected value read)"
+      ],
+      "modulePresenceReads": 0,
+      "additionalClosurePresenceReads": 0
+    }
+  ],
+  "functionIdentityReads": 0,
+  "forwarderLengthReads": 0,
+  "writesToNodeSystemMembersAfterConstruction": 0
+}

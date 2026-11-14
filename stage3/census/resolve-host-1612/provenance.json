@@ -7,9 +7,11 @@
   "task": "#b8ffarm",
   "runtime": "v24.19.0",
   "scratch": "/tmp/resolve-host-1612",
-  "lane": "whole and unfiltered; pending at checkpoint",
+  "lane": "PASS, fresh whole and unfiltered on implementation commit",
   "goCache": "/tmp/resolve-host-1612/gocache",
   "TMPDIR": "/tmp/resolve-host-1612/tmp",
   "GOTMPDIR": "/tmp/resolve-host-1612/tmp",
-  "LoomSubmissions": 0
+  "LoomSubmissions": 0,
+  "sourceBranchPush": "new branch, no force",
+  "sourceCommitCountOnParent": 1
 }

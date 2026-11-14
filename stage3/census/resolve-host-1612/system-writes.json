@@ -1,0 +1,13 @@
+{
+  "sourceRoots": 712,
+  "productionWrites": [],
+  "productionCount": 0,
+  "testOrVirtualSystemWrites": [
+    {
+      "file": "src/testRunner/unittests/helpers/baseline.ts",
+      "line": 445,
+      "text": "sys.readFile = (path, encoding) => {\r\n        const value = originalReadFile.call(sys, path, encoding);\r\n        if (!value || !ts.isBuildInfoFile(path)) return value;\r\n        const buildInfo = ts.getBuildInfo(path, value);\r\n        if (!buildInfo) return value;\r\n        ts.Debug.assert(buildInfo.version === fakeTsVersion);\r\n        buildInfo.version = ts.version;\r\n        return ts.getBuildInfoText(buildInfo);\r\n    }"
+    }
+  ],
+  "scope": "Root symbols of System/NodeResolutionSystem fields; construction property initializers are not post-construction writes."
+}
