@@ -1,0 +1,14 @@
+--- main/sys.ts
++++ private-count/sys.ts
+@@ -1529,7 +1529,10 @@
+             },
+             readFile,
+             writeFile,
+-            watchFile,
++            watchFile: (fileName, callback, pollingInterval, options) => {
++                _fs.appendFileSync(process.env.ADAMIC_WATCH_COUNT!, JSON.stringify({ interval: String(pollingInterval), type: typeof pollingInterval }) + "\n");
++                return watchFile(fileName, callback, pollingInterval as PollingInterval, options);
++            },
+             watchDirectory,
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+             resolvePath: path => _path.resolve(path),

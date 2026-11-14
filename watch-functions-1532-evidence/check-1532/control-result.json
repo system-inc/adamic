@@ -1,0 +1,25 @@
+{
+  "counterFires": true,
+  "results": [
+    {
+      "interval": "250",
+      "result": "registered and closed"
+    },
+    {
+      "interval": "500",
+      "result": "registered and closed"
+    },
+    {
+      "interval": "2000",
+      "result": "registered and closed"
+    },
+    {
+      "interval": "undefined",
+      "result": "TypeError [ERR_INVALID_ARG_TYPE]: The \"interval\" argument must be of type number. Received undefined\n    at StatWatcher.<computed> (node:internal/fs/watchers:178:3)\n    at Object.watchFile (node:fs:2678:39)\n    at fsWatchFileWorker (/tmp/watch-functions-1532/main-tree/built/local/typescript.js:8033:11)\n    at /tmp/watch-functions-1532/main-tree/built/local/typescript.js:7667:15\n    at createSingleWatcherPerName (/tmp/watch-functions-1532/main-tree/built/local/typescript.js:7151:16)\n    at pollingWatchFile (/tmp/watch-functions-1532/main-tree/built/local/typescript.js:7662:12)\n    at watchFile3 (/tmp/watch-functions-1532/main-tree/built/local/typescript.js:7498:16)\n    at Object.watchFile (/tmp/watch-functions-1532/main-tree/built/local/typescript.js:7855:16)\n    at Object.<anonymous> (/tmp/watch-functions-1532/count-control.cjs:13:28)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+    },
+    {
+      "interval": "10",
+      "result": "registered and closed"
+    }
+  ]
+}
