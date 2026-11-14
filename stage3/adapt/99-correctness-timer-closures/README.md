@@ -146,3 +146,24 @@ This is JavaScript-changing, value-identical composition. The separate evidence
 branch retains the complete use/reader inventory, the full census pair, the
 236-event Node witness, the restoring-array mutant and the apply/types/lane
 receipts.
+
+## Changed-file queue element amendment
+
+Adamic, task baobab, Nov 14, 2026. This amendment is type-only:
+`changedFilesInLastPoll` is `(WatchedFileWithUnchangedPolls | undefined)[]`.
+`pollQueue` writes undefined into its slots when unchanged files leave this
+queue, and `pollWatchedFileQueue` already accepts that element contract. The
+whole createDynamicPriorityPollingWatchFile after pin is amended here; its
+upstream before pin and every other owner are unchanged.
+
+The binding's uses are pollQueue, length, identity comparisons and push. No
+reader needs a new narrowing or guard. The full single-file CommonJSBundle
+sys.ts census removes only the invariant-mutable refusal at adapted 290:19,
+with no new or changed finding. The restoring-declaration mutant brings that
+refusal back. Stock TypeScript 6.0.3 emits byte-identical sys.js; adamic types
+exits zero over all 79 compiler roots, and the whole-owner contract passes.
+
+The complete census streams and delta, named restoring mutant, JavaScript
+comparison, source hashes, apply and whole-lane receipts belong on
+`typescript/changed-files-undefined-evidence`, under
+`stage3/census/changed-files-undefined/`.
