@@ -36,6 +36,7 @@ for m in modes:
   s += ['#### '+e['where'],'','```typescript',e.get('adapted_line','(no source line)'), '```','','Context:','','```typescript',e.get('adapted_excerpt',''),'```','','Kind: `'+e['kind']+'`. Reason: '+e['reason']+'. Phase: '+e['phase']+'. Emitter: '+e.get('emitter','not applicable')+'. Owner: '+e['owner']+'.']
   if e.get('owner_basis'):s+=['','Source attribution: '+e['owner_basis'],'']
   s += ['','This is an existing main refusal-scan finding newly reached as a first stop.' if k in mainkeys else 'This tuple is not present in the main refusal-scan ledger; consult its phase above.','']
+assert seen==newkeys, 'every new first-stop tuple must have a quoted source line'
 s+=['### Lowering-phase first stops','']
 for m in modes:
  roots=[r for g in groups[m] if g['phase'].startswith('lowering') for r in g['roots']]
@@ -46,7 +47,7 @@ lines=part2.splitlines();lines[2]=lead
 (primary/'REPORT.md').write_text('\n'.join(lines)+'\n\n'+'\n'.join(s)+'\n')
 (base/'REPORT.md').write_text('# Next stops on c4v-7\n\n'+lead+'\n\nFull combined report: [c4v7-census/REPORT.md](../c4v7-census/REPORT.md).\n\n'+'\n'.join(s)+'\n')
 statuses=[read(p) for p in base.rglob('*-status.json')]
-result=dict(roots_per_format=79,observations=316,duplicates_agree=True,matching_first_stop_tuples=matching,cleared=clear,new_refusal_scan_findings=pairing['new'],maximum_child_seconds=max(s['seconds'] for s in statuses),commonjs_complete_commit=read(base/'bundle-complete.json')['commit'])
+result=dict(roots_per_format=79,observations=316,duplicates_agree=True,matching_first_stop_tuples=matching,cleared=clear,new_refusal_scan_findings=pairing['new'],new_first_stop_tuples=len(seen),maximum_child_seconds=max(s['seconds'] for s in statuses),commonjs_complete_commit=read(base/'bundle-complete.json')['commit'])
 (base/'final-validation.json').write_text(json.dumps(result,indent=2)+'\n')
 subprocess.run(['python3',str(primary/'audit.py')],check=True)
 for root in [base,primary]:
