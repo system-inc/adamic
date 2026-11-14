@@ -52,6 +52,18 @@ const owners = [
     "siteEdits": 4,
     "previousAfter": "export function createQueue<T>(items?: readonly T[]): Queue<T> {\n    const elements: (T | undefined)[] = items?.slice() ?? [];\n    let headIndex = 0;\n\n    function isEmpty() {\n        return headIndex === elements.length;\n    }\n\n    function enqueue(...items: T[]) {\n        elements.push(...items);\n    }\n\n    function dequeue(): T {\n        if (isEmpty()) {\n            throw new Error(\"Queue is empty\");\n        }\n\n        const result = elements[headIndex] as T;\n        elements[headIndex] = undefined; // Don't keep referencing dequeued item\n        headIndex++;\n\n        // If more than half of the queue is empty, copy the remaining elements to the\n        // front and shrink the array (unless we'd be saving fewer than 100 slots)\n        if (headIndex > 100 && headIndex > (elements.length >> 1)) {\n            const newLength = elements.length - headIndex;\n            elements.copyWithin(/*target*/ 0, /*start*/ headIndex);\n\n            elements.splice(newLength);\n            headIndex = 0;\n        }\n\n        return result;\n    }\n\n    return {\n        enqueue,\n        dequeue,\n        isEmpty,\n    };\n}",
     "previousAfterSha256": "19ae68b55f7e220fbfc88ae005692ded05c4dfa42d6cd5b194c44a617ae3ca09"
+  },
+  {
+    "file": "sourcemap.ts",
+    "owner": "flushMappingBuffer",
+    "container": "createSourceMapGenerator",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "function flushMappingBuffer(): void {\n        if (mappingCharCodes.length > 0) {\n            mappings += String.fromCharCode.apply(undefined, mappingCharCodes);\n            mappingCharCodes.length = 0;\n        }\n    }",
+    "after": "function flushMappingBuffer(): void {\n        if (mappingCharCodes.length > 0) {\n            mappings += String.fromCharCode.apply(undefined, mappingCharCodes);\n            mappingCharCodes.splice(0);\n        }\n    }",
+    "ownerBeforeSha256": "3ce9067febb0a951becdbe437354867d2a78bbb8a420d14bc605175207b3d677",
+    "ownerAfterSha256": "1855fdb45d29e230ed66f2b185c983093c028676a0579b4a19eeee1c8b0a9338",
+    "siteEdits": 1
   }
 ];
 const digest = text => crypto.createHash('sha256').update(text).digest('hex');
@@ -63,7 +75,9 @@ function parse(file, text) {
 function locate(file, text) {
     const source = parse(file, text), states = [], edits = [];
     for (const pin of owners.filter(owner => owner.file === file)) {
-        const found = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === pin.owner);
+        const containers = pin.container ? source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === pin.container) : [source];
+        assert.equal(containers.length, 1, pin.owner + ': container count drift');
+        const found = pin.container ? containers[0].body.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === pin.owner) : source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === pin.owner);
         assert([pin.beforeDeclarations, pin.afterDeclarations].includes(found.length), `${pin.owner}: owner count drift`);
         let total = 0; function visit(node) { if (ts.isFunctionDeclaration(node) && node.name?.text === pin.owner) total++; ts.forEachChild(node, visit); } visit(source);
         assert.equal(total, found.length, pin.owner + ': nested owner');
@@ -98,10 +112,12 @@ function adapt(tree) {
         if (raw.includes('\r\n')) after = after.replace(/\n/g, '\r\n');
         return {name, raw, after, ...state};
     });
-    assert(plans.every(plan => plan.adapted === plans[0].adapted), 'half-adapted tree');
+    // Existing complete 99s output migrates by adapting only the new sourcemap owner.
+    assert(plans.every(plan => plan.adapted === plans[0].adapted) ||
+        (plans[0].adapted && !plans[1].adapted), 'half-adapted tree');
     for (const plan of plans) assert.equal(fs.readFileSync(plan.name, 'utf8'), plan.raw, 'source changed while planning');
-    if (!plans[0].adapted) for (const plan of plans) fs.writeFileSync(plan.name, plan.after);
-    return {files: plans[0].adapted ? 0 : plans.length, edits: plans.reduce((sum, plan) => sum + plan.edits.length, 0), javascriptChanging: true};
+    for (const plan of plans) if (!plan.adapted) fs.writeFileSync(plan.name, plan.after);
+    return {files: plans.filter(plan => !plan.adapted).length, edits: plans.reduce((sum, plan) => sum + plan.edits.length, 0), javascriptChanging: true};
 }
 module.exports = {adapt, owners, parse, transpile, digest};
 if (require.main === module) {

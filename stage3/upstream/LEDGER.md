@@ -841,3 +841,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   docs/rulings.md:249 refuses writes into enum objects. Whole owner:
   99-correctness-polling-no-enum-write. Evidence and unfiled upstream issue draft:
   typescript/polling-no-enum-write-evidence, stage3/census/polling-no-enum-write.
+
+- **JavaScript-changing (byte-different, value-identical), 99-correctness-axolotl-s sourcemap amendment (Compiler):** TypeScript 6.0.3 src/compiler/sourcemap.ts:316 clears createSourceMapGenerator.flushMappingBuffer's private mappingCharCodes with `splice(0)` instead of `length = 0`; the ignored splice result changes emitted bytes while preserving mappings and subsequent empty-buffer reads. Evidence: typescript/sourcemap-splice-evidence, stage3/census/sourcemap-splice-evidence.
