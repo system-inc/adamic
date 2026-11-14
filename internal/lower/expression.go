@@ -419,6 +419,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			sameCallable = same
 		}
+		if l.restHiddenByView(fromSignatures[0], toSignatures[0]) {
+			return false
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		if l.censusNeverRestSignature(toSignatures[0]) {
 			toParameters = nil
@@ -466,6 +469,24 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 				return false
 			}
 		}
+	}
+	return true
+}
+
+// restHiddenByView reports whether a function with a rest parameter, seen through to, would be seen
+// through a program view with no rest. Every fixed view can be widened by arity in the next view, (a:
+// string) => string seen as (a: string, b: number) => string, and that relation no longer shows the
+// rest, while the closure underneath still collects every argument raw (copyRest). So the rest is
+// judged only while the type still shows it, and a view that hides it is NotYet: Language's h1 to h3 on
+// #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function pointer.
+// A library view is exempt, since its intrinsic adapter calls the source signature. Calling through
+// the callee's own layout is #8q1pjsp's lift.
+func (l *lowering) restHiddenByView(from, to *checker.Signature) bool {
+	if !from.HasRestParameter() || to.HasRestParameter() {
+		return false
+	}
+	if declaration := to.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		return false
 	}
 	return true
 }
@@ -1924,6 +1945,9 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, slot, map[[2]*checker.Type]bool{}) {
 		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+		}
+		if from, to := l.checker.GetSignaturesOfType(l.present(own), checker.SignatureKindCall), l.checker.GetSignaturesOfType(l.present(slot), checker.SignatureKindCall); len(from) > 0 && len(to) > 0 && l.restHiddenByView(from[0], to[0]) {
+			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
 	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
