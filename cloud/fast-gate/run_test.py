@@ -931,19 +931,23 @@ class DarwinLegs(unittest.TestCase):
     checkout, whose darwinPaths digests the candidate's leg inputs, and is red without one, naming the pool Mac and the
     digest it looked for (no box builds on Kirk's Mac, so no wording names it). The candidate is the change rebased onto
     main, so the leg's tip is never the gate's sha: a main that moved outside the leg's inputs still matches, one that
-    moved inside them, the darwin paths or the in-module closure go list names, doesn't. go list is stubbed at its one
-    seam (run.darwinClosureListing, self.listing), so no test here needs go. Mutants, each red here: cover() failing
-    darwin unread; coverage reding on a passed darwin exit; the darwin phase failing unread; any one green condition
-    dropped; the digest over every path; the dir lines dropped, or a directory outside the tree or a sibling of it kept;
-    a gitlink keyed by anything but its commit; the checkout check dropped; a failed or empty go list read as a digest,
-    or crashing the gate rather than reding darwin; a-check passing a darwin .a on any matching leg rather than on the
+    moved inside them, the darwin paths, the in-module closure go list names, or a compiler the leg's tests build, doesn't.
+    go list is stubbed at its one seam (run.darwinClosureListing, self.listing), which records what it was asked and
+    answers by its patterns, so no test here needs go. Mutants, each red here: cover() failing darwin unread; coverage
+    reding on a passed darwin exit; the darwin phase failing unread; any one green condition dropped; the digest over
+    every path; the dir lines dropped, or a directory outside the tree or a sibling of it kept; a gitlink keyed by
+    anything but its commit; the checkout check dropped; the declared compilers left out of the listing, read from the
+    tools' map alone, or taken from a package outside internal/apple; a map that can't be read listed without them; a
+    failed or empty go list read as a digest, or crashing the gate rather than reding darwin; a-check passing a darwin .a on any matching leg rather than on the
     run of it the leg recorded, or ignoring its header there; a-check reading the leg for a live refusal, an untyped stop
     or a path that isn't darwin's."""
     gate = FailClosed.gate
     edited = "package apple\n\nvar Edited = 1\n"
-    # The leg's closure as the stubbed go list names it, tree-relative: internal/apple and the in-module package it
-    # imports. internal/unrelated sits in the tree outside it, and outside the darwin globs.
+    # The leg's closure as the stubbed go list names it for ./internal/apple/..., tree-relative: internal/apple and the
+    # in-module package it imports. internal/unrelated sits in the tree outside it, and outside the darwin globs.
     closure = ("internal/apple", "internal/lower")
+    # The listing the setUp map makes: ./internal/apple/..., then the compilers it declares for internal/apple, sorted.
+    declaredCommand = ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/...", "./cmd/adamic", "./internal/lower"]
 
     def setUp(self):
         FailClosed.setUp(self)
@@ -951,6 +955,9 @@ class DarwinLegs(unittest.TestCase):
         sources = {"cloud/fast-gate/executors.txt": "a-check-exempt examples/apple/exempt/*\ndarwin internal/apple/*\ndarwin examples/apple/*\n"
                                                     "inert *.md\nstage3 stage3/*\ninert notes/*\n",
                    "go.mod": "module " + run.module + "\n\ngo 1.24\n", "go.sum": "",
+                   # internal/apple's tests build cmd/adamic and run it, so the map declares it, with lower, as its compilers.
+                   run.compilerDependenciesPath: self.mapOf({"internal/apple": ["cmd/adamic", "internal/lower"]}),
+                   "cmd/adamic/main.go": "package main\n", "internal/ir/ir.go": "package ir\n",
                    "internal/apple/apple.go": "package apple\n", "internal/lower/lower.go": "package lower\n",
                    "internal/unrelated/unrelated.go": "package unrelated\n", "examples/apple/app.a": "const x = 1\n",
                    "examples/apple/refused.a": "// a-check: refused no-any\nconst x: any = 1\n", "examples/apple/exempt/vendored.a": "vendored\n",
@@ -960,20 +967,50 @@ class DarwinLegs(unittest.TestCase):
         realRun(["git", "-C", self.tree, "add", "."], check=True)
         self.main = self.commit("the darwin map")
         self.legs = os.path.join(self.tree, run.darwinLegsDirectory)
-        self.listed = None
+        self.listed, self.commands = None, []
         stub = mock.patch.object(run, "darwinClosureListing", side_effect=self.listing)
         stub.start()
         self.addCleanup(stub.stop)
 
-    def listing(self, tree):
-        """The stubbed go list of the leg's closure: self.closure's directories inside tree, one twice as -test's
-        variants repeat a package's, and three the digest drops, the standard library's, a module cache's and a sibling
-        whose name tree's is a prefix of. self.listed, when set, is the answer instead."""
+    def listing(self, tree, command):
+        """The stubbed go list of the leg's closure, recording command in self.commands and answering by its patterns:
+        for ./internal/apple/..., self.closure's directories inside tree, one twice as -test's variants repeat a
+        package's; for each pattern after it, that directory; and three the digest drops, the standard library's, a
+        module cache's and a sibling whose name tree's is a prefix of. self.listed, when set, is the answer instead."""
+        self.commands.append(list(command))
         if self.listed is not None:
             return self.listed
+        named = []
+        if "./internal/apple/..." in command:
+            named = list(self.closure + self.closure[:1]) + [pattern[len("./"):] for pattern in command[command.index("./internal/apple/...") + 1:]]
         outside = ["/usr/local/go/src/fmt", os.path.join(self.directory, "gopath/pkg/mod/example.com/x@v1.0.0"), self.tree + "-binaries/x"]
-        directories = [os.path.join(tree, directory) for directory in self.closure + self.closure[:1]] + outside
-        return subprocess.CompletedProcess(run.darwinClosureCommand(), 0, "".join(directory + "\n" for directory in directories), "")
+        directories = [os.path.join(tree, directory) for directory in named] + outside
+        return subprocess.CompletedProcess(command, 0, "".join(directory + "\n" for directory in directories), "")
+
+    @staticmethod
+    def mapOf(packages, version=1):
+        return json.dumps({"version": version, "packages": packages})
+
+    def mapCommit(self, source):
+        """A commit on self.main whose compiler-dependencies.json is source (None deletes it), left checked out."""
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.main], check=True)
+        if source is None:
+            realRun(["git", "-C", self.tree, "rm", "-q", "--", run.compilerDependenciesPath], check=True)
+        else:
+            self.write(run.compilerDependenciesPath, source)
+            realRun(["git", "-C", self.tree, "add", "--", run.compilerDependenciesPath], check=True)
+        return self.commit("the compiler map moved")
+
+    def toolsWith(self, source):
+        """A gate tools checkout apart from the tree: the tree's executors.txt, and compiler-dependencies.json as source
+        (None for none)."""
+        tools = tempfile.mkdtemp(dir=self.directory)
+        os.makedirs(os.path.join(tools, "cloud/fast-gate"))
+        shutil.copyfile(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), os.path.join(tools, "cloud/fast-gate/executors.txt"))
+        if source is not None:
+            with open(os.path.join(tools, run.compilerDependenciesPath), "w") as handle:
+                handle.write(source)
+        return tools
 
     @contextlib.contextmanager
     def checkedOut(self, commit):
@@ -1177,10 +1214,12 @@ class DarwinLegs(unittest.TestCase):
         code, printed = self.digestMode(tip)
         self.assertIsNone(code)
         self.assertRegex(printed, r"^[0-9a-f]{64}\n$")
+        # The listing named ./internal/apple/... and then internal/apple's declared compilers, so cmd/adamic is a dir line.
+        self.assertEqual(self.commands[-1], self.declaredCommand)
         digest = printed.strip()
         lines = sorted(["100644 %s %s\n" % (self.objectAt(tip, path), path)
                         for path in ("internal/apple/apple.go", "examples/apple/app.a", "examples/apple/refused.a", "examples/apple/exempt/vendored.a")]
-                       + ["dir %s %s\n" % (directory, self.objectAt(tip, directory)) for directory in ("internal/apple", "internal/lower")]
+                       + ["dir %s %s\n" % (directory, self.objectAt(tip, directory)) for directory in ("internal/apple", "internal/lower", "cmd/adamic")]
                        + ["file %s %s\n" % (path, self.objectAt(tip, path)) for path in ("go.mod", "go.sum")])
         self.assertEqual(digest, hashlib.sha256("".join(lines).encode()).hexdigest())
         gate, status, result = self.gate(base=base)
@@ -1231,7 +1270,8 @@ class DarwinLegs(unittest.TestCase):
         base, tip = self.candidate()
         self.record(tip)
         self.assertEqual(run.darwinLegFor(self.tree, self.sha, self.tree)[0], tip + ".json")
-        words = "GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 GOFLAGS=-mod=readonly go list -deps -test -f {{.Dir}} ./internal/apple/..."
+        # A refusal names the whole command that ran, the declared compilers among its patterns.
+        words = "GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 GOFLAGS=-mod=readonly go list -deps -test -f {{.Dir}} ./internal/apple/... ./cmd/adamic ./internal/lower"
         stderr = "go: updates to go.mod needed\n\tgo mod tidy\nthird\nfourth\nfifth\nsixth, past the first lines\n"
         for why, listed, refusal in (
                 ("go list failing", subprocess.CompletedProcess([], 1, "", stderr),
@@ -1289,7 +1329,7 @@ class DarwinLegs(unittest.TestCase):
         self.closure = ("internal/apple", "internal/lower", "internal/vendored", "internal/vendored/inner")
         lines = sorted(["100644 %s %s\n" % (self.objectAt(linked, path), path)
                         for path in ("internal/apple/apple.go", "examples/apple/app.a", "examples/apple/refused.a", "examples/apple/exempt/vendored.a")]
-                       + ["dir %s %s\n" % (directory, self.objectAt(linked, directory)) for directory in ("internal/apple", "internal/lower")]
+                       + ["dir %s %s\n" % (directory, self.objectAt(linked, directory)) for directory in ("internal/apple", "internal/lower", "cmd/adamic")]
                        + ["dir internal/vendored %s\n" % self.main]
                        + ["file %s %s\n" % (path, self.objectAt(linked, path)) for path in ("go.mod", "go.sum")])
         self.assertEqual(run.darwinPathsDigest(self.tree, linked, self.tree), hashlib.sha256("".join(lines).encode()).hexdigest())
@@ -1297,6 +1337,74 @@ class DarwinLegs(unittest.TestCase):
         moved = self.commit("the submodule moved")
         self.assertEqual(self.objectAt(moved, "internal/vendored"), linked)
         self.assertNotEqual(run.darwinPathsDigest(self.tree, moved, self.tree), self.digestAt(linked))
+
+    def test_main_moving_the_declared_compiler_is_red(self):
+        # The dir lines of the declared compilers: internal/apple's tests build cmd/adamic and run it, a main package go
+        # list -deps of ./internal/apple/... never names, so only the map's declaration puts it in the listing.
+        rules = run.executorMap(self.tree)[0]
+        base, tip = self.candidate(("cmd/adamic/main.go", "package main\n\nvar Moved = 1\n"))
+        self.assertEqual(run.darwinEntries(run.commitEntries(self.tree, self.sha), rules), run.darwinEntries(run.commitEntries(self.tree, tip), rules))
+        self.record(tip)
+        self.assertEqual(self.commands[-1], self.declaredCommand)
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertNotEqual(digest, self.digestAt(tip))
+        for extra in ({}, {"phase": "coverage"}, {"phase": "darwin"}):
+            with self.subTest(extra=extra):
+                gate, status, result = self.gate(base=base, extra=extra)
+                self.assertNeedsLeg(gate, status, digest, "no darwin leg recorded for darwinPaths " + digest)
+                self.assertNotIn("darwin_leg", result)
+
+    def test_the_listing_names_internal_apple_s_compilers_from_the_map_the_gate_reads(self):
+        # The listing's patterns: the tools' map with the tree's laid over it, as the census reads it (compilerDeclarations),
+        # every package that is internal/apple or below it, and no other.
+        base = run.darwinClosureCommand()
+        self.assertEqual(base, ["go", "list", "-deps", "-test", "-f", "{{.Dir}}", "./internal/apple/..."])
+        for why, toolsMap, treeMap, command in (
+                ("the tools' declaration alone", self.mapOf({"internal/apple": ["cmd/adamic", "internal/lower"]}),
+                 self.mapOf({"bench": ["internal/ir"]}), self.declaredCommand),
+                ("a declaration the tree adds joins it", self.mapOf({"internal/apple": ["cmd/adamic", "internal/lower"]}),
+                 self.mapOf({"internal/apple/generate": ["internal/ir", "cmd/adamic"], "internal/applesauce": ["internal/unrelated"]}),
+                 base + ["./cmd/adamic", "./internal/ir", "./internal/lower"]),
+                ("the tree's declaration over the tools'", self.mapOf({"internal/apple": ["cmd/adamic", "internal/lower"]}),
+                 self.mapOf({"internal/apple": ["internal/ir"]}), base + ["./internal/ir"]),
+                ("the tree's map alone", None, self.mapOf({"internal/apple": ["cmd/adamic"]}), base + ["./cmd/adamic"]),
+                # No internal/apple package declared: the listing is ./internal/apple/... alone, the map-less shape.
+                ("no internal/apple package declared", self.mapOf({"bench": ["cmd/adamic"]}), self.mapOf({"internal/applesauce": ["internal/ir"]}), base)):
+            with self.subTest(why):
+                tools, sha = self.toolsWith(toolsMap), self.mapCommit(treeMap)
+                run.darwinPathsDigest(self.tree, sha, tools)
+                self.assertEqual(self.commands[-1], command)
+
+    def test_a_compiler_map_that_can_t_be_read_is_refused_and_the_darwin_phase_red(self):
+        # The raise before the listing: a map that can't be read never yields a digest computed without the compilers.
+        cannot = "the compiler dependency map can't be read, so the compilers the darwin leg builds can't be listed: "
+        good = self.mapOf({"internal/apple": ["cmd/adamic"]})
+        for why, toolsMap, treeMap, refusal in (
+                ("the tree's map isn't JSON", good, "{", cannot),
+                ("the tree's map isn't the tools' version", good, self.mapOf({"internal/apple": ["cmd/adamic"]}, version=2),
+                 cannot + "invalid compiler dependency map: %s in %s" % (run.compilerDependenciesPath, self.tree)),
+                ("a map that isn't version 1", self.mapOf({}, version=2), None, cannot + "invalid compiler dependency map: " + run.compilerDependenciesPath),
+                ("no map in either", None, None, cannot + "invalid compiler dependency map: no " + run.compilerDependenciesPath),
+                ("internal/apple's compilers aren't a list", good, self.mapOf({"internal/apple": "cmd/adamic"}),
+                 "the compiler dependency map's internal/apple isn't a list of directories: 'cmd/adamic'")):
+            with self.subTest(why):
+                tools, sha = self.toolsWith(toolsMap), self.mapCommit(treeMap)
+                del self.commands[:]
+                with self.assertRaises(run.DarwinPathsRefusal) as raised:
+                    run.darwinPathsDigest(self.tree, sha, tools)
+                self.assertTrue(str(raised.exception).startswith(refusal), raised.exception)
+                self.assertEqual(self.commands, [])
+        # The gate's tools are the tree here, so a main whose map isn't JSON reds the darwin phase, naming why.
+        base, tip = self.candidate((run.compilerDependenciesPath, "{"))
+        with self.assertRaises(run.DarwinPathsRefusal) as raised:
+            run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertTrue(str(raised.exception).startswith(cannot), raised.exception)
+        for extra in ({}, {"phase": "coverage"}, {"phase": "darwin"}):
+            with self.subTest(extra=extra):
+                del self.commands[:]
+                gate, status, result = self.gate(base=base, extra=extra)
+                self.assertNoDigest(gate, status, str(raised.exception))
+                self.assertEqual(self.commands, [])
 
     missing = "adamic: load: darwin platform missing: Xcode SDK\n"
 
