@@ -165,6 +165,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	lowering.checkOverloadResults(modules)
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	// Before the accessors' dispatchers: a read this makes checked can't go through a dispatcher's
+	// unchecked fallback, which finishAccessors stops by asking CheckedField.
+	if err := lowering.certifySourceSlots(); err != nil {
+		return nil, err
+	}
 	if err := lowering.finishAccessors(); err != nil {
 		return nil, err
 	}
@@ -412,6 +417,12 @@ type lowering struct {
 	// hostMemberJudged says checkHostMemberWrites has run, so a stop after it is the program's own
 	// (hostMemberPending).
 	hostMemberJudged bool
+	// sourceSlotWrites are the writes of an object field through a checked view, each with the type
+	// it writes, which certifySourceSlots holds every read of the field's name to once lowering is
+	// done, and sourceSlotsJudged says it has, so a write found after that keeps its stop
+	// (source_slot_certificate.go, #2msw6t8).
+	sourceSlotWrites  []sourceSlotWrite
+	sourceSlotsJudged bool
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).

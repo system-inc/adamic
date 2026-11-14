@@ -41,18 +41,42 @@ func TestViewObjectContractsAreAvailableToEraser(t *testing.T) {
 	}
 }
 
+// Rule C's source-slot certificate (#2msw6t8): a plain write of view.child lowers, and raw's reads of the
+// slot, at a type that doesn't hold the { ready } the view wrote, are checked under their receiver's key,
+// so raw.child.other stops loudly where it would have read past the new object (internal/oracle's
+// TestSourceSlotCertificate runs it). A destructuring write keeps the stop. .ts, since .a refuses the
+// downcast first (#m8dvvmf).
 func TestViewObjectWritesNeedSourceCertificate(t *testing.T) {
 	t.Parallel()
-	for _, assignment := range []string{
-		`view.child={ready:true};`,
-		`({child:view.child}={child:{ready:true}});`,
-	} {
-		_, err := lowerSource(t, `interface Base {readonly kind:'box'|'other'}
+	source := func(assignment string) string {
+		return `interface Base {readonly kind:'box'|'other'}
   interface Box extends Base {readonly kind:'box';child:{ready:boolean}}
   const raw={kind:'box' as const,child:{ready:true,other:42}};
-  const held:Base=raw;const view=held as Box;`+assignment+`console.log(String(raw.child.other));`)
-		if err == nil || !strings.Contains(err.Error(), "source-slot type certificate") {
-			t.Fatalf("unchecked write could invalidate another alias: %v", err)
+  const held:Base=raw;const view=held as Box;` + assignment + `console.log(String(raw.child.other));`
+	}
+	program, err := lowerSourceAs(t, source(`view.child={ready:true};`), ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	reads := map[string]bool{}
+	inspect := func(node any) bool {
+		if read, ok := node.(ir.Property); ok && (read.Name == "child" || read.Name == "other") {
+			reads[read.Name] = true
+			if !program.CheckedRead(read) {
+				t.Errorf("raw's read of %s, which may hold the view's narrower write, is unchecked", read.Name)
+			}
 		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if !reads["child"] || !reads["other"] {
+		t.Fatalf("raw.child.other's reads not found: %v", reads)
+	}
+	_, err = lowerSourceAs(t, source(`({child:view.child}={child:{ready:true}});`), ".ts")
+	if err == nil || !strings.Contains(err.Error(), "source-slot type certificate") {
+		t.Fatalf("a destructuring write through the view: want the certificate's stop, got %v", err)
 	}
 }
