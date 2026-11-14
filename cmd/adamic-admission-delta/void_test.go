@@ -97,8 +97,8 @@ func TestTimeoutsAndMissingToolchainAreVoid(t *testing.T) {
 		},
 		{
 			name:   "runtime timeout",
-			head:   "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nsleep 5\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n",
-			extra:  []string{"--timeout", "1s"},
+			head:   "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nsleep 10\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n",
+			extra:  []string{"--timeout", "4s"},
 			reason: "corpus/input.a: native timeout",
 		},
 		{
