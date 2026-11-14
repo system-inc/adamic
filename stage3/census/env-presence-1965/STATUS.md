@@ -1,0 +1,11 @@
+# Environment presence 1965 evidence
+
+Base: 8e3a784aa5a601f57342c07b68f145fe56252c21, in a fresh detached private worktree; submodules initialized recursively at depth 1. Upstream: v6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8. Node: v24.19.0. Go: go1.27.1 installed in scratch; `/usr/bin/go` is an unrelated board game.
+
+No adaptation has been constructed. The complete baseline adaptation is being built before the private counting oracle. The three-row control proves the counting categories fire, including a truthy value without a function. Control observations are separate from the lane counts.
+
+The Node witness isolates the enclosing block with an observing polling helper. A valid System preserves the receiver and selects Normal for development; undefined skips the block. The labeled hypothetical missing method skips the original block, but enters the proposed block and throws TypeError at getEnvironmentVariable("NODE_ENV"). The polling helper returns early in that hypothetical.
+
+The real block passes sys to setCustomPollingValues, which reads getEnvironmentVariable for the TSC_WATCH_POLLINGINTERVAL, TSC_WATCH_POLLINGCHUNKSIZE and TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS low/medium/high settings, then calls sys.getEnvironmentVariable("NODE_ENV") to choose Debug's assertion level. There are no other direct sys reads within this block. The following separate conditional reads sys.debugMode.
+
+Ownership search includes owners.json, targets.json and every adapt.cjs. No whole pin includes the target top-level statement. Pins on System or other functions do not own this statement. No Loom submission.
