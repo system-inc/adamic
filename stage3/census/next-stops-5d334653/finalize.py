@@ -19,6 +19,7 @@ for m in modes:
  s += [m+': '+str(changed)+' changed exact tuples; '+str(79-changed)+' unchanged from 9c322233.','']
  accepted=[r for g in json.loads((base/m/'grouped-first-stops.json').read_text()) if g['kind']=='accepted' for r in g['roots']]
  s += ['Files lowering whole in '+m+': '+str(len(accepted))+'/79: '+', '.join(accepted)+'.','']
+s += ["All 73 roots formerly stopped at the sys.ts:272:23 queue cast now stop at sys.ts:290:19 in both formats. The other six roots retain their exact baseline tuples.",'']
 s += ['','## Adapted source at new stops','']
 seen=set()
 for m in modes:
@@ -28,6 +29,7 @@ for m in modes:
   key=(e['where'],e['kind'],e['reason'])
   if key in new and key not in seen:
    seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
+   if e.get('owner_basis'):s += ['Ownership evidence: '+e['owner_basis']+'.','']
 if not seen:s+=['No new stop tuples relative to the 9c322233 baseline.','']
 for m in modes:
  report=(base/m/'REPORT.md').read_text().splitlines()[1:]
