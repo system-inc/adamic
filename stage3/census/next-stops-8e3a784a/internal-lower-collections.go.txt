@@ -1,0 +1,673 @@
+package lower
+
+import (
+	"strconv"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
+// and booleans, plus packed number | undefined, compared as === compares them (numbers by
+// SameValueZero), and objects, arrays, maps
+// and functions, each its own key, compared by identity.
+func keyable(valueType ir.Type) bool {
+	switch valueType {
+	case ir.String, ir.Number, ir.Boolean, ir.MaybeNumber, ir.Object, ir.Array, ir.Map, ir.Closure:
+		return true
+	}
+	return false
+}
+
+// keyableType is keyable for a Map's key or a Set's element whose checker type is proven, and one more
+// case: a key held as a Union (the object type, a union of object types) is keyed by identity when no
+// primitive can stand where it does, so every value it holds is a reference whose address is itself.
+// A Union reference is the object's own pointer, its kind named by its heap header, never a box, so
+// native's identity map (newMap, emit_maps.go) and JavaScript's Map both find it by identity, as
+// SameValueZero does for objects. A key type a primitive fits, `{}`, unknown or a type parameter, stays
+// NotYet, since a Union holding a string or a number would be keyed by its box (#ff5eddz, tsc's
+// tracing.ts recursionIdentityMap, a Map<object, number>).
+func (l *lowering) keyableType(proven *checker.Type, valueType ir.Type) bool {
+	if keyable(valueType) {
+		return true
+	}
+	return valueType == ir.Union && l.noPrimitiveFits(proven)
+}
+
+// noPrimitiveFits is whether no primitive value can stand where proven does. Every member, after a union
+// is split, must be an object type or the object keyword, and an intersection only when every part is
+// (onlyObjects): a literal, an enum member, a template literal, a unique symbol, a branded `string & {
+// __brand }`, null, undefined or void each holds a primitive though the wide primitive isn't assignable
+// to it (Compiler's, Lower's and Library's must on 63979123). Then no wide primitive may be assignable
+// either, which catches `{}` and an interface a primitive fits structurally. A type parameter, unknown,
+// any or never answers no, since its bound could admit one.
+func (l *lowering) noPrimitiveFits(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	if !l.onlyObjects(proven, 0) {
+		return false
+	}
+	for _, primitive := range []*checker.Type{l.checker.GetStringType(), l.checker.GetNumberType(), l.checker.GetBooleanType(), l.checker.GetBigIntType(), l.checker.GetESSymbolType(), l.checker.GetNullType(), l.checker.GetUndefinedType()} {
+		if l.checker.IsTypeAssignableTo(primitive, proven) {
+			return false
+		}
+	}
+	return true
+}
+
+// onlyObjects is whether every value of proven is a reference to an object: proven is an object type or
+// the object keyword, or a union whose every member is, or an intersection whose every part is. Anything
+// else, a primitive, a literal, an enum, a template literal, a unique symbol, null, undefined, void, any,
+// unknown, never or a type parameter, answers no. Past its depth bound it fails closed.
+func (l *lowering) onlyObjects(proven *checker.Type, depth int) bool {
+	if proven == nil || depth >= 16 {
+		return false
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if !l.onlyObjects(member, depth+1) {
+				return false
+			}
+		}
+		return len(proven.Types()) > 0
+	}
+	return proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsNonPrimitive) != 0
+}
+
+// iterated lowers something a for...of or a spread walks as the array of what it gives, with that
+// array's element type: an array, a string's code points, a Set's elements, a Map's [key, value]
+// entries, and map.keys(), map.values(), map.entries(), set.keys() and set.values().
+func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
+	node = ast.SkipParentheses(node)
+	// A call to a program's generator is collected as the generator it is, before any reading of its
+	// declared iterator type (#qk8rztp, Compiler's risk 2). Collecting steps it to its end, which is
+	// right only for a consumer that reads every value: an array literal's spread (object.go) is one,
+	// and so are new Map (newMapFromGenerator) and new Set, which take every value a generator gives.
+	if function, isGenerator, err := l.generatorCallee(node); err != nil {
+		return nil, 0, err
+	} else if isGenerator {
+		return l.collectGenerator(node, function)
+	}
+	if element, iterator := l.libraryIteratorElement(node); iterator {
+		value, err := l.expression(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		return l.libraryIteratorArray(node, value, element), element, nil
+	}
+	if plan, err := l.planIteration(node); err != nil {
+		return nil, 0, err
+	} else if plan != nil {
+		value, err := l.collectIteration(node, node, nil, plan, plan.element)
+		return value, plan.element, err
+	}
+	if node.Kind == ast.KindCallExpression && len(node.AsCallExpression().Arguments.Nodes) == 0 {
+		if callee := ast.SkipParentheses(node.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
+			receiver := callee.AsPropertyAccessExpression().Expression
+			part := callee.Name().Text()
+			receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
+			if receiverType == ir.Map && (part == "keys" || part == "values" || part == "entries") {
+				return l.collectionPart(node, receiver, part)
+			}
+		}
+	}
+	if l.isArrayType(l.checker.GetTypeAtLocation(node)) {
+		element, err := l.elementType(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		array, err := l.expression(node)
+		return array, element, err
+	}
+	value, err := l.expression(node)
+	if err != nil {
+		return nil, 0, err
+	}
+	switch value.Type() {
+	case ir.String:
+		return ir.CodePoints{Value: value}, ir.String, nil
+	case ir.Map:
+		if l.isSet(node) {
+			element, err := l.setElement(node)
+			if err != nil {
+				return nil, 0, err
+			}
+			return ir.SetValues{Set: value, Element: element}, element, nil
+		}
+		key, mapped, err := l.mapTypes(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		return l.mapEntries(node, node, value, key, mapped), ir.Object, nil
+	}
+	return nil, 0, l.notYet(node, "iterating a "+typeName(value.Type()))
+}
+
+// collectionPart lowers map.keys(), map.values() and map.entries(), and set.keys() and set.values(),
+// where they're walked whole: each is a new array of what it gives.
+func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part string) (ir.Expression, ir.Type, error) {
+	if l.isSet(receiver) {
+		if part == "entries" {
+			iterator, _, err := l.libraryCollectionIterator(node, receiver, part)
+			if err != nil {
+				return nil, 0, err
+			}
+			return l.libraryIteratorArray(node, iterator, ir.Object), ir.Object, nil
+		}
+		element, err := l.setElement(receiver)
+		if err != nil {
+			return nil, 0, err
+		}
+		set, err := l.expression(receiver)
+		if err != nil {
+			return nil, 0, err
+		}
+		return ir.SetValues{Set: set, Element: element}, element, nil
+	}
+	key, value, err := l.mapTypes(receiver)
+	if err != nil {
+		return nil, 0, err
+	}
+	collection, err := l.expression(receiver)
+	if err != nil {
+		return nil, 0, err
+	}
+	switch part {
+	case "keys":
+		return ir.MapKeys{Map: collection, Key: key}, key, nil
+	case "values":
+		return ir.MapValues{Map: collection, Value: value}, value, nil
+	}
+	return l.mapEntries(node, receiver, collection, key, value), ir.Object, nil
+}
+
+// graphPairSite is one Map entries site: where, and its pair's tuple type, nil when the checker
+// didn't name one.
+type graphPairSite struct {
+	node *ast.Node
+	pair *checker.Type
+}
+
+// mapEntries is map's [key, value] pairs, each planned by its own tuple type (pairGraphTypes).
+func (l *lowering) mapEntries(node, receiver *ast.Node, collection ir.Expression, key, value ir.Type) ir.MapEntries {
+	return ir.MapEntries{Map: collection, KeyType: key, ValueType: value, PairGraphTypes: l.pairGraphTypes(node, receiver)}
+}
+
+// collectionIterator is a collection's library iterator over part; an entries() iterator's pairs are
+// each planned by their own tuple type (pairGraphTypes).
+func (l *lowering) collectionIterator(node, receiver *ast.Node, collection ir.Expression, part string, key, value ir.Type, set bool) ir.CollectionIterator {
+	iterator := ir.CollectionIterator{Collection: collection, Part: part, Key: key, Value: value, Set: set}
+	if part == "entries" {
+		iterator.PairGraphTypes = l.pairGraphTypes(node, receiver)
+	}
+	return iterator
+}
+
+// pairGraphTypes plans a collection's [key, value] pairs by their own tuple type (#dps0kp6), and
+// records the site for graphAdoptionBoundary. A pair is made in the runtime, outside graphAllocation,
+// and it can reach a graph slot while the array or iterator it came in is dropped, or while the
+// collection is no graph member, so no other plan covers it.
+func (l *lowering) pairGraphTypes(node, receiver *ast.Node) []int {
+	pair := l.mapPairType(l.checker.GetTypeAtLocation(receiver))
+	l.graphPairs = append(l.graphPairs, graphPairSite{node: node, pair: pair})
+	if pair == nil {
+		return nil
+	}
+	return []int{l.cycleTypeID(pair)}
+}
+
+// mapPairType is the tuple a Map's or a Set's entries() gives, [K, V] as the checker names it (the
+// element of its iterator's type), or nil.
+func (l *lowering) mapPairType(mapType *checker.Type) *checker.Type {
+	mapType = checker.Checker_getApparentType(l.checker, l.concrete(mapType))
+	entries := l.checker.GetPropertyOfType(mapType, "entries")
+	if entries == nil {
+		return nil
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(entries), checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return nil
+	}
+	arguments := l.typeArguments(l.checker.GetReturnTypeOfSignature(signatures[0]))
+	if len(arguments) == 0 || !checker.IsTupleType(arguments[0]) {
+		return nil
+	}
+	return arguments[0]
+}
+
+// newMapFrom lowers new Map(pairs) from anything that gives [key, value] pairs: an array of tuples,
+// another Map, or map.entries(). Each pair's key and value must be held as the Map holds its own, or
+// a number would land where number | undefined goes without becoming the pair, so they're checked.
+func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+	// A call to a program's generator is read by its origin, before its declared iterator type can
+	// route it as a collection's (#qk8rztp).
+	if function, isGenerator, err := l.generatorCallee(source); err != nil {
+		return nil, err
+	} else if isGenerator {
+		return l.newMapFromGenerator(source, function, key, value)
+	}
+	if sourceType := l.checker.GetTypeAtLocation(ast.SkipParentheses(source)); sourceType.Flags()&checker.TypeFlagsUnion != 0 && l.checker.GetNonNullableType(sourceType) != sourceType && l.arrayOrUndefined(sourceType) {
+		return l.newMapFromOptional(source, sourceType, key, value)
+	}
+	pairKey, pairValue, isKnown := l.pairTypes(source)
+	if !isKnown {
+		// A Generator that isn't a direct call to a program's generator, one stored or passed, waits on
+		// generators as values (#qk8rztp S2), not on this constructor.
+		if l.isLibraryType(l.checker.GetTypeAtLocation(ast.SkipParentheses(source)), "Generator") {
+			return nil, l.notYet(source, "new Map from a generator's pairs")
+		}
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	if pairKey != key || pairValue != value {
+		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
+	}
+	pairs, element, err := l.iterated(source)
+	if err != nil {
+		return nil, err
+	}
+	if element != ir.Object {
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	l.recordViewArrayUse(source, pairs, "Map constructor")
+	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
+}
+
+// newMapFromOptional lowers new Map(pairs) where pairs is an array of [key, value] tuples or undefined
+// as new Map(pairs ?? []): Node makes an empty Map from undefined, as it does with no argument.
+func (l *lowering) newMapFromOptional(source *ast.Node, sourceType *checker.Type, key ir.Type, value ir.Type) (ir.Expression, error) {
+	pairKey, pairValue, isKnown := l.pairArrayTypes(l.checker.GetNonNullableType(sourceType))
+	if !isKnown {
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	if pairKey != key || pairValue != value {
+		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
+	}
+	pairs, err := l.expression(source)
+	if err != nil {
+		return nil, err
+	}
+	if pairs.Type() != ir.Array {
+		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
+	}
+	optional := ir.Coalesce{Value: pairs, Fallback: ir.ArrayLiteral{Element: ir.Object}, Of: ir.Array}
+	l.recordViewArrayUse(source, optional, "Map constructor")
+	return ir.MapNew{Key: key, Value: value, Pairs: optional}, nil
+}
+
+// pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its
+// tuple's types, a Map (and its entries()) by its own.
+func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
+	source = ast.SkipParentheses(source)
+	sourceType := l.checker.GetTypeAtLocation(source)
+	if l.isArrayType(sourceType) || l.isLibraryType(sourceType, "MapIterator", "SetIterator", "Set", "ReadonlySet") {
+		return l.pairArrayTypes(sourceType)
+	}
+	if source.Kind == ast.KindCallExpression {
+		callee := ast.SkipParentheses(source.AsCallExpression().Expression)
+		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "entries" {
+			return 0, 0, false
+		}
+		source = callee.AsPropertyAccessExpression().Expression
+	}
+	if representation, _ := l.representation(l.checker.GetTypeAtLocation(source)); representation != ir.Map {
+		return 0, 0, false
+	}
+	if l.isSet(source) {
+		element, err := l.setElement(source)
+		return element, element, err == nil
+	}
+	key, value, err := l.mapTypes(source)
+	return key, value, err == nil
+}
+
+// pairArrayTypes is how an array (or a library iterator or Set) of [key, value] tuples holds its keys
+// and values, by its tuple's types.
+func (l *lowering) pairArrayTypes(sourceType *checker.Type) (ir.Type, ir.Type, bool) {
+	element := l.elementTypeOfArray(sourceType)
+	if element == nil {
+		arguments := l.typeArguments(sourceType)
+		if len(arguments) != 1 {
+			return 0, 0, false
+		}
+		element = arguments[0]
+	}
+	if !checker.IsTupleType(element) {
+		return 0, 0, false
+	}
+	arguments := l.checker.GetTypeArguments(element)
+	if len(arguments) != 2 {
+		return 0, 0, false
+	}
+	key, keyKnown := l.representation(arguments[0])
+	value, valueKnown := l.representation(arguments[1])
+	return key, value, keyKnown && valueKnown
+}
+
+// clearOrVisit lowers clear() and forEach(callback) on a Map or a Set.
+func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string, set bool) (ir.Expression, bool, error) {
+	var key, value ir.Type
+	var err error
+	if set {
+		key, err = l.setElement(receiver)
+		value = key
+	} else {
+		key, value, err = l.mapTypes(receiver)
+	}
+	if err != nil {
+		return nil, true, err
+	}
+	collection, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	arguments := node.AsCallExpression().Arguments.Nodes
+	if name == "clear" {
+		if len(arguments) != 0 {
+			return nil, true, l.notYet(node, "clear with arguments")
+		}
+		return ir.MapClear{Map: collection}, true, nil
+	}
+	if len(arguments) == 2 {
+		return l.libraryForEachThisArg(node, receiver, set)
+	}
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(node, "forEach with other than one callback")
+	}
+	callback, err := l.expression(arguments[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if callback.Type() != ir.Closure {
+		return nil, true, l.notYet(arguments[0], "forEach with a callback that isn't a function")
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[0]), checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return nil, true, l.notYet(arguments[0], "forEach with an overloaded callback")
+	}
+	var returns ir.Type
+	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
+		var isKnown bool
+		if returns, isKnown = l.representation(result); !isKnown || slotless(returns) {
+			return nil, true, l.notYet(arguments[0], "forEach with a callback returning "+l.checker.TypeToString(result))
+		}
+	}
+	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+}
+
+// tupleLength is tuple.length for a tuple of fixed length: its type's count, which the checker gives
+// as the type of the read. The tuple is a plain variable, so not reading it changes nothing, unless
+// it's a global read from a function, which may throw for the temporal dead zone, as JavaScript does.
+func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, error) {
+	tuple = ast.SkipParentheses(tuple)
+	local, isLocal := l.local(tuple)
+	if !ast.IsIdentifier(tuple) || !isLocal || l.checked(local) {
+		return nil, l.notYet(node, "the length of a tuple that isn't a plain local")
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNumberLiteral == 0 {
+		return nil, l.notYet(node, "the length of a tuple with optional or rest elements")
+	}
+	return l.numericLiteral(node)
+}
+
+// destructure lowers const [a, b] = tuple and const { x, y } = object, and let: what's destructured
+// is held in a local of its own, made here, and each name is declared from its field, in order, as
+// JavaScript reads them.
+func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.Statement, error) {
+	if initializer == nil {
+		return nil, l.notYet(pattern, "a destructuring declaration without a value")
+	}
+	if pattern.Kind == ast.KindArrayBindingPattern {
+		if plan, err := l.planIteration(initializer); err != nil {
+			return nil, err
+		} else if plan != nil {
+			return l.destructureIterator(pattern, initializer, plan)
+		}
+	}
+	value, err := l.expression(initializer)
+	if err != nil {
+		return nil, err
+	}
+	if err := l.refuseIncompatibleDestructuredView(pattern, initializer); err != nil {
+		return nil, err
+	}
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: value.Type(), Function: l.functionIndex})
+	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
+	if err != nil {
+		return nil, err
+	}
+	return append([]ir.Statement{ir.Declare{Local: held, Value: value}}, declared...), nil
+}
+
+// destructureFrom declares a pattern's names from the local held, which holds a value of type
+// destructured (held as heldAs): a tuple's elements by position, an object's fields by name. An
+// object's name may have a default, { a = 1 } (destructuredDefault); a tuple's may not yet.
+func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+	tuple := pattern.Kind == ast.KindArrayBindingPattern
+	if tuple && heldAs == ir.Array && l.matchArray(destructured) {
+		return l.destructureMatch(pattern, held)
+	}
+	if tuple && !checker.IsTupleType(destructured) {
+		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
+	}
+	if heldAs == ir.String && !tuple {
+		return l.destructureString(pattern, held)
+	}
+	if heldAs != ir.Object {
+		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))
+	}
+	var elementTypes []*checker.Type
+	if tuple {
+		elementTypes = l.checker.GetTypeArguments(destructured)
+	}
+	statements := []ir.Statement{}
+	for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		// A hole, [, second], is a binding element with no name.
+		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+			continue
+		}
+		declared := binding.AsBindingElement()
+		if declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a rest element in destructuring")
+		}
+		if !ast.IsIdentifier(binding.Name()) {
+			return nil, l.notYet(binding, "a nested destructuring pattern")
+		}
+		if tuple && declared.Initializer != nil {
+			// A tuple's optional element is typed without its undefined, so its field's representation
+			// can't be trusted to tell a missing element apart.
+			return nil, l.notYet(binding, "a tuple element default")
+		}
+		var field string
+		var fieldType *checker.Type
+		absent := false
+		if tuple {
+			if index >= len(elementTypes) {
+				return nil, l.notYet(binding, "destructuring past a tuple's end")
+			}
+			field, fieldType = strconv.Itoa(index), elementTypes[index]
+		} else {
+			// { x } reads x, and { x: other } reads x into other.
+			field = binding.Name().Text()
+			if declared.PropertyName != nil {
+				if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+					return nil, l.notYet(declared.PropertyName, "a computed field name")
+				}
+				field = declared.PropertyName.Text()
+			}
+			property, err := l.destructuredField(binding, destructured, field)
+			if err != nil {
+				return nil, err
+			}
+			fieldType = l.checker.GetTypeOfSymbol(property)
+			absent = property.Flags&ast.SymbolFlagsOptional != 0
+		}
+		var fallback ir.Expression
+		if declared.Initializer != nil {
+			// Lowered after the names before it are declared, so { a, b = a } reads a, and before its own,
+			// which the default can't see.
+			var err error
+			if fallback, err = l.expression(declared.Initializer); err != nil {
+				return nil, err
+			}
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		// The field is read as it's stored. Without a default that's the name's own representation;
+		// with one, the name's type has lost the field's undefined, so it may be held otherwise.
+		stored := l.result.Locals[local].Type
+		element, isKnown := l.representation(fieldType)
+		if fallback != nil {
+			stored = element
+		}
+		if !isKnown || element != stored || (slotless(stored) && stored != ir.Union) {
+			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
+		}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: stored, Absent: absent}
+		value.View = sourceExpression(binding) + " (field " + field + ")"
+		value.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
+		value.ViewTypeID = l.viewTypeID(fieldType)
+		value.ViewWhere = l.program.Where(binding)
+		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewAllowed = l.viewLiterals(fieldType)
+		if fallback == nil {
+			statements = append(statements, l.initializeLocal(local, value)...)
+			continue
+		}
+		defaulted, err := l.destructuredDefault(binding, fieldType, value, local, fallback)
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, defaulted...)
+	}
+	return statements, nil
+}
+
+// destructuredDefault declares the name local of { a = fallback } from its field's read, as
+// JavaScript does: the field is read once, into a local of the field's own representation, and the
+// default, already lowered, is evaluated only when that read is undefined, never when it's null.
+// So the field's representation must tell the two apart: a maybe pair can't hold null, and a union
+// holds null as a sentinel of its own, but any other reference holds null and undefined as one null
+// pointer, and that stays not yet rather than take the default for a null.
+func (l *lowering) destructuredDefault(binding *ast.Node, fieldType *checker.Type, read ir.Property, local int, fallback ir.Expression) ([]ir.Statement, error) {
+	of := l.result.Locals[local].Type
+	switch {
+	case read.Of == ir.Weak:
+		return nil, l.notYet(binding, "a destructuring default for a weak field")
+	case !read.Of.IsMaybe() && !read.Of.IsReference():
+		return nil, l.notYet(binding, "a destructuring default for a field of type "+l.checker.TypeToString(fieldType)+", which is never undefined")
+	case read.Of != ir.Union && l.mayHoldNull(fieldType):
+		return nil, l.notYet(binding, "a destructuring default for a field of type "+l.checker.TypeToString(fieldType)+", whose null and undefined are held alike")
+	}
+	field := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured_field", Type: read.Of, Function: l.functionIndex})
+	held := ir.Read{Local: field, Of: read.Of}
+	// Where the field is read, the name is it: as it's stored, or a number or boolean | undefined
+	// pair's present value, which the test below has proven present.
+	present := ir.Expression(held)
+	if read.Of != of {
+		if !read.Of.IsMaybe() || read.Of.Present() != of {
+			return nil, l.notYet(binding, "a destructuring default whose name is held otherwise than its field")
+		}
+		present = ir.Unwrap{Value: held, Proven: true}
+	}
+	if fallback = fit(fallback, of); fallback.Type() != of {
+		return nil, l.notYet(binding, "a destructuring default of another representation than its name")
+	}
+	chosen := ir.Conditional{Condition: ir.IsUndefined{Value: held}, WhenTrue: fallback, WhenNot: present, Of: of}
+	return append([]ir.Statement{ir.Declare{Local: field, Value: read}}, l.initializeLocal(local, chosen)...), nil
+}
+
+// destructuredField is the field { x } reads off a value of type destructured, in a declaration or
+// an assignment: one the type names and holds as its own, never a method, an inherited library
+// member or an erased method.
+func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type, field string) (*ast.Symbol, error) {
+	property := l.checker.GetPropertyOfType(destructured, field)
+	if property == nil {
+		return nil, l.notYet(where, "destructuring a field the type doesn't name")
+	}
+	ownResultField := l.iteratorResultField(nil, property)
+	if l.inheritedLibrarySymbol(property) && !ownResultField {
+		return nil, l.prototypeRead(where, field)
+	}
+	if property.Flags&ast.SymbolFlagsMethod != 0 {
+		return nil, &Refused{Where: l.program.Where(where), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+	}
+	for _, root := range l.checker.GetRootSymbols(property) {
+		for _, declaration := range root.Declarations {
+			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !ownResultField {
+				return nil, l.notYet(where, "an inherited library member in object destructuring, which is not an own field")
+			}
+		}
+	}
+	if err := l.erasedMethodField(where, destructured, field); err != nil {
+		return nil, err
+	}
+	return property, nil
+}
+
+// destructureString uses the same UTF-16 length read as string.length. The caller
+// saves the source once, even for an empty pattern or repeated property reads.
+func (l *lowering) destructureString(pattern *ast.Node, held int) ([]ir.Statement, error) {
+	statements := []ir.Statement{}
+	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		declared := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a string destructured name that isn't plain; save the string and read its properties explicitly")
+		}
+		field := binding.Name().Text()
+		if declared.PropertyName != nil {
+			if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+				return nil, l.notYet(declared.PropertyName, "a computed string destructuring member; save the string and read its properties explicitly")
+			}
+			field = declared.PropertyName.Text()
+		}
+		if field != "length" {
+			return nil, l.notYet(binding, "string member '"+field+"' in object destructuring; call methods on the saved string receiver or wrap the call in an arrow")
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		if l.result.Locals[local].Type != ir.Number {
+			return nil, l.notYet(binding, "a destructured string length held otherwise than a number; use an explicitly typed string source")
+		}
+		value := ir.StringLength{Value: ir.Read{Local: held, Of: ir.String}}
+		statements = append(statements, l.initializeLocal(local, value)...)
+	}
+	return statements, nil
+}
+
+// optionalTupleElement is tuple?.[index], a tuple that may be missing: its field when it's there, and
+// undefined when it isn't, which a number field gives as number | undefined and a reference field as
+// a null one. Fields held any other way stay not yet, as for ?. on a field (object.go's property).
+func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, index *ast.Node) (ir.Expression, error) {
+	access := node.AsElementAccessExpression()
+	tuple := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	if index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(tuple) {
+		return nil, l.notYet(node, "?.[] on anything but a tuple, at a position written out")
+	}
+	elements := l.checker.GetTypeArguments(tuple)
+	position, err := strconv.Atoi(index.Text())
+	if err != nil || position >= len(elements) {
+		return nil, l.notYet(node, "?.[] past a tuple's end")
+	}
+	held, isKnown := l.representation(elements[position])
+	if !isKnown || (held != ir.Number && !held.IsReference()) || held == ir.Weak {
+		return nil, l.notYet(node, "?.[] to a tuple element of type "+l.checker.TypeToString(elements[position]))
+	}
+	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true}, nil
+}
+
+// everyKnown reports whether every type has a representation.
+func (l *lowering) everyKnown(types []*checker.Type) bool {
+	for _, each := range types {
+		if _, isKnown := l.representation(each); !isKnown {
+			return false
+		}
+	}
+	return true
+}

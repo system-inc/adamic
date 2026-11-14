@@ -19,7 +19,7 @@ for m in modes:
   moved=sum(not c['unchanged'] for c in members)
   s += ['- '+str(g['count'])+(' root: ' if g['count']==1 else ' roots: ')+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged from 7534c1d7.']
  s += ['']
-s += ['Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','','## Adapted source at new stops','']
+s += ['Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','','Neither sys.ts:515:39 (#036ve6w) nor sys.ts:594:5 (#trxxkge) is first for the former 73 roots: all stop at sys.ts:790:87 during refusal_scan, before body lowering.', '', '## Adapted source at new stops','']
 seen=set()
 for m in modes:
  cs=json.loads((base/m/'comparison.json').read_text())
