@@ -13,9 +13,11 @@ p=json.loads((base/'provenance.json').read_text())
 s=['# Next stops on 9c322233','','Measured commit: `'+p['sha']+'` (main, "Judge assignment values through their declared write handles"). Parent: `'+p['parent']+'`. Baseline: `'+p['baseline']+'` on typescript/next-stops-516c3ded.','','Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','']
 for m in modes:
  cs=json.loads((base/m/'comparison.json').read_text())
- gs=json.loads((base/m/'grouped-first-stops.json').read_text())
- s += [m+': '+str(sum(c['unchanged'] for c in cs))+' unchanged exact tuples; '+str(sum(not c['unchanged'] for c in cs))+' changed.']
- for g in gs:s += [str(g['count'])+' roots: '+g['where']+'; '+g['kind']+'; '+g['reason']+'.']
+ former=[c for c in cs if c['before']==['sys.ts:272:23','Refused',"a cast the runtime can't check"]]
+ assert len(former)==73 and all(c['unchanged'] for c in former)
+ assert sum(c['unchanged'] for c in cs)==78
+ assert [c['root'] for c in cs if not c['unchanged']]==['sys.ts']
+s += ["The prediction is confirmed for all 73 roots in both formats: **sys.ts:272:23**, Refused: **a cast the runtime can't check**, in the refusal scan (owner 01a11410). Of the other six roots, five are unchanged; **sys.ts** now stops at **scanner.ts:2934:41** instead of scanner.ts:469:12. Thus 78/79 exact tuples are unchanged from the 516c3ded table in each format. Files lowering whole in both formats: corePublic.ts and hostErrors.ts (2/79).",'', 'Adapted source at the predicted shared stop:','','```typescript','        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;','```','']
 s += ['','## Adapted source at new stops','']
 seen=set()
 for m in modes:
@@ -24,7 +26,7 @@ for m in modes:
  for e in json.loads((base/m/'source-evidence.json').read_text()):
   key=(e['where'],e['kind'],e['reason'])
   if key in new and key not in seen:
-   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_excerpt'],'```','']
+   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
 if not seen:s+=['No new stop tuples relative to the 516c3ded baseline.','']
 for m in modes:
  report=(base/m/'REPORT.md').read_text().splitlines()[1:]

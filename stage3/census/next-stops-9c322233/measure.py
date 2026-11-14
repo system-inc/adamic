@@ -1,5 +1,5 @@
 """Recipe; each command is a separate bounded invocation, not one long shell.
-source /workspace/adamic-tools/env.sh
+source /workspace/scratch/next-stops-9c322233/env.sh
 export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/next-stops-9c322233/typescript-source
 export CENSUS_MODULE_FORMAT=CommonJSBundle
 python3 stage3/census/next-stops-9c322233/run.py apply bash stage3/apply.sh /workspace/scratch/next-stops-9c322233-adapted
