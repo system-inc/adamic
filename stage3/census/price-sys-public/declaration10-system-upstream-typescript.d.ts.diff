@@ -1,0 +1,11 @@
+--- control/typescript.d.ts
++++ declaration10-system/typescript.d.ts
+@@ -8470,7 +8470,7 @@
+         watchDirectory?(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;
+         resolvePath(path: string): string;
+         fileExists(path: string): boolean;
+-        directoryExists(path: string): boolean;
++        directoryExists: (path: string) => boolean;
+         createDirectory(path: string): void;
+         getExecutingFilePath(): string;
+         getCurrentDirectory(): string;

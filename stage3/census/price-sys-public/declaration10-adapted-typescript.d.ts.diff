@@ -1,0 +1,15 @@
+--- control/typescript.d.ts
++++ declaration10/typescript.d.ts
+@@ -7267,11 +7267,7 @@
+                 trace(s: string): void;
+             }["trace"]
+             | undefined;
+-        directoryExists?:
+-            | {
+-                directoryExists(directoryName: string): boolean;
+-            }["directoryExists"]
+-            | undefined;
++        directoryExists?: ((directoryName: string) => boolean) | undefined;
+         /**
+          * Resolve a symbolic link.
+          * @see https://nodejs.org/api/fs.html#fs_fs_realpathsync_path_options

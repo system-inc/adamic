@@ -1,0 +1,108 @@
+{
+  "cases": [
+    {
+      "ownCall": false,
+      "control": [
+        [
+          "get",
+          true
+        ],
+        [
+          "set",
+          true
+        ],
+        [
+          "target",
+          true,
+          "first",
+          "data",
+          false
+        ],
+        [
+          "target",
+          true,
+          "second",
+          "data2",
+          true
+        ]
+      ],
+      "readonlyView": [
+        [
+          "get",
+          true
+        ],
+        [
+          "set",
+          true
+        ],
+        [
+          "target",
+          true,
+          "first",
+          "data",
+          false
+        ],
+        [
+          "target",
+          true,
+          "second",
+          "data2",
+          true
+        ]
+      ],
+      "capturedIdentitySame": true
+    },
+    {
+      "ownCall": true,
+      "control": [
+        [
+          "get",
+          true
+        ],
+        [
+          "set",
+          true
+        ],
+        [
+          "own-call",
+          true,
+          "first",
+          "data",
+          false
+        ],
+        [
+          "own-call",
+          true,
+          "second",
+          "data2",
+          true
+        ]
+      ],
+      "readonlyView": [
+        [
+          "get",
+          true
+        ],
+        [
+          "set",
+          true
+        ],
+        [
+          "own-call",
+          true,
+          "first",
+          "data",
+          false
+        ],
+        [
+          "own-call",
+          true,
+          "second",
+          "data2",
+          true
+        ]
+      ],
+      "capturedIdentitySame": true
+    }
+  ]
+}

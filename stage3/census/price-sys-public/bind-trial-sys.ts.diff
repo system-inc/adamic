@@ -1,0 +1,11 @@
+--- control/src/compiler/sys.ts
++++ local3/src/compiler/sys.ts
+@@ -1382,7 +1382,7 @@
+  */
+ export function patchWriteFileEnsuringDirectory(sys: System): void {
+     // patch writefile to create folder before writing the file
+-    const originalWriteFile = sys.writeFile;
++    const originalWriteFile = sys.writeFile.bind(sys);
+     sys.writeFile = (path, data, writeBom) =>
+         writeFileEnsuringDirectories(
+             path,

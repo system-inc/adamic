@@ -1,0 +1,15 @@
+{
+  "control": [
+    [
+      "own-call",
+      true
+    ]
+  ],
+  "bind": [
+    [
+      "target",
+      true
+    ]
+  ],
+  "scope": "Public System can supply a function with its own call property. This distinguishes the bind candidate from the original even though the captured function itself is never identity-compared."
+}

@@ -1,0 +1,11 @@
+--- control/src/compiler/sys.ts
++++ declaration10-system/src/compiler/sys.ts
+@@ -1417,7 +1417,7 @@
+     /**@internal */ preferNonRecursiveWatch?: boolean;
+     resolvePath(path: string): string;
+     fileExists(path: string): boolean;
+-    directoryExists(path: string): boolean;
++    directoryExists: (path: string) => boolean;
+     createDirectory(path: string): void;
+     getExecutingFilePath(): string;
+     getCurrentDirectory(): string;

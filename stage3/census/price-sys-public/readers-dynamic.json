@@ -1,0 +1,36 @@
+{
+  "roots": 712,
+  "scope": "Computed accesses, object spread/rest, in/own presence and standard Object/Reflect/JSON reflection whose checker-resolved receiver exposes the requested public declarations; conservative possible-key inventory.",
+  "rows": [
+    {
+      "kind": "object spread",
+      "file": "src/harness/incrementalUtils.ts",
+      "line": 525,
+      "column": 9,
+      "expression": "...compilerHost",
+      "members": [
+        "ModuleResolutionHost.directoryExists"
+      ]
+    },
+    {
+      "kind": "object spread",
+      "file": "src/testRunner/unittests/helpers/tscWatch.ts",
+      "line": 243,
+      "column": 9,
+      "expression": "...compilerHost",
+      "members": [
+        "ModuleResolutionHost.directoryExists"
+      ]
+    },
+    {
+      "kind": "object spread",
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 305,
+      "column": 13,
+      "expression": "...host",
+      "members": [
+        "ModuleResolutionHost.directoryExists"
+      ]
+    }
+  ]
+}

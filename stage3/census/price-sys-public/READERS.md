@@ -1,41 +1,49 @@
-# Direct public-declaration references
+# Public member references across src
 
-Stock TypeScript symbol resolution over all 712 src TypeScript/TSX roots; all 526 explicit accesses and destructuring entries, including homonyms, are retained in the JSON inventory. This table includes writes as well as reads. It is a static inventory, not lane coverage.
+The complete 526-entry JSON inventory records explicit accesses and destructuring, symbol declaration origins, and unrelated homonyms. It resolves all 712 adapted src TypeScript/TSX roots, including harness and test runners. This table includes writes. System.directoryExists is included to price the alternate public declaration interpretation.
 
-| Source | Expression |
-|---|---|
-| src/compiler/sys.ts:1385:31 | `sys.writeFile` |
-| src/compiler/sys.ts:1386:5 | `sys.writeFile` |
-| src/compiler/moduleNameResolver.ts:820:9 | `host.directoryExists` |
-| src/compiler/moduleNameResolver.ts:824:21 | `host.directoryExists` |
-| src/compiler/program.ts:460:14 | `compilerHost.directoryExists` |
-| src/compiler/program.ts:478:49 | `system.writeFile` |
-| src/compiler/program.ts:4895:37 | `host.compilerHost.directoryExists` |
-| src/compiler/program.ts:4908:27 | `host.compilerHost.directoryExists` |
-| src/compiler/program.ts:4957:9 | `host.compilerHost.directoryExists` |
-| src/compiler/watch.ts:859:56 | `system.writeFile` |
-| src/compiler/watchPublic.ts:660:9 | `compilerHost.directoryExists` |
-| src/compiler/executeCommandLine.ts:1300:9 | `sys.writeFile` |
-| src/services/services.ts:1811:35 | `compilerHost!.directoryExists` |
-| src/server/scriptInfo.ts:659:9 | `this.host.writeFile` |
-| src/server/project.ts:783:16 | `this.projectService.host.writeFile` |
-| src/server/session.ts:2632:111 | `this.host.writeFile` |
-| src/harness/harnessIO.ts:126:39 | `ts.sys.writeFile` |
-| src/testRunner/unittests/helpers/baseline.ts:137:9 | `sys.writeFile` |
-| src/testRunner/unittests/helpers/baseline.ts:294:5 | `sys.writeFile` |
-| src/testRunner/unittests/helpers/baseline.ts:460:31 | `sys.writeFile` |
-| src/testRunner/unittests/helpers/baseline.ts:461:5 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:76:33 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:336:25 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:340:25 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:344:25 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:575:21 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:576:21 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:583:21 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:590:21 | `sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:693:17 | `ts.sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:706:17 | `ts.sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:719:17 | `ts.sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:733:17 | `ts.sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:763:13 | `ts.sys.writeFile` |
-| src/testRunner/unittests/sys/symlinkWatching.ts:764:13 | `ts.sys.writeFile` |
+| Member | Source | Expression |
+|---|---|---|
+| System.writeFile | src/compiler/sys.ts:1385:31 | `sys.writeFile` |
+| System.writeFile | src/compiler/sys.ts:1386:5 | `sys.writeFile` |
+| System.directoryExists | src/compiler/sys.ts:1393:21 | `sys.directoryExists` |
+| System.directoryExists | src/compiler/sys.ts:1540:22 | `nodeSystem.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/moduleNameResolver.ts:820:9 | `host.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/moduleNameResolver.ts:824:21 | `host.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/program.ts:460:14 | `compilerHost.directoryExists` |
+| System.directoryExists | src/compiler/program.ts:460:46 | `system.directoryExists` |
+| System.writeFile | src/compiler/program.ts:478:49 | `system.writeFile` |
+| System.directoryExists | src/compiler/program.ts:489:43 | `system.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/program.ts:4895:37 | `host.compilerHost.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/program.ts:4908:27 | `host.compilerHost.directoryExists` |
+| ModuleResolutionHost.directoryExists | src/compiler/program.ts:4957:9 | `host.compilerHost.directoryExists` |
+| System.directoryExists | src/compiler/watch.ts:852:34 | `system.directoryExists` |
+| System.writeFile | src/compiler/watch.ts:859:56 | `system.writeFile` |
+| ModuleResolutionHost.directoryExists | src/compiler/watchPublic.ts:660:9 | `compilerHost.directoryExists` |
+| System.directoryExists | src/compiler/executeCommandLine.ts:609:61 | `sys.directoryExists` |
+| System.writeFile | src/compiler/executeCommandLine.ts:1300:9 | `sys.writeFile` |
+| ModuleResolutionHost.directoryExists | src/services/services.ts:1811:35 | `compilerHost!.directoryExists` |
+| System.writeFile | src/server/scriptInfo.ts:659:9 | `this.host.writeFile` |
+| System.writeFile | src/server/project.ts:783:16 | `this.projectService.host.writeFile` |
+| System.writeFile | src/server/session.ts:2632:111 | `this.host.writeFile` |
+| System.directoryExists | src/harness/harnessIO.ts:113:23 | `ts.sys.directoryExists` |
+| System.writeFile | src/harness/harnessIO.ts:126:39 | `ts.sys.writeFile` |
+| System.directoryExists | src/harness/harnessIO.ts:131:34 | `ts.sys.directoryExists` |
+| System.writeFile | src/testRunner/unittests/helpers/baseline.ts:137:9 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/helpers/baseline.ts:294:5 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/helpers/baseline.ts:460:31 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/helpers/baseline.ts:461:5 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:76:33 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:336:25 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:340:25 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:344:25 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:575:21 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:576:21 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:583:21 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:590:21 | `sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:693:17 | `ts.sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:706:17 | `ts.sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:719:17 | `ts.sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:733:17 | `ts.sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:763:13 | `ts.sys.writeFile` |
+| System.writeFile | src/testRunner/unittests/sys/symlinkWatching.ts:764:13 | `ts.sys.writeFile` |

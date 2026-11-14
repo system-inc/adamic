@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict');
+function run(bound){const events=[];const sys={};const f=function(){events.push(['target',this===sys]);};f.call=function(receiver){events.push(['own-call',receiver===sys]);};sys.writeFile=f;const originalWriteFile=bound?sys.writeFile.bind(sys):sys.writeFile;sys.writeFile=(p,d,b)=>originalWriteFile.call(sys,p,d,b);sys.writeFile('p','d',false);return events;}
+const control=run(false),bind=run(true);assert.notDeepEqual(control,bind);console.log(JSON.stringify({control,bind,scope:'Public System can supply a function with its own call property. This distinguishes the bind candidate from the original even though the captured function itself is never identity-compared.'},null,2));
