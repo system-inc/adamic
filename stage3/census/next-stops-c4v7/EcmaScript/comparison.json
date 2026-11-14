@@ -1,0 +1,1108 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "binder.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builder.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderState.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "checker.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "core.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "emitter.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/utilities.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "parser.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "path.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "performance.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "performanceCore.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "program.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "resolutionCache.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "scanner.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "semver.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "sourcemap.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "symbolWalker.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "sys.ts",
+    "before": [
+      "scanner.ts:2934:41",
+      "Refused",
+      "a value of type (TextRange & { value: number; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { value: number; } is read"
+    ],
+    "after": [
+      "utilitiesPublic.ts:1280:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "tracing.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformer.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/generators.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/ts.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "tsbuild.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "types.ts",
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "utilities.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "visitorPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "watch.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "watchPublic.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "watchUtilities.ts",
+    "before": [
+      "sys.ts:304:13",
+      "Refused",
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": false
+  }
+]
