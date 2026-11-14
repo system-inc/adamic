@@ -6,7 +6,7 @@
     "phase": "refusal_scan",
     "owner": "internal/lower/cast_proof.go: (*lowering).castProof (createDirectoryWatcherSupportingRecursive)",
     "emitter": "internal/lower/cast_proof.go:197",
-    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive; the line is unchanged by the single-watcher forwarder adaptation. lower.go runs refuse over modules before body lowering, so this cast preempts sys.ts:515:39 optionalCall in body lowering.",
+    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive; the line is unchanged by the single-watcher forwarder adaptation. lower.go runs refuse over modules before body lowering, so this cast preempts sys.ts:515:39 (#036ve6w) optionalCall in body lowering",
     "adapted_line": "    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames) as (fileName: string) => Path;",
     "adapted_excerpt": "615:     let timerToUpdateChildWatches: any;\n616: \n617:     const filePathComparer = getStringComparer(!useCaseSensitiveFileNames);\n618:     const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames) as (fileName: string) => Path;\n619: \n620:     return (dirName, callback, recursive, options) =>\n621:         recursive ?"
   },

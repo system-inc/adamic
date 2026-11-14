@@ -6,10 +6,10 @@ Measured compiler/apply commit: `7534c1d7575db02bb7b6512119e0685987b7e333`. Root
 
 - 73 roots: sys.ts:618:33; Refused; a cast the runtime can't check. 73 moved, 0 unchanged.
 - 2 roots: -; accepted; -. 0 moved, 2 unchanged.
-- 1 roots: commandLineParser.ts:293:35; NotYet; reading an enum before its runtime initialization; move the call after the enum declaration. 0 moved, 1 unchanged.
-- 1 roots: diagnosticInformationMap.generated.ts:13:45; NotYet; reading an enum before its runtime initialization; move the call after the enum declaration. 0 moved, 1 unchanged.
-- 1 roots: semver.ts:71:9; NotYet; a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration. 0 moved, 1 unchanged.
-- 1 roots: utilitiesPublic.ts:1280:52; Refused; an unproven predicate argument for parameter predicate (argument "predicate"). 0 moved, 1 unchanged.
+- 1 root: commandLineParser.ts:293:35; NotYet; reading an enum before its runtime initialization; move the call after the enum declaration. 0 moved, 1 unchanged.
+- 1 root: diagnosticInformationMap.generated.ts:13:45; NotYet; reading an enum before its runtime initialization; move the call after the enum declaration. 0 moved, 1 unchanged.
+- 1 root: semver.ts:71:9; NotYet; a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration. 0 moved, 1 unchanged.
+- 1 root: utilitiesPublic.ts:1280:52; Refused; an unproven predicate argument for parameter predicate (argument "predicate"). 0 moved, 1 unchanged.
 
 ## Adapted source at new stops
 
@@ -21,7 +21,7 @@ Measured compiler/apply commit: `7534c1d7575db02bb7b6512119e0685987b7e333`. Root
 
 Phase: refusal_scan. Owner: internal/lower/cast_proof.go: (*lowering).castProof (createDirectoryWatcherSupportingRecursive).
 
-stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive; the line is unchanged by the single-watcher forwarder adaptation. lower.go runs refuse over modules before body lowering, so this cast preempts sys.ts:515:39 optionalCall in body lowering.
+stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive; the line is unchanged by the single-watcher forwarder adaptation. lower.go runs refuse over modules before body lowering, so this cast preempts sys.ts:515:39 (#036ve6w) optionalCall in body lowering
 
 | Roots | Location | Kind | Exact reason | Phase | Owner |
 | ---: | --- | --- | --- | --- | --- |

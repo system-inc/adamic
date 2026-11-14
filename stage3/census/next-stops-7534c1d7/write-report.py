@@ -9,7 +9,7 @@ lead=['## Stops and movement from ff4ce03f','']
 for g in groups:
  members=[c for c in comparisons if c['root'] in g['roots']]
  moved=sum(not c['unchanged'] for c in members)
- lead+=['- '+str(g['count'])+' roots: '+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged.']
+ lead+=['- '+str(g['count'])+(' root: ' if g['count']==1 else ' roots: ' )+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged.']
 lead+=['','## Adapted source at new stops','']
 for e in read('source-evidence.json'):
  if any(not c['unchanged'] and c['after']==[e['where'],e['kind'],e['reason']] for c in comparisons):
