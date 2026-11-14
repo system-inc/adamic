@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -246,6 +247,74 @@ func TestProvisioningCopiesThePinnedLaidInstall(t *testing.T) {
 		}
 		if string(got) != want {
 			t.Fatalf("%s: the checkout's copy is not corrected", file)
+		}
+	}
+}
+
+// Loom's door lays the install as read-only hard links to the box's one install, so the laid tree's files can't be
+// written (#t7b148j, J-2yma76w): provisioning copies it, makes its own copy writable, still reads the copy as the pin,
+// and corrects the copy, leaving the laid files as they were. Mutant: copyInstall keeping the source's mode alone
+// (the correction fails with permission denied).
+func TestProvisioningCorrectsACopyOfAReadOnlyLay(t *testing.T) {
+	t.Parallel()
+	root, tree, _ := pinnedPair(t)
+	laid := filepath.Join(root, "stage3", "api", "node_modules")
+	var directories []string
+	if err := filepath.WalkDir(laid, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		switch {
+		case entry.Type()&fs.ModeSymlink != 0:
+			return nil
+		case entry.IsDir():
+			directories = append(directories, path)
+			return nil
+		}
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		return os.Chmod(path, info.Mode().Perm()&^0222)
+	}); err != nil {
+		t.Fatal(err)
+	}
+	for _, directory := range directories {
+		if err := os.Chmod(directory, 0555); err != nil {
+			t.Fatal(err)
+		}
+	}
+	// t.TempDir's cleanup needs to remove what it made, so the laid tree is made writable again first.
+	t.Cleanup(func() {
+		for _, directory := range directories {
+			os.Chmod(directory, 0755)
+		}
+	})
+	if err := provisionCheckout(root, tree, withoutNpm, copyInstall); err != nil {
+		t.Fatalf("provisioning from a read-only lay: %v", err)
+	}
+	files, err := load.NodeHostAxiomFiles()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range files {
+		published, err := os.ReadFile(filepath.Join("..", "..", "internal", "load", "node_types", "node_modules", "@types", "node", file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		want, err := load.CorrectNodeHostAxioms(file, string(published))
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := os.ReadFile(filepath.Join(tree, "stage3", "api", "node_modules", "@types", "node", file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(got) != want {
+			t.Fatalf("%s: the copy of the read-only lay is not corrected", file)
+		}
+		if laidText, err := os.ReadFile(filepath.Join(laid, "@types", "node", file)); err != nil || string(laidText) != string(published) {
+			t.Fatalf("%s: the read-only lay itself was changed: %v", file, err)
 		}
 	}
 }
