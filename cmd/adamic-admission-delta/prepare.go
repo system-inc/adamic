@@ -125,7 +125,9 @@ func packagesDigest(tree string, tool func(name string) (string, error)) (string
 // copyInstall copies the install at source to target, which must not exist yet: directories, regular files with
 // their modes, and symlinks as symlinks with their own target text, so node_modules/.bin's relative links resolve
 // inside target. A source that is itself a link (a runner's linked node_modules) is copied as the tree it names,
-// as apply.py's os.walk reads it.
+// as apply.py's os.walk reads it. Every copied file is owner-writable whatever the source's mode, since
+// correctPreparedNodeTypes rewrites the copy's @types/node: Loom's door lays the install as read-only hard links to
+// the box's one install (#t7b148j, J-2yma76w), and the digest reads only a file's executable bit, so the pin holds.
 func copyInstall(source, target string) error {
 	resolved, err := filepath.EvalSymlinks(source)
 	if err != nil {
@@ -155,7 +157,7 @@ func copyInstall(source, target string) error {
 			// Owner-writable while it fills; a directory's mode is in no digest.
 			return os.Mkdir(destination, info.Mode().Perm()|0700)
 		case entry.Type().IsRegular():
-			return copyFile(path, destination, info.Mode().Perm())
+			return copyFile(path, destination, info.Mode().Perm()|0200)
 		}
 		return fmt.Errorf("%s is neither a file, a directory nor a symlink", path)
 	})
