@@ -100,7 +100,7 @@ func TestNeverReadWithNothingBetweenTraps(t *testing.T) {
 	for _, probe := range []struct{ name, source string }{
 		{"nv4", neverReadKinds + "function describe(node: N): string {\n\tif (node.kind === K.A) return 'a';\n\tif (node.kind === K.B) return 'b';\n\t{ const seen: unknown = node; return stray(seen); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\nconsole.log(describe({ kind: K.A, a: 1 }));\n"},
 		{"switch", neverReadShapes + "console.log(String(corners(\"circle\")) + \" \" + String(corners(\"square\")));\n"},
-		{"for_of", "type Shape = \"circle\" | \"square\";\nfunction fail(shape: never): never { throw new Error(\"unexpected shape \" + String(shape)); }\nfunction corners(shapes: readonly Shape[]): number {\n\tlet total = 0;\n\tfor (const shape of shapes) {\n\t\tswitch (shape) {\n\t\t\tcase \"circle\": break;\n\t\t\tcase \"square\": total += 4; break;\n\t\t\tdefault: fail(shape);\n\t\t}\n\t}\n\treturn total;\n}\nconsole.log(String(corners([\"circle\", \"square\"])));\n"},
+		{"for_of", "type Shape = \"circle\" | \"square\";\nfunction fail(shape: unknown): never { throw new Error(\"unexpected shape \" + String(shape)); }\nfunction corners(shapes: readonly Shape[]): number {\n\tlet total = 0;\n\tfor (const shape of shapes) {\n\t\tswitch (shape) {\n\t\t\tcase \"circle\": break;\n\t\t\tcase \"square\": total += 4; break;\n\t\t\tdefault: fail(shape);\n\t\t}\n\t}\n\treturn total;\n}\nconsole.log(String(corners([\"circle\", \"square\"])));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -116,9 +116,10 @@ func TestNeverReadWithNothingBetweenTraps(t *testing.T) {
 }
 
 // neverReadShapes is class (a): an exhaustive switch's never handed to a never-returning call, with
-// nothing between the switch and the read.
+// nothing between the switch and the read. fail takes unknown, since a parameter typed never is not yet on
+// its own (a value of type never, at the parameter), before any read reaches it.
 const neverReadShapes = `type Shape = "circle" | "square";
-function fail(shape: never): never { throw new Error("unexpected shape " + String(shape)); }
+function fail(shape: unknown): never { throw new Error("unexpected shape " + String(shape)); }
 function corners(shape: Shape): number {
 	switch (shape) {
 		case "circle": return 0;
