@@ -84,7 +84,11 @@ static size_t object_size(size_t count) {
 
 // Huge blocks use Linux's transparent huge pages, which the house boxes give only to a mapping that
 // asks for them (THP at madvise). Not under any sanitizer, so a sanitized build runs the blocks it
-// always has; AddressSanitizer already turns the cache off.
+// always has; AddressSanitizer already turns the cache off. Defrag is at madvise too, the kernel's
+// default, so a fault here may compact memory in place when no free 2 MB stretch is left, which would
+// be a pause. Measured on Lunatic after 2.5 days up, with 549 free 2 MB stretches: trees' slowest of 20
+// runs within 3% of its fastest and no compaction stall (J-eg3gprw on #cgn2cwt). A box with almost
+// none free hasn't been measured.
 #if defined(__has_feature)
 #if __has_feature(thread_sanitizer) || __has_feature(memory_sanitizer)
 #define REGION_BLOCK_HUGE_OFF 1
@@ -102,6 +106,8 @@ static size_t object_size(size_t count) {
 #define BLOCK_SIZES 9
 #define BLOCK_LARGEST ((size_t)1048576)
 // BLOCK_HUGE, the turn after BLOCK_LARGEST, is one huge page on x86-64 and on arm64 with 4 KB pages.
+// On arm64 with 16 KB pages a huge page is 32 MB, so a 2 MB block is ordinary memory there: still
+// correct, only faulted a page at a time, as a 1 MB block was.
 #define BLOCK_HUGE ((size_t)2097152)
 static _Thread_local adamic_region_block *cached[BLOCK_SIZES];
 static _Thread_local size_t cached_bytes;
