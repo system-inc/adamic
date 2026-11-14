@@ -222,6 +222,36 @@
       "unit_first_stop_changes": 0,
       "regressions": 0,
       "new_process_findings": []
+    },
+    {
+      "pair": "B",
+      "group": 3,
+      "files": [
+        "src/compiler/parser.ts",
+        "src/compiler/moduleNameResolver.ts",
+        "src/compiler/scanner.ts",
+        "src/compiler/factory/nodeFactory.ts",
+        "src/compiler/factory/utilities.ts",
+        "src/compiler/sys.ts",
+        "src/compiler/factory/emitHelpers.ts",
+        "src/compiler/resolutionCache.ts",
+        "src/compiler/sourcemap.ts",
+        "src/compiler/transformers/module/system.ts",
+        "src/compiler/transformers/namedEvaluation.ts",
+        "src/compiler/performance.ts",
+        "src/compiler/builderState.ts",
+        "src/compiler/performanceCore.ts",
+        "src/compiler/factory/nodeChildren.ts",
+        "src/compiler/factory/baseNodeFactory.ts",
+        "src/compiler/hostErrors.ts",
+        "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "deadline_seconds": 3600,
+      "complete": true,
+      "seconds": 783.7029419560004,
+      "unit_first_stop_changes": 0,
+      "regressions": 0,
+      "new_process_findings": []
     }
   ]
 }
