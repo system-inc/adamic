@@ -244,3 +244,29 @@ oracle, fixture, meter, owners map or committed patch table is edited.
 The whole getNodeSystem before/after pins now include 93's concrete timer
 forwarding arrows. They forward the optional label and opaque unknown handle
 under Adamic's 05:48Z contract. This adapter's crypto transformation is unchanged.
+
+## Require result amendment (#baobab item 9)
+
+Type-only, Nov 14, 2026. The nodeSystem `require` arrow now declares
+`: ModuleImportResult`, checking each return directly against that union. No
+return expression, runtime operation or public declaration changes. The
+getNodeSystem upstream-before SHA-256 is unchanged; the after SHA-256 and exact
+whole-owner text are amended in proofs/targets.json. Both owner texts are now
+explicit pins. Uniform LF and CRLF inputs are accepted; mixed endings refuse.
+The annotation separately asserts byte-identical transpiled JavaScript with
+comments kept and removed. Replay performs zero writes.
+
+The full single-file CommonJSBundle sys.ts census removes only the refusal at
+1610:22 (phase refusal_scan), with zero new or changed findings. The annotated
+return's `module: any` produces no new finding: computed-path require calls are
+already modeled as never by the existing host model. This amendment adds no
+exception or host axiom. require-result-mutant.cjs restores the exact original
+arrow, and proofs/require-result-contract.cjs checks pins, drift, duplicates,
+half-adapted input, mixed endings and replay. Full evidence and acceptance
+receipts belong on `typescript/require-result-1610-evidence`, under
+`stage3/census/require-result-1610/`. Nothing is submitted to Loom.
+
+The existing proofs/check.cjs source-scope oracle also undoes the annotation.
+Its source inventory is rebased from the historical 746 files to this task's
+main 8e3a784aa inventory of 747 files; the before/after inventories must still
+match exactly. Its two crypto JavaScript scope checks remain unchanged and pass.
