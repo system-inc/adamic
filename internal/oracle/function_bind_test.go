@@ -1,9 +1,14 @@
 package oracle
 
 import (
+	"errors"
+	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 var methodBindFixtures = []string{"method_bind.a", "method_bind_lifetime.a", "bind_cycle_fixed_arrow.a", "bind_cycle_fixed_bound.a", "bind_cycle_host_arrow.a", "bind_cycle_host_bound.a", "bind_cycle_cache_arrow.a", "bind_cycle_cache_bound.a"}
@@ -222,5 +227,72 @@ func TestMethodBindRecordNonfunction(t *testing.T) {
 		if diff := disagreement(want, got); diff != "" {
 			t.Fatalf("%s: %+v", diff, got)
 		}
+	}
+}
+
+// A bound closure calls its target with the arguments its bound type names, while JavaScript's bind hands
+// on every argument the bound function receives (#04f5s0s, Language's J-xet5sem). seen declares an index,
+// and held as (shape) => boolean, then bound, find's index never reached it: narrow_type printed "seen at
+// undefined" twice on both backends where Node prints "seen at 0" and "seen at 1", and narrow_default,
+// its defaulted twin, prints -1. Each stops at the bind, naming both counts, until the bound closure
+// forwards every argument.
+// own_type, bound as seen's own type, and narrow_direct, passed with no bind, agree with Node natively
+// under the sanitizers, released, and on the JavaScript backend. The stored .a is Node's source, and its
+// .ts copy is what lowers, as predicate_parameter's pins do: the .a refuses find's `array[i]!` first.
+// The count asks only the functions the allocation flow says can be the bound value, so main's honest
+// function_bind.a:46 still lowers and agrees (TestFunctionBind). Mutants
+// (internal/lower/function_bind_extra_parameters.mutants.md): that narrowing removed, and the count dropped.
+func TestFunctionBindExtraParameters(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name  string
+		stops bool
+	}{
+		{"narrow_type", true},
+		{"narrow_default", true},
+		{"own_type", false},
+		{"narrow_direct", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			witness, checked := predicateInputFrom(t, "internal/oracle/testdata/bind_extra_parameters", probe.name)
+			node := onNode(t, witness)
+			if difference := disagreement(run{stdout: []byte("seen at 0\nseen at 1\ncircle\n")}, node); difference != "" {
+				t.Fatalf("source Node: %s, stdout %q", difference, node.stdout)
+			}
+			program, err := lowered(t, checked)
+			if !probe.stops {
+				if err != nil {
+					t.Fatal(err)
+				}
+				sanitized, _ := nativelyUncached(t, program)
+				for index, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if difference := disagreement(node, got); difference != "" {
+						t.Fatalf("%s on %s: exit %d, stdout %q, stderr %q", difference, []string{"sanitized native", "release native", "the JavaScript backend"}[index], got.exitCode, got.stdout, got.stderr)
+					}
+				}
+				return
+			}
+			if err == nil {
+				sanitized, _ := nativelyUncached(t, program)
+				javaScript := onJavaScriptBackend(t, program)
+				t.Fatalf("lowered: sanitized native stdout %q (%s), the JavaScript backend stdout %q (%s)", sanitized.stdout, disagreement(node, sanitized), javaScript.stdout, disagreement(node, javaScript))
+			}
+			source, readErr := os.ReadFile(checked)
+			if readErr != nil {
+				t.Fatal(readErr)
+			}
+			site := ""
+			for number, line := range strings.Split(string(source), "\n") {
+				if column := strings.Index(line, "narrow.bind(undefined)"); column >= 0 {
+					site = fmt.Sprintf("%s:%d:%d", checked, number+1, column+1)
+				}
+			}
+			var notYet *lower.NotYet
+			want := "bind of a function that declares 2 parameters where the type it's bound as names 1"
+			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != site {
+				t.Fatalf("want NotYet %q at %s, got %v", want, site, err)
+			}
+		})
 	}
 }
