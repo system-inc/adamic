@@ -389,8 +389,15 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 
 // sameKeeping reports whether a value of type from, seen as type to, keeps everything inside it the
 // same way through both: every field to has, every element, map key and value, and every parameter
-// and result of a function, Weak in both or in neither, all the way down.
+// and result of a function, Weak in both or in neither, all the way down. And no rest is hidden from
+// the next view anywhere inside it (restHiddenWithin).
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	return l.sameKeepingWalk(from, to, visited) && !l.restHiddenWithin(from, to, false, map[restHiddenPair]bool{})
+}
+
+// sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
+// function's slots by representation.
+func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
@@ -403,12 +410,12 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeeping(a, b, visited)
+		return l.sameKeepingWalk(a, b, visited)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeeping(inside, viewed, visited)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalk(inside, viewed, visited)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -434,6 +441,24 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 				return false
 			}
 		}
+		// A rest parameter collects every argument at and past its position into its array, each copied
+		// from the caller's own slot with no conversion to the element's representation (ClosureArgumentLayout,
+		// copyRest). So the rest's element is judged against each view parameter it collects, and against
+		// a view rest's element, as a fixed parameter is: (...items: (string | number)[]) seen as
+		// (a: string, b: number) packed b's raw double where a boxed union goes, and clang refused the C
+		// (#2t3h708). Converting each element at the call is #8q1pjsp.
+		if rest := len(fromParameters) - 1; len(toParameters) > 0 && fromSignatures[0].HasRestParameter() && l.isArrayType(l.checker.GetTypeOfSymbol(fromParameters[rest])) {
+			collected := len(toParameters)
+			if toSignatures[0].HasRestParameter() {
+				// A view rest before the function's own hands it that rest's element at every position.
+				collected = max(collected, len(fromParameters))
+			}
+			for position := rest; position < collected; position++ {
+				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
+					return false
+				}
+			}
+		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
@@ -453,6 +478,188 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 				return false
 			}
+		}
+	}
+	return true
+}
+
+// restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
+// signature to, would be seen through a view with no rest. Every fixed view can be widened by arity in
+// the next view, (a: string) => string seen as (a: string, b: number) => string, and that relation no
+// longer shows the rest, while the closure underneath still collects every argument raw (copyRest). So
+// the rest is judged only while the type still shows it, and a view that hides it is NotYet: Language's
+// h1 to h3 on #2t3h708, where h3's zero-parameter view reached the closure through a mismatched function
+// pointer. A library view hides it too (a rest function handed to map's callback), and so does a host
+// function's own rest. The one road kept is #995spev's: setTimeout or clearTimeout read as a value into
+// its ruled view exactly (nodeTimerView), whose forwarder closure stops past the arguments it forwards
+// (ir.HostForwardStop), so a later widening stops loudly. Calling through the callee's own layout is
+// #8q1pjsp's lift.
+func (l *lowering) restHiddenByView(from, to *checker.Signature, viewed *checker.Type) bool {
+	if !from.HasRestParameter() || to.HasRestParameter() {
+		return false
+	}
+	// bind's result, (...args: B) => R with B a fixed-length tuple ([] or [third: string]), takes a
+	// fixed count: its value is lowering's own bound closure over a target with no rest, since bind of a
+	// rest function is refused (function_bind.go), and that target drops what a wider view adds. A
+	// program closure whose rest is a tuple stays judged: copyRest would still collect the extra raw.
+	if declaration := from.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if parameters := from.Parameters(); len(parameters) > 0 {
+			if rest := l.checker.GetTypeOfSymbol(parameters[len(parameters)-1]); checker.IsTupleType(rest) && checker.TupleType_combinedFlags(rest.TargetTupleType())&checker.ElementFlagsVariable == 0 {
+				return false
+			}
+		}
+	}
+	if declaration := from.Declaration(); declaration != nil && declaration.Name() != nil && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+		// By the declaration's own name: setTimeout's symbol also holds its __promisify__ namespace.
+		name := map[string]string{"setTimeout": nodeSetTimeoutName, "clearTimeout": nodeClearTimeoutName}[declaration.Name().Text()]
+		if name != "" && l.nodeTimerView(viewed, name) {
+			return false
+		}
+	}
+	return true
+}
+
+// restAdapters is the closed list of intrinsic adapters a rest function literal may be handed to with
+// its rest hidden by the callback's type (Adamic's ruling on #2t3h708, Language's premise): each takes
+// the literal at a callback parameter the library itself calls, calls it by the function's own
+// signature, packing a rest's tail and freeing it at the call's end, and neither returns nor stores it.
+// A name joins only with its own witness of that shape, agreeing with Node natively under the sanitizers
+// and the leak check, and on the JavaScript backend. Any callback not on the list is judged by
+// restHiddenWithin, so it stays NotYet.
+var restAdapters = map[string]string{
+	"sort": "an array's sort comparator, closureComparator's adapter, witnessed by comparator_rest/rest_sort.a (#kwns2n5)",
+}
+
+// restAdapterCallback reports whether node is a function literal written as the callback argument of a
+// call to an adapter on restAdapters: an arrow or a function expression, through parentheses only (never
+// a cast, satisfies, a conditional or a binding), as the first argument of a method call on an array
+// whose resolved signature the library declares. Such a literal has never been seen through any type
+// but the library's parameter, and only the adapter calls it.
+func (l *lowering) restAdapterCallback(node *ast.Node) bool {
+	literal := ast.SkipParentheses(node)
+	if literal.Kind != ast.KindArrowFunction && literal.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	argument := literal
+	for argument.Parent != nil && argument.Parent.Kind == ast.KindParenthesizedExpression {
+		argument = argument.Parent
+	}
+	call := argument.Parent
+	if call == nil || call.Kind != ast.KindCallExpression {
+		return false
+	}
+	arguments := call.AsCallExpression().Arguments
+	if arguments == nil || len(arguments.Nodes) == 0 || arguments.Nodes[0] != argument {
+		return false
+	}
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return false
+	}
+	if _, listed := restAdapters[callee.Name().Text()]; !listed {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(call)
+	return l.isArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) && signature != nil && librarySignature(signature)
+}
+
+// restHiddenPair is a pair restHiddenWithin has judged, at its polarity.
+type restHiddenPair struct {
+	from, to *checker.Type
+	flipped  bool
+}
+
+// restHiddenWithin reports whether a value of type from, seen as type to, hides a rest from the next
+// view anywhere inside it: a function at the top, a field or method, an element, map key or value, a
+// result, or a parameter. A parameter carries its value the other way, so there the view's side is the
+// value's (flipped): setTimeout's own callback `(...args) => void` seen as `(label?: unknown) => void`
+// takes the program's fixed callback, which is safe, while a source taking `(a: string) => void` seen
+// as taking `(...items: string[]) => void` would call a rest closure through a fixed type. Every pair
+// of call signatures is judged, overloads included. Only a method the library declares on both sides
+// is passed over, its member read off its own object, which the runtime dispatches by name.
+func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visited map[restHiddenPair]bool) bool {
+	if from == nil || to == nil || from == to || visited[restHiddenPair{from, to, flipped}] {
+		return false
+	}
+	visited[restHiddenPair{from, to, flipped}] = true
+	// A union or an intersection on either side is judged member by member, undefined and null aside,
+	// before present (which answers nil for a union of two values): a value seen as
+	// ((a: string) => string) | ((a: number) => number) has no call signature of the whole, but a later
+	// view or narrowing reaches each member (Language's e3 on #2t3h708).
+	for _, side := range []*checker.Type{from, to} {
+		if side.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+			continue
+		}
+		for _, member := range side.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
+			if side == from && l.restHiddenWithin(member, to, flipped, visited) || side == to && l.restHiddenWithin(from, member, flipped, visited) {
+				return true
+			}
+		}
+		return false
+	}
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil || from == to {
+		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.restHiddenWithin(a, b, flipped, visited)
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	switch {
+	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		for _, source := range fromSignatures {
+			for _, view := range toSignatures {
+				if flipped && l.restHiddenByView(view, source, from) || !flipped && l.restHiddenByView(source, view, to) {
+					return true
+				}
+				sourceParameters, viewParameters := source.Parameters(), view.Parameters()
+				for index := 0; index < len(sourceParameters) && index < len(viewParameters); index++ {
+					if l.restHiddenWithin(l.checker.GetTypeOfSymbol(sourceParameters[index]), l.checker.GetTypeOfSymbol(viewParameters[index]), !flipped, visited) {
+						return true
+					}
+				}
+				if l.restHiddenWithin(l.checker.GetReturnTypeOfSignature(source), l.checker.GetReturnTypeOfSignature(view), flipped, visited) {
+					return true
+				}
+			}
+		}
+	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if l.restHiddenWithin(fromArguments[index], toArguments[index], flipped, visited) {
+				return true
+			}
+		}
+	default:
+		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+			inside := l.checker.GetPropertyOfType(from, viewed.Name)
+			if inside == nil || libraryDeclaredMethod(inside) && libraryDeclaredMethod(viewed) {
+				// A method the library declares on both sides is its member read off its own object (an
+				// array's splice overloads against a tuple's), which the runtime dispatches by name. A
+				// function value is never let through this way, whatever types it was seen through.
+				continue
+			}
+			if l.restHiddenWithin(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed), flipped, visited) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// libraryDeclaredMethod reports whether a property is a method every declaration of which is in TypeScript's
+// bundled library.
+func libraryDeclaredMethod(property *ast.Symbol) bool {
+	if property.Flags&ast.SymbolFlagsMethod == 0 || len(property.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range property.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
 		}
 	}
 	return true
@@ -1909,9 +2116,18 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 			return l.nodeHostViewRefusal(node, own, slot, reached)
 		}
 	}
-	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, slot, map[[2]*checker.Type]bool{}) {
+	// A listed adapter's own callback literal is the one rest function that may meet a view hiding its
+	// rest: only the adapter calls it, by its own signature (restAdapterCallback).
+	keeps := l.sameKeeping
+	if l.restAdapterCallback(node) {
+		keeps = l.sameKeepingWalk
+	}
+	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !keeps(own, slot, map[[2]*checker.Type]bool{}) {
 		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
+		}
+		if !l.restAdapterCallback(node) && l.restHiddenWithin(own, slot, false, map[restHiddenPair]bool{}) {
+			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
 	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
