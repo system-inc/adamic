@@ -1,0 +1,23 @@
+{
+  "tip": "5b339879f698cd866814260bc7dfa766220de44d",
+  "host": "Shackler",
+  "claim": "gap-20261114045227-6bbafe",
+  "log": {
+    "sha256": "007fb75b0a7c0c23d13a7126ee9c9d89ced4a84d71f08baf3e410e2078af133b",
+    "kept": "Shackler:/Users/loom/scratch/system_loom_capacity_machines/apple-records/slice-21-5b339879-20261114T045659Z.log, 94720 bytes (#0rd010d)"
+  },
+  "command": "go test -count=1 -timeout 30m ./internal/apple/... then the same with -v, at the commit's own pins (cohere 5360753e19e4, cohere/TypeScript d92d9bfee114), by darwin-record-slice-21.sh on #0rd010d",
+  "tools": {
+    "go": "go1.27.1 darwin/arm64",
+    "node": "v24.19.0",
+    "xcode": "Xcode 27.2 (27B52)",
+    "sdk": "macOS 27.2 (26B118)"
+  },
+  "counts": {
+    "passed": 326,
+    "failed": 0,
+    "skipped": 0
+  },
+  "exit": 0,
+  "darwinPaths": "4649fa80838b47f5bc3a4ca60c4f6bcb612ab97c196bb5e76ad46503e7a92a88"
+}
