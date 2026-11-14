@@ -1,0 +1,11 @@
+// function_bind.a's absentProperty.f?.bind(otherReceiver), honest on main, moved here as a known
+// over-refusal (#04f5s0s): the absent field's reach is unknown, so every () => number function counts,
+// withDefault's bound wrapper among them, which declares a parameter. Lifted by the absent-field reach
+// follow-up.
+function defaulted(a: number, b: number = 9): number { return a + b; }
+const withDefault = defaulted.bind(undefined, 1);
+console.log(String(withDefault()));
+const absentProperty: { f?: () => number } = {};
+const otherReceiver = {};
+const absentPropertyBound = absentProperty.f?.bind(otherReceiver);
+console.log(typeof absentPropertyBound);

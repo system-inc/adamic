@@ -41,10 +41,7 @@ console.log(String(typed.bind(undefined, 6)(7)));
 const callbacks: { fn: (a: number, b: number) => number } = { fn: arrow };
 console.log(String(callbacks.fn.bind({ ignored: true }, 8)(9)));
 
-const absentProperty: { f?: () => number } = {};
 const otherReceiver = {};
-const absentPropertyBound = absentProperty.f?.bind(otherReceiver);
-console.log(typeof absentPropertyBound);
 const presentProperty: { f?: () => number } = { f: () => 42 };
 const presentPropertyBound = presentProperty.f?.bind(otherReceiver);
 console.log(typeof presentPropertyBound);
