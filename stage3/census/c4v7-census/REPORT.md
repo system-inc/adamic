@@ -274,11 +274,11 @@ Full counts by reason, including zero-delta reasons, are in [pairing.json](pairi
 
 ## Every new finding
 
-None of the 12 new findings is inside a generic body. Their enclosing function chains and bound call slots are recorded below.
+New findings inside a generic body: 0. Full enclosing function chains and bound call slots are recorded below.
 
 ### 1. builder.ts:1332:30
 
-Kind: `NotYet`. Rule: `none emitted`. Phase: `refusal_scan`.
+Kind: `NotYet`. Rule: `3350 constraintRelationRefusal (no diagnostic label emitted)`. Phase: `refusal_scan`.
 
 Reason: an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read
 
@@ -306,7 +306,7 @@ Syntactic slot context: `{"kind": "argument", "index": 2, "callee": "append", "a
 
 ### 2. builder.ts:1376:26
 
-Kind: `NotYet`. Rule: `none emitted`. Phase: `refusal_scan`.
+Kind: `NotYet`. Rule: `3350 constraintRelationRefusal (no diagnostic label emitted)`. Phase: `refusal_scan`.
 
 Reason: an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read
 
@@ -334,7 +334,7 @@ Syntactic slot context: `{"kind": "argument", "index": 2, "callee": "append", "a
 
 ### 3. builder.ts:1455:42
 
-Kind: `NotYet`. Rule: `none emitted`. Phase: `refusal_scan`.
+Kind: `NotYet`. Rule: `3350 constraintRelationRefusal (no diagnostic label emitted)`. Phase: `refusal_scan`.
 
 Reason: an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read
 
@@ -362,7 +362,7 @@ Syntactic slot context: `{"kind": "argument", "index": 2, "callee": "append", "a
 
 ### 4. builder.ts:1504:21
 
-Kind: `NotYet`. Rule: `none emitted`. Phase: `refusal_scan`.
+Kind: `NotYet`. Rule: `3350 constraintRelationRefusal (no diagnostic label emitted)`. Phase: `refusal_scan`.
 
 Reason: an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read
 
@@ -390,7 +390,7 @@ Syntactic slot context: `{"kind": "argument", "index": 2, "callee": "append", "a
 
 ### 5. builder.ts:1518:17
 
-Kind: `NotYet`. Rule: `none emitted`. Phase: `refusal_scan`.
+Kind: `NotYet`. Rule: `3350 constraintRelationRefusal (no diagnostic label emitted)`. Phase: `refusal_scan`.
 
 Reason: an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read
 

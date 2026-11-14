@@ -10,7 +10,8 @@ s=p['selected_191'];lines+=['',f"Of the scout’s 191 selected ‘seen as’ sit
 for i,f in enumerate(new,1):
  owner=f['enclosing_function'];generics=f['generic_bodies']
  rule=f.get('registered_rule')
- lines += [f"### {i}. {f['where']}",'',f"Kind: `{f['kind']}`. Rule: `{f['rule'] or 'none emitted'}`. Phase: `{f['phase']}`.",'','Reason: '+f['reason'],'','Text:','','```text',f['raw_text'],'```','','Adapted source line:','','```typescript',f['source_line'],'```','','Enclosing function: '+(f"`{owner['name']}` at `{owner['where']}`" if owner else 'module scope')+'.']
+ rule_display=f['rule'] or (str(rule['order'])+' '+rule['name']+' (no diagnostic label emitted)' if rule else 'none emitted')
+ lines += [f"### {i}. {f['where']}",'',f"Kind: `{f['kind']}`. Rule: `{rule_display}`. Phase: `{f['phase']}`.",'','Reason: '+f['reason'],'','Text:','','```text',f['raw_text'],'```','','Adapted source line:','','```typescript',f['source_line'],'```','','Enclosing function: '+(f"`{owner['name']}` at `{owner['where']}`" if owner else 'module scope')+'.']
  if f.get('enclosing_functions'):lines+=['','Enclosing function chain: '+ ' → '.join('`'+g['name']+'` (`'+g['where']+'`)' for g in f['enclosing_functions'])+'.']
  if f.get('diagnostic_emitter'):lines+=['','Diagnostic emitter: `'+f['diagnostic_emitter']['name']+'` at `'+f['diagnostic_emitter']['source']+'`.']
  if rule:lines+=['','Registered rule: `'+str(rule['order'])+' '+rule['name']+'`; emitter `'+rule['emitter']+'` at `'+rule['emitter_source']+'`.']
