@@ -32,7 +32,8 @@ var viewReceiverCallers = []struct {
 	{"interface_cast.go checkedViewReceiverField viewFieldReceiverTypeID", 1, "read guard: the id the asked access is checked under, read or write by its node"},
 	{"interface_cast.go viewFieldReceiverTypeID viewReceiverTypeID", 1, "write: an assignment target keeps its write's raw id"},
 	{"interface_cast.go viewFieldReceiverTypeID viewReadReceiverTypeID", 1, "read: the routed id, the only caller of viewReadReceiverTypeID"},
-	{"interface_cast.go view checkedViewReceiverField", 2, "read guard: an accessor alias refused at a checked read; write guard: a checked object field write refused, by the access's own node"},
+	{"interface_cast.go viewWalkWhole checkedViewReceiverField", 2, "read guard: an accessor alias refused at a checked read; write guard: a checked object field write refused, by the access's own node, in the walk a view under a type mapper and the comparison mode take"},
+	{"view_sites.go viewWalkIndexed checkedViewReceiverField", 2, "read guard and write guard: viewWalkWhole's two, over the site index, for an access not yet found checked whose name gained a key (#q1hyhzc)"},
 	{"interface_cast.go legacyView checkedViewReceiverField", 1, "read guard: a checked field alias's conversion gap (checkedFieldAliasGap), by the access's own node"},
 	{"interface_cast.go checkedViewReceiverField checkedViewReceiverField", 1, "read guard: a union receiver's member, under the same node"},
 	{"destructure_view.go refuseIncompatibleDestructuredView checkedViewReceiverField", 1, "read guard: a destructured field read through an object-union view"},
@@ -97,5 +98,70 @@ func TestViewReceiverCallersAreClassified(t *testing.T) {
 	sort.Strings(unclassified)
 	if len(unclassified) > 0 {
 		t.Errorf("a receiver id call isn't classified as a read or a write; a read asks viewFieldReceiverTypeID, a write viewWriteReceiverTypeID, and viewReceiverCallers says which and why:\n%s", strings.Join(unclassified, "\n"))
+	}
+}
+
+// checkedFieldWriters is every function in this package allowed to write a CheckedFields key, and why.
+var checkedFieldWriters = map[string]string{
+	"markCheckedField": "the one helper: it counts each new key under its name, which view's indexed walk reads to know what to ask again (#q1hyhzc)",
+	"readiness":        "a record's field names, written once lowering is done, after the last view",
+}
+
+// Every `CheckedFields[...] =` outside the test files is in markCheckedField or readiness, so a key added
+// mid-lowering is counted and view's indexed walk asks the accesses of its name again (view_sites.go). A
+// write that skips the count leaves an access judged before it unchecked, where the whole walk would
+// have checked it. Mutant: one of the five writes made directly again, and this names it.
+func TestCheckedFieldsAreWrittenThroughMarkCheckedField(t *testing.T) {
+	t.Parallel()
+	entries, err := os.ReadDir(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := token.NewFileSet()
+	var direct []string
+	writers := map[string]bool{}
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, declaration := range file.Decls {
+			function, isFunction := declaration.(*ast.FuncDecl)
+			if !isFunction || function.Body == nil {
+				continue
+			}
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				assignment, isAssignment := node.(*ast.AssignStmt)
+				if !isAssignment {
+					return true
+				}
+				for _, written := range assignment.Lhs {
+					index, isIndex := written.(*ast.IndexExpr)
+					if !isIndex {
+						continue
+					}
+					if selector, isSelector := index.X.(*ast.SelectorExpr); isSelector && selector.Sel.Name == "CheckedFields" {
+						writers[function.Name.Name] = true
+						if _, allowed := checkedFieldWriters[function.Name.Name]; !allowed {
+							direct = append(direct, files.Position(assignment.Pos()).String()+" in "+function.Name.Name)
+						}
+					}
+				}
+				return true
+			})
+		}
+	}
+	// A renamed helper would leave this test reading nothing.
+	for writer := range checkedFieldWriters {
+		if !writers[writer] {
+			direct = append(direct, writer+": allowed, writes no CheckedFields key")
+		}
+	}
+	sort.Strings(direct)
+	if len(direct) > 0 {
+		t.Errorf("a CheckedFields key is written past markCheckedField, so view's indexed walk never asks its name's accesses again:\n%s", strings.Join(direct, "\n"))
 	}
 }
