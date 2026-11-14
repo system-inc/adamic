@@ -128,7 +128,13 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
 				if of == ir.Object {
-					refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+					// Another alias may read the slot at a type the value doesn't fit. A plain write is
+					// admitted with its type recorded, and certifySourceSlots checks every read whose type
+					// doesn't hold what the slot can; any other write keeps this stop (#2msw6t8).
+					stop := l.notYet(part, "writing a checked object field without its source-slot type certificate")
+					if err := l.recordSourceSlotWrite(part, symbol, stop); err != nil {
+						refused = err
+					}
 				}
 			}
 		}
