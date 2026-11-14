@@ -152,9 +152,12 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 }
 
 // judgeViewAccess is the one judgment both of view's walks make of a property access: whether a checked view
-// reaches it, and the refusal that carries, a write's overriding an accessor's at one access. known is an access
-// the indexed walk already found checked, which a check never stops being. Both walks call it so a rule changed
-// here changes in production's walk and the whole walk alike (Lower, #q1hyhzc).
+// reaches it, and the refusal that carries, a write's stop where it keeps one overriding an accessor's at one
+// access. known is an access the indexed walk already found checked, which a check never stops being. Both walks
+// call it so a rule changed here changes in production's walk and the whole walk alike (Lower, #q1hyhzc). A
+// write is recorded for the source-slot certificate only at an access found checked, so the indexed walk's skip
+// of an access it found unchecked loses no write, and a known one asked again records nothing twice
+// (recordSourceSlotWrite finds its target).
 func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
 	access := part.AsPropertyAccessExpression()
 	if !known && !l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(access.Expression), part.Name().Text()) {
@@ -173,7 +176,13 @@ func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
 		if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 			of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
 			if of == ir.Object {
-				refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+				// Another alias may read the slot at a type the value doesn't fit. A plain write is
+				// admitted with its type recorded, and certifySourceSlots checks every read whose type
+				// doesn't hold what the slot can; any other write keeps this stop (#2msw6t8).
+				stop := l.notYet(part, "writing a checked object field without its source-slot type certificate")
+				if err := l.recordSourceSlotWrite(part, symbol, stop); err != nil {
+					refused = err
+				}
 			}
 		}
 	}

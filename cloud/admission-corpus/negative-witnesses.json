@@ -1,5 +1,5 @@
 {
-  "_comment": "Adding an entry is a ruling routed to @system_adamic. Valid, type-correct programs must never be listed. Schema: witnesses maps SHA-256 of exact source bytes to form (empty for literal type lies), ruling_task, ruling, declaration (file:line), declared_type, repair_from, repair_to, type_correct_sha256, exit (70), stderr (exact bytes; {root} expands to the head checkout). Repair replaces every repair_from with repair_to; its hash can never be listed. Supported literal type lies are string = undefined!/null! and number asserted from a callback returning the string literal wrong. The checked_boundary form (form, ruling; #995z2fa, Adamic, Oct 25) is a type lie a checked view's own read or write stops with its located message, adamic: panic: field read failed: ..., whose expected or found type is declared_type, an optional field expecting its declared type plus undefined (#1yr7rdh, Adamic, Oct 28); its repair replaces one place and must agree with Node. An element read through a checked view's array field is the same hatch (#6wfvfhm, Adamic, Nov 6): its stop, adamic: panic: element read failed: <expression> is not a <T>; expected <T>, found <kind>, expects the array's element, so declaration names a line declaring an array of exactly declared_type (readonly T[], T[] or ReadonlyArray<T>, or readonly (T)[] for a union). The same form holds a record's declared property read stopped by its checked unbox (#bq3fvdt, Adamic, Oct 27), whose message names the read and says a computed-key or index-signature write may have stored the value. No name lookup; an edit requires Node agreement or a new ruling.",
+  "_comment": "Adding an entry is a ruling routed to @system_adamic. Valid, type-correct programs must never be listed. Schema: witnesses maps SHA-256 of exact source bytes to form (empty for literal type lies), ruling_task, ruling, declaration (file:line), declared_type, repair_from, repair_to, type_correct_sha256, exit (70), stderr (exact bytes; {root} expands to the head checkout). Repair replaces every repair_from with repair_to; its hash can never be listed. Supported literal type lies are string = undefined!/null! and number asserted from a callback returning the string literal wrong. The checked_boundary form (form, ruling; #995z2fa, Adamic, Oct 25) is a type lie a checked view's own read or write stops with its located message, adamic: panic: field read failed: ..., whose expected or found type is declared_type, an optional field expecting its declared type plus undefined (#1yr7rdh, Adamic, Oct 28); its repair replaces one place and must agree with Node. An element read through a checked view's array field is the same hatch (#6wfvfhm, Adamic, Nov 6): its stop, adamic: panic: element read failed: <expression> is not a <T>; expected <T>, found <kind>, expects the array's element, so declaration names a line declaring an array of exactly declared_type (readonly T[], T[] or ReadonlyArray<T>, or readonly (T)[] for a union). The same form holds a record's declared property read stopped by its checked unbox (#bq3fvdt, Adamic, Oct 27), whose message names the read and says a computed-key or index-signature write may have stored the value. A read Rule C's source-slot certificate checks after a checked view's write is the same hatch (#2msw6t8, Adamic, Nov 14, rulings.md:17), each program listed by its own entry: its stop, adamic: panic: field read failed: <expression> is not initialized; expected <T>, found missing, expects the field the read's own type declares, so declaration names that line, and its repair writes through the object itself with no downcast. No name lookup; an edit requires Node agreement or a new ruling.",
   "witnesses": {
     "1109a8df81bfc0551bcfce54097770f6f5fbe9f728230194ae9b1494665c8a6f": {
       "form": "checked_boundary",
@@ -584,6 +584,78 @@
       "type_correct_sha256": "6eb05b4ea716cef42552fb1cf8917bba9dc2b392671ce275daf0484bdc2a4f24",
       "exit": 70,
       "stderr": "adamic: panic: element read failed: view._children[1] is not a number | Node; expected number | Node, found undefined\n"
+    },
+    "32bd591da2d04fb7f2f2d687b9c5746d945d555d76ed1fe37c1678aea5820228": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/hazard.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: false };",
+      "repair_to": "const view = raw;\nview.child = { ready: false, other: 7 };",
+      "type_correct_sha256": "a98b107cab393a561cee9723533dad06de5c84145a38c5ded6e0b17e4a2899b6",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: raw.child.other is not initialized; expected number, found missing\n"
+    },
+    "ac0e0d763c0889e3105e09854bae12be551694a5cf7c19c241d9d84f024b7315": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_destructure_declaration.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: false };",
+      "repair_to": "const view = raw;\nview.child = { ready: false, other: 7 };",
+      "type_correct_sha256": "a73563c72ccb1b64b807c8ccca5959e6bff9b7b98a9980389e1d9ce31df0174d",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: child.other is not initialized; expected number, found missing\n"
+    },
+    "c7f7cfdd15ecb161ada1178a50e5ad5f67d1bab2854634ca7c3c97cd3200b842": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_destructure_parameter.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: false };",
+      "repair_to": "const view = raw;\nview.child = { ready: false, other: 7 };",
+      "type_correct_sha256": "e5817091f72fd6a2dd4330e0fe12ffa8baca8b5b1c1bcb583da63da54e35beb2",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: child.other is not initialized; expected number, found missing\n"
+    },
+    "98690b7c3dc9572566b8bbaa72cfdaeef3e36afceb9cb36a3c25bd7d4a52cdef": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_array_element.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: true };",
+      "repair_to": "const view = raw;\nview.child = { ready: true, other: 7 };",
+      "type_correct_sha256": "84f8cdd1cc828ca7af5048daba5c9ade3b6131d1b615dd2878c3e0f8f2fc9418",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: first.child.other is not initialized; expected number, found missing\n"
+    },
+    "1bb6042ea51fca5b19f3e7c94b1821601745cfa3b0c679346ad0628ee7dfbd6b": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_closure_later.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: true };",
+      "repair_to": "const view = raw;\nview.child = { ready: true, other: 7 };",
+      "type_correct_sha256": "06787b82698474a5b4ef8a3b2deff4bc8f99b7ffc46cd01891e4bcb00b96c238",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: raw.child.other is not initialized; expected number, found missing\n"
+    },
+    "8ac24189a727d21df31afe091709cfc5bc194715fb25ccd89d559c4cf1e4b01e": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_record_made.ts:2",
+      "declared_type": "number",
+      "repair_from": "const view = (made as Base) as Box;\nview.child = { ready: true };",
+      "repair_to": "const view = made;\nview.child = { ready: true, other: 7 };",
+      "type_correct_sha256": "9cb2b8a057624eb0f04cbcc750caff1f45e8610072d9f90a2f2ffacff74c472c",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: made.child.other is not initialized; expected number, found missing\n"
     }
   }
 }
