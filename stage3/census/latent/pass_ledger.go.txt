@@ -9,6 +9,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "checkOverloadResults"},
 	{Name: "forwarderValues", Scoped: true, Production: "lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)"},
 	{Name: "finishClassCalls", Scoped: true},
+	// certifySourceSlots holds every read of a name a checked view wrote to everything its slot can hold:
+	// every view write and every declaration in every source file (#2msw6t8), so a body lowered on its
+	// own can't judge it.
+	{Name: "certifySourceSlots", WholeProgram: true},
 	{Name: "finishAccessors", Scoped: true},
 	{Name: "finishToPrimitive", Scoped: true},
 	{Name: "checkIterableViews"},
