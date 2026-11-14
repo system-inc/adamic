@@ -16,6 +16,7 @@ Base: 10f8f6b4d0f7ce9d56f2558752eab3f095b6d9b2. Stock upstream: 050880ce59e30b35
 | Restoring mutant | sys-mutant.ts restores cast refusal at sys.ts:515:17; all source-aligned findings equal baseline |
 | Adaptation 40 | Two historical declined any rows explicitly resolved at src/compiler/sys.ts:516:30 and :516:58, full source in resolved-sites.json; no executable reader of those historical dispositions found |
 | Lane generated files | Sanction regeneration byte-identical; no hashed input moves; freshness check exit 0 |
+| Full lane | **PASS**, run at committed adaptation `6e7cd200b12ff20ba7177862d094bc1bb12e9f2e`: **106,366 passing; 1 failing (only the sanctioned public API row); 0 pending**. Unfiltered `runners=all`, 8 workers, no test filter. Phase exits: apply **0**, install **0**, build **0**, tests **1**, oracle **1**, lane **0**. Verdict: `PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]`. [Run record](full-lane-committed-head/command.json), [execution](full-lane-committed-head/execution.json), [oracle report](full-lane-committed-head/oracle/report.json), [lane report](full-lane-committed-head/report.json). |
 
 ## Complete census delta
 

@@ -1,0 +1,20 @@
+{
+  "name": "lane-committed-head",
+  "cwd": "/workspace/scratch/single-watcher-forwarder",
+  "command": [
+    "stage3/lane/run.sh",
+    "/workspace/scratch/single-watcher-lane-committed-head"
+  ],
+  "exit": 0,
+  "seconds": 459.55882358551025,
+  "env": {
+    "STAGE3_CACHE": "/workspace/scratch/single-watcher-cache/stage3",
+    "TMPDIR": "/workspace/scratch/single-watcher-tmp",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/single-watcher-typescript",
+    "GOCACHE": "/workspace/scratch/single-watcher-cache/go-build",
+    "NODE_PATH": "/workspace/scratch/single-watcher-forwarder/stage3/api/node_modules",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/scratch/single-watcher-cache",
+    "GOPATH": "/workspace/scratch/single-watcher-cache/go"
+  }
+}
