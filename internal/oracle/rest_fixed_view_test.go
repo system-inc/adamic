@@ -29,8 +29,8 @@ import (
 func TestRestThroughFixedView(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/rest_fixed_view"
-	// Each program's NotYet as line:col, "" where it lowers and agrees, or "loud" where it lowers and
-	// natively stops at run time, exit 70 with no sanitizer report.
+	// Each program's NotYet as line:col, "refused:line:col" where 0.1 refuses it, "" where it lowers and
+	// agrees, or "loud" where it lowers and natively stops at run time, exit 70 with no sanitizer report.
 	stops := map[string]string{
 		"r1_unknown_rest":                    ":1:50",
 		"r2_union_rest":                      ":2:49",
@@ -63,9 +63,8 @@ func TestRestThroughFixedView(t *testing.T) {
 		// the three arguments it forwards, so the same value widened again (r21) lowers and stops loudly
 		// at run time, exit 70 with no sanitizer report, where Node runs it. A union of function types
 		// hides a rest member by member (r22, Language's e3), though the union has no call signature. A
-		// program closure whose rest is a fixed tuple is judged too (r23), since copyRest would still collect
-		// a wider view's extra argument; only bind's result with a fixed tuple, lowering's own bound closure,
-		// takes a fixed count.
+		// program closure whose rest is a fixed tuple stops earlier, at its own rest (r23); only bind's
+		// result with a fixed tuple, lowering's own bound closure, takes a fixed count.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
@@ -75,16 +74,18 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r20_hidden_class_method":         ":2:42",
 		"r21_host_rest_widened":           "loud",
 		"r22_hidden_union_slot":           ":2:65",
-		"r23_program_tuple_rest":          ":2:36",
+		"r23_program_tuple_rest":          ":1:18",
 
 		// The one rest function that may meet a view hiding its rest is a listed adapter's own callback
 		// literal (restAdapters: sort's comparator, comparator_rest/rest_sort.a), which only the adapter
 		// calls. Everything beside it stays NotYet: a library type that keeps the rest, then one that hides
 		// it (r24, Language's e7), and a literal at a library's value parameter, which the call hands back
-		// (r25 Array.of, r26 Promise.resolve). r19 is an unlisted adapter, map's callback.
+		// (r26 Promise.resolve; r25's Array.of is refused earlier, as an inherited library method). r27
+		// is an unlisted adapter, toSorted's comparator, sort's own shape, which only the list keeps out.
 		"r24_library_keeps_library_hides":     ":3:47",
-		"r25_array_of_value_parameter":        ":1:33",
+		"r25_array_of_value_parameter":        "refused:1:1",
 		"r26_promise_resolve_value_parameter": ":1:56",
+		"r27_unlisted_adapter_to_sorted":      ":1:32",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
@@ -124,6 +125,13 @@ func TestRestThroughFixedView(t *testing.T) {
 					if backend.got.exitCode != 70 || strings.Contains(string(backend.got.stderr), "runtime error") || strings.Contains(string(backend.got.stderr), "Sanitizer") {
 						t.Fatalf("%s: want a loud stop, exit 70 with no sanitizer report, got exit %d stderr %q", backend.name, backend.got.exitCode, backend.got.stderr)
 					}
+				}
+				return
+			}
+			if where, refusal := strings.CutPrefix(stop, "refused"); refusal {
+				var refused *lower.Refused
+				if !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, entry.Name()+where) {
+					t.Fatalf("want Refused at %s%s, got %v", entry.Name(), where, err)
 				}
 				return
 			}
