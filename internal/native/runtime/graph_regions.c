@@ -178,6 +178,8 @@ const char *adamic_region_unmovable(const adamic_heap *heap) {
 	case adamic_kind_environment:
 #endif
 		return NULL;
+	// Foreign wrappers own hidden payload slots and release through the foreign runtime.
+	case adamic_kind_foreign: return "a foreign value";
 	case adamic_kind_string: return "a string";
 	case adamic_kind_number: return "a number box";
 	case adamic_kind_boolean: return "a boolean box";
