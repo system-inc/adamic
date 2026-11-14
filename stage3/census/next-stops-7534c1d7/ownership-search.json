@@ -1,0 +1,33 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "-l",
+    "createSingleWatcherPerName",
+    "stage3/adapt",
+    "-g",
+    "owners.json"
+  ],
+  "exit_code": 0,
+  "matching_owner_files": [
+    "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json"
+  ],
+  "new_stop_search": {
+    "command": [
+      "rg",
+      "-n",
+      "-l",
+      "createDirectoryWatcherSupportingRecursive",
+      "stage3/adapt",
+      "-g",
+      "owners.json"
+    ],
+    "exit_code": 0,
+    "matching_owner_files": [
+      "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json",
+      "stage3/adapt/99-correctness-timer-closures/owners.json"
+    ],
+    "exact_owner": "stage3/adapt/99-correctness-timer-closures/owners.json: src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive"
+  }
+}

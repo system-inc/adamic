@@ -1,0 +1,11 @@
+[
+  {
+    "where": "sys.ts:618:33",
+    "kind": "Refused",
+    "reason": "a cast the runtime can't check",
+    "phase": "refusal_scan",
+    "owner": "internal/lower/cast_proof.go: (*lowering).castProof (createDirectoryWatcherSupportingRecursive)",
+    "emitter": "internal/lower/cast_proof.go:197",
+    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive; the line is unchanged by the single-watcher forwarder adaptation. lower.go runs refuse over modules before body lowering, so this cast preempts sys.ts:515:39 optionalCall in body lowering."
+  }
+]
