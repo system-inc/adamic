@@ -6,7 +6,10 @@
  * functions declared after its return, and one shorthand that reads the literal itself (createDirectory,
  * sys.ts:1546). The arrow's own let is undefined until getNodeSystem fills it, a later call stores a
  * field onto it in tsc (patchWriteFileEnsuringDirectory, sys.ts:1376-1381), and it's handed back with !
- * (sys.ts:1955-1963). setSys writes the export, and nothing calls it (sys.ts:1966-1969).
+ * (sys.ts:1955-1963). setSys writes the export, and nothing calls it (sys.ts:1966-1969). Lower stops this
+ * shape at createDirectory's read of nodeSystem, a function value that captures the variable its own
+ * initializer declares (#dv99xzy), before any presence test; ../tssys_presence_twin is the same program
+ * with that read taken out, where they lower.
  */
 export interface System {
 	newLine: string;
