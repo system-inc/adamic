@@ -80,3 +80,42 @@ func TestViewObjectWritesNeedSourceCertificate(t *testing.T) {
 		t.Fatalf("a destructuring write through the view: want the certificate's stop, got %v", err)
 	}
 }
+
+// The declared part of W (#2msw6t8): the view writes a value raw's type holds, so the writes alone would
+// leave raw.child unchecked, but Box declares child narrower than raw reads it, so the read is checked
+// under its receiver's key, as certifySourceSlots writes it. No road reaches an absent slot at a type
+// narrower than a declaration's, so this program agrees with Node either way (internal/oracle's
+// declared_narrower.ts), and this key is the only witness. Mutant: the declared part dropped
+// (sourceSlotDeclared not called), and the read goes unchecked.
+func TestViewObjectWriteHeldToDeclaredTypes(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, `interface Base { readonly kind: "box" | "other" }
+interface Box extends Base { readonly kind: "box"; child: { ready: boolean } }
+const raw = { kind: "box" as const, child: { ready: true, other: 42 } };
+const held: Base = raw;
+const view = held as Box;
+const fuller = { ready: false, other: 7 };
+view.child = fuller;
+console.log(String(raw.child.other));
+`, ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	reads := 0
+	inspect := func(node any) bool {
+		if read, ok := node.(ir.Property); ok && read.Name == "child" {
+			reads++
+			if key := ir.CheckedFieldKey(read.ViewReceiverTypeID, read.Name); !program.CheckedFields[key] {
+				t.Errorf("raw.child, read at a type Box's declaration of child doesn't fit, isn't checked: no %q in CheckedFields", key)
+			}
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if reads != 1 {
+		t.Fatalf("%d reads of child, want raw.child's one", reads)
+	}
+}
