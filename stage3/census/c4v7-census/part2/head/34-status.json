@@ -1,0 +1,19 @@
+{
+  "file": "performanceCore.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 16.098556288000054,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/34.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "0bd7f9dca5f2453c52fb25f490821b1dedfe4889edc2261811781e5fa99d56cf",
+  ".log_sha256": "18a8683dd1ad421f4f0c6384d475ab0c1cf56b8da4db32b5a5c99b2103b75bae"
+}

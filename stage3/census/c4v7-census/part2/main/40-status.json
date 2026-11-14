@@ -1,0 +1,19 @@
+{
+  "file": "sourcemap.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 17.681276216999777,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/40.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 18,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "c1d3dde58530a8bb4a5f52f2b3a95f34e1b813bf49353d015eabfca40a1151d2",
+  ".log_sha256": "cf64090e7456405b82f2c9f168175d68eba80b9f9fee2a081bf2ad364a4568be"
+}

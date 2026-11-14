@@ -1,0 +1,19 @@
+{
+  "file": "semver.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 20.033256962999985,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/39.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "3aedb0c84715430167dd60a6ce4e53ee0a0824d7285d31d787d3ca46f9141656",
+  ".log_sha256": "c8fa7710d78b6dc7b22afafbcf32d0f68c7c2908e0c66a49616b00e362865f56"
+}
