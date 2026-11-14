@@ -213,5 +213,112 @@
     "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
     "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
     "seconds": 20.145863794
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.344869868
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.798173311
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 22.411353464
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 25.083288229
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 22.947583697
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 23.485755598
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.727229246
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/hostErrors.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.165251037
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.938385008
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-8e3a784a-adapted/src/compiler/sys.ts:790:87",
+    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 24.818482188
   }
 ]
