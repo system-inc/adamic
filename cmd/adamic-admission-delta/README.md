@@ -66,6 +66,15 @@ go run ./cmd/adamic-admission-delta --base origin/main --head HEAD \
   --manifest-generator cloud/admission-corpus/manifest.py --json
 ```
 
+Base's and head's builds check out each revision's pinned cohere and its
+TypeScript from the invoking repository's own submodule checkout when it is a
+repository holding the pin, else from the box's mirrors (`<directory>/cohere.git`
+and `TypeScript.git` under `~/scratch/system_loom/modules` and `~/loom-mirrors`,
+the lay kit's own, or `ADAMIC_ADMISSION_MIRRORS`'s colon-separated list), and a
+pin none of them holds is named with every place looked in (#t7b148j). The copied
+install is made owner-writable before `@types/node` is corrected, since the door
+lays it as read-only hard links; the digest reads only the executable bit.
+
 Only head's checkout is provisioned, against head's own pin. When head pins a
 different install from the worktree the tool runs from, head falls back to npm,
 and on a box with none it fails loud.

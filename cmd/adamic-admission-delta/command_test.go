@@ -354,3 +354,50 @@ func TestBuildRevisions(t *testing.T) {
 		t.Fatalf("revision build failed: %+v %s", r, o.Stderr)
 	}
 }
+
+// bareMirror is a bare repository at <directory>/<name>.git holding one commit of a single file, the shape of the
+// box's mirrors a door job's lay kit lays from, and that commit's sha.
+func bareMirror(t *testing.T, directory, name string) string {
+	t.Helper()
+	source, sha := compilerFixture(t)
+	mirror := filepath.Join(directory, name+".git")
+	command := exec.Command("git", "clone", "--quiet", "--bare", source, mirror)
+	command.Env = toolchain.GitEnv()
+	if out, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("git clone --bare: %v\n%s", err, out)
+	}
+	return sha
+}
+
+// A door job's cohere and TypeScript are plain files the lay kit laid, with no repository of their own, so a revision's
+// pinned submodule is checked out from the box's mirror that holds it, a clone sharing the mirror's objects, and the
+// mirror is only read (#t7b148j, J-b54e1fs). Mutant: the mirrors' lookup given an empty directory, and the pin is
+// named with every place looked in, never git's "invalid reference".
+func TestPinnedSubmoduleComesFromTheBoxsMirror(t *testing.T) {
+	t.Parallel()
+	mirrors := t.TempDir()
+	sha := bareMirror(t, mirrors, "cohere")
+	laid := t.TempDir() // a laid submodule: plain files, no .git
+	target := filepath.Join(t.TempDir(), "cohere")
+	cleanup, err := checkoutPinnedFrom("cohere", sha, laid, target, []string{mirrors})
+	if err != nil {
+		t.Fatalf("checking cohere out from the mirror: %v", err)
+	}
+	head, err := git(target, "rev-parse", "HEAD")
+	if err != nil || head != sha {
+		t.Fatalf("the checkout is at %q (%v), want the pin %s", head, err, sha)
+	}
+	if _, err := os.Stat(filepath.Join(mirrors, "cohere.git", "worktrees")); !os.IsNotExist(err) {
+		t.Fatalf("the mirror was written to (it has worktrees/): %v", err)
+	}
+	cleanup()
+	if _, err := os.Stat(target); !os.IsNotExist(err) {
+		t.Fatalf("the checkout outlived its cleanup: %v", err)
+	}
+	empty := t.TempDir()
+	_, err = checkoutPinnedFrom("cohere", sha, laid, filepath.Join(t.TempDir(), "cohere"), []string{empty})
+	if err == nil || !strings.Contains(err.Error(), "cohere at "+sha+" is in no repository this box holds") ||
+		!strings.Contains(err.Error(), filepath.Join(empty, "cohere.git")+" (absent)") || !strings.Contains(err.Error(), laid+" (not a repository of its own)") {
+		t.Fatalf("a pin no mirror holds: %v, want it named with every place looked in", err)
+	}
+}
