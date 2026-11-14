@@ -492,6 +492,17 @@ func (l *lowering) restHiddenByView(from, to *checker.Signature, viewed *checker
 	if !from.HasRestParameter() || to.HasRestParameter() {
 		return false
 	}
+	// bind's result, (...args: B) => R with B a fixed-length tuple ([] or [third: string]), takes a
+	// fixed count: its value is lowering's own bound closure over a target with no rest, since bind of a
+	// rest function is refused (function_bind.go), and that target drops what a wider view adds. A
+	// program closure whose rest is a tuple stays judged: copyRest would still collect the extra raw.
+	if declaration := from.Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if parameters := from.Parameters(); len(parameters) > 0 {
+			if rest := l.checker.GetTypeOfSymbol(parameters[len(parameters)-1]); checker.IsTupleType(rest) && checker.TupleType_combinedFlags(rest.TargetTupleType())&checker.ElementFlagsVariable == 0 {
+				return false
+			}
+		}
+	}
 	if declaration := from.Declaration(); declaration != nil && declaration.Name() != nil && load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 		// By the declaration's own name: setTimeout's symbol also holds its __promisify__ namespace.
 		name := map[string]string{"setTimeout": nodeSetTimeoutName, "clearTimeout": nodeClearTimeoutName}[declaration.Name().Text()]

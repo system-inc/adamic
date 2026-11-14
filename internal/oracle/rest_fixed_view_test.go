@@ -62,7 +62,10 @@ func TestRestThroughFixedView(t *testing.T) {
 		// #995spev's: setTimeout read as a value into its ruled view exactly, whose forwarder stops past
 		// the three arguments it forwards, so the same value widened again (r21) lowers and stops loudly
 		// at run time, exit 70 with no sanitizer report, where Node runs it. A union of function types
-		// hides a rest member by member (r22, Language's e3), though the union has no call signature.
+		// hides a rest member by member (r22, Language's e3), though the union has no call signature. A
+		// program closure whose rest is a fixed tuple is judged too (r23), since copyRest would still collect
+		// a wider view's extra argument; only bind's result with a fixed tuple, lowering's own bound closure,
+		// takes a fixed count.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
@@ -72,6 +75,7 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r20_hidden_class_method":         ":2:42",
 		"r21_host_rest_widened":           "loud",
 		"r22_hidden_union_slot":           ":2:65",
+		"r23_program_tuple_rest":          ":2:36",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
