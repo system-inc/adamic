@@ -8,5 +8,7 @@
   ],
   "npm_ci_exit": 0,
   "upstream_head": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "upstream_tag": "v6.0.3"
+  "upstream_tag": "v6.0.3",
+  "npm_cache": "/home/agent/.npm",
+  "setup_deviation": "Initial npm ci used the default npm cache outside scratch; its node_modules install was inside the scratch worktree. No shared checkout writes were made."
 }
