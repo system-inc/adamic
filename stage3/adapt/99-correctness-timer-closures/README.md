@@ -114,3 +114,35 @@ separate evidence.
 Proof streams, every file's full census delta, the mutant red/green fixture,
 Node witnesses and lane receipts belong on typescript/timer-call-queue-evidence,
 under stage3/census/timer-call-queue/.
+
+## Polling queue composition
+
+Adamic and Compiler, task #0gj665k, Nov 14 00:59Z. The fixed-layout NodeArray
+road in docs/rulings.md:76 does not admit PollingIntervalQueue.
+internal/lower/node_array.go:nodeArrayLayoutOf keys on checker-resolved
+declaration ancestry reaching the library Array/ReadonlyArray, a represented
+numeric index element contract, and the actual extra properties. It does not
+key on a coincidental type name. NodeArrayLayout then requires the fixed
+pos/end/hasTrailingComma/transformFlags schema, primitive metadata and only
+optional additional fields. PollingIntervalQueue lacks those required slots and
+instead has three required polling fields, including pollScheduled: unknown.
+nodeArrayCast also requires a direct array-literal operand and an equal mutable
+element contract; the existing double cast is not that construction.
+
+Main's full census retains the cast refusal at sys.ts:272:23 and five queue
+value/return NotYets (three value sites and two function-return sites). Neither
+the ruling nor the lowering implementation supplies a generic expando-array road.
+
+Road (a) instead gives the queue a fixed object layout containing its files array.
+files is (WatchedFileWithUnchangedPolls | undefined)[] because pollQueue writes
+undefined and pollWatchedFileQueue already accepts that element contract.
+pollScheduled keeps its adapted unknown type. Factory initialization is
+{ files: [], pollingInterval, pollIndex: 0, pollScheduled: false }; the three
+direct array uses select queue.files. Metadata, callback captures and the
+existing helper's element guards stay as they were. A new reader requiring a
+narrowing is a stop for Adamic to rule, not a reason to add a check.
+
+This is JavaScript-changing, value-identical composition. The separate evidence
+branch retains the complete use/reader inventory, the full census pair, the
+236-event Node witness, the restoring-array mutant and the apply/types/lane
+receipts.
