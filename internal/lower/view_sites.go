@@ -131,28 +131,9 @@ func (l *lowering) viewWalkIndexed(modules []*ast.SourceFile, fields map[string]
 				continue
 			}
 		}
-		var refused error
-		// viewWalkWhole's two refusals, unchanged; a write's overrides an accessor's at one access, as there.
-		if known || l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), name) {
+		checked, refused := l.judgeViewAccess(part, known)
+		if checked {
 			l.markViewSiteTrue(part)
-			access := part.AsPropertyAccessExpression()
-			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
-				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && accessorSymbol(field) {
-					refused = l.notYet(part, checkedFieldAliasAccessor)
-				}
-			}
-		}
-		if known || l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), name) {
-			l.markViewSiteTrue(part)
-			if ast.IsAssignmentTarget(part) {
-				if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
-					of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
-					if of == ir.Object {
-						refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
-					}
-				}
-			}
 		}
 		// A refusal leaves viewSiteSeen as it was: the accesses after it weren't asked.
 		if refused != nil {
