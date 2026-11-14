@@ -1,0 +1,10 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const ts=require('/tmp/watch-functions-1532/main-tree/built/local/typescript.js');
+const host={pollingWatchFileWorker(){throw Error('unexpected polling worker');},getModifiedTime:()=>new Date(0),setTimeout:()=>({}),clearTimeout(){},fsWatchWorker(){throw Error('unexpected fs worker');},fileSystemEntryExists:()=>true,useCaseSensitiveFileNames:true,getCurrentDirectory:()=>'/virtual',fsSupportsRecursiveFsWatch:true,getAccessibleSortedChildDirectories:()=>[],realpath:x=>x,tscWatchFile:undefined,useNonPollingWatchers:false,tscWatchDirectory:undefined,inodeWatching:false,fsWatchWithTimestamp:false,sysLog(){}};
+const factory=ts.createSystemWatchFunctions(host);
+factory.watchFile('/virtual/member.ts',()=>{},250,{watchFile:ts.WatchFileKind.DynamicPriorityPolling}).close();
+assert.throws(()=>factory.watchFile('/virtual/non-member.ts',()=>{},10,{watchFile:ts.WatchFileKind.DynamicPriorityPolling}),TypeError);
+const rows=fs.readFileSync(process.env.ADAMIC_DYNAMIC_COUNT,'utf8').trim().split('\n').map(JSON.parse);
+assert.deepEqual(rows,[{interval:'250',type:'number'},{interval:'10',type:'number'}]);
+console.log(JSON.stringify({counterFires:true,memberRegistrationAndClose:true,nonMemberTypeError:true,rows},null,2));

@@ -1,0 +1,55 @@
+stage3/adapt/32-indexed-reads-program/adapt.cjs:6:const files = ["corePublic.ts", "performanceCore.ts", "types.ts", "expressionToTypeNode.ts", "executeCommandLine.ts", "builder.ts"
+stage3/adapt/98-axolotl-c/adapt.cjs:3:// sys.ts's own-file checker diagnostics, rows 1, 2 and 3 of sites.json. Row 4 (ModuleImportResult)
+stage3/adapt/98-axolotl-c/adapt.cjs:49:    const sys = source("sys.ts");
+stage3/adapt/98-axolotl-c/adapt.cjs:114:        evidence.push({ row: 3, file: "src/compiler/sys.ts", line: sys.getLineAndCharacterOfPosition(elements[0].getStart(sys)).line + 1, be
+stage3/adapt/98-axolotl-e/adapt.cjs:3:// sys.ts's last own-file diagnostic (1617:13) and the one fixing it unmasks (1524:15).
+stage3/adapt/98-axolotl-e/adapt.cjs:7:// becomes a property in adaptation 32's idiom. Needs 94's propertyOf and 98-c's sys.ts.
+stage3/adapt/98-axolotl-e/adapt.cjs:60:    const sys = source("compiler/sys.ts");
+stage3/adapt/98-axolotl-e/adapt.cjs:61:    assert(!sys.text.includes("as typeof import(\"source-map-support\")") && sys.text.includes("propertyOf(e, \"code\")"), "sys.ts lacks 98-c
+stage3/adapt/98-axolotl-e/adapt.cjs:156:    // each edited file outside sys.ts keeps its count of references to each. Files 98-e does not
+stage3/adapt/79-exit-code/adapt.cjs:26:    const sys = source('src/compiler/sys.ts');
+stage3/adapt/99-cli-perf-hooks-import/adapt.cjs:132:// tree has none (stage3 never runs npm), the specifier draws exactly the diagnostic sys.ts's `node:fs` import
+stage3/adapt/99-cli-perf-hooks-import/adapt.cjs:151:    const fsImport = one(sys.statements.filter(node => ts.isImportDeclaration(node) && node.moduleSpecifier.text === "node:fs"),
+stage3/adapt/99-cli-perf-hooks-import/adapt.cjs:279:    // specifier's, which sys.ts's node: imports share, the perfHooks read bound to the import, and the return type's
+stage3/adapt/99-cli-perf-hooks-import/adapt.cjs:282:    const unresolved = plannedBinding(ts, planned, fileName, path.join(tree, "src/compiler/sys.ts"));
+stage3/adapt/99-correctness-axolotl-j/adapt.cjs:57:        "file": "sys.ts",
+stage3/adapt/99-correctness-axolotl-j/adapt.cjs:149:        "file": "sys.ts",
+stage3/adapt/92-tty-host-results/adapt.cjs:17:    assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
+stage3/adapt/92-tty-host-results/proofs/targets.json:3:    "file": "src/compiler/sys.ts",
+stage3/adapt/93-builtin-imports/adapt.cjs:71:    assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
+stage3/adapt/93-builtin-imports/proofs/targets.json:3:    "file": "src/compiler/sys.ts",
+stage3/adapt/41-explicit-any-remaining/adapt.cjs:57:    if (file === 'src/compiler/sys.ts') require('./timer-heads-check.cjs').check(ts, source);
+stage3/adapt/99-correctness-axolotl-q/adapt.cjs:46:        "before": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a 
+stage3/adapt/99-correctness-axolotl-q/adapt.cjs:47:        "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a c
+stage3/adapt/99-correctness-axolotl-q/owners.json:40:    "before": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cy
+stage3/adapt/99-correctness-axolotl-q/owners.json:41:    "after": "export function isNodeLikeSystem(): boolean {\n    // This is defined here rather than in sys.ts to prevent a cyc
+stage3/adapt/47-host-errors/adapt.cjs:82:    const sys = source("sys.ts");
+stage3/adapt/99-wasm-crypto-import/adapt.cjs:94:    assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
+stage3/adapt/99-correctness-polling-no-enum-write/adapt.cjs:10:    const source = ts.createSourceFile('sys.ts', text, ts.ScriptTarget.Latest, true);
+stage3/adapt/99-correctness-polling-no-enum-write/adapt.cjs:11:    assert.equal(source.parseDiagnostics.length, 0, 'sys.ts: parse error');
+stage3/adapt/99-correctness-polling-no-enum-write/adapt.cjs:28:    assert(locate(after).adapted, 'sys.ts: invalid planned owner');
+stage3/adapt/99-correctness-polling-no-enum-write/adapt.cjs:30:    assert.equal(fs.readFileSync(file, 'utf8'), raw, 'sys.ts: changed while planning');
+stage3/adapt/99-correctness-polling-no-enum-write/owners.json:3:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:3:    "file": "sys.ts",
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:9:    "before": "function createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>(\n    cache: 
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:10:    "after": "function createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback>(\n    cache: 
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:13:    "file": "sys.ts",
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:14:    "owner": "createSystemWatchFunctions",
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:19:    "before": "export function createSystemWatchFunctions({\n    pollingWatchFileWorker,\n    getModifiedTime,\n
+stage3/adapt/99-correctness-single-watcher-forwarder/owners.json:20:    "after": "export function createSystemWatchFunctions({\n    pollingWatchFileWorker,\n    getModifiedTime,\n 
+stage3/adapt/99-correctness-core-multimap/owners.json:14:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-core-multimap/owners.json:17:      "createUseFsEventsOnParentDirectoryWatchFile",
+stage3/adapt/99-correctness-core-multimap/owners.json:26:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-core-multimap/owners.json:38:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-wasm-crypto-import/proofs/targets.json:3:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-timer-closures/owners.json:3:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-timer-closures/owners.json:4:    "owner": "createDynamicPriorityPollingWatchFile",
+stage3/adapt/99-correctness-timer-closures/owners.json:5:    "before": "function createDynamicPriorityPollingWatchFile(host: {\n    getModifiedTime: NonNullable<System[\"getModifie
+stage3/adapt/99-correctness-timer-closures/owners.json:6:    "after": "function createDynamicPriorityPollingWatchFile(host: {\n    getModifiedTime: NonNullable<System[\"getModified
+stage3/adapt/99-correctness-timer-closures/owners.json:11:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-timer-closures/owners.json:13:    "before": "function createFixedChunkSizePollingWatchFile(host: {\n    getModifiedTime: NonNullable<System[\"getModifie
+stage3/adapt/99-correctness-timer-closures/owners.json:14:    "after": "function createFixedChunkSizePollingWatchFile(host: {\n    getModifiedTime: NonNullable<System[\"getModified
+stage3/adapt/99-correctness-timer-closures/owners.json:19:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-timer-closures/owners.json:27:    "file": "src/compiler/sys.ts",
+stage3/adapt/99-correctness-timer-closures/owners.json:101:    "before": "export class TestServerHost implements server.ServerHost, FormatDiagnosticsHost, ModuleResolutionHost {\n 
+stage3/adapt/99-correctness-timer-closures/owners.json:102:    "after": "export class TestServerHost implements server.ServerHost, FormatDiagnosticsHost, ModuleResolutionHost {\n  

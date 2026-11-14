@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/tmp/watch-file-check-cead/latent",
+    "/tmp/watch-functions-1532/main-tree/src/compiler",
+    "/tmp/watch-file-check-cead/census-main/raw.jsonl"
+  ],
+  "flags": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/tmp/watch-functions-1532/main-tree/src/compiler/sys.ts",
+    "LATENT_TIMES": "/tmp/watch-file-check-cead/census-main/unit-times.jsonl"
+  },
+  "exit": 0,
+  "seconds": 104.81701837299988,
+  "sourceSha256": "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398"
+}

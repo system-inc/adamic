@@ -1,0 +1,39 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const repo='/tmp/watch-file-check-cead/work',tree='/tmp/watch-functions-1532/main-tree',ts=require(repo+'/stage3/api/node_modules/typescript');
+const digest=x=>crypto.createHash('sha256').update(x).digest('hex');
+function once(s,a,b){assert.equal(s.split(a).length,2,a);return s.replace(a,b);}
+function read(p){return fs.readFileSync(path.join(repo,p),'utf8');}
+function write(p,v){fs.writeFileSync(path.join(repo,p),typeof v==='string'?v:JSON.stringify(v,null,2)+'\n');}
+function ownerAt(ref,name){const text=cp.execFileSync('git',['-C',tree,'show',ref+':src/compiler/sys.ts'],{encoding:'utf8'});const source=ts.createSourceFile('sys.ts',text,ts.ScriptTarget.Latest,true);const matches=[];function visit(n){if(ts.isFunctionDeclaration(n)&&n.name?.text===name)matches.push(n);ts.forEachChild(n,visit);}visit(source);assert.equal(matches.length,1);return matches[0].getText(source);}
+let p='stage3/adapt/99-correctness-single-watcher-forwarder/owners.json',pins=JSON.parse(read(p));
+let factory=pins.find(p=>p.owner==='createSystemWatchFunctions');
+factory.after=once(factory.after,'{ watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; }','{ watchFile: (fileName: string, callback: FileWatcherCallback, pollingInterval?: number, options?: WatchOptions) => FileWatcher; watchDirectory: HostWatchDirectory; }');
+for(const name of ['watchFile','pollingWatchFile'])factory.after=once(factory.after,'function '+name+'(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval,','function '+name+'(fileName: string, callback: FileWatcherCallback, pollingInterval: number | undefined,');
+assert.equal(factory.after.split('fallbackPollingInterval: PollingInterval').length,3);factory.after=factory.after.replaceAll('fallbackPollingInterval: PollingInterval','fallbackPollingInterval: number | undefined');factory.ownerAfterSha256=digest(factory.after);
+const main=fs.readFileSync('/tmp/watch-file-check-cead/sys-main.ts','utf8').replace(/\r\n/g,'\n');
+for(const name of ['HostWatchFile','FsWatch']){
+ const before=main.split('\n').find(l=>l.startsWith('export type '+name+' = '));assert(before);const after=once(before,name==='HostWatchFile'?'pollingInterval: PollingInterval':'fallbackPollingInterval: PollingInterval',name==='HostWatchFile'?'pollingInterval: number | undefined':'fallbackPollingInterval: number | undefined');
+ pins.push({file:'sys.ts',owner:name,beforeDeclarations:1,afterDeclarations:1,ownerBeforeSha256:digest(before),ownerAfterSha256:digest(after),before,after});
+}
+write(p,pins);
+p='stage3/adapt/99-correctness-single-watcher-forwarder/adapt.cjs';write(p,once(read(p),'ts.isFunctionDeclaration(node) && node.name?.text === pin.owner','(ts.isFunctionDeclaration(node) || ts.isTypeAliasDeclaration(node)) && node.name?.text === pin.owner'));
+p='stage3/adapt/99-correctness-timer-closures/owners.json';pins=JSON.parse(read(p));const dyn=pins.find(p=>p.owner==='createDynamicPriorityPollingWatchFile');const signature='function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval): FileWatcher {';dyn.after=once(dyn.after,signature,signature.replace('defaultPollingInterval: PollingInterval','defaultPollingInterval: number | undefined')+'\n        if (defaultPollingInterval !== PollingInterval.Low && defaultPollingInterval !== PollingInterval.Medium && defaultPollingInterval !== PollingInterval.High) {\n            return Debug.fail(`Invalid dynamic polling interval: ${defaultPollingInterval}`);\n        }');dyn.ownerAfterSha256=digest(dyn.after);write(p,pins);
+p='stage3/adapt/99-correctness-core-multimap/owners.json';pins=JSON.parse(read(p));const parent=pins.find(p=>p.path?.join('.')==='createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile');assert(parent);parent.after=once(parent.after,'_pollingInterval: PollingInterval','_pollingInterval: number | undefined');parent.afterSha256=digest(parent.after);write(p,pins);
+const narrow='function fsWatchFileWorker(fileName: string, callback: FileWatcherCallback, pollingInterval: number): FileWatcher {';const wide=narrow.replace('pollingInterval: number','pollingInterval: number | undefined');
+for(const name of ['93-builtin-imports','99-wasm-crypto-import']){
+ p='stage3/adapt/'+name+'/proofs/targets.json';const manifest=JSON.parse(read(p));const before=ownerAt('refs/stage3/'+name+'-before','getNodeSystem'),after=ownerAt('refs/stage3/'+name+'-after','getNodeSystem');assert.equal(digest(before),manifest[0].ownerBeforeSha256);assert.equal(digest(after),manifest[0].ownerAfterSha256);
+ manifest[0].ownerBeforeText=name.startsWith('93')?before:once(before,narrow,wide);manifest[0].ownerAfterText=once(after,narrow,wide);manifest[0].ownerBeforeSha256=digest(manifest[0].ownerBeforeText);manifest[0].ownerAfterSha256=digest(manifest[0].ownerAfterText);write(p,manifest);
+ p='stage3/adapt/'+name+'/adapt.cjs';let script=read(p);
+ if(name.startsWith('93')){
+  const at='    const insertion = importAnchor(file).end;';const addition=`    // #cyjqp5f: Node admits an own interval key whose value is undefined.\n    if (!done) {\n        const workers = nodes(ts, owner, n => ts.isFunctionDeclaration(n) && n.name?.text === 'fsWatchFileWorker');\n        assert.equal(workers.length, 1, 'fsWatchFileWorker moved');\n        const intervalType = workers[0].parameters[2].type;\n        assert.equal(intervalType.getText(file), 'number', 'worker interval type drift');\n        edits.push({start:intervalType.getStart(file),end:intervalType.end,text:'number | undefined'});\n    }\n`;
+  script=once(script,at,addition+at);
+ }
+ const where=name.startsWith('93')?'    const done = digest === manifest[0].ownerAfterSha256;':'    const done = digest === manifest[0].ownerAfterSha256;';
+ script=once(script,where,where+"\n    assert.equal(owner.getText(file), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'whole getNodeSystem text drift');");write(p,script);
+}
+for(const name of ['93-builtin-imports','99-correctness-core-multimap','99-correctness-single-watcher-forwarder','99-correctness-timer-closures','99-wasm-crypto-import']){
+ p='stage3/adapt/'+name+'/README.md';write(p,read(p)+'\n## Dynamic watch interval amendment (#cyjqp5f)\n\nOn ceadba1d (#8581h73), the internal watch-file path admits number | undefined. The public factory result takes pollingInterval?: number; only the dynamic priority poller validates membership in PollingInterval and otherwise calls Debug.fail naming the interval. Other modes retain arbitrary numeric intervals such as symlinkWatching\'s 10. System and watchDirectory are unchanged. This directory\'s owned portion is amended in its exact after pin and digest; downstream getNodeSystem pins carry the widened Node worker. The guard is JavaScript-changing; the remaining interval edits erase. Full census, count, fixture/mutant, contracts, stock/Adamic checks, per-file JavaScript, declarations and unfiltered lane receipts are on typescript/watch-functions-1532-evidence under watch-functions-1532-evidence/cead-check-1532/.\n');
+}
+p='stage3/upstream/LEDGER.md';write(p,read(p)+'\n- **JavaScript-changing, dynamic polling interval boundary (#cyjqp5f):** admit System\'s optional numeric watchFile interval through internal watcher contracts; 99-correctness-timer-closures checks the three PollingInterval members only at the dynamic priority poller and otherwise calls Debug.fail naming the interval. Other watcher modes and watchDirectory are unchanged; ceadba1d supplies Node\'s own-undefined interval throw. Evidence: typescript/watch-functions-1532-evidence, watch-functions-1532-evidence/cead-check-1532/.\n');
+console.log('Owner amendments and ledger prepared.');
