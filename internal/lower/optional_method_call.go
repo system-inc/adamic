@@ -35,10 +35,14 @@ type optionalMethod struct {
 }
 
 // optionalMethodCall lowers node when it's object?.method?.(...) or object.method?.(...) on an optional
-// method the program declares; handled is false for any other call, which lowers as it always has.
+// method the program declares, or callback?.(...) on a function value (optionalValueSignature); handled
+// is false for any other call, which lowers as it always has.
 func (l *lowering) optionalMethodCall(node *ast.Node) (optionalMethod, bool, error) {
 	signature := l.optionalMethodSignature(node)
 	if signature == nil {
+		if signature = l.optionalValueSignature(node); signature != nil {
+			return l.optionalValueCall(node, signature)
+		}
 		return optionalMethod{}, false, nil
 	}
 	lowered, err := l.callClosure(node)
@@ -96,6 +100,65 @@ func (l *lowering) optionalMethodSignature(node *ast.Node) *checker.Signature {
 		return nil
 	}
 	return signatures[0]
+}
+
+// An optional call of a function value, callback?.(...), as tsc's sys.ts pollWatchedFileQueue calls its
+// optional parameter callbackOnWatchFileStat?.(...) and emitter.ts's printer its captured handlers
+// (#036ve6w). The callee is read once, before the arguments (ir.CallClosure's Optional on a plain
+// callee, which both emitters hold in one temporary): where it's undefined the call is undefined and no
+// argument is evaluated, so an argument that writes the binding still calls what was read. Otherwise
+// it's an ordinary call of that function value, with no this.
+
+// optionalValueSignature is the one call signature of the function value node calls when node is
+// callback?.(...), written so, with no parentheses around the callee, on an identifier naming a
+// parameter or a variable (captured or not), whose type holds undefined and no null, and whose other
+// members are one function type with one call signature and no construct signature. It's nil for any
+// other call: a field's o.f?.() is optionalMethodSignature's, and an element, a chain, a call's result,
+// a null-holding or a union callee stay optionalCall's NotYet.
+func (l *lowering) optionalValueSignature(node *ast.Node) *checker.Signature {
+	call := node.AsCallExpression()
+	if call.QuestionDotToken == nil || call.Expression.Kind != ast.KindIdentifier {
+		return nil
+	}
+	symbol := l.symbol(call.Expression)
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || len(symbol.Declarations) == 0 {
+		return nil
+	}
+	declared := l.checker.GetTypeAtLocation(call.Expression)
+	if l.includesNull(declared) || !l.includesUndefined(declared) {
+		return nil
+	}
+	present := l.checker.GetNonNullableType(declared)
+	if present.Flags()&checker.TypeFlagsUnion != 0 || len(l.checker.GetSignaturesOfType(present, checker.SignatureKindConstruct)) != 0 {
+		return nil
+	}
+	signatures := l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return nil
+	}
+	return signatures[0]
+}
+
+// optionalValueCall lowers callback?.(...) once optionalValueSignature has said it qualifies: the call
+// as callClosure lowers it, held as a plain function value and marked Optional, with its result's
+// undefined given a place (optionalMethodResult) and a void callback's call made a void call.
+func (l *lowering) optionalValueCall(node *ast.Node, signature *checker.Signature) (optionalMethod, bool, error) {
+	lowered, err := l.callClosure(node)
+	if err != nil {
+		return optionalMethod{}, true, err
+	}
+	call, isCall := lowered.(ir.CallClosure)
+	if !isCall || call.Bound || call.Direct > 0 || call.Closure.Type() != ir.Closure || !optionalMethodResult(call.Returns) {
+		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
+	}
+	if _, _, isMethod := ir.MethodCallee(call.Closure); isMethod {
+		return optionalMethod{}, true, l.notYet(node, optionalCallNotYet)
+	}
+	if l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid != 0 {
+		call.Returns = 0
+	}
+	call.Optional = true
+	return optionalMethod{call: call}, true, nil
 }
 
 // optionalMethodResult is whether a call's undefined has a place in its result's representation: void
