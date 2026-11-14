@@ -110,9 +110,9 @@ func submoduleMirrors() []string {
 }
 
 // checkoutPinned checks name out at sha into target, from own when that's a repository of its own holding sha (a
-// worktree of it, as before), else from the first of submoduleMirrors' <name>.git that holds it (a clone that shares
-// the mirror's objects, so the mirror itself is only read). It hands back what undoes it. A pin no repository holds
-// is named with every place looked in, never left to git's "invalid reference".
+// worktree of it, as before), else from the first of submoduleMirrors' <name>.git that holds it and checks it out (a
+// clone that shares the mirror's objects, so the mirror itself is only read). It hands back what undoes it. A pin no
+// repository checks out is named with every place looked in, never left to git's "invalid reference".
 func checkoutPinned(name, sha, own, target string) (func(), error) {
 	return checkoutPinnedFrom(name, sha, own, target, submoduleMirrors())
 }
@@ -144,12 +144,18 @@ func checkoutPinnedFrom(name, sha, own, target string, mirrors []string) (func()
 		if err := os.RemoveAll(target); err != nil {
 			return nil, err
 		}
-		if _, err := git(filepath.Dir(target), "clone", "--quiet", "--shared", "--no-checkout", mirror, target); err != nil {
-			return nil, err
+		// A mirror can hold the pin's commit and still not check it out: Home's shallow
+		// ~/scratch/system_loom/modules/TypeScript.git clones empty (J-dmtb95y, "reference is not a tree"),
+		// where ~/loom-mirrors/TypeScript.git holds it whole (J-v0705h4). So a mirror that fails is one
+		// more place looked, with why, and the next is tried.
+		_, err := git(filepath.Dir(target), "clone", "--quiet", "--shared", "--no-checkout", mirror, target)
+		if err == nil {
+			_, err = git(target, "checkout", "--quiet", "--detach", sha)
 		}
-		if _, err := git(target, "checkout", "--quiet", "--detach", sha); err != nil {
+		if err != nil {
 			os.RemoveAll(target)
-			return nil, err
+			looked = append(looked, mirror+" (holds it, but didn't check it out: "+strings.TrimSpace(strings.SplitN(err.Error(), "\n", 2)[0])+")")
+			continue
 		}
 		return func() { os.RemoveAll(target) }, nil
 	}
