@@ -164,6 +164,8 @@ int main(void) {
 // original piece and the first copied piece; copying all three exceeds this bound even though the
 // eventual range error still agrees with Node. Dropping array.c's running check reds peak.
 func TestStringLengthJoinMemory(t *testing.T) {
+	// The peak is the child program's own getrusage, so other tests running beside it don't move it.
+	t.Parallel()
 	holdStringLengthFixtures(t, []string{"join_memory"})
 	t.Run("peak", func(t *testing.T) {
 		if runtime.GOOS != "linux" {
