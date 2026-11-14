@@ -24,33 +24,37 @@ import (
 // printed before it. Checked and unchecked are the lines whose reads of field must be checked or must not.
 func TestSourceSlotCertificate(t *testing.T) {
 	t.Parallel()
+	const nullableWrite = "stage 0 can't lower writing a checked object field that may hold undefined or null"
+	const uncheckedCast = "Adamic 0.1 refuses a cast the runtime can't check"
 	directory := "internal/oracle/testdata/source_slot_certificate/"
 	for _, pin := range []struct {
 		file, outcome, field string
 		checked, unchecked   []int
 	}{
-		{file: "hazard.ts", outcome: "stops: adamic: panic: field read failed: raw.child.other", field: "child", checked: []int{9}},
-		{file: "flow_node.ts", outcome: "agrees", field: "flowNode", unchecked: []int{9, 11}},
-		{file: "flow_node_optional.ts", outcome: "notyet: a write to optional field flowNode through a checked view", field: "flowNode"},
-		{file: "required_fresh.ts", field: "flowNode"},
-		{file: "required_fresh_generic.ts", field: "flowNode"},
-		{file: "road_computed_key.ts", field: "child"},
-		{file: "road_key_variable.ts", field: "child"},
-		{file: "road_destructure_declaration.ts", field: "child"},
-		{file: "road_destructure_parameter.ts", field: "child"},
-		{file: "road_destructure_for_of.ts", field: "child"},
-		{file: "road_destructure_catch.ts", field: "child"},
-		{file: "road_destructure_nested.ts", field: "child"},
-		{file: "road_destructure_assignment.ts", field: "child"},
-		{file: "road_spread.ts", field: "child"},
-		{file: "road_object_assign.ts", field: "child"},
-		{file: "road_structured_clone.ts", field: "child"},
-		{file: "road_object_values.ts", field: "child"},
-		{file: "road_object_entries.ts", field: "child"},
-		{file: "road_for_in.ts", field: "child"},
+		{file: "hazard.ts", outcome: "stops: adamic: panic: field read failed: raw.child.other is not initialized", field: "child", checked: []int{9}},
+		{file: "declared_narrower.ts", outcome: "agrees", field: "child", checked: []int{10}},
+		{file: "flow_node.ts", outcome: "notyet: 10:1: " + nullableWrite, field: "flowNode"},
+		{file: "flow_node_optional.ts", outcome: "notyet: 8:1: " + nullableWrite, field: "flowNode"},
+		{file: "required_fresh.ts", outcome: "notyet: 14:13: " + uncheckedCast, field: "flowNode"},
+		{file: "required_fresh_generic.ts", outcome: "notyet: 13:12: " + uncheckedCast, field: "flowNode"},
+		{file: "road_computed_key.ts", outcome: "notyet: 9:20: Adamic 0.1 refuses view member read by element access", field: "child"},
+		{file: "road_key_variable.ts", outcome: "notyet: 10:20: Adamic 0.1 refuses view member read by element access", field: "child"},
+		{file: "road_destructure_declaration.ts", outcome: "stops: adamic: panic: field read failed: child.other is not initialized", field: "child", checked: []int{9}},
+		{file: "road_destructure_parameter.ts", outcome: "stops: adamic: panic: field read failed: child.other is not initialized", field: "child", checked: []int{9}},
+		{file: "road_destructure_for_of.ts", outcome: "notyet: 9:6: stage 0 can't lower a for...of destructuring an object", field: "child"},
+		{file: "road_destructure_catch.ts", outcome: "notyet: 12:23: " + uncheckedCast, field: "child"},
+		{file: "road_destructure_catch_any.ts", field: "child"},
+		{file: "road_destructure_nested.ts", outcome: "notyet: 9:9: stage 0 can't lower a nested destructuring pattern", field: "child"},
+		{file: "road_destructure_assignment.ts", outcome: "notyet: 11:20: stage 0 can't lower a read of field other through type { ready: boolean; other: number; }, which may hold a checked view's value", field: "child"},
+		{file: "road_spread.ts", outcome: "notyet: 9:16: stage 0 can't lower a whole-object copy", field: "child"},
+		{file: "road_object_assign.ts", outcome: "notyet: 9:32: stage 0 can't lower Object.assign adding a field to its target's fixed shape", field: "child"},
+		{file: "road_object_values.ts", outcome: "notyet: 9:21: Adamic 0.1 refuses Object.values", field: "child"},
+		{file: "road_object_entries.ts", outcome: "notyet: 9:28: Adamic 0.1 refuses Object.entries", field: "child"},
+		{file: "road_for_in.ts", outcome: "agrees", field: "child"},
 		{file: "road_json_stringify.ts", field: "child"},
-		{file: "road_reflect_get.ts", field: "child"},
-		{file: "road_getter_dispatcher.ts", field: "child"},
+		{file: "road_reflect_get.ts", outcome: "notyet: 9:23: stage 0 can't lower Reflect.get other than", field: "child"},
+		{file: "road_reflect_get_object.ts", field: "child"},
+		{file: "road_getter_dispatcher.ts", outcome: "notyet: 17:24: stage 0 can't lower a checked view read whose receiver may own an accessor of the same name", field: "child"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()

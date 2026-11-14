@@ -1,10 +1,11 @@
-// required_fresh's read, with Required<Node> reached through a generic function's return.
+// required_fresh's read, with Required<Node> reached through a generic function's return: the cast in
+// its body is refused as required_fresh's is.
 interface FlowNode { readonly id: number }
-interface Holder { readonly kind: "h" | "g"; flowNode: FlowNode | undefined }
+interface Holder { readonly kind: "h" | "g"; flowNode: FlowNode }
 interface HolderH extends Holder { readonly kind: "h" }
 interface Node { readonly kind: "a" | "b"; flowNode?: FlowNode }
 const other: FlowNode = { id: 2 };
-const holder: Holder = { kind: "h", flowNode: undefined };
+const holder: Holder = { kind: "h", flowNode: { id: 1 } };
 const view = holder as HolderH;
 view.flowNode = other;
 console.log(String(holder.flowNode === other));

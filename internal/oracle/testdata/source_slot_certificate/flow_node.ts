@@ -1,5 +1,7 @@
 // flowNode's shape (binder.ts:1109): a checked view writes undefined to a field every declaration
-// types FlowNode | undefined, so a read through Node holds every value the slot can and stays unchecked.
+// types FlowNode | undefined. A read through Node would hold every value the slot can, but the checked
+// write can't change the slot from an object to undefined (it stopped here where Node runs, Loom job
+// J-q2t2z5x), so the write is NotYet.
 interface FlowNode { readonly id: number }
 interface Node { readonly kind: "a" | "b"; flowNode: FlowNode | undefined }
 interface NodeA extends Node { readonly kind: "a" }

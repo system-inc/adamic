@@ -13,7 +13,9 @@ import (
 // new object). The source-slot certificate is Adamic's Rule C on #2msw6t8, asked of the reads that exist:
 //
 //  1. A plain write `x.f = value;` through a checked view is admitted, and the type it writes is
-//     recorded for the name f (recordSourceSlotWrite). Any other write keeps view's stop.
+//     recorded for the name f (recordSourceSlotWrite). Any other write keeps view's stop, and one to a
+//     field that may hold undefined or null is NotYet, since the checked write can't change its slot's
+//     representation.
 //  2. What the slot can hold, W, is every type a view wrote to f and every type a declaration of f
 //     gives it, undefined included where one is optional (sourceSlotDeclared): an absent slot or one an
 //     initializer filled holds a value no view write records (Compiler's condition, binding).
@@ -57,31 +59,39 @@ type sourceSlot struct {
 }
 
 // recordSourceSlotWrite records target, an object field write through a checked view whose stop is
-// stop, as written for certifySourceSlots, and says whether it was. Only the whole left side of a plain
-// `=` statement is (hostMemberAssignment): a compound, a logical or a destructuring write keeps its stop,
-// and so does one found after certifySourceSlots has judged the reads. A fresh object or array literal
-// is made as the slot it's written into (freshOrWidened), so it's recorded as the field's own type.
-func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, stop error) bool {
+// stop, as written for certifySourceSlots, and gives back nil where it was, or the stop to give. Only the
+// whole left side of a plain `=` statement is recorded (hostMemberAssignment): a compound, a logical or a
+// destructuring write keeps its stop, and so does one found after certifySourceSlots has judged the
+// reads. A field whose type holds undefined or null, an optional one among them, is NotYet: its slot can
+// hold undefined, null or an object, and the checked write (object.c's adamic_object_view_write, and the
+// JavaScript backend's adamicViewWrite) stops a write that changes the representation the slot holds, so
+// a program Node runs would stop at it. A fresh object or array literal is made as the slot it's written
+// into (freshOrWidened), so it's recorded as the field's own type.
+func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, stop error) error {
 	if l.sourceSlotsJudged {
-		return false
+		return stop
 	}
 	assignment := hostMemberAssignment(target)
 	if assignment == nil {
-		return false
+		return stop
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	if field.Flags&ast.SymbolFlagsOptional != 0 || l.includesUndefined(declared) || l.includesNull(declared) {
+		return l.notYet(target, "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds")
 	}
 	for _, write := range l.sourceSlotWrites {
 		if write.target == target {
-			return true
+			return nil
 		}
 	}
 	value := assignment.AsBinaryExpression().Right
 	written := l.checker.GetTypeAtLocation(value)
 	switch ast.SkipParentheses(value).Kind {
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
-		written = l.checker.GetTypeOfSymbol(field)
+		written = declared
 	}
 	l.sourceSlotWrites = append(l.sourceSlotWrites, sourceSlotWrite{target: target, name: target.Name().Text(), written: written, stop: stop})
-	return true
+	return nil
 }
 
 // certifySourceSlots holds every read of a name recordSourceSlotWrite recorded to what its slot can hold,

@@ -130,10 +130,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 				if of == ir.Object {
 					// Another alias may read the slot at a type the value doesn't fit. A plain write is
 					// admitted with its type recorded, and certifySourceSlots checks every read whose type
-					// doesn't hold it; any other write keeps this stop (#2msw6t8).
+					// doesn't hold what the slot can; any other write keeps this stop (#2msw6t8).
 					stop := l.notYet(part, "writing a checked object field without its source-slot type certificate")
-					if !l.recordSourceSlotWrite(part, symbol, stop) {
-						refused = stop
+					if err := l.recordSourceSlotWrite(part, symbol, stop); err != nil {
+						refused = err
 					}
 				}
 			}
