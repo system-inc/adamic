@@ -7,14 +7,15 @@ function scopedHashes(text){
  (function visit(n){if(ts.isFunctionDeclaration(n)&&n.name?.text==='getNodeSystem')owners.push(n);ts.forEachChild(n,visit);})(file);
  assert.equal(owners.length,1,'getNodeSystem owner count');
  const imports=file.statements.filter(n=>ts.isImportDeclaration(n)&&n.moduleSpecifier.text.startsWith('node:')).map(n=>n.getText(file));
- return{ownerSha256:hash(owners[0].getText(file)),importsSha256:hash(imports.join('\n')),imports};
+ const ownerText=owners[0].getText(file).replace(/\r?\n/g,'\r\n');
+ return{ownerSha256:hash(ownerText),ownerText,importsSha256:hash(imports.join('\n')),imports};
 }
 module.exports={scopedHashes};
 if(require.main===module){
  const a=scopedHashes(fs.readFileSync(process.argv[2]==='-'?0:process.argv[2],'utf8'));
  if(process.argv[3]){
   const b=scopedHashes(fs.readFileSync(process.argv[3],'utf8'));
-  const result=[{file:'src/compiler/sys.ts',ownerBeforeSha256:a.ownerSha256,ownerAfterSha256:b.ownerSha256,importsBeforeSha256:a.importsSha256,importsAfterSha256:b.importsSha256}];
+  const result=[{file:'src/compiler/sys.ts',ownerBeforeSha256:a.ownerSha256,ownerAfterSha256:b.ownerSha256,importsBeforeSha256:a.importsSha256,importsAfterSha256:b.importsSha256,ownerBeforeText:a.ownerText,ownerAfterText:b.ownerText}];
   if(process.argv[4])fs.writeFileSync(process.argv[4],JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
  }else console.log(JSON.stringify(a,null,2));
 }
