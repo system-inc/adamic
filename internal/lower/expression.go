@@ -522,6 +522,20 @@ func (l *lowering) restHiddenWithin(from, to *checker.Type, flipped bool, visite
 		return false
 	}
 	visited[restHiddenPair{from, to, flipped}] = true
+	// A union or an intersection on either side is judged member by member: a value seen as
+	// ((a: string) => string) | ((a: number) => number) has no call signature of the whole, but a later
+	// view or narrowing reaches each member (Language's e3 on #2t3h708).
+	for _, side := range []*checker.Type{from, to} {
+		if side.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+			continue
+		}
+		for _, member := range side.Types() {
+			if side == from && l.restHiddenWithin(member, to, flipped, visited) || side == to && l.restHiddenWithin(from, member, flipped, visited) {
+				return true
+			}
+		}
+		return false
+	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
 		return l.restHiddenWithin(a, b, flipped, visited)
 	}
