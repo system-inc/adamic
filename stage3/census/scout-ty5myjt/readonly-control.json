@@ -1,0 +1,11 @@
+{
+  "version": "6.0.3",
+  "source": "interface D { file: string | undefined }; function intersection<T extends Readonly<Pick<D, \"file\">> & D>(v:T) { v.file = undefined; } function replaced<T extends Omit<D,\"file\"> & Readonly<Pick<D,\"file\">>>(v:T) { v.file = undefined; }",
+  "diagnostics": [
+    {
+      "code": 2540,
+      "start": 214,
+      "text": "Cannot assign to 'file' because it is a read-only property."
+    }
+  ]
+}

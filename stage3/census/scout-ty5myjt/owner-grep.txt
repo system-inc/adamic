@@ -1,0 +1,10 @@
+stage3/adapt/98-axolotl-d/sites.json:73:    "function": "ResolutionWithResolvedFileName",
+stage3/adapt/98-axolotl-d/sites.json:90:    "invariant": "@internal. stopWatchFailedLookupLocationOfResolution stores `resolution.files = undefined;` when the last file stops using a resolution."
+stage3/adapt/98-axolotl-d/README.md:43:| 2 | program.ts `ResolutionWithResolvedFileName.packageId` (@internal) | `?: PackageId \| undefined` | Present and undefined, below. |
+stage3/adapt/98-axolotl-d/README.md:44:| 3 | resolutionCache.ts `ResolutionWithFailedLookupLocations.files` (@internal) | `?: Set<Path> \| undefined` | stopWatchFailedLookupLocationOfResolution stores `resolution.files = undefined;` (1386). |
+stage3/adapt/98-axolotl-d/README.md:57:- **A sibling contract:** the widened objects are no longer assignable to the internal `ResolutionWithResolvedFileName`, so nine diagnostics appear in program.ts and resolutionCache.ts. That interface's packageId is widened too.
+stage3/adapt/98-axolotl-d/README.md:71:- `ResolutionWithResolvedFileName` holds those same objects. getResolvedModuleFromResolution and
+stage3/adapt/98-axolotl-d/README.md:171:`ResolutionWithResolvedFileName.packageId` and `ResolutionWithFailedLookupLocations.files`. stage3/lane is
+stage3/adapt/98-axolotl-d/adapt.cjs:20:    {file: 'src/compiler/program.ts', owner: 'ResolutionWithResolvedFileName', member: 'packageId', type: 'PackageId', readonly: false, internal: true},
+stage3/adapt/40-explicit-any/evidence/sites.json:865:    "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;",
+stage3/adapt/99-correctness-axolotl-w/README.md:28:evidence names program.ts's sortAndDeduplicateDiagnostics; 99k's emitted
