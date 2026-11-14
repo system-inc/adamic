@@ -82,8 +82,9 @@ func functionNamed(t *testing.T, program *ir.Program, name string) int {
 // A region made in a statement and handed to a suspending function's parameter would end with the
 // statement, while the function reads it after it resumes (Memory's rule 1). countLater reads p after
 // its await, and relay hands its own p on to countLater, so its p escapes only through the fixed
-// point. weigh doesn't suspend, and Main's statement handing it make(5) keeps its region in a program
-// that holds promises. Mutant: the Suspends() clause dropped from the escape seed, and countLater's and
+// point. weigh doesn't suspend, and measure's statement handing it make(5) keeps its region in a program
+// that holds promises. The top-level awaits make Main a suspending module function, so the controls
+// live in functions that don't suspend. Mutant: the Suspends() clause dropped from the escape seed, and countLater's and
 // relay's p flow nowhere, start's and startRelay's statements take regions, and ASan reports the read.
 func TestSuspendingCalleeParametersEscape(t *testing.T) {
 	t.Parallel()
@@ -112,11 +113,16 @@ function startRelay(): Promise<number> {
     const pending = relay(make(9));
     return pending;
 }
-let weight = 0;
-weight += weigh(make(5));
+function measure(): number {
+    let weight = 0;
+    weight += weigh(make(5));
+    return weight;
+}
 const first = start();
 const second = startRelay();
-console.log("sync " + String(weight));
+console.log("sync " + String(measure()));
+await first;
+await second;
 `)
 	plan := planRegions(program)
 	for _, name := range []string{"countLater", "relay"} {
@@ -131,15 +137,15 @@ console.log("sync " + String(weight));
 			}
 		}
 	}
-	main := statementsOf(program.Main)
+	measured := statementsOf(program.Functions[functionNamed(t, program, "measure")].Body)
 	regions := 0
 	for statement := range plan.statements {
-		if main[statement] {
+		if measured[statement] {
 			regions++
 		}
 	}
 	if regions == 0 {
-		t.Error("Main's weigh(make(5)) took no region in a program holding promises")
+		t.Error("measure's weigh(make(5)) took no region in a program holding promises")
 	}
 	suspensionRun(t, program, "sync 5\nlater 7\nlater 9\n")
 }
@@ -147,8 +153,9 @@ console.log("sync " + String(weight));
 // A suspending body keeps its locals in frame cells, which reuse's entries and a borrowed element's
 // binding don't name, so the plans leave its body out (#kha2ea0): work, an async function, and steps,
 // a generator, each hold a statement that would take a region, a spread that would be reused and an
-// element that would be borrowed. grow and Main don't suspend and keep theirs: a spread reused in grow,
-// and a region in Main. Mutant: the Suspends() skips dropped from planRegions' statements, planReuse
+// element that would be borrowed. grow and summary don't suspend and keep theirs: a spread reused in
+// grow, and a region in summary, which also consumes the generator, since a consumer can't sit in the
+// suspending module function the top-level await makes Main. Mutant: the Suspends() skips dropped from planRegions' statements, planReuse
 // and planElementBorrows, and the plans reach into work and steps.
 func TestSuspendingBodiesPlanNothing(t *testing.T) {
 	t.Parallel()
@@ -194,14 +201,17 @@ async function report(xs: Box[]): Promise<void> {
     console.log("total " + String(total));
 }
 const boxes: Box[] = [make(4), make(5)];
-let seen = 0;
-for (const v of steps(boxes)) {
-    seen += v;
+function summary(): string {
+    let seen = 0;
+    for (const v of steps(boxes)) {
+        seen += v;
+    }
+    let weight = 0;
+    weight += weigh(make(6));
+    return "seen " + String(seen) + " grown " + String(grow(make(1)).n) + " weight " + String(weight);
 }
-let weight = 0;
-weight += weigh(make(6));
-console.log("seen " + String(seen) + " grown " + String(grow(make(1)).n) + " weight " + String(weight));
-const done = report(boxes);
+console.log(summary());
+await report(boxes);
 `)
 	borrows, lending := planElementBorrows(program)
 	reuse := planReuse(program, lending)
@@ -225,13 +235,13 @@ const done = report(boxes);
 	if !reused {
 		t.Error("grow's spread isn't reused in a program holding promises and a generator")
 	}
-	main := statementsOf(program.Main)
+	summarized := statementsOf(program.Functions[functionNamed(t, program, "summary")].Body)
 	region := false
 	for statement := range regions.statements {
-		region = region || main[statement]
+		region = region || summarized[statement]
 	}
 	if !region {
-		t.Error("Main's weigh(make(6)) took no region in a program holding promises and a generator")
+		t.Error("summary's weigh(make(6)) took no region in a program holding promises and a generator")
 	}
 	suspensionRun(t, program, "seen 17 grown 3 weight 6\ntotal 26\n")
 }
