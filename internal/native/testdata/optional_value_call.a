@@ -1,0 +1,53 @@
+// optional_value_call_test.go lowers this, then makes each `(callback ?? panic(...))(...)` the
+// optional call `callback?.(...)` in the IR, since lowering doesn't make that call from source yet.
+// Run as written, the calls with undefined panic; the test compares against what the optional calls
+// print, written out by hand.
+import { panic } from 'adamic';
+
+let ran = 0;
+function note(label: string): string {
+	ran = ran + 1;
+	console.log('argument ' + label);
+	return label;
+}
+function run(callback: ((label: string) => void) | undefined, label: string): void {
+	(callback ?? panic('run: the test makes this an optional call'))(note(label));
+}
+function relay(callback: ((label: string) => string) | undefined, label: string): string | undefined {
+	return (callback ?? panic('relay: the test makes this an optional call'))(note(label));
+}
+function shout(label: string): void {
+	console.log('callback ' + label);
+}
+function echo(label: string): string {
+	console.log('callback ' + label);
+	return label + '!';
+}
+// make's closure is fresh, so cb's cell holds the only count on it. clear's write lets go of that
+// count while the arguments run, after the callee is read and before it's called: the call must
+// still run the value it read.
+function make(word: string): ((label: string) => void) | undefined {
+	return (label: string): void => {
+		console.log(word + ' ' + label);
+	};
+}
+function hold(): void {
+	let cb = make('held');
+	const clear = (label: string): string => {
+		cb = undefined;
+		return note(label);
+	};
+	(cb ?? panic('hold: the test makes this an optional call'))(clear('e'));
+	console.log(cb === undefined ? 'cleared' : 'kept');
+}
+run(shout, 'a');
+console.log('ran ' + String(ran));
+run(undefined, 'b');
+console.log('ran ' + String(ran));
+const first = relay(echo, 'c');
+console.log(first === undefined ? 'relay undefined' : 'relay ' + first);
+const second = relay(undefined, 'd');
+console.log(second === undefined ? 'relay undefined' : 'relay ' + second);
+console.log('ran ' + String(ran));
+hold();
+console.log('ran ' + String(ran));
