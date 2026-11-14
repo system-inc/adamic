@@ -1,7 +1,9 @@
 package oracle
 
 import (
+	"fmt"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -156,4 +158,47 @@ int main(void) {
 	if adamicLimit != nodeLimit {
 		t.Errorf("ADAMIC_STRING_MAX_UNITS is %d, but the pinned Node makes a string of %d units and refuses one more", adamicLimit, nodeLimit)
 	}
+}
+
+// A join refuses the next piece before growing its buffer. The release build's peak includes the
+// original piece and the first copied piece; copying all three exceeds this bound even though the
+// eventual range error still agrees with Node. Dropping array.c's running check reds peak.
+func TestStringLengthJoinMemory(t *testing.T) {
+	holdStringLengthFixtures(t, []string{"join_memory"})
+	t.Run("peak", func(t *testing.T) {
+		if runtime.GOOS != "linux" {
+			t.Skip("peak memory measurement needs Linux")
+		}
+		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_length_throws/join_memory.a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		program, err := lowered(t, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		code := native.C(program)
+		at := strings.LastIndex(code, "\treturn adamic_host_exit_status();")
+		if at < 0 {
+			t.Fatal("main return missing")
+		}
+		code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage usage; getrusage(RUSAGE_SELF, &usage); fprintf(stderr, \"join_peak_kib %ld\\n\", usage.ru_maxrss);\n" + code[at:]
+		binary := filepath.Join(t.TempDir(), "join")
+		if err := native.Build(code, binary, native.Options{}); err != nil {
+			t.Fatal(err)
+		}
+		got := execute(t, binary)
+		var peak int64
+		if _, err := fmt.Sscanf(string(got.stderr), "join_peak_kib %d", &peak); err != nil {
+			t.Fatalf("peak memory: %v; stderr %q", err, got.stderr)
+		}
+		if got.exitCode != 0 || string(got.stdout) != "RangeError: Invalid string length\n" {
+			t.Fatalf("exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+		}
+		t.Logf("join peak: %d KiB", peak)
+		// Two pieces need about 512 MiB; three copied pieces plus the original need about 1 GiB.
+		if peak > 750*1024 {
+			t.Errorf("join peak %d KiB exceeds 750 MiB", peak)
+		}
+	})
 }
