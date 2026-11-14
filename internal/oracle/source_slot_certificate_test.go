@@ -30,6 +30,7 @@ func TestSourceSlotCertificate(t *testing.T) {
 	t.Parallel()
 	const nullableWrite = "stage 0 can't lower writing a checked object field that may hold undefined or null"
 	const uncheckedCast = "Adamic 0.1 refuses a cast the runtime can't check"
+	const certificateStop = "stage 0 can't lower writing a checked object field without its source-slot type certificate"
 	directory := "internal/oracle/testdata/source_slot_certificate/"
 	for _, pin := range []struct {
 		file, outcome, field string
@@ -55,10 +56,12 @@ func TestSourceSlotCertificate(t *testing.T) {
 		{file: "road_object_values.ts", outcome: "notyet: 9:21: Adamic 0.1 refuses Object.values", field: "child"},
 		{file: "road_object_entries.ts", outcome: "notyet: 9:28: Adamic 0.1 refuses Object.entries", field: "child"},
 		{file: "road_for_in.ts", outcome: "agrees", field: "child"},
-		{file: "road_json_stringify.ts", outcome: "notyet: 7:1: stage 0 can't lower writing a checked object field without its source-slot type certificate", field: "child"},
+		{file: "road_json_stringify.ts", outcome: "notyet: 7:1: " + certificateStop, field: "child"},
 		{file: "road_reflect_get.ts", outcome: "notyet: 9:23: stage 0 can't lower Reflect.get other than", field: "child"},
 		{file: "road_reflect_get_object.ts", outcome: "notyet: 9:42: stage 0 can't lower Reflect.get of a value not held as unknown", field: "child"},
 		{file: "road_reflect_get_unknown.ts", outcome: "notyet: 10:42: stage 0 can't lower Reflect.get of a value that may be null or undefined", field: "child"},
+		{file: "road_method_call.ts", outcome: "notyet: 7:1: " + certificateStop, field: "child"},
+		{file: "road_bound_method.ts", outcome: "notyet: 7:1: " + certificateStop, field: "child"},
 		{file: "road_getter_dispatcher.ts", outcome: "notyet: 17:24: stage 0 can't lower a checked view read whose receiver may own an accessor of the same name", field: "child"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
