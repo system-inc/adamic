@@ -130,7 +130,9 @@ func invokeCommandWith(t *testing.T, dir string, environment []string, args ...s
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	// A bound for a hang, never the clock a test reads: the timeout tests time out two commands at 4s and retry
+	// both alone, about 16s, and the 4s leaves the real node room on a loaded box (timeout_retry_test.go).
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, exe, "-test.run=^TestCommandHelper$")
 	command.Dir = dir
