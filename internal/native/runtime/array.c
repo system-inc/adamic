@@ -56,7 +56,8 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 
 // adamic_array_join builds the string in one buffer, growing it as it goes.
 adamic_string *adamic_array_join(const adamic_array *array, const adamic_string *separator, enum adamic_join kind) {
-	size_t length = 0, capacity = 64;
+	size_t length = 0, capacity = 64, units = 0;
+	size_t separator_units = adamic_string_units(separator);
 	char *buffer = malloc(capacity);
 	if (buffer == NULL) {
 		static const char message[] = "out of memory";
@@ -65,7 +66,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 	for (size_t index = 0; index < array->length; index++) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX];
 		const char *bytes = NULL;
-		size_t size = 0;
+		size_t size = 0, piece_units = 0;
 		switch (kind) {
 		case adamic_join_numbers:
 			size = adamic_number_format(array->elements[index].number, number);
@@ -90,9 +91,18 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 			if (string != NULL) {
 				bytes = string->bytes;
 				size = string->length;
+				piece_units = adamic_string_units(string);
 			}
 			break;
 		}
+		}
+		if (kind != adamic_join_strings) piece_units = size;
+		units += piece_units + (index > 0 ? separator_units : 0);
+		// Refuse the next piece before growing or copying, leaving concat's empty result and throw.
+		if (units > ADAMIC_STRING_MAX_UNITS) {
+			free(buffer);
+			adamic_string_check_length(units);
+			return adamic_retain(&adamic_string_empty);
 		}
 		size_t needed = length + size + (index > 0 ? separator->length : 0);
 		if (needed > capacity) {
