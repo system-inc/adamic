@@ -595,3 +595,6 @@
 `node_fs_directory.c:coded_error_shape_json:1`
 `node_fs_file.c:shape_json:1`
 `node_fs_watch_impl.h:watch_error_shape_json:1`
+
+# Foreign wrappers own pointer and kind slots; Apple calls remain on the main thread.
+`runtime-file:foreign.c`

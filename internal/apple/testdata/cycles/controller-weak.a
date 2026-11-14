@@ -1,0 +1,19 @@
+// controller.a with the table held weakly: no cycle.
+// want: accepted
+
+import type { Weak } from 'adamic';
+import type { TableView } from 'apple/appkit/table-view';
+import type { TableViewDataSource } from 'apple/appkit/table-view-data-source';
+
+class Controller implements TableViewDataSource {
+	readonly table: Weak<TableView>;
+	constructor(table: TableView) {
+		this.table = table;
+	}
+	numberOfRows(tableView: TableView): number {
+		return tableView === this.table ? 1 : 0;
+	}
+}
+export function attach(table: TableView): void {
+	table.dataSource = new Controller(table);
+}
