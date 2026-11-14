@@ -1,0 +1,28 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: writer owner shape: createProgram
++ actual - expected
+
++ '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854'
+- '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152'
+
+    at adapt (/workspace/scratch/diag-read-view-1/repo/stage3/adapt/95-checker-axolotl-h/adapt.cjs:84:12)
+    at Object.<anonymous> (/workspace/scratch/diag-read-view-1/repo/stage3/adapt/95-checker-axolotl-h/adapt.cjs:182:172)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854',
+  expected: '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

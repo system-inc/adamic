@@ -1,0 +1,9 @@
+{
+  "baselineExit": 1,
+  "candidateExit": 1,
+  "logsByteIdentical": true,
+  "reason": "writer owner shape: createProgram",
+  "expectedOriginalHash": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+  "actualNormalizedHash": "729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854",
+  "scope": "additional stage-specific enclosing-owner check on final trees; baseline already contains three later edits"
+}
