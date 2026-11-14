@@ -1,0 +1,19 @@
+{
+  "file": "watchPublic.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 16.053192371000023,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/78.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 31,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "1898a047f22f3c7c5f24c9c68394dfd1f214df8d21ec42b1e27d5ee30e59ca2e",
+  ".log_sha256": "ed160fec39870b23f261ccc300556aa7283aac9257f87fd39ea920df06f72532"
+}

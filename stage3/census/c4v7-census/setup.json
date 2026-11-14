@@ -6,5 +6,36 @@
   "npm_ci": {
     "head": 0,
     "main": 0
-  }
+  },
+  "submodule_update": {
+    "head": 0,
+    "main": 0
+  },
+  "apply": {
+    "head": {
+      "exit": 0,
+      "bound_seconds": 1500
+    },
+    "main": {
+      "exit": 0,
+      "bound_seconds": 1500
+    }
+  },
+  "typescript": {
+    "head": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "peeled_v6.0.3": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "scan_build": {
+    "head": 0,
+    "main": 0
+  },
+  "controls": {
+    "head": "passed both",
+    "main": "passed both"
+  },
+  "npm_cache_note": "Initial installs used default /home/agent/.npm; both repeated successfully with explicit scratch cache and logs.",
+  "submodules": [
+    " 5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e1)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (remotes/origin/adamic)"
+  ]
 }

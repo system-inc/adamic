@@ -1,0 +1,19 @@
+{
+  "file": "visitorPublic.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 24.46961406599985,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/76.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 42,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "1e1c05bd513c93cc10534f95bfbb9bb0a60e6a18bdde764a881ba9f87512308e",
+  ".log_sha256": "38dd3e7708716696ee2dd6599cd8782c72c9ea32f3749144641d0baa48954886"
+}

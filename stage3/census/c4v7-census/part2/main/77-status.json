@@ -1,0 +1,19 @@
+{
+  "file": "watch.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 16.797669784999925,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/77.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 13,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "f580ecfbfc71db1d9a16d1db0d93f753f5f7135e92ea13f5a551d1b3ec1a6557",
+  ".log_sha256": "9b6c04dd5f749930c93fb2b016e85be119f3535a45325648be018a28cd841aa4"
+}
