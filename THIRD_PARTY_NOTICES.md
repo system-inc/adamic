@@ -5,15 +5,15 @@ ported from other projects, each under its own license, reproduced here in full.
 
 ## In every program Adamic compiles
 
-Adamic's runtime (`internal/native/runtime/`) is compiled into every native program Adamic builds, so a
+Adamic's runtime (`internal/native_runtime/c/`) is compiled into every native program Adamic builds, so a
 binary Adamic makes carries what is ported into the runtime, and these notices travel with it.
 
 ### Node.js
 
 - Source: https://github.com/nodejs/node/blob/v24.14.1/lib/fs.js
 - Version: Node.js v24.14.1, lib/fs.js, realpathSync (POSIX component walk).
-- In Adamic: `internal/native/runtime/directory.c`, `real_path_input` and `adamic_real_path`.
-- Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native/runtime/node_path.c`.
+- In Adamic: `internal/native_runtime/c/directory.c`, `real_path_input` and `adamic_real_path`.
+- Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native_runtime/c/node_path.c`.
 - License: `MIT`
 
 ```text

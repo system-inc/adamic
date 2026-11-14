@@ -28,7 +28,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	expected := printerAnswers(t, cases, "default")
 	narrow := printerAnswers(t, cases, "narrow")
 	script, _ := filepath.Abs("testdata/print_library.mjs")
-	// Reads: internal/native/runtime/*.c
+	// Reads: internal/native_runtime/c/*.c
 	repo, _ := filepath.Abs(repository)
 	original := execute(t, nil, "node", script, filepath.Join(repo, "cohere/internal/format/prettier/bundles"), cases, "default", "fork")
 	if original.exitCode != 0 || len(original.stderr) != 0 {
@@ -104,7 +104,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	runtimeDir := filepath.Join(repo, "internal/native/runtime")
+	runtimeDir := filepath.Join(repo, "internal/native_runtime/c")
 	files, _ := filepath.Glob(filepath.Join(runtimeDir, "*.c"))
 	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
 	args := append(native.SourceFlags(code, native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)

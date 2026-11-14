@@ -10,9 +10,9 @@ with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
     for item in tar:
         if item.isfile() and pathlib.Path(item.name).parent==pathlib.Path('internal/native/runtime'):
             (scratch/'cache-combined-runtime'/pathlib.Path(item.name).name).write_bytes(tar.extractfile(item).read())
-for source in (root/'internal/native/runtime').iterdir():
+for source in (root/'internal/native_runtime/c').iterdir():
     if source.suffix in ('.c','.h'):shutil.copy2(source,scratch/'cache-only-runtime'/source.name)
-shutil.copy2(root/'internal/native/runtime/input.c',scratch/'cache-combined-runtime/input.c')
+shutil.copy2(root/'internal/native_runtime/c/input.c',scratch/'cache-combined-runtime/input.c')
 subprocess.run(['go','build','-o',str(scratch/'build-service'),'cloud/reports/decode-ascii/build.go'],check=True)
 # build.sh prepares the unchanged service/host/command sources; it is not run during measurement.
 for label in ['only','combined']:

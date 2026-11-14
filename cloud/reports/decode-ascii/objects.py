@@ -2,7 +2,7 @@
 import hashlib, json, pathlib, subprocess, sys, os
 root=pathlib.Path.cwd(); scratch=pathlib.Path('/tmp/decode-ascii'); stage=sys.argv[1]
 out=scratch/('objects-'+stage); out.mkdir(exist_ok=True)
-for source in sorted((root/'internal/native/runtime').glob('*.c')):
+for source in sorted((root/'internal/native_runtime/c').glob('*.c')):
     subprocess.run(['clang','-std=c11','-Wall','-Wextra','-Werror','-pedantic','-O2','-ffp-contract=off','-fno-optimize-sibling-calls','-c',str(source),'-o',str(out/(source.stem+'.o'))],check=True)
 if stage=='after':
     rows=[]

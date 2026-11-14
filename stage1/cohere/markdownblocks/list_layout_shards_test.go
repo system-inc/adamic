@@ -56,7 +56,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}, listLayoutSources(t, root, false)...)
+	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native_runtime/c"}, listLayoutSources(t, root, false)...)
 	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 }
 
@@ -353,8 +353,8 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	// memoized as a miss: Adam's key check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19).
 	p.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
 	p.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
-	files := append([]string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}, listLayoutSources(t, root, true)...)
-	nativeFiles := []string{"internal/native/runtime"}
+	files := append([]string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native_runtime/c"}, listLayoutSources(t, root, true)...)
+	nativeFiles := []string{"internal/native_runtime/c"}
 	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
 	if err != nil {
 		t.Fatal(err)

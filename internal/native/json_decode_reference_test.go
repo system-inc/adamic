@@ -14,7 +14,7 @@ import (
 
 func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
 	t.Parallel()
-	decoder, err := os.ReadFile("runtime/json_decode.c")
+	decoder, err := os.ReadFile("../native_runtime/c/json_decode.c")
 	if err != nil {
 		t.Fatal(err)
 	}
