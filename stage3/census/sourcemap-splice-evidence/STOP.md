@@ -1,3 +1,5 @@
+> Historical stop from the first turn. The resumed real-file census proves the restoring mutant; see REPORT.md for the completed work.
+
 # Stopped: exact-body restoring mutant is masked by an earlier wall
 
 Base main: f2546f1fcb7c76f8dd549094401246296b6998a7.

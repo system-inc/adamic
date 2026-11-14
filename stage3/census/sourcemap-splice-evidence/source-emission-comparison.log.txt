@@ -1,0 +1,18 @@
+{
+  "sourceChanges": [
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "before": "21b405e7d70573550a4b412d924c96e1a8107c5f6f6265a51e3d6f6fb66af255",
+      "after": "75860c5f0528bc731ca49bf01872234981a9932b6a3db78ee4623891b485773f"
+    }
+  ],
+  "javascriptChanges": [
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "before": "9c7a165543c0a01e29b0a8ffb4d8bcaaade15a21885c84d45a2aebece1dbc061",
+      "after": "cdcda4d4dc5456d221afd0c5e967e95f38a4cb54a9c1c0af7585bcf6e5d7fef4",
+      "beforeLine": "mappingCharCodes.length = 0;",
+      "afterLine": "mappingCharCodes.splice(0);"
+    }
+  ]
+}

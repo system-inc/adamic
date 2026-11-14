@@ -1,0 +1,8 @@
+{
+  "lengthReadsEqualPushesPlusFlushes": true,
+  "applyReadsEqualNonemptyFlushes": true,
+  "allPostClearReadsBeforeNextWriteSeeZero": true,
+  "noExternalStoredOrReturnedBufferAliases": true,
+  "pairedBufferLengthsComparedAtEverySourceRead": true,
+  "pairedMappingTextComparedAtEveryApply": true
+}

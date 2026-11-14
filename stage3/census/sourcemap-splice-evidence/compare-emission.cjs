@@ -1,0 +1,8 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require('typescript');
+const [baseline,after]=process.argv.slice(2);const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}
+const rows=[];for(const b of files(path.join(baseline,'src'))){const rel=path.relative(baseline,b),a=path.join(after,rel);const x=fs.readFileSync(b),y=fs.readFileSync(a);if(!x.equals(y)){assert.equal(rel,'src/compiler/sourcemap.ts');assert.equal(y.toString(),x.toString().replace('mappingCharCodes.length = 0;','mappingCharCodes.splice(0);'));rows.push({file:rel,before:sha(x),after:sha(y)});}}
+assert.equal(rows.length,1);
+const js=[];for(const file of files(path.join(baseline,'src')).filter(f=>f.endsWith('.ts')&&!f.endsWith('.d.ts'))){const rel=path.relative(baseline,file);const emit=s=>ts.transpileModule(s,{fileName:rel,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext}}).outputText;const x=emit(fs.readFileSync(file,'utf8')),y=emit(fs.readFileSync(path.join(after,rel),'utf8'));if(x!==y){assert.equal(rel,'src/compiler/sourcemap.ts');assert.equal(y,x.replace('mappingCharCodes.length = 0;','mappingCharCodes.splice(0);'));js.push({file:rel,before:sha(x),after:sha(y),beforeLine:'mappingCharCodes.length = 0;',afterLine:'mappingCharCodes.splice(0);'});}}
+assert.equal(js.length,1);console.log(JSON.stringify({sourceChanges:rows,javascriptChanges:js},null,2));

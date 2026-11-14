@@ -1,0 +1,52 @@
+{
+  "refs": [
+    {
+      "line": 52,
+      "column": 9,
+      "function": "createSourceMapGenerator",
+      "kind": "private declaration",
+      "text": "mappingCharCodes: number[] = []"
+    },
+    {
+      "line": 254,
+      "column": 9,
+      "function": "appendMappingCharCode",
+      "kind": "push",
+      "text": "mappingCharCodes.push"
+    },
+    {
+      "line": 257,
+      "column": 13,
+      "function": "appendMappingCharCode",
+      "kind": "length write",
+      "text": "mappingCharCodes.length"
+    },
+    {
+      "line": 317,
+      "column": 13,
+      "function": "flushMappingBuffer",
+      "kind": "length write",
+      "text": "mappingCharCodes.length"
+    },
+    {
+      "line": 318,
+      "column": 62,
+      "function": "flushMappingBuffer",
+      "kind": "native apply argument",
+      "text": "String.fromCharCode.apply(undefined, mappingCharCodes)"
+    },
+    {
+      "line": 319,
+      "column": 13,
+      "function": "flushMappingBuffer",
+      "kind": "length write",
+      "text": "mappingCharCodes.length"
+    }
+  ],
+  "externalStoredOrReturnedAliases": 0,
+  "closureReferences": [
+    "appendMappingCharCode",
+    "flushMappingBuffer"
+  ],
+  "nativeArgumentConsumer": "String.fromCharCode.apply (synchronous argument list)"
+}

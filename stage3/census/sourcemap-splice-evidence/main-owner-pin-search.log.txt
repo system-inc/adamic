@@ -1,0 +1,5 @@
+HEAD:stage3/adapt/33-indexed-reads-emit/proof/whole-files/sourcemap/mutant.json:6:    "function": "createSourceMapGenerator",
+HEAD:stage3/adapt/33-indexed-reads-emit/required-values.json:6:    "function": "createSourceMapGenerator",
+HEAD:stage3/adapt/98-axolotl-d/README.md:132:`ts.createSourceMapGenerator` is on the runtime `ts` object of the published typescript.js, which is how the
+HEAD:stage3/adapt/98-axolotl-d/witness.cjs:15:    const generator = ts.createSourceMapGenerator(host, 'out.js', '', '/', {});
+HEAD:stage3/adapt/98-axolotl-d/witness.cjs:39:    assert.equal(typeof ts.createSourceMapGenerator, 'function', `${file} does not expose createSourceMapGenerator`);

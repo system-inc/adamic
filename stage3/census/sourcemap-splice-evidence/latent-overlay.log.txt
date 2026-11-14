@@ -1,0 +1,7 @@
+go: creating work dir: stat /tmp/adamic-gate: no such file or directory
+Traceback (most recent call last):
+  File "/workspace/scratch/sourcemap-workers/stage3/census/latent/make_overlay.py", line 55, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/scratch/sourcemap-workers/stage3/census/latent/statecopy', '/workspace/scratch/sourcemap-workers', '/workspace/scratch/sourcemap-latent-overlay/internal_lower_lower.go', '/workspace/scratch/sourcemap-latent-overlay/internal_lower_latent_state.go']' returned non-zero exit status 1.

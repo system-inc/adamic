@@ -1,0 +1,5 @@
+{
+  "NODE_OPTIONS": "--require=/workspace/scratch/sourcemap-splice-evidence/stage3/census/sourcemap-splice-evidence/count-preload.cjs",
+  "SM_COUNT_DIR": "/workspace/scratch/sourcemap-splice-evidence/stage3/census/sourcemap-splice-evidence/count-processes",
+  "oracle": "all runners, 8 workers, no test filter; original and splice buffers mirrored at each source read"
+}
