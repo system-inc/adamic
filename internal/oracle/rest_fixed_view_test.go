@@ -57,7 +57,8 @@ func TestRestThroughFixedView(t *testing.T) {
 		// callback, whose adapter calls the source signature (r19, Language's union element covering
 		// map's three parameters), lower and agree. A class method with a rest seen through a method
 		// with none (r20) is the same hidden rest, which reached the method through a mismatched
-		// function pointer on main.
+		// function pointer on main. A host function's own rest (setTimeout's, r21) is exempt, since its
+		// value is a host lowering's closure, and seen through a narrower view and then widened it agrees.
 		"r14_rest_view_control":           "",
 		"r15_hidden_two_hops":             ":2:36",
 		"r16_hidden_argument":             ":2:36",
@@ -65,6 +66,7 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r18_fixed_widened_control":       "",
 		"r19_library_callback_union_rest": "",
 		"r20_hidden_class_method":         ":2:42",
+		"r21_host_rest_widened":           "",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
