@@ -97,9 +97,9 @@ export async function runDay6(input) {
   const benchOptions = { ...defaults, workerd: options.workerd, suite: suitePath, output,
     rounds: options.rounds, coldSpawns: options.coldSpawns, timeoutMs: 120000 };
   const git = args => execFileSync('git', ['-C', options.repo, ...args], { encoding: 'utf8' }).trim();
+  // Every piece the table measures is on main, so the measured commit is the provenance; the
+  // area/platforms and codex/* branches it once named are gone.
   const provenance = { options, measurementCheckout: git(['rev-parse', 'HEAD']), dirty: git(['status', '--porcelain', '--untracked-files=no']),
-    platformsRevision: git(['rev-parse', 'origin/area/platforms']), computeRevision: git(['rev-parse', 'origin/codex/workers-compute-a']),
-    backendsRevision: git(['rev-parse', 'origin/codex/workers-two-backends']),
     corpusSha256: digest(corpusBytes), recordingSha256: digest(recordingBytes),
     handlerSha256: digest(await readFile(path.join(options.repo, 'workers/compute/handler.a'))),
     twinSha256: digest(await readFile(path.join(options.repo, 'workers/compute/twin/worker.ts'))),
@@ -144,7 +144,7 @@ export async function runDay6(input) {
     const sizes = ['| variant | JS raw bytes | JS gzip bytes | Wasm raw bytes | Wasm gzip bytes |', '|---|---:|---:|---:|---:|',
       ...provenance.sizes.map(s => `| ${s.variant} | ${s.jsRawBytes} | ${s.jsGzipBytes} | ${s.wasmRawBytes} | ${s.wasmGzipBytes} |`)];
     const buildHeader = [
-      `Measurement checkout: ${provenance.measurementCheckout}; platforms ${provenance.platformsRevision}; compute ${provenance.computeRevision}; backends ${provenance.backendsRevision}.`,
+      `Measurement checkout: ${provenance.measurementCheckout}${provenance.dirty ? ' (tracked files modified)' : ''}.`,
       `Build flags: ${JSON.stringify(provenance.build.flags)}`,
       `Build/runtime versions: ${JSON.stringify(provenance.build.versions)}`,
       `Build commands: ${JSON.stringify(provenance.build.commands)}`,
