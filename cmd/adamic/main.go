@@ -32,6 +32,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/platform"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -50,7 +51,7 @@ func main() {
 
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
 // be compiled, 2 for a usage error, 4 when the compiler itself panicked. Usage asked for with --help is no error: it
-// goes to stdout and exits 0, as --version does. PlatformMissing alone exits 5.
+// goes to stdout and exits 0, as --version does. platform.Missing alone exits 5.
 func run(arguments []string) (code int) {
 	defer reportCompilerBug(&code, os.Stderr)
 	// Explanation goes to stderr so C/JavaScript output remains usable.
@@ -217,7 +218,7 @@ func check(paths []string) (*load.Program, int) {
 func checkWithLoader(paths []string, loader func([]string) (*load.Program, error)) (*load.Program, int) {
 	program, err := loader(paths)
 	if err != nil {
-		if compilerErrorExit(err) == toolchain.PlatformMissingExitCode {
+		if compilerErrorExit(err) == platform.MissingExitCode {
 			fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 			return nil, compilerErrorExit(err)
 		}
@@ -304,9 +305,9 @@ func relative(text string) string {
 // compilerErrorExit reserves 5 for the typed platform stop, never an error's text
 // or a child process's exit code. Usage, machine and panic paths keep 2, 3 and 4.
 func compilerErrorExit(err error) int {
-	var missing *toolchain.PlatformMissing
+	var missing *platform.Missing
 	if errors.As(err, &missing) {
-		return toolchain.PlatformMissingExitCode
+		return platform.MissingExitCode
 	}
 	return 1
 }

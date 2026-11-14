@@ -241,6 +241,8 @@ var functionReferenceFields = map[string]int{
 	// ModuleExports, wasm32's handleRequest), and the async module body Main moves into.
 	"Export.Function":    0,
 	"Program.AsyncEntry": 1,
+	// A delegate's method, which Apple calls and nothing in the program does (ir.DelegateMethod).
+	"DelegateMethod.Function": 0,
 	// Lowering's own links between functions, kept though none of them is a call, since a field
 	// that may name a function counts.
 	"Function.ForwardsArguments":     1,

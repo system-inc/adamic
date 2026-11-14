@@ -147,6 +147,8 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 // something other than the slot an argument goes into, each with what it reads instead. Any other reader
 // asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
 var signatureReaders = map[string]string{
+	"resolvedDeclaration":               "the Apple overload declaration, to select its foreign-call tag; no argument parameter slot is read",
+	"foreignNew":                        "the Apple constructor declaration, to select its init tag; native arguments are converted by that tag, not a contextual parameter slot",
 	"boundKeyedLength":                  "the callee's declaration, parameter count and symbols, to recognize a keyed bound-length helper; no argument is judged against a parameter's slot",
 	"brandedCall":                       "the callee's type predicate, to judge a call that narrows its argument to a branded supertype",
 	"narrowOverloadCall":                "the declaration a call resolves to, to ask whether its result is checked at the call; no argument is judged against a parameter's slot",

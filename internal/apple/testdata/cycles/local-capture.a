@@ -1,0 +1,24 @@
+// UI built in a function: the action captures a local label. A label, like any Apple object that isn't a
+// leaf, may hold any object through its id slots (objectValue), the button among them, and so the
+// closure the button holds. Refused, the fix capturing the label weakly (local-capture-weak.a).
+// want: refuses 'label', a variable a function value captures
+
+import { Button } from 'apple/appkit/button';
+import { TextField } from 'apple/appkit/text-field';
+import { View } from 'apple/appkit/view';
+
+export function panel(): View {
+	const content = new View({ frame: { x: 0, y: 0, width: 200, height: 100 } });
+	const label = TextField.label({ with: 'ready' });
+	let presses = 0;
+	const button = new Button({
+		title: 'Press',
+		action: () => {
+			presses += 1;
+			label.stringValue = `pressed ${presses}`;
+		},
+	});
+	content.addSubview(label);
+	content.addSubview(button);
+	return content;
+}

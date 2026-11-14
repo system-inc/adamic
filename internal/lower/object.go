@@ -466,6 +466,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err := l.eepPropertyPresence(node); err != nil {
 		return nil, err
 	}
+	if value, handled, err := l.foreignProperty(node); handled {
+		return value, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -894,6 +897,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, handled, err
+	}
+	if value, handled, err := l.foreignCall(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.detachedOwnCall(node); handled {
@@ -1842,6 +1848,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	l.inspectorRecordBuiltUse(node)
 	if value, found, err := l.nodeFSFileDate(node); found {
+		return value, err
+	}
+	if value, handled, err := l.foreignNew(node); handled {
 		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {

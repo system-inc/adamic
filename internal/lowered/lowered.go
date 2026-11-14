@@ -30,6 +30,7 @@ import (
 	"encoding/gob"
 	"encoding/hex"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -63,8 +64,9 @@ const (
 
 // keyedEnvironment is every environment variable the lowering's closure reads that can change the IR it makes, each
 // keyed by its value: lower.Lower's two (lower.go). Lowered lowers with the Options it's given, which lower.Lower and
-// cmd/adamic take from these, so the key holds both.
-var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY"}
+// cmd/adamic take from these, so the key holds both. ADAMIC_APPLE_BINDINGS names the generated bindings;
+// its value and every regular file below it (relative path and SHA-256, sorted by relative path) are keyed.
+var keyedEnvironment = []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_OWNERSHIP_QUERY", "ADAMIC_APPLE_BINDINGS"}
 
 // unkeyedEnvironment is every variable the closure reads that can't change the IR, with why. A read the guard finds in
 // neither list fails it.
@@ -168,6 +170,34 @@ func inputsOf(t testing.TB, read sources, options Options, under environment) bu
 	}
 	for _, variable := range keyedEnvironment {
 		inputs.Flags = append(inputs.Flags, variable+"="+under.getenv(variable))
+	}
+	if directory := under.getenv("ADAMIC_APPLE_BINDINGS"); directory != "" {
+		var bindings []string
+		err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.Type().IsRegular() {
+				return nil
+			}
+			relative, err := filepath.Rel(directory, path)
+			if err != nil {
+				return err
+			}
+			bindings = append(bindings, filepath.ToSlash(relative))
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		sort.Strings(bindings)
+		for _, relative := range bindings {
+			data, err := os.ReadFile(filepath.Join(directory, filepath.FromSlash(relative)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("apple-binding %s=%x", relative, sha256.Sum256(data)))
+		}
 	}
 	// GOFLAGS' tags choose the closure's files (a noembed build reads the checker's libraries from disk), and
 	// buildcache drops its -p share.

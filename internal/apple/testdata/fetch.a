@@ -1,0 +1,40 @@
+// fetch.a: two requests through URLSession, each completion a closure Apple calls as a block on a
+// queue of its own, which Adamic runs on the main thread. The first fetches JSON from the server the
+// test starts (its address is the first argument); the second, made from the first's completion, is
+// refused, to see an error come back. fetch.m makes the same calls in Objective-C.
+
+import { programArguments } from 'adamic';
+import { RunLoop } from 'apple/corefoundation/run-loop';
+import { Url } from 'apple/foundation/url';
+import { UrlSession } from 'apple/foundation/url-session';
+
+const address = programArguments()[0] ?? 'http://127.0.0.1:1';
+const stack = new Url({ string: `${address}/stack.json` });
+console.log(`url: ${stack.absoluteString === undefined ? 'none' : 'made'}`);
+
+let completions = 0;
+const refused = UrlSession.shared.dataTask({
+	with: new Url({ string: 'http://127.0.0.1:1/refused' }),
+	completionHandler: (data, response, error) => {
+		completions += 1;
+		console.log(`refused: ${data === undefined ? 'no data' : 'data'}, ${response === undefined ? 'no response' : 'a response'}, ${error === undefined ? 'no error' : `error ${error.code}`}`);
+		RunLoop.main.stop();
+	},
+});
+
+const fetched = UrlSession.shared.dataTask({
+	with: stack,
+	completionHandler: (data, response, error) => {
+		completions += 1;
+		if (error !== undefined) {
+			console.log(`error: ${error.localizedDescription}`);
+		} else if (data !== undefined && response !== undefined) {
+			console.log(`bytes: ${data.length}, type: ${response.mimeType}, expected: ${response.expectedContentLength}`);
+			console.log(`text: ${data.utf8Text() ?? 'not UTF-8'}`);
+		}
+		refused.resume();
+	},
+});
+fetched.resume();
+RunLoop.run();
+console.log(`completions: ${completions}`);

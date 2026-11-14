@@ -9,6 +9,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The cycle finder (docs/memory.md). Reference counting can't free a cycle, and Adamic has no
@@ -35,10 +36,13 @@ type closureRecord struct {
 	node     *ast.Node
 }
 
-// cycleNode is one thing reaching is followed through: a type, or the cell of a captured local.
+// cycleNode is one thing reaching is followed through: a type, the cell of a captured local, or an
+// Apple class by its Objective-C name, which the program may never name (what a subclass's
+// stickTo: keeps, an NSRecord, whose binding no file of the program loads).
 type cycleNode struct {
 	proven *checker.Type
 	cell   int
+	objc   string
 }
 
 type cycleFinder struct {
@@ -150,6 +154,45 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	}
 	if err := finder.jsonReferenceReach(); err != nil {
 		return err
+	}
+	// A delegate is held by the Apple object it's handed to, a slot no declaration shows and no write
+	// can be proven fresh into, since Apple keeps it past the call: one that can reach back to its
+	// holder is a cycle.
+	for _, hold := range l.delegateHolds {
+		if finder.reaches(hold.delegate, cycleNode{proven: hold.holder}) {
+			holder := l.checker.TypeToString(hold.holder)
+			return &Refused{
+				Where: l.program.Where(hold.node),
+				What:  l.checker.TypeToString(hold.delegate) + ", handed to Apple as a delegate the " + holder + " holds from then on, which can reach back to that " + holder + ": a cycle reference counting can't free",
+				Fix:   "hold the " + holder + " weakly where the delegate reaches it (Weak<" + holder + ">, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)",
+			}
+		}
+	}
+	for local, declared := range l.result.Locals {
+		if !declared.Captured || declared.Global {
+			continue
+		}
+		proven, node := l.localTypes[local], l.localNodes[local]
+		if proven == nil || node == nil || finder.weak(proven) || !finder.appleObject(proven) {
+			continue
+		}
+		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
+			kind := ""
+			if declared.Function >= 0 && l.result.Functions[declared.Function].Async {
+				kind = "async frame capture cycle: "
+			}
+			fix := "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"
+			if apple := finder.present(proven); finder.appleObject(proven) {
+				// An Apple object a closure handed to Apple captures (a label an action sets): Apple may
+				// hold the closure through what the object holds.
+				fix = "capture it weakly, const " + declared.Name + "Held: Weak<" + apple + "> = " + declared.Name + " (import type { Weak } from 'adamic'), and keep it somewhere strong, as its superview does a view; or keep it in a module-level constant, which nothing frees (adamic/cycle-capable)"
+			}
+			return &Refused{
+				Where: l.program.Where(node),
+				What:  kind + "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+				Fix:   fix,
+			}
+		}
 	}
 	if l.programDiscovery {
 		l.resolveCountTypes(modules)
@@ -521,6 +564,63 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 	return false
 }
 
+// appleHolds is what an Apple class's instances may hold, by the leaf table's derivation
+// (load.AppleHolds), as nodes to follow: a class the program loads as its type, one it doesn't by its
+// Objective-C name; any object as NSObject, whose holds are every class's; a protocol as its
+// interface, which the program's delegates can be seen as; a block as every closure the program
+// hands Apple. A class the table doesn't know holds anything.
+func (f *cycleFinder) appleHolds(class string) []cycleNode {
+	holds, err := load.AppleHolds()
+	entries, known := holds[class]
+	if err != nil || !known {
+		entries = []string{"object", "block"}
+	}
+	nodes := []cycleNode{}
+	for _, entry := range entries {
+		kind, name, _ := strings.Cut(entry, " ")
+		switch kind {
+		case "class":
+			if f.l.appleLeaf(name) {
+				continue
+			}
+			if proven := f.l.appleType("class " + name); proven != nil {
+				nodes = append(nodes, cycleNode{proven: proven})
+			} else {
+				nodes = append(nodes, cycleNode{objc: name})
+			}
+		case "protocol":
+			if proven := f.l.appleType("protocol " + name); proven != nil {
+				nodes = append(nodes, cycleNode{proven: proven})
+			}
+		case "object":
+			if proven := f.l.appleType("class NSObject"); proven != nil {
+				nodes = append(nodes, cycleNode{proven: proven})
+			}
+			if class != "NSObject" {
+				nodes = append(nodes, cycleNode{objc: "NSObject"})
+			}
+		case "block":
+			for _, handed := range f.l.appleHanded {
+				nodes = append(nodes, cycleNode{proven: handed})
+			}
+		}
+	}
+	return nodes
+}
+
+// appleObject reports whether a type, undefined aside, is one of Apple's classes.
+func (f *cycleFinder) appleObject(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined == 0 && f.l.foreignClassName(member) == "" {
+				return false
+			}
+		}
+		return true
+	}
+	return f.l.foreignClassName(proven) != ""
+}
+
 // present is a type as written without undefined, as Weak<Target> wants its Target.
 func (f *cycleFinder) present(proven *checker.Type) string {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
@@ -598,6 +698,9 @@ func (f *cycleFinder) deriveWeak(proven *checker.Type) bool {
 }
 
 func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
+	if node.objc != "" {
+		return f.appleHolds(node.objc)
+	}
 	links := []cycleNode{}
 	if node.cell != 0 {
 		// An interior async cell retains its owner, not just its declared value.
@@ -685,8 +788,13 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-		for _, field := range f.fields(proven) {
-			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+		if class := f.l.foreignClassName(proven); !f.l.appleLeaf(class) {
+			for _, field := range f.fields(proven) {
+				links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+			}
+			if class != "" {
+				links = append(links, cycleNode{objc: class})
+			}
 		}
 		// A value seen as this type may be any object type the program has that can be seen as
 		// it, with fields this type doesn't show.
