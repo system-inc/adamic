@@ -1,0 +1,35 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "files": [
+    {
+      "file": "stage3/adapt/99-correctness-env-presence/PROOF.md",
+      "bytes": 2182,
+      "sha256": "606244b56d7bee1f738289d251e53c7f2a9a9cd84323e08b288d644b538539a7"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-env-presence/README.md",
+      "bytes": 1970,
+      "sha256": "3ca131ca7a38c1bd89a5928849019dc5af53e96d9dfc40cde9b402463c17a8d9"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-env-presence/adapt.cjs",
+      "bytes": 3317,
+      "sha256": "a8932efa4bc5b88024ae10663e2ee9a33714eb52720fcfe276a41263bd4cc8c0"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-env-presence/mutant.cjs",
+      "bytes": 248,
+      "sha256": "2c5a5cfea3b859d22d0c1b5aa5b9c507e9aff7f5531626d10a33258da463760e"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-env-presence/owners.json",
+      "bytes": 824,
+      "sha256": "6305ff25ca1fdd07ad56c176e0bbfb244d6f6263609a4a2089686565fe7c853a"
+    },
+    {
+      "file": "stage3/upstream/LEDGER.md",
+      "bytes": 60699,
+      "sha256": "67bc63117fdeb0a34f9f64d012eaeec8499f61a42fa1e116fbda654a2fe7f4c4"
+    }
+  ]
+}
