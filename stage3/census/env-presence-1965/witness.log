@@ -1,0 +1,3 @@
+{"label":"present","before":{"calls":["setCustomPollingValues(sys)","","AssertionLevel.Normal"]},"after":{"calls":["setCustomPollingValues(sys)","","AssertionLevel.Normal"]}}
+{"label":"undefined","before":{"calls":[]},"after":{"calls":[]}}
+{"label":"hypothetical missing member","before":{"calls":[]},"after":{"calls":["setCustomPollingValues(sys)"],"error":"TypeError","message":"sys.getEnvironmentVariable is not a function"}}

@@ -11,9 +11,9 @@ function run(sys, changed) {
         return {calls};
     } catch(e) { return {calls,error:e.name,message:e.message}; }
 }
-for (const [label,sys] of [["present",{getEnvironmentVariable(name){assert.equal(this,sys);return name==="NODE_ENV"?"development":"";}}],["undefined",undefined],["hypothetical missing member",{}]]) {
+for (const [label,sys] of [["present",{marker:"system receiver",getEnvironmentVariable(name){assert.equal(this.marker,"system receiver");return name==="NODE_ENV"?"development":"";}}],["undefined",undefined],["hypothetical missing member",{}]]) {
     const before=run(sys,false),after=run(sys,true);
-    if(label!=="hypothetical missing member") assert.deepEqual(before,after);
+    if(label!=="hypothetical missing member") { assert.deepEqual(before,after); assert.equal(before.error,undefined); }
     else {assert.equal(before.calls.length,0);assert.equal(after.error,"TypeError");}
     console.log(JSON.stringify({label,before,after}));
 }
