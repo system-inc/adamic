@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "stage3/oracle/run.py",
+    "/workspace/scratch/destructure-price-f2989762/counting",
+    "/workspace/scratch/destructure-price-f2989762/r2/clean-oracle"
+  ],
+  "cwd": "/tmp/destructure-price-scratch/work",
+  "exit": 1,
+  "timeout": false,
+  "limit_seconds": null,
+  "wall_seconds": 498.719,
+  "peak_process_tree_rss_kib": 9049844,
+  "sampling_interval_seconds": 0.2,
+  "samples": 2297,
+  "max_descendant_rss_kib": 2737656
+}

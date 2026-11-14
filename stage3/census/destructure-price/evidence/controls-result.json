@@ -28,6 +28,7 @@
     "calls": {
       "default-control::f": 1,
       "supplied-control::supplied": 1,
+      "this-control": 2,
       "src/compiler/parser.ts:1472::createIdentifier": 1,
       "src/compiler/parser.ts:1472::createNumericLiteral": 1,
       "src/compiler/parser.ts:1472::createVariableDeclaration": 1,

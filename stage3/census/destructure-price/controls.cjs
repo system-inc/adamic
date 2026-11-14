@@ -6,6 +6,7 @@ let { supplied }={supplied:x=>x+1};supplied=globalThis.__dpCount('supplied-contr
 assert.equal(globalThis.__dpCount('optional-control::missing',undefined),undefined);
 assert.equal(globalThis.__dpSnapshot().calls['default-control::f'],1);
 assert.equal(globalThis.__dpSnapshot().calls['supplied-control::supplied'],1);
+const strictThis=globalThis.__dpCount('this-control',function(){'use strict';return this});assert.equal(strictThis(),undefined);const receiver={};assert.equal(strictThis.call(receiver),receiver);
 const ts=require('/workspace/scratch/destructure-price-f2989762/counting/built/local/typescript.js');
 const sf=ts.createSourceFile('counter-control.ts','const answer = 42;',ts.ScriptTarget.ES2020,true);
 const output=ts.createPrinter().printFile(sf);assert.equal(output.trim(),'const answer = 42;');

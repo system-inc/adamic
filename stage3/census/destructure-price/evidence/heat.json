@@ -1,0 +1,2984 @@
+{
+  "certified": true,
+  "controls": "controls-result.json",
+  "workload": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "workerSnapshots": 8,
+  "processSnapshots": 26,
+  "scope": "whole oracle install/build/tests; separate controls excluded",
+  "publicSites": 19,
+  "publicWrappers": 82,
+  "extraCallsPerLaneRun": 30851760,
+  "totalCountedMemberCalls": 61753448,
+  "measurement": {
+    "command": [
+      "python3",
+      "stage3/oracle/run.py",
+      "/workspace/scratch/destructure-price-f2989762/counting",
+      "/workspace/scratch/destructure-price-f2989762/r2/clean-oracle"
+    ],
+    "cwd": "/tmp/destructure-price-scratch/work",
+    "exit": 1,
+    "timeout": false,
+    "limit_seconds": null,
+    "wall_seconds": 498.719,
+    "peak_process_tree_rss_kib": 9049844,
+    "sampling_interval_seconds": 0.2,
+    "samples": 2297,
+    "max_descendant_rss_kib": 2737656
+  },
+  "sites": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 590,
+      "column": 52,
+      "enclosing": "createDirectoryWatcherSupportingRecursive",
+      "type": "RecursiveDirectoryWatcherHost",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 574,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "watchDirectory",
+          "local": "watchDirectory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 575,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "watchDirectory: HostWatchDirectory;"
+            }
+          ],
+          "calls": 238
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "local": "useCaseSensitiveFileNames",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "useCaseSensitiveFileNames: boolean;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getCurrentDirectory",
+          "local": "getCurrentDirectory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 577,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "getCurrentDirectory: System[\"getCurrentDirectory\"];"
+            }
+          ],
+          "calls": 20
+        },
+        {
+          "name": "getAccessibleSortedChildDirectories",
+          "local": "getAccessibleSortedChildDirectories",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 578,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "getAccessibleSortedChildDirectories(path: string): readonly string[];"
+            }
+          ],
+          "calls": 167
+        },
+        {
+          "name": "fileSystemEntryExists",
+          "local": "fileSystemEntryExists",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 579,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "fileSystemEntryExists: FileSystemEntryExists;"
+            }
+          ],
+          "calls": 316
+        },
+        {
+          "name": "realpath",
+          "local": "realpath",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 580,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "realpath(s: string): string;"
+            }
+          ],
+          "calls": 379
+        },
+        {
+          "name": "setTimeout",
+          "local": "setTimeout",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 581,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "setTimeout: NonNullable<System[\"setTimeout\"]>;"
+            }
+          ],
+          "calls": 83
+        },
+        {
+          "name": "clearTimeout",
+          "local": "clearTimeout",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 582,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "clearTimeout: NonNullable<System[\"clearTimeout\"]>;"
+            }
+          ],
+          "calls": 54
+        }
+      ],
+      "initializer": null,
+      "site": "src/compiler/sys.ts:590",
+      "public": false,
+      "enclosingRuns": 30,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 993,
+      "column": 44,
+      "enclosing": "createSystemWatchFunctions",
+      "type": "CreateSystemWatchFunctions",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 968,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "pollingWatchFileWorker",
+          "local": "pollingWatchFileWorker",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 970,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "pollingWatchFileWorker: HostWatchFile;"
+            }
+          ],
+          "calls": 4786
+        },
+        {
+          "name": "getModifiedTime",
+          "local": "getModifiedTime",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 972,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "getModifiedTime: NonNullable<System[\"getModifiedTime\"]>;"
+            }
+          ],
+          "calls": 1180
+        },
+        {
+          "name": "setTimeout",
+          "local": "setTimeout",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 973,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "setTimeout: NonNullable<System[\"setTimeout\"]>;"
+            }
+          ],
+          "calls": 358
+        },
+        {
+          "name": "clearTimeout",
+          "local": "clearTimeout",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 974,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "clearTimeout: NonNullable<System[\"clearTimeout\"]>;"
+            }
+          ],
+          "calls": 54
+        },
+        {
+          "name": "fsWatchWorker",
+          "local": "fsWatchWorker",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 976,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "fsWatchWorker: FsWatchWorker;"
+            }
+          ],
+          "calls": 13330
+        },
+        {
+          "name": "fileSystemEntryExists",
+          "local": "fileSystemEntryExists",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 977,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "fileSystemEntryExists: FileSystemEntryExists;"
+            }
+          ],
+          "calls": 18252
+        },
+        {
+          "name": "useCaseSensitiveFileNames",
+          "local": "useCaseSensitiveFileNames",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 978,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "useCaseSensitiveFileNames: boolean;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getCurrentDirectory",
+          "local": "getCurrentDirectory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 979,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "getCurrentDirectory: System[\"getCurrentDirectory\"];"
+            }
+          ],
+          "calls": 66
+        },
+        {
+          "name": "fsSupportsRecursiveFsWatch",
+          "local": "fsSupportsRecursiveFsWatch",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 980,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "fsSupportsRecursiveFsWatch: boolean;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getAccessibleSortedChildDirectories",
+          "local": "getAccessibleSortedChildDirectories",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 981,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "getAccessibleSortedChildDirectories(path: string): readonly string[];"
+            }
+          ],
+          "calls": 167
+        },
+        {
+          "name": "realpath",
+          "local": "realpath",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 982,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "realpath(s: string): string;"
+            }
+          ],
+          "calls": 379
+        },
+        {
+          "name": "tscWatchFile",
+          "local": "tscWatchFile",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 984,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "tscWatchFile: string | undefined;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "useNonPollingWatchers",
+          "local": "useNonPollingWatchers",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 985,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "useNonPollingWatchers?: boolean;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "tscWatchDirectory",
+          "local": "tscWatchDirectory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 986,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "tscWatchDirectory: string | undefined;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "inodeWatching",
+          "local": "inodeWatching",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 987,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "inodeWatching: boolean;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "fsWatchWithTimestamp",
+          "local": "fsWatchWithTimestamp",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 988,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "fsWatchWithTimestamp: boolean | undefined;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "sysLog",
+          "local": "sysLog",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/sys.ts",
+              "line": 989,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "sysLog: (s: string) => void;"
+            }
+          ],
+          "calls": 168
+        }
+      ],
+      "initializer": null,
+      "site": "src/compiler/sys.ts:993",
+      "public": false,
+      "enclosingRuns": 4785,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8213,
+      "column": 11,
+      "enclosing": "mutateMapSkippingNewValues",
+      "type": "MutateMapSkippingNewValuesOptions<K, T, U>",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8182,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "onDeleteValue",
+          "local": "onDeleteValue",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/utilities.ts",
+              "line": 8178,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "onDeleteValue(existingValue: T, key: K): void;"
+            }
+          ],
+          "calls": 76
+        },
+        {
+          "name": "onExistingValue",
+          "local": "onExistingValue",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/utilities.ts",
+              "line": 8189,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "onExistingValue?(existingValue: T, valueInNewMap: U, key: K): void;"
+            }
+          ],
+          "calls": 326
+        }
+      ],
+      "initializer": "options",
+      "site": "src/compiler/utilities.ts:8213",
+      "public": false,
+      "enclosingRuns": 33708,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8253,
+      "column": 11,
+      "enclosing": "mutateMap",
+      "type": "MutateMapOptions<K, T, U>",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8238,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "createNewValue",
+          "local": "createNewValue",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/utilities.ts",
+              "line": 8230,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createNewValue(key: K, valueInNewMap: U): T;"
+            }
+          ],
+          "calls": 2855
+        }
+      ],
+      "initializer": "options",
+      "site": "src/compiler/utilities.ts:8253",
+      "public": false,
+      "enclosingRuns": 8913,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 11317,
+      "column": 33,
+      "enclosing": "createEvaluator",
+      "type": "EvaluationResolver",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10618,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "evaluateElementAccessExpression",
+          "local": "evaluateElementAccessExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10620,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "evaluateElementAccessExpression(expr: ElementAccessExpression, location: Declaration | undefined): EvaluatorResult;"
+            }
+          ],
+          "calls": 51
+        },
+        {
+          "name": "evaluateEntityNameExpression",
+          "local": "evaluateEntityNameExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10619,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "evaluateEntityNameExpression(expr: EntityNameExpression, location: Declaration | undefined): EvaluatorResult;"
+            }
+          ],
+          "calls": 4493
+        }
+      ],
+      "initializer": null,
+      "site": "src/compiler/utilities.ts:11317",
+      "public": false,
+      "enclosingRuns": 86185,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1472,
+      "column": 9,
+      "enclosing": "<top-level>",
+      "type": "NodeFactory",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 8748,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "createNodeArray",
+          "local": "factoryCreateNodeArray",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8754,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T>;"
+            }
+          ],
+          "calls": 4068227
+        },
+        {
+          "name": "createNumericLiteral",
+          "local": "factoryCreateNumericLiteral",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8760,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;"
+            }
+          ],
+          "calls": 377494
+        },
+        {
+          "name": "createStringLiteral",
+          "local": "factoryCreateStringLiteral",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8762,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8763,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "createStringLiteral(text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;"
+            }
+          ],
+          "calls": 375394
+        },
+        {
+          "name": "createLiteralLikeNode",
+          "local": "factoryCreateLiteralLikeNode",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9012,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "createLiteralLikeNode(kind: LiteralToken[\"kind\"] | SyntaxKind.JsxTextAllWhiteSpaces, text: string): LiteralToken;"
+            }
+          ],
+          "calls": 2671
+        },
+        {
+          "name": "createIdentifier",
+          "local": "factoryCreateIdentifier",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8771,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createIdentifier(text: string): Identifier;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8772,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;"
+            }
+          ],
+          "calls": 8254453
+        },
+        {
+          "name": "createPrivateIdentifier",
+          "local": "factoryCreatePrivateIdentifier",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8802,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createPrivateIdentifier(text: string): PrivateIdentifier;"
+            }
+          ],
+          "calls": 4176
+        },
+        {
+          "name": "createToken",
+          "local": "factoryCreateToken",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8812,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.SuperKeyword): SuperExpression;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8813,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.ThisKeyword): ThisExpression;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8814,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.NullKeyword): NullLiteral;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8815,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8816,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8817,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8818,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8819,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken<TKind extends PunctuationSyntaxKind>(token: TKind): PunctuationToken<TKind>;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8820,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken<TKind extends KeywordTypeSyntaxKind>(token: TKind): KeywordTypeNode<TKind>;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8821,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken<TKind extends ModifierSyntaxKind>(token: TKind): ModifierToken<TKind>;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8822,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createToken<TKind extends KeywordSyntaxKind>(token: TKind): KeywordToken<TKind>;"
+            },
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8823,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "createToken<TKind extends SyntaxKind>(token: TKind): Token<TKind>;"
+            }
+          ],
+          "calls": 3399650
+        },
+        {
+          "name": "createArrayLiteralExpression",
+          "local": "factoryCreateArrayLiteralExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8958,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createArrayLiteralExpression(elements?: readonly Expression[], multiLine?: boolean): ArrayLiteralExpression;"
+            }
+          ],
+          "calls": 81897
+        },
+        {
+          "name": "createObjectLiteralExpression",
+          "local": "factoryCreateObjectLiteralExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8960,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createObjectLiteralExpression(properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean): ObjectLiteralExpression;"
+            }
+          ],
+          "calls": 67014
+        },
+        {
+          "name": "createPropertyAccessExpression",
+          "local": "factoryCreatePropertyAccessExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8962,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;"
+            }
+          ],
+          "calls": 151152
+        },
+        {
+          "name": "createPropertyAccessChain",
+          "local": "factoryCreatePropertyAccessChain",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8964,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | MemberName): PropertyAccessChain;"
+            }
+          ],
+          "calls": 812
+        },
+        {
+          "name": "createElementAccessExpression",
+          "local": "factoryCreateElementAccessExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8966,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;"
+            }
+          ],
+          "calls": 40053
+        },
+        {
+          "name": "createElementAccessChain",
+          "local": "factoryCreateElementAccessChain",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8968,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression): ElementAccessChain;"
+            }
+          ],
+          "calls": 217
+        },
+        {
+          "name": "createCallExpression",
+          "local": "factoryCreateCallExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8970,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createCallExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallExpression;"
+            }
+          ],
+          "calls": 106406
+        },
+        {
+          "name": "createCallChain",
+          "local": "factoryCreateCallChain",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8972,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallChain;"
+            }
+          ],
+          "calls": 394
+        },
+        {
+          "name": "createNewExpression",
+          "local": "factoryCreateNewExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8974,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createNewExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): NewExpression;"
+            }
+          ],
+          "calls": 16513
+        },
+        {
+          "name": "createParenthesizedExpression",
+          "local": "factoryCreateParenthesizedExpression",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 8980,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createParenthesizedExpression(expression: Expression): ParenthesizedExpression;"
+            }
+          ],
+          "calls": 44643
+        },
+        {
+          "name": "createBlock",
+          "local": "factoryCreateBlock",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9048,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createBlock(statements: readonly Statement[], multiLine?: boolean): Block;"
+            }
+          ],
+          "calls": 127614
+        },
+        {
+          "name": "createVariableStatement",
+          "local": "factoryCreateVariableStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9050,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createVariableStatement(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]): VariableStatement;"
+            }
+          ],
+          "calls": 227665
+        },
+        {
+          "name": "createExpressionStatement",
+          "local": "factoryCreateExpressionStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9053,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createExpressionStatement(expression: Expression): ExpressionStatement;"
+            }
+          ],
+          "calls": 184328
+        },
+        {
+          "name": "createIfStatement",
+          "local": "factoryCreateIfStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9055,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createIfStatement(expression: Expression, thenStatement: Statement, elseStatement?: Statement): IfStatement;"
+            }
+          ],
+          "calls": 12746
+        },
+        {
+          "name": "createWhileStatement",
+          "local": "factoryCreateWhileStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9059,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createWhileStatement(expression: Expression, statement: Statement): WhileStatement;"
+            }
+          ],
+          "calls": 1250
+        },
+        {
+          "name": "createForStatement",
+          "local": "factoryCreateForStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9061,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createForStatement(initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;"
+            }
+          ],
+          "calls": 3007
+        },
+        {
+          "name": "createForOfStatement",
+          "local": "factoryCreateForOfStatement",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9065,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createForOfStatement(awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;"
+            }
+          ],
+          "calls": 2908
+        },
+        {
+          "name": "createVariableDeclaration",
+          "local": "factoryCreateVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9084,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createVariableDeclaration(name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression): VariableDeclaration;"
+            }
+          ],
+          "calls": 239240
+        },
+        {
+          "name": "createVariableDeclarationList",
+          "local": "factoryCreateVariableDeclarationList",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9086,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags?: NodeFlags): VariableDeclarationList;"
+            }
+          ],
+          "calls": 232784
+        }
+      ],
+      "initializer": "factory",
+      "site": "src/compiler/parser.ts:1472",
+      "public": true,
+      "enclosingRuns": 9,
+      "extraCalls": 18022708
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 583,
+      "column": 169,
+      "enclosing": "getLocalModuleSpecifier",
+      "type": "ModuleSpecifierPreferences",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/moduleSpecifiers.ts",
+          "line": 172,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "getAllowedEndingsInPreferredOrder",
+          "local": "getAllowedEndingsInPrefererredOrder",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/moduleSpecifiers.ts",
+              "line": 177,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "getAllowedEndingsInPreferredOrder(syntaxImpliedNodeFormat?: ResolutionMode): ModuleSpecifierEnding[];"
+            }
+          ],
+          "calls": 3141
+        },
+        {
+          "name": "relativePreference",
+          "local": "relativePreference",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/moduleSpecifiers.ts",
+              "line": 173,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly relativePreference: RelativePreference;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "excludeRegexes",
+          "local": "excludeRegexes",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/moduleSpecifiers.ts",
+              "line": 178,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly excludeRegexes?: readonly string[] | undefined;"
+            }
+          ],
+          "calls": 0
+        }
+      ],
+      "initializer": null,
+      "site": "src/compiler/moduleSpecifiers.ts:583",
+      "public": false,
+      "enclosingRuns": 3769,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 40,
+      "column": 9,
+      "enclosing": "createSourceMapGenerator",
+      "type": "Timer",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/performance.ts",
+          "line": 23,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "enter",
+          "local": "enter",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 24,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "enter(): void;"
+            }
+          ],
+          "calls": 3659380
+        },
+        {
+          "name": "exit",
+          "local": "exit",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 25,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "exit(): void;"
+            }
+          ],
+          "calls": 3659380
+        }
+      ],
+      "initializer": "generatorOptions.extendedDiagnostics\r\n        ? performance.createTimer(\"Source Map\", \"beforeSourcemap\", \"afterSourcemap\")\r\n        : performance.nullTimer",
+      "site": "src/compiler/sourcemap.ts:40",
+      "public": false,
+      "enclosingRuns": 9494,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 236,
+      "column": 11,
+      "enclosing": "transformTypeScript",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 666
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 6788
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 1214
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 8002
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 124
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/ts.ts:236",
+      "public": true,
+      "enclosingRuns": 49199,
+      "extraCalls": 16794
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 355,
+      "column": 11,
+      "enclosing": "transformClassFields",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 1891
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 3402
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 3555
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 974
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 2581
+        },
+        {
+          "name": "addBlockScopedVariable",
+          "local": "addBlockScopedVariable",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9606,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "addBlockScopedVariable(node: Identifier): void;"
+            }
+          ],
+          "calls": 20
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/classFields.ts:355",
+      "public": true,
+      "enclosingRuns": 49199,
+      "extraCalls": 12423
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 133,
+      "column": 11,
+      "enclosing": "createRuntimeTypeSerializer",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 38
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/typeSerializer.ts:133",
+      "public": true,
+      "enclosingRuns": 402,
+      "extraCalls": 38
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 89,
+      "column": 11,
+      "enclosing": "transformLegacyDecorators",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 1583
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 44
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/legacyDecorators.ts:89",
+      "public": true,
+      "enclosingRuns": 1027,
+      "extraCalls": 1627
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 296,
+      "column": 11,
+      "enclosing": "transformESDecorators",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 3162
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 1503
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 1503
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 301
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/esDecorators.ts:296",
+      "public": true,
+      "enclosingRuns": 46653,
+      "extraCalls": 6469
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "line": 120,
+      "column": 11,
+      "enclosing": "transformES2017",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 2513
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 2513
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 2513
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 106
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2017.ts:120",
+      "public": true,
+      "enclosingRuns": 36281,
+      "extraCalls": 7645
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 155,
+      "column": 11,
+      "enclosing": "transformES2018",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 2215
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 26640
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 26640
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 356
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2018.ts:155",
+      "public": true,
+      "enclosingRuns": 36628,
+      "extraCalls": 55851
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 43,
+      "column": 11,
+      "enclosing": "transformES2020",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 432
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2020.ts:43",
+      "public": true,
+      "enclosingRuns": 36871,
+      "extraCalls": 432
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "line": 26,
+      "column": 11,
+      "enclosing": "transformES2021",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 36
+        },
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2021.ts:26",
+      "public": true,
+      "enclosingRuns": 37105,
+      "extraCalls": 36
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 77,
+      "column": 11,
+      "enclosing": "transformESNext",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 2081
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 626
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 340
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 340
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/esnext.ts:77",
+      "public": true,
+      "enclosingRuns": 47449,
+      "extraCalls": 3387
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 99,
+      "column": 11,
+      "enclosing": "transformJsx",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 148
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/jsx.ts:99",
+      "public": true,
+      "enclosingRuns": 590,
+      "extraCalls": 148
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "line": 22,
+      "column": 11,
+      "enclosing": "transformES2016",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 228
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2016.ts:22",
+      "public": true,
+      "enclosingRuns": 36212,
+      "extraCalls": 228
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 489,
+      "column": 11,
+      "enclosing": "transformES2015",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 779
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 7183
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 10368
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 17551
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 431
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/es2015.ts:489",
+      "public": true,
+      "enclosingRuns": 3754,
+      "extraCalls": 36312
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 337,
+      "column": 11,
+      "enclosing": "transformGenerators",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 1029
+        },
+        {
+          "name": "resumeLexicalEnvironment",
+          "local": "resumeLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9591,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "resumeLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 1011
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 1011
+        },
+        {
+          "name": "hoistFunctionDeclaration",
+          "local": "hoistFunctionDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9597,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistFunctionDeclaration(node: FunctionDeclaration): void;"
+            }
+          ],
+          "calls": 6
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 1085
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/generators.ts:337",
+      "public": true,
+      "enclosingRuns": 3754,
+      "extraCalls": 4142
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 192,
+      "column": 11,
+      "enclosing": "transformModule",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 2845
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 11206
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 11206
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 24
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/module/module.ts:192",
+      "public": true,
+      "enclosingRuns": 48396,
+      "extraCalls": 25281
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 143,
+      "column": 11,
+      "enclosing": "transformSystemModule",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "startLexicalEnvironment",
+          "local": "startLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9582,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "startLexicalEnvironment(): void;"
+            }
+          ],
+          "calls": 632
+        },
+        {
+          "name": "endLexicalEnvironment",
+          "local": "endLexicalEnvironment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9594,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "endLexicalEnvironment(): Statement[] | undefined;"
+            }
+          ],
+          "calls": 632
+        },
+        {
+          "name": "hoistVariableDeclaration",
+          "local": "hoistVariableDeclaration",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9600,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hoistVariableDeclaration(node: Identifier): void;"
+            }
+          ],
+          "calls": 1229
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/module/system.ts:143",
+      "public": true,
+      "enclosingRuns": 618,
+      "extraCalls": 2493
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 68,
+      "column": 11,
+      "enclosing": "transformECMAScriptModule",
+      "type": "TransformationContext",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9616,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "factory",
+          "local": "factory",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9576,
+              "column": 5,
+              "kind": "PropertySignature",
+              "text": "readonly factory: NodeFactory;"
+            }
+          ],
+          "calls": 0
+        },
+        {
+          "name": "getEmitHelperFactory",
+          "local": "emitHelpers",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9619,
+              "column": 22,
+              "kind": "MethodSignature",
+              "text": "getEmitHelperFactory(): EmitHelperFactory;"
+            }
+          ],
+          "calls": 15905
+        }
+      ],
+      "initializer": "context",
+      "site": "src/compiler/transformers/module/esnextAnd2015.ts:68",
+      "public": true,
+      "enclosingRuns": 45988,
+      "extraCalls": 15905
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 771,
+      "column": 9,
+      "enclosing": "emitFiles",
+      "type": "Timer",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/performance.ts",
+          "line": 23,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "enter",
+          "local": "enter",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 24,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "enter(): void;"
+            }
+          ],
+          "calls": 54954
+        },
+        {
+          "name": "exit",
+          "local": "exit",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 25,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "exit(): void;"
+            }
+          ],
+          "calls": 54950
+        }
+      ],
+      "initializer": "performance.createTimer(\"printTime\", \"beforePrint\", \"afterPrint\")",
+      "site": "src/compiler/emitter.ts:771",
+      "public": false,
+      "enclosingRuns": 54954,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1215,
+      "column": 9,
+      "enclosing": "createPrinter",
+      "type": "PrintHandlers",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 9820,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "hasGlobalName",
+          "local": "hasGlobalName",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9825,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "hasGlobalName?(name: string): boolean;"
+            }
+          ],
+          "calls": 49960
+        },
+        {
+          "name": "onEmitNode",
+          "local": "onEmitNode",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9844,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "onEmitNode?(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;"
+            }
+          ],
+          "calls": 4628553
+        },
+        {
+          "name": "isEmitNotificationEnabled",
+          "local": "isEmitNotificationEnabled",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9850,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "isEmitNotificationEnabled?(node: Node): boolean;"
+            }
+          ],
+          "calls": 3975026
+        },
+        {
+          "name": "substituteNode",
+          "local": "substituteNode",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9867,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "substituteNode?(hint: EmitHint, node: Node): Node;"
+            }
+          ],
+          "calls": 3986302
+        },
+        {
+          "name": "onBeforeEmitNode",
+          "local": "onBeforeEmitNode",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9872,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onBeforeEmitNode?: (node: Node | undefined) => void;"
+            }
+          ],
+          "calls": 451527
+        },
+        {
+          "name": "onAfterEmitNode",
+          "local": "onAfterEmitNode",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9873,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onAfterEmitNode?: (node: Node | undefined) => void;"
+            }
+          ],
+          "calls": 451527
+        },
+        {
+          "name": "onBeforeEmitNodeArray",
+          "local": "onBeforeEmitNodeArray",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9874,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onBeforeEmitNodeArray?: (nodes: NodeArray<Node> | undefined) => void;"
+            }
+          ],
+          "calls": 110298
+        },
+        {
+          "name": "onAfterEmitNodeArray",
+          "local": "onAfterEmitNodeArray",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9875,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onAfterEmitNodeArray?: (nodes: NodeArray<Node> | undefined) => void;"
+            }
+          ],
+          "calls": 110298
+        },
+        {
+          "name": "onBeforeEmitToken",
+          "local": "onBeforeEmitToken",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9876,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onBeforeEmitToken?: (node: Node) => void;"
+            }
+          ],
+          "calls": 6180
+        },
+        {
+          "name": "onAfterEmitToken",
+          "local": "onAfterEmitToken",
+          "method": false,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 9877,
+              "column": 22,
+              "kind": "PropertySignature",
+              "text": "onAfterEmitToken?: (node: Node) => void;"
+            }
+          ],
+          "calls": 6180
+        }
+      ],
+      "initializer": "handlers",
+      "site": "src/compiler/emitter.ts:1215",
+      "public": true,
+      "enclosingRuns": 73916,
+      "extraCalls": 12639841
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1275,
+      "column": 9,
+      "enclosing": "createPrinter",
+      "type": "Timer",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/performance.ts",
+          "line": 23,
+          "column": 1,
+          "kind": "InterfaceDeclaration"
+        }
+      ],
+      "members": [
+        {
+          "name": "enter",
+          "local": "enterComment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 24,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "enter(): void;"
+            }
+          ],
+          "calls": 10552068
+        },
+        {
+          "name": "exit",
+          "local": "exitComment",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/performance.ts",
+              "line": 25,
+              "column": 5,
+              "kind": "MethodSignature",
+              "text": "exit(): void;"
+            }
+          ],
+          "calls": 10552068
+        }
+      ],
+      "initializer": "performance.createTimerIf(extendedDiagnostics, \"commentTime\", \"beforeComment\", \"afterComment\")",
+      "site": "src/compiler/emitter.ts:1275",
+      "public": false,
+      "enclosingRuns": 73916,
+      "extraCalls": 0
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 199,
+      "column": 15,
+      "enclosing": "tryReuseExistingTypeNode",
+      "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+      "typeDeclarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10669,
+          "column": 71,
+          "kind": "TypeLiteral"
+        }
+      ],
+      "members": [
+        {
+          "name": "finalizeBoundary",
+          "local": "finalizeBoundary",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10671,
+              "column": 9,
+              "kind": "MethodSignature",
+              "text": "finalizeBoundary(): boolean;"
+            }
+          ],
+          "calls": 184001
+        },
+        {
+          "name": "startRecoveryScope",
+          "local": "startRecoveryScope",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10670,
+              "column": 9,
+              "kind": "MethodSignature",
+              "text": "startRecoveryScope(): () => void;"
+            }
+          ],
+          "calls": 332198
+        },
+        {
+          "name": "hadError",
+          "local": "hadError",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10673,
+              "column": 9,
+              "kind": "MethodSignature",
+              "text": "hadError(): boolean;"
+            }
+          ],
+          "calls": 664647
+        },
+        {
+          "name": "markError",
+          "local": "markError",
+          "method": true,
+          "declarations": [
+            {
+              "file": "src/compiler/types.ts",
+              "line": 10672,
+              "column": 9,
+              "kind": "MethodSignature",
+              "text": "markError(): void;"
+            }
+          ],
+          "calls": 1093
+        }
+      ],
+      "initializer": "resolver.createRecoveryBoundary(context)",
+      "site": "src/compiler/expressionToTypeNode.ts:199",
+      "public": false,
+      "enclosingRuns": 184002,
+      "extraCalls": 0
+    }
+  ]
+}
