@@ -244,3 +244,7 @@ oracle, fixture, meter, owners map or committed patch table is edited.
 The whole getNodeSystem before/after pins now include 93's concrete timer
 forwarding arrows. They forward the optional label and opaque unknown handle
 under Adamic's 05:48Z contract. This adapter's crypto transformation is unchanged.
+
+## Dynamic watch interval amendment (#cyjqp5f)
+
+On ceadba1d (#8581h73), the internal watch-file path admits number | undefined. The public factory result takes pollingInterval?: number; only the dynamic priority poller validates membership in PollingInterval and otherwise calls Debug.fail naming the interval. Other modes retain arbitrary numeric intervals such as symlinkWatching's 10. System and watchDirectory are unchanged. This directory's owned portion is amended in its exact after pin and digest; downstream getNodeSystem pins carry the widened Node worker. The guard is JavaScript-changing; the remaining interval edits erase. Full census, count, fixture/mutant, contracts, stock/Adamic checks, per-file JavaScript, declarations and unfiltered lane receipts are on typescript/watch-functions-1532-evidence under watch-functions-1532-evidence/cead-check-1532/.

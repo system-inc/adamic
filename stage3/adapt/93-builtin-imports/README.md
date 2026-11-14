@@ -188,3 +188,7 @@ arrows. setTimeout forwards callback, ms and label; clearTimeout forwards the
 opaque unknown handle. The ambient declarations remain in 41 with this concrete
 contract. The after owner pin includes these arrows. The crypto adapter's
 before/after pins include them too. No other builtin binding changes.
+
+## Dynamic watch interval amendment (#cyjqp5f)
+
+On ceadba1d (#8581h73), the internal watch-file path admits number | undefined. The public factory result takes pollingInterval?: number; only the dynamic priority poller validates membership in PollingInterval and otherwise calls Debug.fail naming the interval. Other modes retain arbitrary numeric intervals such as symlinkWatching's 10. System and watchDirectory are unchanged. This directory's owned portion is amended in its exact after pin and digest; downstream getNodeSystem pins carry the widened Node worker. The guard is JavaScript-changing; the remaining interval edits erase. Full census, count, fixture/mutant, contracts, stock/Adamic checks, per-file JavaScript, declarations and unfiltered lane receipts are on typescript/watch-functions-1532-evidence under watch-functions-1532-evidence/cead-check-1532/.

@@ -96,6 +96,7 @@ function adapt(tree) {
     const digest = hash(owner.getText(file));
     assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'uninventoried owner: getNodeSystem');
     const done = digest === manifest[0].ownerAfterSha256;
+    assert.equal(owner.getText(file), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'whole getNodeSystem text drift');
     const imports = file.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
     assert.equal(hash(imports.map(n => n.getText(file)).join('\n')), done ? manifest[0].importsAfterSha256 : manifest[0].importsBeforeSha256, 'uninventoried node: import block');
     const checked = validateBindings(program, file, done);
