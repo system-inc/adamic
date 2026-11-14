@@ -16,7 +16,8 @@ import (
 // ReachingAllocations' roads through optional arguments, absent values and functions that never run
 // (reach_roads.mutants.md names the one-line change that turns each back): an omitted argument to an
 // optional or defaulted parameter is undefined, undefined and null add no site, a function that never
-// runs makes no writes, and a non-null assertion hands on its value. Each pin lowers a small
+// runs makes no writes, a non-null assertion and a narrowed read hand on their value, and a cell made
+// before its declaration holds nothing until it's assigned. Each pin lowers a small
 // TypeScript program and asks the flow graph which object literals a module-level variable can hold,
 // by the literal's tag. tsc's ts.sys (src/compiler/sys.ts:1462), a let declared undefined and filled
 // from getNodeSystem's literal, then read through `sys!`, is the shape they're for (#p2n17c4), and
@@ -291,6 +292,88 @@ const named = made as Named;
 console.log(named.tag);
 `)
 	wantSites(t, reachOfGlobal(t, program, "named"), literalSite(t, program, "labeled"))
+}
+
+// irHolds reports whether any statement of the program holds a node matching is.
+func irHolds(program *ir.Program, is func(any) bool) bool {
+	found := false
+	visit := func(node any) bool {
+		found = found || is(node)
+		return !found
+	}
+	walk(program.Main, visit)
+	for _, function := range program.Functions {
+		walk(function.Body, visit)
+	}
+	return found
+}
+
+// Road 6: a read the checker narrowed undefined out of is ir.Defined, checked, so it hands on what it
+// reads or stops, and reaches what the read does. It's how ts.sys's arrow hands its let back in .a,
+// which refuses tsc's `sys!` (oracle/testdata/tssys_presence_twin/system.a). The pin first holds that
+// the narrowing lowered to ir.Defined at all, so it can't pass on some other road. Mutant 12.
+func TestReachNarrowedReadHandsOnItsValue(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".ts", ".a"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSourceAs(t, reachBox+`function first(): Box | undefined {
+	return { tag: 'narrowed' };
+}
+function sure(): Box {
+	const box = first();
+	if (box === undefined) {
+		throw new Error('none');
+	}
+	return box;
+}
+const held = sure();
+console.log(held.tag);
+`, extension)
+			if err != nil {
+				t.Fatalf("lowering: %v", err)
+			}
+			assignAllocationSites(program)
+			if !irHolds(program, func(node any) bool { _, defined := node.(ir.Defined); return defined }) {
+				t.Fatalf("the narrowed return lowered to no ir.Defined, so this pins nothing about road 6")
+			}
+			wantSites(t, reachOfGlobal(t, program, "held"), literalSite(t, program, "narrowed"))
+		})
+	}
+}
+
+// Road 7: a function holding a nested function declaration gets its variables' cells before its body
+// runs, so a hoisted function can capture one (nested_functions.go's preallocateNestedBindings). That
+// early declaration holds no value: the variable is what its initializer assigns. It's getNodeSystem's
+// shape, whose nodeSystem literal sits beside readFile and directoryExists, declared after its return
+// (sys.ts:1468). Each row first holds that the cell was made early, valueless, so it can't pass on
+// some other road; the second row's nested function captures the variable. Mutant 13.
+func TestReachEarlyCellIsWhatItsDeclarationAssigns(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, helper string }{
+		{"uncaptured", "function helper(): number {\n\t\treturn 1;\n\t}"},
+		{"captured", "function helper(): string {\n\t\treturn box.tag;\n\t}"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			program := reachProgram(t, reachBox+`function make(): Box {
+	const box: Box = { tag: 'early' };
+	console.log(helper());
+	return box;
+	`+probe.helper+`
+}
+const made = make();
+console.log(made.tag);
+`)
+			if !irHolds(program, func(node any) bool {
+				declared, isDeclare := node.(ir.Declare)
+				return isDeclare && declared.Uninitialized && declared.Value == nil && program.Locals[declared.Local].Name == "box"
+			}) {
+				t.Fatalf("box's cell wasn't declared early and valueless, so this pins nothing about road 7")
+			}
+			wantSites(t, reachOfGlobal(t, program, "made"), literalSite(t, program, "early"))
+		})
+	}
 }
 
 // Road 3: a function nothing calls, exports or makes a value of never runs, so its write is no write.

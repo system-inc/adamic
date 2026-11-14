@@ -332,3 +332,47 @@ New:
 
 Expected: TestEveryLoweringGraphNotesItsDead names host_member_write.go's call. The graph's dead functions go
 unnoted, so a later pass naming one of them would leave checkFlowLiveness silent.
+
+## 12. A narrowed read not followed
+
+File: internal/lower/view_flow.go, follow's Defined arm.
+
+Old:
+
+```go
+	case ir.Defined:
+		// Road 6: a read the checker narrowed undefined (or null) out of is checked, and hands on Value
+		// or stops, as graph_flow_classes.go's wrapper reads it.
+		follow(value.Value)
+```
+
+New:
+
+```go
+	case ir.Defined:
+		unknown("untracked source ir.Defined")
+```
+
+Expected: TestReachNarrowedReadHandsOnItsValue/.ts and /.a go Unknown, "untracked source ir.Defined", and
+TestTsSysPresenceLowers/.a and TestTsSysPresenceAgreesWithNode/main.a refuse execute.a:19:6's presence test, as
+368e1506 did before this road.
+
+## 13. An early, valueless cell taken as a source
+
+File: internal/lower/view_flow.go, collectAllocationFlowGraph's Declare arm.
+
+Old:
+
+```go
+				if value.Uninitialized && value.Value == nil {
+```
+
+New:
+
+```go
+				if false && value.Uninitialized && value.Value == nil {
+```
+
+Expected: TestReachEarlyCellIsWhatItsDeclarationAssigns/uncaptured and /captured go Unknown, "missing expression",
+and TestTsSysPresenceLowers/.ts and TestTsSysPresenceAgreesWithNode/main.ts refuse execute.ts:19:6's presence test,
+as 368e1506 did before this road.

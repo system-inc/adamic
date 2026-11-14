@@ -50,7 +50,8 @@ func TestTsSysSelfReadingLiteralStops(t *testing.T) {
 // nested, a literal of method shorthands and shorthand properties, and the chain, and its presence tests
 // (tsc's patch of writeFile is left out: it reads the method as a value first, which stays refused, so
 // tsc stops there anyway): every one lowers, which is checkOptionalMemberPresence admitting it, a known
-// reach of plain literals, and each tested member is read off its slot as it runs. setBlocking is the
+// reach of plain literals (through roads 6 and 7 in reach_roads_test.go: .a's narrowing and getNodeSystem's
+// early cells), and each tested member is read off its slot as it runs. setBlocking is the
 // 15th site (tsc.ts:20), judged by the check as the others are, since its receiver is ts.sys, not
 // stdout's handle. The oracle holds what it runs to (internal/oracle/tssys_presence_test.go). Mutants are
 // in tssys_presence.mutants.md.
