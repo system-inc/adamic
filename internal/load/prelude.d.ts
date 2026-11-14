@@ -117,3 +117,13 @@ interface ArrayConstructor {
 interface MapConstructor {
 	new <K = unknown, V = unknown>(): Map<K, V>;
 }
+
+// tsc's sys.ts reads process.recordreplay, a member Node's process doesn't have (#b7phwab). Adamic on
+// #b5w3ycg, Nov 7 2026: it reads as undefined on every target, as the absent member lowering folds
+// (hostBindingAbsentMembers), and every write or install of it stays refused. Optional and unknown, so
+// it promises nothing; it merges with @types/node's NodeJS.Process when Node's types load.
+declare namespace NodeJS {
+	interface Process {
+		recordreplay?: unknown;
+	}
+}
