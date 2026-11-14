@@ -8,6 +8,10 @@ import (
 	"testing"
 )
 
+// These run the real node under --timeout, beside fakes that sleep past it, so the limit leaves node room on a
+// loaded box: at 1s, node itself timed out on Lunatic and its timeout joined the reasons (J-tax3dmj). The fakes sleep
+// 10s against 4s, so a sleep can't pass for a run that finished.
+
 // A runtime build that times out under the gate's load is retried alone before its timeout counts, so a clean head
 // reads as a pass, with the timeout and the retry said (#pajbaba, seen on #ny0c3gb's proof at --workers 4). The head's
 // first native build sleeps past the limit and every later one doesn't. Mutant
@@ -16,8 +20,8 @@ import (
 func TestRuntimeTimeoutRetriedAloneIsNotCounted(t *testing.T) {
 	t.Parallel()
 	dir, sha, base, head := commandFixture(t)
-	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo \"console.log('42');\";;\nbuild) slept=\"$(dirname \"$0\")/slept\"; if [ ! -e \"$slept\" ]; then : > \"$slept\"; sleep 5; fi; printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json", "--timeout", "1s")
+	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) echo \"console.log('42');\";;\nbuild) slept=\"$(dirname \"$0\")/slept\"; if [ ! -e \"$slept\" ]; then : > \"$slept\"; sleep 10; fi; printf '#!/bin/sh\\necho 42\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json", "--timeout", "4s")
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
@@ -38,8 +42,8 @@ func TestRuntimeTimeoutRetriedAloneIsNotCounted(t *testing.T) {
 func TestEveryTimeoutIsItsReason(t *testing.T) {
 	t.Parallel()
 	dir, sha, base, head := commandFixture(t)
-	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) sleep 5;;\nbuild) sleep 5;;\nesac\n")
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json", "--timeout", "1s")
+	writeExecutable(t, head, "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\njs) sleep 10;;\nbuild) sleep 10;;\nesac\n")
+	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json", "--timeout", "4s")
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
@@ -55,7 +59,7 @@ func TestEveryTimeoutIsItsReason(t *testing.T) {
 // repair_agree false under load). Mutant (c): the repair's timeouts left out of the reasons, and the run fails.
 func TestRepairTimeoutVoidsNotFails(t *testing.T) {
 	t.Parallel()
-	o, r := checkedBoundaryCommandWith(t, true, "input.a", "sleep 5;", "--timeout", "1s")
+	o, r := checkedBoundaryCommandWith(t, true, "input.a", "sleep 10;", "--timeout", "4s")
 	if o.Exit != 3 || !r.Void || r.Verdict != "void" || !strings.HasSuffix(r.VoidReason, "repair native compile timeout") || r.Programs[0].NegativeWitness {
 		t.Fatalf("exit %d, void %v, verdict %s, reason %q, witness %v, want exit 3 and the repair's timeout: %s", o.Exit, r.Void, r.Verdict, r.VoidReason, r.Programs[0].NegativeWitness, o.Stderr)
 	}
