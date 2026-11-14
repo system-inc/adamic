@@ -1,0 +1,14 @@
+// A key that names an accessor names no own data field, so the write stops at the key proof the read
+// shares, rather than store past the setter that gauge.level = value would run.
+class Gauge {
+	private stored = 0;
+	get level(): number { return this.stored; }
+	set level(value: number) { this.stored = value * 2; }
+	other = 0;
+}
+function set(gauge: Gauge, at: 'level' | 'other', value: number): void {
+	gauge[at] = value;
+}
+const gauge = new Gauge();
+set(gauge, 'other', 4);
+console.log(`${gauge.level} ${gauge.other}`);

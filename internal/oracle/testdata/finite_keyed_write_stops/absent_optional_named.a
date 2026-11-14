@@ -1,0 +1,11 @@
+// Adamic's condition, absentOptionalWrite's half: the literal leaves pending out, so the object has no
+// slot for it, and o.pending = false stops (presence_refused/optional_field_write.a). Its keyed twin,
+// absent_optional_keyed.a, must stop in the same words.
+interface State {
+	pending?: boolean;
+	errors: boolean;
+}
+const state: State = { errors: true };
+console.log(String(state.pending));
+state.pending = false;
+console.log(String(state.pending));
