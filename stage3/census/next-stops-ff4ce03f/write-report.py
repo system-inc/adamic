@@ -22,5 +22,5 @@ for e in read('source-evidence.json'):
  if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','']
 for e in read('source-evidence.json'):
  if e.get('expression_change_reach'):s+=['### ff4ce03f never-read reach: '+e['where'],'',e['expression_change_reach'],'']
-s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from measured stage3/meter/owners.json or the emitting method.']
+s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from emitting source and stage3/adapt/**/owners.json searches retained in ownership-search.json.']
 (out/'REPORT.md').write_text('\n'.join(s)+'\n')

@@ -17,7 +17,7 @@ for m in modes:
  for g in json.loads((base/m/'grouped-first-stops.json').read_text()):
   members=[c for c in cs if c['root'] in g['roots']]
   moved=sum(not c['unchanged'] for c in members)
-  s += ['- '+str(g['count'])+' roots: '+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged from -6.']
+  s += ['- '+str(g['count'])+(' root: ' if g['count']==1 else ' roots: ')+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged from -6.']
  s += ['']
 s += ['Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','','## Adapted source at new stops','']
 seen=set()
@@ -30,11 +30,11 @@ for m in modes:
    seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Adapted context:','','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
    if e.get('owner_basis'):s += ['Ownership evidence: '+e['owner_basis']+'.','']
    if e.get('expression_change_reach'):s += ['Reach of ff4ce03f never-read lowering change: '+e['expression_change_reach'],'']
-if not seen:s+=['No new stop tuples relative to the c4v7-6 baseline.','']
+if not seen:s+=['No new stop tuples relative to the c4v7-6 baseline. There are no changed stops to attribute to ff4ce03f. By reading lowerWithElementKey, initialization preflight and refuse run before body lowering; the new value/neverRead path cannot reach these observed refusals or initialization stops. Per-stop reach assessments follow below. The measured lowering diff is retained in [never-read-change.diff.txt](never-read-change.diff.txt).','']
 for m in modes:
  report=(base/m/'REPORT.md').read_text().splitlines()[1:]
  s += ['## '+m,'','\n'.join('#'+line if line.startswith('#') else line for line in report)]
-s += ['## Setup and limits','','A fresh detached scratch worktree used the measured SHA, with recursive submodules initialized. The upstream clone confirmed v6.0.3 at '+p['upstream']+'. stage3/api npm ci exited 0. Go/adamic caches and temporary measurement products used writable scratch. All npm cache writes used scratch. The shared checkout’s tracked files were unchanged. No compiler or adaptation changes were made. One completed apply and one ordinary build served both formats. The separate sys.ts single-file census was skipped.','','Each ordinary child and group has a 1780-second bound with actual exits recorded, at most ten roots per group, three children at a time. Duplicate observations agree except timing. This measures first stops, not successful native execution. Owners use the measured owners.json or emitting code method.']
+s += ['','## Setup and limits','','A fresh detached scratch worktree used the measured SHA, with recursive submodules initialized. The upstream clone confirmed v6.0.3 at '+p['upstream']+'. stage3/api npm ci exited 0. Go/adamic caches and temporary measurement products used writable scratch. All npm cache writes used scratch. The shared checkout’s tracked files were unchanged. No compiler or adaptation changes were made. One completed apply and one ordinary build served both formats. The separate sys.ts single-file census was skipped.','','Each ordinary child and group has a 1780-second bound with actual exits recorded, at most ten roots per group, three children at a time. Duplicate observations agree except timing. This measures first stops, not successful native execution. Owners use the measured owners.json or emitting code method.']
 checkpoints=[dict(sha=line.split(' ',1)[0],subject=line.split(' ',1)[1]) for line in subprocess.check_output(['git','log','--reverse','--format=%H %s',p['sha']+'..HEAD'],text=True).splitlines() if 'checkpoint' in line]
 assert len(checkpoints)==16
 (base/'checkpoints.json').write_text(json.dumps(checkpoints,indent=2)+'\n')

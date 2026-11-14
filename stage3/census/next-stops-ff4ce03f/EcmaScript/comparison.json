@@ -1,0 +1,1108 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "binder.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "builder.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "builderState.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "checker.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "core.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "emitter.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/utilities.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "parser.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "path.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "performance.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "performanceCore.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "program.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "resolutionCache.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "scanner.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "semver.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "sourcemap.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "symbolWalker.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "sys.ts",
+    "before": [
+      "utilitiesPublic.ts:1280:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "after": [
+      "utilitiesPublic.ts:1280:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "tracing.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformer.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/generators.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/ts.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "tsbuild.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "types.ts",
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "utilities.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "visitorPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "watch.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "watchPublic.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "watchUtilities.ts",
+    "before": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "after": [
+      "sys.ts:514:17",
+      "Refused",
+      "a cast the runtime can't check"
+    ],
+    "unchanged": true
+  }
+]
