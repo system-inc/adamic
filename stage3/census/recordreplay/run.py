@@ -1,6 +1,8 @@
-import subprocess,resource,time,json,sys,os,signal
+import subprocess,resource,time,json,sys,os,signal,fcntl
 from pathlib import Path
-name=sys.argv[1]; argv=sys.argv[2:]; d=Path('/workspace/scratch/recordreplay'); start=time.monotonic()
+name=sys.argv[1]; argv=sys.argv[2:]; d=Path('/workspace/scratch/recordreplay')
+lock=(d/'measurement.lock').open('a'); fcntl.flock(lock,fcntl.LOCK_EX)
+start=time.monotonic()
 with (d/(name+'.log')).open('wb') as log:
  p=subprocess.Popen(argv,stdout=log,stderr=log,start_new_session=True)
  try: rc=p.wait(timeout=int(os.environ.get('RUN_LIMIT','3600')))

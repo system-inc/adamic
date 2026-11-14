@@ -1,0 +1,870 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/sys.ts": "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a PostfixUnaryExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a boolean | undefined variable a function value captures": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a computed field name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function value that captures the variable its own initializer declares": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a literal method through a view that erases its receiver": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method in object destructuring": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getEnvironmentVariable would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (writeFile would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace member without a lowered binding": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread after the first field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any: any has no proven type": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning a non-tuple array's length: array writes must preserve its existing indices": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning an element of a value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to a PropertyAccessExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to an Identifier": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 83,
+        "after": 83,
+        "lowered": 0,
+        "moved_by_reason": {
+          "failed statement; state rolled back; continued at next statement or declaration": 1
+        }
+      },
+      "function identity comparison in a program with specialized generic function values": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member call read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional record property access": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "process.recordreplay as a value (use its supported process operation directly)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 0,
+        "moved_by_reason": {
+          "process.recordreplay with an unrepresented type": 1
+        }
+      },
+      "process.recordreplay with an unrepresented type": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading WatchDirectoryKind": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading WatchFileKind": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading byteOrderMarkIndicator": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading closeFileWatcherOf": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading currentModifiedTime": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading defaultFallbackPolling": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading directorySeparator": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading directoryWatcher": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading elapsed": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading emptyArray": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading emptyFileSystemEntries": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading fileSystemEntryExists": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading getModifiedTime": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading isString": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading noop": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading presentWatcher": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading timerToUpdateChildWatches": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading timestamp": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading watchDirectoryKind": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading watchFileKind": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "sort without a comparator": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a possibly absent optional own field": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          68124
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1517:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+          "start": 68114,
+          "end": 72545
+        },
+        "head": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1517:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet",
+            "start": 68114,
+            "end": 72545
+          }
+        ]
+      },
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          71016
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+          "reason": "process.recordreplay as a value (use its supported process operation directly)",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+        },
+        "head": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+            "reason": "process.recordreplay with an unrepresented type",
+            "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+          }
+        ]
+      }
+    ],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          71016
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          68124
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1517:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet",
+          "start": 68114,
+          "end": 72545
+        }
+      }
+    ],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 18,
+        "NotYet": 73,
+        "Boundary": 86
+      },
+      "after": {
+        "Refused": 18,
+        "NotYet": 73,
+        "Boundary": 86
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a PostfixUnaryExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a boolean | undefined variable a function value captures": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a computed field name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function value that captures the variable its own initializer declares": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a literal method through a view that erases its receiver": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method in object destructuring": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getEnvironmentVariable would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (writeFile would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace member without a lowered binding": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread after the first field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; } seen as (baseDir: string, moduleName: string) => ModuleImportResult, which can write string | undefined where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type System seen as ModuleResolutionHost, whose method directoryExists becomes a writable field: a write of ((directoryName: string) => boolean) | undefined would replace a method of type (path: string) => boolean": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any: any has no proven type": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning a non-tuple array's length: array writes must preserve its existing indices": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning an element of a value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to a PropertyAccessExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "assigning to an Identifier": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "failed statement; state rolled back; continued at next statement or declaration": {
+        "before": 83,
+        "after": 83,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function identity comparison in a program with specialized generic function values": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "function signature or prologue failed; continued at next declaration": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member call read as an own field": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional record property access": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "process.recordreplay as a value (use its supported process operation directly)": {
+        "before": 1,
+        "after": 0,
+        "lowered": 0,
+        "moved_by_reason": {
+          "process.recordreplay with an unrepresented type": 1
+        }
+      },
+      "process.recordreplay with an unrepresented type": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading WatchDirectoryKind": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading WatchFileKind": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading byteOrderMarkIndicator": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading closeFileWatcherOf": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading currentModifiedTime": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading defaultFallbackPolling": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading directorySeparator": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading directoryWatcher": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading elapsed": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading emptyArray": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading emptyFileSystemEntries": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading fileSystemEntryExists": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading getModifiedTime": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading isString": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading noop": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading presentWatcher": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading timerToUpdateChildWatches": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading timestamp": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading watchDirectoryKind": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "reading watchFileKind": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "sort without a comparator": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a possibly absent optional own field": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          71016
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+          "reason": "process.recordreplay as a value (use its supported process operation directly)",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet"
+        },
+        "head": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+            "reason": "process.recordreplay with an unrepresented type",
+            "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+          }
+        ]
+      }
+    ],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/sys.ts",
+          "30876cbae0e2cb19eae2525cbed919abdba86fac921ecc22fa6aaad0441a3398",
+          71016
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1467:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "text": "/workspace/scratch/recordreplay/control/src/compiler/sys.ts:1588:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      }
+    ],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 18,
+        "NotYet": 73,
+        "Boundary": 86
+      },
+      "after": {
+        "Refused": 18,
+        "NotYet": 73,
+        "Boundary": 86
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}

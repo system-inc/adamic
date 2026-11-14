@@ -1,0 +1,192 @@
+{
+  "control-stock": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/stock.cjs",
+      "/workspace/scratch/recordreplay/control",
+      "/workspace/scratch/recordreplay/control-stock-data.json"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/control",
+    "exit": 0,
+    "seconds": 23.555144988000166,
+    "peak_rss_kib": 1065636
+  },
+  "control-dts": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/control/node_modules/hereby/bin/hereby.js",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/control",
+    "exit": 0,
+    "seconds": 28.372798069999817,
+    "peak_rss_kib": 1058672
+  },
+  "control-types": {
+    "argv": [
+      "/workspace/scratch/recordreplay/adamic",
+      "types",
+      "/workspace/scratch/recordreplay/control/src/compiler/sys.ts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 3.436720789999981,
+    "peak_rss_kib": 397896
+  },
+  "control-sys-full": {
+    "argv": [
+      "/workspace/scratch/recordreplay/latent-head",
+      "/workspace/scratch/recordreplay/control/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/control-sys-full.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 40.27027853799996,
+    "peak_rss_kib": 886800
+  },
+  "candidate-stock": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/stock.cjs",
+      "/workspace/scratch/recordreplay/candidate",
+      "/workspace/scratch/recordreplay/candidate-stock-data.json"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/candidate",
+    "exit": 0,
+    "seconds": 18.7909894039999,
+    "peak_rss_kib": 1064432
+  },
+  "candidate-dts": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/control/node_modules/hereby/bin/hereby.js",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/candidate",
+    "exit": 0,
+    "seconds": 25.517346247999967,
+    "peak_rss_kib": 1044520
+  },
+  "candidate-types": {
+    "argv": [
+      "/workspace/scratch/recordreplay/adamic",
+      "types",
+      "/workspace/scratch/recordreplay/candidate/src/compiler/sys.ts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 3.656350687999975,
+    "peak_rss_kib": 382716
+  },
+  "candidate-sys-full": {
+    "argv": [
+      "/workspace/scratch/recordreplay/latent-head",
+      "/workspace/scratch/recordreplay/candidate/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/candidate-sys-full.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 40.000599057000045,
+    "peak_rss_kib": 874424
+  },
+  "candidate-ordinary-sys": {
+    "argv": [
+      "/workspace/scratch/recordreplay/census-head",
+      "/workspace/scratch/recordreplay/candidate/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/candidate-ordinary-sys.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 37.890367306000144,
+    "peak_rss_kib": 906296
+  },
+  "candidate2-stock": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/stock.cjs",
+      "/workspace/scratch/recordreplay/candidate2",
+      "/workspace/scratch/recordreplay/candidate2-stock-data.json"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/candidate2",
+    "exit": 0,
+    "seconds": 25.690006004999987,
+    "peak_rss_kib": 1060772
+  },
+  "candidate2-dts": {
+    "argv": [
+      "node",
+      "/workspace/scratch/recordreplay/control/node_modules/hereby/bin/hereby.js",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/candidate2",
+    "exit": 0,
+    "seconds": 28.651842135999914,
+    "peak_rss_kib": 1053372
+  },
+  "candidate2-types": {
+    "argv": [
+      "/workspace/scratch/recordreplay/adamic",
+      "types",
+      "/workspace/scratch/recordreplay/candidate2/src/compiler/sys.ts"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/candidate2",
+    "exit": 0,
+    "seconds": 3.907850192999831,
+    "peak_rss_kib": 392072
+  },
+  "candidate2-sys-full": {
+    "argv": [
+      "/workspace/scratch/recordreplay/latent-head",
+      "/workspace/scratch/recordreplay/candidate2/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/candidate2-sys-full.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 43.32583345900002,
+    "peak_rss_kib": 868000
+  },
+  "A-main-sys-full": {
+    "argv": [
+      "/workspace/scratch/recordreplay/latent-base",
+      "/workspace/scratch/recordreplay/control/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/A-main-sys-full.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/base",
+    "exit": 0,
+    "seconds": 44.499876417999985,
+    "peak_rss_kib": 861128
+  },
+  "B-main-sys-full": {
+    "argv": [
+      "/workspace/scratch/recordreplay/latent-base",
+      "/workspace/scratch/recordreplay/candidate2/src/compiler/sys.ts",
+      "/workspace/scratch/recordreplay/B-main-sys-full.jsonl"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/base",
+    "exit": 0,
+    "seconds": 44.721490352000046,
+    "peak_rss_kib": 870228
+  },
+  "amendment-apply": {
+    "argv": [
+      "node",
+      "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/recordreplay/amend-proof"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 5.6481082709999555,
+    "peak_rss_kib": 746516
+  },
+  "amendment-proof": {
+    "argv": [
+      "python3",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+      "/workspace/scratch/recordreplay"
+    ],
+    "cwd": "/workspace/scratch/recordreplay/head",
+    "exit": 0,
+    "seconds": 15.487889600000017,
+    "peak_rss_kib": 747980
+  }
+}

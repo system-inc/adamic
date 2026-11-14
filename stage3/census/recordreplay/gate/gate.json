@@ -1,0 +1,23 @@
+{
+  "selected": "candidate2",
+  "amendment_commit": "e00ce47c6e3d667c5b9041c8f25c6f3d2dfdf76e",
+  "candidate": {
+    "stock_diagnostics": 0,
+    "adamic_types_exit": 0,
+    "javascript_identical": true,
+    "public_declarations_identical": true,
+    "selected": false,
+    "reason": "adds Refused: a global augmentation at sys.ts:1977:1"
+  },
+  "candidate2": {
+    "stock_diagnostics": 0,
+    "adamic_types_exit": 0,
+    "javascript_identical": true,
+    "public_declarations_identical": true,
+    "selected": true,
+    "next_wall": "sys.ts:1613:46: reading modulePath",
+    "new_process_findings": 0
+  },
+  "inputs_identical_between_compiler_sides": true,
+  "B_baseline": "main compiler on amended source, required for stage3/census/pair same-input read normalization"
+}

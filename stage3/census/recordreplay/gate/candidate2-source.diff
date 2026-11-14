@@ -1,0 +1,20 @@
+--- control/src/compiler/sys.ts
++++ candidate2/src/compiler/sys.ts
+@@ -53,7 +53,7 @@
+ import * as _path from "node:path";
+ import * as _os from "node:os";
+ import * as _crypto from "node:crypto";
+-
++import type {} from "../recordreplay.js";
+ 
+ /**
+  * djb2 hashing algorithm
+@@ -1585,7 +1585,7 @@
+             disableCPUProfiler,
+             cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),
+             realpath,
+-            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
++            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!process.recordreplay,
+             tryEnableSourceMapsForHost() {
+                 try {
+                     require("source-map-support").install();

@@ -1,0 +1,23 @@
+--- control/src/compiler/sys.ts
++++ candidate/src/compiler/sys.ts
+@@ -1585,7 +1585,7 @@
+             disableCPUProfiler,
+             cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),
+             realpath,
+-            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!(process as any).recordreplay,
++            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i.test(arg)) || !!process.recordreplay,
+             tryEnableSourceMapsForHost() {
+                 try {
+                     require("source-map-support").install();
+@@ -1973,3 +1973,11 @@
+ if (sys && sys.debugMode) {
+     Debug.isDebugging = true;
+ }
++
++declare global {
++    namespace NodeJS {
++        interface Process {
++            recordreplay?: unknown;
++        }
++    }
++}

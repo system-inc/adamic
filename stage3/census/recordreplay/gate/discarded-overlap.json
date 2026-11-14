@@ -1,0 +1,27 @@
+{
+  "reason": "A short ordinary diagnostic census overlapped the second candidate full census. Both observations were discarded and rerun serially after adding a cross-process runner lock. Only final resource/stream files are used.",
+  "discarded": {
+    "candidate2-sys-full.discarded-overlap.json": {
+      "argv": [
+        "/workspace/scratch/recordreplay/latent-head",
+        "/workspace/scratch/recordreplay/candidate2/src/compiler/sys.ts",
+        "/workspace/scratch/recordreplay/candidate2-sys-full.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "exit": -15,
+      "seconds": 30.785009427999967,
+      "peak_rss_kib": 870268
+    },
+    "candidate-ordinary-sys.discarded-overlap.json": {
+      "argv": [
+        "/workspace/scratch/recordreplay/census-head",
+        "/workspace/scratch/recordreplay/candidate/src/compiler/sys.ts",
+        "/workspace/scratch/recordreplay/candidate-ordinary-sys.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "exit": 0,
+      "seconds": 36.10329991899994,
+      "peak_rss_kib": 889792
+    }
+  }
+}
