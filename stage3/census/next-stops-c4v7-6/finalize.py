@@ -31,7 +31,7 @@ for m in modes:
  for e in json.loads((base/m/'source-evidence.json').read_text()):
   key=(e['where'],e['kind'],e['reason'])
   if key in new and key not in seen:
-   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Adapted context:','','```typescript',e['adapted_excerpt'],'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
+   seen.add(key);s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Adapted context:','','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','','Exact reason: '+e['reason']+'.','','Phase: '+e['phase']+'. Owner: '+e['owner']+'. Emitter: '+e['emitter']+'.','']
    if e.get('owner_basis'):s += ['Ownership evidence: '+e['owner_basis']+'.','']
    if e.get('expression_change_reach'):s += ['Reach of a7d47283 expression.go change: '+e['expression_change_reach'],'']
 if not seen:s+=['No new stop tuples relative to the 5c8338c4 baseline.','']
