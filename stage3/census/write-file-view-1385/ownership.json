@@ -1,0 +1,30 @@
+{
+  "searchedFiles": 143,
+  "scope": [
+    "owners.json",
+    "targets.json",
+    "every adapt.cjs"
+  ],
+  "needle": "patchWriteFileEnsuringDirectory",
+  "hits": [
+    {
+      "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "sha256": "f396c23bf0fce3e3b4b0a710e90313e3a8cd6395c0c009ac9d0fe200b0dabb5d",
+      "matches": [
+        {
+          "owner": "TestServerHost",
+          "field": "before",
+          "containsDefinition": false,
+          "context": "  // Just like sys, patch the host to use writeFile\n        patchWriteFileEnsuringDirectory(host);\n        return host;\n    }\n\n    static getCreateWat"
+        },
+        {
+          "owner": "TestServerHost",
+          "field": "after",
+          "containsDefinition": false,
+          "context": "  // Just like sys, patch the host to use writeFile\n        patchWriteFileEnsuringDirectory(host);\n        return host;\n    }\n\n    static getCreateWat"
+        }
+      ]
+    }
+  ],
+  "decision": "New whole-owner adaptation; timer-closures contains only the call in TestServerHost, not the target function. 93 and crypto own getNodeSystem; 41 owns ambient timer deletion."
+}
