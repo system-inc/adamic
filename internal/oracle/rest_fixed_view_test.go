@@ -17,12 +17,15 @@ import (
 // JavaScript backend printed string:x,number:2, and native stopped at "clang failed" in .a and .ts (r2).
 // The relation that judges a function value's parameters against a view's by representation
 // (sameKeeping) now judges the rest's element against each view parameter it collects as it judges a
-// fixed one, so r2 is NotYet at the view. Each stop is pinned by its kind and line:col, never by
-// another rule's words. The neighbors keep theirs: an unknown rest (r1, r4) still stops in its body, a
-// string rest through string parameters (r3, the string control) and a fixed unknown through a string
-// view (r5) lower and agree with Node on release, sanitized native and the JavaScript backend, and an
-// optional unknown through a number view (r6) still stops at its view. Mutant: the rest judgment
-// dropped from sameKeeping lowers r2 again, and clang refuses its C.
+// fixed one, so r2 is NotYet at the view. And since any fixed view can be widened by arity in the next
+// one, a rest function seen through a program view with no rest is NotYet at that view
+// (restHiddenByView), so a string rest through string parameters (r3) stops too. Each stop is pinned by
+// its kind and line:col, never by another rule's words. The neighbors keep theirs: an unknown rest (r1,
+// r4) still stops in its body, a fixed unknown through a string view (r5) lowers and agrees with Node
+// on release, sanitized native and the JavaScript backend, and an optional unknown through a number
+// view (r6) still stops at its view. Mutants: the rest judgment dropped from sameKeeping lowers r2
+// again, and clang refuses its C; restHiddenByView answering false lowers r17 again, into UBSan's
+// mismatched function pointer.
 func TestRestThroughFixedView(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/rest_fixed_view"
@@ -30,7 +33,7 @@ func TestRestThroughFixedView(t *testing.T) {
 	stops := map[string]string{
 		"r1_unknown_rest":                    ":1:50",
 		"r2_union_rest":                      ":2:49",
-		"r3_same_rest_control":               "",
+		"r3_same_rest_control":               ":2:49",
 		"r4_unknown_tail_after_head":         ":1:77",
 		"r5_fixed_unknown_through_string":    "",
 		"r6_optional_unknown_through_number": ":2:39",
@@ -45,6 +48,20 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r11_road_cast":            ":2:15",
 		"r12_view_rest":            ":2:49",
 		"r13_view_rest_after_head": ":2:60",
+
+		// Language's attack on the first cut: a fixed view hides the rest, and the next view widens it
+		// by arity, a relation of two fixed types that no longer shows the rest. Each stops at the
+		// first view (r15 two declarations, r16 the second hop an argument, r17 a zero-parameter view,
+		// which reached the closure through a mismatched function pointer under UBSan). A view with a
+		// rest of its own (r14), a fixed function widened (r18) and a rest function handed to a library
+		// callback, whose adapter calls the source signature (r19, Language's union element covering
+		// map's three parameters), lower and agree.
+		"r14_rest_view_control":           "",
+		"r15_hidden_two_hops":             ":2:36",
+		"r16_hidden_argument":             ":2:36",
+		"r17_hidden_zero_hop":             ":2:28",
+		"r18_fixed_widened_control":       "",
+		"r19_library_callback_union_rest": "",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {

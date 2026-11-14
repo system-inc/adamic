@@ -13,7 +13,7 @@ import (
 
 // A probe, not for landing: one line per program, its stop or each backend's answer beside Node's.
 func TestZZProbeRestHide(t *testing.T) {
-	for _, directory := range []string{"internal/oracle/testdata/rest_fixed_view", "internal/oracle/testdata/rest_fixed_view_probe"} {
+	for _, directory := range []string{"internal/oracle/testdata/rest_fixed_view_probe"} {
 		entries, err := os.ReadDir(filepath.Join(repository, directory))
 		if err != nil {
 			t.Fatal(err)
