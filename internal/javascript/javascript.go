@@ -97,6 +97,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	// callback?.(...) on a function value: undefined, with the arguments not evaluated, where the value,
+	// read once and before them, is undefined. Its type holds no null (ir.CallClosure's Optional).
+	builder.WriteString("const adamicOptionalValueCall = (fn, values) => fn === undefined ? undefined : adamicCall(fn, values());\n")
 	// object.name?.(...) through an interface: what adamicCallee finds, read once and before the
 	// arguments, called; undefined, with the arguments not evaluated, where it finds undefined or null,
 	// or where object?.name?.(...)'s object is undefined or null.
@@ -1488,6 +1491,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t, %d)", functionName(e.program, expression.Function), strings.Join(cells, ", "), target.Receiver, target.SourceLength)
 	case ir.CallClosure:
+		if (expression.Bound || expression.Direct > 0) && expression.Optional {
+			// A bound call's target and a sibling's code are always there: lowering makes neither optional.
+			panic("compiler bug: an optional call of a bound target or a sibling's code")
+		}
 		if expression.Bound {
 			return "adamicBoundCall(self, [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 		}
@@ -1534,8 +1541,9 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 		}
 		if expression.Optional {
-			// Lowering makes an optional call only through an interface (ir.CallClosure's Optional).
-			panic("compiler bug: an optional call through a function value")
+			// callback?.(...): the function value read once, before the arguments, and undefined, with the
+			// arguments not evaluated, where it is.
+			return "adamicOptionalValueCall(" + e.value(expression.Closure) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 	case ir.ArrayMap:
