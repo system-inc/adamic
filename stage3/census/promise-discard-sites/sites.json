@@ -521,14 +521,46 @@
   "measurement_changes": [
     "User requested scan-only for the remaining 59 files; in-flight full runs were intentionally cancelled before replacing the scheduler. Previously pushed observations are retained."
   ],
-  "stopped_error": "OSError: [Errno 30] Read-only file system: '/workspace/scratch/promise-discard-sites-run/adamic/stage3/census/promise-discard-sites/sites.json'",
-  "stop_phase": "Bookkeeping write during requested scan-only handoff; command was mistakenly run in the read-only sandbox. Measurements stopped per user instruction.",
   "control_3220": {
-    "status": "not run",
-    "source": "async function fails(): Promise<void> {}\n[0].map(fails);\n",
-    "reason": "Stopped on bookkeeping error before running this control."
+    "file": "control-3220",
+    "status": "ran",
+    "exit": 0,
+    "seconds": 0.116,
+    "timeout": false,
+    "total_findings": 1,
+    "observed_findings": 1,
+    "compiler_findings": 1,
+    "kinds": {
+      "Refused": 1
+    },
+    "new_reason_findings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1",
+        "reason": "an unawaited async task: a Promise<void>[] thrown away, whose tasks nothing awaits",
+        "text": "/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1: Adamic 0.1 refuses an unawaited async task: a Promise<void>[] thrown away, whose tasks nothing awaits; await the tasks (Promise.all for many), or keep them and return them",
+        "file": "/workspace/scratch/promise-discard-sites-run/control-3220.ts",
+        "line": 2,
+        "column": 1,
+        "rule": "3220 refusePromiseDiscard",
+        "named_type": "Promise<void>[]"
+      }
+    ],
+    "sha256": "dfc76ad31931cc0d02107d4c86f05953c9500067ca278be8ba55eb46648bc395",
+    "raw_sha256": "ecd419f3b6b56afb8478a5b067ac25a0a0da4fc4e0e6d0e0e79de0e233262bf4",
+    "parse_error": null,
+    "mode": "scan only",
+    "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-control-3220.jsonl",
+    "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-control-3220.log",
+    "raw_output": "{\"checker_rejected\":false,\"diagnostic_sites\":[],\"diagnostics\":[],\"latent_mode\":\"scan only\",\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"status\":\"measurement\"}\n{\"measurement\":\"measured on a checker-rejected program\",\"file\":\"/workspace/scratch/promise-discard-sites-run/control-3220.ts\",\"declarations\":[{\"measurement\":\"measured on a checker-rejected program\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control-3220.ts:1:1\",\"name\":\" fails\",\"kind\":\"KindFunctionDeclaration\",\"start\":0,\"end\":40}],\"units\":[],\"findings\":[{\"root_kind\":\"\",\"depth\":0,\"measurement\":\"measured on a checker-rejected program\",\"unit\":\"/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1\",\"phase\":\"refusal_scan\",\"kind\":\"Refused\",\"where\":\"/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1\",\"reason\":\"an unawaited async task: a Promise\\u003cvoid\\u003e[] thrown away, whose tasks nothing awaits\",\"text\":\"/workspace/scratch/promise-discard-sites-run/control-3220.ts:2:1: Adamic 0.1 refuses an unawaited async task: a Promise\\u003cvoid\\u003e[] thrown away, whose tasks nothing awaits; await the tasks (Promise.all for many), or keep them and return them\"}]}\n{\"findings\":[],\"measurement\":\"measured on a checker-rejected program\",\"module_format\":\"CommonJSBundle\",\"relation_overflow\":{\"per_unit\":false,\"after_load\":\"\",\"end\":\"\",\"attribution\":\"endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown\",\"cache_sizes\":{\"assignable\":231,\"comparable\":0,\"enum\":0,\"flaggedPairs\":0,\"identity\":0,\"strictSubtype\":4,\"subtype\":0,\"ts2859\":0}},\"status\":\"relation_report\"}\n",
+    "log": "/workspace/scratch/promise-discard-sites-run/control-3220.ts 0 1 measured on a checker-rejected program\n"
   },
-  "remaining_scan_only_status": "Not started after the latest request; in-flight full-mode work was intentionally cancelled for the requested handoff.",
+  "remaining_scan_only_status": "Continuation running with the scan-only binary; all new rows are scan only.",
   "effective_measurements": {
     "_namespaces/ts.moduleSpecifiers.ts": {
       "mode": "full",
@@ -681,7 +713,19 @@
   "effective_coverage": {
     "full": 20,
     "scan only": 1,
+    "timed out": 0,
+    "failed": 0,
     "not measured": 58,
     "original_full_timeouts": 1
-  }
+  },
+  "stop_history": [
+    {
+      "error": "OSError: [Errno 30] Read-only file system: '/workspace/scratch/promise-discard-sites-run/adamic/stage3/census/promise-discard-sites/sites.json'",
+      "phase": "Bookkeeping write during requested scan-only handoff; command was mistakenly run in the read-only sandbox. Measurements stopped per user instruction.",
+      "resolved": "User authorized continuation with writable scratch bookkeeping."
+    }
+  ],
+  "continuation_binary_sha256": "7d292836d48dc58b8b858f75193e5b6e1261adbbbb94f437358c6fa05beb1fc5",
+  "scan_batches": [],
+  "census_complete": false
 }
