@@ -1,0 +1,37 @@
+--- before/sys.js
++++ adapted/sys.js
+@@ -347,7 +347,7 @@
+         })();
+     }
+ }
+-function createSingleWatcherPerName(cache, useCaseSensitiveFileNames, name, callback, createWatcher) {
++function createSingleWatcherPerName(cache, useCaseSensitiveFileNames, name, callback, createWatcher, createForwarder) {
+     const toCanonicalFileName = createGetCanonicalFileName(useCaseSensitiveFileNames);
+     const path = toCanonicalFileName(name);
+     const existing = cache.get(path);
+@@ -356,9 +356,7 @@
+     }
+     else {
+         cache.set(path, {
+-            watcher: createWatcher((
+-            // Cant infer types correctly so lets satisfy checker
+-            (param1, param2, param3) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3)))),
++            watcher: createWatcher(createForwarder(() => cache.get(path)?.callbacks.slice())),
+             callbacks: [callback],
+         });
+     }
+@@ -843,10 +841,12 @@
+         }
+     }
+     function pollingWatchFile(fileName, callback, pollingInterval, options) {
+-        return createSingleWatcherPerName(pollingWatches, useCaseSensitiveFileNames, fileName, callback, cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options));
++        return createSingleWatcherPerName(pollingWatches, useCaseSensitiveFileNames, fileName, callback, cb => pollingWatchFileWorker(fileName, cb, pollingInterval, options), (getCallbacks) => (param1, param2, param3) => { const callbacks = getCallbacks(); if (callbacks)
++            callbacks.forEach(cb => cb(param1, param2, param3)); });
+     }
+     function fsWatch(fileOrDirectory, entryKind, callback, recursive, fallbackPollingInterval, fallbackOptions) {
+-        return createSingleWatcherPerName(recursive ? fsWatchesRecursive : fsWatches, useCaseSensitiveFileNames, fileOrDirectory, callback, cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions));
++        return createSingleWatcherPerName(recursive ? fsWatchesRecursive : fsWatches, useCaseSensitiveFileNames, fileOrDirectory, callback, cb => fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, cb, recursive, fallbackPollingInterval, fallbackOptions), (getCallbacks) => (param1, param2, param3) => { const callbacks = getCallbacks(); if (callbacks)
++            callbacks.forEach(cb => cb(param1, param2, param3)); });
+     }
+     function fsWatchHandlingExistenceOnHost(fileOrDirectory, entryKind, callback, recursive, fallbackPollingInterval, fallbackOptions) {
+         let lastDirectoryPartWithDirectorySeparator;

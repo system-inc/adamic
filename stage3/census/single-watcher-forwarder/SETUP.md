@@ -40,3 +40,7 @@ regeneration was byte-identical, so no input hashes moved and the unchanged
 three generated files pass their freshness check. An initial caller-search
 Python literal accidentally encoded word boundaries as backspaces (exit 1);
 the corrected raw-string search and AST count are the recorded inventories.
+
+The first census comparison exited 1 because its status object omitted seconds.
+The measured durations were restored from commands.jsonl, the driver was fixed,
+and the comparison exited 0. No measurement or finding was changed or rerun.

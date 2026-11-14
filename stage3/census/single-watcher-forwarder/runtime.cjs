@@ -18,12 +18,13 @@ function trial(root,kind){
  function one(...args){record('one',args,this);if(!entered){entered=true;h2.close();h3=register('a.TS',three);}}
  function two(...args){record('two',args,this);}
  function three(...args){record('three',args,this);}
+ function four(...args){record('after-first-event',args,this);}
  const h1=register('A.ts',one);h2=register('a.TS',two);assert.equal(workers.length,1);const identity=forward;
- forward.call({ignored:true},arg1,arg2,stamp);trace.push(['reuse',forward===identity,workers.length]);
- forward(arg1,arg2,undefined);h1.close();h1.close();forward(arg1,arg2);h3.close();h2.close();
+ forward.call({ignored:true},arg1,arg2,stamp);trace.push(['reuse',forward===identity,workers.length]);const hLate=register('a.TS',four);
+ forward(arg1,arg2,undefined);h1.close();h1.close();forward(arg1,arg2);hLate.close();h3.close();h2.close();
  // Recreate the cache entry: an old close handle must not remove a different callback.
  const h4=register('A.ts',two);assert.equal(workers.length,2);h1.close();forward(arg1,arg2,undefined);h4.close();
- assert(trace.some(x=>x[0]==='two'&&x[5]===false));assert(trace.some(x=>x[0]==='three'&&x[5]===true));
+ assert(trace.some(x=>x[0]==='two'&&x[5]===false));assert(trace.some(x=>x[0]==='three'&&x[5]===true));assert(trace.some(x=>x[0]==='after-first-event'&&x[5]===true));
  return trace;
 }
 const results={};for(const kind of ['polling','fs']){results[kind]={before:trial(before,kind),after:trial(after,kind)};assert.deepEqual(results[kind].before,results[kind].after);}

@@ -1,0 +1,63 @@
+{
+  "adapted": {
+    "units": 136,
+    "raw_findings": 189,
+    "unique_all": 118,
+    "unique_refused_notyet": 63,
+    "kind_counts_unique": {
+      "Boundary": 55,
+      "NotYet": 41,
+      "Refused": 22
+    },
+    "exact_added": 45,
+    "exact_gone": 45,
+    "source_aligned_added": 2,
+    "source_aligned_gone": 2,
+    "source_aligned_changes": 1,
+    "helper_cast_survives": false,
+    "checker_diagnostics": 0,
+    "seconds": 99.13867998123169,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  },
+  "mutant": {
+    "units": 136,
+    "raw_findings": 190,
+    "unique_all": 118,
+    "unique_refused_notyet": 63,
+    "kind_counts_unique": {
+      "Refused": 23,
+      "Boundary": 55,
+      "NotYet": 40
+    },
+    "exact_added": 82,
+    "exact_gone": 82,
+    "source_aligned_added": 0,
+    "source_aligned_gone": 0,
+    "source_aligned_changes": 0,
+    "helper_cast_survives": true,
+    "checker_diagnostics": 0,
+    "seconds": 103.15760064125061,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  },
+  "base": {
+    "units": 136,
+    "raw_findings": 190,
+    "unique_all": 118,
+    "kind_counts_unique": {
+      "NotYet": 40,
+      "Refused": 23,
+      "Boundary": 55
+    },
+    "unique_refused_notyet": 63,
+    "unit_statuses": {
+      "attempted": 133,
+      "deferred_generic_instantiation": 3
+    }
+  }
+}
