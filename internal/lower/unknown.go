@@ -160,6 +160,12 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 	}
 	present := l.checker.GetNonNullableType(own)
+	// An Apple object is a box around an Objective-C pointer (foreign.c), with no fields a run-time
+	// key read could find: on Node it doesn't exist at all, so no answer is right. The walk follows
+	// the reach, as the checks below do, since an unknown hands out what it holds one read at a time.
+	if l.reaches(present, l.appleObject, map[*checker.Type]bool{}) {
+		return l.notYet(node, "an Apple object viewed as unknown or object (Objective-C property metadata)")
+	}
 	if held, known := l.representation(present); known && held == ir.Closure {
 		return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")
 	}
@@ -256,6 +262,13 @@ func (l *lowering) nullableReference(element *checker.Type) bool {
 	}
 	held, known := l.representation(element)
 	return !known || held != ir.Union
+}
+
+// appleObject says whether this is an Apple class or protocol, declared in a binding file
+// (foreign.go's isForeign): its values are foreign boxes. A class of an Adamic-written apple/ module
+// is the program's own and isn't one.
+func (l *lowering) appleObject(proven *checker.Type) bool {
+	return isForeign(l.unbranded(proven).Symbol())
 }
 
 // variableTuple says whether this is a tuple with an optional or rest element, whose length on Node
