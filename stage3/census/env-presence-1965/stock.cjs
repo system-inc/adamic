@@ -1,0 +1,15 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript'),assert=require('node:assert/strict');
+assert.equal(ts.version,'6.0.3');
+const [tree,out]=process.argv.slice(2);
+const roots=ts.sys.readDirectory(path.join(tree,'src/compiler'),['.ts']).sort();
+assert.equal(roots.length,79);
+const configFile=path.join(tree,'src/compiler/tsconfig.json');
+const config=ts.readConfigFile(configFile,ts.sys.readFile);
+assert(!config.error);
+const parsed=ts.parseJsonConfigFileContent(config.config,ts.sys,path.dirname(configFile),undefined,configFile);
+const options={...parsed.options,noEmit:true,typeRoots:[path.dirname(path.dirname(require.resolve('@types/node/package.json')))]};
+const program=ts.createProgram(roots,options);
+const rows=ts.getPreEmitDiagnostics(program).map(d=>({file:d.file?path.relative(tree,d.file.fileName):null,line:d.file?d.file.getLineAndCharacterOfPosition(d.start||0).line+1:null,column:d.file?d.file.getLineAndCharacterOfPosition(d.start||0).character+1:null,code:d.code,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')}));
+fs.writeFileSync(out,JSON.stringify({version:ts.version,roots:roots.map(f=>path.relative(tree,f)),options,rows},null,2)+'\n');
+console.log(JSON.stringify({roots:roots.length,diagnostics:rows.length}));
