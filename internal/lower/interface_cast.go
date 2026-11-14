@@ -106,6 +106,22 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 	if err != nil {
 		return nil, err
 	}
+	getters, err := l.viewWalk(node, modules, fields)
+	if err != nil {
+		return nil, err
+	}
+	if len(getters) != 0 {
+		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
+	}
+	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
+	return value, nil
+}
+
+// viewWalkWhole is view's walk before the site index (#q1hyhzc): every node of every module, each
+// property access asked again. It still judges a view made under a type mapper, which can give an
+// access a receiver id no other view asked (viewWalk), and the comparison mode holds the indexed walk
+// to it (viewWalkCompared).
+func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bool) ([]*ast.Node, error) {
 	var refused error
 	var getters []*ast.Node
 	var visit ast.Visitor
@@ -148,11 +164,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *che
 	if refused != nil {
 		return nil, refused
 	}
-	if len(getters) != 0 {
-		l.contractGetters = append(l.contractGetters, contractGetters{origin: value, getters: getters})
-	}
-	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
-	return value, nil
+	return getters, nil
 }
 
 const checkedFieldAliasAccessor = "a checked field alias of an accessor"
@@ -233,7 +245,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			fields[property.Name] = true
 			// Preserve the boundary under receiver-specific registration too.
-			l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), property.Name)] = true
+			l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), property.Name), property.Name)
 		}
 	}
 	seen := map[ir.ViewContractID]bool{}
@@ -248,10 +260,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 			fields[field.Name] = true
 			for typeID, contractID := range l.result.ViewContractTypes {
 				if contractID == id {
-					if l.result.CheckedFields == nil {
-						l.result.CheckedFields = map[string]bool{}
-					}
-					l.result.CheckedFields[ir.CheckedFieldKey(typeID, field.Name)] = true
+					l.markCheckedField(ir.CheckedFieldKey(typeID, field.Name), field.Name)
 				}
 			}
 			visit(field.Contract)
@@ -354,7 +363,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 		l.result.CheckedFields = map[string]bool{}
 	}
 	for field := range fields {
-		l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), field)] = true
+		l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), field), field)
 	}
 	return value, nil
 }
@@ -431,7 +440,7 @@ func (l *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Ty
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
 			if l.checkedViewReceiverField(node, member, name) {
-				l.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
+				l.markCheckedField(ir.CheckedFieldKey(id, name), name)
 				return true
 			}
 		}
