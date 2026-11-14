@@ -7,6 +7,18 @@ const ts = require('typescript');
 const {compiler, nodes} = require('../47-host-errors/adapt.cjs');
 const manifest = require('./proofs/targets.json');
 const local = '_crypto';
+const requireBefore = 'require: (baseDir, moduleName) => {';
+const requireAfter = 'require: (baseDir, moduleName): ModuleImportResult => {';
+const ownerText = text => text.replace(/\r?\n/g, '\r\n');
+function annotateRequire(text) {
+    assert.equal(text.split(requireBefore).length, 2, 'require result: missing or duplicate arrow');
+    const after = text.replace(requireBefore, requireAfter);
+    for (const removeComments of [false, true]) {
+        const emit = source => ts.transpileModule(source, {compilerOptions: {target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, removeComments}}).outputText;
+        assert.equal(emit(after), emit(text), 'require result annotation changed JavaScript');
+    }
+    return after;
+}
 const importText = 'import * as _crypto from "node:crypto";';
 const declarationText = 'let _crypto: typeof import("crypto") | undefined;';
 const blockLines = [
@@ -92,10 +104,12 @@ function adapt(tree) {
     const program = compiler(tree, ts);
     const file = program.getSourceFile(path.join(tree, manifest[0].file));
     assert(file && !file.parseDiagnostics.length, 'cannot parse sys.ts');
+    assert(!file.text.includes('\r\n') || !file.text.replace(/\r\n/g, '').includes('\n'), 'mixed line endings');
     const owner = one(nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'getNodeSystem');
-    const digest = hash(owner.getText(file));
+    const digest = hash(ownerText(owner.getText(file)));
     assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'uninventoried owner: getNodeSystem');
     const done = digest === manifest[0].ownerAfterSha256;
+    assert.equal(ownerText(owner.getText(file)), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'owner text drift');
     const imports = file.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
     assert.equal(hash(imports.map(n => n.getText(file)).join('\n')), done ? manifest[0].importsAfterSha256 : manifest[0].importsBeforeSha256, 'uninventoried node: import block');
     const checked = validateBindings(program, file, done);
@@ -134,9 +148,11 @@ function adapt(tree) {
         text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
         boundary = edit.start;
     }
+    if (!done) text = annotateRequire(text);
     const changedFile = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
     const changedOwner = one(nodes(ts, changedFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'changed getNodeSystem');
-    assert.equal(hash(changedOwner.getText(changedFile)), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
+    assert.equal(hash(ownerText(changedOwner.getText(changedFile))), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
+    assert.equal(ownerText(changedOwner.getText(changedFile)), manifest[0].ownerAfterText, 'unreviewed owner text');
     const changedImports = changedFile.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
     assert.equal(hash(changedImports.map(n => n.getText(changedFile)).join('\n')), manifest[0].importsAfterSha256, 'unreviewed crypto import change');
     assert.equal(ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
@@ -147,7 +163,7 @@ function adapt(tree) {
     if (edits.length) fs.writeFileSync(file.fileName, text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
 }
-module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText};
+module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter};
 if (require.main === module) {
     assert.equal(process.argv.length, 3, 'usage: node adapt.cjs <tree>');
     console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));
