@@ -1,0 +1,13 @@
+{
+  "label": "main-build-compiler",
+  "args": [
+    "npm",
+    "run",
+    "build:compiler"
+  ],
+  "cwd": "/workspace/scratch/diag-read-view-1/main-tree",
+  "extra": {},
+  "exit": 0,
+  "seconds": 13.704033024999717,
+  "limit": 6000
+}

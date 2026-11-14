@@ -6,7 +6,7 @@ const {rewrite: rewriteOwners} = require('./engine.cjs');
 const {plan} = require('./diagnostic-engine.cjs');
 const owners = require('./owners.json');
 function rewrite(tree, restoring = false) {
-    const diagnostics = [...require('../95-checker-axolotl-h/diagnostic-owners.json'), ...owners.filter(pin => pin.names)];
+    const diagnostics = [...require('../95-checker-axolotl-h/diagnostic-owners.json'), ...require('../99-correctness-core-multimap/diagnostic-owners.json'), ...owners.filter(pin => pin.names)];
     const plans = plan(tree, diagnostics, restoring);
     for (const item of plans) assert.equal(fs.readFileSync(item.name, 'utf8'), item.raw, 'source changed while planning');
     const resolution = rewriteOwners(tree, owners.filter(pin => !pin.names), restoring);

@@ -20,3 +20,8 @@ if mode=='census':
 elif mode=='dts':
  side=sys.argv[2];tree=s/(side+'-tree');sys.exit(run(side+'-dts',[tree/'node_modules/.bin/hereby','dts'],cwd=tree))
 elif mode=='apply':sys.exit(run('candidate-apply',[r/'stage3/apply.sh',s/'applied-tree']))
+
+elif mode=='lane':sys.exit(run('whole-lane',[r/'stage3/lane/run.sh',s/'lane']))
+
+elif mode=='build':
+ side=sys.argv[2];sys.exit(run(side+'-build-compiler',['npm','run','build:compiler'],cwd=s/(side+'-tree')))

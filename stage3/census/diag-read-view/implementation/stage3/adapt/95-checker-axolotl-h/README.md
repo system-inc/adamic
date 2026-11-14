@@ -240,7 +240,7 @@ MultiMap amendment (task b5w3ycg, wave row 7): 94-correctness-multimap first exp
 verify.cjs independently reconstructs the two MultiMap calls and pinned import gap, and contract.cjs checks the three partial MultiMap states with refusal reasons, zero writes and unchanged file hashes ([mutant evidence](tooling-mutant-evidence.json)).
 
 Diagnostic read-view amendment (base 8e3a784aa): diagnostic-owners.json pins the
-whole createProgram declaration group and its diagnostic type import specifiers,
+whole createProgram declaration group and its complete namespace import,
 before and after getDiagnosticsHelper's constraint becomes DiagnosticReadView.
 99-correctness-binding-views invokes these pins atomically with its view and
 sorter pins; the edit remains an amendment of this owner. diagnostic-owner.cjs

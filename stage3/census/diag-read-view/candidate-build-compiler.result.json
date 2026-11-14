@@ -1,0 +1,13 @@
+{
+  "label": "candidate-build-compiler",
+  "args": [
+    "npm",
+    "run",
+    "build:compiler"
+  ],
+  "cwd": "/workspace/scratch/diag-read-view-1/candidate-tree",
+  "extra": {},
+  "exit": 0,
+  "seconds": 10.535424517000138,
+  "limit": 6000
+}

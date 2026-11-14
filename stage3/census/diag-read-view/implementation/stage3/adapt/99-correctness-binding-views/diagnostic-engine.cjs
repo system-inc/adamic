@@ -11,7 +11,7 @@ function locate(source, names) {
         ts.forEachChild(node, visit);
     }
     visit(source);
-    if (names[0] === '@import') nodes.push(...source.statements.filter(ts.isImportDeclaration).filter(n => n.moduleSpecifier.text === './_namespaces/ts.js').flatMap(n => n.importClause.namedBindings.elements.filter(e => ['Diagnostic', 'DiagnosticReadView'].includes(e.name.text))));
+    if (names[0] === '@import') nodes.push(...source.statements.filter(ts.isImportDeclaration).filter(n => n.moduleSpecifier.text === './_namespaces/ts.js'));
     return nodes.sort((a,b) => a.pos - b.pos);
 }
 function inspect(pin, text) {
@@ -20,11 +20,13 @@ function inspect(pin, text) {
     const start = nodes.length ? nodes[0].getStart(source, true) : -1;
     const end = nodes.length ? nodes.at(-1).end : -1;
     const spelling = text.slice(start, end);
-    const state = spelling === pin.after;
+    const variant = (pin.variants || [pin]).find(v => spelling === v.before || spelling === v.after);
+    assert(variant, `${pin.owner}: owner drift or half adaptation`);
+    const state = spelling === variant.after;
     assert.equal(nodes.length, state ? pin.afterCount : pin.beforeCount, `${pin.owner}: duplicate or missing owner`);
-    assert.equal(spelling, state ? pin.after : pin.before, `${pin.owner}: owner drift or half adaptation`);
-    assert.equal(digest(spelling), state ? pin.ownerAfterSha256 : pin.ownerBeforeSha256, `${pin.owner}: hash drift`);
-    return {start, end, state};
+    assert.equal(spelling, state ? variant.after : variant.before, `${pin.owner}: owner drift or half adaptation`);
+    assert.equal(digest(spelling), state ? variant.ownerAfterSha256 : variant.ownerBeforeSha256, `${pin.owner}: hash drift`);
+    return {start, end, state, variant};
 }
 function plan(tree, pins, restoring) {
     assert.equal(ts.version, '6.0.3');
@@ -40,7 +42,7 @@ function plan(tree, pins, restoring) {
         for (let i = 0; i < edits.length; i++) {
             const edit = edits[i];
             if (i) assert(edit.end <= edits[i-1].start, 'overlapping owners');
-            after = after.slice(0, edit.start) + (restoring ? edit.pin.before : edit.pin.after) + after.slice(edit.end);
+            after = after.slice(0, edit.start) + (restoring ? edit.variant.before : edit.variant.after) + after.slice(edit.end);
         }
         for (const pin of pins.filter(p => p.file === file)) assert.equal(inspect(pin, after).state, !restoring);
         for (const removeComments of [false, true]) assert.equal(transpile(text, removeComments), transpile(after, removeComments), `${file}: JavaScript changed`);
