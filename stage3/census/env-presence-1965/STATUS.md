@@ -1,19 +1,29 @@
-# Environment presence 1965 evidence
+# Environment presence 1965: PASS
 
-Base: 8e3a784aa5a601f57342c07b68f145fe56252c21, in a fresh detached private worktree; submodules initialized recursively at depth 1. Upstream: v6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8. Node: v24.19.0. Go: go1.27.1 installed in scratch; `/usr/bin/go` is an unrelated board game.
+Implementation: [typescript/env-presence-1965-1](https://github.com/system-inc/adamic/commit/61d3479cd8a0e2d708fa53abde10a74442a914fb), `61d3479cd8a0e2d708fa53abde10a74442a914fb`. Exactly one commit on `8e3a784aa5a601f57342c07b68f145fe56252c21`, six files: one new adapter directory and one ledger line. Task: #baobab item 11. No Loom submission. All pushes used new branch names and ordinary non-force pushes.
 
-No adaptation has been constructed. The complete baseline apply passed. Stock tsc 6.0.3 reports zero diagnostics across 79 roots. The baseline CommonJSBundle full single-file sys.ts census completed with 185 findings, including refusal_scan and lowering findings at 1965:12 and a lowering boundary at 1965:1. The three-row control proves the counting categories fire, including a truthy value without a function. Control observations are separate from the lane counts.
+| Proof | Result |
+| --- | --- |
+| Count before construction | Complete unfiltered oracle, eight workers: 106,366 passing, one sanctioned API failure, zero pending. Nine visits: nine truthy with getEnvironmentVariable as a function; zero truthy without; zero falsy. Actual-condition controls fire for all categories. |
+| Node witness | Executes the actual adapted polling helper and pinned block. Present System: identical nine polling reads, NODE_ENV read and Normal assertion level, receiver preserved. Undefined: both skip. Labeled missing-member hypothetical: original skips, new enters, helper returns early and NODE_ENV call throws TypeError. |
+| Full sys.ts census | CommonJSBundle, LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1 and exact LATENT_ONLY_FILE: 185 -> 182 findings; zero new, zero changed. |
+| All gone findings | refusal_scan Refused at 1965:12; lowering NotYet at 1965:12; lowering rollback Boundary at 1965:1. delta-full.json retains all complete original records, including phase, diagnostic and byte spans. |
+| Restoring mutant | Original condition restored byte for byte; full census returns all 185 findings and exactly matches baseline, including both target findings. |
+| Stock tsc 6.0.3 | All 79 roots: zero diagnostics before and after, zero new. |
+| Adamic types | All 79 sorted compiler roots, exit zero and zero diagnostics. |
+| JavaScript | 604 source files / 1,208 emits, comments retained and removed. Only the one condition text differs in sys.ts; every other emitted file is byte-identical. |
+| Upstream declarations | Independent npm ci then node_modules/.bin/hereby dts on main and candidate pass; typescript.d.ts and tsserverlibrary.d.ts byte-identical. declarations.diff is empty; declarations.json records hashes. |
+| Contract | LF and CRLF adaptation, exact mutant, zero-write replay; drift, half-adapted text, duplicates, mixed before/after and mixed line endings refuse with zero writes. |
+| Integrated apply | PASS; all 747 src files byte-identical to proved candidate. Adapter replay writes zero files; bytes and mtime unchanged. |
+| Final full lane | PASS, unfiltered, eight workers, 106,366 passing, only sanctioned Public APIs failure, zero pending; zero timeouts, exceptions or extra failures. API guard: 273 composed declarations equal all 273 sanctions. |
+| Commit identity | Every committed blob matches the pre-lane six-file manifest. Post-commit apply input key equals the tested key d54755c39231380c03d2870065bc2831ef9caae30ed99e650a9da744d1183f7b. |
 
-The Node witness isolates the enclosing block with an observing polling helper. A valid System preserves the receiver and selects Normal for development; undefined skips the block. The labeled hypothetical missing method skips the original block, but enters the proposed block and throws TypeError at getEnvironmentVariable("NODE_ENV"). The polling helper returns early in that hypothetical.
+The block passes sys to setCustomPollingValues, which reads the LOW/MEDIUM/HIGH settings for TSC_WATCH_POLLINGINTERVAL, TSC_WATCH_POLLINGCHUNKSIZE and TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS. It then calls sys.getEnvironmentVariable("NODE_ENV") with its receiver intact, selecting AssertionLevel.Normal for case-insensitive development and None otherwise. These are its only other direct sys reads: the argument and the method-call receiver. The following separate block reads sys.debugMode.
 
-The real block passes sys to setCustomPollingValues, which reads getEnvironmentVariable for the TSC_WATCH_POLLINGINTERVAL, TSC_WATCH_POLLINGCHUNKSIZE and TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS low/medium/high settings, then calls sys.getEnvironmentVariable("NODE_ENV") to choose Debug's assertion level. There are no other direct sys reads within this block. The following separate conditional reads sys.debugMode.
+The dropped member-presence test is JavaScript-changing and value-identical on the measured domain. The ledger names that test and #baobab item 11. No existing whole-owner pin includes this top-level if statement; ownership.json records the required search. owners.json pins the whole statement before/after with exact text and SHA-256.
 
-Ownership search includes owners.json, targets.json and every adapt.cjs. No whole pin includes the target top-level statement. Pins on System or other functions do not own this statement. No Loom submission.
+Lane ran before the implementation commit, so execution.commit names the base. implementation-files.json and implementation-final.json prove the committed bytes and post-commit input key are exactly those measured; integrated-source.json ties the fully composed tree to the census/emit/declaration candidate.
 
-The first full counting oracle was invalid: its worker exited without a test summary and the container recorded one OOM kill. Nine truthy/function observations, zero missing-method and zero falsy observations are incomplete, not the gate result. Private scratch was migrated from RAM-backed /tmp to disk-backed /var/tmp, retaining /tmp paths through a symlink. The unchanged eight-worker unfiltered oracle is being retried alone.
+Setup used a fresh detached private worktree, recursive depth-one submodules, upstream v6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8, Node v24.19.0 and Go go1.27.1. All writes and caches were in private scratch. The first counting attempt was invalidated by one OOM kill in RAM-backed /tmp and is preserved explicitly as invalid. Scratch was relocated to disk-backed /var/tmp; the complete retry and final lane had no additional OOM kill. No incomplete count was accepted.
 
-Count gate PASSED: complete unfiltered oracle, eight workers, 106,366 passing / one sanctioned API failure / zero pending, only api/typescript.d.ts differing. Nine observations: nine truthy with a function, zero truthy without, zero falsy. The only failure is unittests:: Public APIs for typescript.d.ts should be acknowledged when they change. No further OOM kill. Adaptation construction is now permitted.
-
-Candidate proof gates passed: full sys.ts 185 -> 182, three gone and zero new/changed; restoring mutant 185 findings and exact baseline census equality, including both 1965:12 findings. Stock tsc reports zero diagnostics on both complete 79-root inputs; adamic types exits zero. JavaScript check covers 604 files and 1,208 emits with only the condition text changed. All contract controls pass, including zero-write replay. Upstream npm ci and Hereby dts succeed independently, both declaration outputs byte-identical and declarations.diff empty. Final integrated lane is running.
-
-Integrated stage3/apply.sh passed. Its entire 747-file src tree is byte-identical to the proved candidate. Adapter replay on the integrated tree writes zero files and retains bytes and mtime. Final lane install passed; its full build/tests are running.
+See COMMANDS.md, raw compressed logs/censuses, delta.json, delta-full.json, span-audit.json, declarations.diff and final-lane-verdict.txt. The span audit independently verifies all 184 retained span fields move by exactly the 30-byte deletion, and no other amount.
