@@ -1,0 +1,126 @@
+{
+  "implementation": "e53da7b28b7191e0dee15d87b67f80d859b83eef",
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "implementation_commits": 1,
+  "form_tried": "newChildWatches = [] as ChildDirectoryWatcher[]",
+  "form_accepted_by_stock_and_census": true,
+  "other_forms_tried": [],
+  "census": {
+    "module_format": "CommonJSBundle",
+    "full": true,
+    "new": 0,
+    "changed": 0,
+    "gone": [
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+        "root_kind": "",
+        "text": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87: Adamic 0.1 refuses a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "unit": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:776:5",
+        "where": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:790:87"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read",
+        "root_kind": "",
+        "text": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:877:34: Adamic 0.1 refuses a value of type never[] seen as ChildDirectoryWatcher[], which can write ChildDirectoryWatcher where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "unit": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:876:9",
+        "where": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts:877:34"
+      }
+    ]
+  },
+  "restoring_mutants": {
+    "restore_map": {
+      "new": 1,
+      "gone": 0,
+      "changed": 0,
+      "where": "sys.ts:790:87",
+      "phase": "refusal_scan"
+    },
+    "restore_child_array": {
+      "new": 1,
+      "gone": 0,
+      "changed": 0,
+      "where": "sys.ts:877:34",
+      "phase": "refusal_scan",
+      "stream_byte_identical_to_prior_map_only_head": true
+    },
+    "combined_source_restored": true
+  },
+  "comparisons": {
+    "stock_tsc": {
+      "version": "6.0.3",
+      "roots": 79,
+      "main_diagnostics": 0,
+      "combined_diagnostics": 0,
+      "new": 0
+    },
+    "adamic_types": {
+      "roots": 79,
+      "combined_exit": 0
+    },
+    "javascript": {
+      "files": 79,
+      "all_byte_identical_to_main": true
+    },
+    "declarations": {
+      "typescript.d.ts": {
+        "byte_identical": true,
+        "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+      },
+      "tsserverlibrary.d.ts": {
+        "byte_identical": true,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+      }
+    },
+    "contract_byte_identical": true,
+    "witness_byte_identical": true,
+    "form_trials": [
+      {
+        "form": "newChildWatches = [] as ChildDirectoryWatcher[]",
+        "stock_diagnostics": 0,
+        "full_census": "accepted; 0 new, 0 changed, only 790:87 and 877:34 gone, both refusal_scan",
+        "alternatives_tried": false
+      }
+    ]
+  },
+  "fresh_apply_exit": 0,
+  "lane_retry": {
+    "status": "pass",
+    "exit": 0,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "workers": 8,
+    "runners": "all",
+    "tests": null,
+    "execution": {
+      "commit": "e53da7b28b7191e0dee15d87b67f80d859b83eef",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 558.87
+    }
+  },
+  "initial_lane": "failed: worker exited without output or complete summary; receipts preserved; resource cleanup followed by full unfiltered retry",
+  "ledger": "one type-only line cites #4pc8wd8 and #frhzgrc",
+  "no_loom_submission": true
+}

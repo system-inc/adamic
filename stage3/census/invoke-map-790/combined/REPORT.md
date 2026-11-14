@@ -28,10 +28,17 @@ Both independent restoring mutants pass: each brings back exactly its own
 refusal_scan site, with no other new, gone or changed finding. The combined
 source is restored and only sys.ts differs in the source hashes.
 The first fresh whole lane passed apply/install/build but stopped when a worker
-exited without a test failure or complete counts. Cgroup OOM kills and its
-16 GiB memory limit suggest memory pressure; this attempt is not a pass.
-All failed receipts are retained under failed-lane/. Removing only task-owned
-unused Go cache and duplicate completed source trees reduced idle memory from
-7.8 GB to 3.9 GB. The identical full lane is retrying with eight workers, all
-runners, and no filters or source/tool changes. Retry apply/build pass, and all
-79 compiler inputs match the recorded combined source. Final receipts follow. No Loom submission.
+exited without output or complete counts. That failed attempt is retained under
+failed-lane/. Cgroup OOM kills suggested memory pressure; removing only unused
+task-owned caches and duplicate completed source trees reduced idle memory
+from 7.8 GB to 3.9 GB. No source, lane, oracle, worker-count or filter changed.
+
+The identical whole unfiltered retry PASSES: 106,366 passing, one sanctioned
+Public API row, zero pending. The sole row is
+`unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`,
+and baseline_diffs is exactly `["api/typescript.d.ts"]`. Apply, install and
+build exit 0; tests and oracle exit 1 as expected; lane exits 0. Eight workers,
+all runners, no filter, timeout or exception. Both the initial fresh apply and
+the retry product match all 79 compiler proof inputs. Complete successful
+receipts are retained in lane/, with the failed attempt preserved separately.
+ No Loom submission.
