@@ -10,3 +10,9 @@
 Baseline: adamic `8e3a784aa5a601f57342c07b68f145fe56252c21`, detached private worktree. Upstream v6.0.3 confirmed at `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized; stage3/api npm ci succeeded. Baseline apply and census binary preparation are running. No adaptation or production compiler change is included.
 
 Upstream sys.ts:1380 is in `patchWriteFileEnsuringDirectory`, not the missing-entry watcher. It captures sys.writeFile, replaces sys.writeFile, and subsequently calls the captured function with `.call(sys, ...)`. An arrow reading the same object's writeFile at call time would recurse. There is no identity comparison of originalWriteFile in this function. Census and lane conclusions remain unmeasured.
+
+## Upstream declaration experiment
+
+Pristine upstream `npm ci` and `node_modules/.bin/hereby dts` succeeded. Each public member conversion was built separately, resetting source between variants. The generated `typescript.d.ts` has exactly one removed and one added line per road; `tsserverlibrary.d.ts` is byte-identical (empty diff). Exact diffs are adjacent to this report. These are pristine upstream measurements, not yet the adapted-tree declaration builds or 79-root checks.
+
+The resolved upstream reader inventory is in `readers-upstream.json`: 526 explicit member accesses/destructuring entries, including homonyms; 35 resolve directly to the two requested public member declarations. This inventory includes harness and src test runners. Dynamic computed keys and structural implementations require further audit; this checkpoint does not claim a complete reader proof.

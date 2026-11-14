@@ -1,0 +1,11 @@
+--- control/typescript.d.ts
++++ site10/typescript.d.ts
+@@ -7261,7 +7261,7 @@
+         fileExists(fileName: string): boolean;
+         readFile(fileName: string): string | undefined;
+         trace?(s: string): void;
+-        directoryExists?(directoryName: string): boolean;
++        directoryExists?: ((directoryName: string) => boolean) | undefined;
+         /**
+          * Resolve a symbolic link.
+          * @see https://nodejs.org/api/fs.html#fs_fs_realpathsync_path_options
