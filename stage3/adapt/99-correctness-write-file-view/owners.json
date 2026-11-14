@@ -1,0 +1,12 @@
+[
+  {
+    "file": "sys.ts",
+    "owner": "patchWriteFileEnsuringDirectory",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function patchWriteFileEnsuringDirectory(sys: System): void {\n    // patch writefile to create folder before writing the file\n    const originalWriteFile = sys.writeFile;\n    sys.writeFile = (path, data, writeBom) =>\n        writeFileEnsuringDirectories(\n            path,\n            data,\n            !!writeBom,\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\n            path => sys.createDirectory(path),\n            path => sys.directoryExists(path),\n        );\n}",
+    "after": "export function patchWriteFileEnsuringDirectory(sys: System): void {\n    // patch writefile to create folder before writing the file\n    const writeFileView: { readonly writeFile: System[\"writeFile\"]; } = sys;\n    const originalWriteFile = writeFileView.writeFile;\n    sys.writeFile = (path, data, writeBom) =>\n        writeFileEnsuringDirectories(\n            path,\n            data,\n            !!writeBom,\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\n            path => sys.createDirectory(path),\n            path => sys.directoryExists(path),\n        );\n}",
+    "ownerBeforeSha256": "adbb2e3289ea7f35f76dc8f6baf618c27bf9c334a770dd5c83382816e93e76e4",
+    "ownerAfterSha256": "9859c28c313f8688c39620ca3aecef4bf51d5aa077f895a50aefe2c2d75ddf25"
+  }
+]
