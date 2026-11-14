@@ -151,6 +151,13 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 					graph.unknownParameters[parameter+1] = true
 				}
 			case ir.Declare:
+				// Road 7: a cell made before its declaration runs, so hoisted functions can capture it
+				// (nested_functions.go's preallocateNestedBindings, locals.go's definite-assignment let),
+				// holds no value until an Assign makes it ready, and it's no source. A read before that
+				// stops (readiness.go), and a local only ever declared this way still has no producer.
+				if value.Uninitialized && value.Value == nil {
+					break
+				}
 				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
 			case ir.Assign:
 				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
@@ -647,6 +654,10 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 	case ir.Narrow:
 		follow(value.Value)
 	case ir.Unwrap:
+		follow(value.Value)
+	case ir.Defined:
+		// Road 6: a read the checker narrowed undefined (or null) out of is checked, and hands on Value
+		// or stops, as graph_flow_classes.go's wrapper reads it.
 		follow(value.Value)
 	case ir.CheckedCast:
 		follow(value.Value)
