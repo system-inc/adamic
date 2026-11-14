@@ -11,7 +11,9 @@ TestFSWatchViewAfterCloseStopsByName hold native, sanitized and in release, and 
 to one named stop instead. The two views are tsc's FsWatchWorkerWatcher, the road on takes at
 sys.ts:1270, where lowering's literal "error" can't look. two_events.a, whose async listener held each
 listener's microtask between two events in one read, is refused now (an async listener in a void slot,
-#8j8ecw0), so the per-event drain's mutant moves to Memory's runtime unit test (#cbj1hpd).
+#8j8ecw0), so the per-event drain's mutant moves to the fs.watch C harness's drain mode, where
+TestFSWatchDrainsJobsPerEvent holds it and TestFSWatchMutantDrainDropped plants it
+(internal/native/testdata/fswatch/harness.mutant.md, #cbj1hpd).
 
 | Mutation in node_fs_watch_impl.h | Fixture | Named pin | Caught by |
 | --- | --- | --- | --- |
