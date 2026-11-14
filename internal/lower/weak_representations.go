@@ -18,13 +18,6 @@ func (l *lowering) sameWeakMethodSlots(from, to *checker.Type) bool {
 	}
 	for _, sourceSignature := range source {
 		for _, viewedSignature := range viewed {
-			// A method with a rest, seen through a method with none, is a rest hidden from the next view
-			// as a function's is: a class's join(...items) seen as { join(a: string) } and then as
-			// { join(a: string, b: number) } reached the method through a mismatched function pointer
-			// (restHiddenByView, #2t3h708).
-			if l.restHiddenByView(sourceSignature, viewedSignature, to) {
-				return false
-			}
 			sourceParameters := sourceSignature.Parameters()
 			viewedParameters := viewedSignature.Parameters()
 			for index := 0; index < len(sourceParameters) && index < len(viewedParameters); index++ {
