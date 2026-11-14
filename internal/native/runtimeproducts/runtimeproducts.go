@@ -59,6 +59,9 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_value.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_canonical.a"},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/census_optional_values_system.a"},
+	// ts.sys's twin (#p2n17c4 T1): getNodeSystem nested in an arrow, its literal's methods called as receivers, and
+	// void calls of them discarded.
+	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/tssys_presence_twin/main.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/program_region/parse.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/node_fs_directory_system.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/host_realpath/closure.a"},
