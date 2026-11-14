@@ -513,6 +513,50 @@ func (l *lowering) restHiddenByView(from, to *checker.Signature, viewed *checker
 	return true
 }
 
+// restAdapters is the closed list of intrinsic adapters a rest function literal may be handed to with
+// its rest hidden by the callback's type (Adamic's ruling on #2t3h708, Language's premise): each takes
+// the literal at a callback parameter the library itself calls, calls it by the function's own
+// signature, packing a rest's tail and freeing it at the call's end, and neither returns nor stores it.
+// A name joins only with its own witness of that shape, agreeing with Node natively under the sanitizers
+// and the leak check, and on the JavaScript backend. Any callback not on the list is judged by
+// restHiddenWithin, so it stays NotYet.
+var restAdapters = map[string]string{
+	"sort": "an array's sort comparator, closureComparator's adapter, witnessed by comparator_rest/rest_sort.a (#kwns2n5)",
+}
+
+// restAdapterCallback reports whether node is a function literal written as the callback argument of a
+// call to an adapter on restAdapters: an arrow or a function expression, through parentheses only (never
+// a cast, satisfies, a conditional or a binding), as the first argument of a method call on an array
+// whose resolved signature the library declares. Such a literal has never been seen through any type
+// but the library's parameter, and only the adapter calls it.
+func (l *lowering) restAdapterCallback(node *ast.Node) bool {
+	literal := ast.SkipParentheses(node)
+	if literal.Kind != ast.KindArrowFunction && literal.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	argument := literal
+	for argument.Parent != nil && argument.Parent.Kind == ast.KindParenthesizedExpression {
+		argument = argument.Parent
+	}
+	call := argument.Parent
+	if call == nil || call.Kind != ast.KindCallExpression {
+		return false
+	}
+	arguments := call.AsCallExpression().Arguments
+	if arguments == nil || len(arguments.Nodes) == 0 || arguments.Nodes[0] != argument {
+		return false
+	}
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return false
+	}
+	if _, listed := restAdapters[callee.Name().Text()]; !listed {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(call)
+	return l.isArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) && signature != nil && librarySignature(signature)
+}
+
 // restHiddenPair is a pair restHiddenWithin has judged, at its polarity.
 type restHiddenPair struct {
 	from, to *checker.Type
@@ -2066,11 +2110,17 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 			return l.nodeHostViewRefusal(node, own, slot, reached)
 		}
 	}
-	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, slot, map[[2]*checker.Type]bool{}) {
+	// A listed adapter's own callback literal is the one rest function that may meet a view hiding its
+	// rest: only the adapter calls it, by its own signature (restAdapterCallback).
+	keeps := l.sameKeeping
+	if l.restAdapterCallback(node) {
+		keeps = l.sameKeepingWalk
+	}
+	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !keeps(own, slot, map[[2]*checker.Type]bool{}) {
 		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 		}
-		if l.restHiddenWithin(own, slot, false, map[restHiddenPair]bool{}) {
+		if !l.restAdapterCallback(node) && l.restHiddenWithin(own, slot, false, map[restHiddenPair]bool{}) {
 			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")

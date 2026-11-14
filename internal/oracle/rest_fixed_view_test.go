@@ -76,6 +76,15 @@ func TestRestThroughFixedView(t *testing.T) {
 		"r21_host_rest_widened":           "loud",
 		"r22_hidden_union_slot":           ":2:65",
 		"r23_program_tuple_rest":          ":2:36",
+
+		// The one rest function that may meet a view hiding its rest is a listed adapter's own callback
+		// literal (restAdapters: sort's comparator, comparator_rest/rest_sort.a), which only the adapter
+		// calls. Everything beside it stays NotYet: a library type that keeps the rest, then one that hides
+		// it (r24, Language's e7), and a literal at a library's value parameter, which the call hands back
+		// (r25 Array.of, r26 Promise.resolve). r19 is an unlisted adapter, map's callback.
+		"r24_library_keeps_library_hides":     ":3:47",
+		"r25_array_of_value_parameter":        ":1:33",
+		"r26_promise_resolve_value_parameter": ":1:56",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
