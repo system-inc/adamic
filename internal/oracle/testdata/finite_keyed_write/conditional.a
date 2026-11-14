@@ -1,0 +1,10 @@
+// The receiver is a conditional, evaluated once, and only the object it chose takes the write (p5).
+interface Levels { Low: number; Medium: number; High: number; }
+function set(flag: boolean, level: keyof Levels): string {
+	const a: Levels = { Low: 0, Medium: 0, High: 0 };
+	const b: Levels = { Low: 0, Medium: 0, High: 0 };
+	(flag ? a : b)[level] = 4;
+	return `${a.Low} ${a.Medium} ${a.High} | ${b.Low} ${b.Medium} ${b.High}`;
+}
+console.log(set(true, 'Low'));
+console.log(set(false, 'High'));

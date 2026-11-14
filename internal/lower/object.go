@@ -2289,7 +2289,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	return property, nil
 }
 
-// setIndex lowers array[index] = value, as a statement.
+// setIndex lowers array[index] = value, as a statement, and object[key] = value with a finite key, a
+// fixed object's field (finiteElementWrite). A tuple's element keeps its stop: it's held as the read
+// path holds it (elementAccess), not as a declared field.
 func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
 	if body, handled, err := l.entriesRecordWrite(target, valueNode); handled {
 		return body, err
@@ -2298,6 +2300,9 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	array, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if array.Type() == ir.Object && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		return l.finiteElementWrite(target, array, valueNode)
 	}
 	if array.Type() != ir.Array {
 		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))

@@ -1,0 +1,20 @@
+// The receiver is a call's result (p7): it runs once, then the key, then the value, and only then the
+// store, as JavaScript orders them.
+interface Levels { Low: number; Medium: number; High: number; }
+const held: Levels = { Low: 0, Medium: 0, High: 0 };
+let receiverCalls = 0;
+function receiver(): Levels {
+	receiverCalls += 1;
+	console.log('receiver');
+	return held;
+}
+function key(): keyof Levels {
+	console.log('key');
+	return 'Medium';
+}
+function value(): number {
+	console.log('value');
+	return 6;
+}
+receiver()[key()] = value();
+console.log(`${held.Low} ${held.Medium} ${held.High} ${receiverCalls}`);
