@@ -12,6 +12,9 @@ function undo(text, erased = false, removeComments = false) {
     if (!erased) text = replaceOne(text, resolveHost.after.replace(/\n/g, newline), resolveHost.before);
     if (!erased) text = replaceOne(text, resolveHost.annotationAfter.replace(/\n/g, newline), resolveHost.annotationBefore);
     if (!erased) text = replaceOne(text, 'require: (baseDir, moduleName): ModuleImportResult => {', 'require: (baseDir, moduleName) => {');
+    if (!erased) {
+        text = replaceOne(text, 'process.recordreplay', '(process as any).recordreplay');
+    }
     text = replaceOne(text, newline + 'import * as _crypto from "node:crypto";', '');
     text = replaceOne(text, 'createHash: createSHA256Hash,', 'createHash: _crypto ? createSHA256Hash : generateDjb2Hash,');
     assert.equal([...text.matchAll(/^([ \t]*)createSHA256Hash,(\r?)$/gm)].length, 1, 'reviewed shorthand missing or duplicated');
@@ -30,14 +33,16 @@ function undo(text, erased = false, removeComments = false) {
     return text.slice(0, at) + lines.map(line => anchor[1] + line + newline).join('') + text.slice(at);
 }
 function TestCryptoSourceScope(before, after) {
-    const names = inventory(before); assert.deepEqual(inventory(after), names, 'source inventory changed');
+    const names = inventory(before), afterNames = inventory(after);
+    assert.deepEqual(afterNames, names, 'source inventory changed');
     assert.equal(names.length, 747, 'source inventory size moved from main 8e3a784aa');
+    assert(!afterNames.includes('src/recordreplay.d.ts'), 'adaptation declaration remains');
     const entries = names.map(file => ({file, before:hash(fs.readFileSync(path.join(before,file))), after:hash(fs.readFileSync(path.join(after,file)))}));
-    const changed = entries.filter(x => x.before !== x.after).map(x => x.file);
+    const changed = entries.filter(x => x.before !== x.after).map(x => x.file).sort();
     assert.deepEqual(changed, ['src/compiler/sys.ts'], 'source changed outside sys.ts');
     const a = fs.readFileSync(path.join(before,'src/compiler/sys.ts'),'utf8'), b = fs.readFileSync(path.join(after,'src/compiler/sys.ts'),'utf8');
-    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import, removed optional load, three hash expressions and require result annotation');
-    return {files:names.length, changed, undoRestoresExactBytes:true, inventory:entries};
+    assert.equal(undo(b), a, 'TestCryptoSourceScope: edit outside the crypto import/load/hash edits, require result annotation, fresh resolution host and erased recordreplay amendment');
+    return {files:afterNames.length, beforeFiles:names.length, added:[], changed, undoRestoresExactBytes:true, inventory:entries};
 }
 function TestCryptoTranspileScope(before, after) {
     const read = tree => fs.readFileSync(path.join(tree,'src/compiler/sys.ts'),'utf8');
