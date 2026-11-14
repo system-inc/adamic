@@ -1,0 +1,59 @@
+[
+  {
+    "reader": "stage3/census/tool/main.go",
+    "side": "control",
+    "source_paths": 712,
+    "entries": 747,
+    "contains_added": false,
+    "method": "original WalkDir clause only; no loading or lowering"
+  },
+  {
+    "reader": "stage3/census/tool/main.go",
+    "side": "candidate2",
+    "source_paths": 713,
+    "entries": 748,
+    "contains_added": true,
+    "method": "original WalkDir clause only; no loading or lowering"
+  },
+  {
+    "reader": "stage3/census/latent/main.go.txt",
+    "side": "control",
+    "source_paths": 712,
+    "entries": 0,
+    "contains_added": false,
+    "method": "original WalkDir clause only; no loading or lowering"
+  },
+  {
+    "reader": "stage3/census/latent/main.go.txt",
+    "side": "candidate2",
+    "source_paths": 713,
+    "entries": 0,
+    "contains_added": true,
+    "method": "original WalkDir clause only; no loading or lowering"
+  },
+  {
+    "reader": "compiler-only source enumeration",
+    "control": 82,
+    "amended": 82,
+    "same_names": true,
+    "changed_bytes": [
+      "sys.ts"
+    ]
+  },
+  {
+    "reader": "stage3/adapt/99-correctness-core-compare/close-proof.py",
+    "line": 20,
+    "predicate": "assert expected==actual and len(actual)==746",
+    "control_747": "reject",
+    "amended_748": "reject",
+    "method": "fixed-count conjunct evaluated; enclosing historical driver not run"
+  },
+  {
+    "reader": "stage3/drivers/tsc-entry/verify-references.py",
+    "line": 42,
+    "predicate": "assert len(i['after'])==746 and i['previous']==i['after'] and not i['built_compiler_declarations_exist'] and not i['publication_compiler_diff']",
+    "control_747": "reject",
+    "amended_748": "reject",
+    "method": "fixed-count conjunct evaluated; enclosing historical driver not run"
+  }
+]

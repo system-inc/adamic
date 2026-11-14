@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "source_changes": [
+    "src/compiler/sys.ts",
+    "src/recordreplay.d.ts"
+  ],
+  "exact_adapter_matches_gate": true,
+  "idempotent_no_write": true,
+  "declaration_mutant_refused_before_write": true,
+  "out_of_scope_edit_mutant_refused_before_write": true,
+  "owner_mutant_refused_before_write": true,
+  "stock_version": "6.0.3",
+  "stock_diagnostics": 0,
+  "compiler_roots": 79,
+  "javascript_files_identical": 79,
+  "public_declarations": {
+    "typescript.d.ts": {
+      "bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    "tsserverlibrary.d.ts": {
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  },
+  "sys_sha256": "309ba1c45fee15a5bed3e275e908fddcbd7c7caf0a32519b43c0fe9d3bd57573",
+  "augmentation_sha256": "852303f7321f71544a7f24dfd561188599c822e52d2a7e961fe85a22e13f2dc9"
+}
