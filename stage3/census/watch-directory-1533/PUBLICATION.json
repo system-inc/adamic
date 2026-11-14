@@ -1,11 +1,11 @@
 {
   "decision": "STOP_NEW_CENSUS_FINDINGS",
-  "raw_evidence_export": "BLOCKED_AUTOMATIC_APPROVAL_PENDING_USER_APPROVAL",
-  "blocked_actions": [
-    "upload full generated types log and compressed parts",
-    "upload candidate source diff",
-    "upload compressed census stream"
-  ],
+  "publication_policy": "SUMMARIES_AND_RECEIPTS_ONLY",
+  "raw_evidence_export": "NOT_AUTHORIZED_BY_USER; RETAINED_IN_SCRATCH",
+  "next_step": "WAIT_FOR_RULING_ON_1533",
+  "raw_file_inventory": "RAW-MANIFEST.json",
+  "inventory_files": 125,
+  "scratch_root": "/workspace/scratch/watch-directory-1533",
   "published_files": [
     "stage3/census/watch-directory-1533/adamic-build.log",
     "stage3/census/watch-directory-1533/adamic-types-exit.json",
@@ -13,27 +13,23 @@
     "stage3/census/watch-directory-1533/build.log",
     "stage3/census/watch-directory-1533/emit.log",
     "stage3/census/watch-directory-1533/delta.log",
-    "stage3/census/watch-directory-1533/emit.cjs",
     "stage3/census/watch-directory-1533/baseline-patch-set.md",
     "stage3/census/watch-directory-1533/delta.json",
-    "stage3/census/watch-directory-1533/delta.py",
     "stage3/census/watch-directory-1533/change.log",
-    "stage3/census/watch-directory-1533/experiment.py",
     "stage3/census/watch-directory-1533/experiment.json",
     "stage3/census/watch-directory-1533/reads.json",
     "stage3/census/watch-directory-1533/reads-upstream.md",
     "stage3/census/watch-directory-1533/results.json",
-    "stage3/census/watch-directory-1533/pilot/experiment.py",
     "stage3/census/watch-directory-1533/setup.json",
     "stage3/census/watch-directory-1533/stock-delta.json",
     "stage3/census/watch-directory-1533/stock-change.json",
     "stage3/census/watch-directory-1533/stock-main.json",
     "stage3/census/watch-directory-1533/upstream-dts.log",
     "stage3/census/watch-directory-1533/upstream-npm-ci.log",
-    "stage3/census/watch-directory-1533/stock.cjs",
-    "stage3/census/watch-directory-1533/README.md"
+    "stage3/census/watch-directory-1533/README.md",
+    "stage3/census/watch-directory-1533/RAW-MANIFEST.json",
+    "stage3/census/watch-directory-1533/PUBLICATION.json"
   ],
-  "local_complete_bundle": "/workspace/scratch/watch-directory-1533/work/stage3/census/watch-directory-1533",
   "implementation_branch_created": false,
   "loom_submissions": 0
 }
