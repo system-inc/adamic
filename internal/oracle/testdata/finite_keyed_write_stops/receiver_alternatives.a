@@ -1,10 +1,11 @@
 // The receiver's alternatives hold left two ways, a number in Packed and a packed number | undefined in
-// Loose, so no one store writes it in both: the key proof the read shares stops it.
-interface Packed { left: number; right: number; }
-interface Loose { left: number | undefined; right: number; }
+// Loose, so no one store writes it in both: the key proof the read shares stops it. Each alternative's
+// kind keeps either from being seen as the other, so the union itself is sound to make.
+interface Packed { readonly kind: 'packed'; left: number; right: number; }
+interface Loose { readonly kind: 'loose'; left: number | undefined; right: number; }
 function set(target: Packed | Loose, side: 'left' | 'right', value: number): void {
 	target[side] = value;
 }
-const packed: Packed = { left: 1, right: 2 };
+const packed: Packed = { kind: 'packed', left: 1, right: 2 };
 set(packed, 'left', 3);
 console.log(`${packed.left} ${packed.right}`);

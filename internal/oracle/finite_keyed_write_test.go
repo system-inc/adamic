@@ -35,8 +35,8 @@ func TestFiniteKeyedWritesAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 9 {
-		t.Fatalf("%d programs in %s, want 9: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 8 {
+		t.Fatalf("%d programs in %s, want 8: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
@@ -62,7 +62,7 @@ var finiteKeyedWriteStops = []struct {
 	{"literal_key.a", true, 6, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"or_temporary.a", true, 5, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"readonly_constructor.a", false, 8, "a computed write to readonly field Low", ""},
-	{"receiver_alternatives.a", false, 6, "a computed field stored differently across receiver alternatives", ""},
+	{"receiver_alternatives.a", false, 7, "a computed field stored differently across receiver alternatives", ""},
 	{"tsc_custom_levels.a", true, 14, "optional property Low in Partial<Levels> absent from structural source {}, which can hide fields", ""},
 	{"value_held_differently.a", false, 7, "a computed field write whose value isn't held as every named field is", ""},
 }
