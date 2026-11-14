@@ -109,6 +109,7 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	if program.HasGenerators() {
 		builder.WriteString("#include \"generator.h\"\n")
 	}
+	builder.WriteString(appleInclude(program))
 	seenStrings := map[string]bool{}
 	for _, value := range program.Strings {
 		if seenStrings[value] {
@@ -171,7 +172,11 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 			signature := emitter.signature(index)
 			emitter.indent = 1
 			emitter.functionIndex = index
-			emitter.functionBody(function)
+			if function.Foreign != nil {
+				emitter.foreignBody(function)
+			} else {
+				emitter.functionBody(function)
+			}
 			body := emitter.out.String()
 			emitter.out.Reset()
 			name := emitter.functionName(index)
@@ -542,7 +547,10 @@ type emitter struct {
 
 	// closes are the C names of the locals an iterable view's dispatch holds (ir.Block's Closes):
 	// releaseScopes closes each before letting go of it, at every way out of its block.
-	closes map[string]bool
+	closes            map[string]bool
+	foreignPrototypes map[string]string
+	blockTypes        map[string]string
+	delegateClasses   map[string]bool
 }
 
 func (e *emitter) line(format string, arguments ...any) {
