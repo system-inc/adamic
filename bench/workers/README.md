@@ -194,9 +194,8 @@ responses. The operation count is known; the time is measured, not assumed.
 
 `day6.mjs` runs the TypeScript twin bundled by Wrangler deploy, the generated
 Adamic JS Worker, and the explicit primes/summarize split Worker under workerd.
-Use a separate local measurement checkout with `codex/workers-compute-a` and
-`codex/workers-two-backends` merged onto platforms; retain its exact merge SHA
-and any merge resolution. Build before timing, and run nothing else while timing.
+Measure a clean checkout of the commit under test; every piece is on main, and
+the header names that commit. Build before timing, and run nothing else while timing.
 
 Place the three builds under a scratch directory as `variants/twin`,
 `variants/adamic-js`, and `variants/adamic-js-wasm`, each with `worker.mjs` as entry.
