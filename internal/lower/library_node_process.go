@@ -230,12 +230,13 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		}
 	}
 
-	if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "browser" && l.processPath(node) == "process.browser" && hostBindingAbsentMembers["node:process.process"]["browser"] {
+	if node.Kind == ast.KindPropertyAccessExpression && hostBindingProcessAbsent(node.Name().Text()) && l.processPath(node) == "process."+node.Name().Text() {
 		// processPath admits only static host receivers here; a receiver with effects stays stopped.
-		// No process object slot is read, on any target (#zqz01vh, Adamic and Lower, Nov 8 2026).
+		// No process object slot is read, on any target: browser (#zqz01vh, Adamic and Lower, Nov 8 2026)
+		// and recordreplay (#b7phwab, Adamic on #b5w3ycg, Nov 7 2026).
 		of, known := l.representation(l.checker.GetTypeAtLocation(node))
 		if !known {
-			return nil, true, l.notYet(node, "process.browser with an unrepresented type")
+			return nil, true, l.notYet(node, "process."+node.Name().Text()+" with an unrepresented type")
 		}
 		return fit(ir.Undefined{Of: ir.Object}, of), true, nil
 	}
