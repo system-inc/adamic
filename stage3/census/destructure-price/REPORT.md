@@ -51,7 +51,7 @@ All **80,520** test input/reference files were verified byte-identical to the ad
 
 ## Census and type experiments — pending
 
-Next: full single-file CommonJSBundle census for the **24 files holding these 29 sites**, one at a time, each capped at 60 minutes. A completed census requires exit zero, exactly one selected file record and a final relation trailer. No census count is claimed at this checkpoint. The former 54-file census is not reused.
+Next: full single-file CommonJSBundle census for the **24 files holding these 29 sites**, one at a time, each capped at 60 minutes. A completed census requires exit zero, exactly one selected file record and a final relation trailer. Partial checkpoint: 13/24 files completed, with 11 distinct method refusals against 13 AST sites in those files. No final census total is claimed. The source-map timer binding is masked by `var`; the ES2018 context binding is masked by a function-prologue predicate-array failure. See evidence/census-summary.json and evidence/census-masks.json. The former 54-file census is not reused.
 
 Then: stock tsc 6.0.3 strictFunctionTypes ledgers over the 79 roots for both roads; actual property-road bundled declaration diff and hybrid byte-identity check. These will run sequentially after the census, with per-run memory measurements. Earlier incomplete type experiments are not results.
 

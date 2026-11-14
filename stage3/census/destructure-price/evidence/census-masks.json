@@ -1,0 +1,16 @@
+[
+  {
+    "site": "src/compiler/sourcemap.ts:40",
+    "maskKind": "statement gate",
+    "observedReason": "var",
+    "observedWhere": "src/compiler/sourcemap.ts:40:5",
+    "explanation": "Statement is refused before destructured members are lowered."
+  },
+  {
+    "site": "src/compiler/transformers/es2018.ts:155",
+    "maskKind": "function prologue",
+    "observedReason": "a branded supertype inside a checked predicate's array target",
+    "observedWhere": "src/compiler/transformers/es2018.ts:1233:36",
+    "explanation": "Outer transformES2018 has an explicit function-signature/prologue failure boundary before its body binding can be examined."
+  }
+]
