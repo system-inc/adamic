@@ -1,0 +1,29 @@
+{
+  "pass": true,
+  "writes": 0,
+  "result": {
+    "files": 0,
+    "declarations": 0,
+    "rewrites": 0,
+    "importsRemoved": 0,
+    "literals": 5,
+    "ownedSlots": [
+      "getSymlinkCache",
+      "readFile",
+      "getModuleSpecifierCache",
+      "getNearestAncestorDirectoryWithPackageJson"
+    ],
+    "externalSlots": [
+      "getGlobalTypingsCacheLocation",
+      "directoryExists",
+      "realpath",
+      "trace"
+    ],
+    "javascriptIdentical": {
+      "src/compiler/types.ts": true,
+      "src/compiler/checker.ts": false,
+      "src/compiler/program.ts": false
+    },
+    "javascriptChanging": true
+  }
+}

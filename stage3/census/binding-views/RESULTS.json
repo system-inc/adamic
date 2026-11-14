@@ -1,55 +1,248 @@
 {
-  "status": "STOP",
-  "reason": "Required byte-identical upstream declaration gate failed",
-  "baseline_apply": "PASS",
-  "upstream_npm_ci": {
-    "baseline": 0,
-    "candidate": 0
-  },
-  "upstream_hereby_dts": {
-    "baseline": 0,
-    "candidate": 0
+  "status": "PASS",
+  "implementation_branch": "typescript/binding-views-1",
+  "implementation_sha": "5ead54d316a4a6606aa61a370adea226d66f3db9",
+  "base": "7534c1d7575db02bb7b6512119e0685987b7e333",
+  "single_commit": true,
+  "bisect": {
+    "resolution_only": "typescript.d.ts differs; tsserverlibrary.d.ts identical",
+    "program_only": "both identical",
+    "internal_exported_resolution_with_program": "both identical"
   },
   "declarations": {
-    "status": "STOP: public declaration output differs",
-    "baseline_dts_exit": 0,
-    "candidate_dts_exit": 0,
+    "status": "pass",
     "rows": [
       {
         "file": "typescript.d.ts",
-        "identical": false,
-        "before_sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
-        "after_sha256": "bfe13d0ab8055d651cff6bf4fe322d8fc8c7c923892108cf062a822c9ae8ab12",
-        "before_bytes": 593536,
-        "after_bytes": 602650,
-        "diff_lines": 5691
+        "identical": true,
+        "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
       },
       {
         "file": "tsserverlibrary.d.ts",
         "identical": true,
-        "before_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
-        "after_sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
-        "before_bytes": 866,
-        "after_bytes": 866
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
       }
     ]
   },
-  "exact_diff": {
-    "file": "typescript.d.ts.diff",
-    "sha256": "0087ce6cfae5b0397a59fd23b8e11ac916d26822f01c2bf3cb8a082c822b6c8c",
-    "changed_lines": 1302,
-    "description": "All 1302 changed lines only insert export modifiers; same 11530 lines."
+  "census": {
+    "status": "pass",
+    "rows": [
+      {
+        "file": "resolutionCache.ts",
+        "mode": "full",
+        "before_raw": 221,
+        "after_raw": 217,
+        "before_unique": 133,
+        "after_unique": 129,
+        "new": 0,
+        "changed": 0,
+        "gone": 4,
+        "restored_targets": 4
+      },
+      {
+        "file": "program.ts",
+        "mode": "scan only",
+        "before_raw": 81,
+        "after_raw": 79,
+        "before_unique": 81,
+        "after_unique": 79,
+        "new": 0,
+        "changed": 0,
+        "gone": 2,
+        "restored_targets": 2
+      }
+    ]
   },
-  "adapter_contracts": "PASS: see contracts.json; includes exact mutant restoration but not refusal-return measurement",
-  "census": "STOPPED after declaration gate failed; both resolution full streams incomplete, exit -15; program scan not started",
-  "stock_tsc": "NOT RUN",
-  "adamic_types": "NOT RUN (executable build succeeded)",
-  "all_file_javascript": "NOT RUN; edited-file comparisons in both comment modes passed within contract checks",
-  "mutant_six_refusals": "NOT RUN",
-  "candidate_apply": "NOT RUN",
-  "lane": "NOT RUN",
-  "generated_files": "NOT REGENERATED",
-  "ledger": "NONE",
-  "implementation_branch": "NOT CREATED OR PUSHED",
+  "checks": {
+    "status": "pass",
+    "roots": 79,
+    "stock_bare": {
+      "before": 64,
+      "after": 64,
+      "new": 0,
+      "identical": true,
+      "note": "No Node ambient roots; retained as supplementary comparison"
+    },
+    "stock_node": {
+      "before": 0,
+      "after": 0,
+      "new": 0,
+      "ambient": "Scout pinned @types/node plus ledger require shim"
+    },
+    "adamic_types": {
+      "exit": 0,
+      "diagnostics": 0
+    },
+    "javascript": {
+      "files": 604,
+      "emits": 1208,
+      "identical": true
+    }
+  },
+  "contracts": {
+    "pass": true,
+    "rows": [
+      {
+        "name": "adapter replay",
+        "writes": 0
+      },
+      {
+        "name": "owner drift",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "outside-owner drift",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "duplicate owner",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "half-adapted resolution",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "mixed resolution line endings",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "mixed program line endings",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "missing prior amendment",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "half-restored tree",
+        "refused": true,
+        "writes": 0
+      },
+      {
+        "name": "CRLF preserved",
+        "pass": true
+      },
+      {
+        "name": "mutant exact restoration and replay",
+        "pass": true
+      }
+    ]
+  },
+  "amended_owner_replay": {
+    "pass": true,
+    "writes": 0,
+    "result": {
+      "files": 0,
+      "declarations": 0,
+      "rewrites": 0,
+      "importsRemoved": 0,
+      "literals": 5,
+      "ownedSlots": [
+        "getSymlinkCache",
+        "readFile",
+        "getModuleSpecifierCache",
+        "getNearestAncestorDirectoryWithPackageJson"
+      ],
+      "externalSlots": [
+        "getGlobalTypingsCacheLocation",
+        "directoryExists",
+        "realpath",
+        "trace"
+      ],
+      "javascriptIdentical": {
+        "src/compiler/types.ts": true,
+        "src/compiler/checker.ts": false,
+        "src/compiler/program.ts": false
+      },
+      "javascriptChanging": true
+    }
+  },
+  "amended_owner_partial_control": {
+    "pass": true,
+    "writes": 0,
+    "message": "half-adapted diagnostics overload amendment\n\n'before' !== 'after'\n"
+  },
+  "applied_replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  },
+  "applied_source_files": 747,
+  "tested_product_key": "319b74bb713134075597eea81d9617fbb2ae2419afce9f118f244cb6339792ba",
+  "lane": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 273,
+      "sanctioned_declarations": 273,
+      "added_lines": 327,
+      "removed_lines": 245
+    },
+    "execution": {
+      "commit": "7534c1d7575db02bb7b6512119e0685987b7e333",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 1071.031
+    },
+    "verdict": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]"
+  },
+  "oracle_settings": {
+    "workers": 8,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0"
+  },
+  "generated": {
+    "status": "pass",
+    "regenerated": false,
+    "reason": "hashed inputs unchanged",
+    "rows": [
+      {
+        "file": "sanctioned-api.json",
+        "sha256": "42851b6eb29f2c94fda1f9bfd4c819fc5eaf6b2fa65c0263de5ffb0490bf81d4",
+        "unchanged": true
+      },
+      {
+        "file": "shard-plan.json",
+        "sha256": "b07180a064fb4048b3e8c5b74529002e960ab2af2dfe399ef457c62c785ca42b",
+        "unchanged": true
+      },
+      {
+        "file": "shards.json",
+        "sha256": "c6aac4b07abc5164021e2382fccef265b7a0047de40bd33b2151b6ce5185a647",
+        "unchanged": true
+      },
+      {
+        "file": "shards_generated_test.go",
+        "sha256": "f9e1eb2afbdd50f7c6afe90ea155d9216079da5f494ce5d32d0988805a1b9a1b",
+        "unchanged": true
+      }
+    ]
+  },
+  "ledger": "One type-only line, #ty5myjt and Compiler accept",
   "loom": "Never submitted"
 }
